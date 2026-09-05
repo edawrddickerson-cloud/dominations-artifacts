@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Cannons first came into use in Europe in the late Middle Ages. Their value in siges was immediately obvious, but during the Renaissance they also came to play an important role supporting infantry in field battles. However, they were hindered by their low rate of fire. The ribauldequin, or organ gun, was an early attempt to address this weakness, sporting several small barrels that could be fired in rapid succcession, but it still took too long to reload. The brilliant polymath and inventor Leonardo da Vinci decided to sketch out a solution to this problem.
+
+His improved version is in essence an automatic-firing ribauldquin. The barrels are separated into three rows of eleven with each set attached to one side of a triangular platform. After one row was fired, the mechanism would then be rotated 120 degrees forward. The first side would be given time to cool off while the operator fired the second set and reloaded the third, creating a cycle that minimized vulnerability. Like many of da Vinci's inventions, despite never being built it is now viewed as a precursor to a piece of modern technology, in this case the machine gun.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| [[Machine Gun Infantry]] Damage|| +9%
+|-
+| [[Machine Gun Infantry]] Hitpoints|| +7%
+|-
+| Invading [[Factory]] Troop Damage|| -8%
+|-
+| [[Ranged Siege]] Damage|| +8%
+|-
+| Enemy [[Mortar|Catapult]] Hitpoints || -8%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Legendary Artifact]]
+[[Category:Artifact]]
+[[Category:Museum]]
+[[Category:World War]]

@@ -1,0 +1,31 @@
+[[File:{{PAGENAME}}.png|center|260x260px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+
+
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Rally Cooldown
+| -6%
+|-
+|[[APC]] Hitpoints
+| +6%
+|-
+|[[Armored Car]] Damage
+| +6%
+|-
+|[[MRL]] Damage
+| +6%
+|-
+|[[Machine Gun Infantry]] Damage
+| +6%
+|}
+
+{{LegendaryWarArtifactsMenu}}

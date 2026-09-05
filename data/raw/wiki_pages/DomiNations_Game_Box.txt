@@ -1,0 +1,30 @@
+[[File:DomiNations Game Box.jpg|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| Generals' Hitpoints || +6%
+|-
+| Generals's Attack Speed|| +6%
+|-
+| Enemy Defender Spawn Time || +6%
+|-
+| Generals' Damage || +6%
+|-
+| General's Movement Speed || +6%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

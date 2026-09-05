@@ -1,0 +1,33 @@
+
+[[File:{{PAGENAME}}.jpg|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+During the 1991 Gulf War, American-led coalition forces were sent into the featureless deserts in and around Kuwait. The Iraqi army considered these areas impossible to navigate and so left them undefended. But the coalition had something the Iraqis didn't: the Global Positioning System. Even though fewer than 20 of the 24 satellites required for fully operational GPS had been launched, the system still proved accurate enough to confer a major tactical advantage. It not only aided navigation but also greatly sped up the aiming of artillery.
+
+The official military GPS receiving device was the PSN-8 Manpack, so named because it was designed to be carried around on a frame like a backpack. However, most soldiers attached the cumbersome 17-pound unit to their vehicles instead. Manpack shortages reportedly led troops to write home asking their families to send commercial GPS units. Despite these difficulties, the system enabled Norman Schwarzkopf's famous 'left hook' maneuver that cut off the Iraqi army. GPS was so important to Operation Desert Storm that it has been called the first space war.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| Rally Cooldown|| -11%
+|-
+| Increase Rally Duration|| +9%
+|-
+| [[Factory]] Troop Hitpoints|| +9%
+|-
+| [[Factory]] Troop Damage|| +9%
+|-
+| Enemy [[Towers]] Damage|| -9%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Legendary Artifact]]
+[[Category:Artifact]]
+[[Category:Museum]]
+[[Category:World War]]

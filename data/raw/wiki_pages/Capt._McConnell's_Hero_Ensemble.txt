@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+No other conflict featured nearly as much jet fighter combat as the Korean War. The American ace of aces in Korea was Captain Joseph McConnell of the 51st Fighter-Interceptor Wings, whose flying horse patch is seen here. In his most dramatic battle, the Soviet ace Semyon Fedorets crippled McConnell's F-86 Sabre, but the American executed a barrel roll and shot down his opponent. Both survived, and since each one downed the other's fighter, both technically gained a victory from the encounter.
+
+McConnell's equipment included this P-1A hard flight helmet with and oxygen mask and goggles. In 1953, he was awarded a Distinguished Service Cross, the U.S. military's second-highest honor, for his extraordinary heroism. McConnell was tragically killed the following year due to a malfunction while testing out a new version of the Sabre in California. His record of 16 aerial victories remains the highest of any U.S. jet pilot.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| [[Generals]]' Hitpoints and Damage|| +8%
+|-
+| Oil Looted|| +9%
+|-
+| [[Fighters|Fighter]] Damage|| +9%
+|-
+| [[Fighters|Fighter]] Damage|| +10%
+|-
+| Airstrip Troop Hitpoints|| +10%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Legendary Artifact]]
+[[Category:Artifact]]
+[[Category:Museum]]
+[[Category:World War]]

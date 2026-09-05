@@ -1,0 +1,34 @@
+[[File:{{PAGENAME}}.jpg|center|249x249px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Mythical War Artifacts]], that can be stored and displayed at [[Museum]]. It is purchased from sale.
+
+== Historical Description ==
+The universal genius Leonardo da Vinci counted the subject of flight among his wide-ranging interests. In 1505-1506, he produced a treatise on the flight of birds that demonstrated a prescient Understanding of concepts in aerodynamics. The work even alluded to an attraction between objects that anticipates Newton's theory of gravity by nearly two centuries.
+
+In addition to his theoretical work, Leonardo produced several sketches of flying machines. Most of these were ornithopters, devices built to remain airborne on wings resembling those of birds or bats. His designs would have been unable to generate enough lift to overcome the weight of the human body, and so could not have gotten off the ground under their own power. However, they shared their underpinnings with successful early gliders that were constructed around the turn of the twentieth century.
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|[[Fighters|Fighter]] Hitpoints & Damage
+| +7%
+|-
+|[[Fighters]] Damage
+| +11%
+|-
+|[[Fighters]] Hitpoints
+| +11%
+|-
+|[[Fighters]] Hitpoints
+| +11%
+|-
+|[[Heavy Tank]] Damage
+| +11%
+|-
+|[[Heavy Tank]] Hitpoints
+| +11%
+|}
+{{MythicalWarArtifactsMenu}}

@@ -1,0 +1,31 @@
+[[File:{{PAGENAME}}.png|centre|250px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]]. It can be purchased for real money. Or it can be purchased for 100 legendary tokens at Marco Polo.
+
+== Historical Description ==
+The Rosetta Stone is a legendary artifact that was created in Egypt in 196 BCE. The stone tablet was found in 1799 by French soldiers in the town of Resetta in the Nile Delta. The Rosetta Stone contains a decree from the ruler of Egypt at the time, King Ptolemy V. The decree was written in 3 different languages: Egyptian hieroglyphics, Demotic script, and Ancient Greek. Scholars tried to decipher all of the hieroglyphs using the text on the stone, but were unable to do so until Jean-François Champollion solved the puzzle in 1822. The artifact is currently held at the British Museum in London.
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| [[Library]] Tech Resource Cost || -11%
+|-
+| [[Vault]] Capacity || +11%
+|-
+| [[Oil]] from [[Oil Well]]s || +6%
+|-
+| Looted Resource Refund || +6%
+|-
+| [[Forest]] Expansion Cost Refund || +6%
+|-
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]

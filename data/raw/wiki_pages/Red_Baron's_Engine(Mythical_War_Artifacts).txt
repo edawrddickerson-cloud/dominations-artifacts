@@ -1,0 +1,28 @@
+[[File:{{PAGENAME}}.jpg|center|249x249px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Mythical War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Manfred Albrecht Freiherr von Richthofen, also known as the 'Red Baron', was an extraordinarily fighter pilot during World War I. The Red Baron had the most victories of any pilot during the war. Whereas most British pilots would add unconfirmed kills to their list of victories, the records for the Red Baron were particularly meticulous, often listing not only that an enemy was killed, even serial numbers of enemy planes, and the names of killed or captured Allied airmen. Including unconfirmed victories, the Red Baron's total is potentially over 100.
+
+Early in his career, Manfred was known to be more lighthearted and playful, and so his response as to why he decided to paint his aircraft red was, 'for whatever reasons'. Soon after, the rest of his squadron also painted their aircrafts red. Painting one's aircraft different bright colors was a growing trend among the other squadrons, and shortly after the whole unit became known as 'the Flying Circus'.
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Enemy [[Air Defense]] Damage|| +11%
+|-
+|[[Fighters|Fighter]] Damage|| +11%
+|-
+|[[Bomber]] Damage|| +11%
+|-
+|[[Heavy Tank]] Damage|| +11%
+|-
+|[[Machine Gun Infantry]] Damage|| +11%
+|-
+|Invading [[Fighters]] Damage || -11%
+|}
+{{MythicalWarArtifactsMenu}}

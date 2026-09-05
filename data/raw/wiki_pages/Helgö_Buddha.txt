@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.png|centre|250px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The 1954 archaeological dig on the Swedish Island, Helgö, was planned to be the grounds of an importing Viking era trading center. The hope was that a Viking trade center could be a source of treasure from across all corners of the world due to pillaging and trading with other nations. This wildly successful dig uncovered a trove of artifacts, ranging from ancient Arabic Coins to ancient European metalworks. The most prized findings were nicknamed the “Helgö Treasure”, and consisted of a highly detailed, ceremonial ladle from Egypt, a Irish Bishop’s crozier, likely stolen by Vikings, and a bronze statue of Buddha.
+
+While the statue itself is relatively small, it is finely detailed and captures many aspects of Buddhist culture. The statue depicts Buddha in a meditative pose, resting on a lotus throne, which represents purity. He also has long ear lobes, which is a sign of royalty. Most notably however is an Urna placed upon his forehead, made of silver. This personifies the individual’s third eye, which is usually regarded as the “eye of consciousness”.
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| Quick Victory Time || +11%
+|-
+| University Research Time || -6%
+|-
+| Library Research Time || -6%
+|-
+| Defender Hitpoints || +11%
+|-
+| Invading Bazooka Damage || -11%
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:Museum]]

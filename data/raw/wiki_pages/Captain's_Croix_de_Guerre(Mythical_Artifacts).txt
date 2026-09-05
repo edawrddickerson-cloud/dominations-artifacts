@@ -1,0 +1,26 @@
+[[File:{{PAGENAME}}.jpg|center|250x250px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Mythical Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Captain Edward V. Rickenbacker was the most successful American fighter ace of World War I. He had 26 aerial victories, the first of which occurred on April 29, 1918. A month later, on May 28th, he became an aerial ace decorated with the French Croix de Guerre medal for shooting down his 5th plane. France awarded the Croix de Guerre to their allied military forces for extraordinary acts of heroism against the enemy during combat.
+
+== Statistic ==
+{| class="article-table"
+! scope="col" |Benefit Name
+! scope="col" |Base Stat
+|-
+|Enemy Defender Hitpoints|| -15%
+|-
+|[[Food]] Looted|| +15%
+|-
+|[[Gold]] Looted|| +15%
+|-
+|[[Oil]] Looted|| +15%
+|-
+|All Resources Looted|| +15%
+|-
+|All Resources Looted|| +15%
+|}
+{{MythicalArtifactsMenu}}

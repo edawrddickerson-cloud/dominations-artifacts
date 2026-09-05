@@ -1,0 +1,38 @@
+[[File:Crescent Blade.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+One of ancient China's greatest warriors was Guan Yu. According to legend, his weapon of choice was a guandao named Green Dragon Crescent Blade. It weighs roughly 100 pounds and spanned over 6 feet. Guandao means "the blade of Guan Yu", and these weapons were only used by superior warriors due to its length, weight, and the dexterity required to effectively wield the weapon in battle. The Green Dragon Crescent Blade is known as the first Guandao in history, and Guan Yu is said to be the inventor of these weapons, though he did not forge it himself. 
+
+Guan Yu was known to be both strong enough to wield this incredible two handed weapon in a single hand, and skilled enough to cut down hundreds of soldiers with it. The blade's color and name originate from the story of its creation, where a legendary blacksmith defeated a green dragon and used it to forge a mighty weapon fit for a heroic warrior.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| Defender Hitpoints || +7%
+
+|-
+| Enemy Defender Spawn Time
+| +7%
+|-
+| [[Air Defense]] Damage
+| +7%
+|-
+| [[Generals|Generals']] Damage
+| +7%
+|-
+| [[Heavy Tank]] Damage || +4%
+|}
+
+Uses ?
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

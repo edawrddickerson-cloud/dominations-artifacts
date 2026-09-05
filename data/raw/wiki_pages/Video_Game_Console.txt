@@ -1,0 +1,32 @@
+
+[[File:{{PAGENAME}}.jpg|centre|250px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Ralph Bear, remembered as the 'father of video games,' created a working prototype for the first home video game console in 1967. The earliest models had no color or sound and relied on a small number of games with a narrow set of mechanics, particularly variations on tennis. As technology improved in the 1970s and early 80s, home gaming became a significant industry. However, a glut of low-quality games and competition from personal computers caused the video game market to crash in 1983.
+
+The resurgence of home consoles began in 1985 and has shown no sign of stopping ever since. Games began to grow more sophisticated with innovative designs, rich stories, and memorable characters. Hardware advances, including cartridges and CDs, allowed for higher-fidelity graphics and increasing amounts of content. The 'retro' aesthetics of early console games remain culturally relevant today in forms like chiptune music and pixel art, even though technology has moved far past the limitations that spawned them.
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| Rally Cooldown || -11%
+|-
+| All Resources Looted || +12%
+|-
+| Oil Looted || +14%
+|-
+| [[Heavy Tank]] Damage || +13%
+|-
+| [[Bomber]] Damage || +13%
+|}
+'''Resource used to upgrade this artifact''': Oil.{{LegendaryArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]

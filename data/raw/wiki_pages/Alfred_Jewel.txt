@@ -1,0 +1,29 @@
+[[File:Alfred_Jewel.png|File:{{PAGENAME}}.png|center|220x220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+King Alfred the Great was the ruler of the Anglo-Saxon kingdom of Wessex from 871 to 899 after the death of his older brother, Aethelred. Though he was regarded as a fierce warrior, he was also known to be an intelligent man, and the discovery of this relic furthers this belief. While on the outside it looks to be an impressive work of art by a master goldsmith, it is actually a fully functional reading implement known as an aestel. Aestels are handheld pointers that are slid along the page, helping to focus the reader's eyes on the words when reading a manuscript. This piece was found in the year 1693 while tilling a field at North Petherton, Somerset, with the inscription: "AELFRED MEC HEHT GEWYRCAN", or 'Alfred ordered me to be made'. 
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|[[Heavy Infantry]] Damage
+| +7%
+|-
+|[[Heavy Infantry]] Attack Speed
+| +7%
+|-
+|[[APC]] Hitpoints
+| +6%
+|-
+|[[APC]] Deploy Time
+| -6%
+|-
+|Quick Victory Time
+| +3%
+|}
+{{LegendaryWarArtifactsMenu}}

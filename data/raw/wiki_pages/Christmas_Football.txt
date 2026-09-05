@@ -1,0 +1,36 @@
+[[File:Christmas_Football.png|centre|250px]]
+
+== General Description ==
+
+'''Christmas Football''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]]. It can be obtained from the [[Christmas Truce Event]].
+
+
+== Historical Description ==
+During the first year of World War I, a spectacular event happened on Christmas day. Although the warring countries refused to make an official cease-fire, there are dozens of first-hand reports stating that in many locations soldiers took it upon themselves to reach out and create a temporary truce on Christmas day. There are reports of soldiers trading food, alcohol, candies, and tobacco with one another as well as a few reports of opposing sides playing games of football and singing Christmas carols throughout the day.
+
+As the war raged on and became increasingly bitter, the warring nations stated to give strict orders against any kind of truce, even temporary ones, threatening disciplinary action if these orders were disobeyed. The Christmas truce of 1914 is remembered as on of the final times in modern war the opposing sides showed empathy and civility toward each other, even for a brief moment.
+
+World War I veteran Alfred Anderson recalled about that day:'All I'd heard for two months in the trenches was the hissing, cracking and whining of bullets in flight, machinegun fire and distant German voices. But there was a dead silence that morning, right across the land as far as you could see. We shouted 'Merry Christmas', even though nobody felt merry. The silence ended early in the afternoon and the killing started again. It was a short peace in a terrible war.'
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| [[Supply Vehicles|Supply Vehicle]] Healing || rowspan="2" | +11%
+|-
+| [[Tactical Helicopter]] Healing 
+|-
+| [[Generals|General]]'s Hitpoints || +6%
+|-
+| [[National Trade Good]] Loot Chance || +11%
+|-
+| Enemy [[Missile Silo]] Damage || -6%
+|-
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:Museum]]

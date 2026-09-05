@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Among the less fanciful examples of Wunderwaffen, of 'wonder weapons,' pursued by wartime Nazi scientists was night vision. They achieved it with the ZG 1229, condenamed Vampir, an infrared device intendded for use with the StG-44 assault rifle. The gun attachment consisted of a spotlight with a high-infrared filter mounted atop a sight displaying that part of the light spectrum. The device, which itself added 5 punds to the rifle's weight, was powered by a 30-pound battery pack worn on the back - no small ask for a soldier in the field.
+
+The ZG 1229 entered combat in February 1945 as the war in Europe approached its end. Some rumors suggest that the 'night hunters' who carried them included snipers, but it was more likely used by Panzergrenadier motorized infantry units. Larger versions were also fitted to machine guns on vehicles like half-tracks and Panther tanks. Only 310 Vampir units were delivered, and they made no serious impact on the outcome of the war. Nevertheless, they did represent a significant technical achievement as the first man-portable night vision combat device.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| [[Sniper Tower]] Damage|| +8%
+|-
+| [[Sniper Tower]] Damage|| +8%
+|-
+| Enemy Tower Damage || -7%
+|-
+| [[Mortar (Troop)|Mortar]] Troop Hitpoints|| +8%
+|-
+| [[APC]] Hitpoints || +9%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

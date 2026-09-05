@@ -1,0 +1,36 @@
+
+[[File:{{PAGENAME}}.jpg|centre|250px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Mythical Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The ruyi scepter was a Chinese ceremonial object that served a variety of functions over time. At court, nobles passed them around during conversations to show whose turn it was to speak. Emperors and officials held them as a symbol of legitimacy and power. Partly because of their auspicious name, meaning  'as you wish,' they also came to be seen as good luck charms and marks of holiness.
+
+According to one theory, ruyi may have originated as a backscratcher carried by Buddhist monks. They were popular from the Han Dynasty through the Tang, then went out of style for several centuries before returning under the Ming  and Qing. The scepters were made of many precious materials like jade, gold, ivory, bamboo, and animal horn. What a ruyi was made of may have impacted its purpose; for example, iron ones were carried as protective talismans.
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+|Factory Troop HP
+| +11%
+|-
+| Enemy Defender Spawn Time || +16%
+|-
+| Enemy [[Anti-Tank Gun]] Damage || -16%
+|-
+| Enemy [[Catapult]] Damage || -16%
+|-
+| All Enemy Defensive Towers Hitpoints || -11%
+|-
+| All Enemy Defensive Towers Damage || -11%
+|}
+
+{{MythicalArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Mythical Artifact]]

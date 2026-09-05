@@ -1,0 +1,33 @@
+[[File:Demarcation Stone.png|centre|220px]]
+
+== General Description ==
+'''Demarcation Stone''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]]. It is purchased from sale.
+
+== How To Get ==
+Most commonly available via the War Hall [[Chest]] from [[Marco Polo]]; the chest costs rubies (typically 400) and gives 5% of getting it.
+
+== Historical Description ==
+Demarcation Stones are meter tall monuments commemorating locations along the Western Front where Allies had victorious battles during World War I. There Are Three versions of these monuments: British, Belgian, and French. Each version has a helmet in the style of their appropriate nation, as well as having a few minor equipment changes pictured on the monuments.
+
+Paul Moreau-Vauthier, the artist who created these monuments, was himself a veteran of the Battle of Verdun during World War I. He had originally planned to place 240 Demarcation Stones but was only able to complete half of them. Moreau-Vauthier was passionate about remembering the sacrifices of hose in combat and had created other pieces of art such as the Monument to the Heroes of the Armee Noire and the Victimes des Revolutions.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|[[Heavy Infantry]] Damage|| rowspan="3" | +3%
+|-
+|[[Ranged Infantry]] Damage
+|-
+|[[Supply Vehicles]] Healing
+|-
+|Invading [[Machine Gun Infantry]] Damage|| rowspan="2" | -3%
+|-
+|All Enemy Defensive [[Towers]] Damage
+|}
+Resource used for upgrading this artifact: '''Food''' {{LegendaryWarArtifactsMenu}}
+[[Category:Legendary Artifact]]
+[[Category:Artifact]]
+[[Category:Museum]]

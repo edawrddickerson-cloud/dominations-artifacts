@@ -1,0 +1,33 @@
+
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Submarine warfare began to come into its own at the end of the 19th century. This threat, along with the sinking of the Titanic in 1912, spurred advances in technology for detecting submerged objects. The cutting edge during World War I was a microphone-like device called the hydrophone which picked up underwater sound waves. In the years that followed, the British and French navies developed a system called ASDIC, later known in America as sonar. It was brought from surface vessels to submarines in 1923 with the Type 113X.
+
+ASDIC worked like the echolocation function of bats of dolphins. A hull-mounted device sent out a sound pulse and "listened" for reflections of that pulse bouncing off underwater objects. If so, further signals attempted to discern the size, distance, and even movement pattern of the located object. This information could then be used to aim depth charges of other underwater munitions. Though effective, ASDIC did not render submarines obsolete like the British had hoped. Their overconfidence left them susceptible to German U-boat wolfpacks when war broke out again.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| Invading [[Troops#Barracks_Units| Barracks Troop]] Damage|| -10% 
+|-
+| Invading [[Troops#Factory_Units| Factory Troop]] Damage|| -10% 
+|-
+| Invading [[Troops#Airstrip_Units| Airstrip Troop]] Damage|| -10% 
+|-
+| Defender Spawn Time|| -10% 
+|-
+| [[Missile Silo]] Damage|| +10% 
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Legendary Artifact]]
+[[Category:Artifact]]
+[[Category:Museum]]
+[[Category:World War]]

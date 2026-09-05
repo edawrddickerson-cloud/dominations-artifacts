@@ -1,0 +1,26 @@
+[[File:{{PAGENAME}}.jpg|center|250x250px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Mythical Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The kingdom of Silla dominated the southern Korean peninsula from 668-935 CE. Excavation at the Silla capital in the modern city of Gyeongju have revealed several magnificent royal crowns. Their base material is thinly hammered golden sheets, and all but one are decorated with jade. The symbolic design suggests a connection between the Silla kings and the shamanistic beliefs of Eurasian steppe nomads. all of these crowns are listed among the National Treasures of South Korea.
+
+== Statistic == 
+{| class="article-table"
+! scope="col" |Benefit Name
+! scope="col" |Base Stat
+|-
+|[[Library]] Tech Resource Cost|| -15%
+|-
+| [[Gold]] Looted || +15%
+|-
+| [[Gold]] from [[Gold Mine]]s || +15%
+|-
+| [[Gold]] from [[Caravan]]s || +15%
+|-
+| [[Library]] [[Technology|Tech]] Resource Cost || +15%
+|-
+| [[Ranged Infantry]] Damage|| -15%
+|}
+{{MythicalArtifactsMenu}}

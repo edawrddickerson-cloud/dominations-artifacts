@@ -1,0 +1,115 @@
+==General Information==
+Legendary Artifacts can only be purchased or obtained from special events and are used to boost a variety of special things.
+
+== Visuals ==
+<gallery>
+File:Admiral Yi Helmet.png|Admiral Yi’s Helmet
+File:Antikythera Mechanism.png|Antikythera Mechanism
+File:Ashanti Kuduo.png|Ashanti Kuduo
+File:Augustus Statue Muscle Cuirass-0.png|Augustus Statue Muscle Cuirass
+File:Aztec Calendar.png|Aztec Calendar
+File:Captain's Croix de Guerre.png|Captain's Croix de Guerre
+File:Christmas Football.png|Christmas Football
+File:Clem Sohn's Wingsuit.jpg|Clem Sohn's Wingsuit
+File:Code of Hammurabi.jpg|Code of Hammurabi
+File:Dilophosaurus Skull.png|Dilophosaurus Skull
+File:Double-Headed Serpent.jpg|Double-Headed Serpent
+File:Edison's Electric Lamp.jpg|Edison's Electric Lamp
+File:Enigma Machine.jpg|Enigma Machine
+File:Fengguan Phoenix Crown.jpg|Fengguan Phoenix Crown
+File:Fire Breathing Bunny Fossil.jpg|Fire Breathing Bunny Fossil
+File:First Strike Star.png|First Strike Star
+File:Heads of Hevajra.png
+File:Helgö Buddha.png|Helgö Buddha
+File:Jade Olmec Mask.jpg|Jade Olmec Mask
+File:Keyed English Guitar.jpg|Keyed English Guitar
+File:Leoni Parade Shield.jpg|Leoni Parade Shield
+File:Lewis Chessmen.jpg|Lewis Chessmen
+File:Li Vessel.png|Li Vessel
+File:Lycurgus Cup.png|Lycurgus Cup
+File:Mask of Agamemnon.png|Mask of Agamemnon
+File:Minoan Bull-Leaper.jpg|Minoan Bull-Leaper
+File:Morse Telegraph.jpg|Morse Telegraph
+File:Napoleon's Bicorne Hat.png|Napoleon's Bicorne Hat
+File:Nefertiti Bust.png|Nefertiti Bust
+File:Personal Computer.png|Personal Computer
+File:Pompus' Comb.jpg|Pompus' Comb
+File:Quimbaya Treasure 0.jpg|Quimbaya Treasure
+File:Rosetta Stone.png|Rosetta Stone
+File:Ruyi Scepter.png|Ruyi Scepter
+File:Silla Gold Crown.png|Silla Gold Crown
+File:Sojourner Mars Rover.jpg|Sojourner Mars Rover
+File:Soul Catcher.png|Soul Catcher
+File:Sphinx of Taharqo.jpg|Sphinx of Taharqo
+File:Stopler Revolver.png|Stopler Revolver
+File:Sutton Hoo Helmet.png|Sutton Hoo Helmet
+File:Swimming Reindeer.png|Swimming Reindeer
+File:Sword of Goujian.png|Sword of Goujian
+File:The Book of Five Rings.png|The Book of Five Rings
+File:The Book of Kells.jpg|The Book of Kells
+File:Thinker of Cernavoda.jpg|Thinker of Cernavoda
+File:Tokugawa Ieyasu's Helmet.png|Tokugawa Ieyasu's Helmet
+File:Video Game Console.jpg|Video Game Console
+File:Warka Vase.jpg|Warka Vase
+</gallery>
+
+== List of Legendary Artifacts ==
+* '''[[Admiral Yi’s Helmet]]'''
+* '''[[Antikythera Mechanism]]'''
+* '''[[Ashanti Kuduo]]'''
+* '''[[Augustus Statue Muscle Cuirass]]'''
+* '''[[Aztec Calendar]]'''
+* '''[[Captain's Croix de Guerre]]'''
+* '''[[Christmas Football]]'''
+* '''[[Clem Sohn's Wingsuit]]'''
+* '''[[Code of Hammurabi]]'''
+* '''[[Dilophosaurus Skull]]'''
+* '''[[Double-Headed Serpent]]'''
+* '''[[Edison's Electric Lamp]]'''
+* '''[[Enigma Machine]]'''
+* '''[[Fengguan Phoenix Crown]]'''
+* '''[[Fire Breathing Bunny Fossil]]'''
+* '''[[First Strike Star]]'''
+* '''[[Heads of Hevajra]]'''
+* '''[[Helgö Buddha]]'''
+* '''[[Jade Olmec Mask]]'''
+* '''[[Keyed English Guitar]]'''
+* '''[[Leoni Parade Shield]]'''
+* '''[[Lewis Chessmen]]'''
+* '''[[Li Vessel]]'''
+* '''[[Lycurgus Cup]]'''
+* '''[[Mask of Agamemnon]]'''
+* '''[[Mask of Tutankhamun]]'''
+* '''[[Minoan Bull-Leaper]]'''
+* '''[[Morse Telegraph]]'''
+* '''[[Napoleon's Bicorne Hat]]'''
+* '''[[Nefertiti Bust]]'''
+* '''[[Personal Computer]]'''
+* '''[[Pompus' Comb]]'''
+* '''[[Quimbaya Treasure]]'''
+* '''[[Rosetta Stone]]'''
+* '''[[Ruyi Scepter]]'''
+* '''[[Silla Gold Crown]]'''
+* '''[[Sojourner Mars Rover]]'''
+* '''[[Soul Catcher]]'''
+* '''[[Sphinx of Taharqo]]'''
+* '''[[Stopler Revolver]]'''
+* '''[[Sutton Hoo Helmet]]'''
+* '''[[Swimming Reindeer]]'''
+* '''[[Sword of Goujian]]'''
+* '''[[The Book of Five Rings]]'''
+* '''[[The Book of Kells]]'''
+* '''[[Thinker of Cernavoda]]'''
+* '''[[Tokugawa Ieyasu's Helmet]]'''
+* '''[[Video Game Console]]'''
+* '''[[Warka Vase]]'''
+
+
+==Boosts==
+
+==Quick View==
+
+{{Template:LegendaryArtifactsMenu}}
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:Museum]]

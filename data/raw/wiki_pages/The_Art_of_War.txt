@@ -1,0 +1,33 @@
+
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Attributed to the Chinese strategist Sun Tzu and dated circa 500 BCE, The Art of War is likely the foremost military text of all time. The warlord Cao Cao, a central figure during China's Three Kingdoms period, edited the work and wrote its first commentary. Napoleon may have read its earliest translation into a Western language, a French version from 1772. Its fiercest recent devotees have included Mao Zedong and Ho Chi Minh. Modern interpreters apply its teachings to law, business, politics, and other arenas outside of warfare.
+
+This is possible because the text is a broad treatise on leadership and how to gain a competitive advantage. Naturally, it discusses topics like tactical deployment and handling different types of terrain. But it also emphasizes the importance of planning, logistics, morale, and above all deception. Control over information, including through the use of spies, is key to success. Despite its subject, The Art of War follows other Chinese political philosophy in prioritizing the well-being of the people. The greatest victory, it says, is that which is won with no fighting at all.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| [[Heavy Tank]] Hitpoints|| +9%
+|-
+| [[Heavy Tank]] Damage|| +9%
+|-
+| Invading [[Generals]]' Hitpoints|| -9%
+|-
+| Invading [[Generals]]' Damage|| -9%
+|-
+| [[Generals]]' Hitpoints and Damage|| +9%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Legendary Artifact]]
+[[Category:Artifact]]
+[[Category:Museum]]
+[[Category:World War]]

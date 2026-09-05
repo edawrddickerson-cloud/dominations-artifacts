@@ -1,0 +1,33 @@
+[[File:{{PAGENAME}}.jpg|centre|250px]]
+
+==General Information==
+
+'''{{PAGENAME}}''' is one of the main hall [[Legendary Artifacts]] that can be stored and displayed at [[Museum]].
+
+==Historical Description==
+Leone Leoni was a fourteenth century sculptor, hailing from Arezzo, Italy, and was well known for his metalwork. He became internationally renowned as one of the best Metalists of his time. He was commissioned by the likes of Charles V, the Habsburgs, Philip II of Spain, and the Holy Roman Emperor. One piece he created was a Parade Shield to be exclusively worn in military and religious parades. Shields of this type were bestowed upon the men who served under princes and nobles, or sometimes served as the prize of a knightly tournament. These beautiful shields were a worthy prize, as they were a stunning piece of artwork and also a monument of honor to the champion’s victory.
+
+==Statistic==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|[[Heavy Tank]] Hitpoints||6%
+|-
+|[[Missile Silo]] Damage||6%
+|-
+|[[Bombers|Bomber]] Damage||6%
+|-
+|[[Generals|General]] Attack Speed||5%
+|-
+|[[Generals]]' Damage||6%
+|}
+
+{{LegendaryArtifactsMenu}}
+
+[[Category:Museum]]
+
+[[Category:Artifact]]
+
+[[Category:Legendary Artifact]]

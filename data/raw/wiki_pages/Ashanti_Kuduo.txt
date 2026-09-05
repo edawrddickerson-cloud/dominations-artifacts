@@ -1,0 +1,38 @@
+[[File:Ashanti Kuduo.png|centre|220px]]
+
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+
+The Ashanti Empire was located along Lake Volta and the Gulf of Guinea. The region this Empire resided in has variable terrain that includes mountains, coasts, lush agricultural lands and savannas where vast deposits of Gold occurred naturally. It was because of this large amount of easily accessible Gold that the Ashanti Empire quickly became influential.
+
+While Gold was a cornerstone of the Ashanti Empire, this container, known as a Kuduo, is made entirely of brass. The imagery is likely inspired by the North African culture which the Ashanti people bartered with in the trans-Saharan gold trade. The Kuduo shows a scene of a leopard preparing to eat a small animal, which commonly signifies the owner’s high position in the Ashanti society. While also functioning as a method to close the Kuduo, the latch on the side represents how these containers retained and protected the soul of their owner.
+
+Kudos such as this were created to store valuable possessions including Gold, which was regarded as the physical manifestation of their owner’s life force. Along with other significant possessions, these containers were brought to the site of burial for their owners.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base
+Stat
+|-
+|All Resources Looted || +6%
+|-
+|University Research Time || -6%
+|-
+|All Defensive Towers Hitpoints || +6%
+|-
+|Invading [[Generals|General's]] Damage || -11%
+|-
+|[[Generals|General's]] Damage || +11%
+|}
+
+*Uses ?
+
+{{LegendaryArtifactsMenu}}
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:Museum]]

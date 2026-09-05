@@ -1,0 +1,34 @@
+[[File:{{PAGENAME}}.jpg|centre|220px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Mythical War Artifacts]], that can be stored and displayed at [[Museum]]. It is purchased from sale.
+
+== Historical Description ==
+When the Gemini-Agena docked spacecraft began to spin out of control, commander Neil Armstrong and pilot Dave Scott did not have much time to find a solution. Both assumed that the problem lay with the Agena's flight system, so they returned control to the Gemini. This worked for a minute, but then the spin gegan to accelerate. Undocking from the Agena only decreased the mass of their craft, making things even worse.
+
+At this point, centripetal forces were pinning the astronauts to their seats. Their vision began to blur, and they had to struggle to reach their flight controls. Armstrong just barely managed to trigger the re-entry control system in time and get the spin under control. Later it was discovered that on of the thrusters on Gemini had short-circuited and kept firing when it wasn't supposed to. The mission had to end prematurely due to safety regulations, but the astronauts had saved both themselves and the American space program.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Defenders Movement Speed
+| +9%
+|-
+|Defender Hitpoints|| +12%
+|-
+|Enemy Defender Spawn Time|| +12%
+|-
+|All Defensive Towers Hitpoints|| +12%
+|-
+|All Defensive Towers Damage|| +12%
+|-
+|Enemy [[Missile Silo]] Damage|| -12%
+|}
+Resource used for upgrading: '''Oil'''{{MythicalWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Mythical Artifact]]
+[[Category:World War]]

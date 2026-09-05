@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.jpg|centre|220px]]
+
+==General Information==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]]. Special limited time edition Legendary Artifact, "'''Siphilos' Dinos'''", increases hit points and damage. 
+
+==Historical Description==
+In Ancient Greece, Dinos were used as drinking vessels and were often decorated with paint depicting beautiful scenes. At the height of their popularity, it was considered rude to drink directly out of a wine goblet, so to remain formal, drinkers would mix water and wine in Dinos, which were, in turn, more socially acceptable to drink from. This particular dinos depicts the marriage of the mythical characters Thetis, a sea nymph, and Peleus, the king of Phthia. Later, the pair would become the parents of another Greek hero, Achilles. Groups of animals, both mythological and real, are featured prominently in the art below the newlyweds.
+
+It was common for artisans to sign their names on work they were most proud of in Ancient Greek culture. Sophilos was no different in that regard, as the text painted next to one of the pillars on dinos translates to “Sophilos painted me”.
+
+==Statistic==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|[[Wall Breachers|Wall Miner]] Damage||+9%
+|-
+|[[Commandos|Commando]] Damage||+6%
+|-
+|[[Commandos|Commando]] Hitpoints||+8%
+|-
+|[[Decoy]] Tactic Hitpoints||+6%
+|-
+|Enemy Defender Spawn Time||+6%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

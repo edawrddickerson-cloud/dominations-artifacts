@@ -1,0 +1,34 @@
+[[File:Soul Catcher.png|centre|220px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]]. 
+== Historical Description ==
+Soul Catchers were amulets used by Shamans in the Pacific Northwest of Alaska and British Columbia. Shamans would only resort to the use of a Soul Cather if no other means of care were successful, as it was believed that incurable problems were caused by "Soul Loss". The use of the Soul Catcher was a ritualistic, requiring trance music and an array of other religious tools in order to travel to the Spirit World. Once the Shaman had successfully traveled to the Spirit World, they would locate the patient's missing spirit and suck it into the Soul Catcher and return it to the patient.
+
+These trinkets were carved from wood and worn around the neck of Shamans, who were an integral part of their respective cultures at the time. It is said that all soul Catchers were created by the Native American Tsimshian tribe who then traded them to nearby tribes.
+
+== Statistics ==
+
+{| class="article-table"
+!Benefit Name
+!Base
+Stat
+|-
+|[[Supply Vehicles|Supply Vechicle]] Healing || rowspan="3" | +11%
+|-
+|[[Tactical Helicopter]] Healing
+|-
+|[[Heavy Cavalry]] Hitpoints
+|-
+|[[APC]] Hitpoints || +6%
+|-
+|[[University]] Research Time || -6%
+|}
+
+*Uses ?
+
+{{LegendaryArtifactsMenu}}
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:Museum]]

@@ -1,0 +1,36 @@
+[[File:{{PAGENAME}}.jpg|centre|220px]]
+
+== General Information ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]] that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+
+Developed by scientist Leslie Bennet Craigie Cunningham in 1936, the Gyro Gunsight was a mounted sight attached to planes starting in the second world war, dramatically changing aerial combat. Prior to this innovation, planes used a reflector sight (also called a reflex sight) which led to inaccurate lead and bullet drop-off due to human calculations. This new discovery used the plane's rotation as a factor to automatically calculate those factors and grant lethal accuracy to the pilot when targeting the enemy. A gyro gunsight was incredibly useful in dogfights, where the calculations needed to be incredibly quick to keep up with other planes weaving in and out of scope. This sight in its genesis was used primarily in World War II before getting upgrades by both the British and Germans.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| [[Bombers|Bomber]] Hitpoints || +6%
+|-
+| [[Bombers|Bomber]] Hitpoints || +6%
+|-
+| [[Recons|Recon]] Bonus Duration || +3%
+|-
+| [[Bazooka]] Attack Speed || +3%
+|-
+| Quick Victory Time || +6%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+
+[[Category:Museum]]
+
+[[Category:Artifact]]
+
+[[Category:Legendary Artifact]]
+
+[[Category:World War]]

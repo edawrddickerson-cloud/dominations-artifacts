@@ -1,0 +1,31 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Despite its fanciful appeareance, the Avro VZ-9 Avrocar was designed for a practical purpose. The U.S. Air Force of the early Cold War was seeking a fighter craft capable of VTOL (vertical takeoff and landing) similar to a helicopter. The idea was to guarantee a means of air  support that could function event if airfields were destroyed in a Soviet nuclear strike.
+
+To meet this need, Avro Canada build a prototype resembling a flying saucer.The craft directed its initial jet thrust straight downward to create a cushion of air and lift itself off the ground. Once aloft, the engines would transition to a more conventional forward acceleration, theoretically at supersonic speeds. Test flights demonstrated an ability to float, but the craft generated excessive heat and was far too unstable to fly at any speed. The project was deemed a failure and scrapped in December 1961.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| Invading [[Fighters|Fighter]] Damage|| -6%
+|-
+| [[Air Defense]] Damage|| +6%
+|-
+| Invading [[Bombers|Bomber]] Damage|| -6%
+|-
+| Invading [[Fighters|Fighter]] Hitpoints|| -6%
+|-
+| Invading [[Bombers|Bomber]] Hitpoints|| -6%
+|}
+Lines are upgraded using Oil.{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

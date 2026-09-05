@@ -1,0 +1,35 @@
+[[File:{{PAGENAME}}.jpg|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Mythical War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The Huey Armament System was commonly equipped on the United States Military UH-1 Huey, a widely used helicopter during the Vietnam War. Consisting of two M134 miniguns and two 7-tube or 19 tube rocket pods, the Huey Armament System provided helicopters with a staggering amount of firepower to assist ground troops and maintain air superiority. The 6-barrel M134 minigun was capable of firing over 6,000 7.62x51mm NATO rounds per minute, producing an overwhelming wall of fire to suppress enemy infantry and penetrate armored defenses. The M134 miniguns were accompanied by a pair of M158 7-tube rocket pods or M200 19-tube rocket pods, both capable of rapidly firing powerful unguided missiles to barrage hostile forces.
+
+Helicopters were initially armed as a defensive measure to assist in extracting and deploying troops in hostile areas. As military strategies evolved, helicopters began to be used as gunship platforms to assist infantry with focused barrages against enemy troops and fortifications with machine guns, cannons or missiles. The use of the Huey Armament System and other similar systems via helicopters to provide Close Air Support was popularized by the United States Army during the Vietnam War, a strategy that remains relevant among militaries around the world in the modern era of combat.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Barracks Troop Damage
+| +9%
+|-
+| [[Attack Helicopter]] Damage|| +12%
+|-
+| [[Attack Helicopter]] Damage|| +12%
+|-
+| [[Attack Helicopter]] Hitpoints|| +12%
+|-
+| [[Bazooka]] Damage|| +12%
+|-
+| All Enemy Defensive Towers Damage || -11%
+|}
+
+{{MythicalWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Mythical Artifact]]
+[[Category:World War]]

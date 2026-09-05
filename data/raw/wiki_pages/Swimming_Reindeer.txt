@@ -1,0 +1,30 @@
+[[File:Swimming_Reindeer.png|File:{{PAGENAME}}.png|center|200x200px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Crafted from mammoth tusk near the end of the last Ice Age, the Swimming Reindeer is one of the most impressive displays of art found at the Montastruc digsite in France. While originally discovered as two separate pieces in 1866, the duo were rejoined in 1905 after the discovery of matching break lines connecting the pieces in the center. Archeologists were originally confused by the pair's size difference, assuming them both to be male due to their antlers. After more investigation, however, they realized that female reindeer also have antlers, and classified the statue as a depiction of mates. Their long, upturned chins, tucked ears, and outstretched limbs give the impression that they are underwater, earning the piece the title of Swimming Reindeer.
+
+== Statistic ==
+{| class="article-table"
+! scope="col" |Benefit Name
+! scope="col" |Base Stat
+|-
+|Defender Hitpoints
+| +11%
+|-
+|Defender Damage
+| +11%
+|-
+|Invading [[Mortar (Troop)|Mortar Troop]] Damage
+| -14%
+|-
+|Invading [[Fighters|Fighter]] Damage
+| -14%
+|-
+|Defender Spawn Time
+| -11%
+|-
+|}
+{{LegendaryArtifactsMenu}}

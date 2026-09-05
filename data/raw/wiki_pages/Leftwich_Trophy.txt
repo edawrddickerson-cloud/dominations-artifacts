@@ -1,0 +1,31 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The Leftwich Trophy is a U.S. Marine Corps award given annually since 1979 for outstanding leadership. The recipient must be a marine captain serving with the ground forces of the Fleet Marine Force. The commanding generals of the Marine Corps of the Atlantic and the Pacific each put forth three candidates, from which one recipient is chosen.
+
+The award is named after Lt. Col. William G. Leftwich Jr. who served as an officer during the Vietnam War. In 1965, he was awarded a Navy Cross and Purple Heart for his heroism during the Battle of Hoai An. He began his second tour of duty in April 1970, making a point to personally accompany every emergency extraction mission. It was during one of these missions that he was killed in a helicopter crash on November 18th that same year.
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| ||
+|-
+| ||
+|-
+| ||
+|-
+| ||
+|-
+| ||
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

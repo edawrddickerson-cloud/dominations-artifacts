@@ -1,0 +1,30 @@
+[[File:Admiral_Yi’s_Helmet(Mythical_Artifacts).jpg|center|250x250px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Mythical Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Admiral Yi Soon Shin is a Korean national hero who was undefeated at sea and was essential to repelling Japanese invaders during the Imjin War(1592 - 1598). He is most famous for defeating Toyotomi Hideyoshi at the Battle of Myeongnyang where he defeated 133 Japanese warships with only 13 Korean turtle ships.
+
+Yi served at a multitude of army and navy posts. He was frequently shuffled between post and even discharged from the military twice due to being falsely charged by jealous government officials. Despite their jealousy he remained in the king's favor and was appointed the commander of the entire navy. As commander he designed the iconic turtle battleships, thought to be the first ironclad battleship in history.
+
+Admiral Yi adorned the traditional commander's helmet of the the Joseon dynasty. His elaborate helmet included a trident that protruded from the top and an extended headdress covering his ears and neck. Yi was killed by a stray bullet, but with his last breaths he commanded his son to masquerade him by wearing his helmet and armor until the battle was won, saying 'Beat my war drums and do not let my death be known'.
+
+== Statistic ==
+{| class="article-table"
+! scope="col" |Benefit Name
+! scope="col" |Base Stat
+|-
+|Enemy [[Sabotage]] Duration|| -12%
+|-
+||Invading [[Generals|General's]] Damage|| -11%
+|-
+|Enemy Defender Spawn Time|| +11%
+|-
+|Defender Damage|| +11%
+|-
+|Defender Hitpoints|| +16%
+|-
+|Invading [[Generals|General's]] Hitpoints|| -16%
+|}
+{{MythicalArtifactsMenu}}

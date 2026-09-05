@@ -1,0 +1,89 @@
+{| style="width:100%; margin-top:1em; border:1px solid #999; font-size:90%;" class="navbox"
+|-
+! colspan="27" style="background-color:#337800;color: #fff;" | <span style="color: #fff;">[[Mythical Artifacts|<span style="color:#fff;">Mythical Artifacts Navigation]]</span>
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">Num
+|
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">A
+| [[Admiral Yi’s Helmet(Mythical Artifacts)]] • [[Antikythera Mechanism(Mythical Artifacts)]] • [[Ashanti Kuduo(Mythical Artifacts)]] • [[Augustus Statue Muscle Cuirass(Mythical Artifacts)]] • [[Aztec Calendar(Mythical Artifacts)]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">B
+|
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">C
+| [[Captain's Croix de Guerre(Mythical Artifacts)]] • [[Christmas Football(Mythical Artifacts)]] • [[Clem Sohn's Wingsuit(Mythical Artifacts)]] • [[Code of Hammurabi(Mythical Artifacts)]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">D
+|[[Double-Headed Serpent(Mythical Artifacts)]] 
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">E
+|[[Edison's Electric Lamp(Mythical Artifacts)]] • [[Enigma Machine(Mythical Artifacts)]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">F
+|[[Fengguan Phoenix Crown(Mythical Artifacts)]] • [[Fire Breathing Bunny Fossil(Mythical Artifacts)]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">G
+|
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">H
+|[[Heads of Hevajra(Mythical Artifacts)]] • [[Helgö Buddha(Mythical Artifacts)]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">I
+|
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">J
+|[[Jade Olmec Mask(Mythical Artifacts)]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">K
+|[[Keyed English Guitar(Mythical Artifacts)]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">L
+|[[Leoni Parade Shield(Mythical Artifacts)]] • [[Lewis Chessmen(Mythical Artifacts)]] • [[Li Vessel(Mythical Artifacts)]] • [[Lycurgus Cup(Mythical Artifacts)]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">M
+|[[Mask of Agamemnon(Mythical Artifacts)]] • [[Minoan Bull-Leaper(Mythical Artifacts)]] • [[Morse Telegraph(Mythical Artifacts)]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">N
+|[[Napoleon's Bicorne Hat(Mythical Artifacts)]] • [[Nefertiti Bust(Mythical Artifacts)]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">O
+|
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">P
+|[[Personal Computer(Mythical Artifacts)]] • [[Pompus' Comb(Mythical Artifacts)]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">Q
+|[[Quimbaya Treasure(Mythical Artifacts)]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">R
+|[[Rosetta Stone(Mythical Artifacts)]] • [[Ruyi Scepter(Mythical Artifacts)]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">S
+|[[Silla Gold Crown(Mythical Artifacts)]] • [[Sojourner Mars Rover(Mythical Artifacts)]] • [[Soul Catcher(Mythical Artifacts)]] • [[Sphinx of Taharqo(Mythical Artifacts)]] • [[Stopler Revolver(Mythical Artifacts)]] • [[Sutton Hoo Helmet(Mythical Artifacts)]] • [[Swimming Reindeer(Mythical Artifacts)]] • [[Sword of Goujian(Mythical Artifacts)]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">T
+|[[The Book of Five Rings(Mythical Artifacts)]] • [[The Book of Kells(Mythical Artifacts)]] • [[Thinker of Cernavoda(Mythical Artifacts)]] • [[Tokugawa Ieyasu's Helmet(Mythical Artifacts)]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">U
+|
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">V
+|[[Video Game Console(Mythical Artifacts)]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">W
+|[[Warka Vase(Mythical Artifacts)]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">X
+|
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">Y
+|
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">Z
+|
+|}
+
+{{Master Navigation}}
+
+<includeonly>[[Category:Artifact]][[Category:Mythical Artifact]][[Category:Museum]]</includeonly>

@@ -1,0 +1,26 @@
+[[File:{{PAGENAME}}.jpg|center|250x250px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Mythical Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The world's oldest known existing revolver was made in 1597 by Hans Stopler, a gunsmith working in the prosperous manufacturing hub of Nuremberg. It was acquired by a Norwegian officer named Georg von Reichwein during the brutal Thirty Years War. The magnificently decorated flintlock's history can be traced through two engravings: a horse spur that was Stopler's unique mark, and the words 'Georg Reichwein 1636'. Its eight-chambered cylinder had to be rotated manually, unlike a modern revolver.
+
+== Statistic ==
+{| class="article-table"
+! scope="col" |Benefit Name
+! scope="col" |Base Stat
+|-
+|[[Mortar (Troop)|Mortar Troop]] Damage|| +15%
+|-
+|Defender Damage|| +15%
+|-
+|[[Fighters]] Damage|| +15%
+|-
+|[[Generals]] Damage|| +15%
+|-
+|[[Oil]] Looted|| +15%
+|-
+|[[Ranged Infantry]] Damage|| +15%
+|}
+{{MythicalArtifactsMenu}}

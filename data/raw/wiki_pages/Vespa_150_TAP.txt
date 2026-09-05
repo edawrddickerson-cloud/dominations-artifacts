@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Motor scooters may not ordinarily be associated with warfare, but the Vespa 150 TAP is an exception. The French military needed some form of mobile light artillery to help quell colonial uprisings in the 1950s. This led ACMA, the licensed manufacturer of Vespas in France, to develop a new model which was little different fro an ordinary Vespa except for the strengthened frame - and of course the M20 recoilless rifle mounted on top. Encouraged by its low price tag, the French soon adopted this 'anti-tank scooter' and deployed it overseas.
+
+The TAP was intended to be airdropped in pairs, fully assembled, alongside two paratroopers. Upon landing, they would zip off to the action, mount the gun on a tripod, and blast away. This tactic allowed the explosive power of the M20 to be felt anywhere at a moments' notice. Though the HEAT warheads were supposed to be able to penetrate tank armor, in practice they turned out to be better at destroying makeshift fortifications. Bizarre as it may seem, the TAP turned out to be an effective anti-guerrilla weapon for French troops fighting in Algeria and Indochina.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| [[Machine Gun Infantry]] Damage|| +7%
+|-
+| [[Machine Gun Infantry]] Hitpoints || +7%
+|-
+| [[Ranged Siege]] Damage || +7%
+|-
+| [[Ranged Siege]] Hitpoints || +7%
+|-
+| [[Factory]] Troop Damage || +1%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

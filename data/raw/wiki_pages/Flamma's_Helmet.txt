@@ -1,0 +1,37 @@
+
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Beyond what is written on his gravestone, little is known about the gladiator Flamma. In the arena, this Syrian man fought 34 battles, won 21 of them and drew 9 times. He was granted reprieve 4 separate times, which was the highest honor a gladiator could earn and would free them from captivity. Flamma refused all 4 opportunities of freedom, and each time declared he would continue life as a gladiator. Some believe he died in the arena, while others think we don’t have enough information to accurately guess where or what caused his death at 30 years old.
+
+He fought as a Secutor, which means he was equipped with a small, rectangular shield and dagger or sword. They were uniquely armed and trained to fight Retiarius gladiators, which fought with a trident and net. Secutors had particularly smooth helmets so the Retiarius' net would not easily become ensnared, and the face shield of the helmet made it nearly impossible for a trident to go through the tiny holes.
+
+His gravestone, made by a fellow gladiator named Delicatus, can be found in Sicily today. It reads:
+
+Flamma secutor vixit annos XXX / pugnavit XXXIIII vicit XXI / stans VIIII missus IIII natione Syrus / huic Delicatus coarmio merenti fecit.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| Guerrilla Damage|| +6%
+|-
+| Guerrilla Hitpoints|| +6%
+|-
+| Enemy Defender Spawn Time|| +3%
+|-
+| Increase Rally Duration|| +6%
+|-
+| Missile Silo and Big Red Button Damage|| +7%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Legendary Artifact]]
+[[Category:Artifact]]
+[[Category:Museum]]
+[[Category:World War]]

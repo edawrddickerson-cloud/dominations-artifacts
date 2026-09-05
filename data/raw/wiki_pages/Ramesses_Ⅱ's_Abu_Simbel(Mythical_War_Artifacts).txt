@@ -1,0 +1,35 @@
+[[File:Ramesses_Ⅱ's_Abu_Simbel(Mythical_War_Artifacts).jpg|center|220x220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Mythical War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The temple complex at Abu Simbel is the grandest monument of Egypt's mightiest pharaoh, Ramesses II. It took twenty years to construct starting in either 1264 or 1244 BCE.
+
+The complex was carved into a sandstone cliffside near the southern border with Nubia, in part to project Egyptian power over the colonized region. Sand eventually buried the site until a Swiss explorer rediscovered it in 1813. In the 1960s, a UNESCO team disassembled the temples and relocated them piece by piece onto an artificial mountain to save them from flooding caused by the new Aswan High Dam. The complex consists of a Great Temple dedicated to Ramesses and a Small Temple honoring his favorite wife Nefertari. Four seated colossi of the pharaoh flank the entrance of the Great Temple. Inside are reliefs depicting the Battle of Kadesh (falsely) as a great victory. Sunlight illuminates statues of the gods along the back wall twice per year, except for that of Ptah, a funerary deity who remains ever in darkness. The Small Temple is notable for its equal-sized statues of the royal couple, breaking the artistic convention of pharaohs always being larger than ordinary mortals.
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Defender DMG
+| +11%
+|-
+|All Defensive Towers Hitpoints
+| +11%
+|-
+|Defender Spawn Time
+| -11%
+|-
+|Invading [[Bazooka]] Damage
+| -12%
+|-
+|Invading [[Guerrilla]] Damage
+| -11%
+|-
+|All Defensive Towers Damage
+| +11%
+|}
+'''Resource used to upgrade this artifact''': Food.
+{{MythicalWarArtifactsMenu}}

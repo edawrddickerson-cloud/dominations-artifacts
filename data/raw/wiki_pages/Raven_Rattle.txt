@@ -1,0 +1,22 @@
+[[File:{{PAGENAME}}.jpg|centre|220px]]
+==General Information==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+==Historical Description==
+Dancing and rituals are an important part of many spiritual cultures, such as the Niska Tribe. During these rituals, shamans used Raven Rattles to try to channel their personal spirit guide or to perform a healing ceremony. This symbolized transmitting power from one being to the next. Rattles themselves were regarded as extremely personal objects, with specific symbols and powers that could only be interpreted and understood by a select few. These rattles were sculpted from wood and then filled with seeds and small rocks. They were then closed up and secured with pins or dowels also made of wood, after which the crafter would adorn the rattle with beautiful beads and feathers along the seams and base.
+==Statistic==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|[[Fighters|Fighter]] Hitpoints||+7%
+|-
+|[[Fighters|Fighter]] Damage||+7%
+|-
+|Enemy [[Machine Gun|Redoubt]] Damage||-6%
+|-
+|Enemy [[Tower]] Damage||-6%
+|-
+|All Enemy Defensive Tower Damage||-11%
+|}'''Resource used to upgrade this artifact''': Food
+
+{{LegendaryWarArtifactsMenu}}

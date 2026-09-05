@@ -1,0 +1,89 @@
+{| style="width:100%; margin-top:1em; border:1px solid #999; font-size:90%;" class="navbox"
+|-
+! colspan="27" style="background-color:#337800;color: #fff;" | <span style="color: #fff;">[[Legendary Artifacts|<span style="color:#fff;">Legendary Artifacts Navigation]]</span>
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">#
+|
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">A
+| [[Admiral Yi’s Helmet]] • [[Antikythera Mechanism]] • [[Ashanti Kuduo]] • [[Augustus Statue Muscle Cuirass]] • [[Aztec Calendar]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">B
+| [[Benin Royal Ivory Mask]] 
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">C
+| [[Captain's Croix de Guerre]] • [[Christmas Football]] • [[Clem Sohn's Wingsuit]] • [[Code of Hammurabi]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">D
+|[[Dilophosaurus Skull]] • [[Double-Headed Serpent]] 
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">E
+|[[Edison's Electric Lamp]] • [[Enigma Machine]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">F
+|[[Fengguan Phoenix Crown]] • [[Fire Breathing Bunny Fossil]] • [[First Strike Star]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">G
+| [[Golden Lyre of Ur]] 
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">H
+|[[Heads of Hevajra]] • [[Helgö Buddha]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">I
+|
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">J
+|[[Jade Olmec Mask]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">K
+|[[Keyed English Guitar]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">L
+|[[Leoni Parade Shield]] • [[Lewis Chessmen]] • [[Li Vessel]] • [[Lycurgus Cup]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">M
+|[[Mask of Agamemnon]] • [[Mask of Tutankhamun]] • [[Minoan Bull-Leaper]] •  [[Mona Lisa]] • [[Morse Telegraph]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">N
+|[[Napoleon's Bicorne Hat]] • [[Nefertiti Bust]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">O
+|
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">P
+|[[Personal Computer]] • [[Pompus' Comb]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">Q
+|[[Quimbaya Treasure]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">R
+|[[Roman Dodechedron]] • [[Rosetta Stone]] • [[Ruyi Scepter]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">S
+|[[Silla Gold Crown]] • [[Sojourner Mars Rover]] • [[Soul Catcher]] • [[Sphinx of Taharqo]] • [[Stopler Revolver]] • [[Sutton Hoo Helmet]] • [[Swimming Reindeer]] • [[Sword of Goujian]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">T
+|[[The Book of Five Rings]] • [[The Book of Kells]] • [[Thinker of Cernavoda]] • [[Tibetan Dung-Dkar]] • [[Tokugawa Ieyasu's Helmet]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">U
+|
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">V
+|[[Video Game Console]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">W
+|[[Warka Vase]]
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">X
+|
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">Y
+|
+|-
+| style="background-color:#337800;color: #fff;" | <span style="color:#fff;">Z
+|
+|}
+
+{{Master Navigation}}
+
+<includeonly>[[Category:Artifact]][[Category:Legendary Artifact]][[Category:Museum]]</includeonly>

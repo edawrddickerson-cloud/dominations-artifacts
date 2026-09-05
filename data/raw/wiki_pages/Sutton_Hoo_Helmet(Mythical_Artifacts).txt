@@ -1,0 +1,29 @@
+[[File:{{PAGENAME}}.jpg|centre|220px]]
+== General Description  ==
+'''{{PAGENAME}}''' is one of The [[Mythical Artifacts]], that can be stored and displayed at [[Museum]].
+
+===== Historical Description =====
+Sutton hoo is a 7th-century burial site located in modern-day England. During the site's excavation, archeologists discovered an 89ft burial-ship containing untouched kingship relics, including the Sutton Hoo helmet.
+The helmet's face mask is a unique feature that was never seen before on an Anglo-Saxon helmet. The face mask's decorations don't only mimic a human face but also serve aesthetic and protective purposes. The thick eyebrows, resembling a dragon's wings, are meant to protect the wearer's eyes, the dragon's body serves as the nose guard, and its fantail, or the moustache, stops upward blows.
+
+== Statistics ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+|[[Heavy Cavalry]] HP
+| +41%
+|-
+|All Enemy Defensive Tower Damage|| -6%
+|-
+|[[Heavy Cavalry]] Damage|| +6%
+|-
+|All Defensive Tower Damage|| +6%
+|-
+|Defender Hitpoints|| +6%
+|-
+|Defender Spawn Time|| -6%
+|}
+
+{{MythicalArtifactsMenu}}

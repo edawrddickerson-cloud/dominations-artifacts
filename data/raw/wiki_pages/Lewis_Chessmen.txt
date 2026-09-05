@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.jpg|centre|250px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Much mystery surrounds the Lewis Chessmen, perhaps the world's most famous game pieces. They were discovered near Uig Bay on the Scottish Isle of Lewis some time before 1831, when they appeared at an antiquarian exhibition in Edinburgh. The pieces were likely carved between 1150 and 1200 in either Norway or Iceland. The original hoard included 78 chessmen, 14 plain discs used for a backgammon-like game, and a buckle that probably clasped the bag holding them. Other than a handful likely made from whale tooth, they are all carved from walrus ivory.
+
+The chessmen provide a fascinating look into Viking culture. Each individual piece has a unique design. Four of the 'warders' or rooks bite their shields, marking them as berserkers in battle frenzy. These pagan warriors fight alongside Christian clergy, incidentally the earliest known examples of the bishop piece. Weary kings and queens sit on their thrones while knights ride short-legged horses. Only the pawns are represented by abstract figures. The Lewis hoard is now one of the prize collections of the British Museum and a beloved Scottish national treasure.
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| [[Raiders]] Spawn from Forest When Attacking || +1
+|-
+| [[National Trade Good]] Loot Chance || +12%
+|-
+| [[Raiders]] Damage || +13%
+|-
+| [[Raiders]] Hitpoints || +13%
+|-
+| All Resources Looted || +14%
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]

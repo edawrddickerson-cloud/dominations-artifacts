@@ -1,0 +1,32 @@
+[[File:Aztec Calendar Large.png|centre|500px]]
+
+== General Description ==
+[[File:Aztec_Calendar.png|thumb|220px]]
+'''Aztec Calendar''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]]. It can be purchased from the Legendary sale for real money.
+
+
+== Historical Description ==
+The Aztec calendar was a unique calendar system used to track time and give names to years. Many Mesoamerican cultures had their own styles of calendars, but the Aztec calendar was the only one to have a 365-day cycle. Each year consisted of 18 months of 20 days each, with an additional five days that were called the 'unlucky days.' Though their calendars differed, both the Aztecs and the Mayans believed that every 52 years was considered one cycle and that at the end of 52 cycles, the world would be destroyed by the gods.
+
+== Statistics ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| [[Food]] from [[Farm]]s || rowspan="2" | +11%
+|-
+| [[Gold]] from [[Caravan]]s
+|-
+| [[Oil]] from [[Oil Well]]s || rowspan="3" | +6%
+|-
+| [[Oil]] from [[Oil Well]]s 
+|-
+| [[Vault]] Interest
+|-
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:Museum]]

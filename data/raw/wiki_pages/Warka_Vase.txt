@@ -1,0 +1,33 @@
+
+[[File:{{PAGENAME}}.jpg|centre|250px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Standing 3 feet tall and made from alabaster, the Warka Vase is an incredibly significant artifact made in roughly 3000 BC Mesopotamia. The art displays a 4-tiered hierarchal depiction of nature, in which humans are clearly only the second most significant being.
+
+The lowest tier depicts the earth growing grains and reeds, two of the most influential and important harvestable goods from the Tigris and the Euphrates Rivers in Mesopotamia. The second lowest tier depicts sheep grazing on the earth’s grains and reeds, as well as them being herded. The second highest tier depicts 9 able-bodied humans walking in a strict fashion, holding what appear to be the four main agricultural goods of Mesopotamia, fruits, grains, wine, and mead. The highest tier is the most complex and largest and depicts a King celebrating and potentially marrying the goddess of love and fertility, Inanna. Such measures would assure the nation of bountiful harvests for years to come.
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| [[Library]] [[Technology|Tech]] Food Cost || -11%
+|-
+| [[Library]] [[Technology|Tech]] Gold Cost || -11%
+|-
+| [[Library]] [[Technology|Tech]] Oil Cost || -11%
+|-
+| [[Library]] [[Technology|Tech]] Resource Cost || -1%
+|-
+| [[Forest]] Expansion Cost Refund || +16%
+|}
+'''Resource used to upgrade this artifact''': 
+{{LegendaryArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]

@@ -1,0 +1,33 @@
+
+[[File:{{PAGENAME}}.jpg|centre|250px]]
+
+==General Description==
+
+'''{{PAGENAME}}''' is one of The [[Mythical Artifacts]], that can be stored and displayed at [[Museum]].
+
+==Historical Description==
+The Li Gui was a vessel that recorded an ancient battle. This bronze vase depicts how King Wu of the Zhou Dynasty overthrew the Shang Dynasty. The inscription states that the King rewarded one of his officials with rare and useful metals, and that general used the gift to make a vase which he named Li Gui Bronze Vessel in order to honor his king. Since there is limited documentation regarding the history of China prior to 841BC, vessels and other bronze wares have been essential in discovering new information about ancient China. The Li Gui has been an important step in discovering more previously undocumented history.
+
+==Statistic==
+
+{| class="article-table"
+! scope="col" |Benefit Name
+! scope="col" |Base Stat
+|-
+|Heavy Infantry Movement Speed
+| +12%
+|-
+|[[APC]] Deploy Time||-11%
+|-
+|[[APC]] Hitpoints||+12%
+|-
+|[[Heavy Infantry]] Attack Speed||+16%
+|-
+|[[Heavy Infantry]] Damage||+16%
+|-
+|[[Commandos|Guerrilla]] Movement Speed||+10%
+|}
+'''Resource used to upgrade this artifact''': Oil.{{MythicalArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Mythical Artifact]]

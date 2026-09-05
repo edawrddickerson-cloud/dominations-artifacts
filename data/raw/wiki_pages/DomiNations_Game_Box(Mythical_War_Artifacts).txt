@@ -1,0 +1,33 @@
+[[File:DomiNations Game Box(Mythical War Artifacts).jpg|center|220x220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Mythical War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+
+
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Generals' Hitpoints and Damage
+| +9%
+|-
+|Generals' Hitpoints
+| +11%
+|-
+|Generals's Attack Speed
+| +11%
+|-
+|Enemy Defender Spawn Time
+| +11%
+|-
+|Generals' Damage
+| +11%
+|-
+|General's Movement Speed
+| +11%
+|}
+{{Template:MythicalWarArtifactsMenu}}

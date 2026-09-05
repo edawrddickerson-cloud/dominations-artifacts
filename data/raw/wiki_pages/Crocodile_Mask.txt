@@ -1,0 +1,34 @@
+[[File:Crocodile Mask.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Crocodile Masks, and other animal-inspired masks, were incredibly complex art pieces to be adorned on one's head in ritual ceremonies, made primarily by tribes in the Torres Strait Islands in the late 1800s. These masks were made to represent ancestors and other animals such as fish, birds and other reptiles. Combining both human and animal features, the masks display a unique mixture of nature and humanity.
+
+Crocodile Masks were made of wood, turtle shells, feathers, bamboo and other materials that were found in the Torres Strait. Each piece includes several sheets of shell that are neatly and carefully molded to the shape of a crocodile, then sewn together and sealed with resin. The high level of craftsmanship required to create these beautiful and intricate masks highlights the importance of spirituality in the culture of tribes in the Torres Strait Islands. These masks provided a strong, physical representation of one's connections to the world around them.
+
+== Statistics ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| General Damage || +4%
+|-
+| Defender Hitpoints || +7%
+|-
+| Invading [[Factory]] Troop Damage || -4%
+|-
+| Invading [[Factory]] Troop Hitpoints || -4%
+|-
+| Invading [[Generals|General's]] Hitpoints || -4%
+|}
+
+*Uses ?
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

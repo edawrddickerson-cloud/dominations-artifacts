@@ -1,0 +1,31 @@
+
+[[File:{{PAGENAME}}.jpg|centre|250px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The double-headed serpent is a unique and intricately designed Aztec sculpture. This sculpture was made by affixing crushed turquoise and oyster shells to a wooden base with pine resin and beeswax. It is believed that this was worn on a person's chest during religious ceremonies. Many Aztec gods were depicted as serpents, but it is believed that this sculpture was made as an ornament to worship the god Quetzalcoatl.
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| [[Oil]] Looted || +11%
+|-
+| [[Oil]] Looted || +11%
+|-
+| [[Heavy Tank]] Damage || +6%
+|-
+| [[Fighters|Fighter]] Damage || +6%
+|-
+| All Resources Looted || +6%
+|}
+'''Resource used to upgrade this artifact''': ?.
+{{LegendaryArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]

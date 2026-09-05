@@ -1,0 +1,30 @@
+[[File:Dilophosaurus Skull.png|File:{{PAGENAME}}.png|center|250x250px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+
+
+== Statistic ==
+Upgrade resource: '''Oil'''. 
+{| class="article-table"
+! scope="col" |Benefit Name
+! scope="col" |Base Stat
+|-
+|Oil From [[Oil Well|Oil Wells]]
+| +16%
+|-
+|[[First Aid]] Duration
+| +16%
+|-
+|Generals' Hitpoints
+| +7%
+|-
+|[[Supply Vehicles|Supply Vehicle]] Healing
+| +11%
+|-
+|Barracks Troop Hitpoints
+| +7%
+|}
+{{LegendaryArtifactsMenu}}

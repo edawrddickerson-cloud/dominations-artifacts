@@ -1,0 +1,28 @@
+[[File:{{PAGENAME}}.jpg|center|249x249px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Mythical War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+In the winter of 1939, The Soviet Union invaded Finland. The Soviets brought hundreds of thousands of men, backed by thousands of tanks and aircraft. Finland's army was much smaller, and not as technologically advanced. However, thanks to Simo Hayha, the Winter Was was anything but swift for the Soviets.
+
+Nicknamed "The White Death", he would dress in camouflage, hide in treetops and snowbanks, in sub-zero temperatures, and ambush Soviet soldiers with only the basic metal sight of his Mosin-Nagant M28 rifle. In just 100 days, he killed 505 Soviet soldiers. To this day, he is considered the most effective sniper in history.
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|[[Sniper Tower]] Damage|| +11%
+|-
+|[[Sniper Tower]] Damage|| +11%
+|-
+|[[Sniper Tower]] Hitpoints|| +11%
+|-
+|Enemy Defender Spawn Time|| +11%
+|-
+|All Defensive Towers Hitpoints|| +9%
+|-
+|All Defensive Towers Damage|| +9%
+|}
+{{MythicalWarArtifactsMenu}}

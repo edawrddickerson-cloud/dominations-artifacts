@@ -1,0 +1,34 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Some artifacts are never permitted to leave their location of origin, due to their value or historical significance. The Narmer Palette is one such artifact. Discovered in a controlled excavation in Egypt, the palette depicts two different scenes on either face of it, both featuring King Narmer. The location of every piece of the art is incredibly important. At the bottom of the piece there appears to be vanquished enemies, and directly above that is a foe about to be slain by King Narmer. The King’s sandal bearer is the next lowest, followed by King Narmer himself, who is only surpassed by the god Horus, and overlooking everything is the head of the Goddess Bat.
+
+There are several interpretations of this artwork. One such interpretation is that the art depicts the journey of the Sun God in his boat, and the balance between Order and Chaos. One side shows chaos, where enemies are butchered, leopard-snake hybrids are being wrangled by handlers, and a bull knocks down the walls of a city, while the other side depicts order, in which the enemy is being subdued, with Horus assisting and the sandal bearer observing.
+
+Another interpretation is the unification of Upper and Lower Egypt. On the side depicting the bull knocking down city walls, Narmer wears the Red Crown, the crown of Lower Egypt. On the side depicting a subdued foe, Narmer wears the White Crown, the symbol of Upper Egypt. It can be reasonably interpreted that King Narmer wearing both Crowns can be a signal of unification, and as such, historians might be able to accurately place the date of the merging of the two kingdoms.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| Invading [[Fighters|Fighter]] Damage|| -6%
+|-
+| [[Air Defense]] Damage|| +6%
+|-
+| [[Bombers|Bomber]] Hitpoints || +3%
+|-
+| [[Fighters|Fighter]] Hitpoints|| +6%
+|-
+| [[Bazooka (Troop)|Bazooka]] Hitpoints || +6%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

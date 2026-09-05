@@ -1,0 +1,26 @@
+[[File:{{PAGENAME}}.jpg|center|250x250px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Mythical Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The Comb of Pompus is a cherished artifact in DomiNations, steeped in the rich history of the game and tied to the beloved figure of Pompus the Wise, the original guide of the Dawn Age. Crafted with exquisite care from polished ivory and delicate silver, the comb is said to have been a personal treasure of Pompus, used to maintain his iconic long white beard, which seemed to carry the weight of his wisdom. Players revere it not for any magical properties, but for its connection to the humble beginnings of their empires and the quiet, steady guidance Pompus provided. To possess The Comb of Pompus is to hold a piece of the game’s heart, a reminder of the wonder of learning and the timeless value of wisdom.
+
+== Statistic == 
+{| class="article-table"
+! scope="col" |Benefit Name
+! scope="col" |Base Stat
+|-
+|Enemy [[Sabotage]] Duration|| -12%
+|-
+|[[University]] Research Time || -15%
+|-
+| [[Library]] Research Time || -15%
+|-
+| Looted Resource Refund || +15%
+|-
+| Defender Movement Speed || +12%
+|-
+| Enemy [[Sabotage]] Duration || -12%
+|}
+{{MythicalArtifactsMenu}}

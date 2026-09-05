@@ -1,0 +1,34 @@
+[[File:British Kettle Drum(Mythical War Artifacts).png|thumb]]
+
+== General Information ==
+The '''British Kettle Drum''' is one of The [[Mythical War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+During the American Revolutionary War, the British army employed a marching band alongside its ranks to assist the regiments with their traveling formations, as well as to convey orders and uplift morale. This method was far more convenient and reliable than shouting orders over the explosions of battle. Many regiments, such as the British IX Corps, employed a drummer equipped with a Kettle Drum. With a hollowed out wooden basen with a piece of cowhide secured across the top with leather straps, this Drum allowed for reliable and loud communication from across the thunderous gunfire of battle.
+
+At first it was unclear how the 10th would fit into the war effort. However, they proved their worth in Italy taking such difficult positions as Monte Belvedere and Riva ridge. They led the Allied charge north to the Po Valley, keeping the Germans off balance and capturing many prisoners. Though demobilized for four decades following the end of the war, the 10th has become the most deployed U.S. military unit since its reactivation in 1985. The division has served in humanitarian and peacekeeping mission and fought in the Gulf, Afghanistan, and Iraq Wars.
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|[[Mortar Infantry|Mortar Troop]] Attack Speed
+| +7%
+|-
+|[[Mortar Infantry|Mortar Troop]] Damage
+| +11%
+|-
+|[[Barracks]] Troop Damage
+| +12%
+|-
+|[[Barracks]] Troop Hitpoints
+| +12%
+|-
+|[[Ranged Siege]] Damage
+| +11%
+|-
+|Enemy Defender Spawn Time
+| +11%
+|}
+{{MythicalWarArtifactsMenu}}

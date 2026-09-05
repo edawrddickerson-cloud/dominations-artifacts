@@ -1,0 +1,28 @@
+[[File:{{PAGENAME}}.jpg|centre|250px]]
+
+==General Information==
+'''{{PAGENAME}}''' is one of the main hall [[Legendary Artifacts]] that can be stored and displayed at [[Museum]].
+==Historical Description==
+The Olmec are known as the first elaborate pre-Columbian civilization of Mesoamerica, active from 1200 to 400 B.C. The term “Olmec” means “Rubber people”, referring to the culture’s practice of creating rubber by mixing latex with moonflower juice. The Olmecs created many similar Masks as a representation of religious beliefs and otherworldly beings.
+
+While these masks contain similarities to human faces, otherworldly beings were believed to have almond-shaped eyes, wide prominent noses and downturned mouths. Each mask was created to transform the wearer’s spiritual and charismatic power, commonly worn around the neck by a shaman or ruler. The Olmec civilization created many unique artifacts similar to the Jade Masks which contribute to the prospect that the Olmecs themselves were not of this world.
+==Statistic==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Enemy Missile Silo Damage||-6%
+|-
+|Bomber Damage||+6%
+|-
+|Paratrooper Hitpoints||+6%
+|-
+|Bazooka Damage||+11%
+|-
+|Enemy Defender Spawn TIme||+11%
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]

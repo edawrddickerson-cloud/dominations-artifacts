@@ -1,0 +1,30 @@
+[[File:{{PAGENAME}}.jpg|centre|250px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The Fire Breathing Bunny Fossil is a whimsical artifact discovered in a Welsh cave, believed to be the remains of a legendary medieval rabbit said to breathe fire and terrify knights. Its charred bones and sharp teeth tell the tale of a beast so fierce it took a divine explosive to defeat it. While skeptics dismiss it as a hoax, the fossil remains a playful and beloved piece of folklore, proving that history can be as strange as it is entertaining.
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| [[Food]] Looted || +11%
+|-
+| [[Gold]] Looted || +11%
+|-
+| [[Oil]] Looted || +11%
+|-
+| Forest Expansion Cost Refund || +11%
+|-
+| [[First Aid]] Duration || +10%
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:Museum]]

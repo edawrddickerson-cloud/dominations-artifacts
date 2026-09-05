@@ -1,0 +1,34 @@
+
+== [[File:20190601_222112.jpg|thumb|left|398px]] ==
+
+== General Description ==
+'''Joyeuse Sword''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]]. It can be purchased from the Legendary sale for real money.
+
+[[File:20190601_222048.jpg|thumb|158px]]
+== Historical Description ==
+"The Frankish king Charlemagne became the first emperor Western Europe had seen for centuries when he was crowned by the Pope on Christmas Day in 800 CE. He later became a key character in medieval tales like the Song of Roland, the national epic of France. According to such legends, the blacksmith Galas spend three years forging a mighty blade for the emperor called Joyeuse ('joyful'). The sword was said to have magical properties such as blinding Charlemagne's enemies with a brilliance that outshone the sun.
+
+After being lost for a time, Joyeuse reenter the historical record in the late thirteen century when it was used for the coronation of Philip the Bold. It was kept with other regalia at the abbey of Saint-Denis where French kings were buried. The sword was moved to its current location, the Louvre, during the early year of the French Revolution. Though the parts now on display seem to have been reforged or replaced over time, it is an authentic medieval blade and a beautiful masterpiece of metalwork."
+== Statistics ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| Factory Troop Damage
+| rowspan="2" | +6%
+|-
+| Heavy Tank Damage
+|-
+| Bomber Damage
+| rowspan="3" | +6%
+|-
+| Generals' Damage
+|-
+| Defender Damage
+|}
+{{LegendaryWarArtifactsMenu}}
+[[Category:Legendary Artifact]]
+[[Category:Artifact]]
+[[Category:Museum]]
+[[Category:World War]]

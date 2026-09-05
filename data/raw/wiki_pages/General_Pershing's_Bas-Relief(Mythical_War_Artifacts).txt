@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.jpg|center|249x249px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Mythical War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+General John Joseph 'Black Jack' Pershing was a senior United States Army Officer during World War I. He served as the Commander of the American Expeditionary Forces on the Western Front from 1917-1918. General Pershing is the only American in history to earn the rank of General of the Armies during his lifetime (George Washington was posthumously given the rank). this Bas-Relief was created by sculptor Walter Hancock in 1935 for the Liberty Memorial in Kansas City.
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Barracks Troop Damage
+| +9%
+|-
+|[[Heavy Infantry]] Hitpoints
+| +9%
+|-
+|[[Ranged Infantry]] Hitpoints
+| +9%
+|-
+|[[Heavy Cavalry]] Hitpoints
+| +9%
+|-
+|[[Ranged Siege]] Damage
+| +9%
+|-
+|[[Raiders|Raider]] Damage
+| +9%
+|}
+{{MythicalWarArtifactsMenu}}

@@ -1,0 +1,29 @@
+[[File:{{PAGENAME}}.png|center|250x250px]]
+
+{{InGameDesc|Archaeoastronomy is the study of prehistoric culture's astronomical knowledge.}}
+
+'''{{PAGENAME}}''' is the final Archaeology [[Technology]].
+
+==General Information==
+'''Requirements''':
+* Completed Bookcase
+
+{| class="article-table"
+|-
+! scope="col" |Chapter
+! scope="col" |Cost {{Icon|Oil}}
+! scope="col" |Time {{Icon|Clock}}
+! scope="col" |Exp Gain {{Icon|Exp}}
+! scope="col" |Description
+|-
+| '''1'''  || 125,000 || 8d || 5,780 || +1% Bonus to [[Legendary War Artifacts|War Hall Legendary Artifact]] Modifiers
+|}
+
+*[[Notre Dame]] wonder decreases the library research cost by 10%.
+
+
+{{TechMenu}}
+[[Category:Technology]]
+[[Category:Library]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

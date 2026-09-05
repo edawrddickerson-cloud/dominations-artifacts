@@ -1,0 +1,33 @@
+[[File:{{PAGENAME}}.png|centre|250px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+In 1900, Greek sponge divers off the rocky island of Antikythera discovered the wreck of a ship containing precious artifacts and art. Among the treasure was a corroded bronze device. Nobody realized it until decades later, but the piece now called the Antikythera Mechanism was in fact an ancient analog computer. From its estimated date of creation around the second century BCE, no known machine would rival it in complexity for well over a millennium.
+
+Operating the mechanism was nevertheless quite simple. The user turned a crank to input a date, which set the internal gears whirring. Once the calculations were complete, the device would display data for that date including the lunar phase, upcoming eclipses, days until various athletic games, and the positions of celestial bodies. Its maker and place of origin are unknown, though the island of Rhodes is a leading contender with its famous mechanical workshops. Modern research continues to unlock the mysteries of this incredible artifact.
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| [[Heavy Tank]] Damage || +12%
+|-
+| [[National Trade Good]] Loot Chance|| +12%
+|-
+| [[Oil]] Looted || +12%
+|-
+| All Resources Looted || +7%
+|-
+| [[Bomber]] Hitpoints || +7%
+|-
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]

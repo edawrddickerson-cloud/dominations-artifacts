@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.jpg|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Although the history of remote-controlled unmanned aerial vehicles stretches back to World War II, the military drone concept really came into its own in the 1980s. Israel led the way, drawing on lessons learned from the Yom Kippur War in 1973 to develop the Tadiran Mastiff. It proved its worth during the 1982 Lebanon War, gathering reconnaissance intel without exposing Israeli forces to danger. The U.S. military saw its value and acquired the design, then commissioned a successor from Israel Aircraft Industries and AAI Corporation of Hunt Valley, Maryland.
+
+The result was the RQ-2 Pioneer. The system went operational in 1986 and entered combat with the U.S. Navy and Marines in the 1991 Gulf War. Pioneers were used for a variety of missions such as reconnaissance, targeting support, and battle damage assessment. In one famous incident, Iraqi troops on Failaka Island surrendered to a Pioneer after a naval shelling even though the drone itself carried no weapons. The model went on to serve in Somalia, Bosnia, Kosovo, and Iraq, paving the way for future generations of unmanned aerial vehicles.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| Invading [[Bombers]] Damage|| -8%
+|-
+| Invading [[Bombers]] Damage|| -8%
+|-
+| Invading [[Bombers]] Hitpoints|| -7%
+|-
+| [[Air Defense]] Hitpoints|| +6%
+|-
+| [[Air Defense]] Damage|| +6%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

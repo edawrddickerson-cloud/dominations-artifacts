@@ -1,0 +1,30 @@
+[[File:Stopler Revolver Large.png|centre|500px]]
+
+== General Description ==
+[[File:Stopler Revolver.png|thumb|220px]]
+'''Stopler Revolver''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]]. It is purchased from sale.
+
+== Historical Description ==
+The world's oldest known existing revolver was made in 1597 by Hans Stopler, a gunsmith working in the prosperous manufacturing hub of Nuremberg. It was acquired by a Norwegian officer named Georg von Reichwein during the brutal Thirty Years War. The magnificently decorated flintlock's history can be traced through two engravings: a horse spur that was Stopler's unique mark, and the words 'Georg Reichwein 1636'. Its eight-chambered cylinder had to be rotated manually, unlike a modern revolver.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Defender Damage|| rowspan="5" | +6%
+|-
+|[[Fighters]] Damage
+|-
+|[[Generals]] Damage
+|-
+|[[Oil]] Looted
+|-
+|[[Ranged Infantry]] Damage
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Legendary Artifact]]
+[[Category:Artifact]]
+[[Category:Museum]]

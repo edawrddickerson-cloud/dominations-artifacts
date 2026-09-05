@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The Cryolophosaurus was an early-Jurassic period dinosaur, discovered in the mountains of Antarctica. This carnivore measured about 6.5 meters long from its nose to the tip of its tail. The skull of the Cryolophosaurus is fairly standard for a carnivore of that time period, but it has a perplexing crest on top of its head that does not seem to serve an offensive purpose.
+>
+>Scientists have not positively determined the reason the crest grew on the top of the dinosaur’s head, but it does help us differentiate the species from other, similarly sized carnivores. Theories about the crest’s use range from intimidating rival carnivores, to being displayed to attract mates during mating season. As archaeologists and scientists learn more about this unique section of the Cryolophosaurus' skull, they could potentially reveal invaluable information about life in the early-jurassic period.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| [[Fighters|Fighter]] Damage || +4%
+|-
+| [[Bombers|Bomber]] Damage || +7%
+|-
+| [[Machine Gun|Redoubt]] Damage || +7%
+|-
+| [[Bazooka]] Damage || +7%
+|-
+| [[Machine Gun Infantry]] Damage || +7%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

@@ -1,0 +1,29 @@
+[[File:Berlichingen's_Iron_Prosthetic_Hand.jpg|center|220x220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]] that can be stored and displayed at the [[Museum]].
+
+== Historical Description ==
+Gottfried von Berlichingen was a 16th-century German imperial knight, mercenary and poet who became legendary for his prosthetic iron hand after losing his right hand in battle in 1504. This mechanical hand, remarkably advanced for its time, had joints on its fingers and spring-loaded mechanisms within the hand, which allowed the fingers to be locked into place. With it, the knight was able to not only wield a wide variety of weapons in battle, but also hold the reins of his horse and even write with a quill. The iron hand, often seen as a precursor to modern prosthetics, highlights human adaptability and ingenuity in the fields of medicine and engineering.
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Transport Cooldown
+| -10%
+|-
+|Transport Movement Speed
+| +10%
+|-
+|Enemy Anti-Tank Gun Damage
+| -17%
+|-
+|Paratrooper Hitpoints
+| +9%
+|-
+|Paratrooper Damage
+| +9%
+|}
+{{LegendaryWarArtifactsMenu}}

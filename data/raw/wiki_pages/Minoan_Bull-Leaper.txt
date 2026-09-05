@@ -1,0 +1,32 @@
+
+[[File:{{PAGENAME}}.jpg|centre|250px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The Minoan Bull-Leaper is a bronze sculpture from around 1600 BCE that was found on the island of Crete and is now housed in the British Museum. The artwork captures a moment from the ritualistic practice of bull-leaping, which was a central element of Minoan religious and ceremonial life. It was cast in a single mold using the lost-wax technique. While the alloy's unusually low tin content likely caused the incomplete rendering of the leaper’s limbs, the artistic integrity remains striking: the arched back of the leaper mirrors the galloping form of the bull, creating a powerful visual symmetry. The artifact highlights the symbolic significance of bulls in Minoan society, as the exaggerated scale of the animal compared to the human figure implies that bulls were likely revered for their sheer power and possible religious associations.
+
+== Statistic ==
+Upgrade resource: .
+<br />
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| General's Hitpoints and Damage|| +9%
+|-
+| All Enemy Defensive Towers Damage|| -9%
+|-
+| Airstrip Troop Hitpoints|| +9%
+|-
+| Airstrip Troop Damage || +9%
+|-
+| Recon Scan Duration  || +6%
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:Museum]]

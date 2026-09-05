@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Sometimes, one quiet bullet is more effective than a magazine full of rounds. Britain's secret military research facility Station IX developed a weapon for just such occasions during World War II. The Welrod was a single-shot, bolt-action pistol intended for covert operations. While its limited range and ammo capacity made it fairly useless in regular combat, it was perfect for special forces dripping sentries or resistance fighters taking out a collaborator, leading it to be nicknamed the 'Assassin's Pistol.'
+
+The weapon boasted unique stealth features including an excellent suppressor and a hollowed-out muzzle that made it safe to fire when pressed directly into a target. with no markings indicating manufacturer or country of origin, it could be passed off as a bicycle pump when disassembled. Though its service history remains shrouded in secrecy, the Welrod is thought to have been employed by Allied and resistance fighters in WWII as well as British special operatives in Korea, Vietnam, the Falklands, the Gulf War, and Norther Ireland.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| All Enemy Defensive Towers Hitpoints || -8%
+|-
+| Enemy Defender Spawn Time || +8%
+|-
+| [[Guerrilla]] Damage || +6%
+|-
+| [[Guerrilla]] Hitpoints || +6%
+|-
+| [[Airstrip]] Troop Damage || +6%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

@@ -1,0 +1,30 @@
+[[File:{{PAGENAME}}.jpg|center|260x260px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Enemy Sabotage Duration
+| -11%
+|-
+|Defender Damage
+| +8%
+|-
+|[[Generals|Generals']] Hitpoints
+| +8%
+|-
+|Invading [[Bombers|Bomber]] Damage
+| -11%
+|-
+|All Defensive Towers Hitpoints and Damage
+| +3%
+|}
+
+{{LegendaryWarArtifactsMenu}}

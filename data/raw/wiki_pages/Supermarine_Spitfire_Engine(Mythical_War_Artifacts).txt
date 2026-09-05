@@ -1,0 +1,36 @@
+[[File:{{PAGENAME}}.jpg|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Mythical War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+One of the most successful and important engines of World War II was the British made Rolls-Royce Merlin PV-12. First designed and tested in 1933, the PV-12 was powered by a liquid-cooled V-12 piston aero engine. The engine contained twelve cylinders consisting of high-carbon steel liners with two inlet and two exhaust poppet valves of K.E.965 steel per cylinder. The Supermarine Spitfire was designed specifically to run with the PV-12 variant of the Rolls-Royce Merlin. The PV-12 provided the Spitfire with greater mobility and speed at high-altitudes than other engines of the time could, such as the P-40 Warhawk Allison V-1710 engine.
+
+The power and agility of the PV-12 allowed the Supermarine Spitfires to compete in dogfights over Europe against the mighty German Luftwaffe. Without the Rolls-Royce Merlin PV-12, the British Airforce would not have withstood the power of the Luftwaffe and would likely have resulted in a different outcome for the second World War.
+
+== Statistic ==
+
+Resource needed to upgrade: '''Oil'''.
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| [[Airstrip]] Troop Damage || +8%
+|-
+| [[Bombers|Bomber]] Damage|| +14%
+|-
+| [[Bombers|Bomber]] Hitpoints|| +14%
+|-
+| [[Bombers|Bomber]] Hitpoints|| +14%
+|-
+| [[Heavy Tank]] Damage || +14%
+|-
+| [[Fighters|Fighter]] Damage || +14%
+|}
+
+{{MythicalWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Mythical Artifact]]
+[[Category:World War]]

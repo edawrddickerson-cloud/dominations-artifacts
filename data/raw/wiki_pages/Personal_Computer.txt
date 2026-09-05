@@ -1,0 +1,33 @@
+[[File:{{PAGENAME}}.png|centre|250px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The earliest computers were room-sized behemoths powered by vacuum tubes that performed complex calculations for the military. Smaller and more economical machines were made possible through a series of inventions: the transistor in 1947, the integrated circuit in 1958, and finally the microprocessor in 1971. Software designed for the personal and office use soon followed. The second half of the 1970s saw the first spreadsheet, word processor, and database applications as well as text adventure games like Colossal Cave Adventure and Zork.
+
+American home computer ownership exploded after the announcement of the Personal Computer or PC in  1981. Time magazine marked its influence by foregoing its usual Man or Woman of the Year to dub the computer its 1982 'Machine of the Year.' Now that families and small businesses could afford computers, there value for both work and entertainment became undeniable. Graphical user interfaces made them approachable for non-geeks, and primitive laptops pointed toward a portable future. The Digital Revolution had taken root.
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| [[Library]] Tech Resource Cost || -13%
+|-
+| Looted Resource Refund || +12%
+|-
+| [[Oil]] from [[Oil Well]]s || +12%
+|-
+| [[Vault]] Interest || +14%
+|-
+| [[Vault]] Capacity || +13%
+|-
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]

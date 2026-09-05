@@ -1,0 +1,31 @@
+[[File:{{PAGENAME}}.jpg|center|220px]]
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]]. It can be purchased from the Legendary sale for real money.
+
+== Historical Description ==
+The extravagant Book of Kells is a manuscript of Christian gospels created in the late 9th century. It is widely regarded as the peak of both Western calligraphy and Insular illumination. Insular illumination is a type of manuscript that can be backlit to both enhance readability as well as the appearance of ornate decorations. When lit, pages come to life and resemble stained glass.
+
+The Book of Kells’ elaborate iconography features human imagery, mythical creatures, and traditional Christian symbolism, making it an incredible prize for pillagers. Over the course of its early existence, the book was stolen several times by Vikings. Nearly every time it was pillaged or recovered, small pieces of the book were lost or damaged. The book was removed from its spine, its cover has gone missing, and several pages have been lost to history entirely.
+
+== Statistics ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+|All Resources Looted|| +16%
+|-
+|All Enemy Defensive Towers Damage|| -11%
+|-
+|Transport Cooldown|| -11%
+|-
+|Paratrooper Hitpoints|| +16%
+|-
+|Paratrooper Damage|| +16%
+|-
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]

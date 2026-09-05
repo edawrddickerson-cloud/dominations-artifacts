@@ -1,0 +1,36 @@
+[[File:{{PAGENAME}}.jpg|centre|220px]]
+
+==General Information==
+
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]] that can be stored and displayed at the [[Museum]].
+
+==Historical Description==
+
+During the American Revolutionary War, the British army employed a marching band alongside its ranks to assist the regiments with their traveling formations, as well as to convey orders and uplift morale. This method was far more convenient and reliable than shouting orders over the explosions of battle. Many regiments, such as the British IX Corps, employed a drummer equipped with a Kettle Drum. With a hollowed out wooden basen with a piece of cowhide secured across the top with leather straps, this Drum allowed for reliable and loud communication from across the thunderous gunfire of battle.
+
+==Statistic==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|[[Mortar Infantry|Mortar Troop]] Damage|| +7%
+|-
+|[[Barracks]] Troop Damage|| +8%
+|-
+|[[Barracks]] Troop Hitpoints|| +8%
+|-
+|[[Ranged Siege]] Damage|| +7%
+|-
+|Enemy Defender Spawn Time|| +7%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+
+[[Category:Museum]]
+
+[[Category:Artifact]]
+
+[[Category:Legendary Artifact]]
+
+[[Category:World War]]

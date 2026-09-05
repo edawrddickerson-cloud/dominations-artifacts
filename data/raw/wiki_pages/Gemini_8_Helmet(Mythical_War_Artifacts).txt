@@ -1,0 +1,34 @@
+[[File:Gemini_8_Helmet(Mythical_War_Artifacts).jpg|File:{{PAGENAME}}.jpg|center|249x249px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Mythical War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The Gemini spaceflights were intended to prepare NASA ground crews and astronauts for the Apollo moon landing program. The primary objective of Gemini 8 was to complete the first ever docking maneuver between two orbiting spacecraft. The unmanned Agena Target Vehicle was sent aloft at 10 AM on March 16, 1966, with first-time commander Neil Armstrong and pilot Dave Scott following in the Gemini an hour and 41 minutes later.
+
+The Gemini's docking procedure with the Agena was 'really a smoothie,' as Neil Armstrong put it. However, the combined craft soon began to enter an unexpected spin. The crew undocked from the Agena, but the Gemini's rotation only accelerated. Whirling at one revolution per second, with seconds to spare before losing consciousness, Armstrong managed to stop the roll in time. Though they did not complete a number of secondary objectives, the crew's survival likely saved the space program from being shut down completely.
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Factory Troop Damage
+| +11%
+|-
+|[[Attack Helicopter]] Damage
+| +11%
+|-
+|[[Armored Car]] Damage
+| +11%
+|-
+|[[Bazooka]] Damage
+| +11%
+|-
+|[[Heavy Tank]] Damage
+| +11%
+|-
+|Barracks Troop Damage
+| +11%
+|}
+{{MythicalWarArtifactsMenu}}

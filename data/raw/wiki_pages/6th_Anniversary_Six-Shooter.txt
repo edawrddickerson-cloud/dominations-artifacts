@@ -1,0 +1,31 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Happy Sixth Anniversary DomiNations! To help you celebrate with us, may we present the Sixth Anniversary Six Shooter!
+
+The Colt Single Action Army (a.k.a. the ‘Colt .45’) was designed for the service weapon revolver trials of 1872 and became the primary U.S. military sidearm until 1892. Although Colt couldn’t begin work on the design until 1869 because of a patent held by Smith and Wesson, its engineers came up with one of the most iconic revolver designs in American history. Most notably, its original barrel was seven and a half inches long, three inches longer than most modern service sidearms. Colt would continue producing the Single Action Army revolver up until the start of World War II, when its design was deemed obsolete. However, the introduction of Western-themed movies and television created such a customer demand that Colt created a second generation of the revolver for production in 1956.
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| [[Bazooka]] Damage || +9%
+|-
+| [[Bazooka]] Damage|| +8%
+|-
+| [[Bombers|Bomber]] Hitpoints || +9%
+|-
+| [[Attack Helicopter]] Damage|| +9%
+|-
+| Invading Paratrooper Damage || -9%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

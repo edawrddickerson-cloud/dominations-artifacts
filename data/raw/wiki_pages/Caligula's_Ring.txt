@@ -1,0 +1,33 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]] that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+As a youth, Gaius Augustus Germanicus received the nickname "Caligula", or "Little Boots" in reference to the clothing his parents dressed him in. His family was the first to rule Rome, and his parents knew he would one day take the throne, so they dressed him in official attire leading to the nickname we know him by now.
+
+He ruled for only 4 years before he was betrayed and assassinated. During his time, he was a brutal, almost insane ruler. It is reported that he killed people for fun, and he planned to make his horse a consul member. Eventually this horse was appointed to Priesthood.
+
+In addition to the strange adoration of his horse, he also reportedly lost his temper frequently, indulged too frequently in personal affairs. The Senate at the time decided it was time for change, and during his fourth year as ruler, 41 AD, he was assassinated by the conspirators and his praetorian guard. The assassins later attacked Caligula's wife and daughter in an attempt to end support for imperial Rome.
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| [[Transports|Paratrooper]] Damage || +7%
+|-
+| [[Transports|Paratrooper]] Hitpoints || +7%
+|-
+| [[Commandos|Guerilla]] Damage || +7%
+|-
+| [[Ranged Siege]] Damage || +4%
+|-
+| [[Wall Sapper]] Damage || +7%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

@@ -1,0 +1,28 @@
+[[File:{{PAGENAME}} .jpg|center|249x249px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Mythical War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The Soviet T-34 is revered as the finest tank of World War II. When it entered the battlefield in 1940 the Germans had no answer to it. Its innovative sloped armor prevented ordinary weapons from landing solid frontal shots, forcing enemies to flank them or repurpose anti-aircraft guns to fend them off. The diesel engine provided good speed topping out above 30 mph. These factors combined with high firepower to make the T-34 them template for the postwar main battle tank.
+
+Though later German tank designs like the Panther could win individual engagements, by then they could not match the sheer number of T-34s on the field. At Kursk, the greatest tank battle of all time, Soviet armored divisions outnumbered the Germans two on one. The main drawbacks of the T-34 were more human than technical failings: primitive signaling, poor tank doctrine, and limited training time. Fortunately for the Soviets, these disadvantages were outweighed by the model's strong fundamental design and its simplicity to operate and maintain.
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Invading Barracks Troop Damage|| -11%
+|-
+| [[Heavy Tank]] Damage || +11%
+|-
+| [[Heavy Tank]] Hitpoints|| +11%
+|-
+| Invading [[Heavy Tank]] Damage || -11%
+|-
+| Invading [[Heavy Tank]] Hitpoints || -11%
+|-
+| Invading [[Heavy Cavalry]] Damage || -11%
+|}
+{{MythicalWarArtifactsMenu}}

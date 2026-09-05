@@ -1,0 +1,29 @@
+[[File:{{PAGENAME}}.jpg|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The Olmec colossal heads are large stone sculptures that were created by the Olmec civilization in ancient Mesoamerica, dating back to around 1200–400 BCE. These monumental heads, typically made of basalt, can reach up to 10 feet in height and weigh several tons. They are believed to represent powerful rulers or ballgame players, with distinct features like broad faces, flat noses, and thick lips, which might reflect the physical characteristics of the elite class. The purpose of the heads is still debated, but they are thought to symbolize the authority and divine connection of the Olmec rulers. The heads were likely placed in ceremonial centers to assert political and spiritual power, and their exact meaning continues to be a subject of intrigue among archaeologists.
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| Rally Cooldown || -11%
+|-
+| Increase Rally Duration|| +11%
+|-
+| Enemy Defender Spawn Time || +6%
+|-
+| [[Fighters|Fighter]] Damage|| +8%
+|-
+| [[Fighters|Fighter]] Damage || +8%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

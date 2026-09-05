@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Catherine the Great commissioned the Great Imperial Crown to be a physical manifestation of Russia's place in the world during her reign. It is divided into two hemispheres which represent the eastern and western divisions of the Roman empire, reflecting the tradition that Moscow is the Third Rome and inheritor of Constantinople. The 4,936 diamonds and 398-carat red spinel that adorn it exude opulence and imperial splendor. The message is clear: Russian can no longer be considered anything less than one of the great powers of Europe.
+
+The crown was used in coronation ceremonies from Catherine's in 1762 until that of the final tsar, Nicholas Ⅱ, in 1896. After the Communists came to power in the Russian Revolution, they often sold off Romanov family jewelry, sometimes prying out the stones for individual purchase. however, international pressure persuaded Stalin to have the crown preserved as state property. It now resides in the Diamond Fund, a collections of historic treasures exhibited in the Kremlin Armory museum.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| All Defensive Towers Damage|| +6%
+|-
+| Invading [[Heavy Tank]] Damage|| -8%
+|-
+| [[MRL]] Damage|| +8%
+|-
+| Invading [[Bazooka]] Damage|| -7%
+|-
+| [[Fighters|Fighter]] Damage || +6%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

@@ -1,0 +1,31 @@
+[[File:{{PAGENAME}}.png|centre|250px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Tokugawa Ieyasu was the last of the three great warlords who unified Japan at the end of the Warring States period. He founded the Tokugawa Shogunate which presided over two  and a half centuries of peace. the kabuto or helmet he wore features a striking frontal decorative element called a date that somewhat resembles the classical Greco-Roman laurel wreath. As the demonic menpo or half-face mask shows, kabuto were constructed and painted to both protect the wearer and terrify enemies.
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| Defender Damage || +6%
+|-
+| Defender Hitpoints || +6%
+|-
+| Defender Spawn Time || -6%
+|-
+| Looted Resource Refund || +11%
+|-
+| Looted Resource Refund || +11%
+|-
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]

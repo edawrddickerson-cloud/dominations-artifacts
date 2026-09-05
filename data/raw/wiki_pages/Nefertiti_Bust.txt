@@ -1,0 +1,35 @@
+
+== General Description ==
+[[File:Nefertiti_Bust.png|thumb|220px]]
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]]. It can be purchased for real money.
+
+== Historical Description ==
+Nefertiti was one of the most powerful women in the history of Egypt. She was born either a high-ranking native noblewoman or a Syrian princess in the 14th century BCE. In her youth she married the pharaoh Akhenaten, whose reign
+introduced shocking reforms to Egyptian society, religion, and art.
+
+The revolution extended to the power dynamic in the royal couple. Upending millennia of tradition, the queen seems to have been an equal partner in her husband's endeavors. She was depicted at the same size as her husband and was even shown smiting enemies in combat. In fact, Nefertiti may have briefly ruled in her own right under the name Smenkhkare after her husband's death.
+
+The world-famous bust of Nefertiti that now resides at Berlin's Neues Museum was discovered in 1912. Because it was found in the workshop of the sculptor Thutmose, it is ironically thought to have been intended not for display but rather as a model for creating other images. Though the queen's reforms turned out to be short-lived in her own time, her image has become an enduring symbol of beauty and an icon of Egyptian art.
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+|All [[Resources]] Looted || rowspan="3" | +11%
+|-
+|All [[Resources]] Looted
+|-
+|[[Raiders|Raider]] Damage
+|-
+|[[Raiders|Raider]] Hitpoints || rowspan="2" | +6%
+|-
+|[[Mortar Infantry|Mortar]] Troop Damage
+|-
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]

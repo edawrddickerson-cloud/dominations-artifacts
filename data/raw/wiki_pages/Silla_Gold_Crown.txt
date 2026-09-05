@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.png|centre|250px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]]. It can be obtained from the [[Temple of Artemis Event]].
+
+
+== Historical Description ==
+The kingdom of Silla dominated the southern Korean peninsula from 668-935 CE. Excavation at the Silla capital in the modern city of Gyeongju have revealed several magnificent royal crowns. Their base material is thinly hammered golden sheets, and all but one are decorated with jade. The symbolic design suggests a connection between the Silla kings and the shamanistic beliefs of Eurasian steppe nomads. all of these crowns are listed among the National Treasures of South Korea.
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| [[Gold]] Looted || +11%
+|-
+| [[Gold]] from [[Gold Mine]]s || +11%
+|-
+| [[Gold]] from [[Caravan]]s || +11%
+|-
+| [[Library]] [[Technology|Tech]] Resource Cost || -11%
+|-
+| [[Ranged Infantry]] Damage|| +11%
+|-
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]

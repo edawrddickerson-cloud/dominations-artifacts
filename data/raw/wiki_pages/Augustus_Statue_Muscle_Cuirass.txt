@@ -1,0 +1,36 @@
+[[File:Augustus Statue Muscle Cuirass-0.png|centre|220px]]
+
+
+[[File:Augustus_Statue_Muscle_Cuirass_Large.png|centre|500px]]
+
+
+== General Description ==
+
+'''Augustus Statue Muscle Cuirass''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]]. It is purchased from limited time sale. Cost 100 token
+
+== Historical Description ==
+
+The Augustus of Prima Porta is a marble statue of the first Roman emperor that was found in a Villa near Rome. In its center, Augustus accepts a battle standard from a foreign ruler. This refers to his greatest diplomatic achievement: negotiating the return of the legionary eagles lost to Parthia at the Battle of Carrhae. Surrounding the emperor in has-relief are gods that symbolize his peaceful reign to come, as well as figures representing various subjugated lands and peoples.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base
+Stat
+|-
+|[[Generals]]' Damage|| rowspan="5" | +11%
+|-
+|[[Generals]]' Damage
+|-
+|[[Generals]]' Hitpoints
+|-
+|[[Generals]]' Hitpoints
+|-
+|Enemy Defender Spawn Time
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:Museum]]

@@ -1,0 +1,2986 @@
+[
+  {
+    "title": "Admiral Yi’s Helmet",
+    "filename": "Admiral_Yi’s_Helmet.txt",
+    "ok": true,
+    "error": null,
+    "length": 2004,
+    "skipped_existing": false
+  },
+  {
+    "title": "Antikythera Mechanism",
+    "filename": "Antikythera_Mechanism.txt",
+    "ok": true,
+    "error": null,
+    "length": 1589,
+    "skipped_existing": false
+  },
+  {
+    "title": "Ashanti Kuduo",
+    "filename": "Ashanti_Kuduo.txt",
+    "ok": true,
+    "error": null,
+    "length": 1765,
+    "skipped_existing": false
+  },
+  {
+    "title": "Augustus Statue Muscle Cuirass",
+    "filename": "Augustus_Statue_Muscle_Cuirass.txt",
+    "ok": true,
+    "error": null,
+    "length": 1176,
+    "skipped_existing": false
+  },
+  {
+    "title": "Aztec Calendar",
+    "filename": "Aztec_Calendar.txt",
+    "ok": true,
+    "error": null,
+    "length": 1241,
+    "skipped_existing": false
+  },
+  {
+    "title": "Captain's Croix de Guerre",
+    "filename": "Captain's_Croix_de_Guerre.txt",
+    "ok": true,
+    "error": null,
+    "length": 1230,
+    "skipped_existing": false
+  },
+  {
+    "title": "Christmas Football",
+    "filename": "Christmas_Football.txt",
+    "ok": true,
+    "error": null,
+    "length": 2108,
+    "skipped_existing": false
+  },
+  {
+    "title": "Clem Sohn's Wingsuit",
+    "filename": "Clem_Sohn's_Wingsuit.txt",
+    "ok": true,
+    "error": null,
+    "length": 1438,
+    "skipped_existing": false
+  },
+  {
+    "title": "Code of Hammurabi",
+    "filename": "Code_of_Hammurabi.txt",
+    "ok": true,
+    "error": null,
+    "length": 1384,
+    "skipped_existing": false
+  },
+  {
+    "title": "Dilophosaurus Skull",
+    "filename": "Dilophosaurus_Skull.txt",
+    "ok": true,
+    "error": null,
+    "length": 586,
+    "skipped_existing": false
+  },
+  {
+    "title": "Double-Headed Serpent",
+    "filename": "Double-Headed_Serpent.txt",
+    "ok": true,
+    "error": null,
+    "length": 1037,
+    "skipped_existing": false
+  },
+  {
+    "title": "Edison's Electric Lamp",
+    "filename": "Edison's_Electric_Lamp.txt",
+    "ok": true,
+    "error": null,
+    "length": 1430,
+    "skipped_existing": false
+  },
+  {
+    "title": "Enigma Machine",
+    "filename": "Enigma_Machine.txt",
+    "ok": true,
+    "error": null,
+    "length": 1678,
+    "skipped_existing": false
+  },
+  {
+    "title": "Fengguan Phoenix Crown",
+    "filename": "Fengguan_Phoenix_Crown.txt",
+    "ok": true,
+    "error": null,
+    "length": 1105,
+    "skipped_existing": false
+  },
+  {
+    "title": "Fire Breathing Bunny Fossil",
+    "filename": "Fire_Breathing_Bunny_Fossil.txt",
+    "ok": true,
+    "error": null,
+    "length": 1022,
+    "skipped_existing": false
+  },
+  {
+    "title": "First Strike Star",
+    "filename": "First_Strike_Star.txt",
+    "ok": true,
+    "error": null,
+    "length": 545,
+    "skipped_existing": false
+  },
+  {
+    "title": "Heads of Hevajra",
+    "filename": "Heads_of_Hevajra.txt",
+    "ok": true,
+    "error": null,
+    "length": 1155,
+    "skipped_existing": false
+  },
+  {
+    "title": "Helgö Buddha",
+    "filename": "Helgö_Buddha.txt",
+    "ok": true,
+    "error": null,
+    "length": 1646,
+    "skipped_existing": false
+  },
+  {
+    "title": "Jade Olmec Mask",
+    "filename": "Jade_Olmec_Mask.txt",
+    "ok": true,
+    "error": null,
+    "length": 1335,
+    "skipped_existing": false
+  },
+  {
+    "title": "Keyed English Guitar",
+    "filename": "Keyed_English_Guitar.txt",
+    "ok": true,
+    "error": null,
+    "length": 1587,
+    "skipped_existing": false
+  },
+  {
+    "title": "Leoni Parade Shield",
+    "filename": "Leoni_Parade_Shield.txt",
+    "ok": true,
+    "error": null,
+    "length": 1236,
+    "skipped_existing": false
+  },
+  {
+    "title": "Lewis Chessmen",
+    "filename": "Lewis_Chessmen.txt",
+    "ok": true,
+    "error": null,
+    "length": 1735,
+    "skipped_existing": false
+  },
+  {
+    "title": "Li Vessel",
+    "filename": "Li_Vessel.txt",
+    "ok": true,
+    "error": null,
+    "length": 1258,
+    "skipped_existing": false
+  },
+  {
+    "title": "Lycurgus Cup",
+    "filename": "Lycurgus_Cup.txt",
+    "ok": true,
+    "error": null,
+    "length": 1964,
+    "skipped_existing": false
+  },
+  {
+    "title": "Mask of Agamemnon",
+    "filename": "Mask_of_Agamemnon.txt",
+    "ok": true,
+    "error": null,
+    "length": 1141,
+    "skipped_existing": false
+  },
+  {
+    "title": "Mask of Tutankhamun",
+    "filename": "Mask_of_Tutankhamun.txt",
+    "ok": true,
+    "error": null,
+    "length": 1359,
+    "skipped_existing": false
+  },
+  {
+    "title": "Minoan Bull-Leaper",
+    "filename": "Minoan_Bull-Leaper.txt",
+    "ok": true,
+    "error": null,
+    "length": 1470,
+    "skipped_existing": false
+  },
+  {
+    "title": "Morse Telegraph",
+    "filename": "Morse_Telegraph.txt",
+    "ok": true,
+    "error": null,
+    "length": 493,
+    "skipped_existing": false
+  },
+  {
+    "title": "Napoleon's Bicorne Hat",
+    "filename": "Napoleon's_Bicorne_Hat.txt",
+    "ok": true,
+    "error": null,
+    "length": 1250,
+    "skipped_existing": false
+  },
+  {
+    "title": "Nefertiti Bust",
+    "filename": "Nefertiti_Bust.txt",
+    "ok": true,
+    "error": null,
+    "length": 1759,
+    "skipped_existing": false
+  },
+  {
+    "title": "Personal Computer",
+    "filename": "Personal_Computer.txt",
+    "ok": true,
+    "error": null,
+    "length": 1664,
+    "skipped_existing": false
+  },
+  {
+    "title": "Pompus' Comb",
+    "filename": "Pompus'_Comb.txt",
+    "ok": true,
+    "error": null,
+    "length": 1312,
+    "skipped_existing": false
+  },
+  {
+    "title": "Quimbaya Treasure",
+    "filename": "Quimbaya_Treasure.txt",
+    "ok": true,
+    "error": null,
+    "length": 1349,
+    "skipped_existing": false
+  },
+  {
+    "title": "Rosetta Stone",
+    "filename": "Rosetta_Stone.txt",
+    "ok": true,
+    "error": null,
+    "length": 1302,
+    "skipped_existing": false
+  },
+  {
+    "title": "Ruyi Scepter",
+    "filename": "Ruyi_Scepter.txt",
+    "ok": true,
+    "error": null,
+    "length": 1472,
+    "skipped_existing": false
+  },
+  {
+    "title": "Silla Gold Crown",
+    "filename": "Silla_Gold_Crown.txt",
+    "ok": true,
+    "error": null,
+    "length": 1156,
+    "skipped_existing": false
+  },
+  {
+    "title": "Sojourner Mars Rover",
+    "filename": "Sojourner_Mars_Rover.txt",
+    "ok": true,
+    "error": null,
+    "length": 1705,
+    "skipped_existing": false
+  },
+  {
+    "title": "Soul Catcher",
+    "filename": "Soul_Catcher.txt",
+    "ok": true,
+    "error": null,
+    "length": 1450,
+    "skipped_existing": false
+  },
+  {
+    "title": "Sphinx of Taharqo",
+    "filename": "Sphinx_of_Taharqo.txt",
+    "ok": true,
+    "error": null,
+    "length": 1057,
+    "skipped_existing": false
+  },
+  {
+    "title": "Stopler Revolver",
+    "filename": "Stopler_Revolver.txt",
+    "ok": true,
+    "error": null,
+    "length": 1094,
+    "skipped_existing": false
+  },
+  {
+    "title": "Sutton Hoo Helmet",
+    "filename": "Sutton_Hoo_Helmet.txt",
+    "ok": true,
+    "error": null,
+    "length": 1245,
+    "skipped_existing": false
+  },
+  {
+    "title": "Swimming Reindeer",
+    "filename": "Swimming_Reindeer.txt",
+    "ok": true,
+    "error": null,
+    "length": 1319,
+    "skipped_existing": false
+  },
+  {
+    "title": "Sword of Goujian",
+    "filename": "Sword_of_Goujian.txt",
+    "ok": true,
+    "error": null,
+    "length": 1137,
+    "skipped_existing": false
+  },
+  {
+    "title": "The Book of Five Rings",
+    "filename": "The_Book_of_Five_Rings.txt",
+    "ok": true,
+    "error": null,
+    "length": 1212,
+    "skipped_existing": false
+  },
+  {
+    "title": "The Book of Kells",
+    "filename": "The_Book_of_Kells.txt",
+    "ok": true,
+    "error": null,
+    "length": 1467,
+    "skipped_existing": false
+  },
+  {
+    "title": "Thinker of Cernavoda",
+    "filename": "Thinker_of_Cernavoda.txt",
+    "ok": true,
+    "error": null,
+    "length": 1172,
+    "skipped_existing": false
+  },
+  {
+    "title": "Tokugawa Ieyasu's Helmet",
+    "filename": "Tokugawa_Ieyasu's_Helmet.txt",
+    "ok": true,
+    "error": null,
+    "length": 1062,
+    "skipped_existing": false
+  },
+  {
+    "title": "Video Game Console",
+    "filename": "Video_Game_Console.txt",
+    "ok": true,
+    "error": null,
+    "length": 1620,
+    "skipped_existing": false
+  },
+  {
+    "title": "Warka Vase",
+    "filename": "Warka_Vase.txt",
+    "ok": true,
+    "error": null,
+    "length": 1686,
+    "skipped_existing": false
+  },
+  {
+    "title": "6th Anniversary Six-Shooter",
+    "filename": "6th_Anniversary_Six-Shooter.txt",
+    "ok": true,
+    "error": null,
+    "length": 1499,
+    "skipped_existing": false
+  },
+  {
+    "title": "10th Mountain Division War Kit",
+    "filename": "10th_Mountain_Division_War_Kit.txt",
+    "ok": true,
+    "error": null,
+    "length": 1691,
+    "skipped_existing": false
+  },
+  {
+    "title": "11th Anniversary Cake",
+    "filename": "11th_Anniversary_Cake.txt",
+    "ok": true,
+    "error": null,
+    "length": 465,
+    "skipped_existing": false
+  },
+  {
+    "title": "Alfred Jewel",
+    "filename": "Alfred_Jewel.txt",
+    "ok": true,
+    "error": null,
+    "length": 1245,
+    "skipped_existing": false
+  },
+  {
+    "title": "Analytical Engine",
+    "filename": "Analytical_Engine.txt",
+    "ok": true,
+    "error": null,
+    "length": 500,
+    "skipped_existing": false
+  },
+  {
+    "title": "Arm Reliquary of Charlemagne",
+    "filename": "Arm_Reliquary_of_Charlemagne.txt",
+    "ok": true,
+    "error": null,
+    "length": 1822,
+    "skipped_existing": false
+  },
+  {
+    "title": "ASDIC Type 113X",
+    "filename": "ASDIC_Type_113X.txt",
+    "ok": true,
+    "error": null,
+    "length": 1789,
+    "skipped_existing": false
+  },
+  {
+    "title": "ASM-135 Anti-Satellite Missile",
+    "filename": "ASM-135_Anti-Satellite_Missile.txt",
+    "ok": true,
+    "error": null,
+    "length": 1696,
+    "skipped_existing": false
+  },
+  {
+    "title": "Battersea Shield",
+    "filename": "Battersea_Shield.txt",
+    "ok": true,
+    "error": null,
+    "length": 1478,
+    "skipped_existing": false
+  },
+  {
+    "title": "Berlichingen's Iron Prosthetic Hand",
+    "filename": "Berlichingen's_Iron_Prosthetic_Hand.txt",
+    "ok": true,
+    "error": null,
+    "length": 1166,
+    "skipped_existing": false
+  },
+  {
+    "title": "British Kettle Drum",
+    "filename": "British_Kettle_Drum.txt",
+    "ok": true,
+    "error": null,
+    "length": 1203,
+    "skipped_existing": false
+  },
+  {
+    "title": "Bust of Ramesses II",
+    "filename": "Bust_of_Ramesses_II.txt",
+    "ok": true,
+    "error": null,
+    "length": 1575,
+    "skipped_existing": false
+  },
+  {
+    "title": "Caligula's Ring",
+    "filename": "Caligula's_Ring.txt",
+    "ok": true,
+    "error": null,
+    "length": 1619,
+    "skipped_existing": false
+  },
+  {
+    "title": "Capt. McConnell's Hero Ensemble",
+    "filename": "Capt._McConnell's_Hero_Ensemble.txt",
+    "ok": true,
+    "error": null,
+    "length": 1518,
+    "skipped_existing": false
+  },
+  {
+    "title": "Creighton Abrams Tank Commander Kit",
+    "filename": "Creighton_Abrams_Tank_Commander_Kit.txt",
+    "ok": true,
+    "error": null,
+    "length": 1444,
+    "skipped_existing": false
+  },
+  {
+    "title": "Crescent Blade",
+    "filename": "Crescent_Blade.txt",
+    "ok": true,
+    "error": null,
+    "length": 1499,
+    "skipped_existing": false
+  },
+  {
+    "title": "Crocodile Mask",
+    "filename": "Crocodile_Mask.txt",
+    "ok": true,
+    "error": null,
+    "length": 1599,
+    "skipped_existing": false
+  },
+  {
+    "title": "Cryolophosaurus Skull",
+    "filename": "Cryolophosaurus_Skull.txt",
+    "ok": true,
+    "error": null,
+    "length": 1492,
+    "skipped_existing": false
+  },
+  {
+    "title": "Da Vinci's Flying Machine",
+    "filename": "Da_Vinci's_Flying_Machine.txt",
+    "ok": true,
+    "error": null,
+    "length": 1498,
+    "skipped_existing": false
+  },
+  {
+    "title": "Da Vinci's Machine Gun",
+    "filename": "Da_Vinci's_Machine_Gun.txt",
+    "ok": true,
+    "error": null,
+    "length": 1764,
+    "skipped_existing": false
+  },
+  {
+    "title": "Demarcation Stone",
+    "filename": "Demarcation_Stone.txt",
+    "ok": true,
+    "error": null,
+    "length": 1651,
+    "skipped_existing": false
+  },
+  {
+    "title": "Desert Storm PSN-8 Manpack",
+    "filename": "Desert_Storm_PSN-8_Manpack.txt",
+    "ok": true,
+    "error": null,
+    "length": 1684,
+    "skipped_existing": false
+  },
+  {
+    "title": "Dominations Army Helmet",
+    "filename": "Dominations_Army_Helmet.txt",
+    "ok": true,
+    "error": null,
+    "length": 536,
+    "skipped_existing": false
+  },
+  {
+    "title": "DomiNations Game Box",
+    "filename": "DomiNations_Game_Box.txt",
+    "ok": true,
+    "error": null,
+    "length": 584,
+    "skipped_existing": false
+  },
+  {
+    "title": "Elephant Archer Quiver",
+    "filename": "Elephant_Archer_Quiver.txt",
+    "ok": true,
+    "error": null,
+    "length": 1073,
+    "skipped_existing": false
+  },
+  {
+    "title": "Flamma's Helmet",
+    "filename": "Flamma's_Helmet.txt",
+    "ok": true,
+    "error": null,
+    "length": 1802,
+    "skipped_existing": false
+  },
+  {
+    "title": "Gemini 8 Gloves",
+    "filename": "Gemini_8_Gloves.txt",
+    "ok": true,
+    "error": null,
+    "length": 1608,
+    "skipped_existing": false
+  },
+  {
+    "title": "Gemini 8 Helmet",
+    "filename": "Gemini_8_Helmet.txt",
+    "ok": true,
+    "error": null,
+    "length": 1578,
+    "skipped_existing": false
+  },
+  {
+    "title": "General Pershing's Bas-Relief",
+    "filename": "General_Pershing's_Bas-Relief.txt",
+    "ok": true,
+    "error": null,
+    "length": 1131,
+    "skipped_existing": false
+  },
+  {
+    "title": "Great Imperial Crown",
+    "filename": "Great_Imperial_Crown.txt",
+    "ok": true,
+    "error": null,
+    "length": 1622,
+    "skipped_existing": false
+  },
+  {
+    "title": "Huey Armament System",
+    "filename": "Huey_Armament_System.txt",
+    "ok": true,
+    "error": null,
+    "length": 1918,
+    "skipped_existing": false
+  },
+  {
+    "title": "Joyeuse Sword",
+    "filename": "Joyeuse_Sword.txt",
+    "ok": true,
+    "error": null,
+    "length": 1724,
+    "skipped_existing": false
+  },
+  {
+    "title": "Julius Caesar Statue",
+    "filename": "Julius_Caesar_Statue.txt",
+    "ok": true,
+    "error": null,
+    "length": 1731,
+    "skipped_existing": false
+  },
+  {
+    "title": "Koh-i-Noor Diamond",
+    "filename": "Koh-i-Noor_Diamond.txt",
+    "ok": true,
+    "error": null,
+    "length": 1401,
+    "skipped_existing": false
+  },
+  {
+    "title": "Leftwich Trophy",
+    "filename": "Leftwich_Trophy.txt",
+    "ok": true,
+    "error": null,
+    "length": 1229,
+    "skipped_existing": false
+  },
+  {
+    "title": "Leonidas Bust",
+    "filename": "Leonidas_Bust.txt",
+    "ok": true,
+    "error": null,
+    "length": 1739,
+    "skipped_existing": false
+  },
+  {
+    "title": "Liberty Bell",
+    "filename": "Liberty_Bell.txt",
+    "ok": true,
+    "error": null,
+    "length": 1827,
+    "skipped_existing": false
+  },
+  {
+    "title": "Mahiole",
+    "filename": "Mahiole.txt",
+    "ok": true,
+    "error": null,
+    "length": 486,
+    "skipped_existing": false
+  },
+  {
+    "title": "Maori War Club",
+    "filename": "Maori_War_Club.txt",
+    "ok": true,
+    "error": null,
+    "length": 1183,
+    "skipped_existing": false
+  },
+  {
+    "title": "Mold Gold Cape",
+    "filename": "Mold_Gold_Cape.txt",
+    "ok": true,
+    "error": null,
+    "length": 513,
+    "skipped_existing": false
+  },
+  {
+    "title": "Narmer Palette",
+    "filename": "Narmer_Palette.txt",
+    "ok": true,
+    "error": null,
+    "length": 2227,
+    "skipped_existing": false
+  },
+  {
+    "title": "Napoleon's Boxlock Pistol",
+    "filename": "Napoleon's_Boxlock_Pistol.txt",
+    "ok": true,
+    "error": null,
+    "length": 2510,
+    "skipped_existing": false
+  },
+  {
+    "title": "Nine Men's Morris",
+    "filename": "Nine_Men's_Morris.txt",
+    "ok": true,
+    "error": null,
+    "length": 1305,
+    "skipped_existing": false
+  },
+  {
+    "title": "Norden Bombsight",
+    "filename": "Norden_Bombsight.txt",
+    "ok": true,
+    "error": null,
+    "length": 1675,
+    "skipped_existing": false
+  },
+  {
+    "title": "Normandy SCR-536 \"Walkie-Talkie\"",
+    "filename": "Normandy_SCR-536__Walkie-Talkie_.txt",
+    "ok": true,
+    "error": null,
+    "length": 1677,
+    "skipped_existing": false
+  },
+  {
+    "title": "Olmec Colossal Heads",
+    "filename": "Olmec_Colossal_Heads.txt",
+    "ok": true,
+    "error": null,
+    "length": 1364,
+    "skipped_existing": false
+  },
+  {
+    "title": "Plane Gyro Gunsight",
+    "filename": "Plane_Gyro_Gunsight.txt",
+    "ok": true,
+    "error": null,
+    "length": 1401,
+    "skipped_existing": false
+  },
+  {
+    "title": "Ramesses Ⅱ's Abu Simbel",
+    "filename": "Ramesses_Ⅱ's_Abu_Simbel.txt",
+    "ok": true,
+    "error": null,
+    "length": 1810,
+    "skipped_existing": false
+  },
+  {
+    "title": "Raven Rattle",
+    "filename": "Raven_Rattle.txt",
+    "ok": true,
+    "error": null,
+    "length": 1257,
+    "skipped_existing": false
+  },
+  {
+    "title": "Red Baron's Engine",
+    "filename": "Red_Baron's_Engine.txt",
+    "ok": true,
+    "error": null,
+    "length": 1608,
+    "skipped_existing": false
+  },
+  {
+    "title": "RQ-2 Pioneer",
+    "filename": "RQ-2_Pioneer.txt",
+    "ok": true,
+    "error": null,
+    "length": 1703,
+    "skipped_existing": false
+  },
+  {
+    "title": "Sanada Yukimura's Armor",
+    "filename": "Sanada_Yukimura's_Armor.txt",
+    "ok": true,
+    "error": null,
+    "length": 1736,
+    "skipped_existing": false
+  },
+  {
+    "title": "Sophilos Dinos",
+    "filename": "Sophilos_Dinos.txt",
+    "ok": true,
+    "error": null,
+    "length": 1589,
+    "skipped_existing": false
+  },
+  {
+    "title": "Supermarine Spitfire Engine",
+    "filename": "Supermarine_Spitfire_Engine.txt",
+    "ok": true,
+    "error": null,
+    "length": 1616,
+    "skipped_existing": false
+  },
+  {
+    "title": "T-34 Tank Engine",
+    "filename": "T-34_Tank_Engine.txt",
+    "ok": true,
+    "error": null,
+    "length": 1618,
+    "skipped_existing": false
+  },
+  {
+    "title": "The Art of War",
+    "filename": "The_Art_of_War.txt",
+    "ok": true,
+    "error": null,
+    "length": 1726,
+    "skipped_existing": false
+  },
+  {
+    "title": "The White Death's War Kit",
+    "filename": "The_White_Death's_War_Kit.txt",
+    "ok": true,
+    "error": null,
+    "length": 1275,
+    "skipped_existing": false
+  },
+  {
+    "title": "Tizona Sword",
+    "filename": "Tizona_Sword.txt",
+    "ok": true,
+    "error": null,
+    "length": 1650,
+    "skipped_existing": false
+  },
+  {
+    "title": "Trundholm Sun Chariot",
+    "filename": "Trundholm_Sun_Chariot.txt",
+    "ok": true,
+    "error": null,
+    "length": 512,
+    "skipped_existing": false
+  },
+  {
+    "title": "Vespa 150 TAP",
+    "filename": "Vespa_150_TAP.txt",
+    "ok": true,
+    "error": null,
+    "length": 1721,
+    "skipped_existing": false
+  },
+  {
+    "title": "Vz-9 Avrocar",
+    "filename": "Vz-9_Avrocar.txt",
+    "ok": true,
+    "error": null,
+    "length": 1541,
+    "skipped_existing": false
+  },
+  {
+    "title": "Welrod MkII",
+    "filename": "Welrod_MkII.txt",
+    "ok": true,
+    "error": null,
+    "length": 1653,
+    "skipped_existing": false
+  },
+  {
+    "title": "Winged Victory of Samothrace",
+    "filename": "Winged_Victory_of_Samothrace.txt",
+    "ok": true,
+    "error": null,
+    "length": 1843,
+    "skipped_existing": false
+  },
+  {
+    "title": "ZG 1229 Vampir",
+    "filename": "ZG_1229_Vampir.txt",
+    "ok": true,
+    "error": null,
+    "length": 1688,
+    "skipped_existing": false
+  },
+  {
+    "title": "Archaeology Capstone",
+    "filename": "Archaeology_Capstone.txt",
+    "ok": true,
+    "error": null,
+    "length": 756,
+    "skipped_existing": false
+  },
+  {
+    "title": "Technology",
+    "filename": "Technology.txt",
+    "ok": true,
+    "error": null,
+    "length": 8065,
+    "skipped_existing": false
+  },
+  {
+    "title": "Library",
+    "filename": "Library.txt",
+    "ok": true,
+    "error": null,
+    "length": 7798,
+    "skipped_existing": false
+  },
+  {
+    "title": "Admiral Yi’s Helmet(Mythical Artifacts)",
+    "filename": "Admiral_Yi’s_Helmet(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1739,
+    "skipped_existing": false
+  },
+  {
+    "title": "Antikythera Mechanism(Mythical Artifacts)",
+    "filename": "Antikythera_Mechanism(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Ashanti Kuduo(Mythical Artifacts)",
+    "filename": "Ashanti_Kuduo(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Augustus Statue Muscle Cuirass(Mythical Artifacts)",
+    "filename": "Augustus_Statue_Muscle_Cuirass(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1020,
+    "skipped_existing": false
+  },
+  {
+    "title": "Aztec Calendar(Mythical Artifacts)",
+    "filename": "Aztec_Calendar(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1079,
+    "skipped_existing": false
+  },
+  {
+    "title": "Captain's Croix de Guerre(Mythical Artifacts)",
+    "filename": "Captain's_Croix_de_Guerre(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 942,
+    "skipped_existing": false
+  },
+  {
+    "title": "Christmas Football(Mythical Artifacts)",
+    "filename": "Christmas_Football(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Clem Sohn's Wingsuit(Mythical Artifacts)",
+    "filename": "Clem_Sohn's_Wingsuit(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Code of Hammurabi(Mythical Artifacts)",
+    "filename": "Code_of_Hammurabi(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Double-Headed Serpent(Mythical Artifacts)",
+    "filename": "Double-Headed_Serpent(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1076,
+    "skipped_existing": false
+  },
+  {
+    "title": "Edison's Electric Lamp(Mythical Artifacts)",
+    "filename": "Edison's_Electric_Lamp(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Enigma Machine(Mythical Artifacts)",
+    "filename": "Enigma_Machine(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1713,
+    "skipped_existing": false
+  },
+  {
+    "title": "Fengguan Phoenix Crown(Mythical Artifacts)",
+    "filename": "Fengguan_Phoenix_Crown(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1078,
+    "skipped_existing": false
+  },
+  {
+    "title": "Fire Breathing Bunny Fossil(Mythical Artifacts)",
+    "filename": "Fire_Breathing_Bunny_Fossil(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 982,
+    "skipped_existing": false
+  },
+  {
+    "title": "Heads of Hevajra(Mythical Artifacts)",
+    "filename": "Heads_of_Hevajra(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Helgö Buddha(Mythical Artifacts)",
+    "filename": "Helgö_Buddha(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Jade Olmec Mask(Mythical Artifacts)",
+    "filename": "Jade_Olmec_Mask(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Keyed English Guitar(Mythical Artifacts)",
+    "filename": "Keyed_English_Guitar(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Leoni Parade Shield(Mythical Artifacts)",
+    "filename": "Leoni_Parade_Shield(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1250,
+    "skipped_existing": false
+  },
+  {
+    "title": "Lewis Chessmen(Mythical Artifacts)",
+    "filename": "Lewis_Chessmen(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Li Vessel(Mythical Artifacts)",
+    "filename": "Li_Vessel(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1297,
+    "skipped_existing": false
+  },
+  {
+    "title": "Lycurgus Cup(Mythical Artifacts)",
+    "filename": "Lycurgus_Cup(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Mask of Agamemnon(Mythical Artifacts)",
+    "filename": "Mask_of_Agamemnon(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 993,
+    "skipped_existing": false
+  },
+  {
+    "title": "Minoan Bull-Leaper(Mythical Artifacts)",
+    "filename": "Minoan_Bull-Leaper(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Morse Telegraph(Mythical Artifacts)",
+    "filename": "Morse_Telegraph(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Napoleon's Bicorne Hat(Mythical Artifacts)",
+    "filename": "Napoleon's_Bicorne_Hat(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1276,
+    "skipped_existing": false
+  },
+  {
+    "title": "Nefertiti Bust(Mythical Artifacts)",
+    "filename": "Nefertiti_Bust(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Personal Computer(Mythical Artifacts)",
+    "filename": "Personal_Computer(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Pompus' Comb(Mythical Artifacts)",
+    "filename": "Pompus'_Comb(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1276,
+    "skipped_existing": false
+  },
+  {
+    "title": "Quimbaya Treasure(Mythical Artifacts)",
+    "filename": "Quimbaya_Treasure(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Rosetta Stone(Mythical Artifacts)",
+    "filename": "Rosetta_Stone(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1164,
+    "skipped_existing": false
+  },
+  {
+    "title": "Ruyi Scepter(Mythical Artifacts)",
+    "filename": "Ruyi_Scepter(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1499,
+    "skipped_existing": false
+  },
+  {
+    "title": "Silla Gold Crown(Mythical Artifacts)",
+    "filename": "Silla_Gold_Crown(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1061,
+    "skipped_existing": false
+  },
+  {
+    "title": "Sojourner Mars Rover(Mythical Artifacts)",
+    "filename": "Sojourner_Mars_Rover(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Soul Catcher(Mythical Artifacts)",
+    "filename": "Soul_Catcher(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1438,
+    "skipped_existing": false
+  },
+  {
+    "title": "Sphinx of Taharqo(Mythical Artifacts)",
+    "filename": "Sphinx_of_Taharqo(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 985,
+    "skipped_existing": false
+  },
+  {
+    "title": "Stopler Revolver(Mythical Artifacts)",
+    "filename": "Stopler_Revolver(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1030,
+    "skipped_existing": false
+  },
+  {
+    "title": "Sutton Hoo Helmet(Mythical Artifacts)",
+    "filename": "Sutton_Hoo_Helmet(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1150,
+    "skipped_existing": false
+  },
+  {
+    "title": "Swimming Reindeer(Mythical Artifacts)",
+    "filename": "Swimming_Reindeer(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Sword of Goujian(Mythical Artifacts)",
+    "filename": "Sword_of_Goujian(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1035,
+    "skipped_existing": false
+  },
+  {
+    "title": "The Book of Five Rings(Mythical Artifacts)",
+    "filename": "The_Book_of_Five_Rings(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1141,
+    "skipped_existing": false
+  },
+  {
+    "title": "The Book of Kells(Mythical Artifacts)",
+    "filename": "The_Book_of_Kells(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Thinker of Cernavoda(Mythical Artifacts)",
+    "filename": "Thinker_of_Cernavoda(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Tokugawa Ieyasu's Helmet(Mythical Artifacts)",
+    "filename": "Tokugawa_Ieyasu's_Helmet(Mythical_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1019,
+    "skipped_existing": false
+  },
+  {
+    "title": "Video Game Console(Mythical Artifacts)",
+    "filename": "Video_Game_Console(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Warka Vase(Mythical Artifacts)",
+    "filename": "Warka_Vase(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "6th Anniversary Six-Shooter(Mythical War Artifacts)",
+    "filename": "6th_Anniversary_Six-Shooter(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "10th Mountain Division War Kit(Mythical War Artifacts)",
+    "filename": "10th_Mountain_Division_War_Kit(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1658,
+    "skipped_existing": false
+  },
+  {
+    "title": "Arm Reliquary of Charlemagne(Mythical War Artifacts)",
+    "filename": "Arm_Reliquary_of_Charlemagne(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1701,
+    "skipped_existing": false
+  },
+  {
+    "title": "ASDIC Type 113X(Mythical War Artifacts)",
+    "filename": "ASDIC_Type_113X(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1822,
+    "skipped_existing": false
+  },
+  {
+    "title": "ASM-135 Anti-Satellite Missile(Mythical War Artifacts)",
+    "filename": "ASM-135_Anti-Satellite_Missile(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Battersea Shield(Mythical War Artifacts)",
+    "filename": "Battersea_Shield(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Berlichingen's Iron Prosthetic Hand(Mythical War Artifacts)",
+    "filename": "Berlichingen's_Iron_Prosthetic_Hand(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "British Kettle Drum(Mythical War Artifacts)",
+    "filename": "British_Kettle_Drum(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1758,
+    "skipped_existing": false
+  },
+  {
+    "title": "Bust of Ramesses II(Mythical War Artifacts)",
+    "filename": "Bust_of_Ramesses_II(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Caligula's Ring(Mythical War Artifacts)",
+    "filename": "Caligula's_Ring(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1576,
+    "skipped_existing": false
+  },
+  {
+    "title": "Capt. McConnell's Hero Ensemble(Mythical War Artifacts)",
+    "filename": "Capt._McConnell's_Hero_Ensemble(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Creighton Abrams Tank Commander Kit(Mythical War Artifacts)",
+    "filename": "Creighton_Abrams_Tank_Commander_Kit(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Crescent Blade(Mythical War Artifacts)",
+    "filename": "Crescent_Blade(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Crocodile Mask(Mythical War Artifacts)",
+    "filename": "Crocodile_Mask(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Cryolophosaurus Skull(Mythical War Artifacts)",
+    "filename": "Cryolophosaurus_Skull(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Da Vinci's Flying Machine(Mythical War Artifacts)",
+    "filename": "Da_Vinci's_Flying_Machine(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1418,
+    "skipped_existing": false
+  },
+  {
+    "title": "Da Vinci's Machine Gun(Mythical War Artifacts)",
+    "filename": "Da_Vinci's_Machine_Gun(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Demarcation Stone(Mythical War Artifacts)",
+    "filename": "Demarcation_Stone(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1455,
+    "skipped_existing": false
+  },
+  {
+    "title": "Desert Storm PSN-8 Manpack(Mythical War Artifacts)",
+    "filename": "Desert_Storm_PSN-8_Manpack(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "DomiNations Game Box(Mythical War Artifacts)",
+    "filename": "DomiNations_Game_Box(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 558,
+    "skipped_existing": false
+  },
+  {
+    "title": "Elephant Archer Quiver(Mythical War Artifacts)",
+    "filename": "Elephant_Archer_Quiver(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1008,
+    "skipped_existing": false
+  },
+  {
+    "title": "Flamma's Helmet(Mythical War Artifacts)",
+    "filename": "Flamma's_Helmet(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Gemini 8 Gloves(Mythical War Artifacts)",
+    "filename": "Gemini_8_Gloves(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1645,
+    "skipped_existing": false
+  },
+  {
+    "title": "Gemini 8 Helmet(Mythical War Artifacts)",
+    "filename": "Gemini_8_Helmet(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1510,
+    "skipped_existing": false
+  },
+  {
+    "title": "General Pershing's Bas-Relief(Mythical War Artifacts)",
+    "filename": "General_Pershing's_Bas-Relief(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 997,
+    "skipped_existing": false
+  },
+  {
+    "title": "Great Imperial Crown(Mythical War Artifacts)",
+    "filename": "Great_Imperial_Crown(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Huey Armament System(Mythical War Artifacts)",
+    "filename": "Huey_Armament_System(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1952,
+    "skipped_existing": false
+  },
+  {
+    "title": "Joyeuse Sword(Mythical War Artifacts)",
+    "filename": "Joyeuse_Sword(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1534,
+    "skipped_existing": false
+  },
+  {
+    "title": "Julius Caesar Statue(Mythical War Artifacts)",
+    "filename": "Julius_Caesar_Statue(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Koh-i-Noor Diamond(Mythical War Artifacts)",
+    "filename": "Koh-i-Noor_Diamond(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Leftwich Trophy(Mythical War Artifacts)",
+    "filename": "Leftwich_Trophy(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Leonidas Bust(Mythical War Artifacts)",
+    "filename": "Leonidas_Bust(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1606,
+    "skipped_existing": false
+  },
+  {
+    "title": "Liberty Bell(Mythical War Artifacts)",
+    "filename": "Liberty_Bell(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Maori War Club(Mythical War Artifacts)",
+    "filename": "Maori_War_Club(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1168,
+    "skipped_existing": false
+  },
+  {
+    "title": "Narmer Palette(Mythical War Artifacts)",
+    "filename": "Narmer_Palette(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Napoleon's Boxlock Pistol(Mythical War Artifacts)",
+    "filename": "Napoleon's_Boxlock_Pistol(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Nine Men's Morris(Mythical War Artifacts)",
+    "filename": "Nine_Men's_Morris(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Norden Bombsight(Mythical War Artifacts)",
+    "filename": "Norden_Bombsight(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1577,
+    "skipped_existing": false
+  },
+  {
+    "title": "Normandy SCR-536 \"Walkie-Talkie\"(Mythical War Artifacts)",
+    "filename": "Normandy_SCR-536__Walkie-Talkie_(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Olmec Colossal Heads(Mythical War Artifacts)",
+    "filename": "Olmec_Colossal_Heads(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Plane Gyro Gunsight(Mythical War Artifacts)",
+    "filename": "Plane_Gyro_Gunsight(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Ramesses Ⅱ's Abu Simbel(Mythical War Artifacts)",
+    "filename": "Ramesses_Ⅱ's_Abu_Simbel(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1774,
+    "skipped_existing": false
+  },
+  {
+    "title": "Raven Rattle(Mythical War Artifacts)",
+    "filename": "Raven_Rattle(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Red Baron's Engine(Mythical War Artifacts)",
+    "filename": "Red_Baron's_Engine(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1498,
+    "skipped_existing": false
+  },
+  {
+    "title": "RQ-2 Pioneer(Mythical War Artifacts)",
+    "filename": "RQ-2_Pioneer(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Sanada Yukimura's Armor(Mythical War Artifacts)",
+    "filename": "Sanada_Yukimura's_Armor(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Sophilos Dinos(Mythical War Artifacts)",
+    "filename": "Sophilos_Dinos(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Supermarine Spitfire Engine(Mythical War Artifacts)",
+    "filename": "Supermarine_Spitfire_Engine(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1651,
+    "skipped_existing": false
+  },
+  {
+    "title": "T-34 Tank Engine(Mythical War Artifacts)",
+    "filename": "T-34_Tank_Engine(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1590,
+    "skipped_existing": false
+  },
+  {
+    "title": "The Art of War(Mythical War Artifacts)",
+    "filename": "The_Art_of_War(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1764,
+    "skipped_existing": false
+  },
+  {
+    "title": "The White Death's War Kit(Mythical War Artifacts)",
+    "filename": "The_White_Death's_War_Kit(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1162,
+    "skipped_existing": false
+  },
+  {
+    "title": "Tizona Sword(Mythical War Artifacts)",
+    "filename": "Tizona_Sword(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1561,
+    "skipped_existing": false
+  },
+  {
+    "title": "Vespa 150 TAP(Mythical War Artifacts)",
+    "filename": "Vespa_150_TAP(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Vz-9 Avrocar(Mythical War Artifacts)",
+    "filename": "Vz-9_Avrocar(Mythical_War_Artifacts).txt",
+    "ok": true,
+    "error": null,
+    "length": 1579,
+    "skipped_existing": false
+  },
+  {
+    "title": "Welrod MkII(Mythical War Artifacts)",
+    "filename": "Welrod_MkII(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Winged Victory of Samothrace(Mythical War Artifacts)",
+    "filename": "Winged_Victory_of_Samothrace(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "ZG 1229 Vampir(Mythical War Artifacts)",
+    "filename": "ZG_1229_Vampir(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Legendary Artifacts",
+    "filename": "Legendary_Artifacts.txt",
+    "ok": true,
+    "error": null,
+    "length": 4033,
+    "skipped_existing": false
+  },
+  {
+    "title": "Benin Royal Ivory Mask",
+    "filename": "Benin_Royal_Ivory_Mask.txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Golden Lyre of Ur",
+    "filename": "Golden_Lyre_of_Ur.txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Mona Lisa",
+    "filename": "Mona_Lisa.txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Roman Dodechedron",
+    "filename": "Roman_Dodechedron.txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Tibetan Dung-Dkar",
+    "filename": "Tibetan_Dung-Dkar.txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Mythical Artifacts",
+    "filename": "Mythical_Artifacts.txt",
+    "ok": true,
+    "error": null,
+    "length": 5632,
+    "skipped_existing": false
+  },
+  {
+    "title": "DomiNations Army Helmet",
+    "filename": "DomiNations_Army_Helmet.txt",
+    "ok": true,
+    "error": null,
+    "length": 536,
+    "skipped_existing": true
+  },
+  {
+    "title": "Admiral Yi’s Helmet(Mythical War Artifacts)",
+    "filename": "Admiral_Yi’s_Helmet(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Aztec Calendar(Mythical War Artifacts)",
+    "filename": "Aztec_Calendar(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Enigma Machine(Mythical War Artifacts)",
+    "filename": "Enigma_Machine(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Fengguan Phoenix Crown(Mythical War Artifacts)",
+    "filename": "Fengguan_Phoenix_Crown(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Fire Breathing Bunny Fossil(Mythical War Artifacts)",
+    "filename": "Fire_Breathing_Bunny_Fossil(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Leoni Parade Shield(Mythical War Artifacts)",
+    "filename": "Leoni_Parade_Shield(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Li Vessel(Mythical War Artifacts)",
+    "filename": "Li_Vessel(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Mask of Agamemnon(Mythical War Artifacts)",
+    "filename": "Mask_of_Agamemnon(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Napoleon's Bicorne Hat(Mythical War Artifacts)",
+    "filename": "Napoleon's_Bicorne_Hat(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Ruyi Scepter(Mythical War Artifacts)",
+    "filename": "Ruyi_Scepter(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Soul Catcher(Mythical War Artifacts)",
+    "filename": "Soul_Catcher(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Sutton Hoo Helmet(Mythical War Artifacts)",
+    "filename": "Sutton_Hoo_Helmet(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "The Book of Five Rings(Mythical War Artifacts)",
+    "filename": "The_Book_of_Five_Rings(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Roman Dodecahedron",
+    "filename": "Roman_Dodecahedron.txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Legendary War Artifacts",
+    "filename": "Legendary_War_Artifacts.txt",
+    "ok": true,
+    "error": null,
+    "length": 20624,
+    "skipped_existing": false
+  },
+  {
+    "title": "Mythical War Artifacts",
+    "filename": "Mythical_War_Artifacts.txt",
+    "ok": true,
+    "error": null,
+    "length": 22636,
+    "skipped_existing": false
+  },
+  {
+    "title": "Antikythera Mechanism(Mythical War Artifacts)",
+    "filename": "Antikythera_Mechanism(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Ashanti Kuduo(Mythical War Artifacts)",
+    "filename": "Ashanti_Kuduo(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Augustus Statue Muscle Cuirass(Mythical War Artifacts)",
+    "filename": "Augustus_Statue_Muscle_Cuirass(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Captain's Croix de Guerre(Mythical War Artifacts)",
+    "filename": "Captain's_Croix_de_Guerre(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Christmas Football(Mythical War Artifacts)",
+    "filename": "Christmas_Football(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Clem Sohn's Wingsuit(Mythical War Artifacts)",
+    "filename": "Clem_Sohn's_Wingsuit(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Code of Hammurabi(Mythical War Artifacts)",
+    "filename": "Code_of_Hammurabi(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Dilophosaurus Skull(Mythical Artifacts)",
+    "filename": "Dilophosaurus_Skull(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Dilophosaurus Skull(Mythical War Artifacts)",
+    "filename": "Dilophosaurus_Skull(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Double-Headed Serpent(Mythical War Artifacts)",
+    "filename": "Double-Headed_Serpent(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Edison's Electric Lamp(Mythical War Artifacts)",
+    "filename": "Edison's_Electric_Lamp(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "First Strike Star(Mythical Artifacts)",
+    "filename": "First_Strike_Star(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "First Strike Star(Mythical War Artifacts)",
+    "filename": "First_Strike_Star(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Heads of Hevajra(Mythical War Artifacts)",
+    "filename": "Heads_of_Hevajra(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Helgö Buddha(Mythical War Artifacts)",
+    "filename": "Helgö_Buddha(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Jade Olmec Mask(Mythical War Artifacts)",
+    "filename": "Jade_Olmec_Mask(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Keyed English Guitar(Mythical War Artifacts)",
+    "filename": "Keyed_English_Guitar(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Lewis Chessmen(Mythical War Artifacts)",
+    "filename": "Lewis_Chessmen(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Lycurgus Cup(Mythical War Artifacts)",
+    "filename": "Lycurgus_Cup(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Mask of Tutankhamun(Mythical Artifacts)",
+    "filename": "Mask_of_Tutankhamun(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Mask of Tutankhamun(Mythical War Artifacts)",
+    "filename": "Mask_of_Tutankhamun(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Minoan Bull-Leaper(Mythical War Artifacts)",
+    "filename": "Minoan_Bull-Leaper(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Morse Telegraph(Mythical War Artifacts)",
+    "filename": "Morse_Telegraph(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Nefertiti Bust(Mythical War Artifacts)",
+    "filename": "Nefertiti_Bust(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Personal Computer(Mythical War Artifacts)",
+    "filename": "Personal_Computer(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Pompus' Comb(Mythical War Artifacts)",
+    "filename": "Pompus'_Comb(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Quimbaya Treasure(Mythical War Artifacts)",
+    "filename": "Quimbaya_Treasure(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Rosetta Stone(Mythical War Artifacts)",
+    "filename": "Rosetta_Stone(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Silla Gold Crown(Mythical War Artifacts)",
+    "filename": "Silla_Gold_Crown(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Sojourner Mars Rover(Mythical War Artifacts)",
+    "filename": "Sojourner_Mars_Rover(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Sphinx of Taharqo(Mythical War Artifacts)",
+    "filename": "Sphinx_of_Taharqo(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Stopler Revolver(Mythical War Artifacts)",
+    "filename": "Stopler_Revolver(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Swimming Reindeer(Mythical War Artifacts)",
+    "filename": "Swimming_Reindeer(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Sword of Goujian(Mythical War Artifacts)",
+    "filename": "Sword_of_Goujian(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "The Book of Kells(Mythical War Artifacts)",
+    "filename": "The_Book_of_Kells(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Thinker of Cernavoda(Mythical War Artifacts)",
+    "filename": "Thinker_of_Cernavoda(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Tokugawa Ieyasu's Helmet(Mythical War Artifacts)",
+    "filename": "Tokugawa_Ieyasu's_Helmet(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Video Game Console(Mythical War Artifacts)",
+    "filename": "Video_Game_Console(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Warka Vase(Mythical War Artifacts)",
+    "filename": "Warka_Vase(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "6th Anniversary Six-Shooter(Mythical Artifacts)",
+    "filename": "6th_Anniversary_Six-Shooter(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "10th Mountain Division War Kit(Mythical Artifacts)",
+    "filename": "10th_Mountain_Division_War_Kit(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "11th Anniversary Cake(Mythical Artifacts)",
+    "filename": "11th_Anniversary_Cake(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "11th Anniversary Cake(Mythical War Artifacts)",
+    "filename": "11th_Anniversary_Cake(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Alfred Jewel(Mythical Artifacts)",
+    "filename": "Alfred_Jewel(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Alfred Jewel(Mythical War Artifacts)",
+    "filename": "Alfred_Jewel(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Analytical Engine(Mythical Artifacts)",
+    "filename": "Analytical_Engine(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Analytical Engine(Mythical War Artifacts)",
+    "filename": "Analytical_Engine(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Arm Reliquary of Charlemagne(Mythical Artifacts)",
+    "filename": "Arm_Reliquary_of_Charlemagne(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "ASDIC Type 113X(Mythical Artifacts)",
+    "filename": "ASDIC_Type_113X(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "ASM-135 Anti-Satellite Missile(Mythical Artifacts)",
+    "filename": "ASM-135_Anti-Satellite_Missile(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Battersea Shield(Mythical Artifacts)",
+    "filename": "Battersea_Shield(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Berlichingen's Iron Prosthetic Hand(Mythical Artifacts)",
+    "filename": "Berlichingen's_Iron_Prosthetic_Hand(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "British Kettle Drum(Mythical Artifacts)",
+    "filename": "British_Kettle_Drum(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Bust of Ramesses II(Mythical Artifacts)",
+    "filename": "Bust_of_Ramesses_II(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Caligula's Ring(Mythical Artifacts)",
+    "filename": "Caligula's_Ring(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Capt. McConnell's Hero Ensemble(Mythical Artifacts)",
+    "filename": "Capt._McConnell's_Hero_Ensemble(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Creighton Abrams Tank Commander Kit(Mythical Artifacts)",
+    "filename": "Creighton_Abrams_Tank_Commander_Kit(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Crescent Blade(Mythical Artifacts)",
+    "filename": "Crescent_Blade(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Crocodile Mask(Mythical Artifacts)",
+    "filename": "Crocodile_Mask(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Cryolophosaurus Skull(Mythical Artifacts)",
+    "filename": "Cryolophosaurus_Skull(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Da Vinci's Flying Machine(Mythical Artifacts)",
+    "filename": "Da_Vinci's_Flying_Machine(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Da Vinci's Machine Gun(Mythical Artifacts)",
+    "filename": "Da_Vinci's_Machine_Gun(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Demarcation Stone(Mythical Artifacts)",
+    "filename": "Demarcation_Stone(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Desert Storm PSN-8 Manpack(Mythical Artifacts)",
+    "filename": "Desert_Storm_PSN-8_Manpack(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Dominations Army Helmet(Mythical Artifacts)",
+    "filename": "Dominations_Army_Helmet(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Dominations Army Helmet(Mythical War Artifacts)",
+    "filename": "Dominations_Army_Helmet(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "DomiNations Game Box(Mythical Artifacts)",
+    "filename": "DomiNations_Game_Box(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Elephant Archer Quiver(Mythical Artifacts)",
+    "filename": "Elephant_Archer_Quiver(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Flamma's Helmet(Mythical Artifacts)",
+    "filename": "Flamma's_Helmet(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Gemini 8 Gloves(Mythical Artifacts)",
+    "filename": "Gemini_8_Gloves(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Gemini 8 Helmet(Mythical Artifacts)",
+    "filename": "Gemini_8_Helmet(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "General Pershing's Bas-Relief(Mythical Artifacts)",
+    "filename": "General_Pershing's_Bas-Relief(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Great Imperial Crown(Mythical Artifacts)",
+    "filename": "Great_Imperial_Crown(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Huey Armament System(Mythical Artifacts)",
+    "filename": "Huey_Armament_System(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Joyeuse Sword(Mythical Artifacts)",
+    "filename": "Joyeuse_Sword(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Julius Caesar Statue(Mythical Artifacts)",
+    "filename": "Julius_Caesar_Statue(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Koh-i-Noor Diamond(Mythical Artifacts)",
+    "filename": "Koh-i-Noor_Diamond(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Leftwich Trophy(Mythical Artifacts)",
+    "filename": "Leftwich_Trophy(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Leonidas Bust(Mythical Artifacts)",
+    "filename": "Leonidas_Bust(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Liberty Bell(Mythical Artifacts)",
+    "filename": "Liberty_Bell(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Mahiole(Mythical Artifacts)",
+    "filename": "Mahiole(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Mahiole(Mythical War Artifacts)",
+    "filename": "Mahiole(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Maori War Club(Mythical Artifacts)",
+    "filename": "Maori_War_Club(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Mold Gold Cape(Mythical Artifacts)",
+    "filename": "Mold_Gold_Cape(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Mold Gold Cape(Mythical War Artifacts)",
+    "filename": "Mold_Gold_Cape(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Narmer Palette(Mythical Artifacts)",
+    "filename": "Narmer_Palette(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Napoleon's Boxlock Pistol(Mythical Artifacts)",
+    "filename": "Napoleon's_Boxlock_Pistol(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Nine Men's Morris(Mythical Artifacts)",
+    "filename": "Nine_Men's_Morris(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Norden Bombsight(Mythical Artifacts)",
+    "filename": "Norden_Bombsight(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Normandy SCR-536 \"Walkie-Talkie\"(Mythical Artifacts)",
+    "filename": "Normandy_SCR-536__Walkie-Talkie_(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Olmec Colossal Heads(Mythical Artifacts)",
+    "filename": "Olmec_Colossal_Heads(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Plane Gyro Gunsight(Mythical Artifacts)",
+    "filename": "Plane_Gyro_Gunsight(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Ramesses Ⅱ's Abu Simbel(Mythical Artifacts)",
+    "filename": "Ramesses_Ⅱ's_Abu_Simbel(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Raven Rattle(Mythical Artifacts)",
+    "filename": "Raven_Rattle(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Red Baron's Engine(Mythical Artifacts)",
+    "filename": "Red_Baron's_Engine(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "RQ-2 Pioneer(Mythical Artifacts)",
+    "filename": "RQ-2_Pioneer(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Sanada Yukimura's Armor(Mythical Artifacts)",
+    "filename": "Sanada_Yukimura's_Armor(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Sophilos Dinos(Mythical Artifacts)",
+    "filename": "Sophilos_Dinos(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Supermarine Spitfire Engine(Mythical Artifacts)",
+    "filename": "Supermarine_Spitfire_Engine(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "T-34 Tank Engine(Mythical Artifacts)",
+    "filename": "T-34_Tank_Engine(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "The Art of War(Mythical Artifacts)",
+    "filename": "The_Art_of_War(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "The White Death's War Kit(Mythical Artifacts)",
+    "filename": "The_White_Death's_War_Kit(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Tizona Sword(Mythical Artifacts)",
+    "filename": "Tizona_Sword(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Trundholm Sun Chariot(Mythical Artifacts)",
+    "filename": "Trundholm_Sun_Chariot(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Trundholm Sun Chariot(Mythical War Artifacts)",
+    "filename": "Trundholm_Sun_Chariot(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Vespa 150 TAP(Mythical Artifacts)",
+    "filename": "Vespa_150_TAP(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Vz-9 Avrocar(Mythical Artifacts)",
+    "filename": "Vz-9_Avrocar(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Welrod MkII(Mythical Artifacts)",
+    "filename": "Welrod_MkII(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Winged Victory of Samothrace(Mythical Artifacts)",
+    "filename": "Winged_Victory_of_Samothrace(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "ZG 1229 Vampir(Mythical Artifacts)",
+    "filename": "ZG_1229_Vampir(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Archaeology Capstone(Mythical Artifacts)",
+    "filename": "Archaeology_Capstone(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Archaeology Capstone(Mythical War Artifacts)",
+    "filename": "Archaeology_Capstone(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Technology(Mythical Artifacts)",
+    "filename": "Technology(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Technology(Mythical War Artifacts)",
+    "filename": "Technology(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Library(Mythical Artifacts)",
+    "filename": "Library(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Library(Mythical War Artifacts)",
+    "filename": "Library(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Benin Royal Ivory Mask(Mythical Artifacts)",
+    "filename": "Benin_Royal_Ivory_Mask(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Benin Royal Ivory Mask(Mythical War Artifacts)",
+    "filename": "Benin_Royal_Ivory_Mask(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Golden Lyre of Ur(Mythical Artifacts)",
+    "filename": "Golden_Lyre_of_Ur(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Golden Lyre of Ur(Mythical War Artifacts)",
+    "filename": "Golden_Lyre_of_Ur(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Mona Lisa(Mythical Artifacts)",
+    "filename": "Mona_Lisa(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Mona Lisa(Mythical War Artifacts)",
+    "filename": "Mona_Lisa(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Roman Dodechedron(Mythical Artifacts)",
+    "filename": "Roman_Dodechedron(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Roman Dodechedron(Mythical War Artifacts)",
+    "filename": "Roman_Dodechedron(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Tibetan Dung-Dkar(Mythical Artifacts)",
+    "filename": "Tibetan_Dung-Dkar(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Tibetan Dung-Dkar(Mythical War Artifacts)",
+    "filename": "Tibetan_Dung-Dkar(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "DomiNations Army Helmet(Mythical Artifacts)",
+    "filename": "DomiNations_Army_Helmet(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "DomiNations Army Helmet(Mythical War Artifacts)",
+    "filename": "DomiNations_Army_Helmet(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Roman Dodecahedron(Mythical Artifacts)",
+    "filename": "Roman_Dodecahedron(Mythical_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  },
+  {
+    "title": "Roman Dodecahedron(Mythical War Artifacts)",
+    "filename": "Roman_Dodecahedron(Mythical_War_Artifacts).txt",
+    "ok": false,
+    "error": "The page you specified doesn't exist.",
+    "length": 0,
+    "skipped_existing": false
+  }
+]

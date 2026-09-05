@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Inspired by the success of outnumbered Finnish ski troops against the Soviets, chairman of the National Ski Patrol Charles 'Minnie' Dole lobbied the U.S. Army to train its own mountain unit in 1941. The general staff agreed, partly due to fear of a potential German invasion in the northeastern United States. They began recruiting men with outdoorsy vocations like lumberjacks and forest rangers who would be able to repurpose their civilian expertise. In 1942, the new 10th Mountain Division began winter warfare training at Camp Hale in Colorado.
+
+At first it was unclear how the 10th would fit into the war effort. However, they proved their worth in Italy taking such difficult positions as Monte Belvedere and Riva ridge. They led the Allied charge north to the Po Valley, keeping the Germans off balance and capturing many prisoners. Though demobilized for four decades following the end of the war, the 10th has become the most deployed U.S. military unit since its reactivation in 1985. The division has served in humanitarian and peacekeeping mission and fought in the Gulf, Afghanistan, and Iraq Wars.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| [[APC]] Damage || +8%
+|-
+| [[APC]] Hitpoints|| +7%
+|-
+| [[Machine Gun Infantry]] Damage || +8%
+|-
+| Enemy Defender Spawn Time|| +6%
+|-
+| Enemy [[Redoubt]] Damage || -6%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

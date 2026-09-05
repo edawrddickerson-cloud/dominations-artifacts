@@ -1,0 +1,29 @@
+[[File:{{PAGENAME}}.png|center|220px]]
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]]. It can be purchased from the Legendary sale for real money.
+
+== Historical Description ==
+'Go Rin No Sho' or 'The Book of Five Rings' is a classic text on martial arts and strategy written by Miyamoto Musashi during the 17th century. Each book within the Book of Five Rings is titled after one of the five natural elements described in Japanese philosophy: earth, water, fire, wind, and void. The books illustrate the concept that there are different elements of combat just as there are different natural elements. Although Musashi's thoughts on strategy and tactics are taught through the lens of fencing, many of the principles in the Book of Five Rings can be applied broadly to other areas of life.
+
+== Statistics ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+|[[Vault]] Capacity|| +11%
+|-
+|[[Vault]] Capacity|| +11%
+|-
+|[[Vault]] Interest|| +6%
+|-
+|[[Vault]] Interest|| +6%
+|-
+|All Defensive Towers Damage|| +6%
+|-
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]

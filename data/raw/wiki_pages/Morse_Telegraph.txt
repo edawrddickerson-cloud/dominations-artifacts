@@ -1,0 +1,20 @@
+[[File:{{PAGENAME}}.jpg|centre|250px]]
+==General Description==
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+==Historical Description==
+?
+==Statistic==
+{| class="article-table"
+! scope="col" |Benefit Name
+! scope="col" |Base Stat
+|-
+|[[Heavy Cavalry]] HP||11%
+|-
+|[[Ranged Siege]] DMG||11%
+|-
+|[[Mortar Infantry|Mortar Troop]] DMG||11%
+|-
+|[[Attack Helicopter]] DMG||11%
+|-
+|[[Attack Helicopter]] HP||16%
+|}{{LegendaryArtifactsMenu}}

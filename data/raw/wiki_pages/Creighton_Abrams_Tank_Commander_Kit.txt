@@ -1,0 +1,29 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]] that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Creighton Abrams graduated from the West Point Military Academy in 1936, and just a few years later began his service in World War II. He was part of the 4th Armored Division as regimental adjutant and battalion commander, and then served in 37th Armor Regiment as a regiment executive officer. He served in the Korean War and the Vietnam War, commanding Tank Battalions and leading his troops to many victories. He was awarded the Distinguished Service Cross twice for extraordinary heroism, and his talent for leading his Tank Battalions was even commented on by the likes of General George Patton, a fellow tank commander, who believed that Abrams abilities were truly unrivaled. His tactical and leadership skills were on full display when Abrams and a few other leaders spearheaded the relief effort that broke up the German entrenchments during the Battle of the Bulge.
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| First Aid Duration || +7%
+|-
+| Heavy Tank Damage || +7%
+|-
+| Decoy Tactic Hitpoints || +8%
+|-
+| Guerrilla Hitpoints || +7%
+|-
+| Enemy Defender Spawn Time || +8%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

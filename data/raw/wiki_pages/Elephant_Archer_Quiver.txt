@@ -1,0 +1,29 @@
+[[File:{{PAGENAME}}.jpg|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Crafted from durable leather and ivory and adorned with intricate carvings, the elephant archer’s quiver was designed to hold specialized arrows with barbed tips and crimson feather fletching. These arrows were renowned for their exceptional range and accuracy, capable of striking targets over walls from impressive distances. The quiver became a symbol of the strategic advantage war elephants provided on the battlefield and the timeless power of game balance.
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| Invading Airstrip Troop Damage || -6%
+|-
+| Invading [[Bombers|Bomber]] Hitpoints|| -6%
+|-
+| [[Heavy Cavalry]] Damage || +6%
+|-
+| [[Heavy Cavalry]] Damage|| +6%
+|-
+| [[Air Defense]] Attack Speed || +6%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

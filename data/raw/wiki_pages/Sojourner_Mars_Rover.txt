@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.jpg|centre|250px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+NASA's Viking program landed spacecraft on the surface of Mars twice during the 1970s. Though the data obtained was invaluable, it came with an immense price tag. The purpose of the 1996 Pathfinder mission was to show that probes could reach Mars for a fraction of the previous cost. Its namesake landing craft carried scientific Sojourner rover. Named for abolitionist and women's rights activist Sojourner Truth, the rover would be the first wheeled vehicle from Earth to traverse the surface of another planet.
+
+Pathfinder landed on September 4, 1997, exactly seven months after launch. The Sojourner rover deployed down a ramp and began taking pictures and analyzing samples of Martian soil and rock. Both craft relayed their data through Pathfinder, now renamed Cars Sagan Memorial Station to honor the passing of the beloved astronomer. The lander and rover kept working well past their expected lifetimes before finally losing contact with NASA on October 7. The program was a resounding success and paved the way for future exploratory missions to Mars.
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+|[[National Trade Goods|National Trade Good]] Loot Chance || +13%
+|-
+| [[University]] Research Time || -6%
+|-
+| [[Library]] Research Time || -6%
+|-
+| [[Barracks]] Troop Training Cost || -11%
+|-
+| [[Factory]] Troop Training Cost || -6%
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:Museum]]

@@ -1,0 +1,30 @@
+[[File:{{PAGENAME}}.jpg|centre|220px]]
+
+==General Information==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+==Historical Description==
+The Battersea Shield was originally created during the Iron Age between 350-50 BC. This wonderful piece of Celtic Art was discovered in the Thames River in Britain and was originally believed to be part of Julius Caesar’s campaign in Britain. As historians continued to study this artifact, they found several bronze rivets, which suggest this was not only a decorative cover on a missing larger wooden shield, but originally cast into the Thames River as a sacrifice or votive offering. This was not uncommon in that era, and votive offerings were believed to bring the offerer closer to deities or other supernatural forces. Additionally, the art is that of the La Tène style, a popular art style in Celt culture in the Iron Age, and is adorned with red glass enamel, further differentiating itself from combat-ready shields of the same era.
+
+==Statistic==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|[[Missile Silo]] and [[Big Red Button|Red Button]] Damage||+7%
+|-
+|[[Bombers|Bomber]] Damage||+8%
+|-
+|Invading [[Recons|Recon]] Scan Duration||-8%
+|-
+|Quick Victory Time||+9%
+|-
+|Invading [[Factory]] [[Troops|Troop]] Hitpoints||-6%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

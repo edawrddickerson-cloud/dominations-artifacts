@@ -1,0 +1,34 @@
+[[File:{{PAGENAME}}.jpg|centre|250px]]
+
+==General Information==
+
+'''{{PAGENAME}}''' is one of the main hall [[Legendary Artifacts]] that can be stored and displayed at [[Museum]].
+
+==Historical Description==
+
+Clem Sohn of Fowler was the first person to jump from a plane, glide through the sky, and land safely on the ground, all with a wingsuit of his own creation. This suit, modeled after a flying squirrel, was made of tubular steel, with collapsible bat-like wings and a strip of cloth between his legs that acts like the tail of a bird, enhancing both balance and control. This allows the wearer to delay pulling the ripcord until they are 1,000 feet from the ground, while the regulation height to deploy a normal parachute is 5,000 feet above the ground. The marvel of aviation that started it all led to a long span of innovations, all the way up to the modern day where the use of the Squirrel Wingsuit that many flyers use today. The United States Parachute Association recommends a person have successfully completed 200 jumps with a parachute before they can undertake a jump with any Wingsuit.
+
+==Statistic==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|[[Transport]] Cooldown||-11%
+|-
+|[[Transport]] Movement Speed||+11%
+|-
+|Quick Victory Time||+11%
+|-
+|[[Bazooka]] Damage||+6%
+|-
+|[[Bazooka]] Damage||+6%
+|}
+
+{{LegendaryArtifactsMenu}}
+
+[[Category:Museum]]
+
+[[Category:Artifact]]
+
+[[Category:Legendary Artifact]]

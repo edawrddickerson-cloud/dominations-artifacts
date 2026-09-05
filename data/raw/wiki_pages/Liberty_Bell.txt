@@ -1,0 +1,40 @@
+[[File:{{PAGENAME}}.jpg|centre|220px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+== Historical Description ==
+“Proclaim Liberty Throughout All the Land Unto All the Inhabitants thereof.”
+
+This message inscribed in the Liberty Bell inspired civil rights activists in the early United States of America and continues to be a source of national pride today. Abolitionists, women's suffrage advocates, and many other civil leaders have looked to this bell as a symbol of hope and change throughout American history.
+
+The Bell itself is made of mostly copper and tin, and bears a large crack in it after being in use for over 90 years. The crack was initially quite small, however a technique was applied to the bell called “stop drilling” to halt the advance of the crack. Stop drilling involves creating a much larger break than currently exists in the object, but in a controlled manner which ideally prevents further breakage. This project failed, and after a second crack began forming, the Liberty Bell was officially retired in 1846.
+
+Perhaps the most significant aspect of the Liberty Bell is that it was used in 1776 to bring local citizens to the very first public reading of the Declaration of Independence, a cornerstone in the foundation of the United States of America.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|[[Ranged Infantry]] Damage
+| +8%
+|-
+|[[Ranged Infantry]] Damage
+| +8%
+|-
+|Airstip Troop Hitpoints | Airstrip Troop Hitpoints
+| +7%
+|-
+|Enemy [[Air Defense]] Damage
+| -11%
+|-
+|All Enemy Defensive Towers Damage | All Enemy Defensive Towers Damage
+| -7%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:World War]]
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]

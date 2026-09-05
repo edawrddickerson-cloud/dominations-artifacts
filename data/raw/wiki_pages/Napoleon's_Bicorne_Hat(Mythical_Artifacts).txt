@@ -1,0 +1,38 @@
+
+== General Description ==
+[[File:{{PAGENAME}}.jpg|thumb|220px]]
+'''{{PAGENAME}}''' is one of The [[Mythical Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Napoleon Bonaparte was the famous Corsican artillery officer who rose to become Emperor of France. His legal reforms cemented the Enlightenment ideas of the French Revolution, and his innovative tactics defined warfare for the next century. Then as now, the emperor was instantly recognizable by his iconic bicorne hats. He owned over 100 in his lifetime. In contrast to most aristocratic officers at the time, he wore them 'en bataille' or sideways, a style considered to symbolize his solidarity with the rank and file.
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" |Benefit Name
+! scope="col" |Base Stat
+|-
+|Airstrip Troop Damage || rowspan="6" | +11%
+|-
+|Barracks Troop Damage 
+|-
+|Barracks Troop Hitpoints
+|-
+|Factory Troop Damage
+|-
+|Factory Troop Hitpoints
+|-
+|Airstrip Troop Damage
+|-
+|}
+'''Upgrade Resource''': Food
+
+Legendary coin cost: 1000
+
+== Trivia ==
+
+* Barrack Troop benefits in the Museum affects Paratroopers whereas Airstrip Troop Damage does not.
+{{MythicalArtifactsMenu}}
+[[Category:Artifact]]
+[[Category:Mythical Artifact]]
+[[Category:Museum]]

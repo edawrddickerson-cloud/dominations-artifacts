@@ -1,0 +1,322 @@
+[[File:Library.jpg|centre|thumb|220x220px|The [[Library]] is where your town researches new technologies.]]
+
+== General Information ==
+'''Technologies''' are researched at the [[Library]], which becomes available in the [[Classical Age]]. Each '''Technology''' has 5 Chapters which are researched separately and cost increasing amounts. Researching a '''Technology''' requires either [[Gold]], [[Food]], or [[Oil]], depending on the '''Technology'''. Some '''Technologies''' require earlier research to be completed to at least Chapter 1 before it can be started.
+
+== List of Technologies ==
+
+=== Through the Ages ===
+''A collection of the most important technologies ever invented by man.''
+
+
+{| class="article-table" style="text-align:center;"
+|-
+! scope="col" |Tech/<br/>[[Library]]<br/>Level
+! scope="col" style="text-align: center;" | Age Available
+! colspan="4" scope="col" style="text-align: center;" | Technology
+|-
+| rowspan="2" | '''1'''
+| rowspan="2" | [[Classical Age]]
+| [[Pottery]]
+| [[Roadways]]
+| [[Reinforcements]]
+| [[Free Companies]]
+|-
+| [[Exploration]]
+| [[Watch Towers]]
+| [[Machinery]]
+| [[Cast Iron]]
+|-
+| '''2'''
+| rowspan="2" | [[Medieval Age]]
+| [[Crop Rotation]]
+| [[Commerce]]
+| [[Ramparts]]
+| [[Chivalry]]
+|-
+| '''3'''
+| [[Zeal]]
+| [[Fortification]]
+| [[Battle Tactics]]
+| [[Ballistics]]
+|-
+| '''4'''
+| [[Gunpowder Age]]
+| [[Hounds]]
+| [[Partisans]]
+| [[Engineering]]
+| [[Banners]]
+|-
+| '''5'''
+| [[Enlightenment Age]]
+| [[Banking]]
+| [[Citadels]]
+| [[Standing Army]]
+| [[Leadership]]
+|-
+| '''6'''
+| rowspan="2" | [[Industrial Age]]
+| [[Drilling]]
+| [[Savings]]
+| [[Nationalism]]
+| [[Heavy Weaponry]]
+|-
+| '''7'''
+| [[Internationalism]]
+| [[Negotiations]]
+| [[Air Defense (Technology)|Air Defense]]
+| [[Aviation]]
+|-
+| '''8'''
+| rowspan="2" | [[Global Age]]
+| [[Heritage]]
+| [[Resistance]]
+| [[Command]]
+| [[Warfare]]
+|-
+| '''9'''
+| [[Shipping]]
+| [[Spoils of War]]
+| [[Deception]]
+| [[High Explosives]]
+|-
+| '''10'''
+| rowspan="2" | [[Atomic Age]]
+| [[Computing]]
+| [[Radar]]
+| [[Monuments]]
+| [[Elite Paratroopers]]
+|-
+| '''11'''
+| [[War Reparations]]
+| [[Sentries]]
+| [[Mobile Forces]]
+| [[Rotorcraft]]
+|-
+| '''12'''
+| [[Cold War Age]]
+| [[Industrial Plastics]]
+| [[Economic Stimulus]]
+| [[Rocketry]]
+| [[Advanced Ballistics]]
+|-
+| '''13'''
+| [[Space Age]]
+| [[Microprocessor]]
+|[[Archaeology (Technology)|<s>Archaeology</s>]]
+[[Paleontology]]
+| [[Anti-aircraft]]
+| [[Offensive Ballistics]]
+|-
+| '''14'''
+| [[Digital Age]]
+| [[Economic Prosperity]]
+| [[Palisades]]
+| [[Tactical Defenses]]
+| [[Reconnaissance Aircraft]]
+|-
+|'''15'''
+| [[Information Age]]
+| [[Orders of Council]]
+| [[Aerial Interception]]
+| [[Counter Offensive]]
+| [[Assault Battalion]]
+|-
+|'''16'''
+|[[Drone Age]]
+|[[Dividend Returns (Technology)|Dividend Returns]]
+|[[Exalted Benefactions (Technology)|Exalted Benefactions]]
+|[[Commanding Defense (Technology)|Commanding Defense]]
+|[[Commanding Offense (Technology)|Commanding Offense]]
+|-
+|'''17'''
+|[[Automation Age]]
+|[[Compartmentalized Production (Technology)|Compartmentalized Production]]
+|[[Fully Loaded Defense (Technology)|Fully Loaded Defense]]
+|[[Fully Loaded Offense (Technology)|Fully Loaded Offense]]
+|[[Assault Force Optimization (Technology)|Assault Force Optimization]]
+|}
+
+=== Archaeology ===
+''The study of ancient civilizations through analysis of artifacts and by obtainers of rare antiquities.''
+
+
+{| class="article-table" style="text-align: center;"
+|-
+! scope="col" |[[Library]] Level
+! Tech Level
+! scope="col" style="text-align: center;" | Age Available
+! colspan="4" scope="col" style="text-align: center;" | Technology
+|-
+| '''5'''
+| '''1'''
+| [[Enlightenment Age]]
+| [[Advanced Reconstruction]]
+| [[Renovations]]
+| [[Archives]]
+| [[Excavation]]
+|-
+| '''7'''
+| '''2'''
+| [[Industrial Age]]
+| [[Curation]]
+| [[Restoration Efficiency]]
+| [[Endowments]]
+| [[Private Collections]]
+|-
+| colspan="3" |
+| colspan="4" |[[Archaeology Capstone]]
+|-
+|}
+
+=== League of Nations ===
+''The first worldwide organization created to maintain peace after World War I.''
+
+
+{| class="article-table" style="text-align: center;"
+|-
+! scope="col" |[[Library]] Level
+! Tech Level
+! scope="col" style="text-align: center;" | Age Available
+! colspan="4" scope="col" style="text-align: center;" |Technology
+|-
+| '''6'''
+| '''1'''
+| [[Industrial Age]]
+| [[Parliamentary Proceedings]]
+| [[Coalition Forces]]
+| [[Defense Planning]]
+| [[Trenches]]
+|-
+| '''8'''
+| '''2'''
+| [[Global Age]]
+| [[Strategic Reserves]]
+| [[Guided Missiles]]
+| [[Armored Division]]
+| [[Payloads]]
+|-
+| colspan="3" |
+| colspan="4" |[[League of Nations Capstone]]
+|-
+|}
+
+=== State of Defensive ===
+''Defend your citizens and their homes.''
+
+
+{| class="article-table" style="text-align: center;"
+|-
+! scope="col" |[[Library]] Level
+! Tech Level
+! scope="col" style="text-align: center;" | Age Available
+! colspan="4" scope="col" style="text-align: center;" | Technology
+|-
+| '''1'''
+| '''1'''
+| [[Classical Age]]
+| [[Tower Defense (Technology)|Tower Defense]]
+| [[Mortars (Technology)|Mortars]]
+| [[Bulwark (Technology)|Bulwark]]
+| [[Sally Forth (Technology)|Sally Forth]]
+|-
+| '''6'''
+| '''2'''
+| [[Industrial Age]]
+| [[Protector (Technology)|Protector]]
+| [[Safeguard (Technology)|Safeguard]]
+| [[Disruption (Technology)|Disruption]]
+| [[Stronghold (Technology)|Stronghold]]
+|-
+| '''13'''
+| '''3'''
+| [[Space Age]]
+| [[Battle Stations (Technology)|Battle Stations]]
+| [[Fortify (Technology)|Fortify]]
+| [[Early Preparation (Technology)|Early Preparation]]
+| [[Blackout (Technology)|Blackout]]
+|-
+| colspan="3" |
+| colspan="4" |[[State of Defensive Capstone]]
+|-
+|}
+
+=== Basic Economics ===
+''Economics are the cornerstone of any thriving Empire.''
+
+
+
+{| class="article-table" style="text-align: center;"
+|-
+! scope="col" |[[Library]] Level
+! Tech Level
+! scope="col" style="text-align: center;" | Age Available
+! colspan="4" scope="col" style="text-align: center;" | Technology
+|-
+| '''5'''
+| '''1'''
+| rowspan="2" | [[Enlightenment Age]]
+| [[Capacious Caravans]]
+| [[Food Stores]]
+| [[Barricades]]
+| [[Lightweight Traps]]
+|-
+| '''5'''
+| '''2'''
+| [[Advanced Drilling]]
+| [[Construction Effort]]
+| [[Intellectual Integrity]]
+| [[Direct Donation]]
+|-
+| colspan="3" |
+| colspan="4" |[[Labor Efficiency Capstone]]
+|}
+
+== Boosts ==
+=== [[Council]] [[Committees]] ===
+*?
+=== [[Council]] [[Councilors]] ===
+* [[Alfred Nobel]]
+**Library [[Technology|Tech]] Oil Cost
+***Rare: -6%
+***Epic: -10%
+***Legendary: -15%
+*[[Ada Lovelace]]
+**Library Tech Oil Cost
+
+=== [[Library]] [[Technology]] ===
+*[[Microprocessor]]
+** Ch. 1: Reduce {{PAGENAME}} research time by 15%
+* [[Intellectual Integrity]]
+** Ch. 3: Research Cost -4%
+** Ch. 4: Research Time -4%
+=== [[Parliament]] [[Laws]] ===
+===[[Template:Mainpage_Season|Seasons]]===
+=== [[University]] ===
+*[[Empress Wu Zetian]]
+** The Great Expansion : 10% faster library research
+*[[Catherine the Great]]
+**Level 5 - Economic [[Library]] Tech Cost: -2% Resource cost of Economic '''Technologies '''(10 levels).
+*[[King Sejong]]
+**Level 5 - Army [[Library]] Tech Cost: -2% Resource cost of Army '''Technologies '''(10 levels).
+*[[Sultan Saladin]]
+**Level 5 - Defensive [[Library]] Tech Cost: -2% Resource cost of Defensive '''Technologies '''(10 levels).
+=== [[Wonders]] ===
+*[[Notre Dame]]
+**Technology Discount: 10%
+**The [[Heritage]] at the Library Chapter 2 increases the discount from +10% to +11%.
+=== [[VIP]] Bonuses ===
+=== Others ===
+* [[Enigma Machine]] artifact if exhibited at the [[Museum]] confers this bonus to the '''Library''':
+** Library Research Time up to 15% faster
+* [[Sojourner Mars Rover]] artifact if exhibited at the [[Museum]] confers this bonus to the '''Library''':
+** Library Research Time up to 15% faster
+* [[Helgö Buddha]] artifact if exhibited at the [[Museum]] confers this bonus to the '''Library''':
+** Library Research Time up to 15% faster
+* [[Pompus' Comb]] artifact if exhibited at the [[Museum]] confers this bonus to the '''Library''':
+** Library Research Time up to 20% faster
+
+{{Master Navigation}}
+[[Category:Mechanics]]
+[[Category:Technology]]
+[[Category:Library]]

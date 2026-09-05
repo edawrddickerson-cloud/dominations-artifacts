@@ -1,0 +1,38 @@
+[[File:{{PAGENAME}}.jpg|centre|250px]]
+
+==General Information==
+
+'''{{PAGENAME}}''' is one of the [[Legendary War Artifacts]] that can be stored and displayed at [[Museum]]. Awarded as the final reward in the Tournament of Glory to alliances that finish in the Triumphant Division rank.
+
+==Historical Description==
+
+Votive Offerings are traditionally used in religious rituals in which the offerer deposits items of great value or importance to them into a location where the items are either impossible or incredibly difficult to retrieve. They would do this with the intent to gain favor from the deity or supernatural force of choice. The Winged Victory of Samothrace is exactly that, and it was deposited into the sanctuary of the Great Gods in Greece sometime around 190 BC.
+
+The statue features the Goddess of Victory, Nike standing proudly on a boat. When initially discovered in 1863 by Charles Champoiseau, he did not understand the significance of Nike standing on top of dilapidated marble blocks. Champoiseau removed the statue from her podium, and eventually, it was added to the Louvre Museum.
+
+In 1875, an Austrian archaeologist group studied the location of the finding with a more careful mindset. They learned the importance of the marble and found that when properly assembled, the marble blocks form the shape of a boat or warship. The group later removed the rest of the marble and restored the statue in the Louvre Museum to its proper form, paying as much respect to the artist’s original intent as possible.
+
+==Statistic==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Quick Victory Time||+11%
+|-
+|Heavy Tank Damage||+7%
+|-
+|Heavy Tank Hitpoints||+7%
+|-
+|Bomber Damage||+7%
+|-
+|Bomber Hitpoints||+7%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+
+[[Category:Museum]]
+
+[[Category:Artifact]]
+
+[[Category:Legendary Artifact]]

@@ -1,0 +1,30 @@
+[[File:{{PAGENAME}}.jpg|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Maori War Clubs, also called Patu, were handheld weapons used by the Maori Warriors of New Zealand sometime between the 11th and 13th centuries. The Maori preferred hand to hand combat, and these weapons fit this style well. Maori armies allowed all capable people into their army, regardless of gender. Despite males making up the majority of the army, all youths began their warrior training at a very young age. Made for the sole purpose of killing the opponent rather than disabling them, these clubs were made of many hard materials such as stone, wood, whalebone and greenstone.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| All Defensive Towers Hitpoints and Damage|| +3%
+|-
+| Defender Spawn Time|| -6%
+|-
+| Defender Movement Speed || +3%
+|-
+| Invading Recon Scan Duration|| -7%
+|-
+| Generals Attack Speed || +3%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

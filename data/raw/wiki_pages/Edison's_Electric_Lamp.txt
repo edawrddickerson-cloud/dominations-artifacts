@@ -1,0 +1,33 @@
+
+[[File:{{PAGENAME}}.jpg|centre|250px]]
+
+==General Description==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+==Historical Description==
+One of Thomas Edison’s most famous inventions was his innovation on electric lights. Though he did not invent the lightbulb, Edison’s innovations made the electronic lamp significantly more applicable in the household. Previously, the Arc Lamp was the most advanced electric lighting technology, but it was large and far too bright to be used at home. Out of over 6400 other plant-based threads Edison tested, he found that cotton burned at the desired color, brightness, and for the longest duration. He refined this initial discovery, resulting in the lamp using a carbonized cotton thread filament.
+
+Edison then patented the described electric lamp, and over the next several years continued to refine the invention, which paved the way for modern incandescent lights.
+
+==Statistic==
+
+{| class="article-table"
+! scope="col" |Benefit Name
+! scope="col" |Base Stat
+|-
+|Looted Resource Refund||+11%
+|-
+|[[Resources|Oil]] from [[Oil Well]]<nowiki/>s||+6%
+|-
+|[[Resources|Oil]] from [[Oil Well]]<nowiki/>s||+6%
+|-
+|All Defensive Towers DMG||+8%
+|-
+|Invading Airstrip Unit HP||-8%
+|}
+'''Resource used to upgrade this artifact''': ?.
+{{LegendaryArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]

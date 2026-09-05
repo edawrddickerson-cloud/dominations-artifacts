@@ -1,0 +1,26 @@
+[[File:{{PAGENAME}}.jpg|center|250x250px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Mythical Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The fengguan or 'phoenix crown' was a type of headdress worn by Chinese noblewomen for special ceremonies. Women of higher rank wore more elaborate versions sporting greater numbers of dragons and phoenixes. Pearls, gemstones, and precious metals adorned the crowns. Notably, the striking blue that dominates their color plaette comes from kingfisher feathers. The fashion craze for Cambodian kingfishers in particular contributed to the great wealth of the Khmer rulers who constructed Angkor Wat.
+
+== Statistic ==
+{| class="article-table"
+! scope="col" |Benefit Name
+! scope="col" |Base Stat
+|-
+|Invading [[Barracks]] Troop Hitpoints|| -11%
+|-
+| [[Oil]] from [[Oil Well]]s || +11%
+|-
+| [[Oil]] from [[Oil Well]]s || -15%
+|-
+| All Defensive Towers Damage || -15%
+|-
+| Defender Spawn Time || +15%
+|-
+| Invading [[Barracks]] Troop Damage || +15%
+|}
+{{MythicalArtifactsMenu}}

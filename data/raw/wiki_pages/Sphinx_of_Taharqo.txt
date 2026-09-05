@@ -1,0 +1,32 @@
+
+== General Description ==
+[[File:{{PAGENAME}}.jpg|thumb|220px]]
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]]. It can be purchased from the Legendary sale for real money.
+
+
+== Historical Description ==
+The
+Sphinx of Taharqo is a granite statue of a sphinx featuring the face of the King Taharqo. It dates back to approximately 680 BCE and was created to honor the last Nubian King of Egypt, Taharqo. He was renowned for his military prowess and won several battles early in his reign. This led to a lasting peace. His rule lasted from 690 BCE to 664 BCE, and he is credited with creating a golden age in Egypt during his reign.
+
+== Statistics ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+|Library Tech Resource Cost|| -6%
+|-
+|Vault Capacity|| +6%
+|-
+|Oil from Oil Wells|| +1%
+|-
+|Looted Resource Refund|| +1%
+|-
+|Forest Expansion Cost Refund|| +1%
+|-
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:Museum]]

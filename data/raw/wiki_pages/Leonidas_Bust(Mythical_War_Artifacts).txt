@@ -1,0 +1,28 @@
+[[File:{{PAGENAME}}.jpg|center|249x249px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Mythical War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Leonidas I was king of Sparta from 490-480 BCE. He came from the Agiad line and shared his title with the Eurypontid Leotychidas under the city's unusual dual monarchy. As his father's thirdborn son, Leonidas was not expected to take the throne, but he became the heir apparent after his half-brother Dorieus died on campaign in Sicily in 510. His full brother Cleomenes allegedly went mad and killed himself in prison, though some suspect that the conservative Spartan elite framed and murdered him for his outward-looking ambition.
+
+Either way, the throne fell to Leonidas. His otherwise obscure reign ended in one of the most famous and glorious last stands in history. In 480, he led a combined Greek force to ward off the invading Persian army under King Xerxes at the narrow pass of Thermopylae. The Greeks held out for days despite being outnumbered many times over. Perhaps influenced by the Oracle of Delphi's prophecy that either Sparta or one of her kings must fall, Leonidas ultimately sacrificed his own life to allow the bullk of the army to retreat.
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Bazooka Damage || +13%
+|-
+|[[Mercenary Camp]] Deploys [[Spartan]]s when Destroyed || +1
+|-
+|Quick Victory Time || +11%
+|-
+|[[Generals]] Hitpoints and Damage || +11%
+|-
+|[[Bazooka]] Damage || +11%
+|-
+|[[Bazooka]] Hitpoints || +11%
+|}
+{{MythicalWarArtifactsMenu}}

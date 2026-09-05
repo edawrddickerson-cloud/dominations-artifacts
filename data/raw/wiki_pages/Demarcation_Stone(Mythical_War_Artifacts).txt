@@ -1,0 +1,34 @@
+[[File:Demarcation Stone(Mythical War Artifacts).jpg|center|220x220px|Demarcation Stone(Mythical War Artifacts)]]
+
+== General Description ==
+'''Demarcation Stone''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Demarcation Stones are meter tall monuments commemorating locations along the Western Front where Allies had victorious battles during World War I. There Are Three versions of these monuments: British, Belgian, and French. Each version has a helmet in the style of their appropriate nation, as well as having a few minor equipment changes pictured on the monuments.
+
+Paul Moreau-Vauthier, the artist who created these monuments, was himself a veteran of the Battle of Verdun during World War I. He had originally planned to place 240 Demarcation Stones but was only able to complete half of them. Moreau-Vauthier was passionate about remembering the sacrifices of hose in combat and had created other pieces of art such as the Monument to the Heroes of the Armee Noire and the Victimes des Revolutions.
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|[[Missile Silo]] and [[Big Red Button]] Damage
+| +11%
+|-
+|[[Heavy Infantry]] Damage
+| +9%
+|-
+|[[Ranged Infantry]] Damage
+| +9%
+|-
+|[[Supply Vehicles]] Healing
+| +9%
+|-
+|Invading [[Machine Gun Infantry]] Damage
+| -9%
+|-
+|All Enemy Defensive [[Towers]] Damage
+| -9%
+|}
+{{MythicalWarArtifactsMenu}}

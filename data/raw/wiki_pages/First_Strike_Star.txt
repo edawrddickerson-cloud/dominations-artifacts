@@ -1,0 +1,29 @@
+[[File:First_Strike_Star.png|File:{{PAGENAME}}.jpg|center|250x250px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+
+
+== Statistic ==
+{| class="article-table"
+! scope="col" |Benefit Name
+! scope="col" |Base Stat
+|-
+|Quick Victory Time
+| +8%
+|-
+|Enemy Defender Spawn Time
+| +6%
+|-
+|All Enemy Defensive Towers Hitpoints
+| -3%
+|-
+|Enemy Defender Hitpoints
+| -3%
+|-
+|Enemy [[Missile Silo]] Damage
+| -6%
+|}
+{{LegendaryArtifactsMenu}}

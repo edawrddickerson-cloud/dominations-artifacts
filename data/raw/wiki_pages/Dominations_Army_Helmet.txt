@@ -1,0 +1,31 @@
+[[File:DomiNations Army Helmet.png|center|260x260px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+
+
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Enemy [[Missile Silo]] Damage
+| -6%
+|-
+|Enemy [[Sniper Tower]] Damage
+| -6%
+|-
+|[[Generals|Generals']] Hitpoints
+| +6%
+|-
+|Enemy [[Mortar|Catapult]] Hitpoints
+| -6%
+|-
+|Enemy [[Anti-Tank Gun]] Hitpoints
+| -6%
+|}
+
+{{LegendaryWarArtifactsMenu}}

@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.jpg|center|220px]]
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]]. It can be purchased from the Legendary sale for real money.
+
+== Historical Description ==
+The Thinker of Cernavoda was a Stone Age masterpiece, sculpted from terracotta along with its pair, The Sitting Woman of Cernavoda. This marvel was unearthed in 1956 and remains one of the oldest prehistoric sculptures that shows the human race’s unique ability of introspection, as opposed to the usual artistic concerns of that time period - hunting or fertility. Also referred to as  'Ganditorul', this piece was found in an archeological dig near Cernavoda, Romania, and now resides in the National Museum of Romanian History, Bucharest.
+
+== Statistics ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+|[[Barracks]] Troop Damage || +11%
+|-
+|Enemy Defender Spawn Time || +6%
+|-
+|All Enemy Defensive Towers Damage || -11%
+|-
+|All Resources Looted || +8%
+|-
+|All Resources Looted || +8%
+|-
+|}
+
+{{LegendaryArtifactsMenu}}
+
+[[Category:Museum]]
+
+[[Category:Artifact]]
+
+[[Category:Legendary Artifact]]

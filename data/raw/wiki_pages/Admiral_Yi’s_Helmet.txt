@@ -1,0 +1,35 @@
+[[File:Admiral Yi Helmet.png|centre|thumb|360x360px]]
+Admiral Yi's Helmet is a [[Legendary Artifacts]] that can be obtained from the [[Admiral Yi Event]]. It focuses mainly on defending your base but it also has 1 boost on attacking.
+
+== Historical Description ==
+Admiral Yi Soon Shin is a Korean national hero who was undefeated at sea and was essential to repelling Japanese invaders during the [https://en.wikipedia.org/wiki/Japanese_invasions_of_Korea_(1592%E2%80%9398) Imjin War](1592 - 1598). He is most famous for defeating [https://en.wikipedia.org/wiki/Toyotomi_Hideyoshi Toyotomi Hideyoshi] at the Battle of [https://en.wikipedia.org/wiki/Battle_of_Myeongnyang Myeongnyang] where he defeated 133 Japanese warships with only 13 Korean turtle ships.
+
+Yi served at a multitude of army and navy posts. He was frequently shuffled between post and even discharged from the military twice due to being falsely charged by jealous government officials. Despite their jealousy he remained in the king's favor and was appointed the commander of the entire navy. As commander he designed the iconic turtle battleships, thought to be the first ironclad battleship in history.
+
+Admiral Yi adorned the traditional commander's helmet of the the [https://en.wikipedia.org/wiki/Joseon Joseon dynasty]. His elaborate helmet included a trident that protruded from the top and an extended headdress covering his ears and neck. Yi was killed by a stray bullet, but with his last breaths he commanded his son to masquerade him by wearing his helmet and armor until the battle was won, saying 'Beat my war drums and do not let my death be known'.
+
+== Statistics ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+||Invading [[Generals|General's]] Damage|| -6%
+|-
+|Enemy Defender Spawn Time
+| +6%
+|-
+|Defender Damage
+| +6%
+|-
+|Defender Hitpoints|| +11%
+|-
+|Invading [[Generals|General's]] Hitpoints
+| -11%
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Legendary Artifact]]
+[[Category:Artifact]]
+|}

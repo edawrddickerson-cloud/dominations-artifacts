@@ -1,0 +1,31 @@
+[[File:{{PAGENAME}}.png|center|260x260px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+
+
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Invading [[Bombers|Bomber]] Damage
+| +11%
+|-
+|All Defensive Towers Hitpoints
+| +8%
+|-
+|[[Mortar|Catapult]] Hitpoints
+| +11%
+|-
+|[[Tower]] Hitpoints
+| +11%
+|-
+|Defender Hitpoints
+| +6%
+|}
+
+{{LegendaryWarArtifactsMenu}}

@@ -1,0 +1,29 @@
+[[File:{{PAGENAME}}.jpg|centre|250px]]
+
+== General Description ==
+'''Mask of Agamemnon''' is one of The [[Mythical Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The golden funeral mask known as the 'Mask of Agamemnon' was unearthed in 1876 by Heinrich Schliemann, the pioneering archaeologist who also discovered Troy. It was found covering the face of a body in a royal burial shaft at Mycenae in southern Greece and became associated with the legendary leader of the Greeks in the Trojan War, Agamemnon. Though we now know he lived three centuries after its creation (if he lived at all), the mask remains one of the most iconic artworks of ancient Greece.
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|All Defensive Tower HP & DMG
+| +8%
+|-
+|[[Tower]] Hitpoints
+| rowspan="4" | +16%
+|-
+|[[Tower]] Damage
+|-
+|[[Catapult]] Hitpoints
+|-
+|[[Catapult]] Damage
+|-
+|All Defensive Tower Damage
+| +12%
+|}
+{{MythicalArtifactsMenu}}

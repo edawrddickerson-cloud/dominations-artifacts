@@ -1,0 +1,29 @@
+[[File:{{PAGENAME}}.jpg|center|220x220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]] that can be stored and displayed at the [[Museum]].
+
+== Historical Description ==
+Nine Men's Morris is an ancient strategy board game, also known as ‘Merels’ or ‘Mill,’ that dates back to Roman times and possibly earlier. The game is played on a board with a grid of 24 spaces, where players take turns placing and moving their pieces (often represented by stones or markers) with the goal of forming ‘mills’ — three pieces in a row. When a mill is formed, the player can remove one of the opponent’s pieces from the board. The game combines elements of placement and movement strategy, requiring careful planning to both block your opponent and create opportunities to form mills. While the game itself is an artifact of ancient leisure and social interaction, it can still be found carved into stone or wood in archaeological sites, illustrating its cultural significance across various civilizations.
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Invading Factory Troop Damage
+| -3%
+|-
+|Invading Factory Troop Damage
+| -3%
+|-
+|Anti-Tank Gun Damage
+| +9%
+|-
+|Missile Silo Damage
+| +9%
+|-
+|Missile Silo Damage
+| +9%
+|}
+{{LegendaryWarArtifactsMenu}}

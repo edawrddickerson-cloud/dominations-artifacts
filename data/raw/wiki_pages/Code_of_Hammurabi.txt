@@ -1,0 +1,33 @@
+[[File:{{PAGENAME}}.jpg|centre|250px]]
+
+==General Information==
+
+'''{{PAGENAME}}''' is one of the main hall [[Legendary Artifacts]] that can be stored and displayed at [[Museum]].
+
+==Historical Description==
+The Code of Hammurabi was etched into a towering stone stele for all to see around 1750 BCE and stands as one of humanity’s earliest known sets of laws. This Babylonian king’s code of laws laid down strict justice across realms of trade, family, property, and criminal punishment, often embodying the harsh logic of ‘an eye for an eye.’ Far from mere rules, it centralized Hammurabi’s power and broadcast his commitment to order and fairness. Imposing standardized laws helped unify a diverse empire and became a cornerstone for later legal traditions across the ancient Near East. The code’s detailed regulations and harsh penalties reflected Babylonian society’s rigid hierarchy, offering a fascinating window into its values, tensions, and daily life. Its existence marks a pivotal moment in humanity’s quest for structured justice and societal order.
+
+==Statistic==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Bazooka Cooldown||+15%
+|-
+|Defender Hitpoints||+9%
+|-
+|Generals' Hitpoints||+12%
+|-
+|Generals' Hitpoints||+12%
+|-
+|Defender Movement Speed||+9%
+|}
+
+{{LegendaryArtifactsMenu}}
+
+[[Category:Museum]]
+
+[[Category:Artifact]]
+
+[[Category:Legendary Artifact]]

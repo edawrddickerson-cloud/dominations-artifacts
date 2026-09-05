@@ -1,0 +1,31 @@
+[[File:{{PAGENAME}}.jpg|center|260x260px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+
+
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Enemy Defender Spawn Time
+| +10%
+|-
+|Defender Spawn Time
+| -10%
+|-
+|[[Wall Sapper]] Damage
+| +11%
+|-
+|[[Wall Sapper]] Hitpoints
+| +11%
+|-
+|[[Sniper Tower]] Damage
+| +16%
+|}
+
+{{LegendaryWarArtifactsMenu}}

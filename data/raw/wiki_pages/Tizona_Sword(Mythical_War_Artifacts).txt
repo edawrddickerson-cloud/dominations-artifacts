@@ -1,0 +1,28 @@
+[[File:{{PAGENAME}}.jpg|center|249x249px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Mythical War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+11th-century Spain was a patchwork of warring states under both Christian and Muslim rulers. This was the chaotic backdrop against which the legendary Castilian general Rodrigo Diaz de Vivar, better known as El Cid, made his name. Though now a Spanish national hero, he was was hardly a devoted soldier of the Reconquista. After getting his start fighting for Christian kings, he then served under Muslim rulers against lords of his own faith. He spent his final years carving out his own personal territory around the city of Valencia.
+
+According to literary sources, El Cid wielded swords named Tizona and Colada. The former supposedly had the power to terrify cowardly opponents into submission. Today, a beautiful blade claimed to be Tizona resides in the Museum of Burgos, near El Cid's hometown. As with most such famous swords, there are doubts as to its authenticity. Regardless, Spanish steel has long been proverbial for its high quality, and the blade wielded by such a great hero would surely have been one of the finest.
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Ranged Siege Damage || +11%
+|-
+|Enemy Defender Spawn Time || +11%
+|-
+|[[Heavy Cavalry]] Damage || +11%
+|-
+|[[Heavy Cavalry]] Hitpoints || +6%
+|-
+|[[Ranged Siege]] Damage || +11%
+|-
+|[[Ranged Siege]] Hitpoints || +6%
+|}
+{{MythicalWarArtifactsMenu}}

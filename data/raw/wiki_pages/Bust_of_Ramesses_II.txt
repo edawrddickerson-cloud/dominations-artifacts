@@ -1,0 +1,40 @@
+[[File:{{PAGENAME}}.jpg|centre|220px]]
+
+==General Information==
+
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]] that can be stored and displayed at the [[Museum]].
+
+==Historical Description==
+
+Crafted in roughly 1270 BC, Ramesses II’s statue weighs a massive 7.25 tons, and was carved from a single block of limestone. This bust showcases fantastic and iconic features of Ramesses II, such as his regal headdress and strong jawline. This interpretation of the Pharaoh also exemplifies the artistic style of the New Kingdom Period of Ancient Egypt.
+
+Ramesses II would rule for an impressive 66 years, more than 5 times longer than his grandfather Ramesses I. During his time as Pharaoh, he led several victorious military campaigns and left symbols of his name throughout all of Egypt.
+
+Statues of Pharaohs served several purposes in Ancient Egypt. They signified the individual's connection to the gods, but also served as a statement to their people that their orders and declarations were authoritative and absolute. Despite their imposing past, a large number of these statues and busts appear nowadays in museums with mere plaques attempting to describe their historic significance.
+
+==Statistic==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Air Defense Damage|| +8%
+|-
+|Air Defense Hitpoints|| +8%
+|-
+|All Defensive Towers Hitpoints|| +7%
+|-
+|Invading Generals' Hitpoints|| -8%
+|-
+|Invading Bomber Damage|| -8%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+
+[[Category:Museum]]
+
+[[Category:Artifact]]
+
+[[Category:Legendary Artifact]]
+
+[[Category:World War]]

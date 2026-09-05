@@ -1,0 +1,30 @@
+[[File:{{PAGENAME}}_0.jpg|centre|250px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The Quimbaya Treasure is a stunning collection of 433 gold artifacts crafted by the Quimbaya civilization between 500 BCE - 600 CE. This treasure includes ceremonial vessels, ornaments, and anthropomorphic figures, which showcase intricate techniques like lost-wax casting. Renowned for its advanced metallurgy, the Quimbaya Treasure reflects the indigenous society’s high artistic and technological skill and offers valuable insights into the spiritual and cultural life of the Quimbaya people. Today, however, much of it resides in Spanish museums, which has sparked intense debates about colonial plundering, cultural heritage, and repatriation. The Quimbaya Treasure remains a symbol of Colombia’s rich past and a testament to indigenous craftsmanship and innovation.
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| [[Guerrilla]] Damage || +6%
+|-
+| [[Guerrilla]] Hitpoints || +9%
+|-
+| Quick Victory Time || +8%
+|-
+| Quick Victory Time || +8%
+|-
+| [[Decoy|Decoy Tactic]] HP || +10%
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:Museum]]

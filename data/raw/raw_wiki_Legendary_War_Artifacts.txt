@@ -1,0 +1,686 @@
+==General Information==
+Legendary War Artifacts can only be purchased or obtained from special events and are used to boost a variety of special things for War Purposes
+
+== Visuals ==
+<gallery>
+File:6th Anniversary Six-Shooter.png|6th Anniversary Six-Shooter
+File:10th Mountain Division War Kit.png|10th Mountain Division War Kit
+File:11th Anniversary Cake.png|11th Anniversary Cake
+File:Alfred Jewel.png|Alfred Jewel
+File:Analytical Engine.png|Analytical Engine
+File:Arm Reliquary of Charlemagne.png|Arm Reliquary of Charlemagne
+File:ASDIC Type 113X.png|ASDIC Type 113X
+File:ASM-135 Anti-Satellite Missile.png|ASM-135 Anti-Satellite Missile
+File:Battersea Shield.jpg|Battersea Shield
+File:Berlichingen's Iron Prosthetic Hand.jpg|Berlichingen's Iron Prosthetic Hand
+File:British Kettle Drum.jpg|British Kettle Drum
+File:Bust of Ramesses II.jpg|Bust of Ramesses II
+File:Caligula's Ring.png|Caligula's Ring
+File:Capt. McConnell's Hero Ensemble.png|Capt. McConnell's Hero Ensemble
+File:Creighton Abrams Tank Commander Kit.png|Creighton Abrams Tank Commander Kit
+File:Crescent Blade.png|Crescent Blade
+File:Crocodile Mask.png|Crocodile Mask
+File:Cryolophosaurus Skull.png|Cryolophosaurus Skull
+File:Da Vinci's Flying Machine.jpg|Da Vinci's Flying Machine
+File:Da Vinci's Machine Gun.png|Da Vinci's Machine Gun
+File:Demarcation Stone.png|Demarcation Stone
+File:Desert Storm PSN-8 Manpack.jpg|Desert Storm PSN-8 Manpack
+File:DomiNations Army Helmet.png|DomiNations Army Helmet
+File:DomiNations Game Box.jpg|DomiNations Game Box
+File:Elephant Archer Quiver.jpg|Elephant Archer Quiver
+File:Flamma's Helmet.png|Flamma's Helmet
+File:Gemini 8 Gloves.png|Gemini 8 Gloves
+File:Gemini 8 Helmet.png|Gemini 8 Helmet
+File:General-Pershing.png|General Pershing's Bas-Relief
+File:Great Imperial Crown.png|Great Imperial Crown
+File:Huey Armament System.png|Huey Armament System
+File:20190601 222048.jpg|Joyeuse Sword
+File:Julius Caesar Statue.png|Julius Caesar Statue
+File:Koh-i-Noor Diamond.png|Koh-i-Noor Diamond
+File:Leftwich Trophy.jpg|Leftwich Trophy
+File:Leonidas Bust.jpg|Leonidas Bust
+File:Liberty Bell.jpg|Liberty Bell
+File:Mahiole.jpg|Mahiole
+File:Maori War Club.jpg|Maori War Club
+File:Mold Gold Cape.jpg|Mold Gold Cape
+File:Narmer Palette.png|Narmer Palette
+File:Napoleon's Boxlock Pistol.jpg|Napoleon's Boxlock Pistol
+File:Nine Men's Morris.jpg|Nine Men's Morris
+File:Norden Bombsight.png|Norden Bombsight
+File:Normandy SCR-536 "Walkie-Talkie".png|Normandy SCR-536 "Walkie-Talkie"
+File:Olmec Colossal Heads.jpg|Olmec Colossal Heads
+File:Plane Gyro Gunsight.jpg|Plane Gyro Gunsight
+File:Ramesses Ⅱ's Abu Simbel.png|Ramesses Ⅱ's Abu Simbel
+File:Raven Rattle.jpg|Raven Rattle
+File:Red Baron's Engine.png|Red Baron's Engine
+File:RQ-2 Pioneer.jpg|RQ-2 Pioneer
+File:Sanada Yukimura's Armor.png|Sanada Yukimura's Armor
+File:Sophilos Dinos.jpg|Sophilos Dinos
+File:Supermarine Spitfire Engine.png|Supermarine Spitfire Engine
+File:T-34 Tank Engine.png|T-34 Tank Engine
+File:The Art of War.png|The Art of War
+File:The White Death's War Kit.png|The White Death's War Kit
+File:Tizona Sword.png|Tizona Sword
+File:Trundholm Sun Chariot.jpg|Trundholm Sun Chariot
+File:Vespa 150 TAP.png|Vespa 150 TAP
+File:Vz-9 Avrocar.png|Vz-9 Avrocar
+File:Welrod MkII.png|Welrod MkII
+File:Winged Victory of Samothrace.jpg|Winged Victory of Samothrace
+File:ZG 1229 Vampir.png|ZG 1229 Vampir
+</gallery>
+
+== List of Legendary War Artifacts ==
+
+* '''[[6th Anniversary Six-Shooter]]'''
+* '''[[10th Mountain Division War Kit]]'''
+* '''[[11th Anniversary Cake]]'''
+* '''[[Alfred Jewel]]'''
+* '''[[Analytical Engine]]'''
+* '''[[Arm Reliquary of Charlemagne]]'''
+* '''[[ASDIC Type 113X]]'''
+* '''[[ASM-135 Anti-Satellite Missile]]'''
+* '''[[Battersea Shield]]'''
+* '''[[Berlichingen's Iron Prosthetic Hand]]
+* '''[[British Kettle Drum]]'''
+* '''[[Bust of Ramesses II]]'''
+* '''[[Caligula's Ring]]'''
+* '''[[Capt. McConnell's Hero Ensemble]]'''
+* '''[[Creighton Abrams Tank Commander Kit]]'''
+* '''[[Crescent Blade]]'''
+* '''[[Crocodile Mask]]'''
+*'''[[Cryolophosaurus Skull]]'''
+*'''Da Vinci's
+** '''[[Da Vinci's Flying Machine|Flying Machine]]'''
+** '''[[Da Vinci's Machine Gun|Machine Gun]]'''
+* '''[[Demarcation Stone]]'''
+* '''[[Desert Storm PSN-8 Manpack]]'''
+* '''[[Dominations Army Helmet]]'''
+* '''[[DomiNations Game Box]]'''
+* '''[[Elephant Archer Quiver]]'''
+* '''[[Flamma's Helmet]]'''
+* '''Gemini 8'''
+** '''[[Gemini 8 Gloves|Gloves]]'''
+** '''[[Gemini 8 Helmet|Helmet]]'''
+* '''[[General Pershing's Bas-Relief]]'''
+* '''[[Great Imperial Crown]]'''
+* '''[[Huey Armament System]]'''
+* '''[[Joyeuse Sword]]'''
+* '''[[Julius Caesar Statue]]'''
+* '''[[Koh-i-Noor Diamond]]'''
+* '''[[Leftwich Trophy]]'''
+* '''[[Leonidas Bust]]'''
+* '''[[Liberty Bell]]'''
+* '''[[Mahiole]]'''
+* '''[[Maori War Club]]'''
+* '''[[Mold Gold Cape]]'''
+* '''[[Narmer Palette]]'''
+* '''[[Napoleon's Boxlock Pistol]]'''
+* '''[[Nine Men's Morris]]'''
+* '''[[Norden Bombsight]]'''
+* '''[[Normandy SCR-536 "Walkie-Talkie"]]'''
+* '''[[Olmec Colossal Heads]]'''
+* '''[[Plane Gyro Gunsight]]'''
+* '''[[Ramesses Ⅱ's Abu Simbel]]'''
+* '''[[Raven Rattle]]
+* '''[[Red Baron's Engine]]'''
+* '''[[RQ-2 Pioneer]]'''
+* '''[[Sanada Yukimura's Armor]]'''
+* '''[[Sophilos Dinos]]'''
+* '''[[Supermarine Spitfire Engine]]'''
+* '''[[T-34 Tank Engine]]'''
+* '''[[The Art of War]]'''
+* '''[[The White Death's War Kit]]'''
+* '''[[Tizona Sword]]'''
+* '''[[Trundholm Sun Chariot]]'''
+* '''[[Vespa 150 TAP]]'''
+* '''[[Vz-9 Avrocar]]'''
+* '''[[Welrod MkII]]'''
+* '''[[Winged Victory of Samothrace]]'''
+* '''[[ZG 1229 Vampir]]'''
+
+== Boosts ==
+The [[Archaeology Capstone]] [[Technology]] research at [[Library]] confers the following bonuses to Legendary War Artifacts:
+* +1% Bonus to War Hall Legendary Artifact Modifiers
+
+== Quick View ==
+{| class="fandom-table"
+|<small>'''Artifacts'''</small>
+| colspan="2" rowspan="1" |<small>'''First Line'''</small>
+| colspan="2" rowspan="1" |<small>'''Second Line'''</small>
+| colspan="2" rowspan="1" |<small>'''Third Line'''</small>
+| colspan="2" rowspan="1" |<small>'''Fourth Line'''</small>
+| colspan="2" rowspan="1" |<small>'''Fifth Line'''</small>
+|-
+|<small>6th Anniversary Six-Shooter</small>
+|<small>Bazooka Damage</small>
+|<small>9%</small>
+|<small>Bazooka Damage</small>
+|<small>8%</small>
+|<small>Bomber Hitpoints</small>
+|<small>9%</small>
+|<small>Attack Helicopter Damage</small>
+|<small>9%</small>
+|<small>Invading Paratrooper Damage</small>
+|<small>-9%</small>
+|-
+|<small>10th Mountain Division War Kit</small>
+|<small>APC Damage</small>
+|<small>8%</small>
+|<small>APC Hitpoints</small>
+|<small>7%</small>
+|<small>Machine Gun Infantry Damage</small>
+|<small>8%</small>
+|<small>Enemy Defender Spawn Time</small>
+|<small>6%</small>
+|<small>Enemy Redoubt Damage</small>
+|<small>-6%</small>
+|-
+|<small>Arm Reliquary of Charlemagne</small>
+|<small>Paratrooper Damage</small>
+|<small>8%</small>
+|<small>Paratrooper Hitpoints</small>
+|<small>7%</small>
+|<small>Generals' Damage</small>
+|<small>7%</small>
+|<small>Fighter Damage</small>
+|<small>7%</small>
+|<small>Invading Heavy Tank Damage</small>
+|<small>-6%</small>
+|-
+|<small>ASDIC Type 113X</small>
+|<small>Invading Barracks Troop Damage</small>
+|<small>-9%</small>
+|<small>Invading Factory Troop Damage</small>
+|<small>-9%</small>
+|<small>Invading Airstrip Troop Damage</small>
+|<small>-9%</small>
+|<small>Defender Spawn Time</small>
+|<small>-9%</small>
+|<small>Missile Silo Damage</small>
+|<small>9%</small>
+|-
+|<small>ASM-135 Anti-Satellite Missile</small>
+|<small>Missile Silo and Red Button Damage</small>
+|<small>7%</small>
+|<small>Missile Silo Damage</small>
+|<small>7%</small>
+|<small>Airstrip Troop Damage</small>
+|<small>3%</small>
+|<small>Air Defense Damage</small>
+|<small>7%</small>
+|<small>Defender Hitpoints</small>
+|<small>7%</small>
+|-
+|<small>Caligula's Ring</small>
+|<small>Paratrooper Damage</small>
+|<small>6%</small>
+|<small>Paratrooper Hitpoints</small>
+|<small>6%</small>
+|<small>Guerilla Damage</small>
+|<small>6%</small>
+|<small>Ranged Siege Damage</small>
+|<small>3%</small>
+|<small>Wall Sapper Damage</small>
+|<small>6%</small>
+|-
+|<small>Capt. McConnell's Hero Ensemble</small>
+|<small>Generals' Hitpoints and Damage</small>
+|<small>7%</small>
+|<small>Oil Looted</small>
+|<small>8%</small>
+|<small>Fighter Damage</small>
+|<small>8%</small>
+|<small>Fighter Damage</small>
+|<small>9%</small>
+|<small>Airstrip Troop Hitpoints</small>
+|<small>9%</small>
+|-
+|<small>Crescent Blade</small>
+|<small>Defender Hitpoints</small>
+|<small>6%</small>
+|<small>Enemy Defender Spawn Time</small>
+|<small>6%</small>
+|<small>Air Defense Damage</small>
+|<small>6%</small>
+|<small>Generals' Damage</small>
+|<small>6%</small>
+|<small>Heavy Tank Damage</small>
+|<small>3%</small>
+|-
+|<small>Crocodile Mask</small>
+|<small>General Damage</small>
+|<small>3%</small>
+|<small>Defender Hitpoints</small>
+|<small>6%</small>
+|<small>Invading Factory Troop Damage</small>
+|<small>-3%</small>
+|<small>Invading Factory Troop Hitpoints</small>
+|<small>-3%</small>
+|<small>Invading Gerneral's Hitpoitnts</small>
+|<small>-3%</small>
+|-
+|<small>Cryolophosaurus Skull</small>
+|<small>Fighter Damage</small>
+|<small>3%</small>
+|<small>Bomber Damage</small>
+|<small>6%</small>
+|<small>Redoubt Damage</small>
+|<small>6%</small>
+|<small>Bazooka Damage</small>
+|<small>6%</small>
+|<small>Machine Gun Infantry Damage</small>
+|<small>6%</small>
+|-
+|<small>Da Vinci's Flying Machine</small>
+|<small>Fighters Damage</small>
+|<small>6%</small>
+|<small>Fighters Hitpoints</small>
+|<small>6%</small>
+|<small>Fighters Hitpoints</small>
+|<small>6%</small>
+|<small>Heavy Tank Damage</small>
+|<small>6%</small>
+|<small>Heavy Tank Hitpoints</small>
+|<small>6%</small>
+|-
+|<small>Da Vinci's Machine Gun</small>
+|<small>Machine Gun Infantry Damage</small>
+|<small>9%</small>
+|<small>Machine Gun Infantry Hitpoints</small>
+|<small>7%</small>
+|<small>Invading Factory Troop Damage</small>
+|<small>-8%</small>
+|<small>Ranged Siege Damage</small>
+|<small>8%</small>
+|<small>Enemy Catapult Hitpoints</small>
+|<small>-8%</small>
+|-
+|<small>Demarcation Stone</small>
+|<small>Heavy Infantry Damage</small>
+|<small>3%</small>
+|<small>Ranged Infantry Damage</small>
+|<small>3%</small>
+|<small>Supply Vehicles Healing</small>
+|<small>3%</small>
+|<small>Invading Machine Gun Infantry Damage</small>
+|<small>-3%</small>
+|<small>All Enemy Defensive Towers Damage</small>
+|<small>-3%</small>
+|-
+|<small>Desert Storm PSN-8 Manpack</small>
+|<small>Rally Cooldown</small>
+|<small>-11%</small>
+|<small>Increase Rally Duration</small>
+|<small>9%</small>
+|<small>Factory Troop Hitpoints</small>
+|<small>9%</small>
+|<small>Factory Troop Damage</small>
+|<small>9%</small>
+|<small>Enemy Towers Damage</small>
+|<small>-9%</small>
+|-
+|<small>Flamma's Helmet</small>
+|<small>Guerrilla Damage</small>
+|<small>6%</small>
+|<small>Guerrilla Hitpoints</small>
+|<small>6%</small>
+|<small>Enemy Defender Spawn Time</small>
+|<small>3%</small>
+|<small>Increase Rally Duration</small>
+|<small>6%</small>
+|<small>Missile Silo and Big Red Button Damage</small>
+|<small>7%</small>
+|-
+|<small>Gemini 8 Gloves</small>
+|<small>Defender Hitpoints</small>
+|<small>7%</small>
+|<small>Enemy Defender Spawn Time</small>
+|<small>7%</small>
+|<small>All Defensive Towers Hitpoints</small>
+|<small>7%</small>
+|<small>All Defensive Towers Damage</small>
+|<small>7%</small>
+|<small>Enemy Missile Silo Damage</small>
+|<small>-7%</small>
+|-
+|<small>Gemini 8 Helmet</small>
+|<small>Attack Helicopter Damage</small>
+|<small>7%</small>
+|<small>Armored Car Damage</small>
+|<small>7%</small>
+|<small>Bazooka Damage</small>
+|<small>7%</small>
+|<small>Heavy Tank Damage</small>
+|<small>7%</small>
+|<small>Barracks Troop Damage</small>
+|<small>7%</small>
+|-
+|<small>General Pershing's Bas-Relief</small>
+|<small>Heavy Infantry Hitpoints</small>
+|<small>3%</small>
+|<small>Ranged Infantry Hitpoints</small>
+|<small>3%</small>
+|<small>Heavy Cavalry Hitpoints</small>
+|<small>3%</small>
+|<small>Ranged Siege Damage</small>
+|<small>3%</small>
+|<small>Raider Damage</small>
+|<small>3%</small>
+|-
+|<small>Great Imperial Crown</small>
+|<small>All Defensive Towers Damage</small>
+|<small>6%</small>
+|<small>Invading Heavy Tank Damage</small>
+|<small>-8%</small>
+|<small>MRL Damage</small>
+|<small>8%</small>
+|<small>Invading Bazooka Damage</small>
+|<small>-7%</small>
+|<small>Fighter Damage</small>
+|<small>6%</small>
+|-
+|<small>Huey Armament System</small>
+|<small>Attack Helicopter Damage</small>
+|<small>9%</small>
+|<small>Attack Helicopter Damage</small>
+|<small>9%</small>
+|<small>Attack Helicopter Hitpoints</small>
+|<small>9%</small>
+|<small>Bazooka Damage</small>
+|<small>9%</small>
+|<small>All Enemy Defensive Towers Damage</small>
+|<small>-6%</small>
+|-
+|<small>Joyeuse Sword</small>
+|<small>Factory Troop Damage</small>
+|<small>6%</small>
+|<small>Heavy Tank Damage</small>
+|<small>6%</small>
+|<small>Bomber Damage</small>
+|<small>6%</small>
+|<small>Generals' Damage</small>
+|<small>6%</small>
+|<small>Defender Damage</small>
+|<small>6%</small>
+|-
+|<small>Julius Caesar Statue</small>
+|<small>Invading Generals' Damage</small>
+|<small>-8%</small>
+|<small>Invading Generals' Hitpoints</small>
+|<small>-8%</small>
+|<small>Generals' Damage</small>
+|<small>9%</small>
+|<small>Barracks Troop Damage</small>
+|<small>8%</small>
+|<small>Invading Barracks Troop Damage</small>
+|<small>-9%</small>
+|-
+|<small>Leonidas Bust</small>
+|<small>Mercenary Camp Deploys Spartans when Destroyed</small>
+|<small>1</small>
+|<small>Quick Victory Time</small>
+|<small>6%</small>
+|<small>Generals' Hitpoints and Damage</small>
+|<small>6%</small>
+|<small>Bazooka Damage</small>
+|<small>6%</small>
+|<small>Bazooka Hitpoints</small>
+|<small>6%</small>
+|-
+|<small>Maori War Club</small>
+|<small>All Defensive Towers Hitpoints and Damage</small>
+|<small>3%</small>
+|<small>Defender Spawn Time</small>
+|<small>-6%</small>
+|<small>Defender Movement Speed</small>
+|<small>3%</small>
+|<small>Invading Recon Scan Duration</small>
+|<small>-7%</small>
+|<small>Generals' Attack Speed</small>
+|<small>3%</small>
+|-
+|<small>Narmer Palette</small>
+|<small>Invading Fighter Damage</small>
+|<small>-6%</small>
+|<small>Air Defense Damage</small>
+|<small>6%</small>
+|<small>Bomber Hitpoints</small>
+|<small>3%</small>
+|<small>Fighter Hitpoints</small>
+|<small>6%</small>
+|<small>Bazooka Hitpoints</small>
+|<small>6%</small>
+|-
+|<small>Norden Bombsight</small>
+|<small>APC Deploys Marines On Death</small>
+|<small>1</small>
+|<small>Coalition Troop Damage</small>
+|<small>8%</small>
+|<small>Defenders Spawn Time</small>
+|<small>-8%</small>
+|<small>Invading Fighter Damage</small>
+|<small>-8%</small>
+|<small>Machine Gun Infantry Damage</small>
+|<small>8%</small>
+|-
+|<small>Normandy SCR-536 "Walkie-Talkie"</small>
+|<small>Bazooka Damage</small>
+|<small>9%</small>
+|<small>Bomber Damage</small>
+|<small>9%</small>
+|<small>Armored Car Damage</small>
+|<small>9%</small>
+|<small>MRL Damage</small>
+|<small>9%</small>
+|<small>Rally Cooldown</small>
+|<small>-11%</small>
+|-
+|<small>Ramesses Ⅱ's Abu Simbel</small>
+|<small>All Defensive Towers Damage</small>
+|<small>9%</small>
+|<small>Defender Spawn Time</small>
+|<small>-9%</small>
+|<small>Invading Bazooka Damage</small>
+|<small>-7%</small>
+|<small>Invading Guerrilla Damage</small>
+|<small>-9%</small>
+|<small>All Defensive Towers Damage</small>
+|<small>9%</small>
+|-
+|<small>Red Baron's Engine</small>
+|<small>Fighter Damage</small>
+|<small>6%</small>
+|<small>Bomber Damage</small>
+|<small>6%</small>
+|<small>Heavy Tank Damage</small>
+|<small>6%</small>
+|<small>Machine Gun Infantry Damage</small>
+|<small>6%</small>
+|<small>Invading Fighters Damage</small>
+|<small>-6%</small>
+|-
+|<small>RQ-2 Pioneer</small>
+|<small>Invading Bombers Damage</small>
+|<small>-8%</small>
+|<small>Invading Bombers Damage</small>
+|<small>-8%</small>
+|<small>Invading Bombers Hitpoints</small>
+|<small>-7%</small>
+|<small>Air Defense Hitpoints</small>
+|<small>6%</small>
+|<small>Air Defense Damage</small>
+|<small>6%</small>
+|-
+|<small>Sanada Yukimura's Armor</small>
+|<small>Castle spawns Sword Saints when Destroyed</small>
+|<small>1</small>
+|<small>Generals' Hitpoints</small>
+|<small>6%</small>
+|<small>Bazooka Damage</small>
+|<small>6%</small>
+|<small>Fighter Damage</small>
+|<small>8%</small>
+|<small>Guerrilla Hitpoints</small>
+|<small>8%</small>
+|-
+|<small>Supermarine Spitfire Engine</small>
+|<small>Bomber Damage</small>
+|<small>9%</small>
+|<small>Bomber Hitpoints</small>
+|<small>9%</small>
+|<small>Bomber Hitpoints</small>
+|<small>8%</small>
+|<small>Heavy Tank Damage</small>
+|<small>9%</small>
+|<small>Fighter Damage</small>
+|<small>9%</small>
+|-
+|<small>T-34 Tank Engine</small>
+|<small>Heavy Tank Damage</small>
+|<small>7%</small>
+|<small>Heavy Tank Hitpoints</small>
+|<small>7%</small>
+|<small>Invading Heavy Tank Damage</small>
+|<small>-7%</small>
+|<small>Invading Heavy Tank Hitpoints</small>
+|<small>-7%</small>
+|<small>Invading Heavy Cavalry Damage</small>
+|<small>-7%</small>
+|-
+|<small>The Art of War</small>
+|<small>Heavy Tank Hitpoints</small>
+|<small>9%</small>
+|<small>Heavy Tank Damage</small>
+|<small>9%</small>
+|<small>Invading Generals' Hitpoints</small>
+|<small>-9%</small>
+|<small>Invading Generals' Damage</small>
+|<small>-9%</small>
+|<small>Generals' Hitpoints and Damage</small>
+|<small>9%</small>
+|-
+|<small>The White Death's War Kit</small>
+|<small>Sniper Tower Damage</small>
+|<small>6%</small>
+|<small>Sniper Tower Hitpoints</small>
+|<small>6%</small>
+|<small>Enemy Defender Spawn Time</small>
+|<small>6%</small>
+|<small>All Defensive Towers Hitpoints</small>
+|<small>3%</small>
+|<small>All Defensive Towers Damage</small>
+|<small>3%</small>
+|-
+|<small>Tizona Sword</small>
+|<small>Enemy Defender Spawn Time</small>
+|<small>6%</small>
+|<small>Heavy Cavalry Damage</small>
+|<small>6%</small>
+|<small>Heavy Cavalry Hitpoints</small>
+|<small>3%</small>
+|<small>Ranged Siege Damage</small>
+|<small>6%</small>
+|<small>Ranged Siege Hitpoints</small>
+|<small>3%</small>
+|-
+|<small>Vespa 150 TAP</small>
+|<small>Machine Gun Infantry Damage</small>
+|<small>7%</small>
+|<small>Machine Gun Infantry Hitpoints</small>
+|<small>7%</small>
+|<small>Ranged Siege Damage</small>
+|<small>7%</small>
+|<small>Ranged Siege Hitpoints</small>
+|<small>7%</small>
+|<small>Factory Troop Damage</small>
+|<small>1%</small>
+|-
+|<small>Vz-9 Avrocar</small>
+|<small>Invading Fighter Damage</small>
+|<small>-6%</small>
+|<small>Air Defense Damage</small>
+|<small>6%</small>
+|<small>Invading Bomber Damage</small>
+|<small>-6%</small>
+|<small>Invading Fighter Hitpoints</small>
+|<small>-6%</small>
+|<small>Invading Bomber Hitpoints</small>
+|<small>-6%</small>
+|-
+|<small>Welrod MkII</small>
+|<small>All Enemy Defensive Towers Hitpoints</small>
+|<small>-8%</small>
+|<small>Enemy Defender Spawn Time</small>
+|<small>8%</small>
+|<small>Guerrilla Damage</small>
+|<small>6%</small>
+|<small>Guerrilla Hitpoints</small>
+|<small>6%</small>
+|<small>Airstrip Troop Damage</small>
+|<small>6%</small>
+|-
+|<small>ZG 1229 Vampir</small>
+|<small>Sniper Tower Damage</small>
+|<small>8%</small>
+|<small>Sniper Tower Damage</small>
+|<small>8%</small>
+|<small>Enemy Tower Damage</small>
+|<small>-7%</small>
+|<small>Mortar Troop Hitpoints</small>
+|<small>8%</small>
+|<small>APC Hitpoints</small>
+|<small>9%</small>
+|-
+|<small>Creighton Abrams Tank Commander Kit</small>
+|<small>Heal Duration</small>
+|<small>6%</small>
+|<small>Heavy Tank Damage</small>
+|<small>6%</small>
+|<small>Decoy Tactic Hitpoints</small>
+|<small>7%</small>
+|<small>Guerrilla Hitpoints</small>
+|<small>6%</small>
+|<small>Enemy Defender Spawn Time</small>
+|<small>7%</small>
+|-
+|<small>Plane Gyro Gunsight</small>
+|<small>Bomber HP</small>
+|<small>6%</small>
+|<small>Bomber Hitpoints</small>
+|<small>6%</small>
+|<small>Recon Bonus Duration</small>
+|<small>3%</small>
+|<small>Bazooka Attack Speed</small>
+|<small>3%</small>
+|<small>Quick Victory Time</small>
+|<small>6%</small>
+|-
+|<small>British Kettle Drum</small>
+|<small>Mortar Troop Damage</small>
+|<small>6%</small>
+|<small>Barracks Troop Damage</small>
+|<small>7%</small>
+|<small>Barracks Troop Hitpoints</small>
+|<small>7%</small>
+|<small>Ranged Siege Damage</small>
+|<small>6%</small>
+|<small>Enemy Defender Spawn Time</small>
+|<small>6%</small>
+|-
+|<small>Berlichingen's Iron Prosthetic Hand</small>
+|<small>Transport Cooldown</small>
+|<small>-9%</small>
+|<small>Transport Movement Speed</small>
+|<small>+9%</small>
+|<small>Enemy Anti-Tank Gun Damage</small>
+|<small>-16%</small>
+|<small>Paratrooper Hitpoints</small>
+|<small>+8%</small>
+|<small>Paratrooper Damage</small>
+|<small>+8%</small>
+|}
+
+{{Template:LegendaryWarArtifactsMenu}}
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:Museum]]

@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Politicians in the Roman Republic were traditionally expected to fade into obscurity even after attaining great victories. But by the time Gaius Julius Caesar was born in 100 BCE, a shift had begun toward the accumulation of power by individuals. Since his family was venerable but poor, the ambitious young Caesar borrowed heavily to stage lavish games and win the people's affection. This started his meteoric rise through Roman public offices including high priest and consul. Most fatefully, in 58 he was made governor of Transalpine Gaul, now southern France.
+
+Through feats of both military and diplomatic genius, Caesar conquered Gaul from 58-50. The triumphant general then returned to Italy and crossed the Rubicon River with his army intact. This illegal action pitted him against the Senate and his one-time ally Pompey the Great in an epic civil war. Caesar emerged victorious and was made dictator for life in early 44 BCE, but assassins bent on saving the republic slew him on the Ides of March. His adopted son Octavian went on to complete the transition to autocracy and be named Augustus, Rome's first emperor
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| Invading [[Generals]]' Damage|| -8%
+|-
+| Invading [[Generals]]' Hitpoints|| -8%
+|-
+| [[Generals]]' Damage|| +9%
+|-
+| [[Barracks]] Troop Damage|| +8%
+|-
+| Invading [[Barracks]] Troop Damage|| -9%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Legendary Artifact]]
+[[Category:Artifact]]
+[[Category:Museum]]
+[[Category:World War]]

@@ -1,0 +1,26 @@
+[[File:{{PAGENAME}}.jpg|center|250x250px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Mythical Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The Sphinx of Taharqo is a granite statue of a sphinx featuring the face of the King Taharqo. It dates back to approximately 680 BCE and was created to honor the last Nubian King of Egypt, Taharqo. He was renowned for his military prowess and won several battles early in his reign. This led to a lasting peace. His rule lasted from 690 BCE to 664 BCE, and he is credited with creating a golden age in Egypt during his reign.
+
+== Statistic ==
+{| class="article-table"
+! scope="col" |Benefit Name
+! scope="col" |Base Stat
+|-
+|[[Assault Vehicle]] Hitpoints|| +21%
+|-
+|[[Library]] Tech Resource Cost|| -11%
+|-
+|[[Vault]] Capacity|| +11%
+|-
+|Oil from [[Oil Well|Oil Wells]]|| +6%
+|-
+|Looted Resource Refund|| +6%
+|-
+|[[Forest]] Expansion Cost Refund|| +6%
+|}
+{{MythicalArtifactsMenu}}

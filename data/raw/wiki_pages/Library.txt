@@ -1,0 +1,182 @@
+
+[[File:Library_Classical.jpg|center|250px]]
+
+{{InGameDesc|Your wise men can research new inventions and [[Technology|technologies]] here.}}
+__TOC__
+== Levels ==
+<tabber>
+|-| Mediterranean =
+<gallery orientation="landscape" position="center" widths="175">
+Library Mediterranean Level 1.png|Level 1
+Library Mediterranean Level 4.png|Level 4
+Library Mediterranean Level 5.jpg|Level 5
+Library Mediterranean Level 6.png|Level 6
+</gallery>
+|-| North European =
+<gallery orientation="landscape" position="center" widths="175">
+Library North European Level 1.png|Level 1
+Library North European Level 2.png|Level 2
+Library North European Level 3.png|Level 3
+Library North European Level 4.png|Level 4
+Library North European Level 5.png|Level 5
+</gallery>
+|-| Oriental =
+<gallery orientation="landscape" position="center" widths="175">
+Library Oriental Level 1.png|Level 1
+Korean librairy lvl unknown.png|Level ?
+</gallery>
+</tabber><gallery>
+Library Level 7.png|Level 7
+Library Level 8.png|Level 8
+Library Level 9.png|Level 9
+Library Level 10.png|Level 10
+Library Level 11.png|Level 11
+Library Level 12.jpg|Level 12
+Library Level 13.jpg|Level 13
+Library lvl 14.png|Level 14
+Library Level 15.jpg|Level 15
+Library Level 16.jpg|Level 16
+Library Level 17.jpg|Library Level 17
+</gallery>
+
+==General Information==
+*The '''Library''' is an [[Buildings|Economic Building]] where you research various [[Technology|Technologies]] to help improve your troops and town's defense and economy in ''[[DomiNations]]''.
+*The [[Technology|Technologies]] are organized into three categories and in a specific color: brown represents economy, blue represents defense, and red represents military.
+*The '''Library''' is unlocked at [[Classical Age]].
+*It takes four citizens to construct and upgrade the '''Library'''.
+*Each [[Technology]] has five chapters.
+*The Library is divided into four Halls:  Through the Ages, Archeology, League of Nations, and State of Defense.
+
+==Statistics==
+{| class="wikitable" style="text-align: center;"
+|-
+! scope="col" |Size
+|-
+|3x3
+|}
+
+:{| class="article-table" style="text-align: center;"
+! scope="col" |Level
+! scope="col" | Build Cost {{Icon|Gold}}
+! scope="col" |Citizens Needed {{Icon|Citizen}}
+! scope="col" |Upgrade Time {{Icon|Clock}}
+! scope="col" |Experience Gain {{Icon|Exp}}
+! scope="col" |Hitpoints {{Icon|Health}}
+! scope="col" |Technologies Unlocked
+! scope="col" |Age Unlocked 
+|-
+|'''1'''|| 80,000
+| rowspan="17" |4||2h||285||1,470
+|[[Pottery]], [[Roadways]], [[Reinforcements]], [[Free Companies]], [[Exploration]], [[Watch Towers]], [[Machinery]], [[Cast Iron]]
+|[[Classical Age]]
+|-
+| '''2'''||90,000|| 8h||610||2,160
+|[[Crop Rotation]], [[Commerce]], [[Ramparts]], [[Chivalry]]
+| rowspan="2" |[[Medieval Age]]
+|-
+|'''3'''||500,000||1d||1,115||2,430
+| [[Zeal]], [[Fortification]], [[Battle Tactics]], [[Ballistics]]
+|-
+|'''4'''||1,200,000||2d||1,630||3,185
+|[[Hounds]], [[Partisans]], [[Engineering]], [[Banners]]
+|[[Gunpowder Age]]
+|-
+|'''5'''||2,500,000||4d||2,385||4,875
+| [[Banking]], [[Citadels]], [[Standing Army]], [[Leadership]], [[Advanced Reconstruction]], [[Renovations]], [[Archives]], [[Excavation]], [[Capacious Caravans]], [[Food Stores]], [[Barricades]], [[Lightweight Traps]], [[Advanced Drilling]], [[Construction Effort]], [[Intellectual Integrity]], [[Direct Donation]], [[Labor Efficiency Capstone]]
+|[[Enlightenment Age]]
+|-
+|'''6'''||3,000,000||5d||2,700||5,325
+|[[Drilling]], [[Savings]], [[Nationalism]], [[Heavy Weaponry]], [[Parliamentary Proceedings]], [[Coalition Forces]], [[Defense Planning]], [[Trenches]]
+| rowspan="2" |[[Industrial Age]]
+|-
+|'''7'''||4,000,000||7d|| 3,245||5,775
+|[[Internationalism]], [[Negotiations]], [[Air Defense (Technology)|Air Defense]], [[Aviation]], [[Curation]], [[Restoration Efficiency]], [[Endowments]], [[Private Collections]], [[Archaeology Capstone]]
+|-
+|'''8'''||5,000,000||8d||3,495||6,375
+|[[Heritage]], [[Command]], [[Warface|Warfare]], [[Resistance]],  [[Strategic Reserves]], [[Guided Missiles]], [[Armored Division]], [[Payloads]], [[League of Nations Capstone]]
+| rowspan="2" |[[Global Age]]
+|-
+|'''9'''||6,000,000||9d||3,725||6,875
+|[[Shipping]], [[Spoils of War]], [[Deception]], [[High Explosives]]
+|-
+|'''10'''||7,000,000||10d||3,950||8,250
+|[[Computing]], [[Radar]], [[Monuments]], [[Elite Paratroopers]]
+| rowspan="2" |[[Atomic Age]]
+|-
+|'''11'''||8,000,000||11d||4,160||9,490
+|[[War Reparations]], [[Sentries]], [[Mobile Forces]], [[Rotorcraft]]
+|-
+|'''12'''||11,800,000||12d||4,365||12,335
+|[[Industrial Plastics]], [[Economic Stimulus]], [[Rocketry]], [[Advanced Ballistics]]
+|[[Cold War Age]]
+|-
+|'''13'''||14,000,000||13d|| 4,520||15,835
+||[[Microprocessor]], [[Archaeology (Technology)|<s>Archaeology</s>]], [[Paleontology]], [[Anti-aircraft]], [[Offensive Ballistics]]
+|[[Space Age]]
+|-
+|'''14'''||16,000,000|| 14d 12h||4,600||19,500
+|[[Economic Prosperity]], [[Palisades]], [[Tactical Defenses]], [[Reconnaissance Aircraft]]
+|[[Digital Age]]
+|-
+|'''15'''||18,000,000||15d||4,850||23,400
+|[[Orders of Council]], [[Aerial Interception]], [[Counter Offensive]], [[Assault Battalion]]
+|[[Information Age]]
+|-
+|'''16'''||20,000,000|| 16d||5,000||27,600
+|[[Dividend Returns (Technology)|Dividend Returns]], [[Exalted Benefactions (Technology)|Exalted Benefactions]], [[Commanding Defense (Technology)|Commanding Defense]], [[Commanding Offense (Technology)|Commanding Offense]]
+|[[Drone Age]]
+|-
+|'''17'''
+|22,000,000
+|16d 12h
+|5,250
+|31,000
+|[[Compartmentalized Production (Technology)|Compartmentalized Production]], [[Fully Loaded Defense (Technology)|Fully Loaded Defense]], [[Fully Loaded Offense (Technology)|Fully Loaded Offense]], [[Assault Force Optimization (Technology)|Assault Force Optimization]]
+|[[Automation Age]]
+|}
+
+==Boosts ==
+=== [[Council]] [[Committees]] ===
+*?
+=== [[Council]] [[Councilors]] ===
+*?
+===[[Library]] [[Technology]]===
+*[[Compartmentalized Production (Technology)|Compartmentalized Production]]
+**Ch. 3 = Gold Costs on all Building Upgrades -5%
+
+* [[Intellectual Integrity]]
+** Ch. 3 = Library Research Cost -4%
+** Ch. 4 = Library Research Time -4%
+
+* [[Labor Efficiency Capstone]]
+** Building Upgrade Cost -3%
+
+===[[Parliament]] [[Laws]]===
+*Base Financing: Economic
+**Reduce cost of Economic building upgrades by 1,000 ~ 85,000 Food/Gold (to a minimum of Free)
+===[[Template:Mainpage_Season|Seasons]]===
+===[[University]]=== 
+*[[King Sejong]] at the [[University]] confers the following bonuses to '''{{PAGENAME}}''':
+**Level 4 - Library Hitpoints: +5% Library hitpoints (10 levels).
+*Completing [[Empress Wu Zetian]]'s The Great Expansion leads to 10% faster research at the '''Library'''.
+===[[Wonders]]===
+*[[Burj Al Arab]]
+**Upgrade Time Reducation per House: -1%
+=== [[VIP]] Bonuses===
+*Building Upgrade Resource Cost
+** Level 9: 5%
+**Level 12: 10%
+**Level 15: 15%
+
+==Trivia==
+*The '''Library''' is based off the [http://riseofnations.wikia.com/wiki/Library Library] in Rise of Nations, a game devoloped in 2004 by Big Huge Games; the same creator of ''[[DomiNations]]''.
+*Originally, the '''Library's''' [[Technology|Technologies]] were organized into five categories, based off the categories of the '''Library''' in Rise of Nations. These categories according to the colors were Brown which represents Age, Red which represents military, Blue which represents civics, Green which represents commerce, and Yellow which represents Science. Over time, the amount of categories decreased from five to the official four in ''[[DomiNations]]''.
+*In early stages of ''[[DomiNations]]'', each [[Technology]] had three chapters. It later increased to four chapters in early 2016 and five chapters in mid-2016.
+
+{{Master Navigation}}
+
+[[zh:圖書館]]
+[[Category:Research Buildings]]
+[[Category:Technology]]
+[[Category:Classical Age]]
+[[Category:Buildings]]

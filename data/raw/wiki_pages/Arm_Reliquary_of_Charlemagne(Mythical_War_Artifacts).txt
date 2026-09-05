@@ -1,0 +1,34 @@
+[[File:Arm Reliquary of Charlemagne(Mythical War Artifacts).jpg|thumb]]
+
+== General Information ==
+'''Arm Reliquary of Charlemagne''' is one of The [[Mythical War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Reliquaries preserve objects associated with the lives of saints, most often their bodily remains. These items, known as relics, are venerated not only for their connection to a holy person but also for their own miraculous powers. To be worthy of carrying such sacred pieces, reliquaries are often crafted with exquisite artistry from costly materials like ivory, gems, and precious metals. One example is the golden forearm holding the ulna and radius bones of Charlemagne which now resides in the treasury of Aachen Cathedral.
+
+The French king Louis XI commissioned the arm reliquary in 1481, many centuries after the death of the great Frankish emperor. Whether the bones can be considered proper relics is a complex question. Since Charlemagne was canonized by an antipope, the Vatican does not officially recognize his sainthood. However, he has long been the subject of local cult worship at Aachen, his primary residence and burial place. Given the famous piety of the emperor, the Church holds him in good stead and has no objection to such popular practices.
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Transport Cooldown
+| -11%
+|-
+|[[Transports|Paratrooper]] Damage
+| +15%
+|-
+|[[Transports|Paratrooper]] Hitpoints
+| +15%
+|-
+|[[Generals]]' Damage
+| +15%
+|-
+|[[Fighters|Fighter]] Damage
+| +14%
+|-
+|Invading [[Heavy Tank]] Damage
+| -11%
+|}
+Resource to upgrade this artifact: '''Oil'''{{MythicalWarArtifactsMenu}}

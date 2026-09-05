@@ -1,0 +1,30 @@
+== General Description ==
+[[File:Mask Of Tutankhamun.png|thumb|220x220px|Mask Of Tutankhamun]]
+'''Mask of Tutankhamun''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+When the nine-year-old Tutankhamun became pharaoh in 1333 BCE, he inherited a kingdom ill at ease. His revolutionary father and predecessor Akhenaten had upended millennia of tradition in Egyptian art, religion, and power structures. The boy king - or rather, his advisors - set about undoing these reforms and restoring the old order that had kept Egypt stable for so long.
+
+Tutankhamun reigned for only ten years and was not a glorious pharaoh in his time. However, today his image and name are among the most iconic in all Egyptian history. While the tombs of most pharaohs succumbed to grave robbers over the centuries, that of 'King Tut' remained hidden until discovered by the British archaeologist Howard Carter in 1922. The unprecedented riches found within touched off a global craze for ancient Egypt that has hardly abated since.
+
+== Statistic ==
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|Oil Looted
+| +11%
+|-
+|Invading [[Heavy Tank]] Damage
+| -11%
+|-
+|Looted Resource Refunt
+| +11%
+|-
+|Invading Barracks Troop Damage
+| -6%
+|-
+|Invading [[Bombers|Bomber]] Damage
+| -6%
+|}
+{{LegendaryArtifactsMenu}}

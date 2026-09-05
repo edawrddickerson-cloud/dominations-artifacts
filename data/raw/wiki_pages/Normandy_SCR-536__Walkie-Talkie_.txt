@@ -1,0 +1,33 @@
+
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Modern warfare would be unthinkable without remote communication of the front lines. Essential to this task are devices that both transmit and receive signals, known as transceivers. The first example in widespread military use was the SCR-536. Developed by Galvin Manufacturing, later Motorola, it entered mass production in July 1941 just five months before the U.S. joined World War II. Today we would recognize it as a walkie-talkie, but it was then called a 'Handie-Talkie' to distinguish it from larger 'Walkie-Talkie' units carried in backpacks.
+
+The SCR-536 turned on and started listening automatically when its 40-inch antenna was pulled out. To transmit sound instead, the user simply held down a button. 50 channels were available although the frequency had to be set in the shop and could not be altered on the go. With a radius of just on mile and batteries lasting less than 24 hours, the device proved inadequate for connecting field commanders back to HQ. Nevertheless, it remained valuable for coordination between platoon leaders, and well over 100,000 units were manufactured by the war's end.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| [[Bazooka]] Damage|| +9%
+|-
+| [[Bombers|Bomber]] Damage|| +9%
+|-
+| [[Armored Car]] Damage|| +9%
+|-
+| [[MRL]] Damage|| +9%
+|-
+| [[Rally]] Cooldown|| -11%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Legendary Artifact]]
+[[Category:Artifact]]
+[[Category:Museum]]
+[[Category:World War]]

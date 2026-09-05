@@ -1,0 +1,26 @@
+[[File:{{PAGENAME}}.jpg|center|250x250px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Mythical Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The Sword of Goujian was discovered in 1965 next to a skeleton in a tomb in Hubei Province, China. The bronze blade remains shiny and sharp after at least 2,300 years with no signs of corrosion. Its remarkable state of preservation is likely due to the near-airtight scabbard in which it was found. Scholars have interpreted eight archaic Chinese characters engraved on the blade to mean that it belonged to Goujian (r. 496-465 BCE), a powerful king of the Yue state during the Spring and Autumn Period.
+
+== Statistic ==
+{| class="article-table"
+! scope="col" |Benefit Name
+! scope="col" |Base Stat
+|-
+|Defender Hitpoints|| +15%
+|-
+|[[Heavy Infantry]] Hitpoints|| +15%
+|-
+|[[Heavy Infantry]] Damage|| +15%
+|-
+|Enemy Defender Spawn Time|| +15%
+|-
+|All Resources Looted|| +15%
+|-
+|Defender Damage|| +15%
+|}
+{{MythicalArtifactsMenu}}

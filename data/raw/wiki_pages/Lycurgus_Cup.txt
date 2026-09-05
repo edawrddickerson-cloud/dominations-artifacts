@@ -1,0 +1,34 @@
+[[File:{{PAGENAME}}.png|centre|250px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The Lycurgus Cup is the most in-tact glass object discovered from 4th-century Rome. It is an impressive discovery due to the rarity of a fully intact glass object from that time period. More extraordinarily, the Lycurgus Cup is the most decorated and detailed piece of glassware that existed that has ever been found from that era of ancient Rome.
+
+The Romans had an incredibly complex method of carving this cup, called a diatretum, where the cup is carved away from the outside to show incredible details in the art. Most others made this way bear relatively simple carvings, often geometric in shape, but the art on the Lycurgus Cup summarizes a classic Roman Story. The mythical King Lycurgus tried to kill Ambrosia, but she transforms into a vine and eventually kills him in this form. The art featured on this artifact depicts Ambrosia taunting the fallen king.
+
+The Lycurgus Cup is also incredibly unique due to how light interacts with it. If a light is cast from the inside of the cup, the outside of the cup will appear red and pink. However, if light is cast from the outside of the cup, the art will appear green. Even more colors can be seen if the cup is filled with fluid, with certain liquids altering the colors more drastically than others. This was magnificent when it was first created, and has inspired many artisans, even in modern times.
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| All Enemy Defensive Towers Damage || -11%
+|-
+| Invading [[Bomber]] Hitpoints || -6%
+|-
+| [[Factory]] Troop Traning Cost || -11%
+|-
+| [[Generals]]' Hitpoints || +11%
+|-
+| [[Oil]] Looted || +11%
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:Museum]]

@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Both sides in the Cold war were concerned about their rival's ability to threaten them from space. Though no weapons were ever built that could attack the Earth from orbit, satellites could perform reconnaissance with seeming impunity. As a result, the American and Soviet militaries both began pursuit anti-satellite (ASAT) technology. A number of methods were designed, including nuclear missiles launched from stationary sites and homing satellites that would self-destruct upon coming within a certain distance of the target.
+
+The ASM-135 was an ASAT rocket mounted on an F-15 fighter plan. Rather than exploding, int slammed into the target and destroyed it through sheer kinetic energy. On September 13th, 1985, Air Force test pilot Major Wilbert Pearson used one to take out a U.S. weather satellite, becoming the only airman to net a 'kill' in space. He had practiced the maneuver hundreds o f times in order to master the precise timing and accuracy required. Despite its success, political and budget concerns led to the termination of the ASM-135 program a few years later.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| [[Missile Silo]] and [[Big Red Button|Red Button]] Damage|| +8%
+|-
+| [[Missile Silo]] Damage|| +8%
+|-
+| [[Airstrip]] Troop Damage || +4%
+|-
+| [[Air Defense]] Damage|| +8%
+|-
+| Defender Hitpoints || +8%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

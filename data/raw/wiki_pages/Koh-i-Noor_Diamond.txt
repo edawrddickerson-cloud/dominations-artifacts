@@ -1,0 +1,31 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The Koh-i-Noor Diamond, meaning 'Mountain of Light' in Persian, is one of the world’s most famous and contested gems. Mined in India’s Golconda region, it first appeared in records around the 14th century and passed through the hands of powerful dynasties including the Kakatiyas, Mughals, Persians, Afghans, and Sikhs. Each ruler saw it as a symbol of divine right and political power. After the British annexed Punjab in 1849, the diamond was taken by the East India Company and presented to Queen Victoria.
+
+The diamond was later recut to enhance its brilliance and is now set in the Queen Mother’s crown as part of the British Crown Jewels. The Koh-i-Noor remains a potent symbol of colonial legacy to this day, with India, Pakistan, Iran, and Afghanistan all laying claim to its ownership.
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| Enemy Defender Spawn Time||+8%
+|-
+| [[Guerrilla]] Movement Speed||+6%
+|-
+| [[Assault Vehicle]] Damage||+8%
+|-
+| [[Assault Vehicle]] Hitpoints||+8%
+|-
+| [[Supply Truck|Supply Vehicle]] Healing||+11%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

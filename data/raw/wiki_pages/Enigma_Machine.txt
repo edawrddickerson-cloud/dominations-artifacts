@@ -1,0 +1,34 @@
+
+[[File:{{PAGENAME}}.jpg|centre|250px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The Enigma machine used by the German military in World War II was far more advanced than any previous encryption mechanism. The device employed a series of rotors to create virtually unbreakable ciphers. Decrypting the messages required a character key which was changed daily and communicated only on printed sheets. Even if a sheet was captured before the operator could dip it in water and wash away its soluble ink, only one month’s worth of keys were given out at a time. The Germans felt they had an unbeatable system.
+
+Little did they know that Polish, French, and British spies and codebreakers had been hard at work on the Enigma problem throughout the 1930s. Led by Alan Turing and the eclectic coalition of mathematicians, linguists, chessmasters, and crossword enthusiasts working at England's Bletchley Park, they eventually achieved fast enough decryption times for the Allies to act on intercepted intelligence. Historians now estimate that their efforts decreased the duration of the war by two years, and saved millions of lives.
+
+== Statistic ==
+Upgrade resource: '''Oil'''.
+<br />
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| Quick Victory Time|| +11%
+|-
+| [[Heavy Tank]] Attack Speed|| +11%
+|-
+| Enemy Defender Spawn Time|| +11%
+|-
+| [[University]] Research Time || -6%
+|-
+| [[Library]] Research Time  || -6%
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:Museum]]

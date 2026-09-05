@@ -1,0 +1,37 @@
+[[File:Captain's Croix de Guerre Large.jpg|centre|250px]]
+
+== General Description ==
+[[File:Captain's Croix de Guerre.png|thumb|220px]]
+'''Captain's Croix de Guerre''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]]. It is purchased from [[Chest]] sale.
+[[File:Captain's Croix de Guerre Sale 2.png|thumb|220px]]
+[[File:Captain's Croix de Guerre Sale.png|thumb|220px]]
+
+
+
+
+== Historical Description ==
+Captain Edward V. Rickenbacker was the most successful American fighter ace of World War I. He had 26 aerial victories, the first of which occurred on April 29, 1918. A month later, on May 28th, he became an aerial ace decorated with the French Croix de Guerre medal for shooting down his 5th plane. France awarded the Croix de Guerre to their allied military forces for extraordinary acts of heroism against the enemy during combat.
+
+== Statistic ==
+Upgrade resource: '''Food'''.
+
+Legendary coin cost: 300
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|[[Food]] Looted|| rowspan="5" | +11%
+|-
+|[[Gold]] Looted
+|-
+|[[Oil]] Looted
+|-
+|All Resources Looted
+|-
+|All Resources Looted
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Legendary Artifact]]
+[[Category:Artifact]]
+[[Category:Museum]]

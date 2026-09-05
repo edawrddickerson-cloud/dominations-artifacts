@@ -1,0 +1,29 @@
+[[File:General-Pershing.png|centre|220px]]
+
+== General Description ==
+'''General Pershing's Bas-Relief''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]]. The Artifact can be obtained from the [[General of Armies Event]].
+== Historical Description ==
+General John Joseph 'Black Jack' Pershing was a senior United States Army Officer during World War I. He served as the Commander of the American Expeditionary Forces on the Western Front from 1917-1918. General Pershing is the only American in history to earn the rank of General of the Armies during his lifetime (George Washington was posthumously given the rank). this Bas-Relief was created by sculptor Walter Hancock in 1935 for the Liberty Memorial in Kansas City.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|[[Heavy Infantry]] Hitpoints|| rowspan="5" | +3%
+|-
+|[[Ranged Infantry]] Hitpoints
+|-
+|[[Heavy Cavalry]] Hitpoints
+|-
+|[[Ranged Siege]] Damage
+|-
+|[[Raider]] Damage
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:World War]]
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]

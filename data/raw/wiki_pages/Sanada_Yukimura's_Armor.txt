@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+Known as the 'Crimson Demon of War' for his red armor and banners, Sanada Yukimura's peers considered him perhaps the finest commander of Japan's Warring States period. The Sanada were a renowned military clan who served as generals under many of the eras greatest warlords. In the climatic conflict between the Toyotomi and Tokugawa, the clan patriarch sent sons to both sides in order to ensure that gis line would continue regardless of who won. Yukimura ended up playing a role in the period's two most decisive battles, albeit on the losing side.
+
+In the leadup to the Battle of Sekigahara in 1600, Tokugawa Ieyasu sent 38,000 men  to take Ueda Castle under this son Hidetada. Fighting for the Toyotomi, Yukimura managed to hold out for eight days with only 2,500 troops. The frustrated besiegers arrived at Sekigahara too late to fight, nearly costing Ieyasu the battle. During the Siege of Osaka in 1614-1615, Yukimura again held off superior Tokugawa forces, but low moral led hist Toyotomi overlords to surrender. His martial skill and indomitable spirit have made Yukimura a popular figure in Japan ever since.
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+| [[Castle]] spawns [[Sword Saint|Sword Saints]] when Destroyed|| +1
+|-
+| [[Generals]] Hitpoints|| +6%
+|-
+| [[Bazooka]] Damage|| +6%
+|-
+| [[Fighters|Fighter]] Damage|| +8%
+|-
+| [[Guerrilla]] Hitpoints || +8%
+|}
+
+{{LegendaryWarArtifactsMenu}}
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:World War]]

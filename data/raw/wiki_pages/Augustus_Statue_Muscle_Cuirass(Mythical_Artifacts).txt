@@ -1,0 +1,26 @@
+[[File:{{PAGENAME}}.jpg|center|250x250px]]
+
+== General Description ==
+'''{{PAGENAME}}''' is one of The [[Mythical Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The Augustus of Prima Porta is a marble statue of the first Roman emperor that was found in a Villa near Rome. In its center, Augustus accepts a battle standard from a foreign ruler. This refers to his greatest diplomatic achievement: negotiating the return of the legionary eagles lost to Parthia at the Battle of Carrhae. Surrounding the emperor in has-relief are gods that symbolize his peaceful reign to come, as well as figures representing various subjugated lands and peoples.
+
+== Statistic ==
+{| class="article-table"
+! scope="col" |Benefit Name
+! scope="col" |Base Stat
+|-
+|[[Generals]]' Attack Speed|| +8%
+|-
+|[[Generals]]' Damage|| +15%
+|-
+|[[Generals]]' Damage|| +15%
+|-
+|[[Generals]]' Hitpoints|| +15%
+|-
+|[[Generals]]' Hitpoints|| +15%
+|-
+|Enemy Defender Spawn Time|| +15%
+|}
+{{MythicalArtifactsMenu}}

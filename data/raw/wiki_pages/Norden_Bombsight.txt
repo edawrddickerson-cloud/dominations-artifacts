@@ -1,0 +1,32 @@
+[[File:{{PAGENAME}}.png|centre|220px]]
+
+== General Information ==
+'''{{PAGENAME}}''' is one of The [[Legendary War Artifacts]], that can be stored and displayed at [[Museum]]. It is purchased from sale.
+
+== Historical Description ==
+Heavy bombers first went into significant production during the runup to World War II: To evade ground-base defenses they often dropped their payloads from an altitude of several miles, meaning the bomb would travel through the air for two minutes or more. Hitting anything under these conditions necessitated the development of new aiming technology. For the United States, that was the Norden Bombsight, which the company optimistically claimed could 'drop a bomb in a pickle barrel from 20,000 feet.'
+
+The sight used an analog computer to crunch numbers fed in by the bombardier. It automatically steered the plane to the optimal release point and let the payload fly. Although it performed well in peacetime tests, the system proved inaccurate under actual combat conditions. The American military guarded the technology with the utmost secrecy throughout the war, but it later transpired that a spy had snuck the blueprint to the Germans as early as 1938 - and they had rejected it for their own superior design!
+
+
+== Statistic ==
+
+{| class="article-table"
+!Benefit Name
+!Base Stat
+|-
+|[[APC]] Deploys Marines On Death || +1
+|-
+|Coalition Troop Damage || +8%
+|-
+|Defenders Spawn Time|| -8%
+|-
+|Invading [[Fighters|Fighter]] Damage || -8%
+|-
+|[[Machine Gun Infantry]] Damage || +8%
+|}
+Upgrade Resource: '''Oil'''{{LegendaryWarArtifactsMenu}}
+[[Category:World War]]
+[[Category:Museum]]
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]

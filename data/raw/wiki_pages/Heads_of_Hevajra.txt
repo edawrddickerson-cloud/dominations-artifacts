@@ -1,0 +1,30 @@
+[[File:{{PAGENAME}}.png|centre|250px]]
+
+== General Description ==
+
+'''{{PAGENAME}}''' is one of The [[Legendary Artifacts]], that can be stored and displayed at [[Museum]].
+
+== Historical Description ==
+The Heads of Hevajra is a symbolic artifact associated with the Buddhist deity Hevajra, often depicted with multiple heads. It represents the transformation of negative mental states, such as attachment and ignorance, and the journey toward enlightenment. Each head is seen as embodying a different aspect of the cycle of suffering, and through this symbolism, it points to the possibility of overcoming these challenges. The artifact is used in ritual practices to help deepen meditation and understanding of wisdom, impermanence, and the interconnectedness of all things.
+
+== Statistic ==
+
+{| class="article-table"
+! scope="col" | Benefit Name
+! scope="col" | Base Stat
+|-
+| Factory Troop HP || +6%
+|-
+| Factory Troop HP || +6%
+|-
+| National Trade Good Loot Chance || +16%
+|-
+| Armored Car DMG || +11%
+|-
+| All Enemy Defensive Towers DMG || +11%
+|}
+
+{{LegendaryArtifactsMenu}}
+[[Category:Artifact]]
+[[Category:Legendary Artifact]]
+[[Category:Museum]]
