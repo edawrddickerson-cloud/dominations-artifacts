@@ -1,0 +1,356 @@
+{
+  "cost_map": {
+    "Great Imperial Crown": [
+      {
+        "amount": "100",
+        "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "title": "",
+        "raw": "Great Imperial Crown",
+        "ctx": "acquired with Legendary Tokens. Here's a look into what's coming up in August! 7/31 - 8/6 Spitfire Engine - 300 tokens Great Imperial Crown - 100 tokens 8/7 - 8/13 Antikythera Mechanism - 300 tokens C",
+        "source": "calendar_pattern"
+      },
+      {
+        "amount": "100",
+        "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "title": "antiky_cal",
+        "raw": "Great Imperial Crown",
+        "ctx": "Great Imperial Crown - 100 tokens",
+        "source": "key_post"
+      }
+    ],
+    "Antikythera Mechanism": [
+      {
+        "amount": "300",
+        "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "title": "",
+        "raw": "13 Antikythera Mechanism",
+        "ctx": "look into what's coming up in August! 7/31 - 8/6 Spitfire Engine - 300 tokens Great Imperial Crown - 100 tokens 8/7 - 8/13 Antikythera Mechanism - 300 tokens Christmas Football - 100 tokens 8/14 - 8/2",
+        "source": "calendar_pattern"
+      },
+      {
+        "amount": "300",
+        "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "title": "antiky_cal",
+        "raw": "13 Antikythera Mechanism",
+        "ctx": "13 Antikythera Mechanism - 300 tokens",
+        "source": "key_post"
+      }
+    ],
+    "Christmas Football": [
+      {
+        "amount": "100",
+        "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "title": "",
+        "raw": "Christmas Football",
+        "ctx": "7/31 - 8/6 Spitfire Engine - 300 tokens Great Imperial Crown - 100 tokens 8/7 - 8/13 Antikythera Mechanism - 300 tokens Christmas Football - 100 tokens 8/14 - 8/20 Art of War - 300 tokens Vespa 150 TA",
+        "source": "calendar_pattern"
+      },
+      {
+        "amount": "100",
+        "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "title": "antiky_cal",
+        "raw": "Christmas Football",
+        "ctx": "Christmas Football - 100 tokens",
+        "source": "key_post"
+      }
+    ],
+    "Vespa 150 TAP": [
+      {
+        "amount": "100",
+        "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "title": "",
+        "raw": "Vespa 150 TAP",
+        "ctx": "okens 8/7 - 8/13 Antikythera Mechanism - 300 tokens Christmas Football - 100 tokens 8/14 - 8/20 Art of War - 300 tokens Vespa 150 TAP - 100 tokens 8/21 - 8/27 Julius Caesar Statue - 300 tokens Demarca",
+        "source": "calendar_pattern"
+      },
+      {
+        "amount": "100",
+        "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "title": "antiky_cal",
+        "raw": "Vespa 150 TAP",
+        "ctx": "Vespa 150 TAP - 100 tokens",
+        "source": "key_post"
+      }
+    ],
+    "Julius Caesar Statue": [
+      {
+        "amount": "300",
+        "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "title": "",
+        "raw": "27 Julius Caesar Statue",
+        "ctx": "sm - 300 tokens Christmas Football - 100 tokens 8/14 - 8/20 Art of War - 300 tokens Vespa 150 TAP - 100 tokens 8/21 - 8/27 Julius Caesar Statue - 300 tokens Demarcation Stone - 100 tokens 8/28 - 9/3 *",
+        "source": "calendar_pattern"
+      },
+      {
+        "amount": "300",
+        "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "title": "antiky_cal",
+        "raw": "27 Julius Caesar Statue",
+        "ctx": "27 Julius Caesar Statue - 300 tokens",
+        "source": "key_post"
+      }
+    ],
+    "Demarcation Stone": [
+      {
+        "amount": "100",
+        "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "title": "",
+        "raw": "Demarcation Stone",
+        "ctx": "100 tokens 8/14 - 8/20 Art of War - 300 tokens Vespa 150 TAP - 100 tokens 8/21 - 8/27 Julius Caesar Statue - 300 tokens Demarcation Stone - 100 tokens 8/28 - 9/3 *Da Vinci's Flying Machine - 300 token",
+        "source": "calendar_pattern"
+      },
+      {
+        "amount": "100",
+        "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "title": "antiky_cal",
+        "raw": "Demarcation Stone",
+        "ctx": "Demarcation Stone - 100 tokens",
+        "source": "key_post"
+      }
+    ],
+    "Da Vinci's Flying Machine": [
+      {
+        "amount": "300",
+        "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "title": "",
+        "raw": "Da Vinci's Flying Machine",
+        "ctx": "ens Vespa 150 TAP - 100 tokens 8/21 - 8/27 Julius Caesar Statue - 300 tokens Demarcation Stone - 100 tokens 8/28 - 9/3 *Da Vinci's Flying Machine - 300 tokens Nefertiti Bust - 100 tokens *Da Vinci Fly",
+        "source": "calendar_pattern"
+      },
+      {
+        "amount": "300",
+        "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "title": "antiky_cal",
+        "raw": "Da Vinci's Flying Machine",
+        "ctx": "Da Vinci's Flying Machine - 300 tokens",
+        "source": "key_post"
+      }
+    ],
+    "Nefertiti Bust": [
+      {
+        "amount": "100",
+        "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "title": "",
+        "raw": "Nefertiti Bust",
+        "ctx": "/27 Julius Caesar Statue - 300 tokens Demarcation Stone - 100 tokens 8/28 - 9/3 *Da Vinci's Flying Machine - 300 tokens Nefertiti Bust - 100 tokens *Da Vinci Flying Machine is without question a highl",
+        "source": "calendar_pattern"
+      },
+      {
+        "amount": "100",
+        "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "title": "antiky_cal",
+        "raw": "Nefertiti Bust",
+        "ctx": "Nefertiti Bust - 100 tokens",
+        "source": "key_post"
+      }
+    ],
+    "ASDIC Type 113X": [
+      {
+        "amount": "300",
+        "url": "https://www.dominationsworld.com/blog/9th-anniversary",
+        "title": "anniv9",
+        "raw": "ASDIC Type 113X",
+        "ctx": "5/20 - 5/22 - ASDIC Type 113X",
+        "source": "vault_schedule"
+      }
+    ],
+    "Gemini 8 Gloves": [
+      {
+        "amount": "300",
+        "url": "https://www.dominationsworld.com/blog/9th-anniversary",
+        "title": "anniv9",
+        "raw": "Gemini 8 Gloves",
+        "ctx": "5/22 - 5/24 - Gemini 8 Gloves",
+        "source": "vault_schedule"
+      }
+    ],
+    "Plane Gyro Gunsight": [
+      {
+        "amount": "300",
+        "url": "https://www.dominationsworld.com/blog/9th-anniversary",
+        "title": "anniv9",
+        "raw": "Plane Gyro Gunsight",
+        "ctx": "5/24 - 5/26 - Plane Gyro Gunsight",
+        "source": "vault_schedule"
+      }
+    ],
+    "Maori War Club": [
+      {
+        "amount": "300",
+        "url": "https://www.dominationsworld.com/blog/9th-anniversary",
+        "title": "anniv9",
+        "raw": "Maori War Club",
+        "ctx": "5/28 - 5/30 - Maori War Club",
+        "source": "vault_schedule"
+      }
+    ],
+    "Thinker of Cernavoda": [
+      {
+        "amount": "300",
+        "url": "https://www.dominationsworld.com/blog/9th-anniversary",
+        "title": "anniv9",
+        "raw": "Thinker of Cernavoda",
+        "ctx": "5/30 - 6/1 - Thinker of Cernavoda",
+        "source": "vault_schedule"
+      }
+    ]
+  },
+  "summary": [
+    {
+      "name": "ASDIC Type 113X",
+      "amount": "300",
+      "n": 1,
+      "blank": true,
+      "all_amts": {
+        "300": 1
+      },
+      "urls": [
+        "https://www.dominationsworld.com/blog/9th-anniversary"
+      ]
+    },
+    {
+      "name": "Antikythera Mechanism",
+      "amount": "300",
+      "n": 2,
+      "blank": true,
+      "all_amts": {
+        "300": 2
+      },
+      "urls": [
+        "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
+      ]
+    },
+    {
+      "name": "Christmas Football",
+      "amount": "100",
+      "n": 2,
+      "blank": true,
+      "all_amts": {
+        "100": 2
+      },
+      "urls": [
+        "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
+      ]
+    },
+    {
+      "name": "Da Vinci's Flying Machine",
+      "amount": "300",
+      "n": 2,
+      "blank": true,
+      "all_amts": {
+        "300": 2
+      },
+      "urls": [
+        "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
+      ]
+    },
+    {
+      "name": "Demarcation Stone",
+      "amount": "100",
+      "n": 2,
+      "blank": true,
+      "all_amts": {
+        "100": 2
+      },
+      "urls": [
+        "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
+      ]
+    },
+    {
+      "name": "Gemini 8 Gloves",
+      "amount": "300",
+      "n": 1,
+      "blank": true,
+      "all_amts": {
+        "300": 1
+      },
+      "urls": [
+        "https://www.dominationsworld.com/blog/9th-anniversary"
+      ]
+    },
+    {
+      "name": "Great Imperial Crown",
+      "amount": "100",
+      "n": 2,
+      "blank": true,
+      "all_amts": {
+        "100": 2
+      },
+      "urls": [
+        "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
+      ]
+    },
+    {
+      "name": "Julius Caesar Statue",
+      "amount": "300",
+      "n": 2,
+      "blank": true,
+      "all_amts": {
+        "300": 2
+      },
+      "urls": [
+        "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
+      ]
+    },
+    {
+      "name": "Maori War Club",
+      "amount": "300",
+      "n": 1,
+      "blank": true,
+      "all_amts": {
+        "300": 1
+      },
+      "urls": [
+        "https://www.dominationsworld.com/blog/9th-anniversary"
+      ]
+    },
+    {
+      "name": "Nefertiti Bust",
+      "amount": "100",
+      "n": 2,
+      "blank": true,
+      "all_amts": {
+        "100": 2
+      },
+      "urls": [
+        "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
+      ]
+    },
+    {
+      "name": "Plane Gyro Gunsight",
+      "amount": "300",
+      "n": 1,
+      "blank": true,
+      "all_amts": {
+        "300": 1
+      },
+      "urls": [
+        "https://www.dominationsworld.com/blog/9th-anniversary"
+      ]
+    },
+    {
+      "name": "Thinker of Cernavoda",
+      "amount": "300",
+      "n": 1,
+      "blank": true,
+      "all_amts": {
+        "300": 1
+      },
+      "urls": [
+        "https://www.dominationsworld.com/blog/9th-anniversary"
+      ]
+    },
+    {
+      "name": "Vespa 150 TAP",
+      "amount": "100",
+      "n": 2,
+      "blank": true,
+      "all_amts": {
+        "100": 2
+      },
+      "urls": [
+        "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
+      ]
+    }
+  ]
+}

@@ -44,7 +44,7 @@
     "hall": "War",
     "museum_hall": "",
     "grade": "Legendary",
-    "release_status": "Uncertain",
+    "release_status": "Released",
     "release_date": "",
     "perk_count": "5",
     "perk_1_name": "Rally Cooldown",
@@ -67,13 +67,13 @@
     "perk_6_max": "",
     "cost": "",
     "cost_currency": "",
-    "acquisition_method": "",
-    "availability_notes": "Wiki-listed candidate; not in verified 110 legendary draft",
-    "source_primary": "wiki_candidate",
+    "acquisition_method": "Event Pass (11th Anniversary Pass)",
+    "availability_notes": "Official DW Week Ahead 3/30/26: brand-new Legendary Artifact in Anniversary Pass",
+    "source_primary": "https://www.dominationsworld.com/blog/week-ahead-33026",
     "source_secondary": "wiki:statistic_table:11th Anniversary Cake",
     "source_checked_date": "2026-09-05",
-    "confidence": "Low",
-    "notes": "Fandom legendary war page + perks exist; no DominationsWorld/BHG hit in 2026-09-05 reverify — remain Uncertain.; perks_from_wiki; perk_max_derived_base_plus_9; uncertain_reverify_2026-09-05_no_dw_hit"
+    "confidence": "High",
+    "notes": "Released per DominationsWorld week-ahead-33026 (perks match wiki statistic_table).; perks_from_wiki; perk_max_derived_base_plus_9; release_confirmed_dominationsworld_2026-09-05"
   },
   {
     "artifact_id": "6th-anniversary-six-shooter-legendary",
@@ -255,15 +255,15 @@
     "perk_6_name": "",
     "perk_6_base": "",
     "perk_6_max": "",
-    "cost": "",
-    "cost_currency": "",
-    "acquisition_method": "",
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
     "availability_notes": "Roster verified; metadata incomplete",
     "source_primary": "https://dominations.fandom.com/wiki/Legendary_Artifacts",
-    "source_secondary": "wiki:statistic_table:Antikythera Mechanism",
+    "source_secondary": "wiki:statistic_table:Antikythera Mechanism; https://www.dominationsworld.com/blog/august-legendary-token-calendar",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_from_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens"
   },
   {
     "artifact_id": "arm-reliquary-of-charlemagne-legendary",
@@ -331,15 +331,15 @@
     "perk_6_name": "",
     "perk_6_base": "",
     "perk_6_max": "",
-    "cost": "",
-    "cost_currency": "",
-    "acquisition_method": "",
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo (Anniversary Vault)",
     "availability_notes": "Perks captured; cost/history still incomplete",
     "source_primary": "https://dominations.fandom.com/wiki/Legendary_War_Artifacts",
-    "source_secondary": "wiki:statistic_table:ASDIC Type 113X",
+    "source_secondary": "wiki:statistic_table:ASDIC Type 113X; https://www.dominationsworld.com/blog/9th-anniversary",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens"
   },
   {
     "artifact_id": "ashanti-kuduo-legendary",
@@ -567,7 +567,7 @@
     "source_secondary": "wiki_nav_or_menu",
     "source_checked_date": "2026-09-05",
     "confidence": "Low",
-    "notes": "No Fandom page (API miss); no DominationsWorld hit — nav/menu phantom; remain Uncertain.; perks_missing; uncertain_reverify_2026-09-05_no_dw_hit"
+    "notes": "Nav-template redlink only (Template:LegendaryArtifactsMenu); no Fandom page, no DW/BHG hit across 151 blog posts — keep Uncertain (not removed: no positive proof never shipped).; perks_missing; uncertain_kept_2026-09-05_deep_pass"
   },
   {
     "artifact_id": "berlichingen-s-iron-prosthetic-hand-legendary",
@@ -825,15 +825,15 @@
     "perk_6_name": "",
     "perk_6_base": "",
     "perk_6_max": "",
-    "cost": "",
-    "cost_currency": "",
-    "acquisition_method": "",
+    "cost": "100",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
     "availability_notes": "Roster verified; metadata incomplete",
     "source_primary": "https://dominations.fandom.com/wiki/Legendary_Artifacts",
-    "source_secondary": "wiki:statistic_table:Christmas Football",
+    "source_secondary": "wiki:statistic_table:Christmas Football; https://www.dominationsworld.com/blog/august-legendary-token-calendar",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_from_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens"
   },
   {
     "artifact_id": "clem-sohn-s-wingsuit-legendary",
@@ -1091,15 +1091,15 @@
     "perk_6_name": "",
     "perk_6_base": "",
     "perk_6_max": "",
-    "cost": "",
-    "cost_currency": "",
-    "acquisition_method": "sale",
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "sale; Marco Polo",
     "availability_notes": "Roster verified; metadata incomplete",
     "source_primary": "https://dominations.fandom.com/wiki/Legendary_War_Artifacts",
-    "source_secondary": "wiki:statistic_table:Da Vinci's Flying Machine",
+    "source_secondary": "wiki:statistic_table:Da Vinci's Flying Machine; https://www.dominationsworld.com/blog/august-legendary-token-calendar",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_from_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens"
   },
   {
     "artifact_id": "da-vinci-s-machine-gun-legendary",
@@ -1167,15 +1167,15 @@
     "perk_6_name": "",
     "perk_6_base": "",
     "perk_6_max": "",
-    "cost": "",
-    "cost_currency": "",
+    "cost": "100",
+    "cost_currency": "Legendary Tokens",
     "acquisition_method": "Marco Polo; Chest sale; sale",
     "availability_notes": "Roster verified; metadata incomplete",
     "source_primary": "https://dominations.fandom.com/wiki/Legendary_War_Artifacts",
-    "source_secondary": "wiki:statistic_table:Demarcation Stone",
+    "source_secondary": "wiki:statistic_table:Demarcation Stone; https://www.dominationsworld.com/blog/august-legendary-token-calendar",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_from_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens"
   },
   {
     "artifact_id": "desert-storm-psn-8-manpack-legendary",
@@ -1222,7 +1222,7 @@
     "hall": "Main",
     "museum_hall": "",
     "grade": "Legendary",
-    "release_status": "Uncertain",
+    "release_status": "Released",
     "release_date": "",
     "perk_count": "5",
     "perk_1_name": "Oil From Oil Wells",
@@ -1245,13 +1245,13 @@
     "perk_6_max": "",
     "cost": "",
     "cost_currency": "",
-    "acquisition_method": "",
-    "availability_notes": "Wiki-listed candidate; not in verified 110 legendary draft",
-    "source_primary": "wiki_candidate",
-    "source_secondary": "wiki:statistic_table:Dilophosaurus Skull",
+    "acquisition_method": "Event Pass (ValenTANKS Day Premium)",
+    "availability_notes": "Official DW Update 13.3 + Week Ahead 2/9/26: Main Hall Legendary; first in ValenTANKS Premium Pass",
+    "source_primary": "https://www.dominationsworld.com/blog/dominations-update-133",
+    "source_secondary": "wiki:statistic_table:Dilophosaurus Skull; https://www.dominationsworld.com/blog/week-ahead-2926",
     "source_checked_date": "2026-09-05",
-    "confidence": "Low",
-    "notes": "Fandom legendary main page + perks exist; no DominationsWorld/BHG hit in 2026-09-05 reverify — remain Uncertain.; perks_from_wiki; perk_max_derived_base_plus_9; uncertain_reverify_2026-09-05_no_dw_hit"
+    "confidence": "High",
+    "notes": "Released per DominationsWorld update-133 and week-ahead-2926 (perks match wiki).; perks_from_wiki; perk_max_derived_base_plus_9; release_confirmed_dominationsworld_2026-09-05"
   },
   {
     "artifact_id": "dominations-army-helmet-legendary",
@@ -1661,15 +1661,15 @@
     "perk_6_name": "",
     "perk_6_base": "",
     "perk_6_max": "",
-    "cost": "",
-    "cost_currency": "",
-    "acquisition_method": "sale",
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "sale; Marco Polo (Anniversary Vault)",
     "availability_notes": "Roster verified; metadata incomplete",
     "source_primary": "https://dominations.fandom.com/wiki/Legendary_War_Artifacts",
-    "source_secondary": "wiki:statistic_table:Gemini 8 Gloves",
+    "source_secondary": "wiki:statistic_table:Gemini 8 Gloves; https://www.dominationsworld.com/blog/9th-anniversary",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_from_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens"
   },
   {
     "artifact_id": "gemini-8-helmet-legendary",
@@ -1783,7 +1783,7 @@
     "source_secondary": "wiki_nav_or_menu",
     "source_checked_date": "2026-09-05",
     "confidence": "Low",
-    "notes": "No Fandom page (API miss); no DominationsWorld hit — nav/menu phantom; remain Uncertain.; perks_missing; uncertain_reverify_2026-09-05_no_dw_hit"
+    "notes": "Nav-template redlink only; no Fandom page, no DW/BHG hit — keep Uncertain (not removed).; perks_missing; uncertain_kept_2026-09-05_deep_pass"
   },
   {
     "artifact_id": "great-imperial-crown-legendary",
@@ -1813,15 +1813,15 @@
     "perk_6_name": "",
     "perk_6_base": "",
     "perk_6_max": "",
-    "cost": "",
-    "cost_currency": "",
-    "acquisition_method": "",
+    "cost": "100",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
     "availability_notes": "Roster verified; metadata incomplete",
     "source_primary": "https://dominations.fandom.com/wiki/Legendary_War_Artifacts",
-    "source_secondary": "wiki:statistic_table:Great Imperial Crown",
+    "source_secondary": "wiki:statistic_table:Great Imperial Crown; https://www.dominationsworld.com/blog/august-legendary-token-calendar",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_from_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens"
   },
   {
     "artifact_id": "heads-of-hevajra-legendary",
@@ -1889,15 +1889,15 @@
     "perk_6_name": "",
     "perk_6_base": "",
     "perk_6_max": "",
-    "cost": "",
-    "cost_currency": "",
-    "acquisition_method": "",
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo (Anniversary Vault)",
     "availability_notes": "Roster verified; metadata incomplete",
     "source_primary": "https://dominations.fandom.com/wiki/Legendary_Artifacts",
-    "source_secondary": "wiki:statistic_table:Helgö Buddha",
+    "source_secondary": "wiki:statistic_table:Helgö Buddha; https://www.dominationsworld.com/blog/9th-anniversary",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_from_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens"
   },
   {
     "artifact_id": "huey-armament-system-legendary",
@@ -1927,15 +1927,15 @@
     "perk_6_name": "",
     "perk_6_base": "",
     "perk_6_max": "",
-    "cost": "",
-    "cost_currency": "",
-    "acquisition_method": "",
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo (Anniversary Vault)",
     "availability_notes": "Roster verified; metadata incomplete",
     "source_primary": "https://dominations.fandom.com/wiki/Legendary_War_Artifacts",
-    "source_secondary": "wiki:statistic_table:Huey Armament System",
+    "source_secondary": "wiki:statistic_table:Huey Armament System; https://www.dominationsworld.com/blog/9th-anniversary",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_from_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens"
   },
   {
     "artifact_id": "jade-olmec-mask-legendary",
@@ -2041,15 +2041,15 @@
     "perk_6_name": "",
     "perk_6_base": "",
     "perk_6_max": "",
-    "cost": "",
-    "cost_currency": "",
-    "acquisition_method": "",
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
     "availability_notes": "Roster verified; metadata incomplete",
     "source_primary": "https://dominations.fandom.com/wiki/Legendary_War_Artifacts",
-    "source_secondary": "wiki:statistic_table:Julius Caesar Statue",
+    "source_secondary": "wiki:statistic_table:Julius Caesar Statue; https://www.dominationsworld.com/blog/august-legendary-token-calendar",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_from_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens"
   },
   {
     "artifact_id": "keyed-english-guitar-legendary",
@@ -2163,7 +2163,7 @@
     "source_secondary": "",
     "source_checked_date": "2026-09-05",
     "confidence": "Low",
-    "notes": "perks_missing"
+    "notes": "perks_missing; leftwich_perk_search_2026-09-05: wiki statistic empty since page create; no DW hit in 151 blog posts; no uploaded Leftwich image on Fandom; mythical Leftwich pages missing; perks not invented"
   },
   {
     "artifact_id": "leoni-parade-shield-legendary",
@@ -2459,15 +2459,15 @@
     "perk_6_name": "",
     "perk_6_base": "",
     "perk_6_max": "",
-    "cost": "",
-    "cost_currency": "",
-    "acquisition_method": "",
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo (Anniversary Vault)",
     "availability_notes": "Roster verified; metadata incomplete",
     "source_primary": "https://dominations.fandom.com/wiki/Legendary_War_Artifacts",
-    "source_secondary": "wiki:statistic_table:Maori War Club",
+    "source_secondary": "wiki:statistic_table:Maori War Club; https://www.dominationsworld.com/blog/9th-anniversary",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_from_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens"
   },
   {
     "artifact_id": "mask-of-agamemnon-legendary",
@@ -2543,7 +2543,7 @@
     "source_secondary": "wiki:statistic_table:Mask of Tutankhamun",
     "source_checked_date": "2026-09-05",
     "confidence": "Low",
-    "notes": "Fandom legendary main page + perks exist; no DominationsWorld/BHG hit in 2026-09-05 reverify — remain Uncertain.; perks_from_wiki; perk_max_derived_base_plus_9; uncertain_reverify_2026-09-05_no_dw_hit"
+    "notes": "Fandom page + perks exist; DW Week Ahead Tutankhamun mentions are King Tut Tomb Event flavor text (funerary mask), not artifact confirmation — remain Uncertain.; perks_from_wiki; perk_max_derived_base_plus_9; uncertain_kept_2026-09-05_deep_pass"
   },
   {
     "artifact_id": "minoan-bull-leaper-legendary",
@@ -2657,7 +2657,7 @@
     "source_secondary": "wiki_nav_or_menu",
     "source_checked_date": "2026-09-05",
     "confidence": "Low",
-    "notes": "No Fandom page (API miss); no DominationsWorld hit — nav/menu phantom; remain Uncertain.; perks_missing; uncertain_reverify_2026-09-05_no_dw_hit"
+    "notes": "Nav-template redlink only; no Fandom page, no DW/BHG hit — keep Uncertain (not removed).; perks_missing; uncertain_kept_2026-09-05_deep_pass"
   },
   {
     "artifact_id": "morse-telegraph-legendary",
@@ -2839,15 +2839,15 @@
     "perk_6_name": "",
     "perk_6_base": "",
     "perk_6_max": "",
-    "cost": "",
-    "cost_currency": "",
-    "acquisition_method": "real-money sale",
+    "cost": "100",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "real-money sale; Marco Polo",
     "availability_notes": "Roster verified; metadata incomplete; also offered via real-money sale (price not stored in cost)",
     "source_primary": "https://dominations.fandom.com/wiki/Legendary_Artifacts",
-    "source_secondary": "wiki:statistic_table:Nefertiti Bust",
+    "source_secondary": "wiki:statistic_table:Nefertiti Bust; https://www.dominationsworld.com/blog/august-legendary-token-calendar",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_from_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens"
   },
   {
     "artifact_id": "nine-men-s-morris-legendary",
@@ -3067,15 +3067,15 @@
     "perk_6_name": "",
     "perk_6_base": "",
     "perk_6_max": "",
-    "cost": "",
-    "cost_currency": "",
-    "acquisition_method": "",
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo (Anniversary Vault)",
     "availability_notes": "Roster verified; metadata incomplete",
     "source_primary": "https://dominations.fandom.com/wiki/Legendary_War_Artifacts",
-    "source_secondary": "wiki:statistic_table:Plane Gyro Gunsight",
+    "source_secondary": "wiki:statistic_table:Plane Gyro Gunsight; https://www.dominationsworld.com/blog/9th-anniversary",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_from_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens"
   },
   {
     "artifact_id": "pompus-comb-legendary",
@@ -3303,7 +3303,7 @@
     "source_secondary": "wiki_nav_or_menu",
     "source_checked_date": "2026-09-05",
     "confidence": "Low",
-    "notes": "No Fandom page for Dodecahedron/Dodechedron; no DominationsWorld hit — nav phantom; remain Uncertain.; perks_missing; uncertain_reverify_2026-09-05_no_dw_hit"
+    "notes": "Nav-template redlink (typo Dodechedron); no Fandom page either spelling, no DW/BHG hit — keep Uncertain (not removed).; perks_missing; uncertain_kept_2026-09-05_deep_pass"
   },
   {
     "artifact_id": "rosetta-stone-legendary",
@@ -3713,15 +3713,15 @@
     "perk_6_name": "",
     "perk_6_base": "",
     "perk_6_max": "",
-    "cost": "",
-    "cost_currency": "",
-    "acquisition_method": "",
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
     "availability_notes": "Roster verified; metadata incomplete",
     "source_primary": "https://dominations.fandom.com/wiki/Legendary_War_Artifacts",
-    "source_secondary": "wiki:statistic_table:Supermarine Spitfire Engine",
+    "source_secondary": "wiki:statistic_table:Supermarine Spitfire Engine; https://www.dominationsworld.com/blog/august-legendary-token-calendar",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_from_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens"
   },
   {
     "artifact_id": "sutton-hoo-helmet-legendary",
@@ -3903,15 +3903,15 @@
     "perk_6_name": "",
     "perk_6_base": "",
     "perk_6_max": "",
-    "cost": "",
-    "cost_currency": "",
-    "acquisition_method": "",
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
     "availability_notes": "Perks captured; cost/history still incomplete",
     "source_primary": "https://dominations.fandom.com/wiki/The_Art_of_War",
-    "source_secondary": "wiki:statistic_table:The Art of War",
+    "source_secondary": "wiki:statistic_table:The Art of War; https://www.dominationsworld.com/blog/august-legendary-token-calendar",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens"
   },
   {
     "artifact_id": "the-book-of-five-rings-legendary",
@@ -4055,15 +4055,15 @@
     "perk_6_name": "",
     "perk_6_base": "",
     "perk_6_max": "",
-    "cost": "",
-    "cost_currency": "",
-    "acquisition_method": "Legendary sale",
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Legendary sale; Marco Polo (Anniversary Vault)",
     "availability_notes": "Roster verified; metadata incomplete; also offered via real-money sale (price not stored in cost)",
     "source_primary": "https://dominations.fandom.com/wiki/Legendary_Artifacts",
-    "source_secondary": "wiki:statistic_table:Thinker of Cernavoda",
+    "source_secondary": "wiki:statistic_table:Thinker of Cernavoda; https://www.dominationsworld.com/blog/9th-anniversary",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_from_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens"
   },
   {
     "artifact_id": "tibetan-dung-dkar-legendary",
@@ -4101,7 +4101,7 @@
     "source_secondary": "wiki_nav_or_menu",
     "source_checked_date": "2026-09-05",
     "confidence": "Low",
-    "notes": "No Fandom page (API miss); no DominationsWorld hit — nav/menu phantom; remain Uncertain.; perks_missing; uncertain_reverify_2026-09-05_no_dw_hit"
+    "notes": "Nav-template redlink only; no Fandom page, no DW/BHG hit — keep Uncertain (not removed).; perks_missing; uncertain_kept_2026-09-05_deep_pass"
   },
   {
     "artifact_id": "tizona-sword-legendary",
@@ -4245,15 +4245,15 @@
     "perk_6_name": "",
     "perk_6_base": "",
     "perk_6_max": "",
-    "cost": "",
-    "cost_currency": "",
-    "acquisition_method": "",
+    "cost": "100",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
     "availability_notes": "Roster verified; metadata incomplete",
     "source_primary": "https://dominations.fandom.com/wiki/Legendary_War_Artifacts",
-    "source_secondary": "wiki:statistic_table:Vespa 150 TAP",
+    "source_secondary": "wiki:statistic_table:Vespa 150 TAP; https://www.dominationsworld.com/blog/august-legendary-token-calendar",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_from_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens"
   },
   {
     "artifact_id": "video-game-console-legendary",

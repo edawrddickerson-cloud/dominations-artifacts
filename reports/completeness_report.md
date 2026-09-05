@@ -20,10 +20,12 @@
 
 - Confirmed on official posts: British Kettle Drum, Analytical Engine, First Strike Star, Mahiole, DomiNations Army Helmet
 - June 2026 Marco's Wares mythicals **General Pershing's Bas-Relief**, **Joyeuse Sword**, **Silla Gold Crown** were missing from draft → added as Released
-- Wiki-only legendaries re-verified 2026-09-05 (Fandom API + DW `?s=` + prior sweep): **no** DominationsWorld/BHG hits → remain Uncertain
-- Cake / Dilophosaurus / Tutankhamun: Fandom pages + statistic_table perks exist
-- Benin / Lyre / Mona Lisa / Dodecahedron / Dung-Dkar: **no Fandom page** (nav phantoms)
-- See `data/temp/official_sweep_posts.json`, `data/temp/uncertain_reverify.json`
+- Deep DW blog pass (151 posts): **11th Anniversary Cake** (week-ahead-33026) and **Dilophosaurus Skull** (update-133 / week-ahead-2926) flipped to **Released**
+- **Mask of Tutankhamun**: DW Tutankhamun hits are King Tut event flavor only → remain Uncertain
+- Nav phantoms (Benin / Lyre / Mona Lisa / Dodecahedron / Dung-Dkar): still no Fandom page or DW hit → **kept Uncertain** (not removed; no proof never shipped)
+- Leftwich Trophy: no perks found (empty wiki table; no DW; no Fandom image) — not invented
+- Legendary token costs filled from August token calendar + 9th Anniversary vault where blank
+- See `data/temp/dw_cost_mine.json`, `data/temp/dw_legendary_costs.json`, `data/temp/uncertain_reverify.json`
 
 ## Targeted fixes this build
 
@@ -31,14 +33,14 @@
 - Hall overrides for prior TBD: Analytical Engine=War, DomiNations Army Helmet=War, First Strike Star=Main, Mahiole=War
 - Wiki statistic_table parser fixed (same-line `||` cells, rowspan, `||-N%` row split) → filled most legendary perk gaps
 - `guess_grade` no longer treats historical prose "mythical" as Mythical grade
-- Token costs / acquisition filled from wiki when present (no IAP sale prices in `cost`)
+- Token costs from wiki + DominationsWorld calendars (no IAP sale prices in `cost`)
 
 ## Gaps (not complete)
 
-- Legendary perk gap remaining: 6 (Leftwich Trophy empty wiki table + 5 nav-phantom Uncertain)
-- Legendary token `cost` sparsely documented on wiki (4 filled); acquisition_method from wiki prose where stated
+- Legendary perk gap remaining: 6 (Leftwich Trophy + 5 nav-phantom Uncertain)
+- Legendary token `cost` still incomplete (21 / 118 filled); more Marco calendars may exist
 - Mythical max values intentionally blank (announcement numbers; no blind +9)
-- Wiki-only legendaries marked `Uncertain` until BHG/DominationsWorld confirmation
+- Uncertain legendaries: Tutankhamun + 5 nav phantoms (pending stronger evidence)
 - dominations-info.com API still 404; not used as primary
 
 ## Outputs
