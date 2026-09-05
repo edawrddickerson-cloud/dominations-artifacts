@@ -1,151 +1,151 @@
 artifact_id,name,grade,hall,museum_hall,in_verified_draft,wiki_perk_extract,release_status,perk_count,evidence_notes
-10th-mountain-division-war-kit-legendary,10th Mountain Division War Kit,Legendary,War,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
+admiral-yi-s-helmet-legendary,Admiral Yi’s Helmet,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+antikythera-mechanism-legendary,Antikythera Mechanism,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+ashanti-kuduo-legendary,Ashanti Kuduo,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+augustus-statue-muscle-cuirass-legendary,Augustus Statue Muscle Cuirass,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_wiki_tokens
+aztec-calendar-legendary,Aztec Calendar,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+benin-royal-ivory-mask-legendary,Benin Royal Ivory Mask,Legendary,Main,,no,no,Uncertain,0,"Nav-template redlink only (Template:LegendaryArtifactsMenu); no Fandom page, no DW/BHG hit across 151 blog posts — keep Uncertain (not removed: no positive proof never shipped).; perks_missing; uncertain_kept_2026-09-05_deep_pass"
+captain-s-croix-de-guerre-legendary,Captain's Croix de Guerre,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_wiki_tokens
+christmas-football-legendary,Christmas Football,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+clem-sohn-s-wingsuit-legendary,Clem Sohn's Wingsuit,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+code-of-hammurabi-legendary,Code of Hammurabi,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+dilophosaurus-skull-legendary,Dilophosaurus Skull,Legendary,Main,,no,yes,Released,5,Released per DominationsWorld update-133 and week-ahead-2926 (perks match wiki).; perks_from_wiki; perk_max_derived_base_plus_9; release_confirmed_dominationsworld_2026-09-05
+double-headed-serpent-legendary,Double-Headed Serpent,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+edison-s-electric-lamp-legendary,Edison's Electric Lamp,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+enigma-machine-legendary,Enigma Machine,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+fengguan-phoenix-crown-legendary,Fengguan Phoenix Crown,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+fire-breathing-bunny-fossil-legendary,Fire Breathing Bunny Fossil,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+first-strike-star-legendary,First Strike Star,Legendary,Main,,yes,yes,Released,5,Official BHG; hall still to verify; hall_set_from=wiki Legendary_Artifacts list; perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
+golden-lyre-of-ur-legendary,Golden Lyre of Ur,Legendary,Main,,no,no,Uncertain,0,"Nav-template redlink only; no Fandom page, no DW/BHG hit — keep Uncertain (not removed).; perks_missing; uncertain_kept_2026-09-05_deep_pass"
+heads-of-hevajra-legendary,Heads of Hevajra,Legendary,Main,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
+helg-buddha-legendary,Helgö Buddha,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+jade-olmec-mask-legendary,Jade Olmec Mask,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+keyed-english-guitar-legendary,Keyed English Guitar,Legendary,Main,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
+leoni-parade-shield-legendary,Leoni Parade Shield,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+lewis-chessmen-legendary,Lewis Chessmen,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+li-vessel-legendary,Li Vessel,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+lycurgus-cup-legendary,Lycurgus Cup,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+mask-of-agamemnon-legendary,Mask of Agamemnon,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+mask-of-tutankhamun-legendary,Mask of Tutankhamun,Legendary,Main,,no,yes,Released,5,Released per DominationsWorld legendary-calendar-july-2025 (artifact-named; prior Week Ahead Tutankhamun hits were King Tut event flavor only).; perks_from_wiki; perk_max_derived_base_plus_9; release_confirmed_dominationsworld_2026-09-05; cost_from_dw_tokens
+minoan-bull-leaper-legendary,Minoan Bull-Leaper,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+mona-lisa-legendary,Mona Lisa,Legendary,Main,,no,no,Uncertain,0,"Nav-template redlink only; no Fandom page, no DW/BHG hit — keep Uncertain (not removed).; perks_missing; uncertain_kept_2026-09-05_deep_pass"
+morse-telegraph-legendary,Morse Telegraph,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+napoleon-s-bicorne-hat-legendary,Napoleon's Bicorne Hat,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_wiki_tokens
+nefertiti-bust-legendary,Nefertiti Bust,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+personal-computer-legendary,Personal Computer,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+pompus-comb-legendary,Pompus' Comb,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+quimbaya-treasure-legendary,Quimbaya Treasure,Legendary,Main,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+roman-dodecahedron-legendary,Roman Dodecahedron,Legendary,Main,,no,no,Uncertain,0,"Nav-template redlink (typo Dodechedron); no Fandom page either spelling, no DW/BHG hit — keep Uncertain (not removed).; perks_missing; uncertain_kept_2026-09-05_deep_pass"
+rosetta-stone-legendary,Rosetta Stone,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_wiki_tokens
+ruyi-scepter-legendary,Ruyi Scepter,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+silla-gold-crown-legendary,Silla Gold Crown,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+sojourner-mars-rover-legendary,Sojourner Mars Rover,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+soul-catcher-legendary,Soul Catcher,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+sphinx-of-taharqo-legendary,Sphinx of Taharqo,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+stopler-revolver-legendary,Stopler Revolver,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+sutton-hoo-helmet-legendary,Sutton Hoo Helmet,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; cost_from_dw_tokens
+swimming-reindeer-legendary,Swimming Reindeer,Legendary,Main,,yes,yes,Released,5,Official BHG; perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
+sword-of-goujian-legendary,Sword of Goujian,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+the-book-of-five-rings-legendary,The Book of Five Rings,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+the-book-of-kells-legendary,The Book of Kells,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+thinker-of-cernavoda-legendary,Thinker of Cernavoda,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+tibetan-dung-dkar-legendary,Tibetan Dung-Dkar,Legendary,Main,,no,no,Uncertain,0,"Nav-template redlink only; no Fandom page, no DW/BHG hit — keep Uncertain (not removed).; perks_missing; uncertain_kept_2026-09-05_deep_pass"
+tokugawa-ieyasu-s-helmet-legendary,Tokugawa Ieyasu's Helmet,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+video-game-console-legendary,Video Game Console,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+warka-vase-legendary,Warka Vase,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+admiral-yi-s-helmet-mythical,Admiral Yi’s Helmet,Mythical,Main,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+aztec-calendar-mythical,Aztec Calendar,Mythical,Main,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+enigma-machine-mythical,Enigma Machine,Mythical,Main,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+fengguan-phoenix-crown-mythical,Fengguan Phoenix Crown,Mythical,Main,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+fire-breathing-bunny-fossil-mythical,Fire Breathing Bunny Fossil,Mythical,Main,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+leoni-parade-shield-mythical,Leoni Parade Shield,Mythical,Main,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+li-vessel-mythical,Li Vessel,Mythical,Main,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+mask-of-agamemnon-mythical,Mask of Agamemnon,Mythical,Main,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+napoleon-s-bicorne-hat-mythical,Napoleon's Bicorne Hat,Mythical,Main,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+ruyi-scepter-mythical,Ruyi Scepter,Mythical,Main,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+silla-gold-crown-mythical,Silla Gold Crown,Mythical,Main,,no,yes,Released,6,Added from official June 2026 Marco's Wares; duplicate Library Tech Resource Cost perk is real per BHG post. No wiki perk extract in batch.; mythical_max_left_blank_not_plus9; perks_from_official_bhg
+soul-catcher-mythical,Soul Catcher,Mythical,Main,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+sutton-hoo-helmet-mythical,Sutton Hoo Helmet,Mythical,Main,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+the-book-of-five-rings-mythical,The Book of Five Rings,Mythical,Main,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+10th-mountain-division-war-kit-legendary,10th Mountain Division War Kit,Legendary,War,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
 11th-anniversary-cake-legendary,11th Anniversary Cake,Legendary,War,,no,yes,Released,5,Released per DominationsWorld week-ahead-33026 (perks match wiki statistic_table).; perks_from_wiki; perk_max_derived_base_plus_9; release_confirmed_dominationsworld_2026-09-05
-6th-anniversary-six-shooter-legendary,6th Anniversary Six-Shooter,Legendary,War,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
-admiral-yi-s-helmet-legendary,Admiral Yi’s Helmet,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+6th-anniversary-six-shooter-legendary,6th Anniversary Six-Shooter,Legendary,War,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
 alfred-jewel-legendary,Alfred Jewel,Legendary,War,,yes,yes,Released,5,Official BHG; perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
 analytical-engine-legendary,Analytical Engine,Legendary,War,,yes,yes,Released,5,Official BHG; hall still to verify; hall_set_from=wiki Legendary_War_Artifacts list; perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
-antikythera-mechanism-legendary,Antikythera Mechanism,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
-arm-reliquary-of-charlemagne-legendary,Arm Reliquary of Charlemagne,Legendary,War,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
+arm-reliquary-of-charlemagne-legendary,Arm Reliquary of Charlemagne,Legendary,War,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
 asdic-type-113x-legendary,ASDIC Type 113X,Legendary,War,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
-ashanti-kuduo-legendary,Ashanti Kuduo,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 asm-135-anti-satellite-missile-legendary,ASM-135 Anti-Satellite Missile,Legendary,War,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
-augustus-statue-muscle-cuirass-legendary,Augustus Statue Muscle Cuirass,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_wiki_tokens
-aztec-calendar-legendary,Aztec Calendar,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-battersea-shield-legendary,Battersea Shield,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-benin-royal-ivory-mask-legendary,Benin Royal Ivory Mask,Legendary,Main,,no,no,Uncertain,0,"Nav-template redlink only (Template:LegendaryArtifactsMenu); no Fandom page, no DW/BHG hit across 151 blog posts — keep Uncertain (not removed: no positive proof never shipped).; perks_missing; uncertain_kept_2026-09-05_deep_pass"
+battersea-shield-legendary,Battersea Shield,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
 berlichingen-s-iron-prosthetic-hand-legendary,Berlichingen's Iron Prosthetic Hand,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 british-kettle-drum-legendary,British Kettle Drum,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 bust-of-ramesses-ii-legendary,Bust of Ramesses II,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 caligula-s-ring-legendary,Caligula's Ring,Legendary,War,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
-capt-mcconnell-s-hero-ensemble-legendary,Capt. McConnell's Hero Ensemble,Legendary,War,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
-captain-s-croix-de-guerre-legendary,Captain's Croix de Guerre,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_wiki_tokens
-christmas-football-legendary,Christmas Football,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
-clem-sohn-s-wingsuit-legendary,Clem Sohn's Wingsuit,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-code-of-hammurabi-legendary,Code of Hammurabi,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-creighton-abrams-tank-commander-kit-legendary,Creighton Abrams Tank Commander Kit,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-crescent-blade-legendary,Crescent Blade,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+capt-mcconnell-s-hero-ensemble-legendary,Capt. McConnell's Hero Ensemble,Legendary,War,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+creighton-abrams-tank-commander-kit-legendary,Creighton Abrams Tank Commander Kit,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+crescent-blade-legendary,Crescent Blade,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
 crocodile-mask-legendary,Crocodile Mask,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 cryolophosaurus-skull-legendary,Cryolophosaurus Skull,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 da-vinci-s-flying-machine-legendary,Da Vinci's Flying Machine,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
 da-vinci-s-machine-gun-legendary,Da Vinci's Machine Gun,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 demarcation-stone-legendary,Demarcation Stone,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
-desert-storm-psn-8-manpack-legendary,Desert Storm PSN-8 Manpack,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-dilophosaurus-skull-legendary,Dilophosaurus Skull,Legendary,Main,,no,yes,Released,5,Released per DominationsWorld update-133 and week-ahead-2926 (perks match wiki).; perks_from_wiki; perk_max_derived_base_plus_9; release_confirmed_dominationsworld_2026-09-05
+desert-storm-psn-8-manpack-legendary,Desert Storm PSN-8 Manpack,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
 dominations-army-helmet-legendary,DomiNations Army Helmet,Legendary,War,,yes,yes,Released,5,Official BHG; hall still to verify; hall_set_from=wiki Legendary_War_Artifacts list; perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
 dominations-game-box-legendary,DomiNations Game Box,Legendary,War,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
-double-headed-serpent-legendary,Double-Headed Serpent,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-edison-s-electric-lamp-legendary,Edison's Electric Lamp,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-elephant-archer-quiver-legendary,Elephant Archer Quiver,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-enigma-machine-legendary,Enigma Machine,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-fengguan-phoenix-crown-legendary,Fengguan Phoenix Crown,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-fire-breathing-bunny-fossil-legendary,Fire Breathing Bunny Fossil,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-first-strike-star-legendary,First Strike Star,Legendary,Main,,yes,yes,Released,5,Official BHG; hall still to verify; hall_set_from=wiki Legendary_Artifacts list; perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
-flamma-s-helmet-legendary,Flamma's Helmet,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+elephant-archer-quiver-legendary,Elephant Archer Quiver,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+flamma-s-helmet-legendary,Flamma's Helmet,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
 gemini-8-gloves-legendary,Gemini 8 Gloves,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
-gemini-8-helmet-legendary,Gemini 8 Helmet,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-general-pershing-s-bas-relief-legendary,General Pershing's Bas-Relief,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-golden-lyre-of-ur-legendary,Golden Lyre of Ur,Legendary,Main,,no,no,Uncertain,0,"Nav-template redlink only; no Fandom page, no DW/BHG hit — keep Uncertain (not removed).; perks_missing; uncertain_kept_2026-09-05_deep_pass"
+gemini-8-helmet-legendary,Gemini 8 Helmet,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+general-pershing-s-bas-relief-legendary,General Pershing's Bas-Relief,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
 great-imperial-crown-legendary,Great Imperial Crown,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
-heads-of-hevajra-legendary,Heads of Hevajra,Legendary,Main,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
-helg-buddha-legendary,Helgö Buddha,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
 huey-armament-system-legendary,Huey Armament System,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
-jade-olmec-mask-legendary,Jade Olmec Mask,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 joyeuse-sword-legendary,Joyeuse Sword,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 julius-caesar-statue-legendary,Julius Caesar Statue,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
-keyed-english-guitar-legendary,Keyed English Guitar,Legendary,Main,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
 koh-i-noor-diamond-legendary,Koh-i-Noor Diamond,Legendary,War,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
-leftwich-trophy-legendary,Leftwich Trophy,Legendary,War,,yes,no,Released,0,perks_missing; leftwich_perk_search_2026-09-05: wiki statistic empty since page create; no DW hit in 151 blog posts; no uploaded Leftwich image on Fandom; mythical Leftwich pages missing; perks not invented
-leoni-parade-shield-legendary,Leoni Parade Shield,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-leonidas-bust-legendary,Leonidas Bust,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-lewis-chessmen-legendary,Lewis Chessmen,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-li-vessel-legendary,Li Vessel,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+leftwich-trophy-legendary,Leftwich Trophy,Legendary,War,,yes,no,Uncertain,0,perks_missing; leftwich_bhg_2025-08: BHGAustin (Engineer) — created years ago but never sold; nobody has it; Showcase only; disabling from Showcase UI. Harlems369th: 'There is no Leftwich Trophy in DomiNations.' Source: https://forums.bighugegames.com/index.php?threads/missing-artifact-not-in-game-for-3-years-leftwich-trophy.43759/ — kept Uncertain (not removed); perks never published; not invented
+leonidas-bust-legendary,Leonidas Bust,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
 liberty-bell-legendary,Liberty Bell,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-lycurgus-cup-legendary,Lycurgus Cup,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 mahiole-legendary,Mahiole,Legendary,War,,yes,yes,Released,5,Official BHG; hall still to verify; hall_set_from=wiki Legendary_War_Artifacts list; perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
 maori-war-club-legendary,Maori War Club,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
-mask-of-agamemnon-legendary,Mask of Agamemnon,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-mask-of-tutankhamun-legendary,Mask of Tutankhamun,Legendary,Main,,no,yes,Uncertain,5,"Fandom page + perks exist; DW Week Ahead Tutankhamun mentions are King Tut Tomb Event flavor text (funerary mask), not artifact confirmation — remain Uncertain.; perks_from_wiki; perk_max_derived_base_plus_9; uncertain_kept_2026-09-05_deep_pass"
-minoan-bull-leaper-legendary,Minoan Bull-Leaper,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 mold-gold-cape-legendary,Mold Gold Cape,Legendary,War,,yes,yes,Released,5,Official BHG; perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
-mona-lisa-legendary,Mona Lisa,Legendary,Main,,no,no,Uncertain,0,"Nav-template redlink only; no Fandom page, no DW/BHG hit — keep Uncertain (not removed).; perks_missing; uncertain_kept_2026-09-05_deep_pass"
-morse-telegraph-legendary,Morse Telegraph,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-napoleon-s-bicorne-hat-legendary,Napoleon's Bicorne Hat,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_wiki_tokens
 napoleon-s-boxlock-pistol-legendary,Napoleon's Boxlock Pistol,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 narmer-palette-legendary,Narmer Palette,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-nefertiti-bust-legendary,Nefertiti Bust,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
 nine-men-s-morris-legendary,Nine Men's Morris,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 norden-bombsight-legendary,Norden Bombsight,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-normandy-scr-536-walkie-talkie-legendary,"Normandy SCR-536 ""Walkie-Talkie""",Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+normandy-scr-536-walkie-talkie-legendary,"Normandy SCR-536 ""Walkie-Talkie""",Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
 olmec-colossal-heads-legendary,Olmec Colossal Heads,Legendary,War,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
-personal-computer-legendary,Personal Computer,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 plane-gyro-gunsight-legendary,Plane Gyro Gunsight,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
-pompus-comb-legendary,Pompus' Comb,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-quimbaya-treasure-legendary,Quimbaya Treasure,Legendary,Main,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
 ramesses-s-abu-simbel-legendary,Ramesses Ⅱ's Abu Simbel,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-raven-rattle-legendary,Raven Rattle,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-red-baron-s-engine-legendary,Red Baron's Engine,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-roman-dodecahedron-legendary,Roman Dodecahedron,Legendary,Main,,no,no,Uncertain,0,"Nav-template redlink (typo Dodechedron); no Fandom page either spelling, no DW/BHG hit — keep Uncertain (not removed).; perks_missing; uncertain_kept_2026-09-05_deep_pass"
-rosetta-stone-legendary,Rosetta Stone,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_wiki_tokens
+raven-rattle-legendary,Raven Rattle,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+red-baron-s-engine-legendary,Red Baron's Engine,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
 rq-2-pioneer-legendary,RQ-2 Pioneer,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-ruyi-scepter-legendary,Ruyi Scepter,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-sanada-yukimura-s-armor-legendary,Sanada Yukimura's Armor,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-silla-gold-crown-legendary,Silla Gold Crown,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-sojourner-mars-rover-legendary,Sojourner Mars Rover,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-sophilos-dinos-legendary,Sophilos Dinos,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-soul-catcher-legendary,Soul Catcher,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-sphinx-of-taharqo-legendary,Sphinx of Taharqo,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-stopler-revolver-legendary,Stopler Revolver,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+sanada-yukimura-s-armor-legendary,Sanada Yukimura's Armor,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+sophilos-dinos-legendary,Sophilos Dinos,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
 supermarine-spitfire-engine-legendary,Supermarine Spitfire Engine,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
-sutton-hoo-helmet-legendary,Sutton Hoo Helmet,Legendary,Main,,yes,yes,Released,5,perks_from_wiki
-swimming-reindeer-legendary,Swimming Reindeer,Legendary,Main,,yes,yes,Released,5,Official BHG; perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
-sword-of-goujian-legendary,Sword of Goujian,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 t-34-tank-engine-legendary,T-34 Tank Engine,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 the-art-of-war-legendary,The Art of War,Legendary,War,,yes,yes,Released,5,perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
-the-book-of-five-rings-legendary,The Book of Five Rings,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-the-book-of-kells-legendary,The Book of Kells,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-the-white-death-s-war-kit-legendary,The White Death's War Kit,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-thinker-of-cernavoda-legendary,Thinker of Cernavoda,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
-tibetan-dung-dkar-legendary,Tibetan Dung-Dkar,Legendary,Main,,no,no,Uncertain,0,"Nav-template redlink only; no Fandom page, no DW/BHG hit — keep Uncertain (not removed).; perks_missing; uncertain_kept_2026-09-05_deep_pass"
-tizona-sword-legendary,Tizona Sword,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-tokugawa-ieyasu-s-helmet-legendary,Tokugawa Ieyasu's Helmet,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
+the-white-death-s-war-kit-legendary,The White Death's War Kit,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
+tizona-sword-legendary,Tizona Sword,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
 trundholm-sun-chariot-legendary,Trundholm Sun Chariot,Legendary,War,,yes,yes,Released,5,Official BHG; perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9
 vespa-150-tap-legendary,Vespa 150 TAP,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9; cost_from_dw_tokens
-video-game-console-legendary,Video Game Console,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 vz-9-avrocar-legendary,Vz-9 Avrocar,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-warka-vase-legendary,Warka Vase,Legendary,Main,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 welrod-mkii-legendary,Welrod MkII,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 winged-victory-of-samothrace-legendary,Winged Victory of Samothrace,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
 zg-1229-vampir-legendary,ZG 1229 Vampir,Legendary,War,,yes,yes,Released,5,perks_from_wiki; perk_max_derived_base_plus_9
-admiral-yi-s-helmet-mythical,Admiral Yi’s Helmet,Mythical,Mythical,Main,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-arm-reliquary-of-charlemagne-mythical,Arm Reliquary of Charlemagne,Mythical,Mythical,War,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-aztec-calendar-mythical,Aztec Calendar,Mythical,Mythical,Main,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-british-kettle-drum-mythical,British Kettle Drum,Mythical,Mythical,War,yes,yes,Released,6,perks_from_wiki; kettle_drum_mythical_from_wiki_statistic_table; mythical_max_left_blank_not_plus9
-caligula-s-ring-mythical,Caligula's Ring,Mythical,Mythical,War,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-da-vinci-s-flying-machine-mythical,Da Vinci's Flying Machine,Mythical,Mythical,War,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-elephant-archer-quiver-mythical,Elephant Archer Quiver,Mythical,Mythical,War,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-enigma-machine-mythical,Enigma Machine,Mythical,Mythical,Main,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-fengguan-phoenix-crown-mythical,Fengguan Phoenix Crown,Mythical,Mythical,Main,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-fire-breathing-bunny-fossil-mythical,Fire Breathing Bunny Fossil,Mythical,Mythical,Main,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-gemini-8-gloves-mythical,Gemini 8 Gloves,Mythical,Mythical,War,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-gemini-8-helmet-mythical,Gemini 8 Helmet,Mythical,Mythical,War,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-general-pershing-s-bas-relief-mythical,General Pershing's Bas-Relief,Mythical,Mythical,War,no,yes,Released,6,Added from official June 2026 Marco's Wares; was missing from 29-row mythical draft.; mythical_max_left_blank_not_plus9; perks_from_official_bhg
-huey-armament-system-mythical,Huey Armament System,Mythical,Mythical,War,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-joyeuse-sword-mythical,Joyeuse Sword,Mythical,Mythical,War,no,yes,Released,6,Added from official June 2026 Marco's Wares; duplicate Heavy Tank Damage perk is real per BHG post.; mythical_max_left_blank_not_plus9; perks_from_official_bhg
-leoni-parade-shield-mythical,Leoni Parade Shield,Mythical,Mythical,Main,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-leonidas-bust-mythical,Leonidas Bust,Mythical,Mythical,War,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-li-vessel-mythical,Li Vessel,Mythical,Mythical,Main,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-maori-war-club-mythical,Maori War Club,Mythical,Mythical,War,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-mask-of-agamemnon-mythical,Mask of Agamemnon,Mythical,Mythical,Main,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-napoleon-s-bicorne-hat-mythical,Napoleon's Bicorne Hat,Mythical,Mythical,Main,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-ramesses-s-abu-simbel-mythical,Ramesses Ⅱ's Abu Simbel,Mythical,Mythical,War,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-ruyi-scepter-mythical,Ruyi Scepter,Mythical,Mythical,Main,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-silla-gold-crown-mythical,Silla Gold Crown,Mythical,Mythical,Main,no,yes,Released,6,Added from official June 2026 Marco's Wares; duplicate Library Tech Resource Cost perk is real per BHG post. No wiki perk extract in batch.; mythical_max_left_blank_not_plus9; perks_from_official_bhg
-soul-catcher-mythical,Soul Catcher,Mythical,Mythical,Main,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-supermarine-spitfire-engine-mythical,Supermarine Spitfire Engine,Mythical,Mythical,War,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-sutton-hoo-helmet-mythical,Sutton Hoo Helmet,Mythical,Mythical,Main,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-t-34-tank-engine-mythical,T-34 Tank Engine,Mythical,Mythical,War,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-the-art-of-war-mythical,The Art of War,Mythical,Mythical,War,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-the-book-of-five-rings-mythical,The Book of Five Rings,Mythical,Mythical,Main,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-the-white-death-s-war-kit-mythical,The White Death's War Kit,Mythical,Mythical,War,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
-vz-9-avrocar-mythical,Vz-9 Avrocar,Mythical,Mythical,War,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+arm-reliquary-of-charlemagne-mythical,Arm Reliquary of Charlemagne,Mythical,War,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+british-kettle-drum-mythical,British Kettle Drum,Mythical,War,,yes,yes,Released,6,perks_from_wiki; kettle_drum_mythical_from_wiki_statistic_table; mythical_max_left_blank_not_plus9
+caligula-s-ring-mythical,Caligula's Ring,Mythical,War,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+da-vinci-s-flying-machine-mythical,Da Vinci's Flying Machine,Mythical,War,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+elephant-archer-quiver-mythical,Elephant Archer Quiver,Mythical,War,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+gemini-8-gloves-mythical,Gemini 8 Gloves,Mythical,War,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+gemini-8-helmet-mythical,Gemini 8 Helmet,Mythical,War,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+general-pershing-s-bas-relief-mythical,General Pershing's Bas-Relief,Mythical,War,,no,yes,Released,6,Added from official June 2026 Marco's Wares; was missing from 29-row mythical draft.; mythical_max_left_blank_not_plus9; perks_from_official_bhg
+huey-armament-system-mythical,Huey Armament System,Mythical,War,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+joyeuse-sword-mythical,Joyeuse Sword,Mythical,War,,no,yes,Released,6,Added from official June 2026 Marco's Wares; duplicate Heavy Tank Damage perk is real per BHG post.; mythical_max_left_blank_not_plus9; perks_from_official_bhg
+leonidas-bust-mythical,Leonidas Bust,Mythical,War,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+maori-war-club-mythical,Maori War Club,Mythical,War,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+ramesses-s-abu-simbel-mythical,Ramesses Ⅱ's Abu Simbel,Mythical,War,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+supermarine-spitfire-engine-mythical,Supermarine Spitfire Engine,Mythical,War,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+t-34-tank-engine-mythical,T-34 Tank Engine,Mythical,War,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+the-art-of-war-mythical,The Art of War,Mythical,War,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+the-white-death-s-war-kit-mythical,The White Death's War Kit,Mythical,War,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9
+vz-9-avrocar-mythical,Vz-9 Avrocar,Mythical,War,,yes,yes,Released,6,perks_prefer_draft_over_wiki; mythical_max_left_blank_not_plus9

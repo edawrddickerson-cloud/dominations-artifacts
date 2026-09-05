@@ -1,23 +1,34 @@
-# Leftwich + nav phantom research (2026-09-05)
+# Leftwich + nav phantom research (updated 2026-09-05)
 
-## Leftwich Trophy (Legendary War) — perks still missing
+## Leftwich Trophy (Legendary War) — Uncertain; perks still missing
 
-Searched; **did not invent perks**.
+### BHG official (new)
+
+Thread: https://forums.bighugegames.com/index.php?threads/missing-artifact-not-in-game-for-3-years-leftwich-trophy.43759/ (Jul–Aug 2025)
+
+| Speaker | Role | Statement |
+|---------|------|-----------|
+| **Harlems369th** | BHG Community Manager | “There is no Leftwich Trophy in DomiNations.” |
+| **BHGAustin** | BHG Engineer | Created/“added” years ago but **never sold**; nobody in the game has it; Showcase surfaced it only as a technical option; **disabling it from Showcase UI** in a future release. |
+
+Follow-up (Apr 2026, thread hi-bhg.48748): players still note Showcase placeholders; community cites prior staff clarification that Leftwich was **scrapped**.
+
+**Perks:** still unknown — never published; LuSt asked for proposed stats; no staff answer with numbers. **Do not invent.**
+
+**Canonical decision:** `release_status=Uncertain` (demoted from Released). Kept as a row for audit (was in roster/Showcase); not removed. Availability note: never sold / Showcase placeholder.
+
+### Earlier searches (exhausted)
 
 | Source | Result |
 |--------|--------|
-| Fandom `Leftwich Trophy` | Page exists (created 2025-07-23 Achartreux); statistic table empty (`\|\|` ×5) |
-| Fandom images `Leftwich*` | **None** uploaded (gallery refs missing files) |
-| Fandom mythical Leftwich pages | **Missing** |
-| DominationsWorld 151 blog posts | **0** mentions |
-| DominationsWorld `?s=` | Unreliable (no hits even for known names) |
-| Bing / Reddit | Blocked or empty organic results |
-
-**Conclusion:** Keep Released (on Legendary War roster) with `perk_count=0` / Low confidence until BHG/DW/in-game evidence appears.
+| Fandom `Leftwich Trophy` | Empty statistic table since create |
+| Fandom images / mythical pages | Missing |
+| DominationsWorld 154 blog posts | **0** mentions |
+| NamuWiki | Page exists (real-world trophy lore); no usable in-game perk extract via fetch |
 
 ## Five nav phantoms — keep Uncertain (not removed)
 
-All appear only as redlinks in `Template:LegendaryArtifactsMenu`. No Fandom article either spelling; no DW blog hit.
+Still only redlinks in `Template:LegendaryArtifactsMenu`. No Fandom article; no DW blog hit across full blog crawl; DuckDuckGo quoted search returned no organic hits.
 
 | Name | Decision |
 |------|----------|
@@ -27,12 +38,11 @@ All appear only as redlinks in `Template:LegendaryArtifactsMenu`. No Fandom arti
 | Roman Dodecahedron (nav: Dodechedron) | Keep Uncertain |
 | Tibetan Dung-Dkar | Keep Uncertain |
 
-Removal rule from handover: remove only with **clear evidence they are not real**. Absence of pages/posts is not that evidence.
+Removal still requires positive “never shipped” evidence (Leftwich-level BHG statement). Absence alone is not enough.
 
-## Optional release flips
+## Release flips
 
 | Name | Decision | Evidence |
 |------|----------|----------|
-| 11th Anniversary Cake | **Released** | DW week-ahead-33026 + matching wiki perks |
-| Dilophosaurus Skull | **Released** | DW update-133 + week-ahead-2926 + matching wiki perks |
-| Mask of Tutankhamun | Stay Uncertain | DW “Tutankhamun” hits = King Tut Tomb Event flavor (funerary mask), not artifact name |
+| Mask of Tutankhamun | **Released** | DW `legendary-calendar-july-2025`: “The Mask of Tutankhamun” under **100 Tokens** (artifact-named). Week Ahead Tutankhamun text remains event flavor only. |
+| Leftwich Trophy | **Uncertain** | BHGAustin / Harlems369th as above |

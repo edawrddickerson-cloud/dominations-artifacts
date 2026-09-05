@@ -66,9 +66,9 @@ Still prefer official BHG confirmation in notes when found.
 ## Roster / release
 
 - Draft treated all 110 legendaries as Released; wiki-only extras merged in.
-- **Released (DW confirmed this pass):** 11th Anniversary Cake, Dilophosaurus Skull.
-- **Uncertain kept:** Mask of Tutankhamun (wiki only; DW text is event flavor); Benin Royal Ivory Mask, Golden Lyre of Ur, Mona Lisa, Roman Dodecahedron, Tibetan Dung-Dkar (nav redlinks only — not removed).
-- Leftwich Trophy: roster Released but wiki statistic table empty; deep DW/Fandom search found no perks — still missing.
+- **Released (DW confirmed):** 11th Anniversary Cake, Dilophosaurus Skull, **Mask of Tutankhamun** (July 2025 legendary calendar).
+- **Uncertain kept:** Benin Royal Ivory Mask, Golden Lyre of Ur, Mona Lisa, Roman Dodecahedron, Tibetan Dung-Dkar (nav redlinks only — not removed).
+- **Leftwich Trophy:** demoted to Uncertain — BHGAustin (BHG Engineer, Aug 2025): never sold; Showcase placeholder; disabling. Perks never published.
 - Mythical wiki lists many more names than the 29 verified draft rows — extras **not** auto-added as released.
 - Ignore meta pages: Archaeology Capstone, Library, Technology.
 
@@ -80,3 +80,4 @@ Still prefer official BHG confirmation in notes when found.
 - Hitpoints vs HP normalized via `perk_name_mapping.csv`.
 - Mythical War quick_view for British Kettle Drum was wrong (legendary 5-perk set); statistic_table used.
 - Marco's Wares **1000 Legendary Tokens** prices are Mythical — never copied onto Legendary `cost`.
+- Legendary Marco calendars typically price at **100 or 300** tokens; Mythical Marco wares at **1000** tokens (or gem/chest sales).

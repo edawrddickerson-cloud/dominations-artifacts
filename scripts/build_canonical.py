@@ -16,6 +16,17 @@ TEMP = DATA / "temp"
 REPORTS = ROOT / "reports"
 CHECKED = "2026-09-05"
 
+# Legendary Marco Polo token costs (May–Aug 2025 calendars + Aug 2023 + 9th Ann vault).
+# Token/coin amounts only — never IAP. Do not apply Mythical 1000-token Marco prices here.
+def _load_dw_legendary_token_costs() -> dict:
+    path = RAW / "dw_legendary_token_costs.json"
+    if path.exists():
+        return json.loads(path.read_text(encoding="utf-8"))
+    return {}
+
+
+DW_LEGENDARY_TOKEN_COSTS = _load_dw_legendary_token_costs()
+
 HALL_OVERRIDES = {
     "analytical-engine": ("War", "wiki Legendary_War_Artifacts list"),
     "dominations-army-helmet": ("War", "wiki Legendary_War_Artifacts list"),
@@ -28,7 +39,7 @@ HALL_OVERRIDES = {
 OFFICIAL_EXTRA_MYTHICALS = [
     {
         "name": "General Pershing's Bas-Relief",
-        "museum_hall": "War",
+        "hall": "War",
         "cost": "1000",
         "cost_currency": "Legendary Tokens",
         "acquisition_method": "Marco / official release",
@@ -45,7 +56,7 @@ OFFICIAL_EXTRA_MYTHICALS = [
     },
     {
         "name": "Joyeuse Sword",
-        "museum_hall": "War",
+        "hall": "War",
         "cost": "1000",
         "cost_currency": "Legendary Tokens",
         "acquisition_method": "Marco / official release",
@@ -62,7 +73,7 @@ OFFICIAL_EXTRA_MYTHICALS = [
     },
     {
         "name": "Silla Gold Crown",
-        "museum_hall": "Main",
+        "hall": "Main",
         "cost": "1000",
         "cost_currency": "Legendary Tokens",
         "acquisition_method": "Marco / official release",
@@ -81,7 +92,7 @@ OFFICIAL_EXTRA_MYTHICALS = [
 
 # Wiki-listed legendary candidates not in the 110-row draft.
 # Cake / Dilophosaurus: flipped to Released after DominationsWorld blog evidence (2026-09-05 deep pass).
-# Tutankhamun: wiki page + perks only; DW hits are King Tut event flavor text, not the artifact — remain Uncertain.
+# Tutankhamun: flipped Released after July 2025 Legendary Calendar lists \"The Mask of Tutankhamun\" at 100 tokens.
 # Benin / Lyre / Mona Lisa / Dodecahedron / Dung-Dkar: nav-template redlinks only; kept Uncertain (no clear
 # proof they were never shipped — absence of page/DW is not removal evidence).
 WIKI_ONLY_LEGENDARY = [
@@ -111,9 +122,13 @@ WIKI_ONLY_LEGENDARY = [
     {
         "name": "Mask of Tutankhamun",
         "hall": "Main",
-        "alternate_name": "",
-        "release_status": "Uncertain",
-        "notes": "Fandom page + perks exist; DW Week Ahead Tutankhamun mentions are King Tut Tomb Event flavor text (funerary mask), not artifact confirmation — remain Uncertain.",
+        "alternate_name": "The Mask of Tutankhamun",
+        "release_status": "Released",
+        "source_primary": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+        "acquisition_method": "Marco Polo",
+        "availability_notes": "DW Legendary Calendar July 2025: The Mask of Tutankhamun under 100 Tokens (7/7–8/4)",
+        "confidence": "High",
+        "notes": "Released per DominationsWorld legendary-calendar-july-2025 (artifact-named; prior Week Ahead Tutankhamun hits were King Tut event flavor only).",
     },
     {
         "name": "Benin Royal Ivory Mask",
@@ -151,115 +166,6 @@ WIKI_ONLY_LEGENDARY = [
         "notes": "Nav-template redlink only; no Fandom page, no DW/BHG hit — keep Uncertain (not removed).",
     },
 ]
-
-# Legendary Marco Polo token costs from DominationsWorld calendars / anniversary vault.
-# Token/coin amounts only — never IAP sale prices. Do not apply Marco's Wares 1000-token mythical prices here.
-DW_LEGENDARY_TOKEN_COSTS = {
-    # https://www.dominationsworld.com/blog/august-legendary-token-calendar
-    "Antikythera Mechanism": {
-        "cost": "300",
-        "cost_currency": "Legendary Tokens",
-        "acquisition_method": "Marco Polo",
-        "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
-    },
-    "Christmas Football": {
-        "cost": "100",
-        "cost_currency": "Legendary Tokens",
-        "acquisition_method": "Marco Polo",
-        "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
-    },
-    "Da Vinci's Flying Machine": {
-        "cost": "300",
-        "cost_currency": "Legendary Tokens",
-        "acquisition_method": "Marco Polo",
-        "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
-    },
-    "Demarcation Stone": {
-        "cost": "100",
-        "cost_currency": "Legendary Tokens",
-        "acquisition_method": "Marco Polo",
-        "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
-    },
-    "Great Imperial Crown": {
-        "cost": "100",
-        "cost_currency": "Legendary Tokens",
-        "acquisition_method": "Marco Polo",
-        "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
-    },
-    "Julius Caesar Statue": {
-        "cost": "300",
-        "cost_currency": "Legendary Tokens",
-        "acquisition_method": "Marco Polo",
-        "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
-    },
-    "Nefertiti Bust": {
-        "cost": "100",
-        "cost_currency": "Legendary Tokens",
-        "acquisition_method": "Marco Polo",
-        "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
-    },
-    "Supermarine Spitfire Engine": {
-        "cost": "300",
-        "cost_currency": "Legendary Tokens",
-        "acquisition_method": "Marco Polo",
-        "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
-    },
-    "The Art of War": {
-        "cost": "300",
-        "cost_currency": "Legendary Tokens",
-        "acquisition_method": "Marco Polo",
-        "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
-    },
-    "Vespa 150 TAP": {
-        "cost": "100",
-        "cost_currency": "Legendary Tokens",
-        "acquisition_method": "Marco Polo",
-        "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
-    },
-    # https://www.dominationsworld.com/blog/9th-anniversary — Marco vault 300 tokens / 48h
-    "ASDIC Type 113X": {
-        "cost": "300",
-        "cost_currency": "Legendary Tokens",
-        "acquisition_method": "Marco Polo (Anniversary Vault)",
-        "source": "https://www.dominationsworld.com/blog/9th-anniversary",
-    },
-    "Gemini 8 Gloves": {
-        "cost": "300",
-        "cost_currency": "Legendary Tokens",
-        "acquisition_method": "Marco Polo (Anniversary Vault)",
-        "source": "https://www.dominationsworld.com/blog/9th-anniversary",
-    },
-    "Helgö Buddha": {
-        "cost": "300",
-        "cost_currency": "Legendary Tokens",
-        "acquisition_method": "Marco Polo (Anniversary Vault)",
-        "source": "https://www.dominationsworld.com/blog/9th-anniversary",
-    },
-    "Huey Armament System": {
-        "cost": "300",
-        "cost_currency": "Legendary Tokens",
-        "acquisition_method": "Marco Polo (Anniversary Vault)",
-        "source": "https://www.dominationsworld.com/blog/9th-anniversary",
-    },
-    "Maori War Club": {
-        "cost": "300",
-        "cost_currency": "Legendary Tokens",
-        "acquisition_method": "Marco Polo (Anniversary Vault)",
-        "source": "https://www.dominationsworld.com/blog/9th-anniversary",
-    },
-    "Plane Gyro Gunsight": {
-        "cost": "300",
-        "cost_currency": "Legendary Tokens",
-        "acquisition_method": "Marco Polo (Anniversary Vault)",
-        "source": "https://www.dominationsworld.com/blog/9th-anniversary",
-    },
-    "Thinker of Cernavoda": {
-        "cost": "300",
-        "cost_currency": "Legendary Tokens",
-        "acquisition_method": "Marco Polo (Anniversary Vault)",
-        "source": "https://www.dominationsworld.com/blog/9th-anniversary",
-    },
-}
 
 SKIP_TITLES = {
     "legendary artifacts",
@@ -766,9 +672,10 @@ def build() -> None:
         out["artifact_id"] = (row.get("artifact_id") or slug_id(name, grade)).lstrip("\ufeff")
         out["name"] = name
         out["alternate_name"] = ""
-        museum = (row.get("hall") or "").strip()
-        out["hall"] = "Mythical"
-        out["museum_hall"] = museum if museum in ("Main", "War") else museum
+        # Hall is Main/War (museum); grade is Mythical — never use hall="Mythical".
+        hall = (row.get("hall") or "").strip()
+        out["hall"] = hall if hall in ("Main", "War") else (hall or "Unknown")
+        out["museum_hall"] = ""
         out["grade"] = grade
         out["release_status"] = (row.get("release_status") or "Uncertain").strip()
         out["release_date"] = (row.get("release_date") or "").strip()
@@ -822,8 +729,8 @@ def build() -> None:
         out = empty_row()
         out["artifact_id"] = slug_id(name, "Mythical")
         out["name"] = name
-        out["hall"] = "Mythical"
-        out["museum_hall"] = cand["museum_hall"]
+        out["hall"] = cand["hall"]
+        out["museum_hall"] = ""
         out["grade"] = "Mythical"
         out["release_status"] = "Released"
         out["cost"] = cand["cost"]
@@ -940,23 +847,48 @@ def build() -> None:
         if meta["source"] not in sec:
             out["source_secondary"] = (sec + "; " if sec else "") + meta["source"]
 
-    # Leftwich Trophy: document deep perk search (still missing)
+    # Leftwich Trophy: BHG confirmed never sold / not in game for players — Uncertain; perks unknown
     for out in rows:
         if norm_key(out.get("name") or "") != "leftwich-trophy":
             continue
+        out["release_status"] = "Uncertain"
+        out["confidence"] = "Medium"
         notes = [x for x in (out.get("notes") or "").split("; ") if x]
-        extra = (
-            "leftwich_perk_search_2026-09-05: wiki statistic empty since page create; "
-            "no DW hit in 151 blog posts; no uploaded Leftwich image on Fandom; "
-            "mythical Leftwich pages missing; perks not invented"
+        # drop stale released-search note fragments we replace
+        notes = [
+            n
+            for n in notes
+            if not n.startswith("leftwich_perk_search_")
+            and n not in {"perks_missing"}
+        ]
+        notes.append("perks_missing")
+        notes.append(
+            "leftwich_bhg_2025-08: BHGAustin (Engineer) — created years ago but never sold; "
+            "nobody has it; Showcase only; disabling from Showcase UI. "
+            "Harlems369th: 'There is no Leftwich Trophy in DomiNations.' "
+            "Source: https://forums.bighugegames.com/index.php?threads/missing-artifact-not-in-game-for-3-years-leftwich-trophy.43759/ "
+            "— kept Uncertain (not removed); perks never published; not invented"
         )
-        if "leftwich_perk_search_2026-09-05" not in ";".join(notes):
-            notes.append(extra)
         out["notes"] = "; ".join(notes)
+        out["availability_notes"] = (
+            "BHG: never sold / not obtainable; Showcase placeholder being disabled"
+        )
+        sec = out.get("source_secondary") or ""
+        bhg = "https://forums.bighugegames.com/index.php?threads/missing-artifact-not-in-game-for-3-years-leftwich-trophy.43759/"
+        if bhg not in sec:
+            out["source_secondary"] = (sec + "; " if sec else "") + bhg
         break
 
-    # Sort: grade Legendary first then Mythical; name
-    rows.sort(key=lambda r: (0 if r["grade"] == "Legendary" else 1, r["name"].casefold()))
+    # Sort: hall Main then War; grade Legendary then Mythical; name
+    hall_ord = {"Main": 0, "War": 1}
+    grade_ord = {"Legendary": 0, "Mythical": 1}
+    rows.sort(
+        key=lambda r: (
+            hall_ord.get(r["hall"], 9),
+            grade_ord.get(r["grade"], 9),
+            r["name"].casefold(),
+        )
+    )
 
     # --- perk_name_mapping ---
     raw_names: dict[str, set[str]] = defaultdict(set)
@@ -1111,19 +1043,20 @@ def build() -> None:
 - Legendary draft base: 110 → canonical legendary: {len(leg_rows)} (includes wiki-only Uncertain candidates)
 - Mythical draft base: 29 → canonical mythical: {len(myth_rows)} (includes official June 2026 Marco extras if missing from draft)
 
-## Official sweep (DominationsWorld, 2026-09-05)
+## Official sweep (DominationsWorld / BHG, 2026-09-05)
 
 - Confirmed on official posts: British Kettle Drum, Analytical Engine, First Strike Star, Mahiole, DomiNations Army Helmet
 - June 2026 Marco's Wares mythicals **General Pershing's Bas-Relief**, **Joyeuse Sword**, **Silla Gold Crown** were missing from draft → added as Released
-- Deep DW blog pass (151 posts): **11th Anniversary Cake** (week-ahead-33026) and **Dilophosaurus Skull** (update-133 / week-ahead-2926) flipped to **Released**
-- **Mask of Tutankhamun**: DW Tutankhamun hits are King Tut event flavor only → remain Uncertain
-- Nav phantoms (Benin / Lyre / Mona Lisa / Dodecahedron / Dung-Dkar): still no Fandom page or DW hit → **kept Uncertain** (not removed; no proof never shipped)
-- Leftwich Trophy: no perks found (empty wiki table; no DW; no Fandom image) — not invented
-- Legendary token costs filled from August token calendar + 9th Anniversary vault where blank
-- See `data/temp/dw_cost_mine.json`, `data/temp/dw_legendary_costs.json`, `data/temp/uncertain_reverify.json`
+- Deep DW blog pass: **11th Anniversary Cake** and **Dilophosaurus Skull** → Released
+- **Mask of Tutankhamun** → **Released** (July 2025 Legendary Calendar lists “The Mask of Tutankhamun” at 100 tokens; prior Week Ahead hits were King Tut event flavor only)
+- Nav phantoms (Benin / Lyre / Mona Lisa / Dodecahedron / Dung-Dkar): still no Fandom page or DW/BHG hit → **kept Uncertain** (not removed; no proof never shipped)
+- **Leftwich Trophy** → **Uncertain** (BHGAustin 2025-08: created but never sold; nobody has it; Showcase placeholder; disabling. Perks never published — not invented)
+- Legendary token costs from May–Aug 2025 calendars + Aug 2023 calendar + 9th Ann vault (`data/raw/dw_legendary_token_costs.json`)
+- Cost source map: `data/temp/token_cost_source_map.md`; mines in `data/temp/dw_calendar_final_mine.json`
 
 ## Targeted fixes this build
 
+- **Hall/grade model:** Mythical is a grade (tier), not a hall. Canonical `hall` is Main or War for both Legendary and Mythical; `museum_hall` left blank (was previously used to stash Main/War under `hall=Mythical`).
 - British Kettle Drum mythical perks: {"OK " + kettle['perk_count'] if kettle else "MISSING"}
 - Hall overrides for prior TBD: {", ".join(f"{r['name']}={r['hall']}" for r in tbd_fixed)}
 - Wiki statistic_table parser fixed (same-line `||` cells, rowspan, `||-N%` row split) → filled most legendary perk gaps
@@ -1132,10 +1065,10 @@ def build() -> None:
 
 ## Gaps (not complete)
 
-- Legendary perk gap remaining: {len(leg_rows) - leg_with} (Leftwich Trophy + 5 nav-phantom Uncertain)
-- Legendary token `cost` still incomplete ({sum(1 for r in leg_rows if (r.get('cost') or '').strip())} / {len(leg_rows)} filled); more Marco calendars may exist
+- Legendary perk gap remaining: {len(leg_rows) - leg_with} (Leftwich Uncertain + 5 nav-phantom Uncertain)
+- Legendary token `cost`: {sum(1 for r in leg_rows if (r.get('cost') or '').strip())} / {len(leg_rows)} filled (more older calendars may exist; 2024 calendars not found as dedicated posts)
 - Mythical max values intentionally blank (announcement numbers; no blind +9)
-- Uncertain legendaries: Tutankhamun + 5 nav phantoms (pending stronger evidence)
+- Uncertain legendaries: Leftwich (never sold) + 5 nav phantoms
 - dominations-info.com API still 404; not used as primary
 
 ## Outputs
@@ -1185,9 +1118,9 @@ Still prefer official BHG confirmation in notes when found.
 ## Roster / release
 
 - Draft treated all 110 legendaries as Released; wiki-only extras merged in.
-- **Released (DW confirmed this pass):** 11th Anniversary Cake, Dilophosaurus Skull.
-- **Uncertain kept:** Mask of Tutankhamun (wiki only; DW text is event flavor); Benin Royal Ivory Mask, Golden Lyre of Ur, Mona Lisa, Roman Dodecahedron, Tibetan Dung-Dkar (nav redlinks only — not removed).
-- Leftwich Trophy: roster Released but wiki statistic table empty; deep DW/Fandom search found no perks — still missing.
+- **Released (DW confirmed):** 11th Anniversary Cake, Dilophosaurus Skull, **Mask of Tutankhamun** (July 2025 legendary calendar).
+- **Uncertain kept:** Benin Royal Ivory Mask, Golden Lyre of Ur, Mona Lisa, Roman Dodecahedron, Tibetan Dung-Dkar (nav redlinks only — not removed).
+- **Leftwich Trophy:** demoted to Uncertain — BHGAustin (BHG Engineer, Aug 2025): never sold; Showcase placeholder; disabling. Perks never published.
 - Mythical wiki lists many more names than the 29 verified draft rows — extras **not** auto-added as released.
 - Ignore meta pages: Archaeology Capstone, Library, Technology.
 
@@ -1199,6 +1132,7 @@ Still prefer official BHG confirmation in notes when found.
 - Hitpoints vs HP normalized via `perk_name_mapping.csv`.
 - Mythical War quick_view for British Kettle Drum was wrong (legendary 5-perk set); statistic_table used.
 - Marco's Wares **1000 Legendary Tokens** prices are Mythical — never copied onto Legendary `cost`.
+- Legendary Marco calendars typically price at **100 or 300** tokens; Mythical Marco wares at **1000** tokens (or gem/chest sales).
 """
 
     (REPORTS / "completeness_report.md").write_text(completeness, encoding="utf-8")

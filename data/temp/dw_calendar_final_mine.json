@@ -1,0 +1,2706 @@
+{
+  "recommended": {
+    "10th Mountain Division War Kit": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "10th Mountain Division War Kit"
+      ],
+      "sources_detail": [
+        {
+          "name": "10th Mountain Division War Kit",
+          "raw": "10th Mountain Division War Kit",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "6th Anniversary Six-Shooter": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Six Shooter"
+      ],
+      "sources_detail": [
+        {
+          "name": "6th Anniversary Six-Shooter",
+          "raw": "Six Shooter",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "ASDIC Type 113X": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/9th-anniversary"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "ASDIC Type 113X"
+      ],
+      "sources_detail": [
+        {
+          "name": "ASDIC Type 113X",
+          "raw": "ASDIC Type 113X",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/9th-anniversary",
+          "source": "vault_schedule"
+        }
+      ]
+    },
+    "Admiral Yi’s Helmet": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-may-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Admiral Yi’s Helmet"
+      ],
+      "sources_detail": [
+        {
+          "name": "Admiral Yi’s Helmet",
+          "raw": "Admiral Yi’s Helmet",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Antikythera Mechanism": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Antikythera Mechanism"
+      ],
+      "sources_detail": [
+        {
+          "name": "Antikythera Mechanism",
+          "raw": "Antikythera Mechanism",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+          "source": "inline_dash"
+        }
+      ]
+    },
+    "Arm Reliquary of Charlemagne": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-may-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Arm Reliquary of Charlemagne"
+      ],
+      "sources_detail": [
+        {
+          "name": "Arm Reliquary of Charlemagne",
+          "raw": "Arm Reliquary of Charlemagne",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Ashanti Kuduo": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Ashanti Kuduo"
+      ],
+      "sources_detail": [
+        {
+          "name": "Ashanti Kuduo",
+          "raw": "Ashanti Kuduo",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Augustus Statue Muscle Cuirass": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Augustus Statue Muscle Cuirass"
+      ],
+      "sources_detail": [
+        {
+          "name": "Augustus Statue Muscle Cuirass",
+          "raw": "Augustus Statue Muscle Cuirass",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Aztec Calendar": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Aztec Calendar"
+      ],
+      "sources_detail": [
+        {
+          "name": "Aztec Calendar",
+          "raw": "Aztec Calendar",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Battersea Shield": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Battersea Shield"
+      ],
+      "sources_detail": [
+        {
+          "name": "Battersea Shield",
+          "raw": "Battersea Shield",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Capt. McConnell's Hero Ensemble": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-may-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "McConnell’s Hero Ensemble"
+      ],
+      "sources_detail": [
+        {
+          "name": "Capt. McConnell's Hero Ensemble",
+          "raw": "McConnell’s Hero Ensemble",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Captain's Croix de Guerre": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Croix de Guerre"
+      ],
+      "sources_detail": [
+        {
+          "name": "Captain's Croix de Guerre",
+          "raw": "Croix de Guerre",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Christmas Football": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "https://www.dominationsworld.com/blog/legendary-calendar-may-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 2,
+      "raw_examples": [
+        "Christmas Football"
+      ],
+      "sources_detail": [
+        {
+          "name": "Christmas Football",
+          "raw": "Christmas Football",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+          "source": "inline_dash"
+        },
+        {
+          "name": "Christmas Football",
+          "raw": "Christmas Football",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Clem Sohn's Wingsuit": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-may-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Clem Sohn’s Wingsuit"
+      ],
+      "sources_detail": [
+        {
+          "name": "Clem Sohn's Wingsuit",
+          "raw": "Clem Sohn’s Wingsuit",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Creighton Abrams Tank Commander Kit": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Creighton Abrams Tank Commander Kit"
+      ],
+      "sources_detail": [
+        {
+          "name": "Creighton Abrams Tank Commander Kit",
+          "raw": "Creighton Abrams Tank Commander Kit",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Crescent Blade": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-may-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Crescent Blade"
+      ],
+      "sources_detail": [
+        {
+          "name": "Crescent Blade",
+          "raw": "Crescent Blade",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Da Vinci's Flying Machine": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 2,
+      "raw_examples": [
+        "Da Vinci's Flying Machine",
+        "Da Vinci’s Vlying Machine"
+      ],
+      "sources_detail": [
+        {
+          "name": "Da Vinci's Flying Machine",
+          "raw": "Da Vinci's Flying Machine",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+          "source": "inline_dash"
+        },
+        {
+          "name": "Da Vinci's Flying Machine",
+          "raw": "Da Vinci’s Vlying Machine",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Demarcation Stone": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "https://www.dominationsworld.com/blog/legendary-calendar-may-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 2,
+      "raw_examples": [
+        "Demarcation Stone"
+      ],
+      "sources_detail": [
+        {
+          "name": "Demarcation Stone",
+          "raw": "Demarcation Stone",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+          "source": "inline_dash"
+        },
+        {
+          "name": "Demarcation Stone",
+          "raw": "Demarcation Stone",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Desert Storm PSN-8 Manpack": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Desert Storm PSN-8 Manpack"
+      ],
+      "sources_detail": [
+        {
+          "name": "Desert Storm PSN-8 Manpack",
+          "raw": "Desert Storm PSN-8 Manpack",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Fengguan Phoenix Crown": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Fengguan Pheonix Crown"
+      ],
+      "sources_detail": [
+        {
+          "name": "Fengguan Phoenix Crown",
+          "raw": "Fengguan Pheonix Crown",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Flammas Helmet": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Flammas Helmet"
+      ],
+      "sources_detail": [
+        {
+          "name": "Flammas Helmet",
+          "raw": "Flammas Helmet",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Gemini 8 Gloves": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/9th-anniversary"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Gemini 8 Gloves"
+      ],
+      "sources_detail": [
+        {
+          "name": "Gemini 8 Gloves",
+          "raw": "Gemini 8 Gloves",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/9th-anniversary",
+          "source": "vault_schedule"
+        }
+      ]
+    },
+    "Gemini 8 Helmet": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Gemini 8 Helmet"
+      ],
+      "sources_detail": [
+        {
+          "name": "Gemini 8 Helmet",
+          "raw": "Gemini 8 Helmet",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "General Pershing's Bas-Relief": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "General Pershing Bas Relief"
+      ],
+      "sources_detail": [
+        {
+          "name": "General Pershing's Bas-Relief",
+          "raw": "General Pershing Bas Relief",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Great Imperial Crown": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 2,
+      "raw_examples": [
+        "Great Imperial Crown"
+      ],
+      "sources_detail": [
+        {
+          "name": "Great Imperial Crown",
+          "raw": "Great Imperial Crown",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+          "source": "inline_dash"
+        },
+        {
+          "name": "Great Imperial Crown",
+          "raw": "Great Imperial Crown",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Helgö Buddha": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/9th-anniversary"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Helg"
+      ],
+      "sources_detail": [
+        {
+          "name": "Helgö Buddha",
+          "raw": "Helg",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/9th-anniversary",
+          "source": "vault_schedule"
+        }
+      ]
+    },
+    "Huey Armament System": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/9th-anniversary"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Huey Armament System"
+      ],
+      "sources_detail": [
+        {
+          "name": "Huey Armament System",
+          "raw": "Huey Armament System",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/9th-anniversary",
+          "source": "vault_schedule"
+        }
+      ]
+    },
+    "Julius Caesar Statue": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 2,
+      "raw_examples": [
+        "Julius Caesar Statue"
+      ],
+      "sources_detail": [
+        {
+          "name": "Julius Caesar Statue",
+          "raw": "Julius Caesar Statue",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+          "source": "inline_dash"
+        },
+        {
+          "name": "Julius Caesar Statue",
+          "raw": "Julius Caesar Statue",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Leonidas Bust": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Leonidas Bust"
+      ],
+      "sources_detail": [
+        {
+          "name": "Leonidas Bust",
+          "raw": "Leonidas Bust",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Lewis Chessmen": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Lewis Chessmen"
+      ],
+      "sources_detail": [
+        {
+          "name": "Lewis Chessmen",
+          "raw": "Lewis Chessmen",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Lycurgus Cup": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Lycurgus Cup"
+      ],
+      "sources_detail": [
+        {
+          "name": "Lycurgus Cup",
+          "raw": "Lycurgus Cup",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Maori War Club": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/9th-anniversary"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Maori War Club"
+      ],
+      "sources_detail": [
+        {
+          "name": "Maori War Club",
+          "raw": "Maori War Club",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/9th-anniversary",
+          "source": "vault_schedule"
+        }
+      ]
+    },
+    "Mask of Agamemnon": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Mask of Agamemnon"
+      ],
+      "sources_detail": [
+        {
+          "name": "Mask of Agamemnon",
+          "raw": "Mask of Agamemnon",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Mask of Tutankhamun": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "The Mask of Tutankhamun"
+      ],
+      "sources_detail": [
+        {
+          "name": "Mask of Tutankhamun",
+          "raw": "The Mask of Tutankhamun",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Napoleon's Bicorne Hat": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Napoleon’s Bicorne Hat"
+      ],
+      "sources_detail": [
+        {
+          "name": "Napoleon's Bicorne Hat",
+          "raw": "Napoleon’s Bicorne Hat",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Nefertiti Bust": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+        "https://www.dominationsworld.com/blog/legendary-calendar-may-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 3,
+      "raw_examples": [
+        "Nefertiti Bust"
+      ],
+      "sources_detail": [
+        {
+          "name": "Nefertiti Bust",
+          "raw": "Nefertiti Bust",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+          "source": "inline_dash"
+        },
+        {
+          "name": "Nefertiti Bust",
+          "raw": "Nefertiti Bust",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        },
+        {
+          "name": "Nefertiti Bust",
+          "raw": "Nefertiti Bust",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Normandy SCR-536 \"Walkie-Talkie\"": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Normandy SCR-536 “Walkie-Talkie”"
+      ],
+      "sources_detail": [
+        {
+          "name": "Normandy SCR-536 \"Walkie-Talkie\"",
+          "raw": "Normandy SCR-536 “Walkie-Talkie”",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Plane Gyro Gunsight": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/9th-anniversary"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Plane Gyro Gunsight"
+      ],
+      "sources_detail": [
+        {
+          "name": "Plane Gyro Gunsight",
+          "raw": "Plane Gyro Gunsight",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/9th-anniversary",
+          "source": "vault_schedule"
+        }
+      ]
+    },
+    "Quimbaya Treasure": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Quimbaya Treasure"
+      ],
+      "sources_detail": [
+        {
+          "name": "Quimbaya Treasure",
+          "raw": "Quimbaya Treasure",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Raven Rattle": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Raven Rattle"
+      ],
+      "sources_detail": [
+        {
+          "name": "Raven Rattle",
+          "raw": "Raven Rattle",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Red Baron's Engine": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Red Baron’s Engine"
+      ],
+      "sources_detail": [
+        {
+          "name": "Red Baron's Engine",
+          "raw": "Red Baron’s Engine",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Rosetta Stone": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+        "https://www.dominationsworld.com/blog/legendary-calendar-may-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 2,
+      "raw_examples": [
+        "Rosetta Stone"
+      ],
+      "sources_detail": [
+        {
+          "name": "Rosetta Stone",
+          "raw": "Rosetta Stone",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        },
+        {
+          "name": "Rosetta Stone",
+          "raw": "Rosetta Stone",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Sanada Yukimura's Armor": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Sanada Yukimura’s Armor"
+      ],
+      "sources_detail": [
+        {
+          "name": "Sanada Yukimura's Armor",
+          "raw": "Sanada Yukimura’s Armor",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Silla Gold Crown": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Korean Silla Crown"
+      ],
+      "sources_detail": [
+        {
+          "name": "Silla Gold Crown",
+          "raw": "Korean Silla Crown",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Sojourner Mars Rover": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Sojourner Mars Rover"
+      ],
+      "sources_detail": [
+        {
+          "name": "Sojourner Mars Rover",
+          "raw": "Sojourner Mars Rover",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Sophilos Dinos": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Sophilos Dinos"
+      ],
+      "sources_detail": [
+        {
+          "name": "Sophilos Dinos",
+          "raw": "Sophilos Dinos",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Stopler Revolver": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Stopler Revolver"
+      ],
+      "sources_detail": [
+        {
+          "name": "Stopler Revolver",
+          "raw": "Stopler Revolver",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Supermarine Spitfire Engine": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Spitfire Engine"
+      ],
+      "sources_detail": [
+        {
+          "name": "Supermarine Spitfire Engine",
+          "raw": "Spitfire Engine",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+          "source": "inline_dash"
+        }
+      ]
+    },
+    "Sutton Hoo Helmet": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Sutton Hoo Helmet"
+      ],
+      "sources_detail": [
+        {
+          "name": "Sutton Hoo Helmet",
+          "raw": "Sutton Hoo Helmet",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "The Art of War": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Art of War"
+      ],
+      "sources_detail": [
+        {
+          "name": "The Art of War",
+          "raw": "Art of War",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+          "source": "inline_dash"
+        }
+      ]
+    },
+    "The White Death's War Kit": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "White Death's War Kit"
+      ],
+      "sources_detail": [
+        {
+          "name": "The White Death's War Kit",
+          "raw": "White Death's War Kit",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Thinker of Cernavoda": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Thinker of Cernavoda"
+      ],
+      "sources_detail": [
+        {
+          "name": "Thinker of Cernavoda",
+          "raw": "Thinker of Cernavoda",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Tizona Sword": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Tizona Sword"
+      ],
+      "sources_detail": [
+        {
+          "name": "Tizona Sword",
+          "raw": "Tizona Sword",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Tokugawa Ieyasu's Helmet": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Tokugawa Ieyasu’s Helmet"
+      ],
+      "sources_detail": [
+        {
+          "name": "Tokugawa Ieyasu's Helmet",
+          "raw": "Tokugawa Ieyasu’s Helmet",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Vespa 150 TAP": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 2,
+      "raw_examples": [
+        "Vespa 150 TAP"
+      ],
+      "sources_detail": [
+        {
+          "name": "Vespa 150 TAP",
+          "raw": "Vespa 150 TAP",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+          "source": "inline_dash"
+        },
+        {
+          "name": "Vespa 150 TAP",
+          "raw": "Vespa 150 TAP",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Warka Vase": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Warka Vase"
+      ],
+      "sources_detail": [
+        {
+          "name": "Warka Vase",
+          "raw": "Warka Vase",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    }
+  },
+  "conflicts": {},
+  "fillable_blanks": {
+    "Admiral Yi’s Helmet": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-may-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Admiral Yi’s Helmet"
+      ],
+      "sources_detail": [
+        {
+          "name": "Admiral Yi’s Helmet",
+          "raw": "Admiral Yi’s Helmet",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Ashanti Kuduo": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Ashanti Kuduo"
+      ],
+      "sources_detail": [
+        {
+          "name": "Ashanti Kuduo",
+          "raw": "Ashanti Kuduo",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Aztec Calendar": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Aztec Calendar"
+      ],
+      "sources_detail": [
+        {
+          "name": "Aztec Calendar",
+          "raw": "Aztec Calendar",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Clem Sohn's Wingsuit": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-may-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Clem Sohn’s Wingsuit"
+      ],
+      "sources_detail": [
+        {
+          "name": "Clem Sohn's Wingsuit",
+          "raw": "Clem Sohn’s Wingsuit",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Fengguan Phoenix Crown": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Fengguan Pheonix Crown"
+      ],
+      "sources_detail": [
+        {
+          "name": "Fengguan Phoenix Crown",
+          "raw": "Fengguan Pheonix Crown",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Lewis Chessmen": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Lewis Chessmen"
+      ],
+      "sources_detail": [
+        {
+          "name": "Lewis Chessmen",
+          "raw": "Lewis Chessmen",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Lycurgus Cup": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Lycurgus Cup"
+      ],
+      "sources_detail": [
+        {
+          "name": "Lycurgus Cup",
+          "raw": "Lycurgus Cup",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Mask of Agamemnon": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Mask of Agamemnon"
+      ],
+      "sources_detail": [
+        {
+          "name": "Mask of Agamemnon",
+          "raw": "Mask of Agamemnon",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Mask of Tutankhamun": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "The Mask of Tutankhamun"
+      ],
+      "sources_detail": [
+        {
+          "name": "Mask of Tutankhamun",
+          "raw": "The Mask of Tutankhamun",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Quimbaya Treasure": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Quimbaya Treasure"
+      ],
+      "sources_detail": [
+        {
+          "name": "Quimbaya Treasure",
+          "raw": "Quimbaya Treasure",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Silla Gold Crown": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Korean Silla Crown"
+      ],
+      "sources_detail": [
+        {
+          "name": "Silla Gold Crown",
+          "raw": "Korean Silla Crown",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Sojourner Mars Rover": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Sojourner Mars Rover"
+      ],
+      "sources_detail": [
+        {
+          "name": "Sojourner Mars Rover",
+          "raw": "Sojourner Mars Rover",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Stopler Revolver": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Stopler Revolver"
+      ],
+      "sources_detail": [
+        {
+          "name": "Stopler Revolver",
+          "raw": "Stopler Revolver",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Sutton Hoo Helmet": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Sutton Hoo Helmet"
+      ],
+      "sources_detail": [
+        {
+          "name": "Sutton Hoo Helmet",
+          "raw": "Sutton Hoo Helmet",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Tokugawa Ieyasu's Helmet": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Tokugawa Ieyasu’s Helmet"
+      ],
+      "sources_detail": [
+        {
+          "name": "Tokugawa Ieyasu's Helmet",
+          "raw": "Tokugawa Ieyasu’s Helmet",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Warka Vase": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Warka Vase"
+      ],
+      "sources_detail": [
+        {
+          "name": "Warka Vase",
+          "raw": "Warka Vase",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "10th Mountain Division War Kit": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "10th Mountain Division War Kit"
+      ],
+      "sources_detail": [
+        {
+          "name": "10th Mountain Division War Kit",
+          "raw": "10th Mountain Division War Kit",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "6th Anniversary Six-Shooter": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Six Shooter"
+      ],
+      "sources_detail": [
+        {
+          "name": "6th Anniversary Six-Shooter",
+          "raw": "Six Shooter",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Arm Reliquary of Charlemagne": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-may-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Arm Reliquary of Charlemagne"
+      ],
+      "sources_detail": [
+        {
+          "name": "Arm Reliquary of Charlemagne",
+          "raw": "Arm Reliquary of Charlemagne",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Battersea Shield": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Battersea Shield"
+      ],
+      "sources_detail": [
+        {
+          "name": "Battersea Shield",
+          "raw": "Battersea Shield",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Capt. McConnell's Hero Ensemble": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-may-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "McConnell’s Hero Ensemble"
+      ],
+      "sources_detail": [
+        {
+          "name": "Capt. McConnell's Hero Ensemble",
+          "raw": "McConnell’s Hero Ensemble",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Creighton Abrams Tank Commander Kit": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Creighton Abrams Tank Commander Kit"
+      ],
+      "sources_detail": [
+        {
+          "name": "Creighton Abrams Tank Commander Kit",
+          "raw": "Creighton Abrams Tank Commander Kit",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Crescent Blade": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-may-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Crescent Blade"
+      ],
+      "sources_detail": [
+        {
+          "name": "Crescent Blade",
+          "raw": "Crescent Blade",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Desert Storm PSN-8 Manpack": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Desert Storm PSN-8 Manpack"
+      ],
+      "sources_detail": [
+        {
+          "name": "Desert Storm PSN-8 Manpack",
+          "raw": "Desert Storm PSN-8 Manpack",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Gemini 8 Helmet": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Gemini 8 Helmet"
+      ],
+      "sources_detail": [
+        {
+          "name": "Gemini 8 Helmet",
+          "raw": "Gemini 8 Helmet",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "General Pershing's Bas-Relief": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "General Pershing Bas Relief"
+      ],
+      "sources_detail": [
+        {
+          "name": "General Pershing's Bas-Relief",
+          "raw": "General Pershing Bas Relief",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Leonidas Bust": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Leonidas Bust"
+      ],
+      "sources_detail": [
+        {
+          "name": "Leonidas Bust",
+          "raw": "Leonidas Bust",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Normandy SCR-536 \"Walkie-Talkie\"": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Normandy SCR-536 “Walkie-Talkie”"
+      ],
+      "sources_detail": [
+        {
+          "name": "Normandy SCR-536 \"Walkie-Talkie\"",
+          "raw": "Normandy SCR-536 “Walkie-Talkie”",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Raven Rattle": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Raven Rattle"
+      ],
+      "sources_detail": [
+        {
+          "name": "Raven Rattle",
+          "raw": "Raven Rattle",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Red Baron's Engine": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Red Baron’s Engine"
+      ],
+      "sources_detail": [
+        {
+          "name": "Red Baron's Engine",
+          "raw": "Red Baron’s Engine",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Sanada Yukimura's Armor": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Sanada Yukimura’s Armor"
+      ],
+      "sources_detail": [
+        {
+          "name": "Sanada Yukimura's Armor",
+          "raw": "Sanada Yukimura’s Armor",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+          "source": "section_list"
+        }
+      ]
+    },
+    "Sophilos Dinos": {
+      "cost": "300",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "300"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Sophilos Dinos"
+      ],
+      "sources_detail": [
+        {
+          "name": "Sophilos Dinos",
+          "raw": "Sophilos Dinos",
+          "amount": "300",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "The White Death's War Kit": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "White Death's War Kit"
+      ],
+      "sources_detail": [
+        {
+          "name": "The White Death's War Kit",
+          "raw": "White Death's War Kit",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    },
+    "Tizona Sword": {
+      "cost": "100",
+      "cost_currency": "Legendary Tokens",
+      "acquisition_method": "Marco Polo",
+      "sources": [
+        "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+      ],
+      "amounts_seen": [
+        "100"
+      ],
+      "hit_count": 1,
+      "raw_examples": [
+        "Tizona Sword"
+      ],
+      "sources_detail": [
+        {
+          "name": "Tizona Sword",
+          "raw": "Tizona Sword",
+          "amount": "100",
+          "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+          "source": "html_table"
+        }
+      ]
+    }
+  },
+  "all_hits": [
+    {
+      "name": "Supermarine Spitfire Engine",
+      "raw": "Spitfire Engine",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+      "source": "inline_dash"
+    },
+    {
+      "name": "Great Imperial Crown",
+      "raw": "Great Imperial Crown",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+      "source": "inline_dash"
+    },
+    {
+      "name": "Antikythera Mechanism",
+      "raw": "Antikythera Mechanism",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+      "source": "inline_dash"
+    },
+    {
+      "name": "Christmas Football",
+      "raw": "Christmas Football",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+      "source": "inline_dash"
+    },
+    {
+      "name": "The Art of War",
+      "raw": "Art of War",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+      "source": "inline_dash"
+    },
+    {
+      "name": "Vespa 150 TAP",
+      "raw": "Vespa 150 TAP",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+      "source": "inline_dash"
+    },
+    {
+      "name": "Julius Caesar Statue",
+      "raw": "Julius Caesar Statue",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+      "source": "inline_dash"
+    },
+    {
+      "name": "Demarcation Stone",
+      "raw": "Demarcation Stone",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+      "source": "inline_dash"
+    },
+    {
+      "name": "Da Vinci's Flying Machine",
+      "raw": "Da Vinci's Flying Machine",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+      "source": "inline_dash"
+    },
+    {
+      "name": "Nefertiti Bust",
+      "raw": "Nefertiti Bust",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/august-legendary-token-calendar",
+      "source": "inline_dash"
+    },
+    {
+      "name": "Sophilos Dinos",
+      "raw": "Sophilos Dinos",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "10th Mountain Division War Kit",
+      "raw": "10th Mountain Division War Kit",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "Creighton Abrams Tank Commander Kit",
+      "raw": "Creighton Abrams Tank Commander Kit",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "Silla Gold Crown",
+      "raw": "Korean Silla Crown",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "Quimbaya Treasure",
+      "raw": "Quimbaya Treasure",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "Sutton Hoo Helmet",
+      "raw": "Sutton Hoo Helmet",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "Julius Caesar Statue",
+      "raw": "Julius Caesar Statue",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "The White Death's War Kit",
+      "raw": "White Death's War Kit",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "6th Anniversary Six-Shooter",
+      "raw": "Six Shooter",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "Tizona Sword",
+      "raw": "Tizona Sword",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "Captain's Croix de Guerre",
+      "raw": "Croix de Guerre",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "Great Imperial Crown",
+      "raw": "Great Imperial Crown",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "Lycurgus Cup",
+      "raw": "Lycurgus Cup",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "Normandy SCR-536 \"Walkie-Talkie\"",
+      "raw": "Normandy SCR-536 “Walkie-Talkie”",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "Thinker of Cernavoda",
+      "raw": "Thinker of Cernavoda",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "Nefertiti Bust",
+      "raw": "Nefertiti Bust",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "Flammas Helmet",
+      "raw": "Flammas Helmet",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "Rosetta Stone",
+      "raw": "Rosetta Stone",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "Battersea Shield",
+      "raw": "Battersea Shield",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "Gemini 8 Helmet",
+      "raw": "Gemini 8 Helmet",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025",
+      "source": "html_table"
+    },
+    {
+      "name": "Mask of Tutankhamun",
+      "raw": "The Mask of Tutankhamun",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Tokugawa Ieyasu's Helmet",
+      "raw": "Tokugawa Ieyasu’s Helmet",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Stopler Revolver",
+      "raw": "Stopler Revolver",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Fengguan Phoenix Crown",
+      "raw": "Fengguan Pheonix Crown",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Vespa 150 TAP",
+      "raw": "Vespa 150 TAP",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Raven Rattle",
+      "raw": "Raven Rattle",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Warka Vase",
+      "raw": "Warka Vase",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Sojourner Mars Rover",
+      "raw": "Sojourner Mars Rover",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Ashanti Kuduo",
+      "raw": "Ashanti Kuduo",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Lewis Chessmen",
+      "raw": "Lewis Chessmen",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "General Pershing's Bas-Relief",
+      "raw": "General Pershing Bas Relief",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Aztec Calendar",
+      "raw": "Aztec Calendar",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Augustus Statue Muscle Cuirass",
+      "raw": "Augustus Statue Muscle Cuirass",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Mask of Agamemnon",
+      "raw": "Mask of Agamemnon",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Napoleon's Bicorne Hat",
+      "raw": "Napoleon’s Bicorne Hat",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Leonidas Bust",
+      "raw": "Leonidas Bust",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Sanada Yukimura's Armor",
+      "raw": "Sanada Yukimura’s Armor",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Da Vinci's Flying Machine",
+      "raw": "Da Vinci’s Vlying Machine",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Desert Storm PSN-8 Manpack",
+      "raw": "Desert Storm PSN-8 Manpack",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Red Baron's Engine",
+      "raw": "Red Baron’s Engine",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Admiral Yi’s Helmet",
+      "raw": "Admiral Yi’s Helmet",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Christmas Football",
+      "raw": "Christmas Football",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Rosetta Stone",
+      "raw": "Rosetta Stone",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Demarcation Stone",
+      "raw": "Demarcation Stone",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Nefertiti Bust",
+      "raw": "Nefertiti Bust",
+      "amount": "100",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Clem Sohn's Wingsuit",
+      "raw": "Clem Sohn’s Wingsuit",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Arm Reliquary of Charlemagne",
+      "raw": "Arm Reliquary of Charlemagne",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Crescent Blade",
+      "raw": "Crescent Blade",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "Capt. McConnell's Hero Ensemble",
+      "raw": "McConnell’s Hero Ensemble",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025",
+      "source": "section_list"
+    },
+    {
+      "name": "ASDIC Type 113X",
+      "raw": "ASDIC Type 113X",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/9th-anniversary",
+      "source": "vault_schedule"
+    },
+    {
+      "name": "Gemini 8 Gloves",
+      "raw": "Gemini 8 Gloves",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/9th-anniversary",
+      "source": "vault_schedule"
+    },
+    {
+      "name": "Plane Gyro Gunsight",
+      "raw": "Plane Gyro Gunsight",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/9th-anniversary",
+      "source": "vault_schedule"
+    },
+    {
+      "name": "Helgö Buddha",
+      "raw": "Helg",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/9th-anniversary",
+      "source": "vault_schedule"
+    },
+    {
+      "name": "Maori War Club",
+      "raw": "Maori War Club",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/9th-anniversary",
+      "source": "vault_schedule"
+    },
+    {
+      "name": "Thinker of Cernavoda",
+      "raw": "Thinker of Cernavoda",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/9th-anniversary",
+      "source": "vault_schedule"
+    },
+    {
+      "name": "Huey Armament System",
+      "raw": "Huey Armament System",
+      "amount": "300",
+      "url": "https://www.dominationsworld.com/blog/9th-anniversary",
+      "source": "vault_schedule"
+    }
+  ],
+  "count": 56,
+  "fillable_count": 34
+}
