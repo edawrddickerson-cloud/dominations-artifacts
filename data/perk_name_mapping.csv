@@ -6,12 +6,15 @@ Airstip Troop Hitpoints | Airstrip Troop Hitpoints,Airstip Troop Hitpoints | Air
 Airstrip Troop Damage,Airstrip Troop Damage,airstrip-troop-damage
 Airstrip Troop Hitpoints,Airstrip Troop Hitpoints,airstrip-troop-hitpoints
 Airstrip Troop HP,Airstrip Troop Hitpoints,airstrip-troop-hp
+All Defensive Tower Damage,All Defensive Tower Damage,all-defensive-tower-damage
 All Defensive Towers Damage,All Defensive Towers Damage,all-defensive-towers-damage
 All Defensive Towers Damage & HP,All Defensive Towers Damage & Hitpoints,all-defensive-towers-damage-hp
+All Defensive Towers DMG,All Defensive Towers DMG,all-defensive-towers-dmg
 All Defensive Towers Hitpoints,All Defensive Towers Hitpoints,all-defensive-towers-hitpoints
 All Defensive Towers Hitpoints and Damage,All Defensive Towers Hitpoints and Damage,all-defensive-towers-hitpoints-and-damage
 All Defensive Towers HP,All Defensive Towers Hitpoints,all-defensive-towers-hp
 All Defensive Towers HP & Damage,All Defensive Towers Hitpoints & Damage,all-defensive-towers-hp-damage
+All Enemy Defensive Tower Damage,All Enemy Defensive Tower Damage,all-enemy-defensive-tower-damage
 All Enemy Defensive Towers Damage,All Enemy Defensive Towers Damage,all-enemy-defensive-towers-damage
 All Enemy Defensive Towers Damage | All Enemy Defensive Towers Damage,All Enemy Defensive Towers Damage | All Enemy Defensive Towers Damage,all-enemy-defensive-towers-damage-all-enemy-defensive-towers-damage
 All Enemy Defensive Towers Hitpoints,All Enemy Defensive Towers Hitpoints,all-enemy-defensive-towers-hitpoints
@@ -28,12 +31,15 @@ Armored Car Damage,Armored Car Damage,armored-car-damage
 Assault Vehicle Damage,Assault Vehicle Damage,assault-vehicle-damage
 Assault Vehicle HP,Assault Vehicle Hitpoints,assault-vehicle-hp
 Attack Helicopter Damage,Attack Helicopter Damage,attack-helicopter-damage
+Attack Helicopter DMG,Attack Helicopter DMG,attack-helicopter-dmg
 Attack Helicopter Hitpoints,Attack Helicopter Hitpoints,attack-helicopter-hitpoints
 Attack Helicopter HP,Attack Helicopter Hitpoints,attack-helicopter-hp
 Barracks Troop Damage,Barracks Troop Damage,barracks-troop-damage
 Barracks Troop Hitpoints,Barracks Troop Hitpoints,barracks-troop-hitpoints
 Barracks Troop HP,Barracks Troop Hitpoints,barracks-troop-hp
+Barracks Troop Training Cost,Barracks Troop Training Cost,barracks-troop-training-cost
 Bazooka Attack Speed,Bazooka Attack Speed,bazooka-attack-speed
+Bazooka Cooldown,Bazooka Cooldown,bazooka-cooldown
 Bazooka Damage,Bazooka Damage,bazooka-damage
 Bazooka Hitpoints,Bazooka Hitpoints,bazooka-hitpoints
 Bazooka HP,Bazooka Hitpoints,bazooka-hp
@@ -42,8 +48,11 @@ Bomber Hitpoints,Bomber Hitpoints,bomber-hitpoints
 Bomber HP,Bomber Hitpoints,bomber-hp
 Castle spawns Sword Saints when Destroyed,Castle spawns Sword Saints when Destroyed,castle-spawns-sword-saints-when-destroyed
 Catapult Damage,Catapult Damage,catapult-damage
+Catapult Hitpoints,Catapult Hitpoints,catapult-hitpoints
 Catapult HP,Catapult Hitpoints,catapult-hp
 Coalition Troop Damage,Coalition Troop Damage,coalition-troop-damage
+Commando Damage,Commando Damage,commando-damage
+Commando Hitpoints,Commando Hitpoints,commando-hitpoints
 Decoy Tactic Hitpoints,Decoy Tactic Hitpoints,decoy-tactic-hitpoints
 Decoy Tactic HP,Decoy Tactic Hitpoints,decoy-tactic-hp
 Defender Damage,Defender Damage,defender-damage
@@ -59,10 +68,12 @@ Enemy Catapult Damage,Enemy Catapult Damage,enemy-catapult-damage
 Enemy Catapult Hitpoints,Enemy Catapult Hitpoints,enemy-catapult-hitpoints
 Enemy Catapult HP,Enemy Catapult Hitpoints,enemy-catapult-hp
 Enemy Defender HP,Enemy Defender Hitpoints,enemy-defender-hp
-Enemy Defender Spawn Time,Enemy Defender Spawn Time,enemy-defender-spawn-time
+Enemy Defender Spawn TIme,Enemy Defender Spawn TIme,enemy-defender-spawn-time
+Enemy Defender Spawn Time,Enemy Defender Spawn TIme,enemy-defender-spawn-time
 Enemy Missile Silo Damage,Enemy Missile Silo Damage,enemy-missile-silo-damage
 Enemy Recon Plane Scan Duration,Enemy Recon Plane Scan Duration,enemy-recon-plane-scan-duration
 Enemy Redoubt Damage,Enemy Redoubt Damage,enemy-redoubt-damage
+Enemy Sabotage Duration,Enemy Sabotage Duration,enemy-sabotage-duration
 Enemy Sniper Tower Damage,Enemy Sniper Tower Damage,enemy-sniper-tower-damage
 Enemy Tower Damage,Enemy Tower Damage,enemy-tower-damage
 Enemy Tower HP,Enemy Tower Hitpoints,enemy-tower-hp
@@ -70,6 +81,8 @@ Enemy Towers Damage,Enemy Towers Damage,enemy-towers-damage
 Factory Troop Damage,Factory Troop Damage,factory-troop-damage
 Factory Troop Hitpoints,Factory Troop Hitpoints,factory-troop-hitpoints
 Factory Troop HP,Factory Troop Hitpoints,factory-troop-hp
+Factory Troop Training Cost,Factory Troop Training Cost,factory-troop-training-cost
+Factory Troop Traning Cost,Factory Troop Traning Cost,factory-troop-traning-cost
 Fighter Damage,Fighter Damage,fighter-damage
 Fighter Hitpoints,Fighter Hitpoints,fighter-hitpoints
 Fighter HP,Fighter Hitpoints,fighter-hp
@@ -82,11 +95,17 @@ Food Looted,Food Looted,food-looted
 Forest Expansion Cost Refund,Forest Expansion Cost Refund,forest-expansion-cost-refund
 General Attack Speed,General Attack Speed,general-attack-speed
 General Damage,General Damage,general-damage
+General's Damage,Generals' Damage,general-s-damage
+General's Hitpoints,Generals' Hitpoints,general-s-hitpoints
+General's Hitpoints and Damage,Generals' Hitpoints and Damage,general-s-hitpoints-and-damage
 Generals Attack Speed,Generals' Attack Speed,generals-attack-speed
 Generals' Attack Speed,Generals' Attack Speed,generals-attack-speed
 Generals Damage,Generals' Damage,generals-damage
 Generals' Damage,Generals' Damage,generals-damage
+Generals Hitpoints,Generals' Hitpoints,generals-hitpoints
 Generals' Hitpoints,Generals' Hitpoints,generals-hitpoints
+Generals’ Hitpoints,Generals' Hitpoints,generals-hitpoints
+Generals Hitpoints and Damage,Generals' Hitpoints and Damage,generals-hitpoints-and-damage
 Generals' Hitpoints and Damage,Generals' Hitpoints and Damage,generals-hitpoints-and-damage
 Generals' HP,Generals' Hitpoints,generals-hp
 Generals HP & Damage,Generals' Hitpoints & Damage,generals-hp-damage
@@ -100,7 +119,6 @@ Guerrilla Damage,Guerrilla Damage,guerrilla-damage
 Guerrilla Hitpoints,Guerrilla Hitpoints,guerrilla-hitpoints
 Guerrilla HP,Guerrilla Hitpoints,guerrilla-hp
 Guerrilla Movement Speed,Guerrilla Movement Speed,guerrilla-movement-speed
-Heal Duration,Heal Duration,heal-duration
 Heavy Cavalry Damage,Heavy Cavalry Damage,heavy-cavalry-damage
 Heavy Cavalry Hitpoints,Heavy Cavalry Hitpoints,heavy-cavalry-hitpoints
 Heavy Cavalry HP,Heavy Cavalry Hitpoints,heavy-cavalry-hp
@@ -114,7 +132,9 @@ Heavy Tank Hitpoints,Heavy Tank Hitpoints,heavy-tank-hitpoints
 Heavy Tank HP,Heavy Tank Hitpoints,heavy-tank-hp
 Increase Rally Duration,Increase Rally Duration,increase-rally-duration
 Invading Airstrip Troop Damage,Invading Airstrip Troop Damage,invading-airstrip-troop-damage
+Invading Airstrip Unit HP,Invading Airstrip Unit Hitpoints,invading-airstrip-unit-hp
 Invading Barracks Troop Damage,Invading Barracks Troop Damage,invading-barracks-troop-damage
+Invading Barracks Troop damage,Invading Barracks Troop Damage,invading-barracks-troop-damage
 Invading Barracks Troop HP,Invading Barracks Troop Hitpoints,invading-barracks-troop-hp
 Invading Bazooka Damage,Invading Bazooka Damage,invading-bazooka-damage
 Invading Bomber Damage,Invading Bomber Damage,invading-bomber-damage
@@ -128,13 +148,13 @@ Invading Fighter Damage,Invading Fighter Damage,invading-fighter-damage
 Invading Fighter Hitpoints,Invading Fighter Hitpoints,invading-fighter-hitpoints
 Invading Fighter HP,Invading Fighter Hitpoints,invading-fighter-hp
 Invading Fighters Damage,Invading Fighters Damage,invading-fighters-damage
+Invading General's Damage,Invading Generals' Damage,invading-general-s-damage
 Invading General's Hitpoints,Invading Generals' Hitpoints,invading-general-s-hitpoints
 Invading Generals Damage,Invading Generals' Damage,invading-generals-damage
 Invading Generals' Damage,Invading Generals' Damage,invading-generals-damage
 Invading Generals' Hitpoints,Invading Generals' Hitpoints,invading-generals-hitpoints
 Invading Generals HP,Invading Generals' Hitpoints,invading-generals-hp
 Invading Generals' HP,Invading Generals' Hitpoints,invading-generals-hp
-Invading Gerneral's Hitpoitnts,Invading Gerneral's Hitpoitnts,invading-gerneral-s-hitpoitnts
 Invading Guerrilla Damage,Invading Guerrilla Damage,invading-guerrilla-damage
 Invading Heavy Cavalry Damage,Invading Heavy Cavalry Damage,invading-heavy-cavalry-damage
 Invading Heavy Tank Damage,Invading Heavy Tank Damage,invading-heavy-tank-damage
@@ -147,7 +167,11 @@ Invading Recon Scan Duration,Invading Recon Scan Duration,invading-recon-scan-du
 Invading Sabotage Duration,Invading Sabotage Duration,invading-sabotage-duration
 Invading Transport HP,Invading Transport Hitpoints,invading-transport-hp
 Library Research Time,Library Research Time,library-research-time
+Library Tech Food Cost,Library Tech Food Cost,library-tech-food-cost
+Library Tech Gold Cost,Library Tech Gold Cost,library-tech-gold-cost
+Library Tech Oil Cost,Library Tech Oil Cost,library-tech-oil-cost
 Library Tech Resource Cost,Library Tech Resource Cost,library-tech-resource-cost
+Looted Resource Refund,Looted Resource Refund,looted-resource-refund
 Looted Resource Refunt,Looted Resource Refund,looted-resource-refunt
 Machine Gun Infantry Damage,Machine Gun Infantry Damage,machine-gun-infantry-damage
 Machine Gun Infantry Hitpoints,Machine Gun Infantry Hitpoints,machine-gun-infantry-hitpoints
@@ -157,6 +181,7 @@ Missile Silo and Red Button Damage,Missile Silo and Red Button Damage,missile-si
 Missile Silo Damage,Missile Silo Damage,missile-silo-damage
 Mortar Troop Attack Speed,Mortar Troop Attack Speed,mortar-troop-attack-speed
 Mortar Troop Damage,Mortar Troop Damage,mortar-troop-damage
+Mortar Troop DMG,Mortar Troop DMG,mortar-troop-dmg
 Mortar Troop Hitpoints,Mortar Troop Hitpoints,mortar-troop-hitpoints
 MRL Damage,MRL Damage,mrl-damage
 National Trade Good Loot Chance,National Trade Good Loot Chance,national-trade-good-loot-chance
@@ -168,26 +193,35 @@ Paratrooper Hitpoints,Paratrooper Hitpoints,paratrooper-hitpoints
 Paratrooper HP,Paratrooper Hitpoints,paratrooper-hp
 Quick Victory Time,Quick Victory Time,quick-victory-time
 Raider Damage,Raider Damage,raider-damage
+Raider Hitpoints,Raider Hitpoints,raider-hitpoints
+Raiders Damage,Raiders Damage,raiders-damage
+Raiders Hitpoints,Raiders Hitpoints,raiders-hitpoints
+Raiders Spawn from Forest When Attacking,Raiders Spawn from Forest When Attacking,raiders-spawn-from-forest-when-attacking
 Rally Cooldown,Rally Cooldown,rally-cooldown
 Ranged Infantry Damage,Ranged Infantry Damage,ranged-infantry-damage
 Ranged Infantry Hitpoints,Ranged Infantry Hitpoints,ranged-infantry-hitpoints
 Ranged Siege Damage,Ranged Siege Damage,ranged-siege-damage
+Ranged Siege DMG,Ranged Siege DMG,ranged-siege-dmg
 Ranged Siege Hitpoints,Ranged Siege Hitpoints,ranged-siege-hitpoints
 Recon Bonus Duration,Recon Bonus Duration,recon-bonus-duration
+Recon Scan Duration,Recon Scan Duration,recon-scan-duration
 Redoubt Damage,Redoubt Damage,redoubt-damage
 Sniper Tower Damage,Sniper Tower Damage,sniper-tower-damage
 Sniper Tower Hitpoints,Sniper Tower Hitpoints,sniper-tower-hitpoints
 Sniper Tower HP,Sniper Tower Hitpoints,sniper-tower-hp
+Supply Vechicle Healing,Supply Vechicle Healing,supply-vechicle-healing
 Supply Vehicle,Supply Vehicle,supply-vehicle
 Supply Vehicle Healing,Supply Vehicle Healing,supply-vehicle-healing
 Supply Vehicles Healing,Supply Vehicles Healing,supply-vehicles-healing
 Tactical Helicopter Healing,Tactical Helicopter Healing,tactical-helicopter-healing
 Tower Damage,Tower Damage,tower-damage
+Tower Hitpoints,Tower Hitpoints,tower-hitpoints
 Tower HP,Tower Hitpoints,tower-hp
 Transport Cooldown,Transport Cooldown,transport-cooldown
 Transport Movement Speed,Transport Movement Speed,transport-movement-speed
 University Research Time,University Research Time,university-research-time
 Vault Capacity,Vault Capacity,vault-capacity
 Vault Interest,Vault Interest,vault-interest
+Wall Miner Damage,Wall Miner Damage,wall-miner-damage
 Wall Sapper Damage,Wall Sapper Damage,wall-sapper-damage
 Wall Sapper HP,Wall Sapper Hitpoints,wall-sapper-hp

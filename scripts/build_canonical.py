@@ -80,54 +80,57 @@ OFFICIAL_EXTRA_MYTHICALS = [
 ]
 
 # Wiki-listed legendary candidates not in the 110-row draft.
+# Re-verified 2026-09-05: DominationsWorld search + prior official sweep had no hits.
+# Cake / Dilophosaurus / Tutankhamun have real Fandom pages + statistic_table perks.
+# Benin / Lyre / Mona Lisa / Dodecahedron / Dung-Dkar: no Fandom page (parse miss) — nav phantoms.
 WIKI_ONLY_LEGENDARY = [
     {
         "name": "11th Anniversary Cake",
         "hall": "War",
         "alternate_name": "",
-        "notes": "Wiki legendary war page exists; release status not BHG-confirmed in this pass.",
+        "notes": "Fandom legendary war page + perks exist; no DominationsWorld/BHG hit in 2026-09-05 reverify — remain Uncertain.",
     },
     {
         "name": "Dilophosaurus Skull",
         "hall": "Main",
         "alternate_name": "",
-        "notes": "Wiki legendary main page with perks; release status not BHG-confirmed in this pass.",
+        "notes": "Fandom legendary main page + perks exist; no DominationsWorld/BHG hit in 2026-09-05 reverify — remain Uncertain.",
     },
     {
         "name": "Mask of Tutankhamun",
         "hall": "Main",
         "alternate_name": "",
-        "notes": "Wiki legendary main page with perks; release status not BHG-confirmed in this pass.",
+        "notes": "Fandom legendary main page + perks exist; no DominationsWorld/BHG hit in 2026-09-05 reverify — remain Uncertain.",
     },
     {
         "name": "Benin Royal Ivory Mask",
         "hall": "Main",
         "alternate_name": "",
-        "notes": "Nav/menu only or thin wiki evidence; verify existence + release.",
+        "notes": "No Fandom page (API miss); no DominationsWorld hit — nav/menu phantom; remain Uncertain.",
     },
     {
         "name": "Golden Lyre of Ur",
         "hall": "Main",
         "alternate_name": "",
-        "notes": "Nav/menu only or thin wiki evidence; verify existence + release.",
+        "notes": "No Fandom page (API miss); no DominationsWorld hit — nav/menu phantom; remain Uncertain.",
     },
     {
         "name": "Mona Lisa",
         "hall": "Main",
         "alternate_name": "",
-        "notes": "Nav/menu only or thin wiki evidence; verify existence + release.",
+        "notes": "No Fandom page (API miss); no DominationsWorld hit — nav/menu phantom; remain Uncertain.",
     },
     {
         "name": "Roman Dodecahedron",
         "hall": "Main",
         "alternate_name": "Roman Dodechedron",
-        "notes": "Nav spelling variants Dodecahedron/Dodechedron; verify existence + release.",
+        "notes": "No Fandom page for Dodecahedron/Dodechedron; no DominationsWorld hit — nav phantom; remain Uncertain.",
     },
     {
         "name": "Tibetan Dung-Dkar",
         "hall": "Main",
         "alternate_name": "",
-        "notes": "Nav/menu only or thin wiki evidence; verify existence + release.",
+        "notes": "No Fandom page (API miss); no DominationsWorld hit — nav/menu phantom; remain Uncertain.",
     },
 ]
 
@@ -401,6 +404,116 @@ def empty_row() -> dict:
     return {k: "" for k in CANONICAL_FIELDS}
 
 
+def load_wiki_page_index() -> dict[str, Path]:
+    """Map normalized artifact name -> preferred legendary (non-Mythical) wiki page path."""
+    pages = RAW / "wiki_pages"
+    index: dict[str, Path] = {}
+    if not pages.exists():
+        return index
+    for fpath in pages.glob("*.txt"):
+        stem = fpath.stem
+        if "(Mythical" in stem:
+            continue
+        if stem in (
+            "Legendary_Artifacts",
+            "Legendary_War_Artifacts",
+            "Mythical_Artifacts",
+            "Mythical_War_Artifacts",
+            "Library",
+            "Technology",
+            "Archaeology_Capstone",
+        ):
+            continue
+        name = stem.replace("_", " ")
+        key = norm_key(name)
+        # Prefer shorter / exact pages; first wins unless overwritten by cleaner match
+        if key not in index:
+            index[key] = fpath
+    return index
+
+
+def extract_cost_acquisition(text: str) -> dict[str, str]:
+    """Pull token cost + acquisition method from wiki prose.
+
+    Never puts IAP/sale dollar prices into ``cost`` — only Legendary Token / coin counts.
+    """
+    out = {
+        "cost": "",
+        "cost_currency": "",
+        "acquisition_method": "",
+        "availability_notes": "",
+    }
+    if not text:
+        return out
+    methods: list[str] = []
+    notes: list[str] = []
+    low = text.casefold()
+
+    # Token / legendary coin costs (not real-money sale prices)
+    m = re.search(
+        r"(?:legendary\s+coin\s+cost|legendary\s+tokens?\s+cost)\s*:\s*(\d+)",
+        text,
+        flags=re.I,
+    )
+    if not m:
+        m = re.search(
+            r"(?:purchased|purchase|buy|bought)\s+for\s+(\d+)\s+legendary\s+tokens?",
+            text,
+            flags=re.I,
+        )
+    if not m:
+        m = re.search(r"cost\s+(\d+)\s+tokens?\b", text, flags=re.I)
+    if m:
+        out["cost"] = m.group(1)
+        out["cost_currency"] = "Legendary Tokens"
+
+    if "marco polo" in low:
+        methods.append("Marco Polo")
+    if re.search(r"limited\s+time\s+sale", text, re.I):
+        methods.append("limited time sale")
+    if re.search(r"legendary\s+sale", text, re.I):
+        methods.append("Legendary sale")
+    if re.search(r"chest", text, re.I) and re.search(r"purchas", text, re.I):
+        methods.append("Chest sale")
+    if re.search(r"real\s+money", text, re.I):
+        notes.append("also offered via real-money sale (price not stored in cost)")
+        if "Legendary sale" not in methods and "limited time sale" not in methods:
+            methods.append("real-money sale")
+    elif re.search(r"purchased\s+from\s+sale", text, re.I) or re.search(
+        r"purchased\s+from\s+.*sale", text, re.I
+    ):
+        methods.append("sale")
+
+    # Dedupe preserve order
+    seen: set[str] = set()
+    uniq = []
+    for x in methods:
+        if x not in seen:
+            seen.add(x)
+            uniq.append(x)
+    out["acquisition_method"] = "; ".join(uniq)
+    out["availability_notes"] = "; ".join(notes)
+    return out
+
+
+def apply_wiki_cost(out: dict, wiki_meta: dict[str, str], *, prefer_existing: bool) -> None:
+    """Fill blank cost/acquisition from wiki; never overwrite stronger draft cost."""
+    if not wiki_meta:
+        return
+    if wiki_meta.get("cost") and (not prefer_existing or not (out.get("cost") or "").strip()):
+        out["cost"] = wiki_meta["cost"]
+        out["cost_currency"] = wiki_meta.get("cost_currency") or "Legendary Tokens"
+    if wiki_meta.get("acquisition_method") and (
+        not prefer_existing or not (out.get("acquisition_method") or "").strip()
+    ):
+        out["acquisition_method"] = wiki_meta["acquisition_method"]
+    if wiki_meta.get("availability_notes"):
+        existing = (out.get("availability_notes") or "").strip()
+        note = wiki_meta["availability_notes"]
+        if note and note not in existing:
+            out["availability_notes"] = f"{existing}; {note}".strip("; ").strip()
+
+
 def apply_perks_to_row(
     out: dict,
     pairs: list[tuple[str, str]],
@@ -440,6 +553,7 @@ def build() -> None:
     mythical = load_csv(myth_path)
     wiki_raw = json.loads((RAW / "wiki_perk_extract.json").read_text(encoding="utf-8"))
     wiki = choose_wiki_extracts(wiki_raw)
+    wiki_pages = load_wiki_page_index()
 
     conflicts: list[dict] = []
     rows: list[dict] = []
@@ -489,6 +603,14 @@ def build() -> None:
         )
         apply_perks_to_row(out, pairs, grade=grade, derive=True)
 
+        wiki_path = wiki_pages.get(nk)
+        wiki_meta = {}
+        if wiki_path and wiki_path.exists():
+            wiki_meta = extract_cost_acquisition(
+                wiki_path.read_text(encoding="utf-8", errors="replace")
+            )
+            apply_wiki_cost(out, wiki_meta, prefer_existing=True)
+
         notes = []
         if (row.get("notes") or "").strip():
             notes.append(row["notes"].strip())
@@ -500,6 +622,9 @@ def build() -> None:
             notes.append("perk_max_derived_base_plus_9")
         if not pairs:
             notes.append("perks_missing")
+        if wiki_meta.get("cost") and "cost_from_wiki" not in ";".join(notes):
+            if out.get("cost") == wiki_meta.get("cost"):
+                notes.append("cost_from_wiki_tokens")
         out["notes"] = "; ".join(notes)
         out["confidence"] = confidence_for(row, len(pairs), hall_note)
         rows.append(out)
@@ -624,15 +749,25 @@ def build() -> None:
             if wiki_ex
             else "wiki_nav_or_menu"
         )
+        wiki_path = wiki_pages.get(norm_key(name))
+        if wiki_path and wiki_path.exists():
+            wiki_meta = extract_cost_acquisition(
+                wiki_path.read_text(encoding="utf-8", errors="replace")
+            )
+            apply_wiki_cost(out, wiki_meta, prefer_existing=False)
         notes = [cand["notes"]]
         if pairs:
             notes.append("perks_from_wiki")
             notes.append("perk_max_derived_base_plus_9")
         else:
             notes.append("perks_missing")
+        notes.append("uncertain_reverify_2026-09-05_no_dw_hit")
         out["notes"] = "; ".join(notes)
         out["confidence"] = "Low"
-        out["availability_notes"] = "Wiki-listed candidate; not in verified 110 legendary draft"
+        out["availability_notes"] = (
+            (out.get("availability_notes") + "; " if out.get("availability_notes") else "")
+            + "Wiki-listed candidate; not in verified 110 legendary draft"
+        ).strip("; ")
         rows.append(out)
         existing.add(key)
 
@@ -796,17 +931,23 @@ def build() -> None:
 
 - Confirmed on official posts: British Kettle Drum, Analytical Engine, First Strike Star, Mahiole, DomiNations Army Helmet
 - June 2026 Marco's Wares mythicals **General Pershing's Bas-Relief**, **Joyeuse Sword**, **Silla Gold Crown** were missing from draft → added as Released
-- Wiki-only legendaries (11th Anniversary Cake, Dilophosaurus Skull, Mask of Tutankhamun, Benin Royal Ivory Mask, Golden Lyre of Ur, Mona Lisa, Roman Dodecahedron, Tibetan Dung-Dkar): **no** DominationsWorld hit in swept posts → remain Uncertain
-- See `data/temp/official_sweep_posts.json`
+- Wiki-only legendaries re-verified 2026-09-05 (Fandom API + DW `?s=` + prior sweep): **no** DominationsWorld/BHG hits → remain Uncertain
+- Cake / Dilophosaurus / Tutankhamun: Fandom pages + statistic_table perks exist
+- Benin / Lyre / Mona Lisa / Dodecahedron / Dung-Dkar: **no Fandom page** (nav phantoms)
+- See `data/temp/official_sweep_posts.json`, `data/temp/uncertain_reverify.json`
 
 ## Targeted fixes this build
 
 - British Kettle Drum mythical perks: {"OK " + kettle['perk_count'] if kettle else "MISSING"}
 - Hall overrides for prior TBD: {", ".join(f"{r['name']}={r['hall']}" for r in tbd_fixed)}
+- Wiki statistic_table parser fixed (same-line `||` cells, rowspan, `||-N%` row split) → filled most legendary perk gaps
+- `guess_grade` no longer treats historical prose "mythical" as Mythical grade
+- Token costs / acquisition filled from wiki when present (no IAP sale prices in `cost`)
 
 ## Gaps (not complete)
 
-- Large legendary perk gap: {len(leg_rows) - leg_with} legendaries still have no perks
+- Legendary perk gap remaining: {len(leg_rows) - leg_with} (Leftwich Trophy empty wiki table + 5 nav-phantom Uncertain)
+- Legendary token `cost` sparsely documented on wiki ({sum(1 for r in leg_rows if (r.get('cost') or '').strip())} filled); acquisition_method from wiki prose where stated
 - Mythical max values intentionally blank (announcement numbers; no blind +9)
 - Wiki-only legendaries marked `Uncertain` until BHG/DominationsWorld confirmation
 - dominations-info.com API still 404; not used as primary
@@ -859,7 +1000,9 @@ Still prefer official BHG confirmation in notes when found.
 
 - Draft treated all 110 legendaries as Released; wiki-only extras added as Uncertain.
 - Mythical wiki lists many more names than the 29 verified draft rows — extras **not** auto-added as released.
-- Nav-only names (Benin Royal Ivory Mask, Golden Lyre of Ur, Mona Lisa, Roman Dodecahedron, Tibetan Dung-Dkar) need existence + release verification.
+- Nav-only names (Benin Royal Ivory Mask, Golden Lyre of Ur, Mona Lisa, Roman Dodecahedron, Tibetan Dung-Dkar): Fandom API miss + no DW hit in 2026-09-05 reverify — kept Uncertain.
+- Cake / Dilophosaurus / Tutankhamun: Fandom pages exist; still Uncertain without BHG/DW.
+- Leftwich Trophy: roster Released but wiki statistic table empty; perks still missing.
 - Ignore meta pages: Archaeology Capstone, Library, Technology.
 
 ## Known data quirks

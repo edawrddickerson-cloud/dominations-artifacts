@@ -6,6 +6,10 @@
     "hall_guess": "Main",
     "perks": [
       {
+        "name": "Invading General's Damage",
+        "base_value_raw": "-6%"
+      },
+      {
         "name": "Enemy Defender Spawn Time",
         "base_value_raw": "+6%"
       },
@@ -14,8 +18,244 @@
         "base_value_raw": "+6%"
       },
       {
+        "name": "Defender Hitpoints",
+        "base_value_raw": "+11%"
+      },
+      {
         "name": "Invading General's Hitpoints",
         "base_value_raw": "-11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Antikythera Mechanism",
+    "artifact_name": "Antikythera Mechanism",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Heavy Tank Damage",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "National Trade Good Loot Chance",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "Oil Looted",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "All Resources Looted",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Bomber Hitpoints",
+        "base_value_raw": "+7%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Ashanti Kuduo",
+    "artifact_name": "Ashanti Kuduo",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "All Resources Looted",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "University Research Time",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "All Defensive Towers Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Invading General's Damage",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "General's Damage",
+        "base_value_raw": "+11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Augustus Statue Muscle Cuirass",
+    "artifact_name": "Augustus Statue Muscle Cuirass",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Generals' Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Generals' Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Generals' Hitpoints",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Generals' Hitpoints",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Aztec Calendar",
+    "artifact_name": "Aztec Calendar",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Food from Farms",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Gold from Caravans",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Oil from Oil Wells",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Oil from Oil Wells",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Vault Interest",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Captain's Croix de Guerre",
+    "artifact_name": "Captain's Croix de Guerre",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Food Looted",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Gold Looted",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Oil Looted",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "All Resources Looted",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "All Resources Looted",
+        "base_value_raw": "+11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Christmas Football",
+    "artifact_name": "Christmas Football",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Supply Vehicle Healing",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Tactical Helicopter Healing",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "General's Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "National Trade Good Loot Chance",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Enemy Missile Silo Damage",
+        "base_value_raw": "-6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Clem Sohn's Wingsuit",
+    "artifact_name": "Clem Sohn's Wingsuit",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Transport Cooldown",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Transport Movement Speed",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Quick Victory Time",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Bazooka Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Bazooka Damage",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Code of Hammurabi",
+    "artifact_name": "Code of Hammurabi",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Bazooka Cooldown",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Defender Hitpoints",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Generals' Hitpoints",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "Generals' Hitpoints",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "Defender Movement Speed",
+        "base_value_raw": "+9%"
       }
     ],
     "source": "statistic_table"
@@ -50,6 +290,151 @@
     "source": "statistic_table"
   },
   {
+    "page_title": "Double-Headed Serpent",
+    "artifact_name": "Double-Headed Serpent",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Oil Looted",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Oil Looted",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Heavy Tank Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Fighter Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "All Resources Looted",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Edison's Electric Lamp",
+    "artifact_name": "Edison's Electric Lamp",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Looted Resource Refund",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Oil from Oil Wells",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Oil from Oil Wells",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "All Defensive Towers DMG",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Invading Airstrip Unit HP",
+        "base_value_raw": "-8%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Enigma Machine",
+    "artifact_name": "Enigma Machine",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Quick Victory Time",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Heavy Tank Attack Speed",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "University Research Time",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "Library Research Time",
+        "base_value_raw": "-6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Fengguan Phoenix Crown",
+    "artifact_name": "Fengguan Phoenix Crown",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Oil from Oil Wells",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Oil from Oil Wells",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "All Defensive Towers Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Defender Spawn Time",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Invading Barracks Troop damage",
+        "base_value_raw": "-11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Fire Breathing Bunny Fossil",
+    "artifact_name": "Fire Breathing Bunny Fossil",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Food Looted",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Gold Looted",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Oil Looted",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Forest Expansion Cost Refund",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "First Aid Duration",
+        "base_value_raw": "+10%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
     "page_title": "First Strike Star",
     "artifact_name": "First Strike Star",
     "grade_guess": "Legendary",
@@ -79,11 +464,102 @@
     "source": "statistic_table"
   },
   {
+    "page_title": "Heads of Hevajra",
+    "artifact_name": "Heads of Hevajra",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Factory Troop HP",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Factory Troop HP",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "National Trade Good Loot Chance",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "Armored Car DMG",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "All Enemy Defensive Towers DMG",
+        "base_value_raw": "+11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Helgö Buddha",
+    "artifact_name": "Helgö Buddha",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Quick Victory Time",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "University Research Time",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "Library Research Time",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "Defender Hitpoints",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Invading Bazooka Damage",
+        "base_value_raw": "-11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Jade Olmec Mask",
+    "artifact_name": "Jade Olmec Mask",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Enemy Missile Silo Damage",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "Bomber Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Paratrooper Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Bazooka Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Enemy Defender Spawn TIme",
+        "base_value_raw": "+11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
     "page_title": "Keyed English Guitar",
     "artifact_name": "Keyed English Guitar",
     "grade_guess": "Legendary",
     "hall_guess": "Main",
     "perks": [
+      {
+        "name": "Enemy Tower DMG",
+        "base_value_raw": "-11%"
+      },
       {
         "name": "Enemy Tower HP",
         "base_value_raw": "-11%"
@@ -93,7 +569,156 @@
         "base_value_raw": "-16%"
       },
       {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+6%"
+      },
+      {
         "name": "Heavy Tank DMG",
+        "base_value_raw": "+11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Leoni Parade Shield",
+    "artifact_name": "Leoni Parade Shield",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Heavy Tank Hitpoints",
+        "base_value_raw": "6%"
+      },
+      {
+        "name": "Missile Silo Damage",
+        "base_value_raw": "6%"
+      },
+      {
+        "name": "Bomber Damage",
+        "base_value_raw": "6%"
+      },
+      {
+        "name": "General Attack Speed",
+        "base_value_raw": "5%"
+      },
+      {
+        "name": "Generals' Damage",
+        "base_value_raw": "6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Lewis Chessmen",
+    "artifact_name": "Lewis Chessmen",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Raiders Spawn from Forest When Attacking",
+        "base_value_raw": "+1"
+      },
+      {
+        "name": "National Trade Good Loot Chance",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "Raiders Damage",
+        "base_value_raw": "+13%"
+      },
+      {
+        "name": "Raiders Hitpoints",
+        "base_value_raw": "+13%"
+      },
+      {
+        "name": "All Resources Looted",
+        "base_value_raw": "+14%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Li Vessel",
+    "artifact_name": "Li Vessel",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "APC Deploy Time",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "APC Hitpoints",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Heavy Infantry Attack Speed",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Heavy Infantry Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Guerrilla Movement Speed",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Lycurgus Cup",
+    "artifact_name": "Lycurgus Cup",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "All Enemy Defensive Towers Damage",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Invading Bomber Hitpoints",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "Factory Troop Traning Cost",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Generals' Hitpoints",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Oil Looted",
+        "base_value_raw": "+11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Mask of Agamemnon",
+    "artifact_name": "Mask of Agamemnon",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Tower Hitpoints",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Tower Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Catapult Hitpoints",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Catapult Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "All Defensive Tower Damage",
         "base_value_raw": "+11%"
       }
     ],
@@ -129,6 +754,441 @@
     "source": "statistic_table"
   },
   {
+    "page_title": "Minoan Bull-Leaper",
+    "artifact_name": "Minoan Bull-Leaper",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "General's Hitpoints and Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "All Enemy Defensive Towers Damage",
+        "base_value_raw": "-9%"
+      },
+      {
+        "name": "Airstrip Troop Hitpoints",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Airstrip Troop Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Recon Scan Duration",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Morse Telegraph",
+    "artifact_name": "Morse Telegraph",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Heavy Cavalry HP",
+        "base_value_raw": "11%"
+      },
+      {
+        "name": "Ranged Siege DMG",
+        "base_value_raw": "11%"
+      },
+      {
+        "name": "Mortar Troop DMG",
+        "base_value_raw": "11%"
+      },
+      {
+        "name": "Attack Helicopter DMG",
+        "base_value_raw": "11%"
+      },
+      {
+        "name": "Attack Helicopter HP",
+        "base_value_raw": "16%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Napoleon's Bicorne Hat",
+    "artifact_name": "Napoleon's Bicorne Hat",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Barracks Troop Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Barracks Troop Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Factory Troop Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Factory Troop Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Airstrip Troop Damage",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Nefertiti Bust",
+    "artifact_name": "Nefertiti Bust",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "All Resources Looted",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "All Resources Looted",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Raider Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Raider Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Mortar Troop Damage",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Personal Computer",
+    "artifact_name": "Personal Computer",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Library Tech Resource Cost",
+        "base_value_raw": "-13%"
+      },
+      {
+        "name": "Looted Resource Refund",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "Oil from Oil Wells",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "Vault Interest",
+        "base_value_raw": "+14%"
+      },
+      {
+        "name": "Vault Capacity",
+        "base_value_raw": "+13%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Pompus' Comb",
+    "artifact_name": "Pompus' Comb",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "University Research Time",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Library Research Time",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Looted Resource Refund",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Defender Movement Speed",
+        "base_value_raw": "+10%"
+      },
+      {
+        "name": "Enemy Sabotage Duration",
+        "base_value_raw": "-6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Quimbaya Treasure",
+    "artifact_name": "Quimbaya Treasure",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Guerrilla Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Guerrilla Hitpoints",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Quick Victory Time",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Quick Victory Time",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Decoy Tactic HP",
+        "base_value_raw": "+10%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Rosetta Stone",
+    "artifact_name": "Rosetta Stone",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Library Tech Resource Cost",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Vault Capacity",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Oil from Oil Wells",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Looted Resource Refund",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Forest Expansion Cost Refund",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Ruyi Scepter",
+    "artifact_name": "Ruyi Scepter",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Enemy Anti-Tank Gun Damage",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Enemy Catapult Damage",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "All Enemy Defensive Towers Hitpoints",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "All Enemy Defensive Towers Damage",
+        "base_value_raw": "-6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Silla Gold Crown",
+    "artifact_name": "Silla Gold Crown",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Gold Looted",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Gold from Gold Mines",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Gold from Caravans",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Library Tech Resource Cost",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Ranged Infantry Damage",
+        "base_value_raw": "+11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Sojourner Mars Rover",
+    "artifact_name": "Sojourner Mars Rover",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "National Trade Good Loot Chance",
+        "base_value_raw": "+13%"
+      },
+      {
+        "name": "University Research Time",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "Library Research Time",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "Barracks Troop Training Cost",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Factory Troop Training Cost",
+        "base_value_raw": "-6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Soul Catcher",
+    "artifact_name": "Soul Catcher",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Supply Vechicle Healing",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Tactical Helicopter Healing",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Heavy Cavalry Hitpoints",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "APC Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "University Research Time",
+        "base_value_raw": "-6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Sphinx of Taharqo",
+    "artifact_name": "Sphinx of Taharqo",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Library Tech Resource Cost",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "Vault Capacity",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Oil from Oil Wells",
+        "base_value_raw": "+1%"
+      },
+      {
+        "name": "Looted Resource Refund",
+        "base_value_raw": "+1%"
+      },
+      {
+        "name": "Forest Expansion Cost Refund",
+        "base_value_raw": "+1%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Stopler Revolver",
+    "artifact_name": "Stopler Revolver",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Defender Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Fighters Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Generals Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Oil Looted",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Ranged Infantry Damage",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Sutton Hoo Helmet",
+    "artifact_name": "Sutton Hoo Helmet",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "All Enemy Defensive Tower Damage",
+        "base_value_raw": "-1%"
+      },
+      {
+        "name": "Heavy Cavalry Damage",
+        "base_value_raw": "+1%"
+      },
+      {
+        "name": "All Defensive Tower Damage",
+        "base_value_raw": "+1%"
+      },
+      {
+        "name": "Defender Hitpoints",
+        "base_value_raw": "+1%"
+      },
+      {
+        "name": "Defender Spawn Time",
+        "base_value_raw": "-1%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
     "page_title": "Swimming Reindeer",
     "artifact_name": "Swimming Reindeer",
     "grade_guess": "Legendary",
@@ -153,6 +1213,267 @@
       {
         "name": "Defender Spawn Time",
         "base_value_raw": "-11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Sword of Goujian",
+    "artifact_name": "Sword of Goujian",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Heavy Infantry Hitpoints",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Heavy Infantry Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "All Resources Looted",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Defender Damage",
+        "base_value_raw": "+11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "The Book of Five Rings",
+    "artifact_name": "The Book of Five Rings",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Vault Capacity",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Vault Capacity",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Vault Interest",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Vault Interest",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "All Defensive Towers Damage",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "The Book of Kells",
+    "artifact_name": "The Book of Kells",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "All Resources Looted",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "All Enemy Defensive Towers Damage",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Transport Cooldown",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Paratrooper Hitpoints",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "Paratrooper Damage",
+        "base_value_raw": "+16%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Thinker of Cernavoda",
+    "artifact_name": "Thinker of Cernavoda",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Barracks Troop Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "All Enemy Defensive Towers Damage",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "All Resources Looted",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "All Resources Looted",
+        "base_value_raw": "+8%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Tokugawa Ieyasu's Helmet",
+    "artifact_name": "Tokugawa Ieyasu's Helmet",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Defender Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Defender Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Defender Spawn Time",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "Looted Resource Refund",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Looted Resource Refund",
+        "base_value_raw": "+11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Video Game Console",
+    "artifact_name": "Video Game Console",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Rally Cooldown",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "All Resources Looted",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "Oil Looted",
+        "base_value_raw": "+14%"
+      },
+      {
+        "name": "Heavy Tank Damage",
+        "base_value_raw": "+13%"
+      },
+      {
+        "name": "Bomber Damage",
+        "base_value_raw": "+13%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Warka Vase",
+    "artifact_name": "Warka Vase",
+    "grade_guess": "Legendary",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Library Tech Food Cost",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Library Tech Gold Cost",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Library Tech Oil Cost",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Library Tech Resource Cost",
+        "base_value_raw": "-1%"
+      },
+      {
+        "name": "Forest Expansion Cost Refund",
+        "base_value_raw": "+16%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "6th Anniversary Six-Shooter",
+    "artifact_name": "6th Anniversary Six-Shooter",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Bazooka Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Bazooka Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Bomber Hitpoints",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Attack Helicopter Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Invading Paratrooper Damage",
+        "base_value_raw": "-9%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "10th Mountain Division War Kit",
+    "artifact_name": "10th Mountain Division War Kit",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "APC Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "APC Hitpoints",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Machine Gun Infantry Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Enemy Redoubt Damage",
+        "base_value_raw": "-6%"
       }
     ],
     "source": "statistic_table"
@@ -274,6 +1595,93 @@
     "source": "statistic_table"
   },
   {
+    "page_title": "ASDIC Type 113X",
+    "artifact_name": "ASDIC Type 113X",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Invading  Barracks Troop Damage",
+        "base_value_raw": "-10%"
+      },
+      {
+        "name": "Invading  Factory Troop Damage",
+        "base_value_raw": "-10%"
+      },
+      {
+        "name": "Invading  Airstrip Troop Damage",
+        "base_value_raw": "-10%"
+      },
+      {
+        "name": "Defender Spawn Time",
+        "base_value_raw": "-10%"
+      },
+      {
+        "name": "Missile Silo Damage",
+        "base_value_raw": "+10%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "ASM-135 Anti-Satellite Missile",
+    "artifact_name": "ASM-135 Anti-Satellite Missile",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Missile Silo and Red Button Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Missile Silo Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Airstrip Troop Damage",
+        "base_value_raw": "+4%"
+      },
+      {
+        "name": "Air Defense Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Defender Hitpoints",
+        "base_value_raw": "+8%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Battersea Shield",
+    "artifact_name": "Battersea Shield",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Missile Silo and Red Button Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Bomber Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Invading Recon Scan Duration",
+        "base_value_raw": "-8%"
+      },
+      {
+        "name": "Quick Victory Time",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Invading Factory Troop Hitpoints",
+        "base_value_raw": "-6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
     "page_title": "Berlichingen's Iron Prosthetic Hand",
     "artifact_name": "Berlichingen's Iron Prosthetic Hand",
     "grade_guess": "Legendary",
@@ -303,11 +1711,160 @@
     "source": "statistic_table"
   },
   {
+    "page_title": "British Kettle Drum",
+    "artifact_name": "British Kettle Drum",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Mortar Troop Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Barracks Troop Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Barracks Troop Hitpoints",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Ranged Siege Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+7%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Bust of Ramesses II",
+    "artifact_name": "Bust of Ramesses II",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Air Defense Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Air Defense Hitpoints",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "All Defensive Towers Hitpoints",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Invading Generals' Hitpoints",
+        "base_value_raw": "-8%"
+      },
+      {
+        "name": "Invading Bomber Damage",
+        "base_value_raw": "-8%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Caligula's Ring",
+    "artifact_name": "Caligula's Ring",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Paratrooper Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Paratrooper Hitpoints",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Guerilla Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Ranged Siege Damage",
+        "base_value_raw": "+4%"
+      },
+      {
+        "name": "Wall Sapper Damage",
+        "base_value_raw": "+7%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Capt. McConnell's Hero Ensemble",
+    "artifact_name": "Capt. McConnell's Hero Ensemble",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Generals' Hitpoints and Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Oil Looted",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Fighter Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Fighter Damage",
+        "base_value_raw": "+10%"
+      },
+      {
+        "name": "Airstrip Troop Hitpoints",
+        "base_value_raw": "+10%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Creighton Abrams Tank Commander Kit",
+    "artifact_name": "Creighton Abrams Tank Commander Kit",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "First Aid Duration",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Heavy Tank Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Decoy Tactic Hitpoints",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Guerrilla Hitpoints",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+8%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
     "page_title": "Crescent Blade",
     "artifact_name": "Crescent Blade",
     "grade_guess": "Legendary",
     "hall_guess": "War",
     "perks": [
+      {
+        "name": "Defender Hitpoints",
+        "base_value_raw": "+7%"
+      },
       {
         "name": "Enemy Defender Spawn Time",
         "base_value_raw": "+7%"
@@ -318,6 +1875,68 @@
       },
       {
         "name": "Generals' Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Heavy Tank Damage",
+        "base_value_raw": "+4%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Crocodile Mask",
+    "artifact_name": "Crocodile Mask",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "General Damage",
+        "base_value_raw": "+4%"
+      },
+      {
+        "name": "Defender Hitpoints",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Invading Factory Troop Damage",
+        "base_value_raw": "-4%"
+      },
+      {
+        "name": "Invading Factory Troop Hitpoints",
+        "base_value_raw": "-4%"
+      },
+      {
+        "name": "Invading General's Hitpoints",
+        "base_value_raw": "-4%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Cryolophosaurus Skull",
+    "artifact_name": "Cryolophosaurus Skull",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Fighter Damage",
+        "base_value_raw": "+4%"
+      },
+      {
+        "name": "Bomber Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Redoubt Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Bazooka Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Machine Gun Infantry Damage",
         "base_value_raw": "+7%"
       }
     ],
@@ -353,6 +1972,93 @@
     "source": "statistic_table"
   },
   {
+    "page_title": "Da Vinci's Machine Gun",
+    "artifact_name": "Da Vinci's Machine Gun",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Machine Gun Infantry Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Machine Gun Infantry Hitpoints",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Invading Factory Troop Damage",
+        "base_value_raw": "-8%"
+      },
+      {
+        "name": "Ranged Siege Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Enemy Catapult Hitpoints",
+        "base_value_raw": "-8%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Demarcation Stone",
+    "artifact_name": "Demarcation Stone",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Heavy Infantry Damage",
+        "base_value_raw": "+3%"
+      },
+      {
+        "name": "Ranged Infantry Damage",
+        "base_value_raw": "+3%"
+      },
+      {
+        "name": "Supply Vehicles Healing",
+        "base_value_raw": "+3%"
+      },
+      {
+        "name": "Invading Machine Gun Infantry Damage",
+        "base_value_raw": "-3%"
+      },
+      {
+        "name": "All Enemy Defensive Towers Damage",
+        "base_value_raw": "-3%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Desert Storm PSN-8 Manpack",
+    "artifact_name": "Desert Storm PSN-8 Manpack",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Rally Cooldown",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Increase Rally Duration",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Factory Troop Hitpoints",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Factory Troop Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Enemy Towers Damage",
+        "base_value_raw": "-9%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
     "page_title": "Dominations Army Helmet",
     "artifact_name": "Dominations Army Helmet",
     "grade_guess": "Legendary",
@@ -377,6 +2083,354 @@
       {
         "name": "Enemy Anti-Tank Gun Hitpoints",
         "base_value_raw": "-6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "DomiNations Game Box",
+    "artifact_name": "DomiNations Game Box",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Generals' Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Generals's Attack Speed",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Generals' Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "General's Movement Speed",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Elephant Archer Quiver",
+    "artifact_name": "Elephant Archer Quiver",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Invading Airstrip Troop Damage",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "Invading Bomber Hitpoints",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "Heavy Cavalry Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Heavy Cavalry Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Air Defense Attack Speed",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Flamma's Helmet",
+    "artifact_name": "Flamma's Helmet",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Guerrilla Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Guerrilla Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+3%"
+      },
+      {
+        "name": "Increase Rally Duration",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Missile Silo and Big Red Button Damage",
+        "base_value_raw": "+7%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Gemini 8 Gloves",
+    "artifact_name": "Gemini 8 Gloves",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Defender Hitpoints",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "All Defensive Towers Hitpoints",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "All Defensive Towers Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Enemy Missile Silo Damage",
+        "base_value_raw": "-7%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Gemini 8 Helmet",
+    "artifact_name": "Gemini 8 Helmet",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Attack Helicopter Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Armored Car Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Bazooka Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Heavy Tank Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Barracks Troop Damage",
+        "base_value_raw": "+7%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "General Pershing's Bas-Relief",
+    "artifact_name": "General Pershing's Bas-Relief",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Heavy Infantry Hitpoints",
+        "base_value_raw": "+3%"
+      },
+      {
+        "name": "Ranged Infantry Hitpoints",
+        "base_value_raw": "+3%"
+      },
+      {
+        "name": "Heavy Cavalry Hitpoints",
+        "base_value_raw": "+3%"
+      },
+      {
+        "name": "Ranged Siege Damage",
+        "base_value_raw": "+3%"
+      },
+      {
+        "name": "Raider Damage",
+        "base_value_raw": "+3%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Great Imperial Crown",
+    "artifact_name": "Great Imperial Crown",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "All Defensive Towers Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Invading Heavy Tank Damage",
+        "base_value_raw": "-8%"
+      },
+      {
+        "name": "MRL Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Invading Bazooka Damage",
+        "base_value_raw": "-7%"
+      },
+      {
+        "name": "Fighter Damage",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Huey Armament System",
+    "artifact_name": "Huey Armament System",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Attack Helicopter Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Attack Helicopter Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Attack Helicopter Hitpoints",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Bazooka Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "All Enemy Defensive Towers Damage",
+        "base_value_raw": "-6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Joyeuse Sword",
+    "artifact_name": "Joyeuse Sword",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Factory Troop Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Heavy Tank Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Bomber Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Generals' Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Defender Damage",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Julius Caesar Statue",
+    "artifact_name": "Julius Caesar Statue",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Invading Generals' Damage",
+        "base_value_raw": "-8%"
+      },
+      {
+        "name": "Invading Generals' Hitpoints",
+        "base_value_raw": "-8%"
+      },
+      {
+        "name": "Generals' Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Barracks Troop Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Invading Barracks Troop Damage",
+        "base_value_raw": "-9%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Koh-i-Noor Diamond",
+    "artifact_name": "Koh-i-Noor Diamond",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Guerrilla Movement Speed",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Assault Vehicle Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Assault Vehicle Hitpoints",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Supply Vehicle Healing",
+        "base_value_raw": "+11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Leonidas Bust",
+    "artifact_name": "Leonidas Bust",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Mercenary Camp Deploys Spartans when Destroyed",
+        "base_value_raw": "+1"
+      },
+      {
+        "name": "Quick Victory Time",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Generals Hitpoints and Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Bazooka Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Bazooka Hitpoints",
+        "base_value_raw": "+6%"
       }
     ],
     "source": "statistic_table"
@@ -440,6 +2494,35 @@
     "source": "statistic_table"
   },
   {
+    "page_title": "Maori War Club",
+    "artifact_name": "Maori War Club",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "All Defensive Towers Hitpoints and Damage",
+        "base_value_raw": "+3%"
+      },
+      {
+        "name": "Defender Spawn Time",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "Defender Movement Speed",
+        "base_value_raw": "+3%"
+      },
+      {
+        "name": "Invading Recon Scan Duration",
+        "base_value_raw": "-7%"
+      },
+      {
+        "name": "Generals Attack Speed",
+        "base_value_raw": "+3%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
     "page_title": "Mold Gold Cape",
     "artifact_name": "Mold Gold Cape",
     "grade_guess": "Legendary",
@@ -469,6 +2552,64 @@
     "source": "statistic_table"
   },
   {
+    "page_title": "Narmer Palette",
+    "artifact_name": "Narmer Palette",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Invading Fighter Damage",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "Air Defense Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Bomber Hitpoints",
+        "base_value_raw": "+3%"
+      },
+      {
+        "name": "Fighter Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Bazooka Hitpoints",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Napoleon's Boxlock Pistol",
+    "artifact_name": "Napoleon's Boxlock Pistol",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Supply Vehicle Healing",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Generals’ Hitpoints",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Heavy Cavalry Hitpoints",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Barracks Troop Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Fighter Damage",
+        "base_value_raw": "+7%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
     "page_title": "Nine Men's Morris",
     "artifact_name": "Nine Men's Morris",
     "grade_guess": "Legendary",
@@ -492,6 +2633,383 @@
       },
       {
         "name": "Missile Silo Damage",
+        "base_value_raw": "+9%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Norden Bombsight",
+    "artifact_name": "Norden Bombsight",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "APC Deploys Marines On Death",
+        "base_value_raw": "+1"
+      },
+      {
+        "name": "Coalition Troop Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Defenders Spawn Time",
+        "base_value_raw": "-8%"
+      },
+      {
+        "name": "Invading Fighter Damage",
+        "base_value_raw": "-8%"
+      },
+      {
+        "name": "Machine Gun Infantry Damage",
+        "base_value_raw": "+8%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Normandy SCR-536 \"Walkie-Talkie\"",
+    "artifact_name": "Normandy SCR-536 \"Walkie-Talkie\"",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Bazooka Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Bomber Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Armored Car Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "MRL Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Rally Cooldown",
+        "base_value_raw": "-11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Olmec Colossal Heads",
+    "artifact_name": "Olmec Colossal Heads",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Rally Cooldown",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Increase Rally Duration",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Fighter Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Fighter Damage",
+        "base_value_raw": "+8%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Plane Gyro Gunsight",
+    "artifact_name": "Plane Gyro Gunsight",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Bomber Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Bomber Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Recon Bonus Duration",
+        "base_value_raw": "+3%"
+      },
+      {
+        "name": "Bazooka Attack Speed",
+        "base_value_raw": "+3%"
+      },
+      {
+        "name": "Quick Victory Time",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Ramesses Ⅱ's Abu Simbel",
+    "artifact_name": "Ramesses Ⅱ's Abu Simbel",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "All Defensive Towers Hitpoints",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Defender Spawn Time",
+        "base_value_raw": "-9%"
+      },
+      {
+        "name": "Invading Bazooka Damage",
+        "base_value_raw": "-7%"
+      },
+      {
+        "name": "Invading Guerrilla Damage",
+        "base_value_raw": "-9%"
+      },
+      {
+        "name": "All Defensive Towers Damage",
+        "base_value_raw": "+9%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Raven Rattle",
+    "artifact_name": "Raven Rattle",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Fighter Hitpoints",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Fighter Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Enemy Redoubt Damage",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "Enemy Tower Damage",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "All Enemy Defensive Tower Damage",
+        "base_value_raw": "-11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Red Baron's Engine",
+    "artifact_name": "Red Baron's Engine",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Fighter Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Bomber Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Heavy Tank Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Machine Gun Infantry Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Invading Fighters Damage",
+        "base_value_raw": "-6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "RQ-2 Pioneer",
+    "artifact_name": "RQ-2 Pioneer",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Invading Bombers Damage",
+        "base_value_raw": "-8%"
+      },
+      {
+        "name": "Invading Bombers Damage",
+        "base_value_raw": "-8%"
+      },
+      {
+        "name": "Invading Bombers Hitpoints",
+        "base_value_raw": "-7%"
+      },
+      {
+        "name": "Air Defense Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Air Defense Damage",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Sanada Yukimura's Armor",
+    "artifact_name": "Sanada Yukimura's Armor",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Castle spawns Sword Saints when Destroyed",
+        "base_value_raw": "+1"
+      },
+      {
+        "name": "Generals Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Bazooka Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Fighter Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Guerrilla Hitpoints",
+        "base_value_raw": "+8%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Sophilos Dinos",
+    "artifact_name": "Sophilos Dinos",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Wall Miner Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Commando Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Commando Hitpoints",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Decoy Tactic Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Supermarine Spitfire Engine",
+    "artifact_name": "Supermarine Spitfire Engine",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Bomber Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Bomber Hitpoints",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Bomber Hitpoints",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Heavy Tank Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Fighter Damage",
+        "base_value_raw": "+9%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "T-34 Tank Engine",
+    "artifact_name": "T-34 Tank Engine",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Heavy Tank Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Heavy Tank Hitpoints",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Invading Heavy Tank Damage",
+        "base_value_raw": "-7%"
+      },
+      {
+        "name": "Invading Heavy Tank Hitpoints",
+        "base_value_raw": "-7%"
+      },
+      {
+        "name": "Invading Heavy Cavalry Damage",
+        "base_value_raw": "-7%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "The Art of War",
+    "artifact_name": "The Art of War",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Heavy Tank Hitpoints",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Heavy Tank Damage",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "Invading Generals' Hitpoints",
+        "base_value_raw": "-9%"
+      },
+      {
+        "name": "Invading Generals' Damage",
+        "base_value_raw": "-9%"
+      },
+      {
+        "name": "Generals' Hitpoints and Damage",
         "base_value_raw": "+9%"
       }
     ],
@@ -527,6 +3045,35 @@
     "source": "statistic_table"
   },
   {
+    "page_title": "Tizona Sword",
+    "artifact_name": "Tizona Sword",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Heavy Cavalry Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Heavy Cavalry Hitpoints",
+        "base_value_raw": "+3%"
+      },
+      {
+        "name": "Ranged Siege Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Ranged Siege Hitpoints",
+        "base_value_raw": "+3%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
     "page_title": "Trundholm Sun Chariot",
     "artifact_name": "Trundholm Sun Chariot",
     "grade_guess": "Legendary",
@@ -556,6 +3103,283 @@
     "source": "statistic_table"
   },
   {
+    "page_title": "Vespa 150 TAP",
+    "artifact_name": "Vespa 150 TAP",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Machine Gun Infantry Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Machine Gun Infantry Hitpoints",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Ranged Siege Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Ranged Siege Hitpoints",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Factory Troop Damage",
+        "base_value_raw": "+1%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Vz-9 Avrocar",
+    "artifact_name": "Vz-9 Avrocar",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Invading Fighter Damage",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "Air Defense Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Invading Bomber Damage",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "Invading Fighter Hitpoints",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "Invading Bomber Hitpoints",
+        "base_value_raw": "-6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Welrod MkII",
+    "artifact_name": "Welrod MkII",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "All Enemy Defensive Towers Hitpoints",
+        "base_value_raw": "-8%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Guerrilla Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Guerrilla Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Airstrip Troop Damage",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Winged Victory of Samothrace",
+    "artifact_name": "Winged Victory of Samothrace",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Quick Victory Time",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Heavy Tank Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Heavy Tank Hitpoints",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Bomber Damage",
+        "base_value_raw": "+7%"
+      },
+      {
+        "name": "Bomber Hitpoints",
+        "base_value_raw": "+7%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "ZG 1229 Vampir",
+    "artifact_name": "ZG 1229 Vampir",
+    "grade_guess": "Legendary",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Sniper Tower Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Sniper Tower Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Enemy Tower Damage",
+        "base_value_raw": "-7%"
+      },
+      {
+        "name": "Mortar Troop Hitpoints",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "APC Hitpoints",
+        "base_value_raw": "+9%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Admiral Yi’s Helmet(Mythical Artifacts)",
+    "artifact_name": "Admiral Yi’s Helmet",
+    "grade_guess": "Mythical",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Enemy Sabotage Duration",
+        "base_value_raw": "-12%"
+      },
+      {
+        "name": "Invading General's Damage",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Defender Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Defender Hitpoints",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "Invading General's Hitpoints",
+        "base_value_raw": "-16%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Augustus Statue Muscle Cuirass(Mythical Artifacts)",
+    "artifact_name": "Augustus Statue Muscle Cuirass",
+    "grade_guess": "Mythical",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Generals' Attack Speed",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Generals' Damage",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Generals' Damage",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Generals' Hitpoints",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Generals' Hitpoints",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+15%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Aztec Calendar(Mythical Artifacts)",
+    "artifact_name": "Aztec Calendar",
+    "grade_guess": "Mythical",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Factory Troop Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Food from Farms",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Gold from Caravans",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Oil from Oil Wells",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Oil from Oil Wells",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Vault Interest",
+        "base_value_raw": "+11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Captain's Croix de Guerre(Mythical Artifacts)",
+    "artifact_name": "Captain's Croix de Guerre",
+    "grade_guess": "Mythical",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Enemy Defender Hitpoints",
+        "base_value_raw": "-15%"
+      },
+      {
+        "name": "Food Looted",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Gold Looted",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Oil Looted",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "All Resources Looted",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "All Resources Looted",
+        "base_value_raw": "+15%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
     "page_title": "Double-Headed Serpent(Mythical Artifacts)",
     "artifact_name": "Double-Headed Serpent",
     "grade_guess": "Mythical",
@@ -564,6 +3388,26 @@
       {
         "name": "Library Tech Resource Cost",
         "base_value_raw": "-11%"
+      },
+      {
+        "name": "Oil Looted",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "Oil Looted",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "Heavy Tank Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Fighter Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "All Resources Looted",
+        "base_value_raw": "+11%"
       }
     ],
     "source": "statistic_table"
@@ -577,6 +3421,125 @@
       {
         "name": "Enemy Defender Hitpoints",
         "base_value_raw": "-16%"
+      },
+      {
+        "name": "Quick Victory Time",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "Heavy Tank Attack Speed",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "University Research Time",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Library Research Time",
+        "base_value_raw": "-11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Fengguan Phoenix Crown(Mythical Artifacts)",
+    "artifact_name": "Fengguan Phoenix Crown",
+    "grade_guess": "Mythical",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Invading Barracks Troop Hitpoints",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Oil from Oil Wells",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Oil from Oil Wells",
+        "base_value_raw": "-15%"
+      },
+      {
+        "name": "All Defensive Towers Damage",
+        "base_value_raw": "-15%"
+      },
+      {
+        "name": "Defender Spawn Time",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Invading Barracks Troop Damage",
+        "base_value_raw": "+15%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Fire Breathing Bunny Fossil(Mythical Artifacts)",
+    "artifact_name": "Fire Breathing Bunny Fossil",
+    "grade_guess": "Mythical",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "All Resources Looted",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Food Looted",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Gold Looted",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Oil Looted",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Forest Expansion Cost Refund",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "First Aid Duration",
+        "base_value_raw": "+15%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Leoni Parade Shield(Mythical Artifacts)",
+    "artifact_name": "Leoni Parade Shield",
+    "grade_guess": "Mythical",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Generals' Hitpoints and Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Heavy Tank Hitpoints",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Missile Silo Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Bomber Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Generals' Attack Speed",
+        "base_value_raw": "+10%"
+      },
+      {
+        "name": "Generals' Damage",
+        "base_value_raw": "+11%"
       }
     ],
     "source": "statistic_table"
@@ -590,6 +3553,26 @@
       {
         "name": "Heavy Infantry Movement Speed",
         "base_value_raw": "+12%"
+      },
+      {
+        "name": "APC Deploy Time",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "APC Hitpoints",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "Heavy Infantry Attack Speed",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "Heavy Infantry Damage",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "Guerrilla Movement Speed",
+        "base_value_raw": "+10%"
       }
     ],
     "source": "statistic_table"
@@ -605,8 +3588,123 @@
         "base_value_raw": "+8%"
       },
       {
+        "name": "Tower Hitpoints",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "Tower Damage",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "Catapult Hitpoints",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "Catapult Damage",
+        "base_value_raw": "+16%"
+      },
+      {
         "name": "All Defensive Tower Damage",
         "base_value_raw": "+12%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Napoleon's Bicorne Hat(Mythical Artifacts)",
+    "artifact_name": "Napoleon's Bicorne Hat",
+    "grade_guess": "Mythical",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Airstrip Troop Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Barracks Troop Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Barracks Troop Hitpoints",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Factory Troop Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Factory Troop Hitpoints",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Airstrip Troop Damage",
+        "base_value_raw": "+11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Pompus' Comb(Mythical Artifacts)",
+    "artifact_name": "Pompus' Comb",
+    "grade_guess": "Mythical",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Enemy Sabotage Duration",
+        "base_value_raw": "-12%"
+      },
+      {
+        "name": "University Research Time",
+        "base_value_raw": "-15%"
+      },
+      {
+        "name": "Library Research Time",
+        "base_value_raw": "-15%"
+      },
+      {
+        "name": "Looted Resource Refund",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Defender Movement Speed",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "Enemy Sabotage Duration",
+        "base_value_raw": "-12%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Rosetta Stone(Mythical Artifacts)",
+    "artifact_name": "Rosetta Stone",
+    "grade_guess": "Mythical",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Library Research Time",
+        "base_value_raw": "-15%"
+      },
+      {
+        "name": "Library Tech Resource Cost",
+        "base_value_raw": "-15%"
+      },
+      {
+        "name": "Vault Capacity",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Oil from Oil Wells",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Looted Resource Refund",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Forest Expansion Cost Refund",
+        "base_value_raw": "+11%"
       }
     ],
     "source": "statistic_table"
@@ -620,6 +3718,158 @@
       {
         "name": "Factory Troop HP",
         "base_value_raw": "+11%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "Enemy Anti-Tank Gun Damage",
+        "base_value_raw": "-16%"
+      },
+      {
+        "name": "Enemy Catapult Damage",
+        "base_value_raw": "-16%"
+      },
+      {
+        "name": "All Enemy Defensive Towers Hitpoints",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "All Enemy Defensive Towers Damage",
+        "base_value_raw": "-11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Silla Gold Crown(Mythical Artifacts)",
+    "artifact_name": "Silla Gold Crown",
+    "grade_guess": "Mythical",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Library Tech Resource Cost",
+        "base_value_raw": "-15%"
+      },
+      {
+        "name": "Gold Looted",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Gold from Gold Mines",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Gold from Caravans",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Library Tech Resource Cost",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Ranged Infantry Damage",
+        "base_value_raw": "-15%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Soul Catcher(Mythical Artifacts)",
+    "artifact_name": "Soul Catcher",
+    "grade_guess": "Mythical",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Assault Vehicle Hitpoints",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "Supply Vechicle Healing",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "Tactical Helicopter Healing",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "Heavy Cavalry Hitpoints",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "APC Hitpoints",
+        "base_value_raw": "+13%"
+      },
+      {
+        "name": "University Research Time",
+        "base_value_raw": "-11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Sphinx of Taharqo(Mythical Artifacts)",
+    "artifact_name": "Sphinx of Taharqo",
+    "grade_guess": "Mythical",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Assault Vehicle Hitpoints",
+        "base_value_raw": "+21%"
+      },
+      {
+        "name": "Library Tech Resource Cost",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Vault Capacity",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Oil from Oil Wells",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Looted Resource Refund",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Forest Expansion Cost Refund",
+        "base_value_raw": "+6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Stopler Revolver(Mythical Artifacts)",
+    "artifact_name": "Stopler Revolver",
+    "grade_guess": "Mythical",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Mortar Troop Damage",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Defender Damage",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Fighters Damage",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Generals Damage",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Oil Looted",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Ranged Infantry Damage",
+        "base_value_raw": "+15%"
       }
     ],
     "source": "statistic_table"
@@ -633,6 +3883,125 @@
       {
         "name": "Heavy Cavalry HP",
         "base_value_raw": "+41%"
+      },
+      {
+        "name": "All Enemy Defensive Tower Damage",
+        "base_value_raw": "-6%"
+      },
+      {
+        "name": "Heavy Cavalry Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "All Defensive Tower Damage",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Defender Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Defender Spawn Time",
+        "base_value_raw": "-6%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Sword of Goujian(Mythical Artifacts)",
+    "artifact_name": "Sword of Goujian",
+    "grade_guess": "Mythical",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Defender Hitpoints",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Heavy Infantry Hitpoints",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Heavy Infantry Damage",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "All Resources Looted",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Defender Damage",
+        "base_value_raw": "+15%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "The Book of Five Rings(Mythical Artifacts)",
+    "artifact_name": "The Book of Five Rings",
+    "grade_guess": "Mythical",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Airstrip Troop Hitpoints",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Vault Capacity",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Vault Capacity",
+        "base_value_raw": "+15%"
+      },
+      {
+        "name": "Vault Interest",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Vault Interest",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "All Defensive Towers Damage",
+        "base_value_raw": "+11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Tokugawa Ieyasu's Helmet(Mythical Artifacts)",
+    "artifact_name": "Tokugawa Ieyasu's Helmet",
+    "grade_guess": "Mythical",
+    "hall_guess": "Main",
+    "perks": [
+      {
+        "name": "Defender Movement Speed",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Defender Damage",
+        "base_value_raw": "+13%"
+      },
+      {
+        "name": "Defender Hitpoints",
+        "base_value_raw": "+13%"
+      },
+      {
+        "name": "Defender Spawn Time",
+        "base_value_raw": "-13%"
+      },
+      {
+        "name": "Looted Resource Refund",
+        "base_value_raw": "+16%"
+      },
+      {
+        "name": "Looted Resource Refund",
+        "base_value_raw": "+16%"
       }
     ],
     "source": "statistic_table"
@@ -699,6 +4068,39 @@
       {
         "name": "Invading Heavy Tank Damage",
         "base_value_raw": "-11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "ASDIC Type 113X(Mythical War Artifacts)",
+    "artifact_name": "ASDIC Type 113X",
+    "grade_guess": "Mythical",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Invading Generals Hitpoints",
+        "base_value_raw": "-14%"
+      },
+      {
+        "name": "Invading  Barracks Troop Damage",
+        "base_value_raw": "-14%"
+      },
+      {
+        "name": "Invading  Factory Troop Damage",
+        "base_value_raw": "-14%"
+      },
+      {
+        "name": "Invading  Airstrip Troop Damage",
+        "base_value_raw": "-14%"
+      },
+      {
+        "name": "Defender Spawn Time",
+        "base_value_raw": "-14%"
+      },
+      {
+        "name": "Missile Silo Damage",
+        "base_value_raw": "+14%"
       }
     ],
     "source": "statistic_table"
@@ -910,6 +4312,26 @@
       {
         "name": "Defenders Movement Speed",
         "base_value_raw": "+9%"
+      },
+      {
+        "name": "Defender Hitpoints",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "All Defensive Towers Hitpoints",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "All Defensive Towers Damage",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "Enemy Missile Silo Damage",
+        "base_value_raw": "-12%"
       }
     ],
     "source": "statistic_table"
@@ -989,6 +4411,26 @@
       {
         "name": "Barracks Troop Damage",
         "base_value_raw": "+9%"
+      },
+      {
+        "name": "Attack Helicopter Damage",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "Attack Helicopter Damage",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "Attack Helicopter Hitpoints",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "Bazooka Damage",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "All Enemy Defensive Towers Damage",
+        "base_value_raw": "-11%"
       }
     ],
     "source": "statistic_table"
@@ -1027,6 +4469,105 @@
     "source": "statistic_table"
   },
   {
+    "page_title": "Leonidas Bust(Mythical War Artifacts)",
+    "artifact_name": "Leonidas Bust",
+    "grade_guess": "Mythical",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Bazooka Damage",
+        "base_value_raw": "+13%"
+      },
+      {
+        "name": "Mercenary Camp Deploys Spartans when Destroyed",
+        "base_value_raw": "+1"
+      },
+      {
+        "name": "Quick Victory Time",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Generals Hitpoints and Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Bazooka Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Bazooka Hitpoints",
+        "base_value_raw": "+11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Maori War Club(Mythical War Artifacts)",
+    "artifact_name": "Maori War Club",
+    "grade_guess": "Mythical",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Generals' Hitpoints and Damage",
+        "base_value_raw": "+12%"
+      },
+      {
+        "name": "All Defensive Towers Hitpoints and Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Defender Spawn Time",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Defender Movement Speed",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Invading Recon Scan Duration",
+        "base_value_raw": "-10%"
+      },
+      {
+        "name": "Generals' Attack Speed",
+        "base_value_raw": "+8%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Norden Bombsight(Mythical War Artifacts)",
+    "artifact_name": "Norden Bombsight",
+    "grade_guess": "Mythical",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Invading Fighter Damage",
+        "base_value_raw": "-13%"
+      },
+      {
+        "name": "APC Deploys Marines On Death",
+        "base_value_raw": "+1"
+      },
+      {
+        "name": "Coalition Troop Damage",
+        "base_value_raw": "+13%"
+      },
+      {
+        "name": "Defenders Spawn Time",
+        "base_value_raw": "-13%"
+      },
+      {
+        "name": "Invading Fighter Damage",
+        "base_value_raw": "-13%"
+      },
+      {
+        "name": "Machine Gun Infantry Damage",
+        "base_value_raw": "+13%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
     "page_title": "Ramesses Ⅱ's Abu Simbel(Mythical War Artifacts)",
     "artifact_name": "Ramesses Ⅱ's Abu Simbel",
     "grade_guess": "Mythical",
@@ -1060,6 +4601,105 @@
     "source": "statistic_table"
   },
   {
+    "page_title": "Red Baron's Engine(Mythical War Artifacts)",
+    "artifact_name": "Red Baron's Engine",
+    "grade_guess": "Mythical",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Enemy Air Defense Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Fighter Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Bomber Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Heavy Tank Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Machine Gun Infantry Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Invading Fighters Damage",
+        "base_value_raw": "-11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Supermarine Spitfire Engine(Mythical War Artifacts)",
+    "artifact_name": "Supermarine Spitfire Engine",
+    "grade_guess": "Mythical",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Airstrip Troop Damage",
+        "base_value_raw": "+8%"
+      },
+      {
+        "name": "Bomber Damage",
+        "base_value_raw": "+14%"
+      },
+      {
+        "name": "Bomber Hitpoints",
+        "base_value_raw": "+14%"
+      },
+      {
+        "name": "Bomber Hitpoints",
+        "base_value_raw": "+14%"
+      },
+      {
+        "name": "Heavy Tank Damage",
+        "base_value_raw": "+14%"
+      },
+      {
+        "name": "Fighter Damage",
+        "base_value_raw": "+14%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "T-34 Tank Engine(Mythical War Artifacts)",
+    "artifact_name": "T-34 Tank Engine",
+    "grade_guess": "Mythical",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Invading Barracks Troop Damage",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Heavy Tank Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Heavy Tank Hitpoints",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Invading Heavy Tank Damage",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Invading Heavy Tank Hitpoints",
+        "base_value_raw": "-11%"
+      },
+      {
+        "name": "Invading Heavy Cavalry Damage",
+        "base_value_raw": "-11%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
     "page_title": "The Art of War(Mythical War Artifacts)",
     "artifact_name": "The Art of War",
     "grade_guess": "Mythical",
@@ -1068,6 +4708,92 @@
       {
         "name": "Anti-Tank Gun Damage",
         "base_value_raw": "+20%"
+      },
+      {
+        "name": "Heavy Tank Hitpoints",
+        "base_value_raw": "+14%"
+      },
+      {
+        "name": "Heavy Tank Damage",
+        "base_value_raw": "+14%"
+      },
+      {
+        "name": "Invading Generals' Hitpoints",
+        "base_value_raw": "-14%"
+      },
+      {
+        "name": "Invading Generals' Damage",
+        "base_value_raw": "-14%"
+      },
+      {
+        "name": "Generals' Hitpoints and Damage",
+        "base_value_raw": "+14%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "The White Death's War Kit(Mythical War Artifacts)",
+    "artifact_name": "The White Death's War Kit",
+    "grade_guess": "Mythical",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Sniper Tower Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Sniper Tower Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Sniper Tower Hitpoints",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "All Defensive Towers Hitpoints",
+        "base_value_raw": "+9%"
+      },
+      {
+        "name": "All Defensive Towers Damage",
+        "base_value_raw": "+9%"
+      }
+    ],
+    "source": "statistic_table"
+  },
+  {
+    "page_title": "Tizona Sword(Mythical War Artifacts)",
+    "artifact_name": "Tizona Sword",
+    "grade_guess": "Mythical",
+    "hall_guess": "War",
+    "perks": [
+      {
+        "name": "Ranged Siege Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Heavy Cavalry Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Heavy Cavalry Hitpoints",
+        "base_value_raw": "+6%"
+      },
+      {
+        "name": "Ranged Siege Damage",
+        "base_value_raw": "+11%"
+      },
+      {
+        "name": "Ranged Siege Hitpoints",
+        "base_value_raw": "+6%"
       }
     ],
     "source": "statistic_table"
@@ -1081,6 +4807,26 @@
       {
         "name": "Air Defense Attack Speed",
         "base_value_raw": "+14%"
+      },
+      {
+        "name": "Invading Fighter Damage",
+        "base_value_raw": "-14%"
+      },
+      {
+        "name": "Air Defense Damage",
+        "base_value_raw": "+14%"
+      },
+      {
+        "name": "Invading Bomber Damage",
+        "base_value_raw": "-14%"
+      },
+      {
+        "name": "Invading Fighter Hitpoints",
+        "base_value_raw": "-14%"
+      },
+      {
+        "name": "Invading Bomber Hitpoints",
+        "base_value_raw": "-14%"
       }
     ],
     "source": "statistic_table"

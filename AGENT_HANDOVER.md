@@ -1,7 +1,7 @@
 # DomiNations Artifacts — Agent Handover
 
 **Date:** 2026-09-05  
-**Status:** Canonical merge **done** (v1). Large legendary perk gaps remain. Do **not** rebuild UI yet.  
+**Status:** Canonical v2 — legendary perk fill largely done. Do **not** rebuild HTML UI yet (cost sparsity + 6 perk gaps + Uncertain names remain).  
 **Mode:** Auto — do not ask for approval; execute; checkpoint to disk often.
 
 ---
@@ -12,27 +12,31 @@ Canonical dataset of all **fixed named** Legendary Main / Legendary War / Mythic
 
 ---
 
-## What the previous agent finished
+## What this agent finished
 
-1. **`scripts/build_canonical.py`** — merge pipeline (drafts + wiki overlay + official extras)
-2. **Official DominationsWorld sweep** (Week Ahead + Marco's Wares + anniversary)
-3. **Wrote deliverables:**
-   - `data/artifacts.csv` / `data/artifacts.json` — **150** rows (118 Legendary + 32 Mythical)
-   - `data/perk_name_mapping.csv`
-   - `data/artifact_release_reconciliation.csv`
-   - `data/temp/conflicts.json` (70 draft-vs-wiki; draft preferred)
-   - `reports/completeness_report.md`, `reports/discrepancies.md`
-4. Halls set for prior TBD: Analytical Engine/DomiNations Army Helmet/Mahiole → **War**; First Strike Star → **Main**
-5. British Kettle Drum Mythical: **6 perks** from wiki statistic_table
-6. Added 3 official mythicals missing from draft (June 2026 Marco): Pershing Bas-Relief, Joyeuse Sword, Silla Gold Crown
+1. **Fixed wiki `statistic_table` parser** (`scripts/batch_fetch_wiki_pages.py`):
+   - Same-line `| Name || +12%` cells
+   - `rowspan` value inheritance
+   - Row split no longer breaks on `||-8%` negatives
+2. **Fixed `guess_grade`** so historical prose (“mythical king/creatures”) no longer mis-tags Legendary pages as Mythical
+3. **Re-extracted** `data/raw/wiki_perk_extract.json` (249 records; 113 legendary statistic_table)
+4. **Rebuilt canonical** via `python scripts/build_canonical.py`
+5. **Re-verified Uncertain wiki-only names** → `data/temp/uncertain_reverify.json` (still Uncertain; no DW/BHG hits)
+6. **Cost/acquisition pass** from wiki prose (token costs only; no IAP sale prices in `cost`)
 
-### Counts (after build)
+### Counts (after rebuild)
 
 | Set | Rows | With ≥1 perk |
 |-----|------|--------------|
-| Legendary | 118 | 64 |
+| Legendary | 118 | **112** (was 64) |
 | Mythical | 32 | 32 (all) |
-| Total | 150 | 96 |
+| Total | 150 | **144** |
+
+Remaining legendary perk gaps (6):
+- **Leftwich Trophy** — Released; wiki table empty; no DW hit
+- **Benin Royal Ivory Mask, Golden Lyre of Ur, Mona Lisa, Roman Dodecahedron, Tibetan Dung-Dkar** — Uncertain nav phantoms (no Fandom page)
+
+Uncertain with perks (wiki only, no DW): 11th Anniversary Cake, Dilophosaurus Skull, Mask of Tutankhamun
 
 ---
 
@@ -41,28 +45,30 @@ Canonical dataset of all **fixed named** Legendary Main / Legendary War / Mythic
 ```text
 /
   AGENT_HANDOVER.md
-  dominations_*_DRAFT.csv          # preserved research drafts
+  dominations_*_DRAFT.csv
 
 data/
-  artifacts.csv / artifacts.json   # CANONICAL TARGET (built)
+  artifacts.csv / artifacts.json   # CANONICAL
   perk_name_mapping.csv
   artifact_release_reconciliation.csv
-  raw/                             # wiki + drafts + dominations_info notes
-  temp/                            # conflicts, build_summary, official_sweep_*
+  raw/                             # wiki + drafts
+  temp/                            # conflicts, build_summary, uncertain_reverify, official_sweep_*
 
 reports/
   completeness_report.md
   discrepancies.md
 
 scripts/
-  build_canonical.py               # re-run after source updates
+  build_canonical.py
   batch_fetch_wiki_pages.py
+  _reextract_wiki_perks.py         # re-parse cached wiki pages (no network)
+  _reverify_uncertain.py           # Fandom + DW check for Uncertain names
   _summarize_wiki_batch.py
 ```
 
 ---
 
-## Required schema (implemented)
+## Required schema (unchanged)
 
 ```text
 artifact_id, name, alternate_name, hall, museum_hall, grade, release_status, release_date,
@@ -71,38 +77,24 @@ cost, cost_currency, acquisition_method, availability_notes,
 source_primary, source_secondary, source_checked_date, confidence, notes
 ```
 
-- `hall`: Main | War | Mythical | Unknown  
-- Mythicals: `hall=Mythical`, Main/War affiliation in `museum_hall`
-- Legendary max: `|base|+9` (skip `|base|==1`); noted in `notes`
+- Legendary max: `|base|+9` (skip `|base|==1`)
 - Mythical max: **left blank** (do not blind +9)
-
----
-
-## Critical source status
-
-### dominations-info.com — still BROKEN (404 API)
-Do not block on it. Notes in `data/raw/dominations_info/NOTES.md`.
-
-### Official sweep takeaway
-- Wiki-only legendaries still **Uncertain** (no DW hits)
-- June 2026 Marco extras were the important draft gap
+- Never put real-money sale prices in `cost` (tokens/legendary coins only)
 
 ---
 
 ## Next agent — ordered tasks
 
-1. **Fill legendary perk gaps** (~54 roster-only with empty perks): prefer BHG/DominationsWorld, then wiki statistic_table; never overwrite stronger draft numbers with weak quick_view.
-2. **Re-verify Uncertain wiki-only legendaries** (Cake, Dilophosaurus, Tutankhamun, Benin, Lyre, Mona Lisa, Dodecahedron, Dung-Dkar) — deeper official/social search; flip to Released only with evidence.
-3. **Cost / acquisition** pass for legendaries (many blank); do not put sale prices in `cost`.
-4. **Optional:** fetch missing wiki pages for nav-only names; refresh `wiki_perk_extract.json`; re-run `python scripts/build_canonical.py`.
-5. **QC** after fills; update reports; commit.
-6. Only after perk coverage is strong: consider HTML tracker (out of scope until then).
+1. **Leftwich Trophy perks** — deeper BHG/DW/social search; wiki table is blank
+2. **Decide fate of 5 nav phantoms** (remove vs keep Uncertain) once product owner rules
+3. **Optional:** flip Cake / Dilophosaurus / Tutankhamun to Released **only** with BHG/DominationsWorld evidence
+4. Broader **cost** sourcing (Marco posts, patch notes) — wiki only had ~4 token costs
+5. Only after perk coverage + release decisions: consider HTML tracker
 
 ### Do not
 
-- Start HTML UI while large perk gaps remain
+- Start HTML UI while Uncertain phantoms / Leftwich gap unresolved (or get explicit OK)
 - Overwrite draft/official perks with weaker wiki quick_view
-- Mark project complete with ~54 empty legendary perk sets
 - Blind +9 mythical values
 - Put sale prices in main `cost`
 
@@ -112,8 +104,9 @@ Do not block on it. Notes in `data/raw/dominations_info/NOTES.md`.
 
 - Duplicate perk names on one artifact can be real
 - Wiki Mythical War quick_view often copies Legendary 5-perk sets (wrong)
-- `Looted Resource Refunt` → mapped toward Refund in perk mapping
-- Shell on this Windows machine: use `required_permissions: ["all"]` (sandbox helper lacks FS isolation)
+- Historical text containing “mythical” must not drive grade (parser fixed)
+- `Looted Resource Refunt` → Refund via perk mapping
+- Shell on this Windows machine: use `required_permissions: ["all"]`
 
 ---
 
@@ -121,8 +114,10 @@ Do not block on it. Notes in `data/raw/dominations_info/NOTES.md`.
 
 ```powershell
 cd "c:\Projects\Dominations Artifacts"
+python scripts/_reextract_wiki_perks.py
 python scripts/build_canonical.py
 python scripts/_summarize_wiki_batch.py
+python scripts/_reverify_uncertain.py
 ```
 
 ---
@@ -131,6 +126,7 @@ python scripts/_summarize_wiki_batch.py
 
 **NOW** after this handover:
 
-- Canonical v1 exists and is committed (or ready to commit)
-- Official June mythical gap closed
-- Next work = fill legendary perks + resolve Uncertain wiki-only names
+- Legendary with perks: **112 / 118**
+- Parser + grade bugs fixed; re-extract path documented
+- Uncertain reverify recorded; none flipped to Released without evidence
+- Next work = Leftwich + phantom policy + richer costs — **not** HTML yet

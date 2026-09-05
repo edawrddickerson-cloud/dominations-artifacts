@@ -4,14 +4,17 @@
 
 ## Draft vs wiki perk conflicts
 
-Count: **70** (logged in `data/temp/conflicts.json`).  
+Count: **130** (logged in `data/temp/conflicts.json`).  
 Resolution rule: **prefer draft/official** over wiki when both present.
 
 | Artifact | Slot | Draft | Wiki |
 |---|---|---|---|
-| Keyed English Guitar (Legendary) | 1 | Enemy Tower Damage -11 | Enemy Tower HP -11 |
-| Keyed English Guitar (Legendary) | 2 | Enemy Tower HP -11 | Enemy Sniper Tower DMG -16 |
-| Keyed English Guitar (Legendary) | 3 | Enemy Sniper Tower Damage -16 | Heavy Tank DMG 11 |
+| Heads of Hevajra (Legendary) | 4 | Armored Car Damage 11 | Armored Car DMG 11 |
+| Heads of Hevajra (Legendary) | 5 | All Enemy Defensive Towers Damage 11 | All Enemy Defensive Towers DMG 11 |
+| Keyed English Guitar (Legendary) | 1 | Enemy Tower Damage -11 | Enemy Tower DMG -11 |
+| Keyed English Guitar (Legendary) | 3 | Enemy Sniper Tower Damage -16 | Enemy Sniper Tower DMG -16 |
+| Keyed English Guitar (Legendary) | 5 | Heavy Tank Damage 11 | Heavy Tank DMG 11 |
+| Quimbaya Treasure (Legendary) | 2 | Guerrilla HP 9 | Guerrilla Hitpoints 9 |
 | Swimming Reindeer (Legendary) | 1 | Defender HP 11 | Defender Hitpoints 11 |
 | Analytical Engine (Legendary) | 1 | Invading Bomber Damage -11 | Invading Bomber Damage 11 |
 | Analytical Engine (Legendary) | 2 | All Defensive Towers HP 8 | All Defensive Towers Hitpoints 8 |
@@ -25,32 +28,29 @@ Resolution rule: **prefer draft/official** over wiki when both present.
 | First Strike Star (Legendary) | 4 | Enemy Defender HP -3 | Enemy Defender Hitpoints -3 |
 | Mahiole (Legendary) | 4 | Wall Sapper HP 11 | Wall Sapper Hitpoints 11 |
 | 6th Anniversary Six-Shooter (Legendary) | 3 | Bomber HP 9 | Bomber Hitpoints 9 |
+| ASDIC Type 113X (Legendary) | 1 | Invading Barracks Troop Damage -9 | Invading  Barracks Troop Damage -10 |
+| ASDIC Type 113X (Legendary) | 2 | Invading Factory Troop Damage -9 | Invading  Factory Troop Damage -10 |
+| ASDIC Type 113X (Legendary) | 3 | Invading Airstrip Troop Damage -9 | Invading  Airstrip Troop Damage -10 |
+| ASDIC Type 113X (Legendary) | 4 | Defender Spawn Time -9 | Defender Spawn Time -10 |
+| ASDIC Type 113X (Legendary) | 5 | Missile Silo Damage 9 | Missile Silo Damage 10 |
+| ASM-135 Anti-Satellite Missile (Legendary) | 1 | Missile Silo and Red Button Damage 7 | Missile Silo and Red Button Damage 8 |
+| ASM-135 Anti-Satellite Missile (Legendary) | 2 | Missile Silo Damage 7 | Missile Silo Damage 8 |
+| ASM-135 Anti-Satellite Missile (Legendary) | 3 | Airstrip Troop Damage 3 | Airstrip Troop Damage 4 |
+| ASM-135 Anti-Satellite Missile (Legendary) | 4 | Air Defense Damage 7 | Air Defense Damage 8 |
+| ASM-135 Anti-Satellite Missile (Legendary) | 5 | Defender Hitpoints 7 | Defender Hitpoints 8 |
 | Alfred Jewel (Legendary) | 3 | APC HP 6 | APC Hitpoints 6 |
-| Mold Gold Cape (Legendary) | 1 | Invading Sabotage Duration -11 | Enemy Sabotage Duration -11 |
-| Mold Gold Cape (Legendary) | 3 | Generals' HP 8 | Generals' Hitpoints 8 |
-| Mold Gold Cape (Legendary) | 4 | Invading Bomber Damage 11 | Invading Bomber Damage -11 |
-| Mold Gold Cape (Legendary) | 5 | All Defensive Towers HP & Damage 3 | All Defensive Towers Hitpoints and Damage 3 |
-| Trundholm Sun Chariot (Legendary) | 3 | Invading Bomber HP -7 | Invading Bomber Hitpoints -7 |
-| Trundholm Sun Chariot (Legendary) | 4 | Invading Transport HP -7 | Invading Transport Hitpoints -7 |
-| Enigma Machine (Mythical) | 1 | Enemy Defender HP -16 | Enemy Defender Hitpoints -16 |
-| Mask of Agamemnon (Mythical) | 1 | All Defensive Towers HP & Damage 8 | All Defensive Tower HP & DMG 8 |
-| Mask of Agamemnon (Mythical) | 2 | Tower HP 16 | All Defensive Tower Damage 12 |
-| Arm Reliquary of Charlemagne (Mythical) | 1 | Transport Cooldown -12 | Transport Cooldown -11 |
-| Arm Reliquary of Charlemagne (Mythical) | 3 | Paratrooper HP 15 | Paratrooper Hitpoints 15 |
-| Caligula's Ring (Mythical) | 3 | Paratrooper HP 14 | Paratrooper Hitpoints 14 |
-| Da Vinci's Flying Machine (Mythical) | 1 | Fighter HP & Damage 7 | Fighter Hitpoints & Damage 7 |
-| Da Vinci's Flying Machine (Mythical) | 2 | Fighter Damage 11 | Fighters Damage 11 |
-| Da Vinci's Flying Machine (Mythical) | 3 | Fighter HP 11 | Fighters Hitpoints 11 |
-| Da Vinci's Flying Machine (Mythical) | 4 | Fighter HP 11 | Fighters Hitpoints 11 |
-| Da Vinci's Flying Machine (Mythical) | 6 | Heavy Tank HP 11 | Heavy Tank Hitpoints 11 |
-| Elephant Archer Quiver (Mythical) | 3 | Invading Bomber Damage -11 | Invading Bomber Hitpoints -11 |
-| Elephant Archer Quiver (Mythical) | 6 | Air Defense Damage 11 | Air Defense Attack Speed 11 |
-| Gemini 8 Gloves (Mythical) | 1 | Defender Movement Speed 9 | Defenders Movement Speed 9 |
-| Gemini 8 Helmet (Mythical) | 1 | Attack Helicopter Damage 11 | Factory Troop Damage 11 |
-| Gemini 8 Helmet (Mythical) | 2 | Armored Car Damage 11 | Attack Helicopter Damage 11 |
-| Gemini 8 Helmet (Mythical) | 3 | Bazooka Damage 11 | Armored Car Damage 11 |
+| Caligula's Ring (Legendary) | 1 | Paratrooper Damage 6 | Paratrooper Damage 7 |
+| Caligula's Ring (Legendary) | 2 | Paratrooper Hitpoints 6 | Paratrooper Hitpoints 7 |
+| Caligula's Ring (Legendary) | 3 | Guerilla Damage 6 | Guerilla Damage 7 |
+| Caligula's Ring (Legendary) | 4 | Ranged Siege Damage 3 | Ranged Siege Damage 4 |
+| Caligula's Ring (Legendary) | 5 | Wall Sapper Damage 6 | Wall Sapper Damage 7 |
+| Capt. McConnell's Hero Ensemble (Legendary) | 1 | Generals' Hitpoints and Damage 7 | Generals' Hitpoints and Damage 8 |
+| Capt. McConnell's Hero Ensemble (Legendary) | 2 | Oil Looted 8 | Oil Looted 9 |
+| Capt. McConnell's Hero Ensemble (Legendary) | 3 | Fighter Damage 8 | Fighter Damage 9 |
+| Capt. McConnell's Hero Ensemble (Legendary) | 4 | Fighter Damage 9 | Fighter Damage 10 |
+| Capt. McConnell's Hero Ensemble (Legendary) | 5 | Airstrip Troop Hitpoints 9 | Airstrip Troop Hitpoints 10 |
 
-… and 30 more in conflicts.json
+… and 90 more in conflicts.json
 
 ## Hall assignments (formerly TBD)
 
@@ -66,12 +66,11 @@ Still prefer official BHG confirmation in notes when found.
 ## Roster / release
 
 - Draft treated all 110 legendaries as Released; wiki-only extras added as Uncertain.
-- Mythical wiki lists many more names than the verified draft rows — wiki-only mythicals **not** auto-added as released.
-- **Exception:** June 2026 Marco's Wares official post confirmed Mythical **General Pershing's Bas-Relief**, **Joyeuse Sword**, **Silla Gold Crown** (missing from 29-row draft) → added as Released with BHG perk values.
-- Nav-only / wiki-only legendaries with **no** DominationsWorld hit in 2026-09-05 sweep (remain Uncertain): 11th Anniversary Cake, Dilophosaurus Skull, Mask of Tutankhamun, Benin Royal Ivory Mask, Golden Lyre of Ur, Mona Lisa, Roman Dodecahedron, Tibetan Dung-Dkar.
-- Official post confirmations for draft rows: British Kettle Drum (week-ahead-42026), Analytical Engine (31626), First Strike Star (5426), Mahiole (111725 + anniversary), DomiNations Army Helmet (11th anniversary).
+- Mythical wiki lists many more names than the 29 verified draft rows — extras **not** auto-added as released.
+- Nav-only names (Benin Royal Ivory Mask, Golden Lyre of Ur, Mona Lisa, Roman Dodecahedron, Tibetan Dung-Dkar): Fandom API miss + no DW hit in 2026-09-05 reverify — kept Uncertain.
+- Cake / Dilophosaurus / Tutankhamun: Fandom pages exist; still Uncertain without BHG/DW.
+- Leftwich Trophy: roster Released but wiki statistic table empty; perks still missing.
 - Ignore meta pages: Archaeology Capstone, Library, Technology.
-- Sweep raw: `data/temp/official_sweep_posts.json`, `data/temp/official_sweep_marco.json`.
 
 ## Known data quirks
 

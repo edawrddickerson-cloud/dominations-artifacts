@@ -62,10 +62,32 @@ def strip_wiki(s: str) -> str:
 
 
 def guess_grade(title: str, text: str) -> str:
-    t = (title + " " + text[:2000]).lower()
-    if "mythical" in t:
+    """Infer grade from title/categories/templates — not historical prose.
+
+    Historical blurbs often say "mythical creatures/king" and must not flip
+    a Legendary artifact page to Mythical.
+    """
+    t = title.lower()
+    if "(mythical" in t:
         return "Mythical"
-    if "legendary" in t:
+    # Prefer explicit wiki structure signals (scan full page for categories/menus)
+    if re.search(r"\[\[Category:\s*Mythical", text, re.I):
+        return "Mythical"
+    if re.search(r"\[\[Category:\s*Legendary", text, re.I):
+        return "Legendary"
+    if re.search(r"\{\{\s*Mythical(?:\s*War)?\s*Artifacts\s*Menu\s*\}\}", text, re.I):
+        return "Mythical"
+    if re.search(r"\{\{\s*Legendary(?:\s*War)?\s*Artifacts\s*Menu\s*\}\}", text, re.I):
+        return "Legendary"
+    if re.search(r"\[\[Mythical(?: War)? Artifacts\]\]", text[:1500], re.I):
+        return "Mythical"
+    if re.search(r"\[\[Legendary(?: War)? Artifacts\]\]", text[:1500], re.I):
+        return "Legendary"
+    # Weak fallback on short lead only
+    lead = (title + " " + text[:400]).lower()
+    if "mythical artifact" in lead or "mythical war artifact" in lead:
+        return "Mythical"
+    if "legendary artifact" in lead or "legendary war artifact" in lead:
         return "Legendary"
     return "Unknown"
 
@@ -87,6 +109,11 @@ def clean_artifact_name(title: str) -> str:
 
 
 def parse_statistic_table(text: str) -> list[dict]:
+    """Parse Benefit Name / Base Stat wiki tables.
+
+    Handles both multiline cells and same-line ``| Name || +12%`` rows,
+    plus ``rowspan`` values that apply to following name-only rows.
+    """
     perks = []
     for m in re.finditer(
         r"\{\|\s*class=\"[^\"]*\"[\s\S]*?\|\}",
@@ -98,28 +125,72 @@ def parse_statistic_table(text: str) -> list[dict]:
             continue
         if not re.search(r"Base\s*Stat", block, re.I):
             continue
-        rows = re.split(r"\|-", block)
+        # Split on row delimiters that are alone on a line — never on
+        # ``||-8%`` style negative values (which contain the substring ``|-``).
+        rows = re.split(r"(?m)^\s*\|-\s*$", block)
+        pending_value: str | None = None
+        pending_span = 0
         for row in rows:
-            cells = []
+            cells: list[tuple[str, int]] = []
             for line in row.splitlines():
                 line = line.strip()
                 if not line.startswith("|") and not line.startswith("!"):
                     continue
                 if line.startswith("|+") or line.startswith("{|") or line.startswith("|}"):
                     continue
-                cell = re.sub(r"^[\|!]+\s*(?:scope=\"[^\"]*\"\s*(?:\|)?)?", "", line)
-                cell = cell.strip()
-                if cell.lower() in ("benefit name", "base stat"):
+                raw = line.lstrip("|!").strip()
+                if not raw:
                     continue
-                if cell.startswith("class=") or cell.startswith("colspan") or cell.startswith("rowspan"):
-                    continue
-                cells.append(strip_wiki(cell))
-            cells = [c for c in cells if c]
+                # Same-line cells use || separators
+                parts = re.split(r"\|\|", raw)
+                for part in parts:
+                    part = part.strip()
+                    if not part:
+                        continue
+                    rowspan_m = re.search(
+                        r'rowspan\s*=\s*"?(\d+)"?\s*\|?', part, flags=re.I
+                    )
+                    rowspan = int(rowspan_m.group(1)) if rowspan_m else 1
+                    part = re.sub(r'^scope="[^"]*"\s*(?:\|)?\s*', "", part)
+                    part = re.sub(
+                        r'rowspan\s*=\s*"?\d+"?\s*\|?\s*', "", part, flags=re.I
+                    )
+                    part = re.sub(
+                        r'colspan\s*=\s*"?\d+"?\s*\|?\s*', "", part, flags=re.I
+                    )
+                    part = part.strip().lstrip("|").strip()
+                    low = part.lower()
+                    if low in ("benefit name", "base", "stat", "base stat"):
+                        continue
+                    if part.startswith("class="):
+                        continue
+                    cleaned = strip_wiki(part)
+                    if cleaned:
+                        cells.append((cleaned, rowspan))
+            if not cells:
+                continue
+            if any(c.lower() in ("benefit name", "base stat") for c, _ in cells):
+                continue
             if len(cells) >= 2:
-                name, val = cells[0], cells[1]
-                if name.lower() in ("benefit name", "base stat"):
+                name, _ = cells[0]
+                val, rs = cells[1]
+                if not name or not val:
                     continue
                 perks.append({"name": name, "base_value_raw": val})
+                if rs > 1:
+                    pending_value = val
+                    pending_span = rs - 1
+                else:
+                    pending_value = None
+                    pending_span = 0
+            elif len(cells) == 1 and pending_span > 0 and pending_value is not None:
+                name, _ = cells[0]
+                if name:
+                    perks.append({"name": name, "base_value_raw": pending_value})
+                pending_span -= 1
+                if pending_span <= 0:
+                    pending_value = None
+                    pending_span = 0
     return perks
 
 
