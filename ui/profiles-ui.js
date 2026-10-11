@@ -32,7 +32,7 @@
   function iconForHref(href) {
     const file = (href || "").split("/").pop() || "";
     if (file === "army.html") return ICONS.army;
-    if (file === "index.html") return ICONS.artifactsPriority;
+    if (file === "artifacts.html") return ICONS.artifactsPriority;
     if (file === "collection.html") return ICONS.artifactsCollection;
     if (file === "council.html") return ICONS.councilPriority;
     if (file === "council-collection.html") return ICONS.councilCollection;
@@ -45,7 +45,7 @@
   function titleForHref(href, fallback) {
     const file = (href || "").split("/").pop() || "";
     if (file === "army.html") return "Army loadout";
-    if (file === "index.html") return "Artifacts priority";
+    if (file === "artifacts.html") return "Artifacts priority";
     if (file === "collection.html") return "Artifacts collection";
     if (file === "council.html") return "Council priority";
     if (file === "council-collection.html") return "Council collection";

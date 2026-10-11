@@ -727,7 +727,7 @@
     if (!structured) {
       if (!collected.size) {
         el.list.innerHTML =
-          `<p class="collection-empty">No owned artifacts yet. Mark them on the <a href="index.html">Artifacts Priority</a> page.</p>`;
+          `<p class="collection-empty">No owned artifacts yet. Mark them on the <a href="artifacts.html">Artifacts Priority</a> page.</p>`;
       } else if (!owned.length) {
         el.list.innerHTML = `<p class="collection-empty">Nothing owned in ${DN.esc(ui.hall)} hall.</p>`;
       } else {
