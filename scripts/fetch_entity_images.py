@@ -63,9 +63,12 @@ ARMY_UNIT_FAMILIES = [
     "Bomber",
     "Fighter",
     "Paratrooper",
+    "Recon",
+    "Tactical Helicopter",
 ]
 
 ARMY_ALIASES: dict[str, list[str]] = {
+    "Recon": ["Recons", "Recon"],
     "Commando": ["Commandos", "Commando", "Guerrilla"],
     "Mortar Troop": ["Mortar", "Mortar Troop"],
     "Supply Vehicle": ["Supply Vehicles", "Supply Vehicle"],

@@ -700,7 +700,7 @@
     const total = scores[axis];
     return (
       `<div class="axis-total-only" title="${
-        scoreMode === "maxrow" ? "Best line" : "Combined"
+        scoreMode === "maxrow" ? "Showcase" : "Hall"
       }">${formatScore(total)}</div>`
     );
   }

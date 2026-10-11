@@ -4,6 +4,14 @@
     "thumb_size": 400
   },
   "images": {
+    "Recon": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/4/46/Recon.jpg/revision/latest?cb=20200405183257",
+      "source_title": "Recons"
+    },
+    "Tactical Helicopter": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/2/2f/Tactical_Helicopter_Mk.1.png/revision/latest/scale-to-width-down/400?cb=20170713032957",
+      "source_title": "Tactical Helicopter"
+    },
     "Bazooka": {
       "url": "https://static.wikia.nocookie.net/dominations/images/1/18/Bazooka.jpg/revision/latest?cb=20160407151940",
       "source_title": "Bazooka"

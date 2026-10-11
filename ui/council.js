@@ -254,7 +254,7 @@
     if (!scores.lines.length) return C.blankSpan(C.BLANK);
     return (
       `<div class="axis-total-only" title="${
-        scoreMode === "maxrow" ? "Best line" : "Combined"
+        scoreMode === "maxrow" ? "Showcase" : "Hall"
       }">${formatScore(scores[axis])}</div>`
     );
   }
@@ -612,7 +612,7 @@
     const filtered = rows.filter(matches).sort(compareRows);
     const ownedCount = rows.filter((r) => isOwnedHere(C.text(r.id))).length;
     const modeLabel = C.modeLabel(ui.mode);
-    const scoreLabel = scoreMode === "maxrow" ? "Best" : "Sum";
+    const scoreLabel = scoreMode === "maxrow" ? "Showcase" : "Hall";
 
     el.stats.innerHTML =
       `<span class="chip">${filtered.length} / ${rows.length} shown</span>` +
