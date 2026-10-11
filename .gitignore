@@ -2,3 +2,7 @@
 *.pyc
 .DS_Store
 Thumbs.db
+
+# Local research mines / dumps — not required for Pages (site is ui/)
+data/temp/*
+!data/temp/.gitkeep

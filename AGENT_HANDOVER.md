@@ -1,7 +1,7 @@
 # DomiNations Artifacts — Agent Handover
 
 **Date:** 2026-09-05  
-**Status:** Canonical v4 — BHG Leftwich confirmation; Tutankhamun Released; legendary costs **57/118**; cost source map written. Do **not** rebuild HTML UI yet (cost still sparse; Leftwich/phantoms Uncertain).  
+**Status:** Canonical v4 (evening re-verify) — Leftwich BHG thread live-confirmed; phantoms stay Uncertain; no new cost calendars; legendary costs still **57/118**. Do **not** rebuild HTML UI yet.  
 **Mode:** Auto — do not ask for approval; execute; checkpoint to disk often.
 
 ---

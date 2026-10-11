@@ -1,0 +1,164 @@
+/* Council-specific layout overrides (shared chrome lives in styles.css). */
+
+.page-council-collection .top {
+  align-items: flex-start;
+}
+
+.council-collection-layout {
+  grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.85fr);
+}
+
+.council-card.is-owned {
+  border-color: var(--collected-edge);
+}
+
+.council-card.is-active {
+  box-shadow: inset 3px 0 0 var(--collected-edge);
+  border-color: var(--collected-edge);
+}
+
+.council-card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.council-card-actions .owned-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.45rem;
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--text);
+}
+
+.hall-checks {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  flex: 0 0 auto;
+}
+
+.hall-check {
+  gap: 0.25rem;
+  padding: 0.12rem 0.35rem;
+  min-width: 0;
+  line-height: 1;
+}
+
+.hall-check .hall-check-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  line-height: 1;
+  color: var(--muted);
+}
+
+.hall-check.is-owned .hall-check-label {
+  color: var(--collected-edge);
+}
+
+.council-card-actions .hall-checks {
+  flex-direction: row;
+  gap: 0.35rem;
+}
+
+.council-card-actions select {
+  padding: 0.3rem 0.45rem;
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  background: var(--bg);
+  color: var(--text);
+  font: inherit;
+  font-size: 0.8rem;
+}
+
+.owned-rarity-badge {
+  display: inline-block;
+  margin-left: 0.35rem;
+  padding: 0.05rem 0.35rem;
+  border-radius: 3px;
+  background: var(--collected-bg);
+  color: var(--collected-edge);
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+
+.active-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin-bottom: 1.25rem;
+}
+
+.active-chip {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+  align-items: center;
+  padding: 0.45rem 0.55rem;
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  background: var(--panel);
+  font-size: 0.85rem;
+}
+
+.active-chip-text {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.active-chip button {
+  margin: 0;
+  padding: 0.2rem 0.45rem;
+  border: 1px solid var(--line);
+  border-radius: 3px;
+  background: var(--bg);
+  color: var(--muted);
+  font: inherit;
+  font-size: 0.75rem;
+  cursor: pointer;
+}
+
+.active-chip button:hover {
+  color: var(--text);
+}
+
+.totals-title {
+  margin-top: 0.5rem;
+}
+
+.perk-row.is-best-line .perk-name {
+  font-weight: 700;
+}
+
+@media (max-width: 900px) {
+  body.page-council-collection {
+    height: auto;
+    overflow: visible;
+  }
+
+  body.page-council-collection .app-main {
+    height: auto;
+    overflow: visible;
+  }
+
+  .council-collection-layout {
+    grid-template-columns: 1fr;
+    flex: none;
+    overflow: visible;
+  }
+
+  .collection-list-panel {
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .council-collection-layout .collection-list-panel,
+  .council-collection-layout .totals-panel {
+    overflow: visible;
+  }
+}

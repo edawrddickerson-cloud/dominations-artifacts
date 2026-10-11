@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Artifacts · Collection</title>
+  <link rel="stylesheet" href="styles.css?v=32" />
+</head>
+<body class="page-collection">
+  <nav class="site-nav" aria-label="Pages">
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Army Loadout</h2>
+      <a href="army.html">Army</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Artifacts</h2>
+      <a href="index.html">Priority</a>
+      <a href="collection.html" aria-current="page">Collection</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Council</h2>
+      <a href="council.html">Priority</a>
+      <a href="council-collection.html">Collection</a>
+    </div>
+  </nav>
+  <div class="app-main">
+  <header class="top">
+    <div class="top-inner">
+      <h1>DomiNations Artifacts</h1>
+      <p class="sub">Collection loadout · Main/War · 3 Legendary + 3 Mythical Hall · Hermitage · Showcase</p>
+    </div>
+  </header>
+
+  <section class="filters collection-controls" aria-label="Collection controls">
+    <div class="filter-main">
+      <fieldset class="seg-field">
+        <legend>Museum hall</legend>
+        <div class="seg" role="group" aria-label="Museum hall">
+          <button type="button" class="seg-btn" data-hall="Main" id="hall-main" aria-pressed="false">Main</button>
+          <button type="button" class="seg-btn" data-hall="War" id="hall-war" aria-pressed="false">War</button>
+        </div>
+      </fieldset>
+      <fieldset class="seg-field">
+        <legend>View</legend>
+        <div class="seg" role="group" aria-label="View mode">
+          <button type="button" class="seg-btn" data-view-mode="list" id="view-list" aria-pressed="false">List</button>
+          <button type="button" class="seg-btn" data-view-mode="structured" id="view-structured" aria-pressed="false">Structured</button>
+        </div>
+      </fieldset>
+      <fieldset class="seg-field">
+        <legend>Values</legend>
+        <div class="seg" role="group" aria-label="Value mode">
+          <button type="button" class="seg-btn" data-value-mode="actual" id="mode-actual" aria-pressed="false">Actual</button>
+          <button type="button" class="seg-btn" data-value-mode="max" id="mode-max" aria-pressed="false">Max</button>
+        </div>
+      </fieldset>
+    </div>
+    <p class="collection-hint" id="collection-hint"></p>
+  </section>
+
+  <p id="error" class="error" hidden></p>
+
+  <div class="collection-layout">
+    <section class="collection-list-panel" aria-label="Owned artifacts">
+      <h2 class="panel-title">Owned</h2>
+      <div id="collection-list" class="collection-list"></div>
+      <div id="museum-board" class="museum-board" hidden></div>
+    </section>
+    <aside class="totals-panel" aria-label="Active perk totals">
+      <h2 class="panel-title">Active totals</h2>
+      <p class="totals-sub" id="totals-sub"></p>
+      <div id="totals-list" class="totals-list"></div>
+    </aside>
+  </div>
+
+  <div id="slot-picker" class="slot-picker" hidden>
+    <div class="slot-picker-backdrop" data-action="picker-close"></div>
+    <div class="slot-picker-panel" role="dialog" aria-modal="true" aria-labelledby="slot-picker-title">
+      <header class="slot-picker-head">
+        <h3 id="slot-picker-title">Choose artifact</h3>
+        <button type="button" class="slot-picker-close" data-action="picker-close" aria-label="Close">×</button>
+      </header>
+      <div id="slot-picker-list" class="slot-picker-list"></div>
+    </div>
+  </div>
+
+  </div>
+  <script src="shared.js?v=22"></script>
+  <script src="profiles-ui.js?v=5"></script>
+  <script src="collection.js?v=16"></script>
+</body>
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Council · Stat ratings</title>
+  <link rel="stylesheet" href="styles.css?v=31" />
+  <link rel="stylesheet" href="council.css?v=10" />
+</head>
+<body class="page-ratings page-council-ratings">
+  <nav class="site-nav" aria-label="Pages">
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Army Loadout</h2>
+      <a href="army.html">Army</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Artifacts</h2>
+      <a href="index.html">Priority</a>
+      <a href="collection.html">Collection</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Council</h2>
+      <a href="council.html">Priority</a>
+      <a href="council-collection.html">Collection</a>
+    </div>
+  </nav>
+  <div class="app-main">
+  <header class="top">
+    <div class="top-inner">
+      <h1>DomiNations Council</h1>
+      <p class="sub">Stat ratings · −5…+5 Off/Def · profile-scoped · seeded from matching artifact perk defaults</p>
+    </div>
+  </header>
+
+  <section class="filters ratings-page-controls" aria-label="Ratings controls">
+    <div class="filter-main">
+      <label class="filter-control">
+        Search
+        <input type="search" id="ratings-q" placeholder="Search stats…" autocomplete="off" />
+      </label>
+    </div>
+    <div class="filter-actions">
+      <button type="button" id="ratings-reset" class="btn">Reset to defaults</button>
+    </div>
+  </section>
+
+  <p id="error" class="error" hidden></p>
+  <p class="ratings-hint" id="ratings-hint">
+    Scores apply on Council Priority (rating × bonus magnitude). Defaults come from matching artifact perk ratings; overrides stay in a separate council store per profile.
+  </p>
+
+  <div class="ratings-page-scroll" id="ratings-scroll">
+    <div class="ratings-page-grid" id="ratings-grid" style="--ratings-groups: 1"></div>
+  </div>
+  </div>
+
+  <script src="shared.js?v=22"></script>
+  <script src="profiles-ui.js?v=6"></script>
+  <script src="council-shared.js?v=7"></script>
+  <script src="council-ratings.js?v=3"></script>
+</body>
+</html>

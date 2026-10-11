@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Council · Collection</title>
+  <link rel="stylesheet" href="styles.css?v=31" />
+  <link rel="stylesheet" href="council.css?v=10" />
+</head>
+<body class="page-council-collection">
+  <nav class="site-nav" aria-label="Pages">
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Army Loadout</h2>
+      <a href="army.html">Army</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Artifacts</h2>
+      <a href="index.html">Priority</a>
+      <a href="collection.html">Collection</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Council</h2>
+      <a href="council.html">Priority</a>
+      <a href="council-collection.html" aria-current="page">Collection</a>
+    </div>
+  </nav>
+  <div class="app-main">
+  <header class="top">
+    <div class="top-inner">
+      <h1>DomiNations Council</h1>
+      <p class="sub">Collection · owned councilors · Main/War · activate up to 7</p>
+    </div>
+  </header>
+
+  <section class="filters collection-controls" aria-label="Council collection controls">
+    <div class="filter-main">
+      <fieldset class="seg-field">
+        <legend>Hall</legend>
+        <div class="seg" role="group" aria-label="Hall">
+          <button type="button" class="seg-btn" id="mode-main" data-mode="main" aria-pressed="false">Main</button>
+          <button type="button" class="seg-btn" id="mode-war" data-mode="war" aria-pressed="false">War</button>
+        </div>
+      </fieldset>
+      <label class="filter-control">
+        Search
+        <input type="search" id="q" placeholder="Name…" autocomplete="off" />
+      </label>
+      <label class="filter-control">
+        Type
+        <select id="type">
+          <option value="">All</option>
+        </select>
+      </label>
+      <div class="slot-chips" id="slot-chips" aria-live="polite"></div>
+    </div>
+    <p class="collection-hint" id="collection-hint">
+      Own on Priority for the selected Hall. Here: rarity + active Council (up to 7) for that Hall.
+    </p>
+  </section>
+
+  <p id="error" class="error" hidden></p>
+
+  <div class="collection-layout council-collection-layout">
+    <section class="collection-list-panel" aria-label="Owned councilors">
+      <h2 class="panel-title">Owned <span id="owned-count" class="panel-count"></span></h2>
+      <div id="collection-list" class="collection-list"></div>
+    </section>
+    <aside class="totals-panel" aria-label="Active council totals">
+      <h2 class="panel-title">Active council <span id="active-count" class="panel-count"></span></h2>
+      <div id="active-list" class="active-list"></div>
+      <h2 class="panel-title totals-title">Bonus totals</h2>
+      <p class="totals-sub" id="totals-sub"></p>
+      <div id="totals-list" class="totals-list"></div>
+    </aside>
+  </div>
+
+  </div>
+  <script src="shared.js?v=22"></script>
+  <script src="profiles-ui.js?v=6"></script>
+  <script src="council-shared.js?v=7"></script>
+  <script src="council-collection.js?v=5"></script>
+</body>
+</html>

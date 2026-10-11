@@ -1,0 +1,38 @@
+{
+  "meta": {
+    "source": "https://dominations.fandom.com/api.php",
+    "thumb_size": 400
+  },
+  "images": {
+    "joan-of-arc": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/0/0e/Joan_of_Arc.png/revision/latest?cb=20160219091411",
+      "source_title": "Joan of Arc",
+      "name": "Joan of Arc"
+    },
+    "cleopatra": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/b/b0/Cleopatra.png/revision/latest?cb=20150320205845",
+      "source_title": "Cleopatra",
+      "name": "Cleopatra"
+    },
+    "guan-yu": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/5/5f/Guan_Yu.png/revision/latest/scale-to-width-down/400?cb=20180920212651",
+      "source_title": "Guan Yu",
+      "name": "Guan Yu"
+    },
+    "hannibal": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/a/ab/Hannibal.png/revision/latest?cb=20180915202502",
+      "source_title": "Hannibal",
+      "name": "Hannibal"
+    },
+    "leonidas": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/a/a6/Leonidas.jpg/revision/latest/scale-to-width-down/400?cb=20191015190456",
+      "source_title": "Leonidas",
+      "name": "Leonidas"
+    },
+    "miyamoto-musashi": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/8/8a/Miyamoto_Musashi.png/revision/latest/scale-to-width-down/400?cb=20180731203933",
+      "source_title": "Miyamoto Musashi",
+      "name": "Miyamoto Musashi"
+    }
+  }
+}

@@ -1,106 +1,4 @@
 {
-  "Antikythera Mechanism": {
-    "cost": "300",
-    "cost_currency": "Legendary Tokens",
-    "acquisition_method": "Marco Polo",
-    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
-  },
-  "Christmas Football": {
-    "cost": "100",
-    "cost_currency": "Legendary Tokens",
-    "acquisition_method": "Marco Polo",
-    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
-  },
-  "Da Vinci's Flying Machine": {
-    "cost": "300",
-    "cost_currency": "Legendary Tokens",
-    "acquisition_method": "Marco Polo",
-    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
-  },
-  "Demarcation Stone": {
-    "cost": "100",
-    "cost_currency": "Legendary Tokens",
-    "acquisition_method": "Marco Polo",
-    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
-  },
-  "Great Imperial Crown": {
-    "cost": "100",
-    "cost_currency": "Legendary Tokens",
-    "acquisition_method": "Marco Polo",
-    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
-  },
-  "Julius Caesar Statue": {
-    "cost": "300",
-    "cost_currency": "Legendary Tokens",
-    "acquisition_method": "Marco Polo",
-    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
-  },
-  "Nefertiti Bust": {
-    "cost": "100",
-    "cost_currency": "Legendary Tokens",
-    "acquisition_method": "Marco Polo",
-    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
-  },
-  "Supermarine Spitfire Engine": {
-    "cost": "300",
-    "cost_currency": "Legendary Tokens",
-    "acquisition_method": "Marco Polo",
-    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
-  },
-  "The Art of War": {
-    "cost": "300",
-    "cost_currency": "Legendary Tokens",
-    "acquisition_method": "Marco Polo",
-    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
-  },
-  "Vespa 150 TAP": {
-    "cost": "100",
-    "cost_currency": "Legendary Tokens",
-    "acquisition_method": "Marco Polo",
-    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
-  },
-  "ASDIC Type 113X": {
-    "cost": "300",
-    "cost_currency": "Legendary Tokens",
-    "acquisition_method": "Marco Polo (Anniversary Vault)",
-    "source": "https://www.dominationsworld.com/blog/9th-anniversary"
-  },
-  "Gemini 8 Gloves": {
-    "cost": "300",
-    "cost_currency": "Legendary Tokens",
-    "acquisition_method": "Marco Polo (Anniversary Vault)",
-    "source": "https://www.dominationsworld.com/blog/9th-anniversary"
-  },
-  "Helgö Buddha": {
-    "cost": "300",
-    "cost_currency": "Legendary Tokens",
-    "acquisition_method": "Marco Polo (Anniversary Vault)",
-    "source": "https://www.dominationsworld.com/blog/9th-anniversary"
-  },
-  "Huey Armament System": {
-    "cost": "300",
-    "cost_currency": "Legendary Tokens",
-    "acquisition_method": "Marco Polo (Anniversary Vault)",
-    "source": "https://www.dominationsworld.com/blog/9th-anniversary"
-  },
-  "Maori War Club": {
-    "cost": "300",
-    "cost_currency": "Legendary Tokens",
-    "acquisition_method": "Marco Polo (Anniversary Vault)",
-    "source": "https://www.dominationsworld.com/blog/9th-anniversary"
-  },
-  "Plane Gyro Gunsight": {
-    "cost": "300",
-    "cost_currency": "Legendary Tokens",
-    "acquisition_method": "Marco Polo (Anniversary Vault)",
-    "source": "https://www.dominationsworld.com/blog/9th-anniversary"
-  },
-  "Thinker of Cernavoda": {
-    "cost": "300",
-    "cost_currency": "Legendary Tokens",
-    "acquisition_method": "Marco Polo (Anniversary Vault)",
-    "source": "https://www.dominationsworld.com/blog/9th-anniversary"
-  },
   "10th Mountain Division War Kit": {
     "cost": "100",
     "cost_currency": "Legendary Tokens",
@@ -113,11 +11,29 @@
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
   },
+  "ASDIC Type 113X": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo (Anniversary Vault)",
+    "source": "https://www.dominationsworld.com/blog/9th-anniversary"
+  },
+  "ASM-135 Anti-Satellite Missile": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "user-provided-2026-09-06"
+  },
   "Admiral Yi’s Helmet": {
     "cost": "100",
     "cost_currency": "Legendary Tokens",
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025"
+  },
+  "Antikythera Mechanism": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
   },
   "Arm Reliquary of Charlemagne": {
     "cost": "300",
@@ -131,6 +47,12 @@
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
   },
+  "Augustus Statue Muscle Cuirass": {
+    "cost": "100",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+  },
   "Aztec Calendar": {
     "cost": "100",
     "cost_currency": "Legendary Tokens",
@@ -143,11 +65,35 @@
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
   },
+  "Bust of Ramesses II": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "user-provided-2026-09-06"
+  },
+  "Caligula's Ring": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "user-provided-2026-09-06"
+  },
   "Capt. McConnell's Hero Ensemble": {
     "cost": "300",
     "cost_currency": "Legendary Tokens",
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025"
+  },
+  "Captain's Croix de Guerre": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+  },
+  "Christmas Football": {
+    "cost": "100",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
   },
   "Clem Sohn's Wingsuit": {
     "cost": "300",
@@ -167,11 +113,47 @@
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-may-2025"
   },
+  "Crocodile Mask": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "user-provided-2026-09-06"
+  },
+  "Cryolophosaurus Skull": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "user-provided-2026-09-06"
+  },
+  "Da Vinci's Flying Machine": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
+  },
+  "Da Vinci's Machine Gun": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "user-provided-2026-09-06"
+  },
+  "Demarcation Stone": {
+    "cost": "100",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
+  },
   "Desert Storm PSN-8 Manpack": {
     "cost": "300",
     "cost_currency": "Legendary Tokens",
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+  },
+  "DomiNations Game Box": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "user-provided-2026-09-06"
   },
   "Elephant Archer Quiver": {
     "cost": "300",
@@ -191,6 +173,12 @@
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
   },
+  "Gemini 8 Gloves": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo (Anniversary Vault)",
+    "source": "https://www.dominationsworld.com/blog/9th-anniversary"
+  },
   "Gemini 8 Helmet": {
     "cost": "100",
     "cost_currency": "Legendary Tokens",
@@ -202,6 +190,36 @@
     "cost_currency": "Legendary Tokens",
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+  },
+  "Great Imperial Crown": {
+    "cost": "100",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
+  },
+  "Helgö Buddha": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo (Anniversary Vault)",
+    "source": "https://www.dominationsworld.com/blog/9th-anniversary"
+  },
+  "Huey Armament System": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo (Anniversary Vault)",
+    "source": "https://www.dominationsworld.com/blog/9th-anniversary"
+  },
+  "Joyeuse Sword": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "user-provided-2026-09-06"
+  },
+  "Julius Caesar Statue": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
   },
   "Leonidas Bust": {
     "cost": "300",
@@ -215,11 +233,23 @@
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
   },
+  "Liberty Bell": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "user-provided-2026-09-06"
+  },
   "Lycurgus Cup": {
     "cost": "300",
     "cost_currency": "Legendary Tokens",
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+  },
+  "Maori War Club": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo (Anniversary Vault)",
+    "source": "https://www.dominationsworld.com/blog/9th-anniversary"
   },
   "Mask of Agamemnon": {
     "cost": "100",
@@ -233,17 +263,71 @@
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
   },
+  "Napoleon's Bicorne Hat": {
+    "cost": "100",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+  },
+  "Napoleon's Boxlock Pistol": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "user-provided-2026-09-06"
+  },
+  "Narmer Palette": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "user-provided-2026-09-06"
+  },
+  "Nefertiti Bust": {
+    "cost": "100",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
+  },
+  "Norden Bombsight": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "user-provided-2026-09-06"
+  },
   "Normandy SCR-536 \"Walkie-Talkie\"": {
     "cost": "100",
     "cost_currency": "Legendary Tokens",
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
   },
+  "Olmec Colossal Heads": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "user-provided-2026-09-06"
+  },
+  "Plane Gyro Gunsight": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo (Anniversary Vault)",
+    "source": "https://www.dominationsworld.com/blog/9th-anniversary"
+  },
   "Quimbaya Treasure": {
     "cost": "300",
     "cost_currency": "Legendary Tokens",
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+  },
+  "RQ-2 Pioneer": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "user-provided-2026-09-06"
+  },
+  "Ramesses Ⅱ's Abu Simbel": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "user-provided-2026-09-06"
   },
   "Raven Rattle": {
     "cost": "300",
@@ -256,6 +340,12 @@
     "cost_currency": "Legendary Tokens",
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-june-2025"
+  },
+  "Rosetta Stone": {
+    "cost": "100",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
   },
   "Sanada Yukimura's Armor": {
     "cost": "300",
@@ -287,17 +377,35 @@
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
   },
+  "Supermarine Spitfire Engine": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
+  },
   "Sutton Hoo Helmet": {
     "cost": "100",
     "cost_currency": "Legendary Tokens",
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
   },
+  "The Art of War": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
+  },
   "The White Death's War Kit": {
     "cost": "100",
     "cost_currency": "Legendary Tokens",
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-august-2025"
+  },
+  "Thinker of Cernavoda": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo (Anniversary Vault)",
+    "source": "https://www.dominationsworld.com/blog/9th-anniversary"
   },
   "Tizona Sword": {
     "cost": "100",
@@ -311,10 +419,22 @@
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
   },
+  "Vespa 150 TAP": {
+    "cost": "100",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "https://www.dominationsworld.com/blog/august-legendary-token-calendar"
+  },
   "Warka Vase": {
     "cost": "300",
     "cost_currency": "Legendary Tokens",
     "acquisition_method": "Marco Polo",
     "source": "https://www.dominationsworld.com/blog/legendary-calendar-july-2025"
+  },
+  "Welrod MkII": {
+    "cost": "300",
+    "cost_currency": "Legendary Tokens",
+    "acquisition_method": "Marco Polo",
+    "source": "user-provided-2026-09-06"
   }
 }

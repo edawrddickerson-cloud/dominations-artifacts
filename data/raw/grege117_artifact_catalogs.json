@@ -1,0 +1,1847 @@
+{
+  "source": "https://grege117.github.io/dominationsTools/",
+  "captured_note": "Downloaded mythical/legendary War+Main JSON catalogs + councilors",
+  "catalogs": {
+    "mythical_war": {
+      "grade": "Mythical",
+      "hall": "War",
+      "source": "https://dominations.fandom.com/wiki/Mythical_War_Artifacts",
+      "artifacts": [
+        {
+          "name": "10th Mountain Division War Kit",
+          "status": "available",
+          "bonuses": [
+            "Ranged Siege Damage +13%",
+            "APC Damage +13%",
+            "APC Hitpoints +12%",
+            "Machine Gun Infantry Damage +13%",
+            "Enemy Defender Spawn Time +11%",
+            "Enemy Redoubt Damage -11%"
+          ]
+        },
+        {
+          "name": "Arm Reliquary of Charlemagne",
+          "status": "available",
+          "bonuses": [
+            "Transport Cooldown -11%",
+            "Paratrooper Damage +15%",
+            "Paratrooper Hitpoints +15%",
+            "Generals' Damage +15%",
+            "Fighter Damage +14%",
+            "Invading Heavy Tank Damage -11%"
+          ]
+        },
+        {
+          "name": "ASDIC Type 113X",
+          "status": "available",
+          "bonuses": [
+            "Invading Generals Hitpoints -14%",
+            "Invading Barracks Troop Damage -14%",
+            "Invading Factory Troop Damage -14%",
+            "Invading Airstrip Troop Damage -14%",
+            "Defender Spawn Time -14%",
+            "Missile Silo Damage +14%"
+          ]
+        },
+        {
+          "name": "British Kettle Drum",
+          "status": "available",
+          "bonuses": [
+            "Mortar Troop Attack Speed +7%",
+            "Mortar Troop Damage +11%",
+            "Barracks Troop Damage +12%",
+            "Barracks Troop Hitpoints +12%",
+            "Ranged Siege Damage +11%",
+            "Enemy Defender Spawn Time +11%"
+          ]
+        },
+        {
+          "name": "Caligula's Ring",
+          "status": "available",
+          "bonuses": [
+            "Ranged Siege Damage +14%",
+            "Paratrooper Damage +14%",
+            "Paratrooper Hitpoints +14%",
+            "Guerilla Damage +14%",
+            "Ranged Siege Damage +14%",
+            "Wall Sapper Damage +14%"
+          ]
+        },
+        {
+          "name": "Da Vinci's Flying Machine",
+          "status": "available",
+          "bonuses": [
+            "Fighter Hitpoints & Damage +7%",
+            "Fighters Damage +11%",
+            "Fighters Hitpoints +11%",
+            "Fighters Hitpoints +11%",
+            "Heavy Tank Damage +11%",
+            "Heavy Tank Hitpoints +11%"
+          ]
+        },
+        {
+          "name": "Demarcation Stone",
+          "status": "available",
+          "bonuses": [
+            "Missile Silo and Big Red Button Damage +11%",
+            "Heavy Infantry Damage +9%",
+            "Ranged Infantry Damage +9%",
+            "Supply Vehicles Healing +9%",
+            "Invading Machine Gun Infantry Damage -9%",
+            "All Enemy Defensive Towers Damage -9%"
+          ]
+        },
+        {
+          "name": "DomiNations Game Box",
+          "status": "available",
+          "bonuses": [
+            "Generals' Hitpoints and Damage +9%",
+            "Generals' Hitpoints +11%",
+            "Generals's Attack Speed +11%",
+            "Enemy Defender Spawn Time +11%",
+            "Generals' Damage +11%",
+            "General's Movement Speed +11%"
+          ]
+        },
+        {
+          "name": "Elephant Archer Quiver",
+          "status": "available",
+          "bonuses": [
+            "Air Defense Damage +11%",
+            "Invading Airstrip Troop Damage -11%",
+            "Invading Bomber Hitpoints -11%",
+            "Heavy Cavalry Damage +11%",
+            "Heavy Cavalry Damage +11%",
+            "Air Defense Attack Speed +11%"
+          ]
+        },
+        {
+          "name": "Gemini 8 Gloves",
+          "status": "available",
+          "bonuses": [
+            "Defenders Movement Speed +9%",
+            "Defender Hitpoints +12%",
+            "Enemy Defender Spawn Time +12%",
+            "All Defensive Towers Hitpoints +12%",
+            "All Defensive Towers Damage +12%",
+            "Enemy Missile Silo Damage -12%"
+          ]
+        },
+        {
+          "name": "Gemini 8 Helmet",
+          "status": "available",
+          "bonuses": [
+            "Factory Troop Damage +11%",
+            "Attack Helicopter Damage +11%",
+            "Armored Car Damage +11%",
+            "Bazooka Damage +11%",
+            "Heavy Tank Damage +11%",
+            "Barracks Troop Damage +11%"
+          ]
+        },
+        {
+          "name": "General Pershing's Bas-Relief",
+          "status": "available",
+          "bonuses": [
+            "Barracks Troop Damage +9%",
+            "Heavy Infantry Hitpoints +9%",
+            "Ranged Infantry Hitpoints +9%",
+            "Heavy Cavalry Hitpoints +9%",
+            "Ranged Siege Damage +9%",
+            "Raider Damage +9%"
+          ]
+        },
+        {
+          "name": "Huey Armament System",
+          "status": "available",
+          "bonuses": [
+            "Barracks Troop Damage +9%",
+            "Attack Helicopter Damage +12%",
+            "Attack Helicopter Damage +12%",
+            "Attack Helicopter Hitpoints +12%",
+            "Bazooka Damage +12%",
+            "All Enemy Defensive Towers Damage -11%"
+          ]
+        },
+        {
+          "name": "Joyeuse Sword",
+          "status": "available",
+          "bonuses": [
+            "Heavy Tank Damage +11%",
+            "Factory Troop Damage +11%",
+            "Heavy Tank Damage +11%",
+            "Bomber Damage +11%",
+            "Generals' Damage +11%",
+            "Defender Damage +11%"
+          ]
+        },
+        {
+          "name": "Leonidas Bust",
+          "status": "available",
+          "bonuses": [
+            "Bazooka Damage +13%",
+            "Mercenary Camp Deploys Spartans when Destroyed +1",
+            "Quick Victory Time +11%",
+            "Generals Hitpoints and Damage +11%",
+            "Bazooka Damage +11%",
+            "Bazooka Hitpoints +11%"
+          ]
+        },
+        {
+          "name": "Maori War Club",
+          "status": "available",
+          "bonuses": [
+            "Generals' Hitpoints and Damage +12%",
+            "All Defensive Towers Hitpoints and Damage +8%",
+            "Defender Spawn Time -11%",
+            "Defender Movement Speed +8%",
+            "Invading Recon Scan Duration -10%",
+            "Generals' Attack Speed +8%"
+          ]
+        },
+        {
+          "name": "Norden Bombsight",
+          "status": "available",
+          "bonuses": [
+            "Invading Fighter Damage -13%",
+            "APC Deploys Marines On Death +1",
+            "Coalition Troop Damage +13%",
+            "Defenders Spawn Time -13%",
+            "Invading Fighter Damage -13%",
+            "Machine Gun Infantry Damage +13%"
+          ]
+        },
+        {
+          "name": "Ramesses Ⅱ's Abu Simbel",
+          "status": "available",
+          "bonuses": [
+            "Defender DMG +11%",
+            "All Defensive Towers Hitpoints +11%",
+            "Defender Spawn Time -11%",
+            "Invading Bazooka Damage -12%",
+            "Invading Guerrilla Damage -11%",
+            "All Defensive Towers Damage +11%"
+          ]
+        },
+        {
+          "name": "Red Baron's Engine",
+          "status": "available",
+          "bonuses": [
+            "Enemy Air Defense Damage +11%",
+            "Fighter Damage +11%",
+            "Bomber Damage +11%",
+            "Heavy Tank Damage +11%",
+            "Machine Gun Infantry Damage +11%",
+            "Invading Fighters Damage -11%"
+          ]
+        },
+        {
+          "name": "Supermarine Spitfire Engine",
+          "status": "available",
+          "bonuses": [
+            "Airstrip Troop Damage +8%",
+            "Bomber Damage +14%",
+            "Bomber Hitpoints +14%",
+            "Bomber Hitpoints +14%",
+            "Heavy Tank Damage +14%",
+            "Fighter Damage +14%"
+          ]
+        },
+        {
+          "name": "T-34 Tank Engine",
+          "status": "available",
+          "bonuses": [
+            "Invading Barracks Troop Damage -11%",
+            "Heavy Tank Damage +11%",
+            "Heavy Tank Hitpoints +11%",
+            "Invading Heavy Tank Damage -11%",
+            "Invading Heavy Tank Hitpoints -11%",
+            "Invading Heavy Cavalry Damage -11%"
+          ]
+        },
+        {
+          "name": "The Art of War",
+          "status": "available",
+          "bonuses": [
+            "Anti-Tank Gun Damage +20%",
+            "Heavy Tank Hitpoints +14%",
+            "Heavy Tank Damage +14%",
+            "Invading Generals' Hitpoints -14%",
+            "Invading Generals' Damage -14%",
+            "Generals' Hitpoints and Damage +14%"
+          ]
+        },
+        {
+          "name": "The White Death's War Kit",
+          "status": "available",
+          "bonuses": [
+            "Sniper Tower Damage +11%",
+            "Sniper Tower Damage +11%",
+            "Sniper Tower Hitpoints +11%",
+            "Enemy Defender Spawn Time +11%",
+            "All Defensive Towers Hitpoints +9%",
+            "All Defensive Towers Damage +9%"
+          ]
+        },
+        {
+          "name": "Tizona Sword",
+          "status": "available",
+          "bonuses": [
+            "Ranged Siege Damage +11%",
+            "Enemy Defender Spawn Time +11%",
+            "Heavy Cavalry Damage +11%",
+            "Heavy Cavalry Hitpoints +6%",
+            "Ranged Siege Damage +11%",
+            "Ranged Siege Hitpoints +6%"
+          ]
+        },
+        {
+          "name": "Vz-9 Avrocar",
+          "status": "available",
+          "bonuses": [
+            "Air Defense Attack Speed +14%",
+            "Invading Fighter Damage -14%",
+            "Air Defense Damage +14%",
+            "Invading Bomber Damage -14%",
+            "Invading Fighter Hitpoints -14%",
+            "Invading Bomber Hitpoints -14%"
+          ]
+        }
+      ]
+    },
+    "mythical_main": {
+      "grade": "Mythical",
+      "hall": "Main",
+      "source": "https://dominations.fandom.com/wiki/Mythical_Artifacts",
+      "artifacts": [
+        {
+          "name": "Admiral Yi’s Helmet",
+          "status": "available",
+          "bonuses": [
+            "Enemy Sabotage Duration -12%",
+            "Invading General's Damage -11%",
+            "Enemy Defender Spawn Time +11%",
+            "Defender Damage +11%",
+            "Defender Hitpoints +16%",
+            "Invading General's Hitpoints -16%"
+          ]
+        },
+        {
+          "name": "Augustus Statue Muscle Cuirass",
+          "status": "available",
+          "bonuses": [
+            "Generals' Attack Speed +8%",
+            "Generals' Damage +15%",
+            "Generals' Damage +15%",
+            "Generals' Hitpoints +15%",
+            "Generals' Hitpoints +15%",
+            "Enemy Defender Spawn Time +15%"
+          ]
+        },
+        {
+          "name": "Aztec Calendar",
+          "status": "available",
+          "bonuses": [
+            "Factory Troop Damage +11%",
+            "Food from Farms +15%",
+            "Gold from Caravans +15%",
+            "Oil from Oil Wells +11%",
+            "Oil from Oil Wells +11%",
+            "Vault Interest +11%"
+          ]
+        },
+        {
+          "name": "Captain's Croix de Guerre",
+          "status": "available",
+          "bonuses": [
+            "Enemy Defender Hitpoints -15%",
+            "Food Looted +15%",
+            "Gold Looted +15%",
+            "Oil Looted +15%",
+            "All Resources Looted +15%",
+            "All Resources Looted +15%"
+          ]
+        },
+        {
+          "name": "Double-Headed Serpent",
+          "status": "available",
+          "bonuses": [
+            "Library Tech Resource Cost -11%",
+            "Oil Looted +16%",
+            "Oil Looted +16%",
+            "Heavy Tank Damage +11%",
+            "Fighter Damage +11%",
+            "All Resources Looted +11%"
+          ]
+        },
+        {
+          "name": "Enigma Machine",
+          "status": "available",
+          "bonuses": [
+            "Enemy Defender Hitpoints -16%",
+            "Quick Victory Time +16%",
+            "Heavy Tank Attack Speed +16%",
+            "Enemy Defender Spawn Time +15%",
+            "University Research Time -11%",
+            "Library Research Time -11%"
+          ]
+        },
+        {
+          "name": "Fengguan Phoenix Crown",
+          "status": "available",
+          "bonuses": [
+            "Invading Barracks Troop Hitpoints -11%",
+            "Oil from Oil Wells +11%",
+            "Oil from Oil Wells -15%",
+            "All Defensive Towers Damage -15%",
+            "Defender Spawn Time +15%",
+            "Invading Barracks Troop Damage +15%"
+          ]
+        },
+        {
+          "name": "Fire Breathing Bunny Fossil",
+          "status": "available",
+          "bonuses": [
+            "All Resources Looted +15%",
+            "Food Looted +15%",
+            "Gold Looted +15%",
+            "Oil Looted +15%",
+            "Forest Expansion Cost Refund +15%",
+            "First Aid Duration +15%"
+          ]
+        },
+        {
+          "name": "Leoni Parade Shield",
+          "status": "available",
+          "bonuses": [
+            "Generals' Hitpoints and Damage +11%",
+            "Heavy Tank Hitpoints +11%",
+            "Missile Silo Damage +11%",
+            "Bomber Damage +11%",
+            "Generals' Attack Speed +10%",
+            "Generals' Damage +11%"
+          ]
+        },
+        {
+          "name": "Li Vessel",
+          "status": "available",
+          "bonuses": [
+            "Heavy Infantry Movement Speed +12%",
+            "APC Deploy Time -11%",
+            "APC Hitpoints +12%",
+            "Heavy Infantry Attack Speed +16%",
+            "Heavy Infantry Damage +16%",
+            "Guerrilla Movement Speed +10%"
+          ]
+        },
+        {
+          "name": "Mask of Agamemnon",
+          "status": "available",
+          "bonuses": [
+            "All Defensive Tower HP & DMG +8%",
+            "Tower Hitpoints +16%",
+            "Tower Damage +16%",
+            "Catapult Hitpoints +16%",
+            "Catapult Damage +16%",
+            "All Defensive Tower Damage +12%"
+          ]
+        },
+        {
+          "name": "Napoleon's Bicorne Hat",
+          "status": "available",
+          "bonuses": [
+            "Airstrip Troop Damage +11%",
+            "Barracks Troop Damage +11%",
+            "Barracks Troop Hitpoints +11%",
+            "Factory Troop Damage +11%",
+            "Factory Troop Hitpoints +11%",
+            "Airstrip Troop Damage +11%"
+          ]
+        },
+        {
+          "name": "Pompus' Comb",
+          "status": "available",
+          "bonuses": [
+            "Enemy Sabotage Duration -12%",
+            "University Research Time -15%",
+            "Library Research Time -15%",
+            "Looted Resource Refund +15%",
+            "Defender Movement Speed +12%",
+            "Enemy Sabotage Duration -12%"
+          ]
+        },
+        {
+          "name": "Rosetta Stone",
+          "status": "available",
+          "bonuses": [
+            "Library Research Time -15%",
+            "Library Tech Resource Cost -15%",
+            "Vault Capacity +15%",
+            "Oil from Oil Wells +11%",
+            "Looted Resource Refund +11%",
+            "Forest Expansion Cost Refund +11%"
+          ]
+        },
+        {
+          "name": "Ruyi Scepter",
+          "status": "available",
+          "bonuses": [
+            "Factory Troop HP +11%",
+            "Enemy Defender Spawn Time +16%",
+            "Enemy Anti-Tank Gun Damage -16%",
+            "Enemy Catapult Damage -16%",
+            "All Enemy Defensive Towers Hitpoints -11%",
+            "All Enemy Defensive Towers Damage -11%"
+          ]
+        },
+        {
+          "name": "Silla Gold Crown",
+          "status": "available",
+          "bonuses": [
+            "Library Tech Resource Cost -15%",
+            "Gold Looted +15%",
+            "Gold from Gold Mines +15%",
+            "Gold from Caravans +15%",
+            "Library Tech Resource Cost +15%",
+            "Ranged Infantry Damage -15%"
+          ]
+        },
+        {
+          "name": "Soul Catcher",
+          "status": "available",
+          "bonuses": [
+            "Assault Vehicle Hitpoints +16%",
+            "Supply Vechicle Healing +16%",
+            "Tactical Helicopter Healing +16%",
+            "Heavy Cavalry Hitpoints +16%",
+            "APC Hitpoints +13%",
+            "University Research Time -11%"
+          ]
+        },
+        {
+          "name": "Sphinx of Taharqo",
+          "status": "available",
+          "bonuses": [
+            "Assault Vehicle Hitpoints +21%",
+            "Library Tech Resource Cost -11%",
+            "Vault Capacity +11%",
+            "Oil from Oil Wells +6%",
+            "Looted Resource Refund +6%",
+            "Forest Expansion Cost Refund +6%"
+          ]
+        },
+        {
+          "name": "Stopler Revolver",
+          "status": "available",
+          "bonuses": [
+            "Mortar Troop Damage +15%",
+            "Defender Damage +15%",
+            "Fighters Damage +15%",
+            "Generals Damage +15%",
+            "Oil Looted +15%",
+            "Ranged Infantry Damage +15%"
+          ]
+        },
+        {
+          "name": "Sutton Hoo Helmet",
+          "status": "available",
+          "bonuses": [
+            "Heavy Cavalry HP +41%",
+            "All Enemy Defensive Tower Damage -6%",
+            "Heavy Cavalry Damage +6%",
+            "All Defensive Tower Damage +6%",
+            "Defender Hitpoints +6%",
+            "Defender Spawn Time -6%"
+          ]
+        },
+        {
+          "name": "Sword of Goujian",
+          "status": "available",
+          "bonuses": [
+            "Defender Hitpoints +15%",
+            "Heavy Infantry Hitpoints +15%",
+            "Heavy Infantry Damage +15%",
+            "Enemy Defender Spawn Time +15%",
+            "All Resources Looted +15%",
+            "Defender Damage +15%"
+          ]
+        },
+        {
+          "name": "The Book of Five Rings",
+          "status": "available",
+          "bonuses": [
+            "Airstrip Troop Hitpoints +11%",
+            "Vault Capacity +15%",
+            "Vault Capacity +15%",
+            "Vault Interest +11%",
+            "Vault Interest +11%",
+            "All Defensive Towers Damage +11%"
+          ]
+        },
+        {
+          "name": "Tokugawa Ieyasu's Helmet",
+          "status": "available",
+          "bonuses": [
+            "Defender Movement Speed +6%",
+            "Defender Damage +13%",
+            "Defender Hitpoints +13%",
+            "Defender Spawn Time -13%",
+            "Looted Resource Refund +16%",
+            "Looted Resource Refund +16%"
+          ]
+        }
+      ]
+    },
+    "legendary_war": {
+      "grade": "Legendary",
+      "hall": "War",
+      "source": "https://dominations.fandom.com/wiki/Legendary_War_Artifacts#List_of_Legendary_War_Artifacts",
+      "artifacts": [
+        {
+          "name": "6th Anniversary Six-Shooter",
+          "status": "available",
+          "bonuses": [
+            "Bazooka Damage +9%",
+            "Bazooka Damage +8%",
+            "Bomber Hitpoints +9%",
+            "Attack Helicopter Damage +9%",
+            "Invading Paratrooper Damage -9%"
+          ]
+        },
+        {
+          "name": "10th Mountain Division War Kit",
+          "status": "available",
+          "bonuses": [
+            "APC Damage +8%",
+            "APC Hitpoints +7%",
+            "Machine Gun Infantry Damage +8%",
+            "Enemy Defender Spawn Time +6%",
+            "Enemy Redoubt Damage -6%"
+          ]
+        },
+        {
+          "name": "11th Anniversary Cake",
+          "status": "available",
+          "bonuses": [
+            "Rally Cooldown -6%",
+            "APC Hitpoints +6%",
+            "Armored Car Damage +6%",
+            "MRL Damage +6%",
+            "Machine Gun Infantry Damage +6%"
+          ]
+        },
+        {
+          "name": "Alfred Jewel",
+          "status": "available",
+          "bonuses": [
+            "Heavy Infantry Damage +7%",
+            "Heavy Infantry Attack Speed +7%",
+            "APC Hitpoints +6%",
+            "APC Deploy Time -6%",
+            "Quick Victory Time +3%"
+          ]
+        },
+        {
+          "name": "Analytical Engine",
+          "status": "available",
+          "bonuses": [
+            "Invading Bomber Damage +11%",
+            "All Defensive Towers Hitpoints +8%",
+            "Catapult Hitpoints +11%",
+            "Tower Hitpoints +11%",
+            "Defender Hitpoints +6%"
+          ]
+        },
+        {
+          "name": "Arm Reliquary of Charlemagne",
+          "status": "available",
+          "bonuses": [
+            "Paratrooper Damage +8%",
+            "Paratrooper Hitpoints +7%",
+            "Generals' Damage +7%",
+            "Fighter Damage +7%",
+            "Invading Heavy Tank Damage -6%"
+          ]
+        },
+        {
+          "name": "ASDIC Type 113X",
+          "status": "available",
+          "bonuses": [
+            "Invading Barracks Troop Damage -9%",
+            "Invading Factory Troop Damage -9%",
+            "Invading Airstrip Troop Damage -9%",
+            "Defender Spawn Time -9%",
+            "Missile Silo Damage +9%"
+          ]
+        },
+        {
+          "name": "ASM-135 Anti-Satellite Missile",
+          "status": "available",
+          "bonuses": [
+            "Missile Silo and Red Button Damage +7%",
+            "Missile Silo Damage +7%",
+            "Airstrip Troop Damage +3%",
+            "Air Defense Damage +7%",
+            "Defender Hitpoints +7%"
+          ]
+        },
+        {
+          "name": "Battersea Shield",
+          "status": "available",
+          "bonuses": [
+            "Missile Silo and Red Button Damage +7%",
+            "Bomber Damage +8%",
+            "Invading Recon Scan Duration -8%",
+            "Quick Victory Time +9%",
+            "Invading Factory Troop Hitpoints -6%"
+          ]
+        },
+        {
+          "name": "Berlichingen's Iron Prosthetic Hand",
+          "status": "available",
+          "bonuses": [
+            "Transport Cooldown -9%",
+            "Transport Movement Speed +9%",
+            "Enemy Anti-Tank Gun Damage -16%",
+            "Paratrooper Hitpoints +8%",
+            "Paratrooper Damage +8%"
+          ]
+        },
+        {
+          "name": "British Kettle Drum",
+          "status": "available",
+          "bonuses": [
+            "Mortar Troop Damage +6%",
+            "Barracks Troop Damage +7%",
+            "Barracks Troop Hitpoints +7%",
+            "Ranged Siege Damage +6%",
+            "Enemy Defender Spawn Time +6%"
+          ]
+        },
+        {
+          "name": "Bust of Ramesses II",
+          "status": "available",
+          "bonuses": [
+            "Air Defense Damage +7%",
+            "Air Defense Hitpoints +7%",
+            "All Defensive Towers Hitpoints +6%",
+            "Invading Generals' Hitpoints -7%",
+            "Invading Bomber Damage -7%"
+          ]
+        },
+        {
+          "name": "Caligula's Ring",
+          "status": "available",
+          "bonuses": [
+            "Paratrooper Damage +6%",
+            "Paratrooper Hitpoints +6%",
+            "Guerilla Damage +6%",
+            "Ranged Siege Damage +3%",
+            "Wall Sapper Damage +6%"
+          ]
+        },
+        {
+          "name": "Capt. McConnell's Hero Ensemble",
+          "status": "available",
+          "bonuses": [
+            "Generals' Hitpoints and Damage +7%",
+            "Oil Looted +8%",
+            "Fighter Damage +8%",
+            "Fighter Damage +9%",
+            "Airstrip Troop Hitpoints +9%"
+          ]
+        },
+        {
+          "name": "Creighton Abrams Tank Commander Kit",
+          "status": "available",
+          "bonuses": [
+            "Heal Duration +6%",
+            "Heavy Tank Damage +6%",
+            "Decoy Tactic Hitpoints +7%",
+            "Guerrilla Hitpoints +6%",
+            "Enemy Defender Spawn Time +7%"
+          ]
+        },
+        {
+          "name": "Crescent Blade",
+          "status": "available",
+          "bonuses": [
+            "Defender Hitpoints +6%",
+            "Enemy Defender Spawn Time +6%",
+            "Air Defense Damage +6%",
+            "Generals' Damage +6%",
+            "Heavy Tank Damage +3%"
+          ]
+        },
+        {
+          "name": "Crocodile Mask",
+          "status": "available",
+          "bonuses": [
+            "General Damage +3%",
+            "Defender Hitpoints +6%",
+            "Invading Factory Troop Damage -3%",
+            "Invading Factory Troop Hitpoints -3%",
+            "Invading General's Hitpoints -3%"
+          ]
+        },
+        {
+          "name": "Cryolophosaurus Skull",
+          "status": "available",
+          "bonuses": [
+            "Fighter Damage +3%",
+            "Bomber Damage +6%",
+            "Redoubt Damage +6%",
+            "Bazooka Damage +6%",
+            "Machine Gun Infantry Damage +6%"
+          ]
+        },
+        {
+          "name": "Da Vinci's Flying Machine",
+          "status": "available",
+          "bonuses": [
+            "Fighters Damage +6%",
+            "Fighters Hitpoints +6%",
+            "Fighters Hitpoints +6%",
+            "Heavy Tank Damage +6%",
+            "Heavy Tank Hitpoints +6%"
+          ]
+        },
+        {
+          "name": "Da Vinci's Machine Gun",
+          "status": "available",
+          "bonuses": [
+            "Machine Gun Infantry Damage +9%",
+            "Machine Gun Infantry Hitpoints +7%",
+            "Invading Factory Troop Damage -8%",
+            "Ranged Siege Damage +8%",
+            "Enemy Catapult Hitpoints -8%"
+          ]
+        },
+        {
+          "name": "Demarcation Stone",
+          "status": "available",
+          "bonuses": [
+            "Heavy Infantry Damage +3%",
+            "Ranged Infantry Damage +3%",
+            "Supply Vehicles Healing +3%",
+            "Invading Machine Gun Infantry Damage -3%",
+            "All Enemy Defensive Towers Damage -3%"
+          ]
+        },
+        {
+          "name": "Desert Storm PSN-8 Manpack",
+          "status": "available",
+          "bonuses": [
+            "Rally Cooldown -11%",
+            "Increase Rally Duration +9%",
+            "Factory Troop Hitpoints +9%",
+            "Factory Troop Damage +9%",
+            "Enemy Towers Damage -9%"
+          ]
+        },
+        {
+          "name": "Dominations Army Helmet",
+          "status": "available",
+          "bonuses": [
+            "Enemy Missile Silo Damage -6%",
+            "Enemy Sniper Tower Damage -6%",
+            "Generals' Hitpoints +6%",
+            "Enemy Catapult Hitpoints -6%",
+            "Enemy Anti-Tank Gun Hitpoints -6%"
+          ]
+        },
+        {
+          "name": "DomiNations Game Box",
+          "status": "available",
+          "bonuses": [
+            "Generals' Hitpoints +6%",
+            "Generals's Attack Speed +6%",
+            "Enemy Defender Spawn Time +6%",
+            "Generals' Damage +6%",
+            "General's Movement Speed +6%"
+          ]
+        },
+        {
+          "name": "Elephant Archer Quiver",
+          "status": "available",
+          "bonuses": [
+            "Invading Airstrip Troop Damage -6%",
+            "Invading Bomber Hitpoints -6%",
+            "Heavy Cavalry Damage +6%",
+            "Heavy Cavalry Damage +6%",
+            "Air Defense Attack Speed +6%"
+          ]
+        },
+        {
+          "name": "Flamma's Helmet",
+          "status": "available",
+          "bonuses": [
+            "Guerrilla Damage +6%",
+            "Guerrilla Hitpoints +6%",
+            "Enemy Defender Spawn Time +3%",
+            "Increase Rally Duration +6%",
+            "Missile Silo and Big Red Button Damage +7%"
+          ]
+        },
+        {
+          "name": "Gemini 8 Gloves",
+          "status": "available",
+          "bonuses": [
+            "Defender Hitpoints +7%",
+            "Enemy Defender Spawn Time +7%",
+            "All Defensive Towers Hitpoints +7%",
+            "All Defensive Towers Damage +7%",
+            "Enemy Missile Silo Damage -7%"
+          ]
+        },
+        {
+          "name": "Gemini 8 Helmet",
+          "status": "available",
+          "bonuses": [
+            "Attack Helicopter Damage +7%",
+            "Armored Car Damage +7%",
+            "Bazooka Damage +7%",
+            "Heavy Tank Damage +7%",
+            "Barracks Troop Damage +7%"
+          ]
+        },
+        {
+          "name": "General Pershing's Bas-Relief",
+          "status": "available",
+          "bonuses": [
+            "Heavy Infantry Hitpoints +3%",
+            "Ranged Infantry Hitpoints +3%",
+            "Heavy Cavalry Hitpoints +3%",
+            "Ranged Siege Damage +3%",
+            "Raider Damage +3%"
+          ]
+        },
+        {
+          "name": "Great Imperial Crown",
+          "status": "available",
+          "bonuses": [
+            "All Defensive Towers Damage +6%",
+            "Invading Heavy Tank Damage -8%",
+            "MRL Damage +8%",
+            "Invading Bazooka Damage -7%",
+            "Fighter Damage +6%"
+          ]
+        },
+        {
+          "name": "Huey Armament System",
+          "status": "available",
+          "bonuses": [
+            "Attack Helicopter Damage +9%",
+            "Attack Helicopter Damage +9%",
+            "Attack Helicopter Hitpoints +9%",
+            "Bazooka Damage +9%",
+            "All Enemy Defensive Towers Damage -6%"
+          ]
+        },
+        {
+          "name": "Joyeuse Sword",
+          "status": "available",
+          "bonuses": [
+            "Factory Troop Damage +6%",
+            "Heavy Tank Damage +6%",
+            "Bomber Damage +6%",
+            "Generals' Damage +6%",
+            "Defender Damage +6%"
+          ]
+        },
+        {
+          "name": "Julius Caesar Statue",
+          "status": "available",
+          "bonuses": [
+            "Invading Generals' Damage -8%",
+            "Invading Generals' Hitpoints -8%",
+            "Generals' Damage +9%",
+            "Barracks Troop Damage +8%",
+            "Invading Barracks Troop Damage -9%"
+          ]
+        },
+        {
+          "name": "Koh-i-Noor Diamond",
+          "status": "available",
+          "bonuses": [
+            "Enemy Defender Spawn Time +8%",
+            "Guerrilla Movement Speed +6%",
+            "Assault Vehicle Damage +8%",
+            "Assault Vehicle Hitpoints +8%",
+            "Supply Vehicle Healing +11%"
+          ]
+        },
+        {
+          "name": "Leftwich Trophy",
+          "status": "unavailable",
+          "bonuses": []
+        },
+        {
+          "name": "Leonidas Bust",
+          "status": "available",
+          "bonuses": [
+            "Mercenary Camp Deploys Spartans when Destroyed +1",
+            "Quick Victory Time +6%",
+            "Generals Hitpoints and Damage +6%",
+            "Bazooka Damage +6%",
+            "Bazooka Hitpoints +6%"
+          ]
+        },
+        {
+          "name": "Liberty Bell",
+          "status": "available",
+          "bonuses": [
+            "Ranged Infantry Damage +8%",
+            "Ranged Infantry Damage +8%",
+            "Airstrip Troop Hitpoints +7%",
+            "Enemy Air Defense Damage -11%",
+            "All Enemy Defensive Towers Damage -7%"
+          ]
+        },
+        {
+          "name": "Mahiole",
+          "status": "available",
+          "bonuses": [
+            "Enemy Defender Spawn Time +10%",
+            "Defender Spawn Time -10%",
+            "Wall Sapper Damage +11%",
+            "Wall Sapper Hitpoints +11%",
+            "Sniper Tower Damage +16%"
+          ]
+        },
+        {
+          "name": "Maori War Club",
+          "status": "available",
+          "bonuses": [
+            "All Defensive Towers Hitpoints and Damage +3%",
+            "Defender Spawn Time -6%",
+            "Defender Movement Speed +3%",
+            "Invading Recon Scan Duration -7%",
+            "Generals Attack Speed +3%"
+          ]
+        },
+        {
+          "name": "Mold Gold Cape",
+          "status": "available",
+          "bonuses": [
+            "Enemy Sabotage Duration -11%",
+            "Defender Damage +8%",
+            "Generals' Hitpoints +8%",
+            "Invading Bomber Damage -11%",
+            "All Defensive Towers Hitpoints and Damage +3%"
+          ]
+        },
+        {
+          "name": "Narmer Palette",
+          "status": "available",
+          "bonuses": [
+            "Invading Fighter Damage -6%",
+            "Air Defense Damage +6%",
+            "Bomber Hitpoints +3%",
+            "Fighter Hitpoints +6%",
+            "Bazooka Hitpoints +6%"
+          ]
+        },
+        {
+          "name": "Napoleon's Boxlock Pistol",
+          "status": "available",
+          "bonuses": [
+            "Supply Vehicle Healing +9%",
+            "Generals’ Hitpoints +7%",
+            "Heavy Cavalry Hitpoints +9%",
+            "Barracks Troop Hitpoints +6%",
+            "Fighter Damage +7%"
+          ]
+        },
+        {
+          "name": "Nine Men's Morris",
+          "status": "available",
+          "bonuses": [
+            "Invading Factory Troop Damage -3%",
+            "Invading Factory Troop Damage -3%",
+            "Anti-Tank Gun Damage +9%",
+            "Missile Silo Damage +9%",
+            "Missile Silo Damage +9%"
+          ]
+        },
+        {
+          "name": "Norden Bombsight",
+          "status": "available",
+          "bonuses": [
+            "APC Deploys Marines On Death +1",
+            "Coalition Troop Damage +8%",
+            "Defenders Spawn Time -8%",
+            "Invading Fighter Damage -8%",
+            "Machine Gun Infantry Damage +8%"
+          ]
+        },
+        {
+          "name": "Normandy SCR-536 \"Walkie-Talkie\"",
+          "status": "available",
+          "bonuses": [
+            "Bazooka Damage +9%",
+            "Bomber Damage +9%",
+            "Armored Car Damage +9%",
+            "MRL Damage +9%",
+            "Rally Cooldown -11%"
+          ]
+        },
+        {
+          "name": "Olmec Colossal Heads",
+          "status": "available",
+          "bonuses": [
+            "Rally Cooldown -11%",
+            "Increase Rally Duration +11%",
+            "Enemy Defender Spawn Time +6%",
+            "Fighter Damage +8%",
+            "Fighter Damage +8%"
+          ]
+        },
+        {
+          "name": "Plane Gyro Gunsight",
+          "status": "available",
+          "bonuses": [
+            "Bomber Hitpoints +6%",
+            "Bomber Hitpoints +6%",
+            "Recon Bonus Duration +3%",
+            "Bazooka Attack Speed +3%",
+            "Quick Victory Time +6%"
+          ]
+        },
+        {
+          "name": "Ramesses Ⅱ's Abu Simbel",
+          "status": "available",
+          "bonuses": [
+            "All Defensive Towers Hitpoints +9%",
+            "Defender Spawn Time -9%",
+            "Invading Bazooka Damage -7%",
+            "Invading Guerrilla Damage -9%",
+            "All Defensive Towers Damage +9%"
+          ]
+        },
+        {
+          "name": "Raven Rattle",
+          "status": "available",
+          "bonuses": [
+            "Fighter Hitpoints +7%",
+            "Fighter Damage +7%",
+            "Enemy Redoubt Damage -6%",
+            "Enemy Tower Damage -6%",
+            "All Enemy Defensive Tower Damage -11%"
+          ]
+        },
+        {
+          "name": "Red Baron's Engine",
+          "status": "available",
+          "bonuses": [
+            "Fighter Damage +6%",
+            "Bomber Damage +6%",
+            "Heavy Tank Damage +6%",
+            "Machine Gun Infantry Damage +6%",
+            "Invading Fighters Damage -6%"
+          ]
+        },
+        {
+          "name": "RQ-2 Pioneer",
+          "status": "available",
+          "bonuses": [
+            "Invading Bombers Damage -8%",
+            "Invading Bombers Damage -8%",
+            "Invading Bombers Hitpoints -7%",
+            "Air Defense Hitpoints +6%",
+            "Air Defense Damage +6%"
+          ]
+        },
+        {
+          "name": "Sanada Yukimura's Armor",
+          "status": "available",
+          "bonuses": [
+            "Castle spawns Sword Saints when Destroyed +1",
+            "Generals Hitpoints +6%",
+            "Bazooka Damage +6%",
+            "Fighter Damage +8%",
+            "Guerrilla Hitpoints +8%"
+          ]
+        },
+        {
+          "name": "Sophilos Dinos",
+          "status": "available",
+          "bonuses": [
+            "Wall Miner Damage +9%",
+            "Commando Damage +6%",
+            "Commando Hitpoints +8%",
+            "Decoy Tactic Hitpoints +6%",
+            "Enemy Defender Spawn Time +6%"
+          ]
+        },
+        {
+          "name": "Supermarine Spitfire Engine",
+          "status": "available",
+          "bonuses": [
+            "Bomber Damage +9%",
+            "Bomber Hitpoints +9%",
+            "Bomber Hitpoints +8%",
+            "Heavy Tank Damage +9%",
+            "Fighter Damage +9%"
+          ]
+        },
+        {
+          "name": "T-34 Tank Engine",
+          "status": "available",
+          "bonuses": [
+            "Heavy Tank Damage +7%",
+            "Heavy Tank Hitpoints +7%",
+            "Invading Heavy Tank Damage -7%",
+            "Invading Heavy Tank Hitpoints -7%",
+            "Invading Heavy Cavalry Damage -7%"
+          ]
+        },
+        {
+          "name": "The Art of War",
+          "status": "available",
+          "bonuses": [
+            "Heavy Tank Hitpoints +9%",
+            "Heavy Tank Damage +9%",
+            "Invading Generals' Hitpoints -9%",
+            "Invading Generals' Damage -9%",
+            "Generals' Hitpoints and Damage +9%"
+          ]
+        },
+        {
+          "name": "The White Death's War Kit",
+          "status": "available",
+          "bonuses": [
+            "Sniper Tower Damage +6%",
+            "Sniper Tower Hitpoints +6%",
+            "Enemy Defender Spawn Time +6%",
+            "All Defensive Towers Hitpoints +3%",
+            "All Defensive Towers Damage +3%"
+          ]
+        },
+        {
+          "name": "Tizona Sword",
+          "status": "available",
+          "bonuses": [
+            "Enemy Defender Spawn Time +6%",
+            "Heavy Cavalry Damage +6%",
+            "Heavy Cavalry Hitpoints +3%",
+            "Ranged Siege Damage +6%",
+            "Ranged Siege Hitpoints +3%"
+          ]
+        },
+        {
+          "name": "Trundholm Sun Chariot",
+          "status": "available",
+          "bonuses": [
+            "Tower Damage +6%",
+            "Air Defense Damage +6%",
+            "Invading Bomber Hitpoints -7%",
+            "Invading Transport Hitpoints -7%",
+            "All Defensive Towers Damage +6%"
+          ]
+        },
+        {
+          "name": "Vespa 150 TAP",
+          "status": "available",
+          "bonuses": [
+            "Machine Gun Infantry Damage +7%",
+            "Machine Gun Infantry Hitpoints +7%",
+            "Ranged Siege Damage +7%",
+            "Ranged Siege Hitpoints +7%",
+            "Factory Troop Damage +1%"
+          ]
+        },
+        {
+          "name": "Vz-9 Avrocar",
+          "status": "available",
+          "bonuses": [
+            "Invading Fighter Damage -6%",
+            "Air Defense Damage +6%",
+            "Invading Bomber Damage -6%",
+            "Invading Fighter Hitpoints -6%",
+            "Invading Bomber Hitpoints -6%"
+          ]
+        },
+        {
+          "name": "Welrod MkII",
+          "status": "available",
+          "bonuses": [
+            "All Enemy Defensive Towers Hitpoints -8%",
+            "Enemy Defender Spawn Time +8%",
+            "Guerrilla Damage +6%",
+            "Guerrilla Hitpoints +6%",
+            "Airstrip Troop Damage +6%"
+          ]
+        },
+        {
+          "name": "Winged Victory of Samothrace",
+          "status": "available",
+          "bonuses": [
+            "Quick Victory Time +11%",
+            "Heavy Tank Damage +7%",
+            "Heavy Tank Hitpoints +7%",
+            "Bomber Damage +7%",
+            "Bomber Hitpoints +7%"
+          ]
+        },
+        {
+          "name": "ZG 1229 Vampir",
+          "status": "available",
+          "bonuses": [
+            "Sniper Tower Damage +8%",
+            "Sniper Tower Damage +8%",
+            "Enemy Tower Damage -7%",
+            "Mortar Troop Hitpoints +8%",
+            "APC Hitpoints +9%"
+          ]
+        }
+      ]
+    },
+    "legendary_main": {
+      "grade": "Legendary",
+      "hall": "Main",
+      "source": "https://dominations.fandom.com/wiki/Legendary_Artifacts",
+      "artifacts": [
+        {
+          "name": "Admiral Yi’s Helmet",
+          "status": "available",
+          "bonuses": [
+            "Invading General's Damage -6%",
+            "Enemy Defender Spawn Time +6%",
+            "Defender Damage +6%",
+            "Defender Hitpoints +11%",
+            "Invading General's Hitpoints -11%"
+          ]
+        },
+        {
+          "name": "Antikythera Mechanism",
+          "status": "available",
+          "bonuses": [
+            "Heavy Tank Damage +12%",
+            "National Trade Good Loot Chance +12%",
+            "Oil Looted +12%",
+            "All Resources Looted +7%",
+            "Bomber Hitpoints +7%"
+          ]
+        },
+        {
+          "name": "Ashanti Kuduo",
+          "status": "available",
+          "bonuses": [
+            "All Resources Looted +6%",
+            "University Research Time -6%",
+            "All Defensive Towers Hitpoints +6%",
+            "Invading General's Damage -11%",
+            "General's Damage +11%"
+          ]
+        },
+        {
+          "name": "Augustus Statue Muscle Cuirass",
+          "status": "available",
+          "bonuses": [
+            "Generals' Damage +11%",
+            "Generals' Damage +11%",
+            "Generals' Hitpoints +11%",
+            "Generals' Hitpoints +11%",
+            "Enemy Defender Spawn Time +11%"
+          ]
+        },
+        {
+          "name": "Aztec Calendar",
+          "status": "available",
+          "bonuses": [
+            "Food from Farms +11%",
+            "Gold from Caravans +11%",
+            "Oil from Oil Wells +6%",
+            "Oil from Oil Wells +6%",
+            "Vault Interest +6%"
+          ]
+        },
+        {
+          "name": "Captain's Croix de Guerre",
+          "status": "available",
+          "bonuses": [
+            "Food Looted +11%",
+            "Gold Looted +11%",
+            "Oil Looted +11%",
+            "All Resources Looted +11%",
+            "All Resources Looted +11%"
+          ]
+        },
+        {
+          "name": "Christmas Football",
+          "status": "available",
+          "bonuses": [
+            "Supply Vehicle Healing +11%",
+            "Tactical Helicopter Healing +11%",
+            "General's Hitpoints +6%",
+            "National Trade Good Loot Chance +11%",
+            "Enemy Missile Silo Damage -6%"
+          ]
+        },
+        {
+          "name": "Clem Sohn's Wingsuit",
+          "status": "available",
+          "bonuses": [
+            "Transport Cooldown -11%",
+            "Transport Movement Speed +11%",
+            "Quick Victory Time +11%",
+            "Bazooka Damage +6%",
+            "Bazooka Damage +6%"
+          ]
+        },
+        {
+          "name": "Code of Hammurabi",
+          "status": "available",
+          "bonuses": [
+            "Bazooka Cooldown +15%",
+            "Defender Hitpoints +9%",
+            "Generals' Hitpoints +12%",
+            "Generals' Hitpoints +12%",
+            "Defender Movement Speed +9%"
+          ]
+        },
+        {
+          "name": "Dilophosaurus Skull",
+          "status": "available",
+          "bonuses": [
+            "Oil From Oil Wells +16%",
+            "First Aid Duration +16%",
+            "Generals' Hitpoints +7%",
+            "Supply Vehicle Healing +11%",
+            "Barracks Troop Hitpoints +7%"
+          ]
+        },
+        {
+          "name": "Double-Headed Serpent",
+          "status": "available",
+          "bonuses": [
+            "Oil Looted +11%",
+            "Oil Looted +11%",
+            "Heavy Tank Damage +6%",
+            "Fighter Damage +6%",
+            "All Resources Looted +6%"
+          ]
+        },
+        {
+          "name": "Edison's Electric Lamp",
+          "status": "available",
+          "bonuses": [
+            "Looted Resource Refund +11%",
+            "Oil from Oil Wells +6%",
+            "Oil from Oil Wells +6%",
+            "All Defensive Towers DMG +8%",
+            "Invading Airstrip Unit HP -8%"
+          ]
+        },
+        {
+          "name": "Enigma Machine",
+          "status": "available",
+          "bonuses": [
+            "Quick Victory Time +11%",
+            "Heavy Tank Attack Speed +11%",
+            "Enemy Defender Spawn Time +11%",
+            "University Research Time -6%",
+            "Library Research Time -6%"
+          ]
+        },
+        {
+          "name": "Fengguan Phoenix Crown",
+          "status": "available",
+          "bonuses": [
+            "Oil from Oil Wells +11%",
+            "Oil from Oil Wells +11%",
+            "All Defensive Towers Damage +6%",
+            "Defender Spawn Time -11%",
+            "Invading Barracks Troop damage -11%"
+          ]
+        },
+        {
+          "name": "Fire Breathing Bunny Fossil",
+          "status": "available",
+          "bonuses": [
+            "Food Looted +11%",
+            "Gold Looted +11%",
+            "Oil Looted +11%",
+            "Forest Expansion Cost Refund +11%",
+            "First Aid Duration +10%"
+          ]
+        },
+        {
+          "name": "First Strike Star",
+          "status": "available",
+          "bonuses": [
+            "Quick Victory Time +8%",
+            "Enemy Defender Spawn Time +6%",
+            "All Enemy Defensive Towers Hitpoints -3%",
+            "Enemy Defender Hitpoints -3%",
+            "Enemy Missile Silo Damage -6%"
+          ]
+        },
+        {
+          "name": "Heads of Hevajra",
+          "status": "available",
+          "bonuses": [
+            "Factory Troop HP +6%",
+            "Factory Troop HP +6%",
+            "National Trade Good Loot Chance +16%",
+            "Armored Car DMG +11%",
+            "All Enemy Defensive Towers DMG +11%"
+          ]
+        },
+        {
+          "name": "Helgö Buddha",
+          "status": "available",
+          "bonuses": [
+            "Quick Victory Time +11%",
+            "University Research Time -6%",
+            "Library Research Time -6%",
+            "Defender Hitpoints +11%",
+            "Invading Bazooka Damage -11%"
+          ]
+        },
+        {
+          "name": "Jade Olmec Mask",
+          "status": "available",
+          "bonuses": [
+            "Enemy Missile Silo Damage -6%",
+            "Bomber Damage +6%",
+            "Paratrooper Hitpoints +6%",
+            "Bazooka Damage +11%",
+            "Enemy Defender Spawn TIme +11%"
+          ]
+        },
+        {
+          "name": "Keyed English Guitar",
+          "status": "available",
+          "bonuses": [
+            "Enemy Tower DMG -11%",
+            "Enemy Tower HP -11%",
+            "Enemy Sniper Tower DMG -16%",
+            "Enemy Defender Spawn Time +6%",
+            "Heavy Tank DMG +11%"
+          ]
+        },
+        {
+          "name": "Leoni Parade Shield",
+          "status": "available",
+          "bonuses": [
+            "Heavy Tank Hitpoints 6%",
+            "Missile Silo Damage 6%",
+            "Bomber Damage 6%",
+            "General Attack Speed 5%",
+            "Generals' Damage 6%"
+          ]
+        },
+        {
+          "name": "Lewis Chessmen",
+          "status": "available",
+          "bonuses": [
+            "Raiders Spawn from Forest When Attacking +1",
+            "National Trade Good Loot Chance +12%",
+            "Raiders Damage +13%",
+            "Raiders Hitpoints +13%",
+            "All Resources Looted +14%"
+          ]
+        },
+        {
+          "name": "Li Vessel",
+          "status": "available",
+          "bonuses": [
+            "APC Deploy Time -11%",
+            "APC Hitpoints +11%",
+            "Heavy Infantry Attack Speed +11%",
+            "Heavy Infantry Damage +11%",
+            "Guerrilla Movement Speed +6%"
+          ]
+        },
+        {
+          "name": "Lycurgus Cup",
+          "status": "available",
+          "bonuses": [
+            "All Enemy Defensive Towers Damage -11%",
+            "Invading Bomber Hitpoints -6%",
+            "Factory Troop Traning Cost -11%",
+            "Generals' Hitpoints +11%",
+            "Oil Looted +11%"
+          ]
+        },
+        {
+          "name": "Mask of Agamemnon",
+          "status": "available",
+          "bonuses": [
+            "Tower Hitpoints +11%",
+            "Tower Damage +11%",
+            "Catapult Hitpoints +11%",
+            "Catapult Damage +11%",
+            "All Defensive Tower Damage +11%"
+          ]
+        },
+        {
+          "name": "Mask of Tutankhamun",
+          "status": "available",
+          "bonuses": [
+            "Oil Looted +11%",
+            "Invading Heavy Tank Damage -11%",
+            "Looted Resource Refunt +11%",
+            "Invading Barracks Troop Damage -6%",
+            "Invading Bomber Damage -6%"
+          ]
+        },
+        {
+          "name": "Minoan Bull-Leaper",
+          "status": "available",
+          "bonuses": [
+            "General's Hitpoints and Damage +9%",
+            "All Enemy Defensive Towers Damage -9%",
+            "Airstrip Troop Hitpoints +9%",
+            "Airstrip Troop Damage +9%",
+            "Recon Scan Duration +6%"
+          ]
+        },
+        {
+          "name": "Morse Telegraph",
+          "status": "available",
+          "bonuses": [
+            "Heavy Cavalry HP 11%",
+            "Ranged Siege DMG 11%",
+            "Mortar Troop DMG 11%",
+            "Attack Helicopter DMG 11%",
+            "Attack Helicopter HP 16%"
+          ]
+        },
+        {
+          "name": "Napoleon's Bicorne Hat",
+          "status": "available",
+          "bonuses": [
+            "Barracks Troop Damage +6%",
+            "Barracks Troop Hitpoints +6%",
+            "Factory Troop Damage +6%",
+            "Factory Troop Hitpoints +6%",
+            "Airstrip Troop Damage +6%"
+          ]
+        },
+        {
+          "name": "Nefertiti Bust",
+          "status": "available",
+          "bonuses": [
+            "All Resources Looted +11%",
+            "All Resources Looted +11%",
+            "Raider Damage +11%",
+            "Raider Hitpoints +6%",
+            "Mortar Troop Damage +6%"
+          ]
+        },
+        {
+          "name": "Personal Computer",
+          "status": "available",
+          "bonuses": [
+            "Library Tech Resource Cost -13%",
+            "Looted Resource Refund +12%",
+            "Oil from Oil Wells +12%",
+            "Vault Interest +14%",
+            "Vault Capacity +13%"
+          ]
+        },
+        {
+          "name": "Pompus' Comb",
+          "status": "available",
+          "bonuses": [
+            "University Research Time -11%",
+            "Library Research Time -11%",
+            "Looted Resource Refund +11%",
+            "Defender Movement Speed +10%",
+            "Enemy Sabotage Duration -6%"
+          ]
+        },
+        {
+          "name": "Quimbaya Treasure",
+          "status": "available",
+          "bonuses": [
+            "Guerrilla DMG +6%",
+            "Guerrilla HP +9%",
+            "Quick Victory Time +8%",
+            "Quick Victory Time +8%",
+            "Decoy Tactic HP +10%"
+          ]
+        },
+        {
+          "name": "Rosetta Stone",
+          "status": "available",
+          "bonuses": [
+            "Library Tech Resource Cost -11%",
+            "Vault Capacity +11%",
+            "Oil from Oil Wells +6%",
+            "Looted Resource Refund +6%",
+            "Forest Expansion Cost Refund +6%"
+          ]
+        },
+        {
+          "name": "Ruyi Scepter",
+          "status": "available",
+          "bonuses": [
+            "Enemy Defender Spawn Time +11%",
+            "Enemy Anti-Tank Gun Damage -11%",
+            "Enemy Catapult Damage -11%",
+            "All Enemy Defensive Towers Hitpoints -6%",
+            "All Enemy Defensive Towers Damage -6%"
+          ]
+        },
+        {
+          "name": "Silla Gold Crown",
+          "status": "available",
+          "bonuses": [
+            "Gold Looted +11%",
+            "Gold from Gold Mines +11%",
+            "Gold from Caravans +11%",
+            "Library Tech Resource Cost -11%",
+            "Ranged Infantry Damage +11%"
+          ]
+        },
+        {
+          "name": "Sojourner Mars Rover",
+          "status": "available",
+          "bonuses": [
+            "National Trade Good Loot Chance +13%",
+            "University Research Time -6%",
+            "Library Research Time -6%",
+            "Barracks Troop Training Cost -11%",
+            "Factory Troop Training Cost -6%"
+          ]
+        },
+        {
+          "name": "Soul Catcher",
+          "status": "available",
+          "bonuses": [
+            "Supply Vechicle Healing +11%",
+            "Tactical Helicopter Healing +11%",
+            "Heavy Cavalry Hitpoints +11%",
+            "APC Hitpoints +6%",
+            "University Research Time -6%"
+          ]
+        },
+        {
+          "name": "Sphinx of Taharqo",
+          "status": "available",
+          "bonuses": [
+            "Library Tech Resource Cost -6%",
+            "Vault Capacity +6%",
+            "Oil from Oil Wells +1%",
+            "Looted Resource Refund +1%",
+            "Forest Expansion Cost Refund +1%"
+          ]
+        },
+        {
+          "name": "Stopler Revolver",
+          "status": "available",
+          "bonuses": [
+            "Defender Damage +6%",
+            "Fighters Damage +6%",
+            "Generals Damage +6%",
+            "Oil Looted +6%",
+            "Ranged Infantry Damage +6%"
+          ]
+        },
+        {
+          "name": "Sutton Hoo Helmet",
+          "status": "available",
+          "bonuses": [
+            "All Enemy Defensive Tower Damage -1%",
+            "Heavy Cavalry Damage +1%",
+            "All Defensive Tower Damage +1%",
+            "Defender Hitpoints +1%",
+            "Defender Spawn Time -1%"
+          ]
+        },
+        {
+          "name": "Swimming Reindeer",
+          "status": "available",
+          "bonuses": [
+            "Defender Hitpoints +11%",
+            "Defender Damage +11%",
+            "Invading Mortar Troop Damage -14%",
+            "Invading Fighter Damage -14%",
+            "Defender Spawn Time -11%"
+          ]
+        },
+        {
+          "name": "Sword of Goujian",
+          "status": "available",
+          "bonuses": [
+            "Heavy Infantry Hitpoints +11%",
+            "Heavy Infantry Damage +11%",
+            "Enemy Defender Spawn Time +11%",
+            "All Resources Looted +11%",
+            "Defender Damage +11%"
+          ]
+        },
+        {
+          "name": "The Book of Five Rings",
+          "status": "available",
+          "bonuses": [
+            "Vault Capacity +11%",
+            "Vault Capacity +11%",
+            "Vault Interest +6%",
+            "Vault Interest +6%",
+            "All Defensive Towers Damage +6%"
+          ]
+        },
+        {
+          "name": "The Book of Kells",
+          "status": "available",
+          "bonuses": [
+            "All Resources Looted +16%",
+            "All Enemy Defensive Towers Damage -11%",
+            "Transport Cooldown -11%",
+            "Paratrooper Hitpoints +16%",
+            "Paratrooper Damage +16%"
+          ]
+        },
+        {
+          "name": "Thinker of Cernavoda",
+          "status": "available",
+          "bonuses": [
+            "Barracks Troop Damage +11%",
+            "Enemy Defender Spawn Time +6%",
+            "All Enemy Defensive Towers Damage -11%",
+            "All Resources Looted +8%",
+            "All Resources Looted +8%"
+          ]
+        },
+        {
+          "name": "Tokugawa Ieyasu's Helmet",
+          "status": "available",
+          "bonuses": [
+            "Defender Damage +6%",
+            "Defender Hitpoints +6%",
+            "Defender Spawn Time -6%",
+            "Looted Resource Refund +11%",
+            "Looted Resource Refund +11%"
+          ]
+        },
+        {
+          "name": "Video Game Console",
+          "status": "available",
+          "bonuses": [
+            "Rally Cooldown -11%",
+            "All Resources Looted +12%",
+            "Oil Looted +14%",
+            "Heavy Tank Damage +13%",
+            "Bomber Damage +13%"
+          ]
+        },
+        {
+          "name": "Warka Vase",
+          "status": "available",
+          "bonuses": [
+            "Library Tech Food Cost -11%",
+            "Library Tech Gold Cost -11%",
+            "Library Tech Oil Cost -11%",
+            "Library Tech Resource Cost -1%",
+            "Forest Expansion Cost Refund +16%"
+          ]
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Artifacts · Profiles</title>
+  <link rel="stylesheet" href="styles.css?v=27" />
+</head>
+<body class="page-config">
+  <nav class="site-nav" aria-label="Pages">
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Army Loadout</h2>
+      <a href="army.html">Army</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Artifacts</h2>
+      <a href="index.html">Priority</a>
+      <a href="collection.html">Collection</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Council</h2>
+      <a href="council.html">Priority</a>
+      <a href="council-collection.html">Collection</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Settings</h2>
+      <a href="config.html" aria-current="page">Profiles</a>
+      <a href="ratings.html">Perk ratings</a>
+    </div>
+  </nav>
+  <div class="app-main">
+  <header class="top">
+    <div class="top-inner">
+      <h1>DomiNations Artifacts</h1>
+      <p class="sub">Profiles · rename, add, or remove · each profile keeps its own army, collection, and council data</p>
+    </div>
+  </header>
+
+  <section class="config-page-section" aria-label="Profiles">
+    <h2 class="panel-title">Profiles</h2>
+    <p class="ratings-hint">Rename, add, or remove profiles. Up to <span id="profiles-max"></span>. Perk ratings are shared globally, with optional per-profile overrides on the Perk ratings page.</p>
+    <div id="profiles-list" class="profiles-list profiles-list-page"></div>
+    <div class="config-section-actions">
+      <button type="button" class="btn" id="profiles-add">Add profile</button>
+    </div>
+  </section>
+  </div>
+
+  <script src="shared.js?v=21"></script>
+  <script src="profiles-ui.js?v=5"></script>
+  <script src="config.js?v=1"></script>
+</body>
+</html>

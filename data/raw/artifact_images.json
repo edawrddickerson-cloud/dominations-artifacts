@@ -1,0 +1,728 @@
+{
+  "meta": {
+    "source": "https://dominations.fandom.com/api.php",
+    "thumb_size": 400
+  },
+  "images": {
+    "admiral-yi-s-helmet-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/2/2b/Admiral_Yi_Helmet.png/revision/latest/scale-to-width-down/400?cb=20180802233345",
+      "source_title": "Admiral Yi’s Helmet",
+      "name": "Admiral Yi’s Helmet"
+    },
+    "antikythera-mechanism-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/7/7d/Antikythera_Mechanism.png/revision/latest/scale-to-width-down/276?cb=20191117094035",
+      "source_title": "Antikythera Mechanism",
+      "name": "Antikythera Mechanism"
+    },
+    "ashanti-kuduo-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/c/c4/Ashanti_Kuduo.png/revision/latest?cb=20220415221618",
+      "source_title": "Ashanti Kuduo",
+      "name": "Ashanti Kuduo"
+    },
+    "augustus-statue-muscle-cuirass-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/7/7e/Augustus_Statue_Muscle_Cuirass-0.png/revision/latest?cb=20180518154019",
+      "source_title": "Augustus Statue Muscle Cuirass",
+      "name": "Augustus Statue Muscle Cuirass"
+    },
+    "aztec-calendar-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/b/bf/Aztec_Calendar_Large.png/revision/latest/scale-to-width-down/400?cb=20181215171918",
+      "source_title": "Aztec Calendar",
+      "name": "Aztec Calendar"
+    },
+    "captain-s-croix-de-guerre-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/c/ca/Captain%27s_Croix_de_Guerre_Large.jpg/revision/latest/scale-to-width-down/367?cb=20181116190155",
+      "source_title": "Captain's Croix de Guerre",
+      "name": "Captain's Croix de Guerre"
+    },
+    "christmas-football-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/f/f8/Christmas_Football.png/revision/latest?cb=20181215110620",
+      "source_title": "Christmas Football",
+      "name": "Christmas Football"
+    },
+    "clem-sohn-s-wingsuit-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/4/4d/Clem_Sohn%27s_Wingsuit.jpg/revision/latest?cb=20230417132521",
+      "source_title": "Clem Sohn's Wingsuit",
+      "name": "Clem Sohn's Wingsuit"
+    },
+    "code-of-hammurabi-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/d/dc/Code_of_Hammurabi.jpg/revision/latest?cb=20250210122738",
+      "source_title": "Code of Hammurabi",
+      "name": "Code of Hammurabi"
+    },
+    "dilophosaurus-skull-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/3/3d/Dilophosaurus_Skull.png/revision/latest/scale-to-width-down/400?cb=20260720233340",
+      "source_title": "Dilophosaurus Skull",
+      "name": "Dilophosaurus Skull"
+    },
+    "double-headed-serpent-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/5/5e/Double-Headed_Serpent.jpg/revision/latest?cb=20220429021748",
+      "source_title": "Double-Headed Serpent",
+      "name": "Double-Headed Serpent"
+    },
+    "edison-s-electric-lamp-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/8/8c/Edison%27s_Electric_Lamp.jpg/revision/latest?cb=20240816052023",
+      "source_title": "Edison's Electric Lamp",
+      "name": "Edison's Electric Lamp"
+    },
+    "enigma-machine-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/e/e2/Enigma_Machine.jpg/revision/latest?cb=20200604173812",
+      "source_title": "Enigma Machine",
+      "name": "Enigma Machine"
+    },
+    "fengguan-phoenix-crown-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/d/d2/Fengguan_Phoenix_Crown.jpg/revision/latest?cb=20200902142228",
+      "source_title": "Fengguan Phoenix Crown",
+      "name": "Fengguan Phoenix Crown"
+    },
+    "fire-breathing-bunny-fossil-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/c/ce/Fire_Breathing_Bunny_Fossil.jpg/revision/latest?cb=20250402132029",
+      "source_title": "Fire Breathing Bunny Fossil",
+      "name": "Fire Breathing Bunny Fossil"
+    },
+    "first-strike-star-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/4/4b/First_Strike_Star.png/revision/latest?cb=20260720234400",
+      "source_title": "First Strike Star",
+      "name": "First Strike Star"
+    },
+    "heads-of-hevajra-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/a/a7/Heads_of_Hevajra.png/revision/latest/scale-to-width-down/297?cb=20260810212137",
+      "source_title": "Heads of Hevajra",
+      "name": "Heads of Hevajra"
+    },
+    "helg-buddha-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/5/50/Helg%C3%B6_Buddha.png/revision/latest?cb=20220320142309",
+      "source_title": "Helgö Buddha",
+      "name": "Helgö Buddha"
+    },
+    "jade-olmec-mask-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/6/64/Jade_Olmec_Mask.jpg/revision/latest?cb=20230408231312",
+      "source_title": "Jade Olmec Mask",
+      "name": "Jade Olmec Mask"
+    },
+    "keyed-english-guitar-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/d/dd/Keyed_English_Guitar.jpg/revision/latest?cb=20241210050302",
+      "source_title": "Keyed English Guitar",
+      "name": "Keyed English Guitar"
+    },
+    "leoni-parade-shield-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/6/60/Leoni_Parade_Shield.jpg/revision/latest?cb=20240428051502",
+      "source_title": "Leoni Parade Shield",
+      "name": "Leoni Parade Shield"
+    },
+    "lewis-chessmen-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/1/17/Lewis_Chessmen.jpg/revision/latest?cb=20200411165952",
+      "source_title": "Lewis Chessmen",
+      "name": "Lewis Chessmen"
+    },
+    "li-vessel-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/9/97/Li_Vessel.png/revision/latest?cb=20221125070700",
+      "source_title": "Li Vessel",
+      "name": "Li Vessel"
+    },
+    "lycurgus-cup-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/f/ff/Lycurgus_Cup.png/revision/latest?cb=20220106070546",
+      "source_title": "Lycurgus Cup",
+      "name": "Lycurgus Cup"
+    },
+    "mask-of-agamemnon-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/2/25/Mask_of_Agamemnon_Large.png/revision/latest/scale-to-width-down/400?cb=20181011171207",
+      "source_title": "Mask of Agamemnon",
+      "name": "Mask of Agamemnon"
+    },
+    "mask-of-tutankhamun-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/a/a2/Mask_Of_Tutankhamun.png/revision/latest/scale-to-width-down/400?cb=20260720145123",
+      "source_title": "Mask of Tutankhamun",
+      "name": "Mask of Tutankhamun"
+    },
+    "minoan-bull-leaper-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/3/38/Minoan_Bull-Leaper.jpg/revision/latest?cb=20250915145639",
+      "source_title": "Minoan Bull-Leaper",
+      "name": "Minoan Bull-Leaper"
+    },
+    "morse-telegraph-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/e/e2/Morse_Telegraph.jpg/revision/latest?cb=20240612022736",
+      "source_title": "Morse Telegraph",
+      "name": "Morse Telegraph"
+    },
+    "napoleon-s-bicorne-hat-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/8/8e/Napoleon%27s_Bicorne_Hat.png/revision/latest?cb=20190222200809",
+      "source_title": "Napoleon's Bicorne Hat",
+      "name": "Napoleon's Bicorne Hat"
+    },
+    "nefertiti-bust-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/7/75/Nefertiti_Bust.png/revision/latest?cb=20190507171102",
+      "source_title": "Nefertiti Bust",
+      "name": "Nefertiti Bust"
+    },
+    "personal-computer-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/4/40/Personal_Computer.png/revision/latest?cb=20200308090519",
+      "source_title": "Personal Computer",
+      "name": "Personal Computer"
+    },
+    "pompus-comb-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/5/58/Pompus%27_Comb.jpg/revision/latest?cb=20250403132247",
+      "source_title": "Pompus' Comb",
+      "name": "Pompus' Comb"
+    },
+    "quimbaya-treasure-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/8/8b/Quimbaya_Treasure_0.jpg/revision/latest?cb=20251012140619",
+      "source_title": "Quimbaya Treasure",
+      "name": "Quimbaya Treasure"
+    },
+    "rosetta-stone-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/9/94/Rosetta_Stone.png/revision/latest?cb=20190918083234",
+      "source_title": "Rosetta Stone",
+      "name": "Rosetta Stone"
+    },
+    "ruyi-scepter-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/0/00/Ruyi_Scepter.png/revision/latest?cb=20200624083847",
+      "source_title": "Ruyi Scepter",
+      "name": "Ruyi Scepter"
+    },
+    "silla-gold-crown-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/0/01/Silla_Gold_Crown.png/revision/latest?cb=20190818190451",
+      "source_title": "Silla Gold Crown",
+      "name": "Silla Gold Crown"
+    },
+    "sojourner-mars-rover-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/a/a1/Sojourner_Mars_Rover.jpg/revision/latest?cb=20210508111523",
+      "source_title": "Sojourner Mars Rover",
+      "name": "Sojourner Mars Rover"
+    },
+    "soul-catcher-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/c/ca/Soul_Catcher.png/revision/latest?cb=20220415205723",
+      "source_title": "Soul Catcher",
+      "name": "Soul Catcher"
+    },
+    "sphinx-of-taharqo-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/c/c0/Sphinx_of_Taharqo.jpg/revision/latest?cb=20190316164053",
+      "source_title": "Sphinx of Taharqo",
+      "name": "Sphinx of Taharqo"
+    },
+    "stopler-revolver-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/8/85/Stopler_Revolver_Large.png/revision/latest/scale-to-width-down/400?cb=20181027213116",
+      "source_title": "Stopler Revolver",
+      "name": "Stopler Revolver"
+    },
+    "sutton-hoo-helmet-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/1/15/Sutton_Hoo_Helmet.png/revision/latest?cb=20190622071617",
+      "source_title": "Sutton Hoo Helmet",
+      "name": "Sutton Hoo Helmet"
+    },
+    "swimming-reindeer-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/f/fb/Swimming_Reindeer.png/revision/latest/scale-to-width-down/400?cb=20260720190345",
+      "source_title": "Swimming Reindeer",
+      "name": "Swimming Reindeer"
+    },
+    "sword-of-goujian-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/5/55/Sword_of_Goujian_Large.png/revision/latest/scale-to-width-down/400?cb=20181024165716",
+      "source_title": "Sword of Goujian",
+      "name": "Sword of Goujian"
+    },
+    "the-book-of-five-rings-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/7/70/The_Book_of_Five_Rings.png/revision/latest?cb=20190522174203",
+      "source_title": "The Book of Five Rings",
+      "name": "The Book of Five Rings"
+    },
+    "the-book-of-kells-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/e/eb/The_Book_of_Kells.jpg/revision/latest?cb=20241128105807",
+      "source_title": "The Book of Kells",
+      "name": "The Book of Kells"
+    },
+    "thinker-of-cernavoda-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/f/fa/Thinker_of_Cernavoda.jpg/revision/latest?cb=20230304150948",
+      "source_title": "Thinker of Cernavoda",
+      "name": "Thinker of Cernavoda"
+    },
+    "tokugawa-ieyasu-s-helmet-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/5/52/Tokugawa_Ieyasu%27s_Helmet.png/revision/latest?cb=20200125095107",
+      "source_title": "Tokugawa Ieyasu's Helmet",
+      "name": "Tokugawa Ieyasu's Helmet"
+    },
+    "video-game-console-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/d/da/Video_Game_Console.jpg/revision/latest?cb=20200614070258",
+      "source_title": "Video Game Console",
+      "name": "Video Game Console"
+    },
+    "warka-vase-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/e/ea/Warka_Vase.jpg/revision/latest?cb=20240422005452",
+      "source_title": "Warka Vase",
+      "name": "Warka Vase"
+    },
+    "admiral-yi-s-helmet-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/2/2b/Admiral_Yi_Helmet.png/revision/latest/scale-to-width-down/400?cb=20180802233345",
+      "source_title": "Admiral Yi’s Helmet",
+      "name": "Admiral Yi’s Helmet"
+    },
+    "aztec-calendar-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/b/bf/Aztec_Calendar_Large.png/revision/latest/scale-to-width-down/400?cb=20181215171918",
+      "source_title": "Aztec Calendar",
+      "name": "Aztec Calendar"
+    },
+    "enigma-machine-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/e/e2/Enigma_Machine.jpg/revision/latest?cb=20200604173812",
+      "source_title": "Enigma Machine",
+      "name": "Enigma Machine"
+    },
+    "fengguan-phoenix-crown-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/d/d2/Fengguan_Phoenix_Crown.jpg/revision/latest?cb=20200902142228",
+      "source_title": "Fengguan Phoenix Crown",
+      "name": "Fengguan Phoenix Crown"
+    },
+    "fire-breathing-bunny-fossil-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/c/ce/Fire_Breathing_Bunny_Fossil.jpg/revision/latest?cb=20250402132029",
+      "source_title": "Fire Breathing Bunny Fossil",
+      "name": "Fire Breathing Bunny Fossil"
+    },
+    "leoni-parade-shield-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/6/60/Leoni_Parade_Shield.jpg/revision/latest?cb=20240428051502",
+      "source_title": "Leoni Parade Shield",
+      "name": "Leoni Parade Shield"
+    },
+    "li-vessel-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/9/97/Li_Vessel.png/revision/latest?cb=20221125070700",
+      "source_title": "Li Vessel",
+      "name": "Li Vessel"
+    },
+    "mask-of-agamemnon-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/2/25/Mask_of_Agamemnon_Large.png/revision/latest/scale-to-width-down/400?cb=20181011171207",
+      "source_title": "Mask of Agamemnon",
+      "name": "Mask of Agamemnon"
+    },
+    "napoleon-s-bicorne-hat-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/8/8e/Napoleon%27s_Bicorne_Hat.png/revision/latest?cb=20190222200809",
+      "source_title": "Napoleon's Bicorne Hat",
+      "name": "Napoleon's Bicorne Hat"
+    },
+    "ruyi-scepter-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/0/00/Ruyi_Scepter.png/revision/latest?cb=20200624083847",
+      "source_title": "Ruyi Scepter",
+      "name": "Ruyi Scepter"
+    },
+    "silla-gold-crown-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/0/01/Silla_Gold_Crown.png/revision/latest?cb=20190818190451",
+      "source_title": "Silla Gold Crown",
+      "name": "Silla Gold Crown"
+    },
+    "soul-catcher-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/c/ca/Soul_Catcher.png/revision/latest?cb=20220415205723",
+      "source_title": "Soul Catcher",
+      "name": "Soul Catcher"
+    },
+    "sutton-hoo-helmet-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/1/15/Sutton_Hoo_Helmet.png/revision/latest?cb=20190622071617",
+      "source_title": "Sutton Hoo Helmet",
+      "name": "Sutton Hoo Helmet"
+    },
+    "the-book-of-five-rings-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/7/70/The_Book_of_Five_Rings.png/revision/latest?cb=20190522174203",
+      "source_title": "The Book of Five Rings",
+      "name": "The Book of Five Rings"
+    },
+    "10th-mountain-division-war-kit-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/6/69/10th_Mountain_Division_War_Kit.png/revision/latest?cb=20191230193241",
+      "source_title": "10th Mountain Division War Kit",
+      "name": "10th Mountain Division War Kit"
+    },
+    "11th-anniversary-cake-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/e/e2/11th_Anniversary_Cake.png/revision/latest?cb=20260721213653",
+      "source_title": "11th Anniversary Cake",
+      "name": "11th Anniversary Cake"
+    },
+    "6th-anniversary-six-shooter-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/5/52/6th_Anniversary_Six-Shooter.png/revision/latest?cb=20210827032546",
+      "source_title": "6th Anniversary Six-Shooter",
+      "name": "6th Anniversary Six-Shooter"
+    },
+    "alfred-jewel-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/7/7e/Alfred_Jewel.png/revision/latest/scale-to-width-down/400?cb=20260720172433",
+      "source_title": "Alfred Jewel",
+      "name": "Alfred Jewel"
+    },
+    "analytical-engine-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/3/3e/Analytical_Engine.png/revision/latest?cb=20260721220143",
+      "source_title": "Analytical Engine",
+      "name": "Analytical Engine"
+    },
+    "arm-reliquary-of-charlemagne-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/7/7a/Arm_Reliquary_of_Charlemagne.png/revision/latest/scale-to-width-down/285?cb=20210411025619",
+      "source_title": "Arm Reliquary of Charlemagne",
+      "name": "Arm Reliquary of Charlemagne"
+    },
+    "asdic-type-113x-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/1/16/ASDIC_Type_113X.png/revision/latest?cb=20201220225055",
+      "source_title": "ASDIC Type 113X",
+      "name": "ASDIC Type 113X"
+    },
+    "asm-135-anti-satellite-missile-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/4/40/ASM-135_Anti-Satellite_Missile.png/revision/latest/scale-to-width-down/243?cb=20200502200940",
+      "source_title": "ASM-135 Anti-Satellite Missile",
+      "name": "ASM-135 Anti-Satellite Missile"
+    },
+    "battersea-shield-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/5/55/Battersea_Shield.jpg/revision/latest?cb=20240402000514",
+      "source_title": "Battersea Shield",
+      "name": "Battersea Shield"
+    },
+    "berlichingen-s-iron-prosthetic-hand-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/1/10/Berlichingen%27s_Iron_Prosthetic_Hand.jpg/revision/latest?cb=20250330140821",
+      "source_title": "Berlichingen's Iron Prosthetic Hand",
+      "name": "Berlichingen's Iron Prosthetic Hand"
+    },
+    "british-kettle-drum-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/9/9d/British_Kettle_Drum.jpg/revision/latest?cb=20231002142102",
+      "source_title": "British Kettle Drum",
+      "name": "British Kettle Drum"
+    },
+    "bust-of-ramesses-ii-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/4/41/Bust_of_Ramesses_II.jpg/revision/latest?cb=20250122082113",
+      "source_title": "Bust of Ramesses II",
+      "name": "Bust of Ramesses II"
+    },
+    "caligula-s-ring-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/0/0b/Caligula%27s_Ring.png/revision/latest?cb=20220422180952",
+      "source_title": "Caligula's Ring",
+      "name": "Caligula's Ring"
+    },
+    "capt-mcconnell-s-hero-ensemble-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/b/b7/Capt._McConnell%27s_Hero_Ensemble.png/revision/latest?cb=20200824132134",
+      "source_title": "Capt. McConnell's Hero Ensemble",
+      "name": "Capt. McConnell's Hero Ensemble"
+    },
+    "creighton-abrams-tank-commander-kit-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/d/d3/Creighton_Abrams_Tank_Commander_Kit.png/revision/latest?cb=20230408072132",
+      "source_title": "Creighton Abrams Tank Commander Kit",
+      "name": "Creighton Abrams Tank Commander Kit"
+    },
+    "crescent-blade-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/a/ac/Crescent_Blade.png/revision/latest?cb=20220419001136",
+      "source_title": "Crescent Blade",
+      "name": "Crescent Blade"
+    },
+    "crocodile-mask-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/5/53/Crocodile_Mask.png/revision/latest?cb=20220415202549",
+      "source_title": "Crocodile Mask",
+      "name": "Crocodile Mask"
+    },
+    "cryolophosaurus-skull-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/7/74/Cryolophosaurus_Skull.png/revision/latest?cb=20220427213812",
+      "source_title": "Cryolophosaurus Skull",
+      "name": "Cryolophosaurus Skull"
+    },
+    "da-vinci-s-flying-machine-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/e/e2/Da_Vinci%27s_Flying_Machine.jpg/revision/latest?cb=20190622100447",
+      "source_title": "Da Vinci's Flying Machine",
+      "name": "Da Vinci's Flying Machine"
+    },
+    "da-vinci-s-machine-gun-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/3/36/Da_Vinci%27s_Machine_Gun.png/revision/latest?cb=20200711034345",
+      "source_title": "Da Vinci's Machine Gun",
+      "name": "Da Vinci's Machine Gun"
+    },
+    "demarcation-stone-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/4/42/Demarcation_Stone.png/revision/latest?cb=20181115205356",
+      "source_title": "Demarcation Stone",
+      "name": "Demarcation Stone"
+    },
+    "desert-storm-psn-8-manpack-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/f/ff/Desert_Storm_PSN-8_Manpack.jpg/revision/latest?cb=20201010111657",
+      "source_title": "Desert Storm PSN-8 Manpack",
+      "name": "Desert Storm PSN-8 Manpack"
+    },
+    "dominations-army-helmet-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/e/ea/DomiNations_Army_Helmet.png/revision/latest?cb=20260722194559",
+      "source_title": "Dominations Army Helmet",
+      "name": "DomiNations Army Helmet"
+    },
+    "dominations-game-box-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/1/1c/DomiNations_Game_Box.jpg/revision/latest?cb=20250618141720",
+      "source_title": "DomiNations Game Box",
+      "name": "DomiNations Game Box"
+    },
+    "elephant-archer-quiver-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/3/3a/Elephant_Archer_Quiver.jpg/revision/latest?cb=20250618141733",
+      "source_title": "Elephant Archer Quiver",
+      "name": "Elephant Archer Quiver"
+    },
+    "flamma-s-helmet-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/7/7e/Flamma%27s_Helmet.png/revision/latest?cb=20211220083310",
+      "source_title": "Flamma's Helmet",
+      "name": "Flamma's Helmet"
+    },
+    "gemini-8-gloves-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/0/0a/Gemini_8_Gloves.png/revision/latest?cb=20190815212237",
+      "source_title": "Gemini 8 Gloves",
+      "name": "Gemini 8 Gloves"
+    },
+    "gemini-8-helmet-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/7/71/Gemini_8_Helmet.png/revision/latest?cb=20190829092206",
+      "source_title": "Gemini 8 Helmet",
+      "name": "Gemini 8 Helmet"
+    },
+    "general-pershing-s-bas-relief-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/5/51/General-Pershing.png/revision/latest?cb=20181125120222",
+      "source_title": "General Pershing's Bas-Relief",
+      "name": "General Pershing's Bas-Relief"
+    },
+    "great-imperial-crown-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/b/b2/Great_Imperial_Crown.png/revision/latest?cb=20200603055904",
+      "source_title": "Great Imperial Crown",
+      "name": "Great Imperial Crown"
+    },
+    "huey-armament-system-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/6/62/Huey_Armament_System.png/revision/latest?cb=20210621143053",
+      "source_title": "Huey Armament System",
+      "name": "Huey Armament System"
+    },
+    "joyeuse-sword-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/a/af/20190601_222112.jpg/revision/latest/scale-to-width-down/400?cb=20190602022439",
+      "source_title": "Joyeuse Sword",
+      "name": "Joyeuse Sword"
+    },
+    "julius-caesar-statue-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/6/69/Julius_Caesar_Statue.png/revision/latest?cb=20200725035438",
+      "source_title": "Julius Caesar Statue",
+      "name": "Julius Caesar Statue"
+    },
+    "koh-i-noor-diamond-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/f/fb/Koh-i-Noor_Diamond.png/revision/latest/scale-to-width-down/400?cb=20250810141505",
+      "source_title": "Koh-i-Noor Diamond",
+      "name": "Koh-i-Noor Diamond"
+    },
+    "leonidas-bust-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/f/ff/Leonidas_Bust.png/revision/latest/scale-to-width-down/221?cb=20191019033807",
+      "source_title": "Leonidas Bust",
+      "name": "Leonidas Bust"
+    },
+    "liberty-bell-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/1/1a/Liberty_Bell.jpg/revision/latest?cb=20241015100917",
+      "source_title": "Liberty Bell",
+      "name": "Liberty Bell"
+    },
+    "mahiole-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/6/6b/Mahiole.jpg/revision/latest?cb=20260722202622",
+      "source_title": "Mahiole",
+      "name": "Mahiole"
+    },
+    "maori-war-club-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/3/3d/Maori_War_Club%28Mythical_War_Artifacts%29.jpg/revision/latest?cb=20260722221349",
+      "source_title": "Maori War Club(Mythical War Artifacts)",
+      "name": "Maori War Club"
+    },
+    "mold-gold-cape-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/2/20/Mold_Gold_Cape.jpg/revision/latest?cb=20260722204304",
+      "source_title": "Mold Gold Cape",
+      "name": "Mold Gold Cape"
+    },
+    "napoleon-s-boxlock-pistol-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/8/87/Napoleon%27s_Boxlock_Pistol.jpg/revision/latest?cb=20251012140841",
+      "source_title": "Napoleon's Boxlock Pistol",
+      "name": "Napoleon's Boxlock Pistol"
+    },
+    "narmer-palette-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/5/5c/Narmer_Palette.png/revision/latest?cb=20220123102334",
+      "source_title": "Narmer Palette",
+      "name": "Narmer Palette"
+    },
+    "nine-men-s-morris-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/3/31/Nine_Men%27s_Morris.jpg/revision/latest?cb=20250708134031",
+      "source_title": "Nine Men's Morris",
+      "name": "Nine Men's Morris"
+    },
+    "norden-bombsight-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/7/78/Norden_Bombsight.png/revision/latest?cb=20191118153818",
+      "source_title": "Norden Bombsight",
+      "name": "Norden Bombsight"
+    },
+    "normandy-scr-536-walkie-talkie-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/4/4a/Normandy_SCR-536_%22Walkie-Talkie%22.png/revision/latest?cb=20201220225200",
+      "source_title": "Normandy SCR-536 \"Walkie-Talkie\"",
+      "name": "Normandy SCR-536 \"Walkie-Talkie\""
+    },
+    "olmec-colossal-heads-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/b/b7/Olmec_Colossal_Heads.jpg/revision/latest?cb=20251012140853",
+      "source_title": "Olmec Colossal Heads",
+      "name": "Olmec Colossal Heads"
+    },
+    "plane-gyro-gunsight-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/1/1d/Plane_Gyro_Gunsight.jpg/revision/latest?cb=20230422115508",
+      "source_title": "Plane Gyro Gunsight",
+      "name": "Plane Gyro Gunsight"
+    },
+    "ramesses-s-abu-simbel-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/4/45/Ramesses_%E2%85%A1%27s_Abu_Simbel.png/revision/latest/scale-to-width-down/400?cb=20200914185035",
+      "source_title": "Ramesses Ⅱ's Abu Simbel",
+      "name": "Ramesses Ⅱ's Abu Simbel"
+    },
+    "raven-rattle-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/2/24/Raven_Rattle.jpg/revision/latest?cb=20240507003942",
+      "source_title": "Raven Rattle",
+      "name": "Raven Rattle"
+    },
+    "red-baron-s-engine-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/7/7a/Red_Baron%27s_Engine.png/revision/latest?cb=20181224083734",
+      "source_title": "Red Baron's Engine",
+      "name": "Red Baron's Engine"
+    },
+    "rq-2-pioneer-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/6/6c/RQ-2_Pioneer.jpg/revision/latest?cb=20200419165313",
+      "source_title": "RQ-2 Pioneer",
+      "name": "RQ-2 Pioneer"
+    },
+    "sanada-yukimura-s-armor-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/d/d6/Sanada_Yukimura%27s_Armor.png/revision/latest/scale-to-width-down/266?cb=20200619092150",
+      "source_title": "Sanada Yukimura's Armor",
+      "name": "Sanada Yukimura's Armor"
+    },
+    "sophilos-dinos-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/2/27/Sophilos_Dinos.jpg/revision/latest?cb=20240709010706",
+      "source_title": "Sophilos Dinos",
+      "name": "Sophilos Dinos"
+    },
+    "supermarine-spitfire-engine-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/4/4f/Supermarine_Spitfire_Engine.png/revision/latest?cb=20210702132710",
+      "source_title": "Supermarine Spitfire Engine",
+      "name": "Supermarine Spitfire Engine"
+    },
+    "t-34-tank-engine-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/0/0d/T-34_Tank_Engine.png/revision/latest?cb=20191130092043",
+      "source_title": "T-34 Tank Engine",
+      "name": "T-34 Tank Engine"
+    },
+    "the-art-of-war-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/b/ba/The_Art_of_War.png/revision/latest?cb=20201231203038",
+      "source_title": "The Art of War",
+      "name": "The Art of War"
+    },
+    "the-white-death-s-war-kit-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/c/c0/The_White_Death%27s_War_Kit.png/revision/latest?cb=20190210170133",
+      "source_title": "The White Death's War Kit",
+      "name": "The White Death's War Kit"
+    },
+    "tizona-sword-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/6/61/Tizona_Sword.png/revision/latest?cb=20190811081820",
+      "source_title": "Tizona Sword",
+      "name": "Tizona Sword"
+    },
+    "trundholm-sun-chariot-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/c/c2/Trundholm_Sun_Chariot.jpg/revision/latest/scale-to-width-down/400?cb=20260722210112",
+      "source_title": "Trundholm Sun Chariot",
+      "name": "Trundholm Sun Chariot"
+    },
+    "vespa-150-tap-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/9/93/Vespa_150_TAP.png/revision/latest?cb=20200409173625",
+      "source_title": "Vespa 150 TAP",
+      "name": "Vespa 150 TAP"
+    },
+    "vz-9-avrocar-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/d/db/Vz-9_Avrocar.png/revision/latest?cb=20200430190224",
+      "source_title": "Vz-9 Avrocar",
+      "name": "Vz-9 Avrocar"
+    },
+    "welrod-mkii-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/7/73/Welrod_MkII.png/revision/latest?cb=20200321154118",
+      "source_title": "Welrod MkII",
+      "name": "Welrod MkII"
+    },
+    "winged-victory-of-samothrace-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/9/94/Winged_Victory_of_Samothrace.jpg/revision/latest?cb=20250210123401",
+      "source_title": "Winged Victory of Samothrace",
+      "name": "Winged Victory of Samothrace"
+    },
+    "zg-1229-vampir-legendary": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/d/d2/ZG_1229_Vampir.png/revision/latest?cb=20200531160007",
+      "source_title": "ZG 1229 Vampir",
+      "name": "ZG 1229 Vampir"
+    },
+    "arm-reliquary-of-charlemagne-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/7/7a/Arm_Reliquary_of_Charlemagne.png/revision/latest/scale-to-width-down/285?cb=20210411025619",
+      "source_title": "Arm Reliquary of Charlemagne",
+      "name": "Arm Reliquary of Charlemagne"
+    },
+    "british-kettle-drum-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/9/9d/British_Kettle_Drum.jpg/revision/latest?cb=20231002142102",
+      "source_title": "British Kettle Drum",
+      "name": "British Kettle Drum"
+    },
+    "caligula-s-ring-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/0/0b/Caligula%27s_Ring.png/revision/latest?cb=20220422180952",
+      "source_title": "Caligula's Ring",
+      "name": "Caligula's Ring"
+    },
+    "da-vinci-s-flying-machine-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/e/e2/Da_Vinci%27s_Flying_Machine.jpg/revision/latest?cb=20190622100447",
+      "source_title": "Da Vinci's Flying Machine",
+      "name": "Da Vinci's Flying Machine"
+    },
+    "elephant-archer-quiver-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/3/3a/Elephant_Archer_Quiver.jpg/revision/latest?cb=20250618141733",
+      "source_title": "Elephant Archer Quiver",
+      "name": "Elephant Archer Quiver"
+    },
+    "gemini-8-gloves-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/0/0a/Gemini_8_Gloves.png/revision/latest?cb=20190815212237",
+      "source_title": "Gemini 8 Gloves",
+      "name": "Gemini 8 Gloves"
+    },
+    "gemini-8-helmet-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/7/71/Gemini_8_Helmet.png/revision/latest?cb=20190829092206",
+      "source_title": "Gemini 8 Helmet",
+      "name": "Gemini 8 Helmet"
+    },
+    "general-pershing-s-bas-relief-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/5/51/General-Pershing.png/revision/latest?cb=20181125120222",
+      "source_title": "General Pershing's Bas-Relief",
+      "name": "General Pershing's Bas-Relief"
+    },
+    "huey-armament-system-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/6/62/Huey_Armament_System.png/revision/latest?cb=20210621143053",
+      "source_title": "Huey Armament System",
+      "name": "Huey Armament System"
+    },
+    "joyeuse-sword-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/a/af/20190601_222112.jpg/revision/latest/scale-to-width-down/400?cb=20190602022439",
+      "source_title": "Joyeuse Sword",
+      "name": "Joyeuse Sword"
+    },
+    "leonidas-bust-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/f/ff/Leonidas_Bust.png/revision/latest/scale-to-width-down/221?cb=20191019033807",
+      "source_title": "Leonidas Bust",
+      "name": "Leonidas Bust"
+    },
+    "maori-war-club-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/3/3d/Maori_War_Club%28Mythical_War_Artifacts%29.jpg/revision/latest?cb=20260722221349",
+      "source_title": "Maori War Club(Mythical War Artifacts)",
+      "name": "Maori War Club"
+    },
+    "ramesses-s-abu-simbel-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/4/45/Ramesses_%E2%85%A1%27s_Abu_Simbel.png/revision/latest/scale-to-width-down/400?cb=20200914185035",
+      "source_title": "Ramesses Ⅱ's Abu Simbel",
+      "name": "Ramesses Ⅱ's Abu Simbel"
+    },
+    "supermarine-spitfire-engine-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/4/4f/Supermarine_Spitfire_Engine.png/revision/latest?cb=20210702132710",
+      "source_title": "Supermarine Spitfire Engine",
+      "name": "Supermarine Spitfire Engine"
+    },
+    "t-34-tank-engine-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/0/0d/T-34_Tank_Engine.png/revision/latest?cb=20191130092043",
+      "source_title": "T-34 Tank Engine",
+      "name": "T-34 Tank Engine"
+    },
+    "the-art-of-war-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/b/ba/The_Art_of_War.png/revision/latest?cb=20201231203038",
+      "source_title": "The Art of War",
+      "name": "The Art of War"
+    },
+    "the-white-death-s-war-kit-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/c/c0/The_White_Death%27s_War_Kit.png/revision/latest?cb=20190210170133",
+      "source_title": "The White Death's War Kit",
+      "name": "The White Death's War Kit"
+    },
+    "vz-9-avrocar-mythical": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/d/db/Vz-9_Avrocar.png/revision/latest?cb=20200430190224",
+      "source_title": "Vz-9 Avrocar",
+      "name": "Vz-9 Avrocar"
+    }
+  }
+}

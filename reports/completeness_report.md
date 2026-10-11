@@ -39,7 +39,7 @@
 ## Gaps (not complete)
 
 - Legendary perk gap remaining: 6 (Leftwich Uncertain + 5 nav-phantom Uncertain)
-- Legendary token `cost`: 57 / 118 filled (more older calendars may exist; 2024 calendars not found as dedicated posts)
+- Legendary token `cost`: 73 / 118 filled (more older calendars may exist; 2024 calendars not found as dedicated posts)
 - Mythical max values intentionally blank (announcement numbers; no blind +9)
 - Uncertain legendaries: Leftwich (never sold) + 5 nav phantoms
 - dominations-info.com API still 404; not used as primary

@@ -1,0 +1,2817 @@
+{
+  "source": "https://dominations.fandom.com/wiki/Councilors#Councilors_List",
+  "generatedAt": "2026-07-23T16:13:43Z",
+  "rarities": [
+    "Common",
+    "Uncommon",
+    "Rare",
+    "Epic",
+    "Legendary"
+  ],
+  "count": 42,
+  "by_type": {
+    "Leader": 8,
+    "Scholar": 8,
+    "Revolutionary": 6,
+    "Diplomat": 6,
+    "Warrior": 7,
+    "Royalty": 4,
+    "Samurai": 1,
+    "Admiral": 2
+  },
+  "unique_legendary_stats": [
+    "Air Defense Damage",
+    "Air Defense Damage & Hitpoints",
+    "Air Defense Damage and Hitpoints",
+    "Air Defense Hitpoints",
+    "All Def. Tower Damage & Hitpoints",
+    "All Defensive Tower Damage & Hitpoints",
+    "All Defensive Tower Damage and Hitpoints",
+    "All Resources Looted",
+    "Attack Helicopter DMG & Hitpoints",
+    "Attack Helicopter Damage",
+    "Attack Helicopter Damage & Hitpoints",
+    "Attack Helicopter Damage and Hitpoints",
+    "Bazooka & Paratrooper Damage",
+    "Bazooka Attack Speed",
+    "Bazooka Damage",
+    "Bomber Damage",
+    "Bomber Damage & Hitpoints",
+    "Bomber Damage and HP",
+    "Bomber Damage and Hitpoints",
+    "Catapult Damage",
+    "Coalition Troop Damage",
+    "Defender DMG",
+    "Defender Damage",
+    "Defender HP",
+    "Defender Hitpoints",
+    "Defender Spawn Time",
+    "Defensive Missile Silo Damage",
+    "Defensive Tower Damage",
+    "Enemy Air Def. Damage",
+    "Enemy Air Defense Damage",
+    "Enemy Missile Silo Damage",
+    "Enemy Tower Damage",
+    "Enemy Tower Hitpoints",
+    "Enemy Wall Hitpoints",
+    "Fighter Damage",
+    "Fighter Hitpoints",
+    "Food from Farms",
+    "Food, Gold and Oil Generated",
+    "General Damage",
+    "General Hitpoints",
+    "Generals Damage",
+    "Generals Hitpoints",
+    "Generals' Damage",
+    "Generals' Hitpoints",
+    "Gold From Carvans",
+    "Gold from Caravans",
+    "Guerilla Damage",
+    "Guerrilla Damage",
+    "Guerrilla Hitpoints",
+    "Heavy Cavalry HP",
+    "Heavy Cavalry Hitpoints",
+    "Heavy Infantry Attack Speed",
+    "Heavy Infantry Damage",
+    "Heavy Tank Damage",
+    "Heavy Tank Hitpoints",
+    "Invading Bazooka Damage",
+    "Invading Bazooka Hitpoints",
+    "Invading Bomber Damage",
+    "Invading Fighter Damage",
+    "Invading Fighter Damage & Hitpoints",
+    "Invading Fighter Damage and Hitpoints",
+    "Invading Fighter Hitpoints",
+    "Invading Generals Attack Speed",
+    "Invading Generals Damage & Hitpoints",
+    "Invading Generals' Attack Speed",
+    "Invading Generals' Damage",
+    "Invading Generals' Damage and Hitpoints",
+    "Invading Generals’ Attack Speed",
+    "Invading Guerrilla Hitpoints",
+    "Invading Heavy Tank Damage",
+    "Invading Heavy Tank Hitpoints",
+    "Invading Machine Gun Infantry Damage",
+    "Invading Raider Damage",
+    "Library Tech Oil Cost",
+    "Looted Resource Refund",
+    "MRL Damage",
+    "MRL Damage & Hitpoints",
+    "MRL Damage and Hitpoints",
+    "Machine Gun Infantry Damage",
+    "Machine Gun Infantry Hitpoints",
+    "Mercenary Damage",
+    "Mercenary Damage & Hitpoints",
+    "Mercenary Hitpoints",
+    "Mortar Infantry Damage",
+    "Oil Looted",
+    "Oil from Oil Wells",
+    "Paratrooper Damage",
+    "Paratrooper Damage and Hitpoints",
+    "Paratrooper Hitpoints",
+    "Paratrooper Hitpoints & Damage",
+    "Protect Duration",
+    "Raider Damage",
+    "Ranged Infantry Damage",
+    "Ranged Siege Damage",
+    "Recon Scan Bonus Damage",
+    "Redoubt Damage",
+    "Sabotage Duration",
+    "Sniper Tower Damage",
+    "Supply Cart Healing",
+    "Tower Damage",
+    "Wall Hitpoints",
+    "Wall Miner Movement Speed"
+  ],
+  "people": [
+    {
+      "id": "alcibiades",
+      "name": "Alcibiades",
+      "type": "Leader",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Alcibiades",
+      "warLegendary": [
+        {
+          "stat": "Catapult Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "Defensive Tower Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "Redoubt Damage",
+          "value": "+14%"
+        },
+        {
+          "stat": "Air Defense Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "Sniper Tower Damage",
+          "value": "+30%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Mercenary Damage",
+          "value": "+15%"
+        },
+        {
+          "stat": "Mercenary Hitpoints",
+          "value": "+15%"
+        },
+        {
+          "stat": "Ranged Siege Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Heavy Tank Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Mercenary Damage & Hitpoints",
+          "value": "+15%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "alexander-the-great",
+      "name": "Alexander the Great",
+      "type": "Leader",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Alexander_the_Great",
+      "warLegendary": [
+        {
+          "stat": "Heavy Cavalry Hitpoints",
+          "value": "+15%"
+        },
+        {
+          "stat": "Fighter Hitpoints",
+          "value": "+14%"
+        },
+        {
+          "stat": "Defender Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "Attack Helicopter Damage and Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Air Defense Damage and Hitpoints",
+          "value": "+8%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Heavy Cavalry Hitpoints",
+          "value": "+15%"
+        },
+        {
+          "stat": "Heavy Infantry Damage",
+          "value": "+10%"
+        },
+        {
+          "stat": "Enemy Air Defense Damage",
+          "value": "-12%"
+        },
+        {
+          "stat": "Fighter Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "Paratrooper Damage and Hitpoints",
+          "value": "+8%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "charlemagne",
+      "name": "Charlemagne",
+      "type": "Leader",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Charlemagne",
+      "warLegendary": [
+        {
+          "stat": "Heavy Cavalry Hitpoints",
+          "value": "+18%"
+        },
+        {
+          "stat": "Paratrooper Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "Enemy Tower Damage",
+          "value": "-24%"
+        },
+        {
+          "stat": "Heavy Cavalry Hitpoints",
+          "value": "+18%"
+        },
+        {
+          "stat": "Paratrooper Damage",
+          "value": "+12%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Heavy Cavalry Hitpoints",
+          "value": "+18%"
+        },
+        {
+          "stat": "Paratrooper Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "Enemy Tower Damage",
+          "value": "-24%"
+        },
+        {
+          "stat": "Heavy Cavalry Hitpoints",
+          "value": "+18%"
+        },
+        {
+          "stat": "Paratrooper Damage",
+          "value": "+12%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "erik-the-red",
+      "name": "Erik the Red",
+      "type": "Leader",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Erik_the_Red",
+      "warLegendary": [
+        {
+          "stat": "Mercenary Damage",
+          "value": "+15%"
+        },
+        {
+          "stat": "Fighter Hitpoints",
+          "value": "+14%"
+        },
+        {
+          "stat": "Sabotage Duration",
+          "value": "+24%"
+        },
+        {
+          "stat": "Invading Bomber Damage",
+          "value": "-12%"
+        },
+        {
+          "stat": "Defensive Missile Silo Damage",
+          "value": "+8%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Heavy Infantry Attack Speed",
+          "value": "+13%"
+        },
+        {
+          "stat": "All Resources Looted",
+          "value": "+8%"
+        },
+        {
+          "stat": "Enemy Tower Damage",
+          "value": "-12%"
+        },
+        {
+          "stat": "Heavy Tank Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Enemy Missile Silo Damage",
+          "value": "-12%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "hammurabi",
+      "name": "Hammurabi",
+      "type": "Leader",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Hammurabi",
+      "warLegendary": [
+        {
+          "stat": "Redoubt Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Redoubt Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Tower Damage",
+          "value": "-16%"
+        },
+        {
+          "stat": "Tower Damage",
+          "value": "-16%"
+        },
+        {
+          "stat": "Air Defense Damage & Hitpoints",
+          "value": "+18%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Redoubt Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Redoubt Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Tower Damage",
+          "value": "-16%"
+        },
+        {
+          "stat": "Tower Damage",
+          "value": "-16%"
+        },
+        {
+          "stat": "Air Defense Damage & Hitpoints",
+          "value": "+18%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "joan-of-arc",
+      "name": "Joan of Arc",
+      "type": "Leader",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Joan_of_Arc(Council)",
+      "warLegendary": [
+        {
+          "stat": "Mortar Infantry Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "Enemy Wall Hitpoints",
+          "value": "-14%"
+        },
+        {
+          "stat": "Attack Helicopter Damage and Hitpoints",
+          "value": "+11%"
+        },
+        {
+          "stat": "Generals' Hitpoints",
+          "value": "+14%"
+        },
+        {
+          "stat": "Paratrooper Damage and Hitpoints",
+          "value": "+8%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Heavy Infantry Attack Speed",
+          "value": "+13%"
+        },
+        {
+          "stat": "Heavy Infantry Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "Generals' Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "Enemy Tower Damage",
+          "value": "-12%"
+        },
+        {
+          "stat": "Recon Scan Bonus Damage",
+          "value": "+10%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "oda-nobunaga",
+      "name": "Oda Nobunaga",
+      "type": "Leader",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Oda_Nobunaga",
+      "warLegendary": [
+        {
+          "stat": "Generals Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Generals Hitpoints",
+          "value": "+16%"
+        },
+        {
+          "stat": "Generals Hitpoints",
+          "value": "+16%"
+        },
+        {
+          "stat": "Paratrooper Damage",
+          "value": "+14%"
+        },
+        {
+          "stat": "Paratrooper Hitpoints",
+          "value": "+20%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Generals Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Generals Hitpoints",
+          "value": "+16%"
+        },
+        {
+          "stat": "Generals Hitpoints",
+          "value": "+16%"
+        },
+        {
+          "stat": "Paratrooper Damage",
+          "value": "+14%"
+        },
+        {
+          "stat": "Paratrooper Hitpoints",
+          "value": "+20%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "robert-the-bruce",
+      "name": "Robert the Bruce",
+      "type": "Leader",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Robert_the_Bruce",
+      "warLegendary": [
+        {
+          "stat": "Defender Spawn Time",
+          "value": "-14%"
+        },
+        {
+          "stat": "Defensive Tower Damage",
+          "value": "+18%"
+        },
+        {
+          "stat": "Enemy Tower Damage",
+          "value": "-12%"
+        },
+        {
+          "stat": "Enemy Air Defense Damage",
+          "value": "-14%"
+        },
+        {
+          "stat": "Paratrooper Damage and Hitpoints",
+          "value": "+8%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Ranged Infantry Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Wall Hitpoints",
+          "value": "+14%"
+        },
+        {
+          "stat": "Air Defense Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Guerrilla Hitpoints",
+          "value": "+15%"
+        },
+        {
+          "stat": "Guerilla Damage",
+          "value": "+12%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "ada-lovelace",
+      "name": "Ada Lovelace",
+      "type": "Scholar",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Ada_Lovelace",
+      "warLegendary": [
+        {
+          "stat": "Machine Gun Infantry Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Machine Gun Infantry Hitpoints",
+          "value": "+20%"
+        },
+        {
+          "stat": "Enemy Wall Hitpoints",
+          "value": "-16%"
+        },
+        {
+          "stat": "Heavy Tank Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "Heavy Tank Damage",
+          "value": "+12%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Oil from Oil Wells",
+          "value": "+15%"
+        },
+        {
+          "stat": "Library Tech Oil Cost",
+          "value": "-10%"
+        },
+        {
+          "stat": "Oil Looted",
+          "value": "+13%"
+        },
+        {
+          "stat": "All Resources Looted",
+          "value": "+10%"
+        },
+        {
+          "stat": "All Resources Looted",
+          "value": "+10%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "alfred-nobel",
+      "name": "Alfred Nobel",
+      "type": "Scholar",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Alfred_Nobel",
+      "warLegendary": [
+        {
+          "stat": "Mortar Infantry Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "Defensive Tower Damage",
+          "value": "+18%"
+        },
+        {
+          "stat": "Bomber Damage",
+          "value": "+10%"
+        },
+        {
+          "stat": "Bazooka Damage",
+          "value": "+18%"
+        },
+        {
+          "stat": "Recon Scan Bonus Damage",
+          "value": "+10%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Heavy Cavalry HP",
+          "value": "+15%"
+        },
+        {
+          "stat": "Food, Gold and Oil Generated",
+          "value": "+10%"
+        },
+        {
+          "stat": "Library Tech Oil Cost",
+          "value": "-15%"
+        },
+        {
+          "stat": "Bazooka Attack Speed",
+          "value": "+15%"
+        },
+        {
+          "stat": "Bomber Damage and HP",
+          "value": "+7%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "charles-babbage",
+      "name": "Charles Babbage",
+      "type": "Scholar",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Charles_Babbage",
+      "warLegendary": [
+        {
+          "stat": "Attack Helicopter Damage & Hitpoints",
+          "value": "+10%"
+        },
+        {
+          "stat": "Enemy Tower Damage",
+          "value": "-20%"
+        },
+        {
+          "stat": "Enemy Tower Hitpoints",
+          "value": "-16%"
+        },
+        {
+          "stat": "Enemy Air Defense Damage",
+          "value": "-20%"
+        },
+        {
+          "stat": "Attack Helicopter Damage",
+          "value": "+10%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Attack Helicopter Damage & Hitpoints",
+          "value": "+10%"
+        },
+        {
+          "stat": "Enemy Tower Damage",
+          "value": "-20%"
+        },
+        {
+          "stat": "Enemy Tower Hitpoints",
+          "value": "-16%"
+        },
+        {
+          "stat": "Enemy Air Defense Damage",
+          "value": "-20%"
+        },
+        {
+          "stat": "Attack Helicopter Damage",
+          "value": "+10%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "florence-nightingale",
+      "name": "Florence Nightingale",
+      "type": "Scholar",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Florence_Nightingale",
+      "warLegendary": [
+        {
+          "stat": "Enemy Air Def. Damage",
+          "value": "-8%"
+        },
+        {
+          "stat": "Bomber Damage",
+          "value": "+10%"
+        },
+        {
+          "stat": "Paratrooper Hitpoints",
+          "value": "+15%"
+        },
+        {
+          "stat": "Paratrooper Damage",
+          "value": "+10%"
+        },
+        {
+          "stat": "Bomber Damage & Hitpoints",
+          "value": "+7%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Supply Cart Healing",
+          "value": "+20%"
+        },
+        {
+          "stat": "Defender Spawn Time",
+          "value": "-16%"
+        },
+        {
+          "stat": "Enemy Missile Silo Damage",
+          "value": "-10%"
+        },
+        {
+          "stat": "Bazooka Attack Speed",
+          "value": "+15%"
+        },
+        {
+          "stat": "All Def. Tower Damage & Hitpoints",
+          "value": "+6%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "kong-qiu",
+      "name": "Kong Qiu",
+      "type": "Scholar",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Kong_Qiu",
+      "warLegendary": [
+        {
+          "stat": "Tower Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Sniper Tower Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Defender Damage",
+          "value": "+14%"
+        },
+        {
+          "stat": "Defender Hitpoints",
+          "value": "+18%"
+        },
+        {
+          "stat": "Defender Spawn Time",
+          "value": "+14%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Food from Farms",
+          "value": "+40%"
+        },
+        {
+          "stat": "Looted Resource Refund",
+          "value": "+20%"
+        },
+        {
+          "stat": "Defender Damage",
+          "value": "+14%"
+        },
+        {
+          "stat": "Defender Hitpoints",
+          "value": "+18%"
+        },
+        {
+          "stat": "Defender Spawn Time",
+          "value": "+14%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "marie-curie",
+      "name": "Marie Curie",
+      "type": "Scholar",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Marie_Curie",
+      "warLegendary": [
+        {
+          "stat": "Defensive Tower Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "Air Defense Damage",
+          "value": "+14%"
+        },
+        {
+          "stat": "Air Defense Damage & Hitpoints",
+          "value": "+10%"
+        },
+        {
+          "stat": "Invading Fighter Damage & Hitpoints",
+          "value": "-10%"
+        },
+        {
+          "stat": "All Defensive Tower Damage & Hitpoints",
+          "value": "+10%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Enemy Air Defense Damage",
+          "value": "-12%"
+        },
+        {
+          "stat": "Attack Helicopter DMG & Hitpoints",
+          "value": "+8%"
+        },
+        {
+          "stat": "Fighter Damage",
+          "value": "+10%"
+        },
+        {
+          "stat": "Fighter Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Bomber Damage & Hitpoints",
+          "value": "+10%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "pericles",
+      "name": "Pericles",
+      "type": "Scholar",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Pericles",
+      "warLegendary": [
+        {
+          "stat": "Machine Gun Infantry Damage",
+          "value": "+11%"
+        },
+        {
+          "stat": "Fighter Hitpoints",
+          "value": "+14%"
+        },
+        {
+          "stat": "Paratrooper Hitpoints",
+          "value": "+15%"
+        },
+        {
+          "stat": "Invading Guerrilla Hitpoints",
+          "value": "-15%"
+        },
+        {
+          "stat": "Invading Generals’ Attack Speed",
+          "value": "-15%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Mercenary Damage",
+          "value": "+15%"
+        },
+        {
+          "stat": "Enemy Wall Hitpoints",
+          "value": "-14%"
+        },
+        {
+          "stat": "Enemy Tower Damage",
+          "value": "-12%"
+        },
+        {
+          "stat": "Enemy Air Defense Damage",
+          "value": "-14%"
+        },
+        {
+          "stat": "Enemy Missile Silo Damage",
+          "value": "-12%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "samuel-morse",
+      "name": "Samuel Morse",
+      "type": "Scholar",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Samuel_Morse",
+      "warLegendary": [
+        {
+          "stat": "Fighter Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Fighter Damage",
+          "value": "+10%"
+        },
+        {
+          "stat": "Bomber Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "Bomber Damage & Hitpoints",
+          "value": "+10%"
+        },
+        {
+          "stat": "Recon Scan Bonus Damage",
+          "value": "+10%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Bazooka Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "Bazooka Attack Speed",
+          "value": "+13%"
+        },
+        {
+          "stat": "Generals Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Paratrooper Hitpoints & Damage",
+          "value": "+10%"
+        },
+        {
+          "stat": "Heavy Tank Damage",
+          "value": "+14%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "boudica",
+      "name": "Boudica",
+      "type": "Revolutionary",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Boudica",
+      "warLegendary": [
+        {
+          "stat": "Ranged Siege Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Coalition Troop Damage",
+          "value": "+15%"
+        },
+        {
+          "stat": "Invading Bazooka Hitpoints",
+          "value": "-14%"
+        },
+        {
+          "stat": "Invading Generals' Damage",
+          "value": "-14%"
+        },
+        {
+          "stat": "All Defensive Tower Damage and Hitpoints",
+          "value": "+6%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Ranged Siege Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "All Resources Looted",
+          "value": "+8%"
+        },
+        {
+          "stat": "Invading Bazooka Damage",
+          "value": "-15%"
+        },
+        {
+          "stat": "Bazooka Attack Speed",
+          "value": "+15%"
+        },
+        {
+          "stat": "Guerrilla Damage",
+          "value": "+12%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "george-washington",
+      "name": "George Washington",
+      "type": "Revolutionary",
+      "sourceUrl": "https://dominations.fandom.com/wiki/George_Washington",
+      "warLegendary": [
+        {
+          "stat": "Coalition Troop Damage",
+          "value": "+13%"
+        },
+        {
+          "stat": "Air Defense Damage",
+          "value": "+10%"
+        },
+        {
+          "stat": "Generals' Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "Invading Bazooka Hitpoints",
+          "value": "-16%"
+        },
+        {
+          "stat": "Recon Scan Bonus Damage",
+          "value": "+10%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Ranged Infantry Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Generals' Hitpoints",
+          "value": "+10%"
+        },
+        {
+          "stat": "Sabotage Duration",
+          "value": "+24%"
+        },
+        {
+          "stat": "Attack Helicopter Damage and Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Bomber Damage",
+          "value": "+14%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "johannes-gutenberg",
+      "name": "Johannes Gutenberg",
+      "type": "Revolutionary",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Johannes_Gutenberg",
+      "warLegendary": [
+        {
+          "stat": "Heavy Tank Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "Heavy Infantry Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Protect Duration",
+          "value": "+15%"
+        },
+        {
+          "stat": "Heavy Tank Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Heavy Infantry Damage",
+          "value": "+16%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Heavy Tank Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "Heavy Infantry Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Protect Duration",
+          "value": "+15%"
+        },
+        {
+          "stat": "Heavy Tank Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Heavy Infantry Damage",
+          "value": "+16%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "leona-vicario",
+      "name": "Leona Vicario",
+      "type": "Revolutionary",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Leona_Vicario",
+      "warLegendary": [
+        {
+          "stat": "Invading Fighter Hitpoints",
+          "value": "-20%"
+        },
+        {
+          "stat": "Invading Fighter Damage",
+          "value": "-14%"
+        },
+        {
+          "stat": "Invading Bomber Damage",
+          "value": "-14%"
+        },
+        {
+          "stat": "Invading Heavy Tank Hitpoints",
+          "value": "-16%"
+        },
+        {
+          "stat": "Invading Heavy Tank Damage",
+          "value": "-16%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Invading Fighter Hitpoints",
+          "value": "-20%"
+        },
+        {
+          "stat": "Invading Fighter Damage",
+          "value": "-14%"
+        },
+        {
+          "stat": "Invading Bomber Damage",
+          "value": "-14%"
+        },
+        {
+          "stat": "Invading Heavy Tank Hitpoints",
+          "value": "-16%"
+        },
+        {
+          "stat": "Invading Heavy Tank Damage",
+          "value": "-16%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "nancy-wake",
+      "name": "Nancy Wake",
+      "type": "Revolutionary",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Nancy_Wake",
+      "warLegendary": [
+        {
+          "stat": "Defender Spawn Time",
+          "value": "-12%"
+        },
+        {
+          "stat": "Ranged Infantry Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "MRL Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "Guerrilla Hitpoints",
+          "value": "+14%"
+        },
+        {
+          "stat": "Defender Spawn Time",
+          "value": "-12%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Paratrooper Hitpoints",
+          "value": "+15%"
+        },
+        {
+          "stat": "Paratrooper Damage",
+          "value": "+10%"
+        },
+        {
+          "stat": "Oil Looted",
+          "value": "+13%"
+        },
+        {
+          "stat": "Oil Looted",
+          "value": "+13%"
+        },
+        {
+          "stat": "All Resources Looted",
+          "value": "+15%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "simon-bolivar",
+      "name": "Simón Bolívar",
+      "type": "Revolutionary",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Sim%C3%B3n_Bol%C3%ADvar",
+      "warLegendary": [
+        {
+          "stat": "Guerrilla Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Guerrilla Hitpoints",
+          "value": "+20%"
+        },
+        {
+          "stat": "Bazooka Damage",
+          "value": "+15%"
+        },
+        {
+          "stat": "Bazooka Damage",
+          "value": "+15%"
+        },
+        {
+          "stat": "Bazooka Attack Speed",
+          "value": "+15%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Guerrilla Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Guerrilla Hitpoints",
+          "value": "+20%"
+        },
+        {
+          "stat": "Bazooka Damage",
+          "value": "+15%"
+        },
+        {
+          "stat": "Bazooka Damage",
+          "value": "+15%"
+        },
+        {
+          "stat": "Bazooka Attack Speed",
+          "value": "+15%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "charlotte-ray",
+      "name": "Charlotte Ray",
+      "type": "Diplomat",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Charlotte_Ray",
+      "warLegendary": [
+        {
+          "stat": "Wall Hitpoints",
+          "value": "-16%"
+        },
+        {
+          "stat": "Defensive Missile Silo Damage",
+          "value": "-12%"
+        },
+        {
+          "stat": "General Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "General Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Air Defense Damage",
+          "value": "-20%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Enemy Wall Hitpoints",
+          "value": "-16%"
+        },
+        {
+          "stat": "Enemy Missile Silo Damage",
+          "value": "-12%"
+        },
+        {
+          "stat": "General Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "General Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Enemy Air Defense Damage",
+          "value": "-20%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "cleopatra",
+      "name": "Cleopatra",
+      "type": "Diplomat",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Cleopatra(Council)",
+      "warLegendary": [
+        {
+          "stat": "Supply Cart Healing",
+          "value": "+20%"
+        },
+        {
+          "stat": "Heavy Infantry Attack Speed",
+          "value": "+15%"
+        },
+        {
+          "stat": "Generals' Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Guerrilla Hitpoints",
+          "value": "+15%"
+        },
+        {
+          "stat": "Invading Generals' Damage and Hitpoints",
+          "value": "-8%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Ranged Infantry Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Gold From Carvans",
+          "value": "+15%"
+        },
+        {
+          "stat": "Machine Gun Infantry Hitpoints",
+          "value": "+20%"
+        },
+        {
+          "stat": "Oil from Oil Wells",
+          "value": "+15%"
+        },
+        {
+          "stat": "Guerrilla Damage",
+          "value": "+12%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "hatshepsut",
+      "name": "Hatshepsut",
+      "type": "Diplomat",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Hatshepsut",
+      "warLegendary": [
+        {
+          "stat": "Mortar Infantry Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "Mortar Infantry Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "Enemy Wall Hitpoints",
+          "value": "-16%"
+        },
+        {
+          "stat": "Heavy Infantry Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Heavy Infantry Attack Speed",
+          "value": "+12%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Mortar Infantry Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "Mortar Infantry Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "Enemy Wall Hitpoints",
+          "value": "-16%"
+        },
+        {
+          "stat": "Heavy Infantry Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Heavy Infantry Attack Speed",
+          "value": "+12%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "njinga-mbandi",
+      "name": "Njinga Mbandi",
+      "type": "Diplomat",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Njinga_Mbandi",
+      "warLegendary": [
+        {
+          "stat": "Ranged Siege Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Bazooka Attack Speed",
+          "value": "+9%"
+        },
+        {
+          "stat": "Paratrooper Hitpoints",
+          "value": "+15%"
+        },
+        {
+          "stat": "Attack Helicopter Damage & Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Bazooka & Paratrooper Damage",
+          "value": "+5%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Defender Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Sniper Tower Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "Invading Heavy Tank Hitpoints",
+          "value": "-10%"
+        },
+        {
+          "stat": "Invading Generals Damage & Hitpoints",
+          "value": "-6%"
+        },
+        {
+          "stat": "Defensive Missile Silo Damage",
+          "value": "+8%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "winston-churchill",
+      "name": "Winston Churchill",
+      "type": "Diplomat",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Winston_Churchill",
+      "warLegendary": [
+        {
+          "stat": "Mercenary Damage",
+          "value": "+15%"
+        },
+        {
+          "stat": "Sniper Tower Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "Air Defense Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "Bomber Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "MRL Damage and Hitpoints",
+          "value": "+25%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Sabotage Duration",
+          "value": "+20%"
+        },
+        {
+          "stat": "Enemy Wall Hitpoints",
+          "value": "-14%"
+        },
+        {
+          "stat": "Air Defense Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "Fighter Hitpoints",
+          "value": "+18%"
+        },
+        {
+          "stat": "Invading Bomber Damage",
+          "value": "-14%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "zenobia",
+      "name": "Zenobia",
+      "type": "Diplomat",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Zenobia",
+      "warLegendary": [
+        {
+          "stat": "Enemy Wall Hitpoints",
+          "value": "-12%"
+        },
+        {
+          "stat": "Enemy Tower Damage",
+          "value": "-14%"
+        },
+        {
+          "stat": "Enemy Air Defense Damage",
+          "value": "-16%"
+        },
+        {
+          "stat": "Enemy Tower Hitpoints",
+          "value": "-16%"
+        },
+        {
+          "stat": "Enemy Missile Silo Damage",
+          "value": "-12%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Supply Cart Healing",
+          "value": "+20%"
+        },
+        {
+          "stat": "Heavy Cavalry Hitpoints",
+          "value": "+18%"
+        },
+        {
+          "stat": "Ranged Siege Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Attack Helicopter Damage & Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Mortar Infantry Damage",
+          "value": "+24%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "guan-yu",
+      "name": "Guan Yu",
+      "type": "Warrior",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Guan_Yu(Council)",
+      "warLegendary": [
+        {
+          "stat": "Defender HP",
+          "value": "+12%"
+        },
+        {
+          "stat": "Defender Spawn Time",
+          "value": "-16%"
+        },
+        {
+          "stat": "Invading Guerrilla Hitpoints",
+          "value": "-13%"
+        },
+        {
+          "stat": "Invading Heavy Tank Hitpoints",
+          "value": "-12%"
+        },
+        {
+          "stat": "Invading Fighter Damage and Hitpoints",
+          "value": "-8%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Mercenary Hitpoints",
+          "value": "+16%"
+        },
+        {
+          "stat": "Sniper Tower Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "Air Defense Damage",
+          "value": "+12%"
+        },
+        {
+          "stat": "Paratrooper Damage",
+          "value": "+10%"
+        },
+        {
+          "stat": "Invading Generals' Damage and Hitpoints",
+          "value": "-8%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "hannibal",
+      "name": "Hannibal",
+      "type": "Warrior",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Hannibal(Council)",
+      "warLegendary": [
+        {
+          "stat": "Heavy Cavalry Hitpoints",
+          "value": "+15%"
+        },
+        {
+          "stat": "MRL Damage",
+          "value": "+14%"
+        },
+        {
+          "stat": "Generals Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Generals Damage",
+          "value": "+14%"
+        },
+        {
+          "stat": "MRL Damage & Hitpoints",
+          "value": "+25%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Enemy Wall Hitpoints",
+          "value": "-12%"
+        },
+        {
+          "stat": "Heavy Tank Hitpoints",
+          "value": "+10%"
+        },
+        {
+          "stat": "MRL Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "MRL Damage & Hitpoints",
+          "value": "+20%"
+        },
+        {
+          "stat": "Heavy Tank Damage",
+          "value": "+6%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "lakshmibai-newalkar",
+      "name": "Lakshmibai Newalkar",
+      "type": "Warrior",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Lakshmibai_Newalkar",
+      "warLegendary": [
+        {
+          "stat": "Invading Heavy Tank Hitpoints",
+          "value": "-20%"
+        },
+        {
+          "stat": "Defender Spawn Time",
+          "value": "-20%"
+        },
+        {
+          "stat": "Air Defense Damage",
+          "value": "+18%"
+        },
+        {
+          "stat": "Defender Damage",
+          "value": "+15%"
+        },
+        {
+          "stat": "Defensive Missile Silo Damage",
+          "value": "+12%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Invading Heavy Tank Hitpoints",
+          "value": "-20%"
+        },
+        {
+          "stat": "Defender Spawn Time",
+          "value": "-20%"
+        },
+        {
+          "stat": "Air Defense Damage",
+          "value": "+18%"
+        },
+        {
+          "stat": "Defender DMG",
+          "value": "+15%"
+        },
+        {
+          "stat": "Defensive Missile Silo Damage",
+          "value": "+12%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "lu-bu",
+      "name": "Lü Bu",
+      "type": "Warrior",
+      "sourceUrl": "https://dominations.fandom.com/wiki/L%C3%BC_Bu",
+      "warLegendary": [
+        {
+          "stat": "Enemy Tower Damage",
+          "value": "-18%"
+        },
+        {
+          "stat": "Heavy Infantry Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "Enemy Wall Hitpoints",
+          "value": "-16%"
+        },
+        {
+          "stat": "Heavy Infantry Attack Speed",
+          "value": "+12%"
+        },
+        {
+          "stat": "Generals Damage",
+          "value": "+16%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Gold from Caravans",
+          "value": "+15%"
+        },
+        {
+          "stat": "Looted Resource Refund",
+          "value": "+18%"
+        },
+        {
+          "stat": "Wall Hitpoints",
+          "value": "+16%"
+        },
+        {
+          "stat": "Defender Spawn Time",
+          "value": "-12%"
+        },
+        {
+          "stat": "Invading Generals Attack Speed",
+          "value": "-12%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "red-cloud",
+      "name": "Red Cloud",
+      "type": "Warrior",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Red_Cloud",
+      "warLegendary": [
+        {
+          "stat": "Defender Spawn Time",
+          "value": "-14%"
+        },
+        {
+          "stat": "Defensive Tower Damage",
+          "value": "+18%"
+        },
+        {
+          "stat": "Enemy Tower Damage",
+          "value": "-12%"
+        },
+        {
+          "stat": "Enemy Air Defense Damage",
+          "value": "-14%"
+        },
+        {
+          "stat": "Paratrooper Damage and Hitpoints",
+          "value": "+8%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Defensive Tower Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "Machine Gun Infantry Hitpoints",
+          "value": "+18%"
+        },
+        {
+          "stat": "Defender Hitpoints",
+          "value": "+16%"
+        },
+        {
+          "stat": "Defender Damage",
+          "value": "+18%"
+        },
+        {
+          "stat": "Air Defense Damage and Hitpoints",
+          "value": "+8%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "shaka-zulu",
+      "name": "Shaka Zulu",
+      "type": "Warrior",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Shaka_Zulu",
+      "warLegendary": [
+        {
+          "stat": "Machine Gun Infantry Damage",
+          "value": "+11%"
+        },
+        {
+          "stat": "Air Defense Damage",
+          "value": "+10%"
+        },
+        {
+          "stat": "Bazooka Damage",
+          "value": "+10%"
+        },
+        {
+          "stat": "Heavy Tank Hitpoints",
+          "value": "+18%"
+        },
+        {
+          "stat": "Paratrooper Damage and Hitpoints",
+          "value": "+14%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Defensive Tower Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "Wall Hitpoints",
+          "value": "+16%"
+        },
+        {
+          "stat": "Invading Heavy Tank Hitpoints",
+          "value": "-10%"
+        },
+        {
+          "stat": "Invading Generals' Damage",
+          "value": "-14%"
+        },
+        {
+          "stat": "Invading Bomber Damage",
+          "value": "-14%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "tran-hung-dao",
+      "name": "Tran Hung Dao",
+      "type": "Warrior",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Tran_Hung_Dao",
+      "warLegendary": [
+        {
+          "stat": "Ranged Siege Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Enemy Wall Hitpoints",
+          "value": "-14%"
+        },
+        {
+          "stat": "Fighter Damage",
+          "value": "+10%"
+        },
+        {
+          "stat": "Invading Generals' Damage",
+          "value": "-14%"
+        },
+        {
+          "stat": "Paratrooper Damage and Hitpoints",
+          "value": "+8%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Wall Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Defender Spawn Time",
+          "value": "-16%"
+        },
+        {
+          "stat": "Invading Generals' Damage",
+          "value": "-12%"
+        },
+        {
+          "stat": "Air Defense Damage",
+          "value": "+14%"
+        },
+        {
+          "stat": "All Defensive Tower Damage and Hitpoints",
+          "value": "+6%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "itzcoatl",
+      "name": "Itzcoatl",
+      "type": "Royalty",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Itzcoatl",
+      "warLegendary": [
+        {
+          "stat": "Wall Miner Movement Speed",
+          "value": "+15%"
+        },
+        {
+          "stat": "Mercenary Hitpoints",
+          "value": "+18%"
+        },
+        {
+          "stat": "Machine Gun Infantry Damage",
+          "value": "+15%"
+        },
+        {
+          "stat": "Attack Helicopter Damage and Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Enemy Missile Silo Damage",
+          "value": "-12%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Mercenary Damage",
+          "value": "+15%"
+        },
+        {
+          "stat": "Food, Gold and Oil Generated",
+          "value": "+10%"
+        },
+        {
+          "stat": "Invading Raider Damage",
+          "value": "-16%"
+        },
+        {
+          "stat": "Looted Resource Refund",
+          "value": "+15%"
+        },
+        {
+          "stat": "Oil Looted",
+          "value": "+15%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "julius-caesar",
+      "name": "Julius Caesar",
+      "type": "Royalty",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Julius_Caesar",
+      "warLegendary": [
+        {
+          "stat": "MRL Damage & Hitpoints",
+          "value": "+18%"
+        },
+        {
+          "stat": "Bazooka Damage",
+          "value": "+14%"
+        },
+        {
+          "stat": "Mortar Infantry Damage",
+          "value": "+18%"
+        },
+        {
+          "stat": "Bomber Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "MRL Damage & Hitpoints",
+          "value": "+18%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "MRL Damage & Hitpoints",
+          "value": "+18%"
+        },
+        {
+          "stat": "Bazooka Damage",
+          "value": "+14%"
+        },
+        {
+          "stat": "Mortar Infantry Damage",
+          "value": "+18%"
+        },
+        {
+          "stat": "Bomber Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "MRL Damage & Hitpoints",
+          "value": "+18%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "leonidas",
+      "name": "Leonidas",
+      "type": "Royalty",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Leonidas(Council)",
+      "warLegendary": [
+        {
+          "stat": "Coalition Troop Damage",
+          "value": "+13%"
+        },
+        {
+          "stat": "Enemy Wall Hitpoints",
+          "value": "-14%"
+        },
+        {
+          "stat": "Mortar Infantry Damage",
+          "value": "+20%"
+        },
+        {
+          "stat": "Generals' Damage",
+          "value": "+14%"
+        },
+        {
+          "stat": "Heavy Tank Damage",
+          "value": "+6%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Defender Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Defender Spawn Time",
+          "value": "-16%"
+        },
+        {
+          "stat": "Invading Generals' Damage",
+          "value": "-12%"
+        },
+        {
+          "stat": "Defender Damage",
+          "value": "+18%"
+        },
+        {
+          "stat": "Defensive Missile Silo Damage",
+          "value": "+12%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "queen-seondeok",
+      "name": "Queen Seondeok",
+      "type": "Royalty",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Queen_Seondeok",
+      "warLegendary": [
+        {
+          "stat": "Defender Spawn Time",
+          "value": "-12%"
+        },
+        {
+          "stat": "Defender Damage",
+          "value": "+14%"
+        },
+        {
+          "stat": "Defender Hitpoints",
+          "value": "+16%"
+        },
+        {
+          "stat": "Air Defense Damage & Hitpoints",
+          "value": "+8%"
+        },
+        {
+          "stat": "All Defensive Tower Damage & Hitpoints",
+          "value": "8%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Mortar Infantry Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "Bazooka Damage",
+          "value": "+13%"
+        },
+        {
+          "stat": "Machine Gun Infantry Damage",
+          "value": "+15%"
+        },
+        {
+          "stat": "Generals Damage",
+          "value": "+14%"
+        },
+        {
+          "stat": "Enemy Missile Silo Damage",
+          "value": "-12%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "miyamoto-musashi",
+      "name": "Miyamoto Musashi",
+      "type": "Samurai",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Miyamoto_Musashi(Council)",
+      "warLegendary": [
+        {
+          "stat": "Heavy Cavalry Hitpoints",
+          "value": "+15%"
+        },
+        {
+          "stat": "Heavy Infantry Damage",
+          "value": "+16%"
+        },
+        {
+          "stat": "Invading Machine Gun Infantry Damage",
+          "value": "-16%"
+        },
+        {
+          "stat": "Air Defense Damage",
+          "value": "+14%"
+        },
+        {
+          "stat": "All Defensive Tower Damage and Hitpoints",
+          "value": "+6%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Heavy Infantry Attack Speed",
+          "value": "+13%"
+        },
+        {
+          "stat": "Mortar Infantry Damage",
+          "value": "+18%"
+        },
+        {
+          "stat": "Bazooka Damage",
+          "value": "+15%"
+        },
+        {
+          "stat": "Generals' Damage",
+          "value": "+14%"
+        },
+        {
+          "stat": "Invading Heavy Tank Damage",
+          "value": "-10%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "ching-shih",
+      "name": "Ching Shih",
+      "type": "Admiral",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Ching_Shih",
+      "warLegendary": [
+        {
+          "stat": "Mercenary Damage",
+          "value": "-14%"
+        },
+        {
+          "stat": "Mercenary Hitpoints",
+          "value": "+18%"
+        },
+        {
+          "stat": "Coalition Troop Damage",
+          "value": "-12%"
+        },
+        {
+          "stat": "Enemy Tower Damage",
+          "value": "-14%"
+        },
+        {
+          "stat": "Bomber Damage",
+          "value": "+8%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Mercenary Hitpoints",
+          "value": "+20%"
+        },
+        {
+          "stat": "Raider Damage",
+          "value": "+14%"
+        },
+        {
+          "stat": "Food, Gold and Oil Generated",
+          "value": "+12%"
+        },
+        {
+          "stat": "Oil Looted",
+          "value": "+15%"
+        },
+        {
+          "stat": "All Resources Looted",
+          "value": "+12%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    },
+    {
+      "id": "yi-sun-sin",
+      "name": "Yi Sun-sin",
+      "type": "Admiral",
+      "sourceUrl": "https://dominations.fandom.com/wiki/Yi_Sun-sin",
+      "warLegendary": [
+        {
+          "stat": "Coalition Troop Damage",
+          "value": "+13%"
+        },
+        {
+          "stat": "Enemy Wall Hitpoints",
+          "value": "-14%"
+        },
+        {
+          "stat": "Invading Fighter Hitpoints",
+          "value": "-16%"
+        },
+        {
+          "stat": "Invading Fighter Damage",
+          "value": "-12%"
+        },
+        {
+          "stat": "Bomber Damage and Hitpoints",
+          "value": "+7%"
+        }
+      ],
+      "multiplayerLegendary": [
+        {
+          "stat": "Heavy Cavalry Hitpoints",
+          "value": "+15%"
+        },
+        {
+          "stat": "Food, Gold and Oil Generated",
+          "value": "+10%"
+        },
+        {
+          "stat": "Air Defense Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Attack Helicopter Damage and Hitpoints",
+          "value": "+12%"
+        },
+        {
+          "stat": "Invading Generals' Attack Speed",
+          "value": "-15%"
+        }
+      ],
+      "warBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      },
+      "multiplayerBonusCountsByRarity": {
+        "Common": 1,
+        "Uncommon": 2,
+        "Rare": 3,
+        "Epic": 4,
+        "Legendary": 5
+      }
+    }
+  ],
+  "full_raw_path": "data/raw/grege117_councilors.json"
+}

@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import json
 import re
+import shutil
 from collections import defaultdict
 from datetime import date
 from pathlib import Path
@@ -14,10 +15,11 @@ RAW = ROOT / "data" / "raw"
 DATA = ROOT / "data"
 TEMP = DATA / "temp"
 REPORTS = ROOT / "reports"
+UI_DATA = ROOT / "ui" / "data"
 CHECKED = "2026-09-05"
 
-# Legendary Marco Polo token costs (May–Aug 2025 calendars + Aug 2023 + 9th Ann vault).
-# Token/coin amounts only — never IAP. Do not apply Mythical 1000-token Marco prices here.
+# Legendary Marco Polo token costs (May–Aug 2025 calendars + Aug 2023 + 9th Ann vault
+# + user-provided fills). Token amounts only — never IAP.
 def _load_dw_legendary_token_costs() -> dict:
     path = RAW / "dw_legendary_token_costs.json"
     if path.exists():
@@ -257,6 +259,206 @@ def norm_key(s: str) -> str:
     return s
 
 
+def perk_norm_key(s: str) -> str:
+    """Collapse known perk spelling/plural/abbrev variants for mapping only.
+
+    Does not merge enemy/own, damage/hitpoints, or compound vs single-stat perks.
+    """
+    s = fix_mojibake(s).casefold()
+    for a, b in [
+        ("\u2019", "'"),
+        ("\u2018", "'"),
+        ("\u2032", "'"),
+        ("\u2013", "-"),
+        ("\u2014", "-"),
+    ]:
+        s = s.replace(a, b)
+    # Conflict / dual labels: take first segment (duplicates are usually typo|correct).
+    if "|" in s:
+        s = s.split("|", 1)[0].strip()
+    s = s.replace("&", " and ")
+    s = s.replace("big red button", "red button")
+    # Possessives: General's / Generals' must not become "general-s-...".
+    s = s.replace("general's", "generals")
+    s = s.replace("generals'", "generals")
+    s = re.sub(r"[^a-z0-9]+", " ", s)
+    s = re.sub(r"\s+", " ", s).strip()
+    token_map = {
+        "dmg": "damage",
+        "hp": "hitpoints",
+        "hitpoint": "hitpoints",
+        "towers": "tower",
+        "defenders": "defender",
+        "fighters": "fighter",
+        "bombers": "bomber",
+        "raiders": "raider",
+        "vehicles": "vehicle",
+        "vechicle": "vehicle",
+        "generals": "general",
+        "guerilla": "guerrilla",
+        "airstip": "airstrip",
+        "traning": "training",
+        "def": "defensive",  # "Air Def." / "All Def. Tower"
+        "carvans": "caravans",  # council typo
+    }
+    toks = [token_map.get(t, t) for t in s.split() if t not in {"the", "a", "an", "of"}]
+    # Stabilize "X Hitpoints and Damage" vs "X Damage and Hitpoints".
+    if "hitpoints" in toks and "damage" in toks:
+        rest = [t for t in toks if t not in {"hitpoints", "damage", "and"}]
+        toks = rest + ["hitpoints", "damage"]
+    # Same APC deploy perk labeled Speed (+%) vs Time (−%).
+    if toks == ["apc", "deploy", "speed"]:
+        toks = ["apc", "deploy", "time"]
+    return "-".join(toks)
+
+
+# Preferred display names for merged perk_norm_key groups (agreed duplicate cleanup).
+PERK_CANONICAL_BY_KEY = {
+    "defender-spawn-time": "Defender Spawn Time",
+    "enemy-defender-spawn-time": "Enemy Defender Spawn Time",
+    "all-defense-tower-damage": "All Defensive Towers Damage",
+    "all-defensive-tower-damage": "All Defensive Towers Damage",
+    "all-enemy-defense-tower-damage": "All Enemy Defensive Towers Damage",
+    "all-enemy-defensive-tower-damage": "All Enemy Defensive Towers Damage",
+    "all-defensive-tower-hitpoints-damage": "All Defensive Towers Hitpoints & Damage",
+    "all-defense-tower-hitpoints-damage": "All Defensive Towers Hitpoints & Damage",
+    "attack-helicopter-damage": "Attack Helicopter Damage",
+    "mortar-troop-damage": "Mortar Troop Damage",
+    "ranged-siege-damage": "Ranged Siege Damage",
+    "enemy-tower-damage": "Enemy Tower Damage",
+    "general-hitpoints-damage": "Generals' Hitpoints & Damage",
+    "general-damage": "Generals' Damage",
+    "general-attack-speed": "Generals' Attack Speed",
+    "general-hitpoints": "Generals' Hitpoints",
+    "fighter-damage": "Fighter Damage",
+    "fighter-hitpoints": "Fighter Hitpoints",
+    "invading-bomber-damage": "Invading Bomber Damage",
+    "invading-bomber-hitpoints": "Invading Bomber Hitpoints",
+    "invading-fighter-damage": "Invading Fighter Damage",
+    "raider-damage": "Raider Damage",
+    "raider-hitpoints": "Raider Hitpoints",
+    "supply-vehicle-healing": "Supply Vehicle Healing",
+    "factory-troop-training-cost": "Factory Troop Training Cost",
+    "guerrilla-damage": "Guerrilla Damage",
+    "missile-silo-and-red-button-damage": "Missile Silo and Big Red Button Damage",
+    "airstrip-troop-hitpoints": "Airstrip Troop Hitpoints",
+    "apc-deploy-time": "APC Deploy Time",
+    # Council grege117 aliases (also kept via perk_name_mapping.csv)
+    "air-defense-hitpoints-damage": "Air Defense Hitpoints & Damage",
+    "attack-helicopter-hitpoints-damage": "Attack Helicopter Hitpoints & Damage",
+    "bomber-hitpoints-damage": "Bomber Hitpoints & Damage",
+    "enemy-air-defense-damage": "Enemy Air Defense Damage",
+    "gold-from-caravans": "Gold from Caravans",
+    "invading-fighter-hitpoints-damage": "Invading Fighter Hitpoints & Damage",
+    "invading-general-attack-speed": "Invading Generals' Attack Speed",
+    "invading-general-hitpoints-damage": "Invading Generals' Hitpoints & Damage",
+    "mrl-hitpoints-damage": "MRL Hitpoints & Damage",
+    "paratrooper-hitpoints-damage": "Paratrooper Hitpoints & Damage",
+    "mercenary-hitpoints-damage": "Mercenary Hitpoints & Damage",
+}
+
+# Raw spellings that must remain in perk_name_mapping.csv even after rows are
+# rewritten to the canonical form (so future scrapes still auto-merge).
+KNOWN_PERK_ALIAS_RAWS = [
+    "Defender Spawn Time",
+    "Defenders Spawn Time",
+    "Enemy Defender Spawn Time",
+    "Enemy Defender Spawn TIme",
+    "All Defensive Towers Damage",
+    "All Defensive Tower Damage",
+    "All Defensive Towers DMG",
+    "All Enemy Defensive Towers Damage",
+    "All Enemy Defensive Tower Damage",
+    "All Enemy Defensive Towers Damage | All Enemy Defensive Towers Damage",
+    "All Defensive Towers Hitpoints & Damage",
+    "All Defensive Towers Hitpoints and Damage",
+    "All Defensive Towers Damage & Hitpoints",
+    "Attack Helicopter Damage",
+    "Attack Helicopter DMG",
+    "Mortar Troop Damage",
+    "Mortar Troop DMG",
+    "Ranged Siege Damage",
+    "Ranged Siege DMG",
+    "Enemy Tower Damage",
+    "Enemy Towers Damage",
+    "Generals' Hitpoints & Damage",
+    "Generals' Hitpoints and Damage",
+    "General's Hitpoints and Damage",
+    "Generals Hitpoints and Damage",
+    "Generals' HP & Damage",
+    "Generals HP & Damage",
+    "Generals' Damage",
+    "General Damage",
+    "Generals' Attack Speed",
+    "General Attack Speed",
+    "Fighter Damage",
+    "Fighters Damage",
+    "Fighter Hitpoints",
+    "Fighters Hitpoints",
+    "Invading Bomber Damage",
+    "Invading Bombers Damage",
+    "Invading Bomber Hitpoints",
+    "Invading Bombers Hitpoints",
+    "Invading Fighter Damage",
+    "Invading Fighters Damage",
+    "Raider Damage",
+    "Raiders Damage",
+    "Raider Hitpoints",
+    "Raiders Hitpoints",
+    "Supply Vehicle Healing",
+    "Supply Vehicles Healing",
+    "Supply Vechicle Healing",
+    "Factory Troop Training Cost",
+    "Factory Troop Traning Cost",
+    "Guerrilla Damage",
+    "Guerilla Damage",
+    "Missile Silo and Big Red Button Damage",
+    "Missile Silo and Red Button Damage",
+    "Airstrip Troop Hitpoints",
+    "Airstip Troop Hitpoints | Airstrip Troop Hitpoints",
+    "APC Deploy Time",
+    "APC Deploy Speed",
+    # Council grege117 raw spellings
+    "Generals Hitpoints",
+    "Generals' Hitpoints",
+    "Generals Damage",
+    "General Hitpoints",
+    "Air Defense Damage & Hitpoints",
+    "Air Defense Damage and Hitpoints",
+    "Air Defense Hitpoints & Damage",
+    "All Def. Tower Damage & Hitpoints",
+    "All Defensive Tower Damage & Hitpoints",
+    "All Defensive Tower Damage and Hitpoints",
+    "Attack Helicopter Damage & Hitpoints",
+    "Attack Helicopter Damage and Hitpoints",
+    "Attack Helicopter DMG & Hitpoints",
+    "Attack Helicopter Hitpoints & Damage",
+    "Bomber Damage & Hitpoints",
+    "Bomber Damage and Hitpoints",
+    "Bomber Damage and HP",
+    "Bomber Hitpoints & Damage",
+    "Defender DMG",
+    "Defender HP",
+    "Enemy Air Def. Damage",
+    "Gold From Carvans",
+    "Gold from Caravans",
+    "Heavy Cavalry HP",
+    "Invading Fighter Damage & Hitpoints",
+    "Invading Fighter Damage and Hitpoints",
+    "Invading Generals Attack Speed",
+    "Invading Generals' Attack Speed",
+    "Invading Generals Damage & Hitpoints",
+    "Invading Generals' Damage and Hitpoints",
+    "MRL Damage & Hitpoints",
+    "MRL Damage and Hitpoints",
+    "MRL Hitpoints & Damage",
+    "Paratrooper Damage and Hitpoints",
+    "Paratrooper Hitpoints & Damage",
+    "Mercenary Damage & Hitpoints",
+    "Mercenary Hitpoints & Damage",
+]
+
+
 def slug_id(name: str, grade: str) -> str:
     base = norm_key(name)
     g = grade.casefold()
@@ -291,7 +493,9 @@ def parse_value(raw: str) -> tuple[str, bool]:
 
 
 def derive_max(base: str, grade: str, apply: bool) -> str:
-    if not apply or not base or grade.casefold() != "legendary":
+    if not apply or not base:
+        return ""
+    if grade.casefold() not in ("legendary", "mythical"):
         return ""
     try:
         n = int(base)
@@ -702,15 +906,15 @@ def build() -> None:
             grade=grade,
             conflicts=conflicts,
         )
-        # Mythical: do NOT derive max (+9)
-        apply_perks_to_row(out, pairs, grade=grade, derive=False)
+        apply_perks_to_row(out, pairs, grade=grade, derive=True)
 
         notes = []
         if perk_note:
             notes.append(perk_note)
         if name.casefold() == "british kettle drum" and pairs:
             notes.append("kettle_drum_mythical_from_wiki_statistic_table")
-        notes.append("mythical_max_left_blank_not_plus9")
+        if any(out[f"perk_{i}_max"] for i in range(1, 7)):
+            notes.append("perk_max_derived_base_plus_9")
         if not pairs:
             notes.append("perks_missing")
         out["notes"] = "; ".join(notes)
@@ -747,8 +951,10 @@ def build() -> None:
         out["source_checked_date"] = CHECKED
         # Prefer official perk list from Marco post
         pairs = list(cand["perks"])
-        apply_perks_to_row(out, pairs, grade="Mythical", derive=False)
-        notes = [cand["notes"], "mythical_max_left_blank_not_plus9", "perks_from_official_bhg"]
+        apply_perks_to_row(out, pairs, grade="Mythical", derive=True)
+        notes = [cand["notes"], "perks_from_official_bhg"]
+        if any(out[f"perk_{i}_max"] for i in range(1, 7)):
+            notes.append("perk_max_derived_base_plus_9")
         out["notes"] = "; ".join(notes)
         out["confidence"] = "High"
         rows.append(out)
@@ -847,6 +1053,21 @@ def build() -> None:
         if meta["source"] not in sec:
             out["source_secondary"] = (sec + "; " if sec else "") + meta["source"]
 
+    # Empty Mythical costs → 1000 Legendary Tokens (Marco default).
+    for out in rows:
+        if out.get("grade") != "Mythical":
+            continue
+        if (out.get("cost") or "").strip():
+            continue
+        out["cost"] = "1000"
+        out["cost_currency"] = "Legendary Tokens"
+        if not (out.get("acquisition_method") or "").strip():
+            out["acquisition_method"] = "Marco Polo"
+        notes = [x for x in (out.get("notes") or "").split("; ") if x]
+        if "cost_mythical_default_1000" not in notes:
+            notes.append("cost_mythical_default_1000")
+        out["notes"] = "; ".join(notes)
+
     # Leftwich Trophy: BHG confirmed never sold / not in game for players — Uncertain; perks unknown
     for out in rows:
         if norm_key(out.get("name") or "") != "leftwich-trophy":
@@ -891,17 +1112,42 @@ def build() -> None:
     )
 
     # --- perk_name_mapping ---
+    # Group by perk_norm_key so spelling/plural/DMG aliases collapse. Persist
+    # historical + known raw spellings in the CSV so future scrapes still merge.
     raw_names: dict[str, set[str]] = defaultdict(set)
+
+    def remember_perk(name: str) -> None:
+        n = (name or "").strip()
+        if n:
+            raw_names[perk_norm_key(n)].add(n)
+
     for r in rows:
         for i in range(1, 7):
-            n = r.get(f"perk_{i}_name") or ""
-            if n:
-                raw_names[norm_key(n)].add(n)
+            remember_perk(r.get(f"perk_{i}_name") or "")
 
-    def canonical_perk_name(variants: set[str]) -> str:
-        # Prefer Hitpoints over HP; expand common short forms
-        prefs = sorted(variants, key=lambda s: (-len(s), s))
-        best = prefs[0]
+    map_path = DATA / "perk_name_mapping.csv"
+    if map_path.exists():
+        with map_path.open(encoding="utf-8", newline="") as fh:
+            for row in csv.DictReader(fh):
+                remember_perk(row.get("raw_perk_name") or "")
+                remember_perk(row.get("canonical_perk_name") or "")
+
+    for alias in KNOWN_PERK_ALIAS_RAWS:
+        remember_perk(alias)
+
+    def canonical_perk_name(nk: str, variants: set[str]) -> str:
+        if nk in PERK_CANONICAL_BY_KEY:
+            return PERK_CANONICAL_BY_KEY[nk]
+        # Prefer "&" compound labels, then longer / stable spellings.
+        prefs = sorted(
+            variants,
+            key=lambda s: (
+                0 if " & " in s else (1 if re.search(r"\band\b", s, re.I) else 2),
+                -len(s),
+                s,
+            ),
+        )
+        best = prefs[0] if prefs else nk
         repl = [
             (r"\bHP\b", "Hitpoints"),
             (r"\bHit Points\b", "Hitpoints"),
@@ -912,11 +1158,29 @@ def build() -> None:
         out = best
         for pat, rep in repl:
             out = re.sub(pat, rep, out)
+        out = re.sub(
+            r"Hitpoints\s+and\s+Damage", "Hitpoints & Damage", out, flags=re.I
+        )
+        out = re.sub(
+            r"Damage\s+and\s+Hitpoints", "Hitpoints & Damage", out, flags=re.I
+        )
+        out = re.sub(r"\s*&\s*", " & ", out)
+        out = re.sub(r"\s+", " ", out).strip()
         return out
 
     mapping_rows = []
+    canon_by_nk: dict[str, str] = {}
     for nk, variants in sorted(raw_names.items(), key=lambda x: x[0]):
-        canon = canonical_perk_name(variants)
+        # Drop names that no longer belong to this key after norm fixes.
+        variants = {v for v in variants if perk_norm_key(v) == nk}
+        if not variants and nk not in PERK_CANONICAL_BY_KEY:
+            continue
+        canon = canonical_perk_name(nk, variants)
+        if perk_norm_key(canon) != nk and nk in PERK_CANONICAL_BY_KEY:
+            canon = PERK_CANONICAL_BY_KEY[nk]
+        if perk_norm_key(canon) == nk:
+            variants.add(canon)
+        canon_by_nk[nk] = canon
         for v in sorted(variants):
             mapping_rows.append(
                 {
@@ -926,13 +1190,15 @@ def build() -> None:
                 }
             )
 
-    # Apply mapping to canonical rows
-    map_lookup = {m["raw_perk_name"]: m["canonical_perk_name"] for m in mapping_rows}
+    # Apply by norm key so conflicting CSV leftovers cannot overwrite merges.
     for r in rows:
         for i in range(1, 7):
             n = r.get(f"perk_{i}_name") or ""
-            if n in map_lookup:
-                r[f"perk_{i}_name"] = map_lookup[n]
+            if not n:
+                continue
+            nk = perk_norm_key(n)
+            if nk in canon_by_nk:
+                r[f"perk_{i}_name"] = canon_by_nk[nk]
 
     # --- release reconciliation ---
     recon = []
@@ -985,6 +1251,18 @@ def build() -> None:
         )
         w.writeheader()
         w.writerows(mapping_rows)
+
+    # UI loads from ui/data/ — keep in sync with canonical outputs.
+    UI_DATA.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(DATA / "artifacts.json", UI_DATA / "artifacts.json")
+    shutil.copy2(DATA / "perk_name_mapping.csv", UI_DATA / "perk_name_mapping.csv")
+    defaults_path = DATA / "perk_rating_defaults.json"
+    if defaults_path.exists():
+        shutil.copy2(defaults_path, UI_DATA / "perk_rating_defaults.json")
+    for img_name in ("artifact_images.json", "army_unit_images.json"):
+        img_path = RAW / img_name
+        if img_path.exists():
+            shutil.copy2(img_path, UI_DATA / img_name)
 
     with (DATA / "artifact_release_reconciliation.csv").open(
         "w", encoding="utf-8", newline=""

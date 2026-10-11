@@ -1,0 +1,96 @@
+{
+  "meta": {
+    "source": "https://dominations.fandom.com/api.php",
+    "thumb_size": 400
+  },
+  "images": {
+    "Bazooka": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/1/18/Bazooka.jpg/revision/latest?cb=20160407151940",
+      "source_title": "Bazooka"
+    },
+    "Commando": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/d/d7/Guerrilla.png/revision/latest?cb=20150718105607",
+      "source_title": "Commandos"
+    },
+    "Guerrilla": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/d/d7/Guerrilla.png/revision/latest?cb=20150718105607",
+      "source_title": "Guerrilla"
+    },
+    "Heavy Cavalry": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/c/c7/Horseman_North_European.jpg/revision/latest?cb=20150517050121",
+      "source_title": "Heavy Cavalry"
+    },
+    "Heavy Infantry": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/4/4f/Spearman.jpg/revision/latest/scale-to-width-down/400?cb=20190722010942",
+      "source_title": "Heavy Infantry"
+    },
+    "Machine Gun Infantry": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/3/36/Gatling_Gun.png/revision/latest?cb=20150719131928",
+      "source_title": "Machine Gun Infantry"
+    },
+    "Mortar Troop": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/b/b7/Catapult_Level_1.png/revision/latest/scale-to-width-down/400?cb=20170823205926",
+      "source_title": "Mortar"
+    },
+    "Raider": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/5/59/Horse_Raider.jpg/revision/latest?cb=20150601053559",
+      "source_title": "Raiders"
+    },
+    "Ranged Infantry": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/d/dd/Slinger.jpg/revision/latest/scale-to-width-down/400?cb=20190722010745",
+      "source_title": "Ranged Infantry"
+    },
+    "Wall Miner": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/7/7c/Wall_Miner.jpg/revision/latest?cb=20150515075820",
+      "source_title": "Wall Miner"
+    },
+    "Wall Sapper": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/0/02/Wall_Sapper.jpg/revision/latest?cb=20150529065303",
+      "source_title": "Wall Sapper"
+    },
+    "APC": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/9/9b/APC.png/revision/latest?cb=20161108032618",
+      "source_title": "APC"
+    },
+    "Armored Car": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/d/d1/Armored_Car_Mk.1.png/revision/latest?cb=20161015095241",
+      "source_title": "Armored Car"
+    },
+    "Assault Vehicle": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/9/98/Assault_Vehicle.jpg/revision/latest/scale-to-width-down/400?cb=20190606164238",
+      "source_title": "Assault Vehicle"
+    },
+    "Heavy Tank": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/1/16/Heavy_Tank_Mk.1.png/revision/latest?cb=20150719130849",
+      "source_title": "Heavy Tank"
+    },
+    "MRL": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/5/52/MRL_Mk.1.png/revision/latest?cb=20190123180559",
+      "source_title": "MRL"
+    },
+    "Ranged Siege": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/d/d5/Ballista.png/revision/latest?cb=20150518192519",
+      "source_title": "Ranged Siege"
+    },
+    "Supply Vehicle": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/5/5b/Supply_Cart.png/revision/latest?cb=20150507223444",
+      "source_title": "Supply Vehicles"
+    },
+    "Attack Helicopter": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/c/c8/Attack_Helicopter.png/revision/latest/scale-to-width-down/400?cb=20190206100110",
+      "source_title": "Attack Helicopter"
+    },
+    "Bomber": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/f/fc/Zeppelin.png/revision/latest/scale-to-width-down/400?cb=20151223114810",
+      "source_title": "Bombers"
+    },
+    "Fighter": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/a/a7/Biplane.png/revision/latest/scale-to-width-down/400?cb=20151219110449",
+      "source_title": "Fighters"
+    },
+    "Paratrooper": {
+      "url": "https://static.wikia.nocookie.net/dominations/images/1/1b/Elite_Paratroopers.png/revision/latest/scale-to-width-down/400?cb=20161202075050",
+      "source_title": "Elite Paratroopers"
+    }
+  }
+}

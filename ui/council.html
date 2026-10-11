@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Council · Priority</title>
+  <link rel="stylesheet" href="styles.css?v=31" />
+  <link rel="stylesheet" href="council.css?v=10" />
+</head>
+<body class="page-council-priority">
+  <nav class="site-nav" aria-label="Pages">
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Army Loadout</h2>
+      <a href="army.html">Army</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Artifacts</h2>
+      <a href="index.html">Priority</a>
+      <a href="collection.html">Collection</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Council</h2>
+      <a href="council.html" aria-current="page">Priority</a>
+      <a href="council-collection.html">Collection</a>
+    </div>
+  </nav>
+  <div class="app-main">
+  <header class="top">
+    <div class="top-inner">
+      <h1>DomiNations Council</h1>
+      <p class="sub">Priority · sort &amp; rate · Main/War · rarity · synced from <code>data/councilors.json</code></p>
+    </div>
+    <div class="top-aside">
+      <div class="stats" id="stats" aria-live="polite"></div>
+    </div>
+  </header>
+
+  <section class="filters" aria-label="Filters">
+    <div class="filter-main">
+      <label class="filter-control">
+        Search
+        <input type="search" id="q" placeholder="Name…" autocomplete="off" />
+      </label>
+      <label class="filter-control">
+        Type
+        <select id="type">
+          <option value="">All</option>
+        </select>
+      </label>
+      <fieldset class="seg-field">
+        <legend>Collected</legend>
+        <div class="seg" role="group" aria-label="Collected">
+          <button type="button" class="seg-btn" id="collected-hide" aria-pressed="false">Hide</button>
+          <button type="button" class="seg-btn is-active" id="collected-show" aria-pressed="true">Show</button>
+        </div>
+      </fieldset>
+      <fieldset class="seg-field">
+        <legend>Hall</legend>
+        <div class="seg" role="group" aria-label="Hall">
+          <button type="button" class="seg-btn" id="mode-main" data-mode="main" aria-pressed="false">Main</button>
+          <button type="button" class="seg-btn" id="mode-war" data-mode="war" aria-pressed="false">War</button>
+        </div>
+      </fieldset>
+      <fieldset class="seg-field">
+        <legend>Rarity</legend>
+        <div class="seg" role="group" aria-label="Browse rarity" id="rarity-seg">
+          <button type="button" class="seg-btn" data-rarity="Common" aria-pressed="false">Common</button>
+          <button type="button" class="seg-btn" data-rarity="Uncommon" aria-pressed="false">Uncommon</button>
+          <button type="button" class="seg-btn" data-rarity="Rare" aria-pressed="false">Rare</button>
+          <button type="button" class="seg-btn" data-rarity="Epic" aria-pressed="false">Epic</button>
+          <button type="button" class="seg-btn" data-rarity="Legendary" aria-pressed="false">Legendary</button>
+        </div>
+      </fieldset>
+      <div class="filter-control perk-filter" id="stat-filter">
+        <span class="filter-label">Stats</span>
+        <div class="perk-filter-row">
+          <button type="button" id="stat-filter-btn" class="btn perk-filter-btn" aria-expanded="false" aria-controls="stat-filter-panel">
+            Any stat
+          </button>
+          <div class="seg seg-mini" role="group" aria-label="Stat match mode">
+            <button type="button" class="seg-btn is-active" id="stat-match-and" data-stat-match="and" aria-pressed="true">AND</button>
+            <button type="button" class="seg-btn" id="stat-match-or" data-stat-match="or" aria-pressed="false">OR</button>
+          </div>
+        </div>
+        <div id="stat-filter-panel" class="perk-filter-panel" hidden>
+          <input type="search" id="stat-filter-q" placeholder="Filter stats…" autocomplete="off" />
+          <div id="stat-filter-list" class="perk-filter-list" role="group" aria-label="Stat checklist"></div>
+          <div class="perk-filter-actions">
+            <button type="button" id="stat-filter-clear" class="btn btn-small">Clear stats</button>
+          </div>
+        </div>
+      </div>
+      <fieldset class="seg-field pref-sort-axes" id="pref-sort-axes" title="Off/Def = rating × bonus magnitude at selected mode + rarity">
+        <legend>Sort</legend>
+        <div class="seg seg-mini" role="group" aria-label="Sort preference axes">
+          <button type="button" class="seg-btn is-active" id="sort-off" aria-pressed="true">Off</button>
+          <button type="button" class="seg-btn is-active" id="sort-def" aria-pressed="true">Def</button>
+        </div>
+      </fieldset>
+      <fieldset class="seg-field score-mode-field" id="score-mode" title="Sum adds every stat line; Best uses the single highest active-axis line">
+        <legend>Score</legend>
+        <div class="seg seg-mini" role="group" aria-label="Score mode">
+          <button type="button" class="seg-btn is-active" id="score-combined" aria-pressed="true">Sum</button>
+          <button type="button" class="seg-btn" id="score-maxrow" aria-pressed="false">Best</button>
+        </div>
+      </fieldset>
+    </div>
+  </section>
+
+  <p id="error" class="error" hidden></p>
+
+  <div class="table-wrap">
+    <table id="table">
+      <thead>
+        <tr>
+          <th data-sort="name" aria-sort="none" scope="col" title="Own marks this councilor for the selected Hall (Main or War)"><button type="button" class="th-sort">Name</button></th>
+          <th data-sort="type" aria-sort="none" scope="col"><button type="button" class="th-sort">Type</button></th>
+          <th data-sort="stats" aria-sort="none" scope="col" title="Stat name and bonus at browse rarity"><button type="button" class="th-sort">Stats</button></th>
+          <th scope="col" class="th-plain" title="Per-line Offensive scores (rating × magnitude)"><span class="th-label">Off</span></th>
+          <th scope="col" class="th-plain" title="Per-line Defensive scores (rating × magnitude)"><span class="th-label">Def</span></th>
+          <th data-sort="offensive" aria-sort="none" scope="col" title="Offensive total: Sum or Best line. With both Sort axes checked, Off/Def headers sort by Off+Def."><button type="button" class="th-sort">Off Σ</button></th>
+          <th data-sort="defensive" aria-sort="none" scope="col" title="Defensive total: Sum or Best line. With both Sort axes checked, Off/Def headers sort by Off+Def."><button type="button" class="th-sort">Def Σ</button></th>
+        </tr>
+      </thead>
+      <tbody id="tbody"></tbody>
+    </table>
+  </div>
+
+  </div>
+  <script src="shared.js?v=22"></script>
+  <script src="profiles-ui.js?v=6"></script>
+  <script src="council-shared.js?v=7"></script>
+  <script src="council.js?v=13"></script>
+</body>
+</html>
