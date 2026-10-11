@@ -6,6 +6,7 @@ import csv
 import json
 import re
 import shutil
+import subprocess
 from collections import defaultdict
 from datetime import date
 from pathlib import Path
@@ -1253,6 +1254,7 @@ def build() -> None:
         w.writerows(mapping_rows)
 
     # UI loads from ui/data/ — keep in sync with canonical outputs.
+    subprocess.run(["node", str(ROOT / "scripts" / "export_army_catalog.js")], check=True)
     UI_DATA.mkdir(parents=True, exist_ok=True)
     shutil.copy2(DATA / "artifacts.json", UI_DATA / "artifacts.json")
     shutil.copy2(DATA / "perk_name_mapping.csv", UI_DATA / "perk_name_mapping.csv")

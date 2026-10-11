@@ -142,9 +142,9 @@
       `<button type="button" class="nav-link site-nav-toggle" id="nav-collapse-btn" aria-controls="site-nav" aria-expanded="true" title="Collapse navigation"></button>`;
 
     const head = document.createElement("div");
-    head.className = "site-nav-section site-nav-profiles";
+    head.className = "header-profile-picker";
     head.innerHTML =
-      `<h2 class="site-nav-label">Profile</h2>` +
+      `<span class="filter-label">Profile</span>` +
       `<label class="site-nav-profile-label">` +
       `<span class="nav-icon site-nav-profile-icon" aria-hidden="true">${ICONS.profile}</span>` +
       `<span class="visually-hidden">Active profile</span>` +
@@ -156,7 +156,7 @@
       `</button>`;
 
     nav.insertBefore(toggleWrap, nav.firstChild);
-    nav.insertBefore(head, toggleWrap.nextSibling);
+    document.getElementById("header-profile").appendChild(head);
 
     decorateLinks(nav);
 
@@ -174,14 +174,60 @@
       setCollapsed(!document.body.classList.contains("nav-collapsed"));
     });
 
-    // Collapsed: show active profile only; expand nav so the picker can be used.
-    // Profile edit stays in Settings → Profiles.
-    head.querySelector("#profile-collapsed-btn").addEventListener("click", () => {
-      setCollapsed(false);
-      select.focus();
-    });
-
+    mountPrimaryFilters();
     setCollapsed(loadCollapsed());
+  }
+
+  function mountPrimaryFilters() {
+    const key = `dn-primary-filters:${DN.activeProfileId()}`;
+    function readObject(storageKey) {
+      try { return JSON.parse(DN.lsGet(storageKey) || "{}"); } catch { return {}; }
+    }
+    let saved;
+    try { saved = JSON.parse(localStorage.getItem(key) || "null"); } catch { /* use existing preferences */ }
+    const legacyAxes = readObject("dn-artifact-pref-sort-axes");
+    const state = saved || {
+      hall: DN.lsGet("dn-artifact-hall-filter") === "Main" ? "Main" : "War",
+      offensive: legacyAxes.offensive !== false,
+      defensive: legacyAxes.defensive !== false,
+    };
+    if (!state.offensive && !state.defensive) state.offensive = state.defensive = true;
+    function persist() {
+      try { localStorage.setItem(key, JSON.stringify(state)); } catch { /* storage unavailable */ }
+      DN.lsSet("dn-artifact-hall-filter", state.hall);
+      DN.lsSet("dn-artifact-collection-ui", JSON.stringify({ ...readObject("dn-artifact-collection-ui"), hall: state.hall }));
+      DN.lsSet("dn-council-ui", JSON.stringify({ ...readObject("dn-council-ui"), mode: state.hall.toLowerCase() }));
+      const axes = JSON.stringify({ offensive: state.offensive, defensive: state.defensive });
+      DN.lsSet("dn-artifact-pref-sort-axes", axes);
+      DN.lsSet("dn-council-pref-sort-axes", axes);
+    }
+    persist();
+    const main = document.querySelector("#hall-main, #mode-main, #header-main");
+    const war = document.querySelector("#hall-war, #mode-war, #header-war");
+    const off = document.querySelector("#sort-off, #header-off");
+    const def = document.querySelector("#sort-def, #header-def");
+    function sync() {
+      for (const [button, active] of [[main, state.hall === "Main"], [war, state.hall === "War"], [off, state.offensive], [def, state.defensive]]) {
+        button.classList.toggle("is-active", active);
+        button.setAttribute("aria-pressed", String(active));
+      }
+    }
+    sync();
+    for (const [button, hall] of [[main, "Main"], [war, "War"]]) {
+      button.addEventListener("click", () => {
+        state.hall = hall;
+        persist();
+        sync();
+      }, true);
+    }
+    for (const [button, axis, other] of [[off, "offensive", "defensive"], [def, "defensive", "offensive"]]) {
+      button.addEventListener("click", () => {
+        if (state[axis] && !state[other]) return;
+        state[axis] = !state[axis];
+        persist();
+        sync();
+      }, true);
+    }
   }
 
   function fillSelect(select, state) {
@@ -199,9 +245,5 @@
     }
   }
 
-  if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", mountNav);
-  } else {
-    mountNav();
-  }
+  mountNav();
 })();

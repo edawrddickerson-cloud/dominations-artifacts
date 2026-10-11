@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <script src="navigation.js?v=1"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Council · Collection</title>
-  <link rel="stylesheet" href="styles.css?v=31" />
+  <link rel="stylesheet" href="styles.css?v=38" />
   <link rel="stylesheet" href="council.css?v=10" />
 </head>
 <body class="page-council-collection">
@@ -28,19 +29,19 @@
   <header class="top">
     <div class="top-inner">
       <h1>DomiNations Council</h1>
-      <p class="sub">Collection · owned councilors · Main/War · activate up to 7</p>
     </div>
-  </header>
-
-  <section class="filters collection-controls" aria-label="Council collection controls">
-    <div class="filter-main">
-      <fieldset class="seg-field">
+    <div class="header-controls" aria-label="Primary filters">      <fieldset class="seg-field">
         <legend>Hall</legend>
         <div class="seg" role="group" aria-label="Hall">
           <button type="button" class="seg-btn" id="mode-main" data-mode="main" aria-pressed="false">Main</button>
           <button type="button" class="seg-btn" id="mode-war" data-mode="war" aria-pressed="false">War</button>
         </div>
       </fieldset>
+<fieldset class="seg-field"><legend>Base Type</legend><div class="seg seg-mini" role="group" aria-label="Base Type"><button type="button" class="seg-btn" id="header-off" aria-pressed="false">Off</button><button type="button" class="seg-btn" id="header-def" aria-pressed="false">Def</button></div></fieldset><div id="header-profile" class="header-profile"></div></div>
+  </header>
+
+  <section class="filters collection-controls" aria-label="Council collection controls">
+    <div class="filter-main">
       <label class="filter-control">
         Search
         <input type="search" id="q" placeholder="Name…" autocomplete="off" />
@@ -75,9 +76,10 @@
   </div>
 
   </div>
-  <script src="shared.js?v=22"></script>
-  <script src="profiles-ui.js?v=7"></script>
+  <script src="data/army_catalog.js?v=1"></script>
+  <script src="shared.js?v=29"></script>
+  <script src="profiles-ui.js?v=8"></script>
   <script src="council-shared.js?v=7"></script>
-  <script src="council-collection.js?v=5"></script>
+  <script src="council-collection.js?v=6"></script>
 </body>
 </html>

@@ -466,90 +466,37 @@
     return true;
   }
 
-  /**
-   * Troop families on the Army page, grouped by training building.
-   * Order within each group is display order (alpha).
-   */
-  const ARMY_UNIT_GROUPS = Object.freeze([
-    {
-      id: "barracks",
-      label: "Barracks troops",
-      units: Object.freeze([
-        "Bazooka",
-        "Heavy Cavalry",
-        "Heavy Infantry",
-        "Machine Gun Infantry",
-        "Mortar Troop",
-        "Raider",
-        "Ranged Infantry",
-        "Wall Miner",
-        "Wall Sapper",
-      ]),
-    },
-    {
-      id: "factory",
-      label: "Factory troops",
-      units: Object.freeze([
-        "APC",
-        "Armored Car",
-        "Assault Vehicle",
-        "Commando",
-        "Heavy Tank",
-        "MRL",
-        "Ranged Siege",
-        "Supply Vehicle",
-      ]),
-    },
-    {
-      id: "air",
-      label: "Air troops",
-      units: Object.freeze([
-        "Attack Helicopter",
-        "Bomber",
-        "Fighter",
-        "Paratrooper",
-      ]),
-    },
-  ]);
-
-  /** Flat list of all selectable troop families. */
-  const ARMY_UNIT_FAMILIES = Object.freeze(
-    ARMY_UNIT_GROUPS.flatMap((g) => g.units)
-  );
-
-  /**
-   * Perk-name prefixes that map to a selectable family (legacy / wiki naming).
-   * Guerrilla is the same line as Commando — keep perks working under Commando.
-   */
-  const ARMY_UNIT_ALIASES = Object.freeze({
-    Guerrilla: "Commando",
-  });
-
-  const ARMY_UNIT_FAMILIES_BY_LEN = Object.freeze(
-    [...ARMY_UNIT_FAMILIES].sort((a, b) => b.length - a.length)
-  );
-
-  /** Match keys for perk→family (families + alias prefixes), longest first. */
-  const ARMY_UNIT_MATCH_BY_LEN = Object.freeze(
-    [...ARMY_UNIT_FAMILIES, ...Object.keys(ARMY_UNIT_ALIASES)].sort(
-      (a, b) => b.length - a.length
-    )
-  );
+  // Generated from the canonical data/army_catalog.json.
+  const ARMY_CATALOG = window.DN_ARMY_CATALOG;
+  if (!ARMY_CATALOG) throw new Error("Army catalog is missing");
+  const ARMY_UNITS = Object.freeze(ARMY_CATALOG.units.map(u => Object.freeze(u)));
+  const ARMY_UNIT_GROUPS = Object.freeze(ARMY_CATALOG.types.map(type => ({
+    ...type,
+    units: Object.freeze(ARMY_UNITS.filter(u => u.type === type.id)
+      .sort((a, b) => a.order - b.order).map(u => u.name)),
+  })));
+  const ARMY_UNIT_FAMILIES = Object.freeze(ARMY_UNIT_GROUPS.flatMap(g => g.units));
+  const ARMY_UNIT_ALIASES = Object.freeze(Object.fromEntries(
+    ARMY_UNITS.flatMap(u => u.aliases.map(alias => [alias, u.name]))
+  ));
+  const ARMY_UNIT_INCLUDES = Object.freeze(Object.fromEntries(
+    ARMY_UNITS.filter(u => u.includes.length).map(u => [u.name, Object.freeze(u.includes)])
+  ));
 
   function canonicalArmyFamily(name) {
     const u = text(name);
-    if (!u) return "";
     return ARMY_UNIT_ALIASES[u] || u;
   }
 
-  /**
-   * One-way army includes: selecting a key also selects its dependents.
-   * APC spawns Heavy Infantry, so APC implies HI — not the reverse.
-   * @type {Readonly<Record<string, readonly string[]>>}
-   */
-  const ARMY_UNIT_INCLUDES = Object.freeze({
-    APC: Object.freeze(["Heavy Infantry"]),
-  });
+  function armyUnitType(name) {
+    return ARMY_UNITS.find(u => u.name === canonicalArmyFamily(name))?.type || null;
+  }
+
+  function perkArmyScope(perkName) {
+    const name = polishPerk(perkName);
+    const canonical = ARMY_CATALOG.perk_aliases[name] || name;
+    return ARMY_CATALOG.perk_scopes[canonical] || null;
+  }
 
   function text(v) {
     if (v == null) return "";
@@ -816,6 +763,55 @@
     lsSet(LOADOUT_KEY, JSON.stringify(loadout));
   }
 
+  function artifactSlots(id) {
+    const loadout = loadLoadout();
+    const slots = [];
+    for (const hall of ["Main", "War"]) {
+      const entry = loadout[hall];
+      if (entry.mains.includes(id)) slots.push(`${hall} Hall`);
+      if (entry.hermitage === id) slots.push(`${hall} Hermitage`);
+      if (Object.prototype.hasOwnProperty.call(entry.singles, id)) slots.push(`${hall} Showcase`);
+    }
+    return slots;
+  }
+
+  function removeArtifactSlots(id) {
+    const loadout = loadLoadout();
+    for (const hall of ["Main", "War"]) {
+      const entry = loadout[hall];
+      entry.mains = entry.mains.filter((key) => key !== id);
+      if (entry.hermitage === id) entry.hermitage = null;
+      delete entry.singles[id];
+    }
+    saveLoadout(loadout);
+  }
+
+  function confirmUncollect(name, slots) {
+    return new Promise((resolve) => {
+      const dialog = document.createElement("dialog");
+      dialog.className = "ratings-dialog uncollect-dialog";
+      dialog.setAttribute("aria-labelledby", "uncollect-title");
+      dialog.setAttribute("aria-describedby", "uncollect-hint");
+      dialog.innerHTML =
+        '<form method="dialog" class="ratings-form">' +
+        '<header class="ratings-header"><h2 id="uncollect-title">Remove collected item?</h2>' +
+        '<p id="uncollect-hint" class="ratings-hint"></p></header>' +
+        '<footer class="ratings-footer">' +
+        '<button type="submit" class="btn" value="cancel" autofocus>Cancel</button>' +
+        '<button type="submit" class="btn btn-accent" value="remove">Remove</button>' +
+        '</footer></form>';
+      dialog.querySelector(".ratings-hint").textContent =
+        `${name} is currently in ${slots.join(", ")}. Are you sure? Removing ownership will also clear its collection slot.`;
+      dialog.addEventListener("close", () => {
+        const confirmed = dialog.returnValue === "remove";
+        dialog.remove();
+        resolve(confirmed);
+      }, { once: true });
+      document.body.appendChild(dialog);
+      dialog.showModal();
+    });
+  }
+
   function loadLevels() {
     try {
       const raw = lsGet(LEVELS_KEY);
@@ -866,13 +862,9 @@
 
   /** @returns {string | null} troop family for a perk name, else null */
   function unitFamily(perkName) {
-    const name = polishPerk(perkName);
-    if (!name) return null;
-    for (const key of ARMY_UNIT_MATCH_BY_LEN) {
-      if (name === key || name.startsWith(key + " ")) {
-        return canonicalArmyFamily(key) || null;
-      }
-    }
+    const scope = perkArmyScope(perkName);
+    if (scope?.kind === "unit") return scope.unit;
+    if (scope?.kind === "type") return ARMY_UNIT_GROUPS.find(g => g.id === scope.type)?.label || null;
     return null;
   }
 
@@ -1036,11 +1028,22 @@
    * (APC selected ⇒ Heavy Infantry defaults apply, without HI appearing selected).
    */
   function armyEffectiveAppliedSet(stateOrUnits) {
-    if (Array.isArray(stateOrUnits) || stateOrUnits instanceof Set) {
-      return new Set(expandArmyUnitsWithLinks([...stateOrUnits]));
+    const units = Array.isArray(stateOrUnits) || stateOrUnits instanceof Set
+      ? [...stateOrUnits] : (stateOrUnits || loadArmyPresets()).lastApplied;
+    const applied = new Set(expandArmyUnitsWithLinks(units));
+    for (const group of ARMY_UNIT_GROUPS) {
+      if (group.units.some(unit => applied.has(unit))) applied.add(group.label);
     }
-    const s = stateOrUnits || loadArmyPresets();
-    return new Set(expandArmyUnitsWithLinks(s.lastApplied));
+    return applied;
+  }
+
+  // A group's ratings change only on its first added or last removed unit.
+  function armyGroupRatingChanges(before, after) {
+    const prev = armyEffectiveAppliedSet(before), next = armyEffectiveAppliedSet(after);
+    return {
+      removed: ARMY_UNIT_GROUPS.filter(g => prev.has(g.label) && !next.has(g.label)).map(g => g.label),
+      added: ARMY_UNIT_GROUPS.filter(g => !prev.has(g.label) && next.has(g.label)).map(g => g.label),
+    };
   }
 
   /**
@@ -1080,6 +1083,11 @@
     RATING_MIN,
     RATING_MAX,
     RATING_AXES,
+    ARMY_CATALOG,
+    ARMY_UNITS,
+    armyUnitType,
+    perkArmyScope,
+    armyGroupRatingChanges,
     ARMY_UNIT_GROUPS,
     ARMY_UNIT_FAMILIES,
     ARMY_UNIT_INCLUDES,
@@ -1130,6 +1138,9 @@
     normalizeLoadout,
     loadLoadout,
     saveLoadout,
+    artifactSlots,
+    removeArtifactSlots,
+    confirmUncollect,
     loadLevels,
     saveLevels,
     loadCollectionUi,

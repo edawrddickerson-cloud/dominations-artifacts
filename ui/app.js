@@ -26,7 +26,6 @@
     gradeAll: document.getElementById("grade-all"),
     gradeLeg: document.getElementById("grade-leg"),
     gradeMyth: document.getElementById("grade-myth"),
-    clear: document.getElementById("clear"),
     tbody: document.getElementById("tbody"),
     error: document.getElementById("error"),
     table: document.getElementById("table"),
@@ -659,6 +658,20 @@
    * Per-line weighted scores (aligned with Stats rows).
    * @param {"offensive" | "defensive"} axis
    */
+  function ratingLinesBlock(scores) {
+    if (!scores.lines.length) return blankSpan(BLANK);
+    const format = (rating) => {
+      const cls = rating > 0 ? "pref-pos" : rating < 0 ? "pref-neg" : "blank";
+      return '<span class="perk-rating ' + cls + '">' + (rating > 0 ? "+" : "") + rating + '</span>';
+    };
+    return '<div class="axis-stack">' + scores.lines.map((line, i) => {
+      const best = scoreMode === "maxrow" && i === scores.bestIndex ? " is-best" : "";
+      return '<div class="axis-line rating-line' + best + '" title="' + esc(line.name) + '">' +
+        '<span aria-label="Offensive rating">O ' + format(line.offRating) + '</span>' +
+        '<span aria-label="Defensive rating">D ' + format(line.defRating) + '</span></div>';
+    }).join("") + '</div>';
+  }
+
   function axisLinesBlock(scores, axis) {
     const lines = scores.lines;
     if (!lines.length) return blankSpan(BLANK);
@@ -878,6 +891,8 @@
         return axisScore(row, "offensive");
       case "defensive":
         return axisScore(row, "defensive");
+      case "collected":
+        return Number(isCollected(row));
       case "name":
         return text(row.name).toLowerCase();
       case "hall": {
@@ -1035,7 +1050,7 @@
 
     if (!filtered.length) {
       el.tbody.innerHTML =
-        `<tr class="empty-row"><td colspan="10">No artifacts match these filters.</td></tr>`;
+        `<tr class="empty-row"><td colspan="12">No artifacts match these filters.</td></tr>`;
       return;
     }
 
@@ -1058,13 +1073,14 @@
               "entity-thumb--priority"
             )
           : "";
-        const nameHtml =
-          `<div class="name-cell">` +
-          thumb +
+        const collectedHtml =
           `<label class="owned-check${owned ? " is-owned" : ""}" title="${owned ? "Owned — click to clear" : "Mark as owned"}">` +
           `<input type="checkbox" class="collected-input" data-artifact-id="${esc(key)}"${owned ? " checked" : ""}` +
           ` aria-label="${owned ? "Owned" : "Mark as owned"}: ${esc(show(row.name))}" />` +
-          `</label>` +
+          `</label>`;
+        const nameHtml =
+          `<div class="name-cell">` +
+          thumb +
           `<div class="name-body">` +
           `<span class="name-text">${esc(show(row.name))}</span>` +
           (alt ? `<span class="alt">${esc(alt)}</span>` : "") +
@@ -1073,9 +1089,11 @@
         return (
           `<tr class="${rowClass}" data-artifact-id="${esc(key)}">` +
           `<td>${nameHtml}</td>` +
+          `<td class="collected-cell">${collectedHtml}</td>` +
           `<td>${esc(show(row.hall))}</td>` +
           `<td>${esc(show(row.grade))}</td>` +
           `<td>${perkBlock(row, scores)}</td>` +
+          `<td class="perk-rating-cell">${ratingLinesBlock(scores)}</td>` +
           `<td class="pref-cell">${axisLinesBlock(scores, "offensive")}</td>` +
           `<td class="pref-cell">${axisLinesBlock(scores, "defensive")}</td>` +
           `<td class="pref-cell pref-total-cell">${axisTotalBlock(scores, "offensive")}</td>` +
@@ -1108,7 +1126,7 @@
       sortState.dir = /** @type {1 | -1} */ (sortState.dir === 1 ? -1 : 1);
     } else {
       // Preference axes and Pref/cost default to highest-first; other columns asc.
-      const highFirst = isPrefSortKey(resolved) || resolved === "pref_per_cost";
+      const highFirst = isPrefSortKey(resolved) || resolved === "pref_per_cost" || resolved === "collected";
       sortState = { key: resolved, dir: highFirst ? -1 : 1 };
     }
     render();
@@ -1210,29 +1228,6 @@
     if (el.perkMatchAnd) el.perkMatchAnd.addEventListener("click", () => setPerkMatchMode("and"));
     if (el.perkMatchOr) el.perkMatchOr.addEventListener("click", () => setPerkMatchMode("or"));
 
-    el.clear.addEventListener("click", () => {
-      el.q.value = "";
-      hallFilter = "War";
-      saveHallFilter();
-      syncHallToggle();
-      gradeFilter = "";
-      saveGradeFilter();
-      syncGradeToggle();
-      perkMatchMode = "and";
-      savePerkMatchMode();
-      syncPerkMatchToggle();
-      clearCostFilter();
-      setCostPanelOpen(false);
-      selectedPerks.clear();
-      el.perkFilterQ.value = "";
-      setPerkPanelOpen(false);
-      hideCollected = false;
-      saveHideCollected();
-      syncCollectedToggle();
-      renderPerkFilterList();
-      render();
-    });
-
     if (el.collectedHide) {
       el.collectedHide.addEventListener("click", () => setHideCollected(true));
     }
@@ -1240,12 +1235,22 @@
       el.collectedShow.addEventListener("click", () => setHideCollected(false));
     }
 
-    el.tbody.addEventListener("change", (ev) => {
+    el.tbody.addEventListener("change", async (ev) => {
       const input = ev.target;
       if (!(input instanceof HTMLInputElement) || !input.classList.contains("collected-input")) return;
       const id = input.getAttribute("data-artifact-id");
       if (!id) return;
-      if (input.checked) collected.add(id);
+      const on = input.checked;
+      if (!on) {
+        const slots = window.DN.artifactSlots(id);
+        if (slots.length) {
+          input.checked = true;
+          const row = rows.find((item) => artifactKey(item) === id);
+          if (!await window.DN.confirmUncollect(show(row && row.name), slots)) return;
+          window.DN.removeArtifactSlots(id);
+        }
+      }
+      if (on) collected.add(id);
       else collected.delete(id);
       saveCollected();
       // If hiding collected, row disappears; otherwise restyle in place.
@@ -1330,7 +1335,7 @@
       if (!artRes.ok) throw new Error(`HTTP ${artRes.status} loading ${DATA_URL}`);
       const data = await artRes.json();
       if (!Array.isArray(data)) throw new Error("artifacts.json is not an array");
-      rows = data.slice();
+      rows = data.filter((row) => row.artifact_id !== "leftwich-trophy-legendary");
 
       if (mapRes.ok) {
         perkCanon = parseMappingCsv(await mapRes.text());

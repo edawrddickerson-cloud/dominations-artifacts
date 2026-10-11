@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <script src="navigation.js?v=1"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts · Army</title>
-  <link rel="stylesheet" href="styles.css?v=33" />
+  <link rel="stylesheet" href="styles.css?v=38" />
 </head>
 <body class="page-army">
   <nav class="site-nav" aria-label="Pages">
@@ -27,8 +28,8 @@
   <header class="top">
     <div class="top-inner">
       <h1>DomiNations Artifacts</h1>
-      <p class="sub">Army · Main troop loadout presets · drives default perk ratings for selected units</p>
     </div>
+    <div class="header-controls" aria-label="Primary filters"><fieldset class="seg-field"><legend>Hall</legend><div class="seg" role="group" aria-label="Hall"><button type="button" class="seg-btn" id="header-main" aria-pressed="false">Main</button><button type="button" class="seg-btn" id="header-war" aria-pressed="false">War</button></div></fieldset><fieldset class="seg-field"><legend>Base Type</legend><div class="seg seg-mini" role="group" aria-label="Base Type"><button type="button" class="seg-btn" id="header-off" aria-pressed="false">Off</button><button type="button" class="seg-btn" id="header-def" aria-pressed="false">Def</button></div></fieldset><div id="header-profile" class="header-profile"></div></div>
   </header>
 
   <section class="filters army-controls" aria-label="Army presets">
@@ -51,8 +52,8 @@
 
   <p id="error" class="error" hidden></p>
   <p class="army-hint" id="army-hint">
-    Select the Main troops you use. Saving (or switching presets) can update perk ratings:
-    removed units → 0, newly selected units → factory defaults.
+    Pick your army loadout here so that your Perk Ratings are personalised for you.
+    Specific customisations to individual perks can be made from Settings &gt; Perk Ratings.
   </p>
 
   <section class="army-units" aria-label="Troop families">
@@ -104,8 +105,9 @@
     </form>
   </dialog>
 
-  <script src="shared.js?v=23"></script>
-  <script src="profiles-ui.js?v=7"></script>
-  <script src="army.js?v=11"></script>
+  <script src="data/army_catalog.js?v=1"></script>
+  <script src="shared.js?v=29"></script>
+  <script src="profiles-ui.js?v=8"></script>
+  <script src="army.js?v=12"></script>
 </body>
 </html>

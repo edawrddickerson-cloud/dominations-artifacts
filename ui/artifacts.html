@@ -2,9 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <script src="navigation.js?v=1"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts · Priority</title>
-  <link rel="stylesheet" href="styles.css?v=32" />
+  <link rel="stylesheet" href="styles.css?v=38" />
 </head>
 <body class="page-priority">
   <nav class="site-nav" aria-label="Pages">
@@ -27,10 +28,24 @@
   <header class="top">
     <div class="top-inner">
       <h1>DomiNations Artifacts</h1>
-      <p class="sub">Priority · sort &amp; rate · Main/War · Legendary/Mythical · synced from <code>data/artifacts.json</code></p>
     </div>
     <div class="top-aside">
     </div>
+    <div class="header-controls" aria-label="Primary filters">      <fieldset class="seg-field">
+        <legend>Hall</legend>
+        <div class="seg" role="group" aria-label="Hall">
+          <button type="button" class="seg-btn" data-hall="Main" id="hall-main" aria-pressed="false">Main</button>
+          <button type="button" class="seg-btn is-active" data-hall="War" id="hall-war" aria-pressed="true">War</button>
+        </div>
+      </fieldset>
+      <fieldset class="seg-field pref-sort-axes" id="pref-sort-axes" title="Off/Def = perk rating × strongest available stat magnitude">
+        <legend>Base Type</legend>
+        <div class="seg seg-mini" role="group" aria-label="Base Type">
+          <button type="button" class="seg-btn is-active" id="sort-off" aria-pressed="true">Off</button>
+          <button type="button" class="seg-btn is-active" id="sort-def" aria-pressed="true">Def</button>
+        </div>
+      </fieldset>
+<div id="header-profile" class="header-profile"></div></div>
   </header>
 
   <section class="filters" aria-label="Filters">
@@ -44,13 +59,6 @@
         <div class="seg" role="group" aria-label="Collected">
           <button type="button" class="seg-btn" id="collected-hide" aria-pressed="false">Hide</button>
           <button type="button" class="seg-btn is-active" id="collected-show" aria-pressed="true">Show</button>
-        </div>
-      </fieldset>
-      <fieldset class="seg-field">
-        <legend>Hall</legend>
-        <div class="seg" role="group" aria-label="Hall">
-          <button type="button" class="seg-btn" data-hall="Main" id="hall-main" aria-pressed="false">Main</button>
-          <button type="button" class="seg-btn is-active" data-hall="War" id="hall-war" aria-pressed="true">War</button>
         </div>
       </fieldset>
       <fieldset class="seg-field">
@@ -97,13 +105,6 @@
           </div>
         </div>
       </div>
-      <fieldset class="seg-field pref-sort-axes" id="pref-sort-axes" title="Off/Def = perk rating × strongest available stat magnitude">
-        <legend>Sort</legend>
-        <div class="seg seg-mini" role="group" aria-label="Sort preference axes">
-          <button type="button" class="seg-btn is-active" id="sort-off" aria-pressed="true">Off</button>
-          <button type="button" class="seg-btn is-active" id="sort-def" aria-pressed="true">Def</button>
-        </div>
-      </fieldset>
       <fieldset class="seg-field score-mode-field" id="score-mode" title="Combined sums every perk line; Best uses the single highest active-axis line">
         <legend>Score</legend>
         <div class="seg seg-mini" role="group" aria-label="Score mode">
@@ -111,9 +112,6 @@
           <button type="button" class="seg-btn" id="score-maxrow" aria-pressed="false">Best</button>
         </div>
       </fieldset>
-    </div>
-    <div class="filter-actions">
-      <button type="button" id="clear" class="btn">Clear</button>
     </div>
   </section>
 
@@ -123,16 +121,18 @@
     <table id="table">
       <thead>
         <tr>
-          <th data-sort="name" aria-sort="none" scope="col" title="Checkbox marks artifacts you already own"><button type="button" class="th-sort">Name</button></th>
+          <th data-sort="name" aria-sort="none" scope="col"><button type="button" class="th-sort">Name</button></th>
+          <th data-sort="collected" aria-sort="none" scope="col" title="Sort by collected status"><button type="button" class="th-sort">Collected</button></th>
           <th data-sort="hall" aria-sort="none" scope="col"><button type="button" class="th-sort">Hall</button></th>
           <th data-sort="grade" aria-sort="none" scope="col"><button type="button" class="th-sort">Grade</button></th>
           <th data-sort="perks" aria-sort="none" scope="col" title="Perk name and stat range"><button type="button" class="th-sort">Stats</button></th>
-          <th scope="col" class="th-plain" title="Per-line Offensive scores (rating × stat magnitude)"><span class="th-label">Off</span></th>
-          <th scope="col" class="th-plain" title="Per-line Defensive scores (rating × stat magnitude)"><span class="th-label">Def</span></th>
-          <th data-sort="offensive" aria-sort="none" scope="col" title="Offensive total: Combined sum or Best line. With both Sort axes checked, Off/Def headers sort by Off+Def."><button type="button" class="th-sort">Off Σ</button></th>
-          <th data-sort="defensive" aria-sort="none" scope="col" title="Defensive total: Combined sum or Best line. With both Sort axes checked, Off/Def headers sort by Off+Def."><button type="button" class="th-sort">Def Σ</button></th>
-          <th data-sort="cost" aria-sort="none" scope="col" title="Sort by cost tier"><button type="button" class="th-sort">Cost</button></th>
-          <th data-sort="pref_per_cost" aria-sort="none" scope="col" title="Active preference score ÷ token cost. Blank when cost unknown."><button type="button" class="th-sort">Pref/cost</button></th>
+          <th scope="col" class="th-plain" title="Off and Def ratings for each stat, before multiplying by magnitude"><span class="th-label">Perk rating</span></th>
+          <th scope="col" class="th-plain th-numeric" title="Per-line Offensive scores (rating × stat magnitude)"><span class="th-label">Off</span></th>
+          <th scope="col" class="th-plain th-numeric" title="Per-line Defensive scores (rating × stat magnitude)"><span class="th-label">Def</span></th>
+          <th class="th-numeric" data-sort="offensive" aria-sort="none" scope="col" title="Offensive total: Combined sum or Best line. With both Base Type axes checked, Off/Def headers sort by Off+Def."><button type="button" class="th-sort">Off Σ</button></th>
+          <th class="th-numeric" data-sort="defensive" aria-sort="none" scope="col" title="Defensive total: Combined sum or Best line. With both Base Type axes checked, Off/Def headers sort by Off+Def."><button type="button" class="th-sort">Def Σ</button></th>
+          <th class="th-numeric" data-sort="cost" aria-sort="none" scope="col" title="Sort by cost tier"><button type="button" class="th-sort">Cost</button></th>
+          <th class="th-numeric" data-sort="pref_per_cost" aria-sort="none" scope="col" title="Active preference score ÷ token cost. Blank when cost unknown."><button type="button" class="th-sort">Pref/cost</button></th>
         </tr>
       </thead>
       <tbody id="tbody"></tbody>
@@ -140,8 +140,9 @@
   </div>
 
   </div>
-  <script src="shared.js?v=21"></script>
-  <script src="profiles-ui.js?v=7"></script>
-  <script src="app.js?v=23"></script>
+  <script src="data/army_catalog.js?v=1"></script>
+  <script src="shared.js?v=29"></script>
+  <script src="profiles-ui.js?v=8"></script>
+  <script src="app.js?v=26"></script>
 </body>
 </html>

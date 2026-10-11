@@ -310,12 +310,13 @@
     const prev = DN.normalizeArmyUnits(state.lastApplied);
     const next = DN.normalizeArmyUnits(nextUnits);
     const { removed, added } = diffUnits(prev, next);
+    const groupChanges = DN.armyGroupRatingChanges(prev, next);
     const prevEffective = DN.armyEffectiveAppliedSet(prev);
     const nextEffective = DN.armyEffectiveAppliedSet(next);
 
-    if (removed.length) {
+    if (removed.length || groupChanges.removed.length) {
       // APC off ⇒ also offer zeroing Heavy Infantry unless HI stays explicitly selected.
-      const ratingRemoved = DN.armyRatingFamilies(removed, next);
+      const ratingRemoved = [...DN.armyRatingFamilies(removed, next), ...groupChanges.removed];
       const rows = buildChangeRows(ratingRemoved, prevEffective, nextEffective, 0);
       if (rows.length) {
         const layer = await showRatingConfirm({
@@ -327,9 +328,9 @@
       }
     }
 
-    if (added.length) {
+    if (added.length || groupChanges.added.length) {
       // APC on ⇒ also offer factory defaults for Heavy Infantry in the background.
-      const ratingAdded = DN.armyRatingFamilies(added, next);
+      const ratingAdded = [...DN.armyRatingFamilies(added, next), ...groupChanges.added];
       const rows = buildChangeRows(ratingAdded, prevEffective, nextEffective, "factory");
       if (rows.length) {
         const layer = await showRatingConfirm({
@@ -520,6 +521,11 @@
       const canonPerk = DN.makeCanonPerk(DN.parseMappingCsv(await mapRes.text()));
       const rawDefaults = await defRes.json();
       unitImages = imgRes.ok ? DN.imageUrlMap(await imgRes.json()) : {};
+      for (const unit of DN.ARMY_UNITS) {
+        if (!unitImages[unit.name]) {
+          unitImages[unit.name] = unit.aliases.map(alias => unitImages[alias]).find(Boolean) || "";
+        }
+      }
       /** @type {Record<string, { offensive: number, defensive: number }>} */
       const defaults = {};
       for (const [k, v] of Object.entries(rawDefaults || {})) {

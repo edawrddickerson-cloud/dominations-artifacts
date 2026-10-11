@@ -1,0 +1,967 @@
+{
+  "version": 1,
+  "types": [
+    {
+      "id": "barracks",
+      "label": "Barracks troops"
+    },
+    {
+      "id": "factory",
+      "label": "Factory troops"
+    },
+    {
+      "id": "air",
+      "label": "Air troops"
+    }
+  ],
+  "units": [
+    {
+      "name": "Heavy Infantry",
+      "type": "barracks",
+      "order": 0,
+      "aliases": [],
+      "includes": []
+    },
+    {
+      "name": "Ranged Infantry",
+      "type": "barracks",
+      "order": 1,
+      "aliases": [],
+      "includes": []
+    },
+    {
+      "name": "Raider",
+      "type": "barracks",
+      "order": 2,
+      "aliases": [],
+      "includes": []
+    },
+    {
+      "name": "Heavy Cavalry",
+      "type": "barracks",
+      "order": 3,
+      "aliases": [],
+      "includes": []
+    },
+    {
+      "name": "Wall Breacher",
+      "type": "barracks",
+      "order": 4,
+      "aliases": [
+        "Wall Miner",
+        "Wall Sapper"
+      ],
+      "includes": []
+    },
+    {
+      "name": "Ranged Siege",
+      "type": "barracks",
+      "order": 5,
+      "aliases": [],
+      "includes": []
+    },
+    {
+      "name": "Supply Vehicle",
+      "type": "barracks",
+      "order": 6,
+      "aliases": [],
+      "includes": []
+    },
+    {
+      "name": "Mortar Troop",
+      "type": "barracks",
+      "order": 7,
+      "aliases": [],
+      "includes": []
+    },
+    {
+      "name": "Attack Helicopter",
+      "type": "barracks",
+      "order": 8,
+      "aliases": [],
+      "includes": []
+    },
+    {
+      "name": "Assault Vehicle",
+      "type": "barracks",
+      "order": 9,
+      "aliases": [],
+      "includes": []
+    },
+    {
+      "name": "Machine Gun Infantry",
+      "type": "factory",
+      "order": 0,
+      "aliases": [],
+      "includes": []
+    },
+    {
+      "name": "Commando",
+      "type": "factory",
+      "order": 1,
+      "aliases": [
+        "Guerrilla"
+      ],
+      "includes": []
+    },
+    {
+      "name": "Heavy Tank",
+      "type": "factory",
+      "order": 2,
+      "aliases": [],
+      "includes": []
+    },
+    {
+      "name": "Bazooka",
+      "type": "factory",
+      "order": 3,
+      "aliases": [],
+      "includes": []
+    },
+    {
+      "name": "Armored Car",
+      "type": "factory",
+      "order": 4,
+      "aliases": [],
+      "includes": []
+    },
+    {
+      "name": "APC",
+      "type": "factory",
+      "order": 5,
+      "aliases": [],
+      "includes": [
+        "Heavy Infantry"
+      ]
+    },
+    {
+      "name": "Tactical Helicopter",
+      "type": "factory",
+      "order": 6,
+      "aliases": [],
+      "includes": []
+    },
+    {
+      "name": "MRL",
+      "type": "factory",
+      "order": 7,
+      "aliases": [],
+      "includes": []
+    },
+    {
+      "name": "Fighter",
+      "type": "air",
+      "order": 0,
+      "aliases": [],
+      "includes": []
+    },
+    {
+      "name": "Bomber",
+      "type": "air",
+      "order": 1,
+      "aliases": [],
+      "includes": []
+    },
+    {
+      "name": "Paratrooper",
+      "type": "air",
+      "order": 2,
+      "aliases": [],
+      "includes": []
+    },
+    {
+      "name": "Recon",
+      "type": "air",
+      "order": 3,
+      "aliases": [],
+      "includes": []
+    }
+  ],
+  "perk_scopes": {
+    "APC Damage": {
+      "kind": "unit",
+      "unit": "APC"
+    },
+    "APC Deploy Time": {
+      "kind": "unit",
+      "unit": "APC"
+    },
+    "APC Deploys Marines On Death": {
+      "kind": "unit",
+      "unit": "APC"
+    },
+    "APC Hitpoints": {
+      "kind": "unit",
+      "unit": "APC"
+    },
+    "Air Defense Attack Speed": {
+      "kind": "independent"
+    },
+    "Air Defense Damage": {
+      "kind": "independent"
+    },
+    "Air Defense Hitpoints": {
+      "kind": "independent"
+    },
+    "Air Defense Hitpoints & Damage": {
+      "kind": "independent"
+    },
+    "Airstrip Troop Damage": {
+      "kind": "type",
+      "type": "air"
+    },
+    "Airstrip Troop Hitpoints": {
+      "kind": "type",
+      "type": "air"
+    },
+    "All Defensive Towers Damage": {
+      "kind": "independent"
+    },
+    "All Defensive Towers Hitpoints": {
+      "kind": "independent"
+    },
+    "All Defensive Towers Hitpoints & Damage": {
+      "kind": "independent"
+    },
+    "All Enemy Defensive Towers Damage": {
+      "kind": "independent"
+    },
+    "All Enemy Defensive Towers Hitpoints": {
+      "kind": "independent"
+    },
+    "All Resources Looted": {
+      "kind": "independent"
+    },
+    "Anti-Tank Gun Damage": {
+      "kind": "independent"
+    },
+    "Armored Car Damage": {
+      "kind": "unit",
+      "unit": "Armored Car"
+    },
+    "Armored Car Hitpoints": {
+      "kind": "unit",
+      "unit": "Armored Car"
+    },
+    "Assault Vehicle Damage": {
+      "kind": "unit",
+      "unit": "Assault Vehicle"
+    },
+    "Assault Vehicle Hitpoints": {
+      "kind": "unit",
+      "unit": "Assault Vehicle"
+    },
+    "Attack Helicopter Damage": {
+      "kind": "unit",
+      "unit": "Attack Helicopter"
+    },
+    "Attack Helicopter Hitpoints": {
+      "kind": "unit",
+      "unit": "Attack Helicopter"
+    },
+    "Attack Helicopter Hitpoints & Damage": {
+      "kind": "unit",
+      "unit": "Attack Helicopter"
+    },
+    "Barracks Troop Damage": {
+      "kind": "type",
+      "type": "barracks"
+    },
+    "Barracks Troop Hitpoints": {
+      "kind": "type",
+      "type": "barracks"
+    },
+    "Barracks Troop Training Cost": {
+      "kind": "type",
+      "type": "barracks"
+    },
+    "Bazooka & Paratrooper Damage": {
+      "kind": "unit",
+      "unit": "Bazooka"
+    },
+    "Bazooka Attack Speed": {
+      "kind": "unit",
+      "unit": "Bazooka"
+    },
+    "Bazooka Cooldown": {
+      "kind": "unit",
+      "unit": "Bazooka"
+    },
+    "Bazooka Damage": {
+      "kind": "unit",
+      "unit": "Bazooka"
+    },
+    "Bazooka Hitpoints": {
+      "kind": "unit",
+      "unit": "Bazooka"
+    },
+    "Bomber Damage": {
+      "kind": "unit",
+      "unit": "Bomber"
+    },
+    "Bomber Hitpoints": {
+      "kind": "unit",
+      "unit": "Bomber"
+    },
+    "Bomber Hitpoints & Damage": {
+      "kind": "unit",
+      "unit": "Bomber"
+    },
+    "Castle spawns Sword Saints when Destroyed": {
+      "kind": "independent"
+    },
+    "Catapult Damage": {
+      "kind": "independent"
+    },
+    "Catapult Hitpoints": {
+      "kind": "independent"
+    },
+    "Coalition Troop Damage": {
+      "kind": "independent"
+    },
+    "Commando Damage": {
+      "kind": "unit",
+      "unit": "Commando"
+    },
+    "Commando Hitpoints": {
+      "kind": "unit",
+      "unit": "Commando"
+    },
+    "Decoy Tactic Hitpoints": {
+      "kind": "independent"
+    },
+    "Defender Damage": {
+      "kind": "independent"
+    },
+    "Defender Hitpoints": {
+      "kind": "independent"
+    },
+    "Defender Movement Speed": {
+      "kind": "independent"
+    },
+    "Defender Spawn Time": {
+      "kind": "independent"
+    },
+    "Defensive Missile Silo Damage": {
+      "kind": "independent"
+    },
+    "Defensive Tower Damage": {
+      "kind": "independent"
+    },
+    "Enemy Air Defense Damage": {
+      "kind": "independent"
+    },
+    "Enemy Anti-Tank Gun Damage": {
+      "kind": "independent"
+    },
+    "Enemy Anti-Tank Gun Hitpoints": {
+      "kind": "independent"
+    },
+    "Enemy Catapult Damage": {
+      "kind": "independent"
+    },
+    "Enemy Catapult Hitpoints": {
+      "kind": "independent"
+    },
+    "Enemy Defender Hitpoints": {
+      "kind": "independent"
+    },
+    "Enemy Defender Spawn Time": {
+      "kind": "independent"
+    },
+    "Enemy Missile Silo Damage": {
+      "kind": "independent"
+    },
+    "Enemy Recon Plane Scan Duration": {
+      "kind": "independent"
+    },
+    "Enemy Redoubt Damage": {
+      "kind": "independent"
+    },
+    "Enemy Sabotage Duration": {
+      "kind": "independent"
+    },
+    "Enemy Sniper Tower Damage": {
+      "kind": "independent"
+    },
+    "Enemy Tower Damage": {
+      "kind": "independent"
+    },
+    "Enemy Tower Hitpoints": {
+      "kind": "independent"
+    },
+    "Enemy Wall Hitpoints": {
+      "kind": "independent"
+    },
+    "Factory Troop Damage": {
+      "kind": "type",
+      "type": "factory"
+    },
+    "Factory Troop Hitpoints": {
+      "kind": "type",
+      "type": "factory"
+    },
+    "Factory Troop Training Cost": {
+      "kind": "type",
+      "type": "factory"
+    },
+    "Fighter Damage": {
+      "kind": "unit",
+      "unit": "Fighter"
+    },
+    "Fighter Hitpoints": {
+      "kind": "unit",
+      "unit": "Fighter"
+    },
+    "Fighter Hitpoints & Damage": {
+      "kind": "unit",
+      "unit": "Fighter"
+    },
+    "First Aid Duration": {
+      "kind": "independent"
+    },
+    "Food Looted": {
+      "kind": "independent"
+    },
+    "Food from Farms": {
+      "kind": "independent"
+    },
+    "Forest Expansion Cost Refund": {
+      "kind": "independent"
+    },
+    "Generals' Attack Speed": {
+      "kind": "independent"
+    },
+    "Generals' Damage": {
+      "kind": "independent"
+    },
+    "Generals' Hitpoints": {
+      "kind": "independent"
+    },
+    "Generals' Hitpoints & Damage": {
+      "kind": "independent"
+    },
+    "Generals' Movement Speed": {
+      "kind": "independent"
+    },
+    "Gold Looted": {
+      "kind": "independent"
+    },
+    "Gold from Caravans": {
+      "kind": "independent"
+    },
+    "Gold from Gold Mines": {
+      "kind": "independent"
+    },
+    "Guerrilla Damage": {
+      "kind": "unit",
+      "unit": "Commando"
+    },
+    "Guerrilla Hitpoints": {
+      "kind": "unit",
+      "unit": "Commando"
+    },
+    "Guerrilla Movement Speed": {
+      "kind": "unit",
+      "unit": "Commando"
+    },
+    "Heavy Cavalry Damage": {
+      "kind": "unit",
+      "unit": "Heavy Cavalry"
+    },
+    "Heavy Cavalry Hitpoints": {
+      "kind": "unit",
+      "unit": "Heavy Cavalry"
+    },
+    "Heavy Infantry Attack Speed": {
+      "kind": "unit",
+      "unit": "Heavy Infantry"
+    },
+    "Heavy Infantry Damage": {
+      "kind": "unit",
+      "unit": "Heavy Infantry"
+    },
+    "Heavy Infantry Hitpoints": {
+      "kind": "unit",
+      "unit": "Heavy Infantry"
+    },
+    "Heavy Infantry Movement Speed": {
+      "kind": "unit",
+      "unit": "Heavy Infantry"
+    },
+    "Heavy Tank Attack Speed": {
+      "kind": "unit",
+      "unit": "Heavy Tank"
+    },
+    "Heavy Tank Damage": {
+      "kind": "unit",
+      "unit": "Heavy Tank"
+    },
+    "Heavy Tank Hitpoints": {
+      "kind": "unit",
+      "unit": "Heavy Tank"
+    },
+    "Increase Rally Duration": {
+      "kind": "independent"
+    },
+    "Invading Airstrip Troop Damage": {
+      "kind": "independent"
+    },
+    "Invading Airstrip Unit Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Barracks Troop Damage": {
+      "kind": "independent"
+    },
+    "Invading Barracks Troop Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Bazooka Damage": {
+      "kind": "independent"
+    },
+    "Invading Bazooka Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Bomber Damage": {
+      "kind": "independent"
+    },
+    "Invading Bomber Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Factory Troop Damage": {
+      "kind": "independent"
+    },
+    "Invading Factory Troop Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Fighter Damage": {
+      "kind": "independent"
+    },
+    "Invading Fighter Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Fighter Hitpoints & Damage": {
+      "kind": "independent"
+    },
+    "Invading Generals' Attack Speed": {
+      "kind": "independent"
+    },
+    "Invading Generals' Damage": {
+      "kind": "independent"
+    },
+    "Invading Generals' Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Generals' Hitpoints & Damage": {
+      "kind": "independent"
+    },
+    "Invading Guerrilla Damage": {
+      "kind": "independent"
+    },
+    "Invading Guerrilla Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Heavy Cavalry Damage": {
+      "kind": "independent"
+    },
+    "Invading Heavy Tank Damage": {
+      "kind": "independent"
+    },
+    "Invading Heavy Tank Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Machine Gun Infantry Damage": {
+      "kind": "independent"
+    },
+    "Invading Mortar Troop Damage": {
+      "kind": "independent"
+    },
+    "Invading Paratrooper Damage": {
+      "kind": "independent"
+    },
+    "Invading Raider Damage": {
+      "kind": "independent"
+    },
+    "Invading Recon Scan Duration": {
+      "kind": "independent"
+    },
+    "Invading Sabotage Duration": {
+      "kind": "independent"
+    },
+    "Invading Transport Hitpoints": {
+      "kind": "independent"
+    },
+    "Library Research Time": {
+      "kind": "independent"
+    },
+    "Library Tech Food Cost": {
+      "kind": "independent"
+    },
+    "Library Tech Gold Cost": {
+      "kind": "independent"
+    },
+    "Library Tech Oil Cost": {
+      "kind": "independent"
+    },
+    "Library Tech Resource Cost": {
+      "kind": "independent"
+    },
+    "Looted Resource Refund": {
+      "kind": "independent"
+    },
+    "MRL Damage": {
+      "kind": "unit",
+      "unit": "MRL"
+    },
+    "MRL Hitpoints": {
+      "kind": "unit",
+      "unit": "MRL"
+    },
+    "MRL Hitpoints & Damage": {
+      "kind": "unit",
+      "unit": "MRL"
+    },
+    "Machine Gun Infantry Damage": {
+      "kind": "unit",
+      "unit": "Machine Gun Infantry"
+    },
+    "Machine Gun Infantry Hitpoints": {
+      "kind": "unit",
+      "unit": "Machine Gun Infantry"
+    },
+    "Mercenary Camp Deploys Spartans when Destroyed": {
+      "kind": "independent"
+    },
+    "Mercenary Damage": {
+      "kind": "independent"
+    },
+    "Mercenary Hitpoints": {
+      "kind": "independent"
+    },
+    "Mercenary Hitpoints & Damage": {
+      "kind": "independent"
+    },
+    "Missile Silo Damage": {
+      "kind": "independent"
+    },
+    "Missile Silo and Big Red Button Damage": {
+      "kind": "independent"
+    },
+    "Mortar Infantry Damage": {
+      "kind": "independent"
+    },
+    "Mortar Troop Attack Speed": {
+      "kind": "unit",
+      "unit": "Mortar Troop"
+    },
+    "Mortar Troop Damage": {
+      "kind": "unit",
+      "unit": "Mortar Troop"
+    },
+    "Mortar Troop Hitpoints": {
+      "kind": "unit",
+      "unit": "Mortar Troop"
+    },
+    "National Trade Good Loot Chance": {
+      "kind": "independent"
+    },
+    "Oil From Oil Wells": {
+      "kind": "independent"
+    },
+    "Oil Looted": {
+      "kind": "independent"
+    },
+    "Oil from Oil Wells": {
+      "kind": "independent"
+    },
+    "Paratrooper Damage": {
+      "kind": "unit",
+      "unit": "Paratrooper"
+    },
+    "Paratrooper Hitpoints": {
+      "kind": "unit",
+      "unit": "Paratrooper"
+    },
+    "Paratrooper Hitpoints & Damage": {
+      "kind": "unit",
+      "unit": "Paratrooper"
+    },
+    "Protect Duration": {
+      "kind": "independent"
+    },
+    "Quick Victory Time": {
+      "kind": "independent"
+    },
+    "Raider Damage": {
+      "kind": "unit",
+      "unit": "Raider"
+    },
+    "Raider Hitpoints": {
+      "kind": "unit",
+      "unit": "Raider"
+    },
+    "Raiders Spawn from Forest When Attacking": {
+      "kind": "independent"
+    },
+    "Rally Cooldown": {
+      "kind": "independent"
+    },
+    "Ranged Infantry Damage": {
+      "kind": "unit",
+      "unit": "Ranged Infantry"
+    },
+    "Ranged Infantry Hitpoints": {
+      "kind": "unit",
+      "unit": "Ranged Infantry"
+    },
+    "Ranged Siege Damage": {
+      "kind": "unit",
+      "unit": "Ranged Siege"
+    },
+    "Ranged Siege Hitpoints": {
+      "kind": "unit",
+      "unit": "Ranged Siege"
+    },
+    "Recon Bonus Duration": {
+      "kind": "unit",
+      "unit": "Recon"
+    },
+    "Recon Scan Bonus Damage": {
+      "kind": "unit",
+      "unit": "Recon"
+    },
+    "Recon Scan Duration": {
+      "kind": "unit",
+      "unit": "Recon"
+    },
+    "Redoubt Damage": {
+      "kind": "independent"
+    },
+    "Sabotage Duration": {
+      "kind": "independent"
+    },
+    "Sniper Tower Damage": {
+      "kind": "independent"
+    },
+    "Sniper Tower Hitpoints": {
+      "kind": "independent"
+    },
+    "Supply Cart Healing": {
+      "kind": "independent"
+    },
+    "Supply Vehicle": {
+      "kind": "independent"
+    },
+    "Supply Vehicle Healing": {
+      "kind": "unit",
+      "unit": "Supply Vehicle"
+    },
+    "Tactical Helicopter Healing": {
+      "kind": "unit",
+      "unit": "Tactical Helicopter"
+    },
+    "Tower Damage": {
+      "kind": "independent"
+    },
+    "Tower Hitpoints": {
+      "kind": "independent"
+    },
+    "Transport Cooldown": {
+      "kind": "independent"
+    },
+    "Transport Movement Speed": {
+      "kind": "independent"
+    },
+    "University Research Time": {
+      "kind": "independent"
+    },
+    "Vault Capacity": {
+      "kind": "independent"
+    },
+    "Vault Interest": {
+      "kind": "independent"
+    },
+    "Wall Hitpoints": {
+      "kind": "independent"
+    },
+    "Wall Miner Damage": {
+      "kind": "unit",
+      "unit": "Wall Breacher"
+    },
+    "Wall Miner Hitpoints": {
+      "kind": "unit",
+      "unit": "Wall Breacher"
+    },
+    "Wall Miner Movement Speed": {
+      "kind": "unit",
+      "unit": "Wall Breacher"
+    },
+    "Wall Sapper Damage": {
+      "kind": "unit",
+      "unit": "Wall Breacher"
+    },
+    "Wall Sapper Hitpoints": {
+      "kind": "unit",
+      "unit": "Wall Breacher"
+    },
+    "All Air Troop Damage": {
+      "kind": "type",
+      "type": "air"
+    },
+    "All Air Troop Hitpoints": {
+      "kind": "type",
+      "type": "air"
+    },
+    "All Air Troop HP": {
+      "kind": "type",
+      "type": "air"
+    },
+    "All Air Troops Damage": {
+      "kind": "type",
+      "type": "air"
+    },
+    "All Air Troops Hitpoints": {
+      "kind": "type",
+      "type": "air"
+    },
+    "All Air Troops HP": {
+      "kind": "type",
+      "type": "air"
+    },
+    "Air Troop Damage": {
+      "kind": "type",
+      "type": "air"
+    },
+    "Air Troop Hitpoints": {
+      "kind": "type",
+      "type": "air"
+    },
+    "Air Troop HP": {
+      "kind": "type",
+      "type": "air"
+    },
+    "Air Troops Damage": {
+      "kind": "type",
+      "type": "air"
+    },
+    "Air Troops Hitpoints": {
+      "kind": "type",
+      "type": "air"
+    },
+    "Air Troops HP": {
+      "kind": "type",
+      "type": "air"
+    },
+    "Food, Gold and Oil Generated": {
+      "kind": "independent"
+    }
+  },
+  "perk_aliases": {
+    "Air Defense Damage & Hitpoints": "Air Defense Hitpoints & Damage",
+    "Air Defense Damage and Hitpoints": "Air Defense Hitpoints & Damage",
+    "Airstip Troop Hitpoints | Airstrip Troop Hitpoints": "Airstrip Troop Hitpoints",
+    "Airstrip Troop HP": "Airstrip Troop Hitpoints",
+    "All Defensive Tower Damage": "All Defensive Towers Damage",
+    "All Defensive Towers DMG": "All Defensive Towers Damage",
+    "All Defensive Towers HP": "All Defensive Towers Hitpoints",
+    "All Def. Tower Damage & Hitpoints": "All Defensive Towers Hitpoints & Damage",
+    "All Defensive Tower Damage & Hitpoints": "All Defensive Towers Hitpoints & Damage",
+    "All Defensive Tower Damage and Hitpoints": "All Defensive Towers Hitpoints & Damage",
+    "All Defensive Towers Damage & HP": "All Defensive Towers Hitpoints & Damage",
+    "All Defensive Towers Damage & Hitpoints": "All Defensive Towers Hitpoints & Damage",
+    "All Defensive Towers HP & Damage": "All Defensive Towers Hitpoints & Damage",
+    "All Defensive Towers Hitpoints and Damage": "All Defensive Towers Hitpoints & Damage",
+    "All Enemy Defensive Tower Damage": "All Enemy Defensive Towers Damage",
+    "All Enemy Defensive Towers Damage | All Enemy Defensive Towers Damage": "All Enemy Defensive Towers Damage",
+    "All Enemy Defensive Towers HP": "All Enemy Defensive Towers Hitpoints",
+    "APC Deploy Speed": "APC Deploy Time",
+    "APC HP": "APC Hitpoints",
+    "Assault Vehicle HP": "Assault Vehicle Hitpoints",
+    "Attack Helicopter DMG": "Attack Helicopter Damage",
+    "Attack Helicopter HP": "Attack Helicopter Hitpoints",
+    "Attack Helicopter DMG & Hitpoints": "Attack Helicopter Hitpoints & Damage",
+    "Attack Helicopter Damage & Hitpoints": "Attack Helicopter Hitpoints & Damage",
+    "Attack Helicopter Damage and Hitpoints": "Attack Helicopter Hitpoints & Damage",
+    "Barracks Troop HP": "Barracks Troop Hitpoints",
+    "Bazooka HP": "Bazooka Hitpoints",
+    "Bomber HP": "Bomber Hitpoints",
+    "Bomber Damage & Hitpoints": "Bomber Hitpoints & Damage",
+    "Bomber Damage and HP": "Bomber Hitpoints & Damage",
+    "Bomber Damage and Hitpoints": "Bomber Hitpoints & Damage",
+    "Catapult HP": "Catapult Hitpoints",
+    "Decoy Tactic HP": "Decoy Tactic Hitpoints",
+    "Defender DMG": "Defender Damage",
+    "Defender HP": "Defender Hitpoints",
+    "Defenders Spawn Time": "Defender Spawn Time",
+    "Enemy Air Def. Damage": "Enemy Air Defense Damage",
+    "Enemy Anti-Tank Gun HP": "Enemy Anti-Tank Gun Hitpoints",
+    "Enemy Catapult HP": "Enemy Catapult Hitpoints",
+    "Enemy Defender HP": "Enemy Defender Hitpoints",
+    "Enemy Defender Spawn TIme": "Enemy Defender Spawn Time",
+    "Enemy Towers Damage": "Enemy Tower Damage",
+    "Enemy Tower HP": "Enemy Tower Hitpoints",
+    "Factory Troop HP": "Factory Troop Hitpoints",
+    "Factory Troop Traning Cost": "Factory Troop Training Cost",
+    "Fighters Damage": "Fighter Damage",
+    "Fighter HP": "Fighter Hitpoints",
+    "Fighters Hitpoints": "Fighter Hitpoints",
+    "Fighter HP & Damage": "Fighter Hitpoints & Damage",
+    "General Attack Speed": "Generals' Attack Speed",
+    "Generals Attack Speed": "Generals' Attack Speed",
+    "General Damage": "Generals' Damage",
+    "General's Damage": "Generals' Damage",
+    "Generals Damage": "Generals' Damage",
+    "General Hitpoints": "Generals' Hitpoints",
+    "General's Hitpoints": "Generals' Hitpoints",
+    "Generals Hitpoints": "Generals' Hitpoints",
+    "Generals' HP": "Generals' Hitpoints",
+    "Generals’ Hitpoints": "Generals' Hitpoints",
+    "General's Hitpoints and Damage": "Generals' Hitpoints & Damage",
+    "Generals HP & Damage": "Generals' Hitpoints & Damage",
+    "Generals Hitpoints and Damage": "Generals' Hitpoints & Damage",
+    "Generals' HP & Damage": "Generals' Hitpoints & Damage",
+    "Generals' Hitpoints and Damage": "Generals' Hitpoints & Damage",
+    "Gold From Carvans": "Gold from Caravans",
+    "Guerilla Damage": "Guerrilla Damage",
+    "Guerrilla HP": "Guerrilla Hitpoints",
+    "Heavy Cavalry HP": "Heavy Cavalry Hitpoints",
+    "Heavy Tank HP": "Heavy Tank Hitpoints",
+    "Invading Airstrip Unit HP": "Invading Airstrip Unit Hitpoints",
+    "Invading Barracks Troop damage": "Invading Barracks Troop Damage",
+    "Invading Barracks Troop HP": "Invading Barracks Troop Hitpoints",
+    "Invading Bombers Damage": "Invading Bomber Damage",
+    "Invading Bomber HP": "Invading Bomber Hitpoints",
+    "Invading Bombers Hitpoints": "Invading Bomber Hitpoints",
+    "Invading Fighters Damage": "Invading Fighter Damage",
+    "Invading Fighter HP": "Invading Fighter Hitpoints",
+    "Invading Fighter Damage & Hitpoints": "Invading Fighter Hitpoints & Damage",
+    "Invading Fighter Damage and Hitpoints": "Invading Fighter Hitpoints & Damage",
+    "Invading Generals Attack Speed": "Invading Generals' Attack Speed",
+    "Invading Generals’ Attack Speed": "Invading Generals' Attack Speed",
+    "Invading General's Damage": "Invading Generals' Damage",
+    "Invading Generals Damage": "Invading Generals' Damage",
+    "Invading General's Hitpoints": "Invading Generals' Hitpoints",
+    "Invading Generals HP": "Invading Generals' Hitpoints",
+    "Invading Generals' HP": "Invading Generals' Hitpoints",
+    "Invading Generals Damage & Hitpoints": "Invading Generals' Hitpoints & Damage",
+    "Invading Generals' Damage and Hitpoints": "Invading Generals' Hitpoints & Damage",
+    "Invading Heavy Tank HP": "Invading Heavy Tank Hitpoints",
+    "Invading Transport HP": "Invading Transport Hitpoints",
+    "Looted Resource Refunt": "Looted Resource Refund",
+    "Mercenary Damage & Hitpoints": "Mercenary Hitpoints & Damage",
+    "Missile Silo and Red Button Damage": "Missile Silo and Big Red Button Damage",
+    "Mortar Troop DMG": "Mortar Troop Damage",
+    "MRL Damage & Hitpoints": "MRL Hitpoints & Damage",
+    "MRL Damage and Hitpoints": "MRL Hitpoints & Damage",
+    "Paratrooper HP": "Paratrooper Hitpoints",
+    "Paratrooper Damage and Hitpoints": "Paratrooper Hitpoints & Damage",
+    "Raiders Damage": "Raider Damage",
+    "Raiders Hitpoints": "Raider Hitpoints",
+    "Ranged Siege DMG": "Ranged Siege Damage",
+    "Sniper Tower HP": "Sniper Tower Hitpoints",
+    "Supply Vechicle Healing": "Supply Vehicle Healing",
+    "Supply Vehicles Healing": "Supply Vehicle Healing",
+    "Tower HP": "Tower Hitpoints",
+    "Wall Sapper HP": "Wall Sapper Hitpoints"
+  }
+}

@@ -338,14 +338,20 @@
     el.q.addEventListener("input", render);
     el.type.addEventListener("change", render);
 
-    el.list.addEventListener("change", (ev) => {
+    el.list.addEventListener("change", async (ev) => {
       const target = ev.target;
       if (!(target instanceof HTMLInputElement) && !(target instanceof HTMLSelectElement)) return;
       const id = target.getAttribute("data-id");
       const action = target.getAttribute("data-action");
       if (!id || !action) return;
       if (action === "owned" && target instanceof HTMLInputElement) {
-        setOwnedHere(id, target.checked);
+        const on = target.checked;
+        if (!on && isActive(id)) {
+          target.checked = true;
+          const row = byId[id];
+          if (!await window.DN.confirmUncollect(C.show(row && row.name), ["the active Council"])) return;
+        }
+        setOwnedHere(id, on);
         render();
         return;
       }

@@ -76,8 +76,8 @@
 
   function setOwnedHere(id, on) {
     const hall = C.modeToHall(ui.mode);
-    const still = C.setOwnedHall(owned, id, hall, on, ui.rarity);
-    if (!still) {
+    C.setOwnedHall(owned, id, hall, on, ui.rarity);
+    if (!on) {
       const active = C.loadActive().filter((x) => x !== id);
       C.saveActive(active);
     }
@@ -218,6 +218,20 @@
   }
 
   /** @param {"offensive" | "defensive"} axis */
+  function ratingLinesBlock(scores) {
+    if (!scores.lines.length) return C.blankSpan(C.BLANK);
+    const format = (rating) => {
+      const cls = rating > 0 ? "pref-pos" : rating < 0 ? "pref-neg" : "blank";
+      return '<span class="perk-rating ' + cls + '">' + (rating > 0 ? "+" : "") + rating + '</span>';
+    };
+    return '<div class="axis-stack">' + scores.lines.map((line, i) => {
+      const best = scoreMode === "maxrow" && i === scores.bestIndex ? " is-best" : "";
+      return '<div class="axis-line rating-line' + best + '" title="' + C.esc(line.name) + '">' +
+        '<span aria-label="Offensive rating">O ' + format(line.offRating) + '</span>' +
+        '<span aria-label="Defensive rating">D ' + format(line.defRating) + '</span></div>';
+    }).join("") + '</div>';
+  }
+
   function axisLinesBlock(scores, axis) {
     const lines = scores.lines;
     if (!lines.length) return C.blankSpan(C.BLANK);
@@ -434,6 +448,10 @@
         av = preferenceScore(a);
         bv = preferenceScore(b);
         break;
+      case "collected":
+        av = Number(isOwnedHere(C.text(a.id)));
+        bv = Number(isOwnedHere(C.text(b.id)));
+        break;
       case "name":
         av = C.text(a.name).toLowerCase();
         bv = C.text(b.name).toLowerCase();
@@ -526,7 +544,7 @@
     if (sortState.key === resolved) {
       sortState.dir = /** @type {1 | -1} */ (sortState.dir === 1 ? -1 : 1);
     } else {
-      sortState = { key: resolved, dir: isPrefSortKey(resolved) ? -1 : 1 };
+      sortState = { key: resolved, dir: isPrefSortKey(resolved) || resolved === "collected" ? -1 : 1 };
     }
     render();
   }
@@ -615,7 +633,7 @@
 
     if (!filtered.length) {
       el.tbody.innerHTML =
-        `<tr class="empty-row"><td colspan="7">No councilors match these filters.</td></tr>`;
+        `<tr class="empty-row"><td colspan="9">No councilors match these filters.</td></tr>`;
       return;
     }
 
@@ -633,15 +651,16 @@
               "entity-thumb--priority"
             )
           : "";
-        const nameHtml =
-          `<div class="name-cell">` +
-          thumb +
+        const collectedHtml =
           `<label class="owned-check${on ? " is-owned" : ""}" title="${
             on ? `Owned for ${hall} — click to clear` : `Mark as owned for ${hall}`
           }">` +
           `<input type="checkbox" class="owned-input" data-id="${C.esc(id)}"${on ? " checked" : ""}` +
           ` aria-label="${on ? "Owned" : "Mark as owned"} (${C.esc(hall)}): ${C.esc(C.show(row.name))}" />` +
-          `</label>` +
+          `</label>`;
+        const nameHtml =
+          `<div class="name-cell">` +
+          thumb +
           `<div class="name-body">` +
           `<span class="name-text">${C.esc(C.show(row.name))}</span>` +
           (rarity ? `<span class="owned-rarity-badge">${C.esc(rarity)}</span>` : "") +
@@ -650,8 +669,10 @@
         return (
           `<tr class="${rowClass}" data-id="${C.esc(id)}">` +
           `<td>${nameHtml}</td>` +
+          `<td class="collected-cell">${collectedHtml}</td>` +
           `<td>${C.esc(C.show(row.type))}</td>` +
           `<td>${statsBlock(row, scores)}</td>` +
+          `<td class="perk-rating-cell">${ratingLinesBlock(scores)}</td>` +
           `<td class="pref-cell">${axisLinesBlock(scores, "offensive")}</td>` +
           `<td class="pref-cell">${axisLinesBlock(scores, "defensive")}</td>` +
           `<td class="pref-cell pref-total-cell">${axisTotalBlock(scores, "offensive")}</td>` +
@@ -684,12 +705,18 @@
     if (el.scoreCombined) el.scoreCombined.addEventListener("click", () => setScoreMode("combined"));
     if (el.scoreMaxrow) el.scoreMaxrow.addEventListener("click", () => setScoreMode("maxrow"));
 
-    el.tbody.addEventListener("change", (ev) => {
+    el.tbody.addEventListener("change", async (ev) => {
       const input = ev.target;
       if (!(input instanceof HTMLInputElement) || !input.classList.contains("owned-input")) return;
       const id = input.getAttribute("data-id");
       if (!id) return;
-      setOwnedHere(id, input.checked);
+      const on = input.checked;
+      if (!on && C.loadActive().includes(id)) {
+        input.checked = true;
+        const row = rows.find((item) => C.text(item.id) === id);
+        if (!await window.DN.confirmUncollect(C.show(row && row.name), ["the active Council"])) return;
+      }
+      setOwnedHere(id, on);
       render();
     });
 

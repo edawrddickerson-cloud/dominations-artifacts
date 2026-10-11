@@ -873,7 +873,7 @@
       if (!artRes.ok) throw new Error(`HTTP ${artRes.status} loading ${DATA_URL}`);
       const data = await artRes.json();
       if (!Array.isArray(data)) throw new Error("artifacts.json is not an array");
-      rows = data.slice();
+      rows = data.filter((row) => row.artifact_id !== "leftwich-trophy-legendary");
       byId = {};
       for (const row of rows) {
         byId[DN.artifactKey(row)] = row;
