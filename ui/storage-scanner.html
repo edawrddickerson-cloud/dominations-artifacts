@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts - Storage Scanner</title>
   <link rel="stylesheet" href="styles.css?v=41" />
-  <link rel="stylesheet" href="scanner.css?v=25" />
+  <link rel="stylesheet" href="scanner.css?v=26" />
 </head>
 <body class="page-scanner page-storage-scanner">
   <nav class="site-nav" aria-label="Pages">
@@ -90,8 +90,35 @@
         <p>PNG, JPEG, or WebP under 20 MB and 32 megapixels. The full screenshot stays temporary; keeping an artifact saves its picture and checked stats.</p>
         </section>
       </div>
+      <section class="scanner-field-setup scanner-panel" aria-label="Storage field calibration">
+        <h3>Field calibration</h3>
+        <p>Select the complete item dialog first, then choose five or six rows. Saved boxes are separate for each row count and from Crafting.</p>
+        <div class="scanner-controls">
+          <label><input type="checkbox" id="scanner-fields-enabled" checked /> Use saved field boxes</label>
+          <button type="button" class="btn" id="scanner-fields-edit" disabled>Calibrate Fields</button>
+          <button type="button" class="btn" id="scanner-fields-reset" disabled>Reset Saved Boxes</button>
+        </div>
+        <p id="scanner-fields-status" role="status" aria-live="polite">Standard recognition · no saved field boxes.</p>
+        <div id="scanner-fields-editor" hidden>
+          <p>Scanning pauses on this frozen frame. Choose a field and drag its box, or use the percentages below. Include the sign and % in each percentage crop, the complete level fraction, and the complete dice button. Allow space for longer stat names.</p>
+          <label>Field <select id="scanner-fields-field"></select></label>
+          <canvas id="scanner-fields-canvas" class="scanner-preview" width="640" height="360" tabindex="0" aria-label="Storage field boxes on a frozen source"></canvas>
+          <div class="scanner-region-fields">
+            <label>Left % of dialog<input id="scanner-fields-x" type="number" step="0.1" /></label>
+            <label>Top % of dialog<input id="scanner-fields-y" type="number" step="0.1" /></label>
+            <label>Width % of dialog<input id="scanner-fields-width" type="number" min="0.1" step="0.1" /></label>
+            <label>Height % of dialog<input id="scanner-fields-height" type="number" min="0.1" step="0.1" /></label>
+          </div>
+          <label id="scanner-fields-optional-label" hidden><input id="scanner-fields-optional" type="checkbox" /> Read this optional field</label>
+          <p>For Hall colour, select plain red or blue ribbon background. The picture crop is saved only when you Keep Artifact.</p>
+          <figure class="scanner-field-preview"><figcaption id="scanner-fields-preview-label">Selected field crop</figcaption><canvas id="scanner-fields-preview" width="320" height="64" aria-label="Selected storage field crop preview"></canvas></figure>
+          <p id="scanner-fields-feedback" role="status"></p>
+          <div class="scanner-controls"><button type="button" class="btn" id="scanner-fields-save">Save Field Boxes</button><button type="button" class="btn" id="scanner-fields-cancel">Cancel</button></div>
+        </div>
+      </section>
     </details>
     <section class="scanner-reading scanner-panel storage-review" aria-label="Artifact recognition and rating">
+      <div class="storage-review-content">
       <div class="storage-review-heading">
         <img id="storage-picture" class="storage-artwork" alt="Captured artifact artwork" hidden />
         <div class="storage-identity">
@@ -104,7 +131,6 @@
         </div>
         <div class="storage-rating">
           <div class="scanner-controls">
-            <label>Rating <select id="scanner-mode"><option value="combined">Hall</option><option value="maxrow">Showcase</option></select></label>
             <input type="checkbox" id="scanner-off" checked hidden />
             <input type="checkbox" id="scanner-def" checked hidden />
           </div>
@@ -120,6 +146,7 @@
       <datalist id="scanner-names"></datalist>
       <div id="scanner-correct" class="storage-stat-editor"></div>
       <p id="scanner-correction-status" class="scanner-warning" role="status"></p>
+      </div>
       <div class="storage-review-actions">
         <button type="button" class="btn" id="scanner-accept" disabled>Use Corrected Values</button>
         <button type="button" class="btn" id="storage-keep" aria-describedby="storage-keep-status" disabled>Keep Artifact</button>
@@ -131,7 +158,6 @@
       <details class="storage-inventory-details" open>
         <summary>Scanned inventory · <span id="storage-count" role="status"></span></summary>
         <p id="storage-saved" role="status">Loading saved inventory…</p>
-        <button type="button" class="btn" id="storage-export" disabled>Export Inventory</button>
         <ol id="storage-items" class="storage-items"></ol>
       </details>
     </section>
@@ -140,27 +166,30 @@
       <label><input type="checkbox" id="scanner-collect" checked /> Collect names while I cycle through artifacts</label>
       <p>Pause on each artifact until its read finishes. Keep the planner visible. Unknown labels with a % are collected for review; unrecognisable text without a % is discarded.</p>
       <p id="scanner-collection-count" role="status"></p>
-      <button type="button" class="btn" id="scanner-export" disabled>Export Collected Names</button>
       <button type="button" class="btn" id="scanner-collection-clear">Clear Collected Names</button>
       <details><summary>Labels needing review</summary><pre id="scanner-collected-labels" style="white-space:pre-wrap"></pre></details>
-      <p>Text only, held in this tab until you export. Stop Scanning keeps the collection; refreshing or closing this page loses it. Nothing is added to perk settings automatically.</p>
+      <p>Diagnostic names are held in this tab. Stop Scanning keeps them; refreshing or closing this page loses them. Kept artifacts and stats are saved separately and can be backed up from Profiles. Nothing is added to perk settings automatically.</p>
     </section>
     <video id="scanner-video" class="scanner-video" muted playsinline aria-hidden="true"></video>
   </div>
   <script src="scanner-core.js?v=1"></script>
-  <script src="scanner-frames.js?v=1"></script>
+  <script src="scanner-regions.js?v=3"></script>
+  <script src="storage-field-regions.js?v=1"></script>
+  <script src="scanner-calibration.js?v=4"></script>
+  <script src="scanner-frames.js?v=2"></script>
   <script src="data/army_catalog.js?v=8"></script>
   <script src="shared.js?v=40"></script>
   <script src="profiles-ui.js?v=13"></script>
   <script src="artifact-scoring.js?v=2"></script>
   <script src="vendor/tesseract/tesseract.min.js"></script>
   <script src="scanner-reroll-recognition.js?v=1"></script>
-  <script src="scanner-recognition.js?v=27"></script>
-  <script src="scanner-collection.js?v=48"></script>
-  <script src="storage-recognition.js?v=10"></script>
-  <script src="stored-artifacts.js?v=13"></script>
-  <script src="storage-scanner.js?v=17"></script>
-  <script src="scanner-reading.js?v=44"></script>
-  <script src="scanner.js?v=5"></script>
+  <script src="scanner-name-catalog.js?v=1"></script>
+  <script src="scanner-recognition.js?v=30"></script>
+  <script src="scanner-collection.js?v=49"></script>
+  <script src="storage-recognition.js?v=11"></script>
+  <script src="stored-artifacts.js?v=15"></script>
+  <script src="storage-scanner.js?v=19"></script>
+  <script src="scanner-reading.js?v=52"></script>
+  <script src="scanner.js?v=8"></script>
 </body>
 </html>

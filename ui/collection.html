@@ -5,7 +5,7 @@
   <script src="navigation.js?v=5"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts · Collection</title>
-  <link rel="stylesheet" href="styles.css?v=62" />
+  <link rel="stylesheet" href="styles.css?v=74" />
 </head>
 <body class="page-collection">
   <nav class="site-nav" aria-label="Pages">
@@ -67,20 +67,31 @@
   <div class="collection-layout">
     <section class="collection-list-panel" aria-label="Owned artifacts">
       <h2 class="panel-title">Owned</h2>
+      <div class="collection-list-toolbar" id="collection-list-toolbar" hidden>
+        <details class="collection-slot-filter" id="collection-slot-filter">
+          <summary>Slot types · <span id="collection-slot-filter-label">All</span></summary>
+          <div class="collection-slot-filter-menu">
+            <div class="collection-slot-filter-actions"><button type="button" class="btn" data-filter-action="all">Select all</button><button type="button" class="btn" data-filter-action="none">Clear</button></div>
+            <div id="collection-slot-filter-options"></div>
+            <p class="collection-filter-note">Includes unused and Showcase items of each selected type.</p>
+          </div>
+        </details>
+        <span id="collection-list-count" role="status"></span>
+      </div>
       <div id="collection-list" class="collection-list"></div>
       <div id="museum-workspace" class="museum-workspace" hidden>
         <div id="museum-board" class="museum-board" hidden></div>
-        <div id="slot-picker" class="museum-swap-picker" hidden>
-          <header class="slot-picker-head">
-            <h3 id="slot-picker-title">Choose artifact</h3>
-            <button type="button" class="slot-picker-close" data-action="picker-close" aria-label="Close replacements">×</button>
-          </header>
-          <div id="slot-picker-list" class="slot-picker-list"></div>
-        </div>
       </div>
     </section>
     <div class="collection-summary" aria-hidden="true" inert>
         <aside class="museum-inspector" aria-label="Highlighted artifact and eligible replacements">
+          <div id="slot-picker" class="museum-swap-picker" hidden>
+            <header class="slot-picker-head">
+              <h3 id="slot-picker-title">Choose artifact</h3>
+              <button type="button" class="slot-picker-close" data-action="picker-close" aria-label="Close artifact selector">×</button>
+            </header>
+            <div id="slot-picker-list" class="slot-picker-list"></div>
+          </div>
           <section class="collection-comparison" aria-label="Artifact stat comparison">
             <div class="comparison-headline">
               <div id="collection-comparison-totals" aria-live="polite"></div>
@@ -100,9 +111,9 @@
   <script src="data/army_catalog.js?v=8"></script>
   <script src="shared.js?v=40"></script>
   <script src="profiles-ui.js?v=13"></script>
-  <script src="stored-artifacts.js?v=13"></script>
+  <script src="stored-artifacts.js?v=15"></script>
   <script src="artifact-scoring.js?v=2"></script>
-  <script src="collection.js?v=48"></script>
+  <script src="collection.js?v=61"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9c4fcfc024144c4aa34a78ae6332dc9f"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

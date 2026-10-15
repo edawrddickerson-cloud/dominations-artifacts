@@ -103,6 +103,7 @@ async function integration() {
   context.URL=URL;context.document.baseURI='http://localhost/ui/scanner.html';
   context.document.createElement=()=>({width:0,height:0,getContext(){return {drawImage(){},fillRect(){},putImageData(){},getImageData(x,y,w,h){const data=new Uint8ClampedArray(w*h*4);for(let i=0;i<data.length;i+=4){data[i]=data[i+1]=data[i+2]=42;data[i+3]=255;}return {data};}};}});
   vm.runInContext(fs.readFileSync(path.join(root,'ui/scanner-core.js'),'utf8'),context);
+  vm.runInContext(fs.readFileSync(path.join(root,'ui/scanner-name-catalog.js'),'utf8'),context);
   vm.runInContext(fs.readFileSync(path.join(root,'ui/scanner-recognition.js'),'utf8'),context);
   const recognition=context.window.DNScannerRecognition;let released=0;
   F.snapshot=()=>({valid:true,crops:{},release(){released++;}});
@@ -127,7 +128,7 @@ async function integration() {
 async function browser() {
   const http=require('node:http'),os=require('node:os'),{spawn}=require('node:child_process');
   const server=http.createServer((request,response)=>{
-    if(request.url==='/'){response.setHeader('Content-Type','text/html');response.end('<script src="/ui/scanner-core.js"></script><script src="/ui/scanner-recognition.js"></script><script src="/ui/scanner-reroll-recognition.js"></script>');return;}
+    if(request.url==='/'){response.setHeader('Content-Type','text/html');response.end('<script src="/ui/scanner-core.js"></script><script src="/ui/scanner-name-catalog.js"></script><script src="/ui/scanner-recognition.js"></script><script src="/ui/scanner-reroll-recognition.js"></script>');return;}
     const file=path.resolve(root,'.'+decodeURIComponent(request.url));
     if(!file.startsWith(root+path.sep)){response.writeHead(403).end();return;}
     fs.readFile(file,(error,data)=>{if(error){response.writeHead(404).end();return;}response.setHeader('Content-Type',file.endsWith('.js')?'text/javascript':'image/png');response.end(data);});

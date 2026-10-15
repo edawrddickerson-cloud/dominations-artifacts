@@ -33,7 +33,7 @@ const item=(id,mask)=>({id,name:'Weapon',hall:'main',type:'Weapon',reviewed:true
 const old=item('old',[null,null,null]),confirmed=item('new',[false,true,false]);
 result=store.merge([old],[confirmed]);assert.equal(result.updated,1);assert.equal(result.collection[0].rows[1].rerollEligible,true);
 result=store.merge(result.collection,[item('unknown',[null,null,null])]);assert.equal(result.duplicates,1);assert.equal(result.collection[0].rows[1].rerollEligible,true);
-assert.equal(store.merge([confirmed],[item('different',[true,true,true])]).added,1,'distinct confirmed masks represent distinct artifacts');
+assert.equal(store.merge([confirmed],[item('different',[true,true,true])]).updated,1,'same name and tiers update dice metadata in place');
 const incompleteRanges=mask=>({id:'incomplete-'+String(mask),name:'Incomplete',hall:'main',type:'Weapon',reviewed:true,rows:[7,8].map((value,i)=>({name:'Damage '+i,value,unlocked:true,level:null,rerollEligible:mask,rerollSource:'manual'}))});
 result=store.merge([incompleteRanges(null)],[incompleteRanges(true)]);
 assert.equal(result.updated,1,'identical scans with unclear levels can still enrich dice metadata');assert.equal(result.collection[0].rows[0].rerollEligible,true);

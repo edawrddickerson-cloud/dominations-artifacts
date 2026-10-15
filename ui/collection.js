@@ -53,6 +53,7 @@
   let loadout = DN.loadLoadout();
   let levels = DN.loadLevels();
   let ui = DN.loadCollectionUi();
+  let listSort={key:'name',direction:'ascending'},listSlotTypes=null;
 
   /** @type {{ kind: "hall" | "hermitage", grade?: string } | null} */
   let pickerTarget = null;
@@ -408,35 +409,50 @@
     }).sort(compareByScore);
   }
 
-  function comparisonPerks(row) {
-    return DN.perksOf(row, canonPerk).filter(perk => ui.compareRows === 'all' || !row.scanned || row.scanned.rows[perk.index - 1]?.unlocked === true);
+  function diceIcon(row,perk) {
+    const eligible=crafted(row)?row.scanned?.rows[perk.index-1]?.rerollEligible ?? null:false;
+    const state=eligible===true?'available':eligible===false?'unavailable':'unknown';
+    const shape='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8" cy="8" r="1.4"/><circle cx="16" cy="8" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="8" cy="16" r="1.4"/><circle cx="16" cy="16" r="1.4"/></svg>';
+    return '<span class="comparison-dice'+(eligible===true?' is-rerollable':eligible==null?' is-unknown':'')+'" role="img" aria-label="Reroll '+state+'" title="Reroll '+state+'">'+shape+'</span>';
+  }
+  function comparisonPerks(row,mode=ui.compareRows) {
+    return DN.perksOf(row, canonPerk).filter(perk => mode === 'all' || mode === 'current' || !row.scanned || row.scanned.rows[perk.index - 1]?.unlocked === true);
   }
 
   function comparisonMaxValue(row,perk) {
     const scanned=row.scanned?.rows[perk.index-1];
     return scanned?scanned.max ?? window.DNStoredArtifacts.impliedRange(scanned)?.max ?? null:DN.effectivePerkRange(perk).max;
   }
-  function itemScore(row) {
+  function comparisonValue(row,perk,mode=ui.compareRows) {
+    return mode==='all'?comparisonMaxValue(row,perk):actualPerkValue(DN.artifactKey(row),perk);
+  }
+  function itemScore(row,mode=ui.compareRows) {
     const layers=DN.loadActivePerkRatingLayers(),ratings=DN.mergePerkRatingLayers(layers.global,layers.profile);
     const applied=DN.lsHas(DN.ARMY_PRESETS_KEY)?DN.armyEffectiveAppliedSet():null;
     const scored={};
-    comparisonPerks(row).forEach(perk=>{scored['perk_'+perk.index+'_name']=perk.name;scored['perk_'+perk.index+'_base']=String(comparisonMaxValue(row,perk) ?? '');});
+    comparisonPerks(row,mode).forEach(perk=>{scored['perk_'+perk.index+'_name']=perk.name;scored['perk_'+perk.index+'_base']=String(comparisonValue(row,perk,mode) ?? '');});
     return window.DNArtifactScoring.comparisonScore(scored,{canonPerk,scoreMode:'combined',
       prefSortAxes:{offensive:document.getElementById('header-off').getAttribute('aria-pressed')==='true',defensive:document.getElementById('header-def').getAttribute('aria-pressed')==='true'},
       ratingOf:(name,axis)=>DN.perkRatingAxisOrNull(ratings,name,axis) ?? (applied?DN.armyAwareDefault(factoryRatings,applied,name,axis,{expanded:true}):factoryRatings[name]?.[axis] || 0)},
-      {hall:row.hall,grade:row.grade,eligible:comparisonPerks(row).map(perk=>row.scanned?.rows[perk.index-1]?.rerollEligible ?? (crafted(row)?null:false))});
+      {hall:row.hall,grade:row.grade,eligible:comparisonPerks(row,mode).map(perk=>mode==='all'?(row.scanned?.rows[perk.index-1]?.rerollEligible ?? (crafted(row)?null:false)):false)});
   }
   function compareByScore(a,b) {return itemScore(b).potentialPreference-itemScore(a).potentialPreference || DN.text(a.name).localeCompare(DN.text(b.name));}
   function comparisonCandidates(selected) {
     return selected?ownedForHall().filter(row=>row.grade===selected.grade && DN.artifactKey(row)!==highlightedId && ['unused','showcase'].includes(modeOf(DN.artifactKey(row)))).sort(compareByScore):[];
   }
+  function syncInspector() {
+    const visible=!!(byId[highlightedId] || pickerTarget);
+    if(!visible && el.summary.contains(document.activeElement))document.activeElement.blur();
+    el.summary.inert=!visible;
+    el.summary.setAttribute('aria-hidden',String(!visible));
+    el.summary.classList.toggle('is-visible',visible);
+    el.layout.classList.toggle('has-selection',visible);
+    el.summary.querySelector('.collection-comparison').hidden=!!pickerTarget;
+    el.picker.hidden=!pickerTarget;
+  }
   function renderComparison() {
     const selected=byId[highlightedId];
-    if(!selected && el.summary.contains(document.activeElement))document.activeElement.blur();
-    el.summary.inert=!selected;
-    el.summary.setAttribute('aria-hidden',String(!selected));
-    el.summary.classList.toggle('is-visible',!!selected);
-    el.layout.classList.toggle('has-selection',!!selected);
+    syncInspector();
     for (const [button, mode] of [[el.compareUnlocked, 'unlocked'], [el.compareAll, 'all']]) {
       button.classList.toggle('is-active', ui.compareRows === mode);
       button.setAttribute('aria-pressed', String(ui.compareRows === mode));
@@ -446,7 +462,7 @@
     if(comparisonSelectedId!==highlightedId){comparedId=null;comparisonSelectedId=highlightedId;}
     const candidates=comparisonCandidates(selected);
     if(!candidates.some(row=>DN.artifactKey(row)===comparedId))comparedId=null;
-    el.compareItem.innerHTML='<option value="">Choose artifact</option>'+candidates.map(row=>{const score=itemScore(row);return '<option value="'+DN.esc(DN.artifactKey(row))+'">'+DN.esc(DN.show(row.name))+' · Potential '+(score.rerollUncertain?'~':'')+formatNum(score.potentialPreference)+'</option>';}).join('');
+    el.compareItem.innerHTML='<option value="">Choose artifact</option>'+candidates.map(row=>{const score=itemScore(row);return '<option value="'+DN.esc(DN.artifactKey(row))+'">'+DN.esc(DN.show(row.name))+' · '+(ui.compareRows==='all'?'Full Potential ':'Unlocked Score ')+(score.rerollUncertain?'~':'')+formatNum(score.potentialPreference)+'</option>';}).join('');
     el.compareItem.disabled=!candidates.length;
     if(comparedId)el.compareItem.value=comparedId;
     const other=byId[comparedId];
@@ -455,39 +471,48 @@
     el.compareSwap.hidden=!other;
     el.compareSwap.title=canSwap?'Replace '+selected.name+' with '+other.name:'Select an artifact in a Hall, exhibit or Hermitage slot to swap.';
     el.compareSwap.remove();
-    const valid=row=>!comparisonPerks(row).some(perk=>!Number.isFinite(comparisonMaxValue(row,perk)));
+    const valid=(row,mode=ui.compareRows)=>!comparisonPerks(row,mode).some(perk=>!Number.isFinite(comparisonValue(row,perk,mode)));
     const leftScore=itemScore(selected),rightScore=other?itemScore(other):null;
     const signed=value=>(value>0?'+':'')+formatNum(value);
     const off=document.getElementById('header-off').getAttribute('aria-pressed')==='true';
     const def=document.getElementById('header-def').getAttribute('aria-pressed')==='true';
     const statCells=(row,score,index,side)=>{
       const line=score?.lines[index];
-      const perk=line?comparisonPerks(row)[index]:null,value=perk?comparisonMaxValue(row,perk):null;
+      const perk=line?comparisonPerks(row,'all')[index]:null,value=perk?comparisonValue(row,perk):null;
       const points=line?(off?line.offensive:0)+(def?line.defensive:0):null;
-      const reroll=line && score.rerollIndex===index;
-      const name='<td class="comparison-stat '+side+'">'+(line?DN.esc(line.name):DN.BLANK)+(reroll?'<small class="comparison-reroll-note">Ideal reroll → '+score.rerollTarget+'</small>':'')+'</td>';
+      const locked=perk && row.scanned && row.scanned.rows[perk.index-1]?.unlocked!==true;
+      const star=perk?perkStar(DN.artifactKey(row),perk):'';
+      const name='<td class="comparison-stat '+side+'">'+(line?'<span class="comparison-stat-content">'+(side==='left'?diceIcon(row,perk)+star:'')+'<span class="comparison-stat-name'+(locked?' is-locked':'')+'">'+DN.esc(line.name)+'</span>'+(side==='right'?star+diceIcon(row,perk):'')+'</span>':DN.BLANK)+'</td>';
       const stat='<td class="comparison-perk-stat">'+(Number.isFinite(value)?signed(value)+'%':DN.BLANK)+'</td>';
-      const weighted='<td class="comparison-line-score"><b>'+(Number.isFinite(value)?formatNum(points):DN.BLANK)+(reroll?' → '+score.rerollTarget:'')+'</b></td>';
+      const weighted='<td class="comparison-line-score"><b>'+(Number.isFinite(value)?formatNum(points):DN.BLANK)+'</b></td>';
       return side==='left'?name+stat+weighted:weighted+stat+name;
     };
     const portrait=row=>'<figure class="comparison-portrait">'+DN.thumbHtml(artifactImages[DN.artifactKey(row)] || '',DN.show(row.name),'entity-thumb--comparison')+'</figure>';
-    const selectedScore=valid(selected)?(leftScore.rerollUncertain?'~':'')+formatNum(leftScore.potentialPreference):DN.BLANK;
-    const comparedScore=other && valid(other)?(rightScore.rerollUncertain?'~':'')+formatNum(rightScore.potentialPreference):DN.BLANK;
     const uncertain=leftScore.rerollUncertain || rightScore?.rerollUncertain;
     const difference=other && valid(selected) && valid(other)?(uncertain?'~':'')+signed(rightScore.potentialPreference-leftScore.potentialPreference):DN.BLANK;
     const delta=other && valid(selected) && valid(other) && !uncertain?rightScore.potentialPreference-leftScore.potentialPreference:0;
-    const selectedTone=delta>0?' is-lower':delta<0?' is-higher':'';
     const comparedTone=delta>0?' is-higher':delta<0?' is-lower':'';
-    const itemHeader=(row,score,tone)=>{const actual=itemScore(row);return '<div class="comparison-item">'+portrait(row)+'<div class="comparison-item-heading"><h3>'+DN.esc(row.name)+'</h3><strong class="comparison-total'+tone+'" title="Potential after one ideal reroll">'+score+'</strong><small class="comparison-reroll-note">Upgraded '+formatNum(actual.basePreference)+' · Potential after one reroll'+(actual.rerollUncertain?' · Reroll availability unknown':'')+'</small></div></div>';};
-    el.comparisonTotals.innerHTML='<div class="comparison-score'+(other?'':' is-single')+'">'+itemHeader(selected,selectedScore,selectedTone)+(other?itemHeader(other,comparedScore,comparedTone):'')+'</div>';
-    const count=Math.max(leftScore.lines.length,rightScore?.lines.length || 0,1);
+    const headerScores=row=>({unlocked:itemScore(row,'unlocked'),full:itemScore(row,'all')});
+    const leftHeader=headerScores(selected),rightHeader=other?headerScores(other):null;
+    const leftDisplay=ui.compareRows==='all'?leftHeader.full:itemScore(selected,'current');
+    const rightDisplay=other?(ui.compareRows==='all'?rightHeader.full:itemScore(other,'current')):null;
+    const itemHeader=(row,actual)=>{
+      const unlocked=valid(row,'unlocked')?formatNum(actual.unlocked.basePreference):DN.BLANK;
+      const potential=valid(row,'all')?(actual.full.rerollUncertain?'~':'')+formatNum(actual.full.potentialPreference):DN.BLANK;
+      const breakdown='<div class="comparison-header-scores"><div class="comparison-header-metric"><span>Unlocked Score:</span><strong class="comparison-unlocked-score">'+unlocked+'</strong></div><span class="comparison-score-separator">/</span><div class="comparison-header-metric"><span>Full Potential:</span><strong class="comparison-total comparison-potential-total">'+potential+'</strong></div></div>';
+      const note=actual.full.rerollUncertain?'<small class="comparison-reroll-note">Reroll availability unknown · possible gain may be higher</small>':'';
+      return '<div class="comparison-item">'+portrait(row)+'<div class="comparison-item-heading"><h3>'+DN.esc(row.name)+'</h3>'+breakdown+note+'</div></div>';
+    };
+    el.comparisonTotals.innerHTML='<div class="comparison-score'+(other?'':' is-single')+'">'+itemHeader(selected,leftHeader)+(other?itemHeader(other,rightHeader):'')+'</div>';
+    const count=Math.max(leftHeader.full.lines.length,rightHeader?.full.lines.length || 0,1);
     const divider='<td class="comparison-divider" rowspan="'+count+'"><div class="comparison-center"><span class="comparison-change'+comparedTone+'" title="Score change on swap" aria-label="Score change on swap '+difference+'"><strong>'+difference+'</strong></span></div></td>';
-    el.comparison.innerHTML='<div class="comparison-artifacts'+(other?'':' is-single')+'"><div class="comparison-table-scroll"><table class="collection-stat-comparison"><thead><tr><th class="comparison-name-heading">Name</th><th class="comparison-stat-heading">Stat</th><th class="comparison-score-heading">Score</th>'+(other?'<th class="comparison-divider-heading" aria-label="Swap comparison"></th><th class="comparison-score-heading">Score</th><th class="comparison-stat-heading">Stat</th><th class="comparison-name-heading">Name</th>':'')+'</tr></thead><tbody>'+Array.from({length:count},(_,index)=>'<tr>'+statCells(selected,leftScore,index,'left')+(other?(index===0?divider:'')+statCells(other,rightScore,index,'right'):'')+'</tr>').join('')+'</tbody></table></div></div>';
+    el.comparison.innerHTML='<div class="comparison-artifacts'+(other?'':' is-single')+'"><div class="comparison-table-scroll"><table class="collection-stat-comparison"><thead><tr><th class="comparison-name-heading">Name</th><th class="comparison-stat-heading">Stat</th><th class="comparison-score-heading">Score</th>'+(other?'<th class="comparison-divider-heading" aria-label="Swap comparison"></th><th class="comparison-score-heading">Score</th><th class="comparison-stat-heading">Stat</th><th class="comparison-name-heading">Name</th>':'')+'</tr></thead><tbody>'+Array.from({length:count},(_,index)=>'<tr>'+statCells(selected,leftDisplay,index,'left')+(other?(index===0?divider:'')+statCells(other,rightDisplay,index,'right'):'')+'</tr>').join('')+'</tbody></table></div></div>';
     if(other)el.comparison.querySelector('.comparison-center').append(el.compareSwap);
   }
 
-  function openPicker(kind, grade, replacing=null) {
+  function openPicker(kind, grade, replacing=null, reveal=true) {
     pickerTarget = kind === "hermitage" ? { kind: "hermitage",replacing } : { kind: "hall", grade,replacing };
+    const target=pickerTarget;
     highlightedId=replacing;renderBoard();renderDetail();
     const title =
       kind === "hermitage"
@@ -519,12 +544,16 @@
         .join("");
     }
     el.picker.hidden = false;
+    // Wait for the comparison panel's opening transition before positioning it.
+    if(reveal)setTimeout(()=>{
+      if(pickerTarget===target)el.picker.scrollIntoView({block:'nearest'});
+    },350);
   }
 
   function closePicker() {
     pickerTarget = null;
-    el.picker.hidden = true;
     el.pickerList.innerHTML = "";
+    syncInspector();
   }
 
   function renderDetail() {
@@ -661,6 +690,54 @@
     el.viewStructured.setAttribute("aria-pressed", ui.viewMode === "structured" ? "true" : "false");
   }
 
+  function listTypeOrder() {
+    return [...(ui.hall==='War'?WAR_TYPE_EXHIBITS:MAIN_TYPE_EXHIBITS).map(exhibitGrade),'Legendary','Mythical'];
+  }
+  function renderArtifactTable(owned) {
+    const count=Math.max(5,...owned.map(row=>DN.perksOf(row,canonPerk).length));
+    const heading=(label,key)=>'<th scope="col" aria-sort="'+(listSort.key===key?listSort.direction:'none')+'"><button type="button" data-action="list-sort" data-sort="'+key+'"'+(key.startsWith('stat-')?' title="Sort by this stat’s score at maximum upgrade"':'')+'>'+label+(listSort.key===key?listSort.direction==='ascending'?' ↑':' ↓':'')+'</button></th>';
+    const columns='<th scope="col" class="collection-table-stats-heading" aria-sort="'+(listSort.key.startsWith('stat-')?listSort.direction:'none')+'"><div class="collection-table-stats-header"><span>Stats</span><details class="collection-stat-sort-menu"><summary>'+(listSort.key.startsWith('stat-')?'Stat '+(Number(listSort.key.slice(5))+1)+(listSort.direction==='ascending'?' ↑':' ↓'):'Sort stat')+'</summary><div>'+Array.from({length:count},(_,index)=>'<button type="button" data-action="list-sort" data-sort="stat-'+index+'" title="Sort by stat '+(index+1)+' score">Stat '+(index+1)+(listSort.key==='stat-'+index?listSort.direction==='ascending'?' ↑':' ↓':'')+'</button>').join('')+'</div></details><span class="collection-table-value-headings"><span>Current</span><span>Score</span></span></div></th>';
+    const complete=(row,mode)=>comparisonPerks(row,mode).every(perk=>Number.isFinite(comparisonValue(row,perk,mode)));
+    const off=document.getElementById('header-off').getAttribute('aria-pressed')==='true';
+    const def=document.getElementById('header-def').getAttribute('aria-pressed')==='true';
+    const metrics=new Map(owned.map(row=>[row,{full:itemScore(row,'all'),unlocked:itemScore(row,'unlocked')}]));
+    const sortValue=row=>{
+      const score=metrics.get(row),key=listSort.key;
+      if(key==='name')return DN.show(row.name);
+      if(key==='type')return DN.text(row.grade);
+      if(key==='slot')return slotLabel(DN.artifactKey(row));
+      if(key==='unlocked')return complete(row,'unlocked')?score.unlocked.basePreference:null;
+      if(key==='potential')return complete(row,'all')?score.full.potentialPreference:null;
+      const index=Number(key.slice(5)),line=score.full.lines[index],perk=DN.perksOf(row,canonPerk)[index];
+      return line && Number.isFinite(comparisonMaxValue(row,perk))?(off?line.offensive:0)+(def?line.defensive:0):null;
+    };
+    const sorted=owned.slice().sort((a,b)=>{
+      const types=listTypeOrder(),leftType=DN.text(a.grade),rightType=DN.text(b.grade);
+      const rank=type=>types.includes(type)?types.indexOf(type):types.length;
+      const section=rank(leftType)-rank(rightType) || (leftType===rightType?0:leftType.localeCompare(rightType));
+      if(section)return section;
+      const left=sortValue(a),right=sortValue(b);
+      if(left==null || right==null)return left==null && right==null?DN.text(a.name).localeCompare(DN.text(b.name)):left==null?1:-1;
+      const order=typeof left==='number'?left-right:String(left).localeCompare(String(right));
+      return order*(listSort.direction==='ascending'?1:-1) || DN.text(a.name).localeCompare(DN.text(b.name));
+    });
+    const renderRow=row=>{
+      const id=DN.artifactKey(row),perks=DN.perksOf(row,canonPerk),{full,unlocked}=metrics.get(row);
+      const stats=Array.from({length:count},(_,index)=>{
+        const perk=perks[index];if(!perk)return '<div class="collection-table-stat">'+DN.BLANK+'</div>';
+        const value=actualPerkValue(id,perk),line=full.lines[index];
+        const points=line?(off?line.offensive:0)+(def?line.defensive:0):null;
+        const locked=row.scanned && row.scanned.rows[perk.index-1]?.unlocked!==true;
+        return '<div class="collection-table-stat"><div class="collection-table-stat-title">'+diceIcon(row,perk)+perkStar(id,perk)+'<span class="comparison-stat-name'+(locked?' is-locked':'')+'">'+DN.esc(perk.name)+'</span></div><div class="collection-table-stat-values"><span>'+(Number.isFinite(value)?(value>=0?'+':'')+formatNum(value)+'%':DN.BLANK)+'</span><span title="Score at maximum upgrade">'+(Number.isFinite(comparisonMaxValue(row,perk))?formatNum(points):DN.BLANK)+'</span></div></div>';
+      }).join('');
+      const identity='<div class="collection-table-identity"><div class="collection-table-thumb">'+DN.thumbHtml(artifactImages[id] || '',DN.show(row.name),'entity-thumb--collection')+'</div><div><button type="button" class="card-name collection-table-name" data-action="inspect" data-id="'+DN.esc(id)+'">'+DN.esc(DN.show(row.name))+'</button></div></div>';
+      return '<tr class="artifact-card collection-table-row" data-artifact-id="'+DN.esc(id)+'"><th scope="row">'+identity+'</th><td class="collection-table-type">'+DN.esc(row.grade)+'</td><td class="collection-table-slot">'+DN.esc(slotLabel(id))+'</td><td class="collection-table-stats-cell"><div class="collection-table-stats" style="--stat-count:'+count+'">'+stats+'</div></td><td class="collection-table-score collection-table-unlocked">'+(complete(row,'unlocked')?formatNum(unlocked.basePreference):DN.BLANK)+'</td><td class="collection-table-score collection-table-potential"'+(full.rerollUncertain?' title="Reroll availability unknown"':'')+'>'+(complete(row,'all')?(full.rerollUncertain?'~':'')+formatNum(full.potentialPreference):DN.BLANK)+'</td><td class="collection-table-actions"><button type="button" class="btn" data-action="inspect" data-id="'+DN.esc(id)+'">Compare / Edit</button><button type="button" class="btn artifact-delete" data-action="delete" data-id="'+DN.esc(id)+'" aria-label="Delete '+DN.esc(row.name)+'">Delete</button></td></tr>';
+    };
+    const groups=new Map();
+    for(const row of sorted){const type=DN.text(row.grade);if(!groups.has(type))groups.set(type,[]);groups.get(type).push(row);}
+    const body=Array.from(groups,([type,items])=>'<tbody class="collection-type-section" data-slot-type="'+DN.esc(type)+'"><tr class="collection-section-heading"><th colspan="7" scope="rowgroup">'+DN.esc(type)+'<span>'+items.length+' artifact'+(items.length===1?'':'s')+'</span></th></tr>'+items.map(renderRow).join('')+'</tbody>').join('');
+    return '<table class="collection-owned-table"><caption class="visually-hidden">Owned artifacts, stats and scores</caption><thead><tr>'+heading('Artifact','name')+heading('Type','type')+heading('Slot','slot')+columns+heading('Unlocked Score','unlocked')+heading('Full Potential','potential')+'<th scope="col">Actions</th></tr></thead>'+body+'</table>';
+  }
   function renderArtifactCard(row,{detail=false}={}) {
     const id = DN.artifactKey(row);
     const mode = modeOf(id);
@@ -936,28 +1013,46 @@
     syncControls();
     const owned = ownedForHall();
     const structured = ui.viewMode === "structured";
+    document.getElementById('collection-list-toolbar').hidden=structured;
     el.list.hidden = structured;
     el.board.hidden = !structured;
     el.workspace.hidden=!structured;
 
     if (!structured) {
+      const types=[...new Set([...listTypeOrder(),...owned.map(row=>DN.text(row.grade))])];
+      document.getElementById('collection-slot-filter-options').innerHTML=types.map(type=>'<label><input type="checkbox" value="'+DN.esc(type)+'"'+(listSlotTypes===null || listSlotTypes.includes(type)?' checked':'')+' />'+DN.esc(type)+'</label>').join('');
+      document.getElementById('collection-slot-filter-label').textContent=listSlotTypes===null?'All':types.filter(type=>listSlotTypes.includes(type)).length+' selected';
+      const filtered=owned.filter(row=>listSlotTypes===null || listSlotTypes.includes(DN.text(row.grade)));
+      document.getElementById('collection-list-count').textContent=filtered.length+' of '+owned.length+' artifacts';
       if (!collected.size) {
         el.list.innerHTML =
           `<p class="collection-empty">No owned artifacts yet. Add verified inventory from <a href="storage-scanner.html">Storage Scanner</a>, or mark artifacts on the <a href="artifacts.html">Artifacts Priority</a> page.</p>`;
       } else if (!owned.length) {
         el.list.innerHTML = `<p class="collection-empty">Nothing owned in ${DN.esc(ui.hall)} hall.</p>`;
       } else {
-        el.list.innerHTML = owned.map(row=>renderArtifactCard(row)).join("");
+        el.list.innerHTML = filtered.length?renderArtifactTable(filtered):'<p class="collection-empty">No artifacts match the selected slot types.</p>';
       }
     } else {
       renderBoard();
     }
 
     renderDetail();
-    if(pickerTarget)openPicker(pickerTarget.kind,pickerTarget.grade,pickerTarget.replacing);
+    if(pickerTarget)openPicker(pickerTarget.kind,pickerTarget.grade,pickerTarget.replacing,false);
   }
 
   function bind() {
+    const filter=document.getElementById('collection-slot-filter');
+    filter.addEventListener('change',event=>{
+      if(!event.target.matches('input[type="checkbox"]'))return;
+      const value=event.target.value;
+      listSlotTypes=Array.from(filter.querySelectorAll('input:checked')).map(input=>input.value);
+      render();Array.from(filter.querySelectorAll('input')).find(input=>input.value===value)?.focus();
+    });
+    filter.addEventListener('click',event=>{
+      const action=event.target.closest('[data-filter-action]')?.dataset.filterAction;
+      if(!action)return;
+      listSlotTypes=action==='all'?null:[];render();
+    });
     el.detail.addEventListener('submit',event=>{event.preventDefault();savePerkEditor(event.target);});
     el.detail.addEventListener('input',event=>{if(event.target.matches('input,select'))for(const input of el.detail.querySelectorAll('input,select'))input.setCustomValidity('');});
     el.detail.addEventListener('change',event=>{
@@ -991,7 +1086,7 @@
         if(pickerTarget)openPicker(pickerTarget.kind,pickerTarget.grade,pickerTarget.replacing);
       });
     }
-    for(const id of ['header-off','header-def'])document.getElementById(id).addEventListener('click',()=>{renderComparison();if(pickerTarget)openPicker(pickerTarget.kind,pickerTarget.grade,pickerTarget.replacing);});
+    for(const id of ['header-off','header-def'])document.getElementById(id).addEventListener('click',render);
     for (const container of [el.list, el.board, el.detail]) {
       container.addEventListener('change', event => {
         if (event.target.matches('[data-action="perk-value"]')) editPerkValue(event.target);
@@ -1032,6 +1127,11 @@
       const btn = t.closest("[data-action]");
       if (!btn) {const card=t.closest('[data-artifact-id]');if(card){highlightedId=card.getAttribute('data-artifact-id');closePicker();renderDetail();}return;}
       const action = btn.getAttribute("data-action");
+      if(action==='list-sort') {
+        const key=btn.dataset.sort;
+        listSort={key,direction:listSort.key===key && listSort.direction==='ascending'?'descending':listSort.key===key?'ascending':['name','type','slot'].includes(key)?'ascending':'descending'};
+        render();el.list.querySelector('[data-sort="'+key+'"]')?.focus();return;
+      }
       const id = btn.getAttribute("data-id");
       if (!id) return;
       if(action==='delete'){deleteArtifact(id,btn);return;}
@@ -1140,7 +1240,7 @@
       if(ui.viewMode==='structured')renderBoard();
     }
     document.addEventListener('click',event=>{
-      if(event.target.closest('.artifact-card, .museum-tile, .collection-summary, #slot-picker, button, a, input, select, label'))return;
+      if(event.target.closest('.artifact-card, .museum-tile, .collection-summary, .collection-list-toolbar, .collection-stat-sort-menu, #slot-picker, button, a, input, select, label'))return;
       clearHighlight();
     });
     document.addEventListener('keydown',event=>{if(event.key==='Escape')clearHighlight();});

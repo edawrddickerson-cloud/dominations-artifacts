@@ -33,11 +33,15 @@
         canvas.getContext('2d').drawImage(input,rect.x,rect.y,rect.width,rect.height,0,0,rect.width,rect.height);
         crops['hall-banner']=canvas;
       }
-      return {valid:true,crops,release,diceRequested:fields.template.rows.map(row=>!!row.dice),unavailable:resolved.unavailable || {}};
+      const sharedPercentages=fields.template.rows.map((_,i)=>{
+        const a=resolved.boxes[i+'-name'],b=resolved.boxes[i+'-percentage'];
+        return ['x','y','width','height'].every(key=>a[key]===b[key]);
+      });
+      return {valid:true,crops,release,sharedPercentages,diceRequested:fields.template.rows.map(row=>!!row.dice),unavailable:resolved.unavailable || {}};
     }catch(error){release();throw error;}
   }
-  function view(source,mode='contrast') {
-    const canvas=document.createElement('canvas'),scale=Math.min(4,Math.max(2,64/source.height));
+  function view(source,mode='contrast',compact=false) {
+    const canvas=document.createElement('canvas'),scale=compact?Math.min(2,Math.max(1,48/source.height)):Math.min(4,Math.max(2,64/source.height));
     canvas.width=Math.ceil(source.width*scale)+32;canvas.height=Math.ceil(source.height*scale)+24;
     const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);
     const raw=document.createElement('canvas');raw.width=Math.ceil(source.width*scale);raw.height=Math.ceil(source.height*scale);
@@ -67,6 +71,17 @@
     const colours=R().rowColours(ctx.getImageData(0,0,canvas.width,canvas.height).data,canvas.width,canvas.height);
     canvas.width=canvas.height=0;return colours;
   }
+  // Associate OCR lines with their physical cell, never their output order.
+  // Missing lines leave a hole; wrapped/extra lines require a focused retry.
+  function atlasEvidence(output,cells) {
+    const lines=(output.data.blocks || []).flatMap(b=>(b.paragraphs || []).flatMap(p=>p.lines || []));
+    return cells.map(cell=>{
+      const found=lines.filter(line=>line.bbox && line.bbox.y0>=cell.top && line.bbox.y1<=cell.bottom);
+      if(found.length!==1)return {text:'',confidence:0,words:[],reason:found.length?'multiple-lines':'missing-line'};
+      const line=found[0];
+      return {text:String(line.text || '').trim(),confidence:line.confidence || 0,words:line.words || []};
+    });
+  }
   async function recognize(snapshot,{worker,readView,names,canonPerk,hall='main',inferColours=false,categorySource,isClosed,ocrCalls}) {
     const rerolls=Array.from({length:5},(_,i)=>{
       if(!snapshot.diceRequested?.[i] && !snapshot.crops[i+'-dice'])return null;
@@ -91,7 +106,7 @@
           // This independent layout pass never borrows the name crop's text.
           await worker.setParameters({tessedit_pageseg_mode:'7',tessedit_char_whitelist:''});
           guide=evidence(await readView(prepared.canvas,{}, {text:true,blocks:true}));check();
-          const words=guide.words,last=words.findLastIndex(word=>/\d/.test(word.text || '') && word.bbox);
+          const words=guide.words,last=words.findLastIndex(word=>(/\d/.test(word.text || '') || /^[+-][^\s]*$/.test(word.text || '')) && word.bbox);
           if(last>=0) {
             const tail=[words[last]];
             if(last && /^[+-]$/.test(words[last-1].text.trim()) && words[last-1].bbox)tail.unshift(words[last-1]);
@@ -107,6 +122,7 @@
         const output=await readView(prepared.canvas,rectangle?{rectangle}:{}, {text:true,blocks:true});check();
         const result=evidence(output);
         if(guide) {
+          result.guideText=guide.text;
           const suffix=/([+-]\s*\d+(?:[.,]\d+)?)\s*%\s*$/.exec(guide.text),value=/^([+-]\s*\d+(?:[.,]\d+)?)\s*%$/.exec(result.text);
           if(suffix && value) {
             if(Number(suffix[1].replace(/\s/g,'').replace(',','.'))!==Number(value[1].replace(/\s/g,'').replace(',','.')))result.conflict=true;
@@ -116,14 +132,69 @@
         return result;
       }finally {prepared.canvas.width=prepared.canvas.height=0;}
     }
-    const fields=[],firstRows=[],firstWarnings=[];
+    async function batch(kind,mode='contrast') {
+      check();
+      const prepared=Array.from({length:5},(_,i)=>view(snapshot.crops[i+'-'+kind],mode,true));
+      if(mode==='colour' && prepared.every(item=>item.ink<30)){for(const item of prepared)item.canvas.width=item.canvas.height=0;return null;}
+      const canvas=document.createElement('canvas'),cells=[];
+      canvas.width=Math.max(...prepared.map(item=>item.canvas.width));
+      canvas.height=prepared.reduce((height,item)=>height+item.canvas.height+16,0);
+      const ctx=canvas.getContext('2d');ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);
+      let top=0;
+      for(const item of prepared){ctx.drawImage(item.canvas,0,top);cells.push({top,bottom:top+item.canvas.height});top+=item.canvas.height+16;}
+      try {
+        await worker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:kind==='percentage'?'+-0123456789.,%':''});
+        const output=await readView(canvas,{}, {text:true,blocks:true});check();
+        return atlasEvidence(output,cells);
+      }finally {canvas.width=canvas.height=0;for(const item of prepared)item.canvas.width=item.canvas.height=0;}
+    }
+    const fields=[],firstRows=[],firstWarnings=[],fieldReads=Array.from({length:5},()=>[]);
+    const recordFields=(i,pass,name,percentage)=>{
+      const raw=value=>value?{text:value.text,confidence:value.confidence,...(value.guideText?{guideText:value.guideText}: {})}:null;
+      fieldReads[i].push({pass,name:raw(name),percentage:raw(percentage)});
+    };
+    const batchNames=await batch('name');
+    // Identical calibrated boxes contain the same evidence. Read their signed
+    // suffix once instead of repeating identical pixels through a guide pass.
+    const batchPercentages=snapshot.sharedPercentages?.every(Boolean)?null:await batch('percentage');
+    const suffixOf=name=>({text:/([+-]\s*\d+(?:[.,]\d+)?)\s*%\s*$/.exec(name.text)?.[0]?.trim() || '',confidence:name.confidence,words:[],source:'shared-crop'});
+    const batchRows=batchNames.map((name,i)=>{
+      const percentage=batchPercentages?.[i] || suffixOf(name);
+      return {...R().parseFieldRow(name.text,percentage.text,names,canonPerk).row,confidence:Math.min(name.confidence,percentage.confidence)};
+    });
+    const needsColour=!batchPercentages && batchNames.some(name=>!R().parseFieldRow(name.text,suffixOf(name).text,names,canonPerk).valid || name.confidence<80);
+    const colourNames=needsColour?await batch('name','colour'):null;
     for(let i=0;i<5;i++) {
-      const name=await read(snapshot.crops[i+'-name'],'name'),percentage=await read(snapshot.crops[i+'-percentage'],'percentage');
+      let name=batchNames[i],percentage;
+      if(batchPercentages)percentage=batchPercentages[i];
+      else percentage=suffixOf(name);
+      recordFields(i,'batch-contrast',name,percentage);
+      if(colourNames?.[i]?.text)recordFields(i,'batch-colour',colourNames[i],suffixOf(colourNames[i]));
+      let fieldConflict=false;
+      if(colourNames?.[i]?.confidence>=80) {
+        const alternative=colourNames[i],amount=suffixOf(alternative);
+        const candidate=R().parseFieldRow(alternative.text,amount.text,names,canonPerk);
+        const first=R().parseFieldRow(name.text,percentage.text,names,canonPerk);
+        const conflict=first.row.known && candidate.row.known && first.row.name!==candidate.row.name ||
+          first.row.value!==null && candidate.row.value!==null && first.row.value!==candidate.row.value;
+        if(conflict)fieldConflict=true;
+        else if(candidate.valid && (!first.valid || name.confidence<80)){name=alternative;percentage=amount;}
+      }
+      // A wide nonidentical percentage box needs its own numeric-suffix guide.
+      const wide=!snapshot.sharedPercentages?.[i] && snapshot.crops[i+'-percentage'].width/snapshot.crops[i+'-percentage'].height>5;
+      let initial=R().parseFieldRow(name.text,percentage.text,names,canonPerk);
+      const priorName=name,priorPercentage=percentage;
+      if(!initial.row.known || initial.row.assumed || name.confidence<80)name=await read(snapshot.crops[i+'-name'],'name');
+      if(wide || initial.row.value===null || percentage.confidence<80)percentage=await read(snapshot.crops[i+'-percentage'],'percentage');
+      if(name!==priorName || percentage!==priorPercentage)recordFields(i,'focused-fields',name,percentage);
       const parsed=R().parseFieldRow(name.text,percentage.text,names,canonPerk);
-      if(percentage.conflict){parsed.row.conflict=true;parsed.warnings.push('Percentage views disagree. Verify this row.');parsed.valid=false;}
+      fieldConflict=fieldConflict || percentage.conflict || initial.row.conflict ||
+        initial.row.known && parsed.row.known && initial.row.name!==parsed.row.name ||
+        initial.row.value!==null && parsed.row.value!==null && initial.row.value!==parsed.row.value;
+      if(fieldConflict){parsed.row.conflict=true;parsed.warnings.push('Independent field views disagree. Verify this row.');parsed.valid=false;}
       parsed.row.confidence=Math.min(name.confidence,percentage.confidence);
       if(parsed.row.confidence<80)parsed.warnings.push('Row '+(i+1)+': OCR field evidence is weak. Verify the name and percentage.');
-      firstRows.push({...parsed.row,...(rerolls[i] || {})});firstWarnings.push(...parsed.warnings);fields.push({name,percentage});
+      firstRows.push({...parsed.row,...(rerolls[i] || {})});firstWarnings.push(...parsed.warnings);fields.push({name,percentage,conflict:!!fieldConflict});
     }
     const colours=coloursOf(Array.from({length:5},(_,i)=>snapshot.crops[i+'-name']));
     const fills=Array.from({length:5},(_,i)=>starFill(snapshot.crops[i+'-star']));
@@ -135,22 +206,31 @@
       let output=await read(category,'category','category'),type=R().craftCategoryEvidence(output || {});
       if(!type){output=await read(category,'category');type=R().craftCategoryEvidence(output);}
       if(!type){output=await read(category,'category','category','11') || await read(category,'category','contrast','11');type=R().craftCategoryEvidence(output);}
-      artifact={type:type || '',rawType:output.text,categoryConfidence:output.confidence,source:'calibrated-label'};
+      artifact={type:type || '',rawType:output?.text || '',categoryConfidence:output?.confidence || 0,source:'calibrated-label'};
     }else if(categorySource?.width) {
       // Keep existing metadata fallback if category calibration is disabled.
       await worker.setParameters({tessedit_pageseg_mode:'7',tessedit_char_whitelist:'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz '});
       const output=evidence(await readView(categorySource,{}, {text:true,blocks:true}));check();
       artifact={type:R().craftCategoryEvidence(output) || '',rawType:output.text,categoryConfidence:output.confidence,source:'crafting-label'};
     }
+    if(category && !artifact?.type && categorySource?.width) {
+      await worker.setParameters({tessedit_pageseg_mode:'7',tessedit_char_whitelist:'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz '});
+      const output=evidence(await readView(categorySource,{}, {text:true,blocks:true}));check();
+      const type=R().craftCategoryEvidence(output);
+      if(type)artifact={type,rawType:output.text,categoryConfidence:output.confidence,source:'crafting-label'};
+    }
     const observations=[{pass:'calibrated-fields',rows:firstRows.map(row=>({...row})),warnings:[...firstWarnings],artifact:artifact?{...artifact}:null,unlocked}];
+    if(batchRows.some((row,i)=>row.raw!==firstRows[i].raw || row.confidence!==firstRows[i].confidence))
+      observations.unshift({pass:'calibrated-batch',rows:batchRows,warnings:[],artifact:artifact?{...artifact}:null,unlocked});
     const rows=firstRows.map(row=>({...row})),warnings=[];let retried=false;
     for(let i=0;i<5;i++) {
       const first=R().parseFieldRow(fields[i].name.text,fields[i].percentage.text,names,canonPerk);
-      if(fields[i].percentage.conflict){first.row.conflict=true;first.warnings.push('Percentage views disagree. Verify this row.');first.valid=false;}
+      if(fields[i].conflict){first.row.conflict=true;first.warnings.push('Independent field views disagree. Verify this row.');first.valid=false;}
       let selected=first;
       if(!first.valid || rows[i].confidence<80) {
         const alternativeName=await read(snapshot.crops[i+'-name'],'name','colour');
         const alternativePercentage=await read(snapshot.crops[i+'-percentage'],'percentage','colour');
+        recordFields(i,'colour-fields',alternativeName,alternativePercentage);
         if(alternativeName || alternativePercentage) {
           retried=true;
           const name=alternativeName || fields[i].name,percentage=alternativePercentage || fields[i].percentage;
@@ -165,6 +245,7 @@
       if(rows[i].confidence<80)warnings.push('Row '+(i+1)+': OCR field evidence is weak. Verify the name and percentage.');
     }
     if(retried)observations.push({pass:'calibrated-colour-retry',rows:rows.map(row=>({...row})),warnings:[...warnings]});
+    observations[observations.length-1].fieldReads=fieldReads;
     const classification=R().craftHall({colourHall,colourOnly:true,selected:hall});
     let hallSource=classification.source;
     hall=classification.hall;
@@ -183,5 +264,5 @@
     const conflicts=tieredRows.flatMap((row,i)=>row.tierConflict?['Row '+(i+1)+': colour and starting percentage conflict. Verify the tier.']:[]);
     return {...annotated,valid:annotated.valid && !conflicts.length,warnings:[...annotated.warnings,...conflicts],artifact,hall,hallSource,colours,unlocked,inferColours,metadataConflict,recognitionPath:'calibrated-fields',ocrCalls:ocrCalls(),observations,rows:tieredRows};
   }
-  window.DNScannerFieldRecognition={snapshot,recognize};
+  window.DNScannerFieldRecognition={snapshot,recognize,atlasEvidence};
 })();

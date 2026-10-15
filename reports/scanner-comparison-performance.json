@@ -1,0 +1,8 @@
+{
+  "ownedItems": 500,
+  "iterations": 50,
+  "uncachedMs": 11.099706000000001,
+  "cachedMs": 0.04932399999999916,
+  "speedup": 225.0366150352808,
+  "scope": "Warm score comparison only, synthetic 500-item collection; excludes OCR and capture."
+}

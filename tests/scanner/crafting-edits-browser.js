@@ -6,11 +6,15 @@
   get('auto').checked=false;
   const names=['Heavy Tank Damage','Heavy Tank Hitpoints','Fighter Damage','Fighter Hitpoints','Mortar Troop Damage'];
   let hall='war',rows=names.map((name,index)=>({name,value:[1,3,6,3,1][index],known:true,hasPercent:true,unlocked:index<2,tier:['white','green','blue','green','white'][index],tierSource:'starting-percentage',level:1,levelSource:'crafting'}));
+  const catalogue=Array.from(get('names').children,option=>option.value);
+  rows[0]={...rows[0],...window.DNScannerRecognition.parseFieldRow('Heawy Tank Damage','+1%',catalogue,value=>value).row};
   const canvas=document.createElement('canvas');canvas.width=640;canvas.height=360;
   window.DNScannerRecognition.create=()=>({close:async()=>{},recognize:async()=>({valid:true,rows,warnings:[],hall,unlocked:{count:2,states:rows.map(row=>row.unlocked)},artifact:{type:'Weapon',hall}})});
   window.DNScannerReading.update(canvas,{session:1,current:true});get('read').click();
   await wait(()=>get('progress').textContent.startsWith('Finished'));
   const details=get('correct').closest('details');details.open=true;
+  const matchNote=get('correct').querySelector('.scanner-edit-row small[title]');
+  check('clear OCR name registers and exposes matching evidence',get('correct').querySelector('.scanner-perk-name').value==='Heavy Tank Damage' && matchNote?.textContent.includes('Matched automatically') && matchNote.title.includes('Heawy Tank Damage'));
   check('existing results and comparison layout remains',!!document.querySelector('.scanner-summary-bar') && get('result').querySelectorAll('.scanner-stat-table .scanner-perk').length===5);
   check('fresh craft has five blue reroll dice',get('result').querySelectorAll('.scanner-perk-reroll.is-rerollable').length===5 && get('correct').querySelectorAll('.scanner-perk-reroll.is-rerollable').length===5);
   check('fresh craft reroll summary is explicit',get('reroll-status').textContent==='All 5 stats rerollable');

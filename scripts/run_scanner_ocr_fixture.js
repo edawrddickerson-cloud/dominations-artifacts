@@ -71,7 +71,7 @@ async function main() {
     if(glance || process.argv.includes('--regions-ui')){if(!/^\d{3,4}x\d{3,4}$/.test(viewport))throw new Error('Invalid viewport');const [width,height]=viewport.split('x').map(Number);await client.send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:false});}
     if(inventory)await client.send('Emulation.setDeviceMetricsOverride',{width:1800,height:1100,deviceScaleFactor:1,mobile:false});
     if(storageLayout)await client.send('Emulation.setDeviceMetricsOverride',{width:1440,height:900,deviceScaleFactor:1,mobile:false});
-    const storage=process.argv.includes('--storage') || inventory || storageLayout;
+    const storage=process.argv.includes('--storage') || inventory || storageLayout || process.argv.includes('--storage-fields');
     await client.send('Page.navigate',{url:origin+'/ui/'+(storage?'storage-scanner.html':'scanner.html')});
     await delay(500);
     const uiSmoke=process.argv.includes('--ui');
@@ -80,7 +80,12 @@ async function main() {
     let expression = fs.readFileSync(path.join(root,collectionComparison?'tests/scanner/collection-comparison-browser.js':process.argv.includes('--primary-filters')?'tests/scanner/filters-browser.js':glance?'tests/scanner/glance-browser.js':storageLayout?'tests/scanner/storage-layout-browser.js':process.argv.includes('--navigation')?'tests/scanner/navigation-browser.js':inventory?'tests/scanner/inventory-browser.js':coverage?'tests/scanner/storage-coverage-browser.js':storage?'tests/scanner/storage-browser.js':uiSmoke?'tests/scanner/ui-browser.js':'tests/scanner/fixture-browser.js'),'utf8');
     if(process.argv.includes('--inventory-tiers'))expression='window.DNInventoryTierOnly=true;\n'+expression;
     if(process.argv.includes('--regions-benchmark'))expression='window.DNRegionsBaseline='+process.argv.includes('--baseline')+'; window.DNRegionsTight='+process.argv.includes('--regions-tight')+';\n'+fs.readFileSync(path.join(root,'tests/scanner/regions-benchmark-browser.js'),'utf8');
+    if(process.argv.includes('--crafting-audit')) {
+      const fixtures=fs.readdirSync(path.join(root,'tests/scanner')).filter(file=>file.endsWith('.labels.json') && !file.startsWith('storage')).map(file=>file.replace('.labels.json','')).sort();
+      expression='window.DNRegionsFixtures='+JSON.stringify(fixtures)+';window.DNRegionsScales=[1,.75,1.5];\n'+fs.readFileSync(path.join(root,'tests/scanner/regions-benchmark-browser.js'),'utf8');
+    }
     if(process.argv.includes('--regions-ui'))expression=fs.readFileSync(path.join(root,'tests/scanner/regions-ui-browser.js'),'utf8');
+    if(process.argv.includes('--storage-fields'))expression=fs.readFileSync(path.join(root,'tests/scanner/storage-fields-browser.js'),'utf8');
     if(process.argv.includes('--crafting-metadata'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-metadata-browser.js'),'utf8');
     if(process.argv.includes('--crafting-edits'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-edits-browser.js'),'utf8');
     if(process.argv.includes('--reroll-ui'))expression=fs.readFileSync(path.join(root,'tests/scanner/reroll-browser.js'),'utf8');
@@ -113,8 +118,22 @@ async function main() {
     if(glance && process.argv.includes('--report')){const screenshot=await client.send('Page.captureScreenshot',{format:'png'});fs.writeFileSync(path.join(root,'tests/scanner/glance-'+viewport+'.png'),Buffer.from(screenshot.data,'base64'));}
     value.network={requests:observedRequests,blockedRequests:observedRequests.filter(request=>blockedRequests.has(request.requestId)),externalRequests:observedRequests.filter(request=>!blockedRequests.has(request.requestId)&&!request.url.startsWith(origin+'/')&&!request.url.startsWith('data:')&&!request.url.startsWith('blob:')),nonGetRequests:observedRequests.filter(request=>request.method!=='GET'&&!blockedRequests.has(request.requestId)),browserErrors};
     value.passed &&= value.network.externalRequests.length===0 && value.network.nonGetRequests.length===0 && browserErrors.length===0;
-    if(process.argv.includes('--report')) fs.writeFileSync(path.join(root,process.argv.includes('--crafting-metadata')?'tests/scanner/crafting-metadata-result.json':process.argv.includes('--regions-benchmark')?'tests/scanner/regions-'+(process.argv.includes('--baseline')?'baseline':process.argv.includes('--regions-tight')?'tight':'calibrated')+'.json':process.argv.includes('--regions-ui')?'tests/scanner/regions-ui-'+viewport+'.json':glance?'tests/scanner/glance-'+viewport+'.json':percent?'tests/scanner/storage-percent.ocr-result.json':coverage?'tests/scanner/storage-coverage.ocr-result.json':storage?'tests/scanner/storage.ocr-result.json':fixture?'tests/scanner/'+fixture+'.ocr-result.json':green?'tests/scanner/greenissue.ocr-result.json':uiSmoke?'tests/scanner/pic1.ui-result.json':'tests/scanner/pic1.ocr-result.json'),JSON.stringify(value,null,2)+'\n');
-    console.log(JSON.stringify(process.argv.includes('--summary')?{passed:value.passed,runs:value.runs?.map(r=>({kind:r.kind,stamp:r.stamp,variant:r.variant,passed:r.passed,exact:r.exact,...(!r.passed?{warnings:r.warnings}: {})})),ui:value.ui,network:{external:value.network.externalRequests.length,errors:value.network.browserErrors}}:value,null,2));
+    if(process.argv.includes('--crafting-audit') && process.argv.includes('--report')) {
+      const runs=value.runs.map(({fixture,scale,elapsedMs,accuracy,first,starsCorrect,categoryCorrect,complete,confidentlyIncorrect,ocrCalls,recognitionPath,valid,warnings,rows})=>({fixture,scale,elapsedMs,accuracy,first,starsCorrect,categoryCorrect,complete,confidentlyIncorrect,ocrCalls,recognitionPath,valid,...(!valid?{warnings}: {}),...(!complete?{rows}: {})}));
+      const baselineFile=path.join(root,'data/temp/crafting-scanner-before.json');
+      const baseline=fs.existsSync(baselineFile)?JSON.parse(fs.readFileSync(baselineFile,'utf8')).runs:[];
+      const matched=baseline.map(before=>({before,after:runs.find(after=>after.fixture===before.fixture && after.scale===1)})).filter(pair=>pair.after);
+      const sum=(items,value)=>items.reduce((total,item)=>total+value(item),0);
+      const performance=matched.length?{fixtures:matched.length,beforeMs:sum(matched,p=>p.before.elapsedMs),afterMs:sum(matched,p=>p.after.elapsedMs),beforeCalls:sum(matched,p=>p.before.ocrCalls),afterCalls:sum(matched,p=>p.after.ocrCalls)}:null;
+      if(performance)performance.speedup=performance.beforeMs/performance.afterMs;
+      const before=matched.map(({before})=>({fixture:before.fixture,elapsedMs:before.elapsedMs,ocrCalls:before.ocrCalls,accuracy:before.accuracy,first:before.first,valid:before.valid}));
+      fs.writeFileSync(path.join(root,'reports/scanner-crafting-performance.json'),JSON.stringify({passed:value.passed,performance,before,runs,limitations:value.limitations,network:{external:value.network.externalRequests.length,errors:browserErrors}},null,2)+'\n');
+    }
+    if(process.argv.includes('--report') && !process.argv.includes('--crafting-audit')) fs.writeFileSync(path.join(root,process.argv.includes('--crafting-metadata')?'tests/scanner/crafting-metadata-result.json':process.argv.includes('--regions-benchmark')?'tests/scanner/regions-'+(process.argv.includes('--baseline')?'baseline':process.argv.includes('--regions-tight')?'tight':'calibrated')+'.json':process.argv.includes('--regions-ui')?'tests/scanner/regions-ui-'+viewport+'.json':glance?'tests/scanner/glance-'+viewport+'.json':percent?'tests/scanner/storage-percent.ocr-result.json':coverage?'tests/scanner/storage-coverage.ocr-result.json':storage?'tests/scanner/storage.ocr-result.json':fixture?'tests/scanner/'+fixture+'.ocr-result.json':green?'tests/scanner/greenissue.ocr-result.json':uiSmoke?'tests/scanner/pic1.ui-result.json':'tests/scanner/pic1.ocr-result.json'),JSON.stringify(value,null,2)+'\n');
+    const summary={passed:value.passed,ui:value.ui,network:{external:value.network.externalRequests.length,errors:value.network.browserErrors}};
+    if(process.argv.includes('--crafting-audit'))summary.audit={cases:value.runs.length,complete:value.runs.filter(r=>r.complete).length,direct:value.runs.filter(r=>r.complete && r.accuracy.directPercentages===5).length,confirmed:value.runs.filter(r=>r.valid).length,confidentlyIncorrect:value.runs.filter(r=>r.confidentlyIncorrect).length,review:value.runs.filter(r=>!r.valid).map(r=>({fixture:r.fixture,scale:r.scale,directPercentages:r.accuracy.directPercentages}))};
+    else summary.runs=value.runs?.map(r=>({fixture:r.fixture,scale:r.scale,kind:r.kind,stamp:r.stamp,variant:r.variant,passed:r.passed ?? r.complete,exact:r.exact,...(!(r.passed ?? r.complete)?{warnings:r.warnings}: {})}));
+    console.log(JSON.stringify(process.argv.includes('--summary')?summary:value,null,2));
     if(!value?.passed) process.exitCode=1;
   } finally {
     clearTimeout(deadline);

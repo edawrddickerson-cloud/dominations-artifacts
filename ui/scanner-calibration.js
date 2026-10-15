@@ -5,12 +5,14 @@
  * Constraints: Supported gold-panel anchor required; calibration is browser-local. */
 (() => {
   'use strict';
-  const G=window.DNScannerRegions,C=window.DNScannerCore;
+  const storage=!!window.DNStorageRegions,G=storage?window.DNStorageRegions:window.DNScannerRegions,C=window.DNScannerCore;
+  const rowCount=()=>Number(document.getElementById('scanner-rows')?.value)===6?6:5;
+  const supported=layout=>layout===(storage?'storage':'panel');
   const get=id=>document.getElementById('scanner-fields-'+id);
   if(!get('editor'))return;
   const ids=['enabled','edit','reset','status','editor','field','canvas','x','y','width','height','optional-label','optional','preview','preview-label','feedback','save','cancel'];
   const el=Object.fromEntries(ids.map(id=>[id,get(id)]));
-  let template=G.load(),draft=null,frozen=null,frozenPanel=null,source=null,panel=null,drag=null,active=null,lastPath=null,lastReason=null,currentLayout='panel';
+  let template=storage?G.load(rowCount()):G.load(),draft=null,frozen=null,frozenPanel=null,source=null,panel=null,drag=null,active=null,lastPath=null,lastReason=null,currentLayout=storage?'storage':'panel',templateRows=rowCount();
   const notify=()=>{lastPath=lastReason=null;window.DNScannerReading?.invalidate('Field calibration changed. Reading the current panel again.');window.dispatchEvent(new Event('dn-scanner-fields-change'));};
   function discard() {
     if(frozen)frozen.width=frozen.height=0;
@@ -19,22 +21,25 @@
   }
   function update(nextSource,nextPanel,{layout=currentLayout}={}) {
     currentLayout=layout;
+    if(storage && templateRows!==rowCount() && !draft){templateRows=rowCount();template=G.load(templateRows);lastPath=lastReason=null;}
     source=nextSource;panel=nextPanel;active=null;
-    el.edit.disabled=!source || !panel || layout!=='panel' || !!draft;
+    el.edit.disabled=!source || !panel || !supported(layout) || !!draft;
     el.reset.disabled=!template && !localStorageValue();
     let text='Standard recognition · no saved field boxes.';
     if(draft)text='Calibration paused · editing a frozen frame.';
     else if(!el.enabled.checked)text='Standard recognition · saved field boxes switched off.';
     else if(template) {
-      const resolved=layout==='panel'?G.resolve(template,panel,source):{valid:false,reason:'Choose Gold-framed panel to use saved boxes.'};
+      const resolved=supported(layout)?G.resolve(template,panel,source):{valid:false,reason:storage?'Choose Full stored-item dialog to use saved boxes.':'Choose Gold-framed panel to use saved boxes.'};
       if(resolved.valid){active={template:G.copy(template),source,panel};text=lastReason?'Standard recognition · '+lastReason:lastPath==='calibrated-fields+standard-fallback'?'Calibrated fields · standard fallback used for unclear fields.':'Calibrated fields · saved boxes follow the detected panel.';}
       else text='Standard recognition · '+resolved.reason;
-      if(!panel && source && layout==='panel')text='Panel anchor missing · reading paused. Find Panel or recalibrate.';
+      if(!panel && source && supported(layout))text=storage?'Select the full stored-item dialog to calibrate fields.':'Panel anchor missing · reading paused. Find Panel or recalibrate.';
     }else if(localStorageValue())text='Standard recognition · saved boxes are invalid. Reset or recalibrate.';
     if(el.status.textContent!==text)el.status.textContent=text;
-    return {fields:active,paused:!!draft || !!(template && el.enabled.checked && layout==='panel' && source && !panel)};
+    return {fields:active,paused:!!draft || !!(template && el.enabled.checked && supported(layout) && source && !panel)};
   }
-  function localStorageValue(){try{return localStorage.getItem(G.KEY);}catch{return null;}}
+  function localStorageValue(){
+    try {const raw=localStorage.getItem(G.KEY);return storage && raw && !JSON.parse(raw)?.[rowCount()]?null:raw;}catch{return null;}
+  }
   function selected(){return draft && G.fields(draft).find(field=>field.id===el.field.value);}
   function refreshInputs() {
     const field=selected();if(!field)return;
@@ -53,7 +58,7 @@
       const x=box.x*el.canvas.width,y=box.y*el.canvas.height,w=box.width*el.canvas.width,h=box.height*el.canvas.height,chosen=field.id===current?.id;
       ctx.strokeStyle=chosen?'#ffdd6d':field.kind==='percentage'?'#72dcad':'#89bfff';ctx.lineWidth=chosen?3:1;
       ctx.strokeRect(x,y,w,h);
-      const label=field.index===undefined?field.label:(field.index+1)+' '+(field.kind==='name'?'Name':field.kind==='percentage'?'%':field.kind==='dice'?'Dice':'Star');
+      const label=field.index===undefined?field.label:(field.index+1)+' '+(field.kind==='name'?'Name':field.kind==='percentage'?'%':field.kind==='dice'?'Dice':field.kind==='level'?'Level':'Star');
       ctx.font=(chosen?'bold ':'')+'12px sans-serif';ctx.fillStyle='#10151e';ctx.fillRect(x,Math.max(0,y-15),ctx.measureText(label).width+8,15);
       ctx.fillStyle=ctx.strokeStyle;ctx.fillText(label,x+4,Math.max(12,y-3));
       if(chosen)for(const [a,b] of [[x,y],[x+w,y],[x,y+h],[x+w,y+h]]){ctx.fillStyle='#ffdd6d';ctx.fillRect(a-4,b-4,8,8);}
@@ -70,7 +75,7 @@
   function begin() {
     if(!source || !panel || draft)return;
     frozen=document.createElement('canvas');frozen.width=source.width;frozen.height=source.height;frozen.getContext('2d').drawImage(source,0,0);
-    frozenPanel={...panel};draft=template?G.copy(template):G.defaults(panel.width*source.width/(panel.height*source.height));
+    frozenPanel={...panel};draft=template?G.copy(template):G.defaults(panel.width*source.width/(panel.height*source.height),storage?rowCount():false);
     draft.aspect=panel.width*source.width/(panel.height*source.height);
     el.field.replaceChildren(...G.fields(draft).map(field=>{const option=document.createElement('option');option.value=field.id;option.textContent=field.label;return option;}));
     el.field.value='0-name';el.editor.hidden=false;el.edit.disabled=true;
@@ -102,7 +107,7 @@
   });
   el.optional.addEventListener('change',()=>{
     const field=selected();if(!field || !['category','hall','dice'].includes(field.kind))return;
-    const seed=field.kind==='category'?{x:-.3,y:-.31,width:.5,height:.2}:field.kind==='hall'?{x:.03,y:.04,width:.55,height:.2}:
+    const seed=storage?G.fields(G.defaults(draft.aspect,draft.rows.length)).find(item=>item.id===field.id)?.box:field.kind==='category'?{x:-.3,y:-.31,width:.5,height:.2}:field.kind==='hall'?{x:.03,y:.04,width:.55,height:.2}:
       {x:.88,y:draft.rows[field.index].name.y,width:.10,height:draft.rows[field.index].name.height};
     G.assign(draft,field.id,el.optional.checked?seed:null);refreshInputs();
   });
@@ -114,7 +119,7 @@
     template=G.copy(draft);discard();notify();update(source,panel);
   });
   el.reset.addEventListener('click',()=>{
-    if(!G.reset()){el.status.textContent='Could not reset saved boxes. Check browser storage access.';return;}
+    if(!(storage?G.reset(rowCount()):G.reset())){el.status.textContent='Could not reset saved boxes. Check browser storage access.';return;}
     template=null;discard();notify();update(source,panel);
   });
   el.enabled.addEventListener('change',()=>{discard();notify();update(source,panel);});

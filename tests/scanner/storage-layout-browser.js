@@ -13,6 +13,8 @@
   setup.querySelector('.scanner-setup-title').click();
   check('setup title collapses setup',!setup.open);
   get('auto').checked=false;
+  const actionTop=()=>document.getElementById('storage-keep').getBoundingClientRect().top;
+  const emptyActionTop=actionTop();
   window.DNStorageRecognition.inspect=()=>({expectedRows:6,hall:'main'});
   const names=['Heavy Tank Damage','Heavy Tank Hitpoints','Fighter Damage','Fighter Hitpoints','Defender Damage','Defender Hitpoints'];
   const rows=names.map((name,index)=>({name,value:index+1,known:true,hasPercent:true,level:1,unlocked:index===1?null:true}));
@@ -21,6 +23,9 @@
   window.DNScannerReading.update(canvas,{session:1,current:true});get('read').click();
   await wait(()=>get('progress').textContent.startsWith('Finished'));
   check('six scanned stats beside six edit rows',get('correct').querySelectorAll('.storage-read-stat').length===6 && get('correct').querySelectorAll('.scanner-perk-name').length===6);
+  check('action buttons stay fixed when a scan appears',Math.abs(actionTop()-emptyActionTop)<1);
+  check('unknown star blocks keeping',document.getElementById('storage-keep').disabled);
+  check('special tier is not editable',Array.from(get('correct').querySelectorAll('.scanner-perk-tier')).every(select=>select.disabled));
   check('Mythical dice are unavailable and disabled',Array.from(get('correct').querySelectorAll('.scanner-perk-reroll')).every(button=>button.value==='false' && button.disabled));
   check('scanned percentages visible',get('correct').querySelectorAll('.storage-read-stat strong')[5].textContent==='+6%');
   check('stars replace the locked/unlocked dropdown',get('correct').querySelectorAll('button.scanner-perk-unlocked').length===6 && !get('correct').querySelector('select.scanner-perk-unlocked'));
@@ -42,10 +47,11 @@
   await wait(()=>document.getElementById('storage-collection-status').textContent.startsWith('1 added'));
   check('keep and import work in consolidated view',document.getElementById('storage-items').children.length===0);
   window.DNStorageRecognition.inspect=()=>({expectedRows:5,hall:'war'});
-  const editRows=names.slice(0,5).map(name=>({name,value:12,level:7,levelSource:'ocr',known:true,hasPercent:true,tier:'blue',tierSource:'percentage-level',base:6,max:15,rangeSource:'inferred-tier'}));
+  const editRows=names.slice(0,5).map(name=>({name,value:12,level:7,levelSource:'ocr',unlocked:true,rerollEligible:false,known:true,hasPercent:true,tier:'blue',tierSource:'percentage-level',base:6,max:15,rangeSource:'inferred-tier'}));
   window.DNScannerRecognition.create=()=>({close:async()=>{},recognize:async()=>({valid:true,rows:editRows,warnings:[],artifact:{name:'Live edits',type:'War Weapon',hall:'war'}})});
   window.DNScannerReading.reset();window.DNScannerReading.update(canvas,{session:2,current:true});get('read').click();
   await wait(()=>get('correct').querySelectorAll('.scanner-edit-row').length===5 && get('progress').textContent.startsWith('Finished'));
+  for(const button of get('correct').querySelectorAll('.scanner-perk-reroll'))if(button.value===''){button.click();button.click();}
   const field=get('correct').querySelector('.scanner-edit-row'),value=field.querySelector('.scanner-perk-value'),level=field.querySelector('.scanner-perk-level'),tier=field.querySelector('.scanner-perk-tier');
   const edit=(input,next)=>{input.value=next;input.dispatchEvent(new Event('input',{bubbles:true}));};
   value.value='';level.value='3';edit(tier,'blue');
@@ -63,7 +69,7 @@
   check('green tier colours the scanned stat title',statTitle.classList.contains('is-green') && titleStyle.color==='rgb(105, 212, 73)');
   tier.value='';delete tier.dataset.autoInferred;level.value='4';value.value='';edit(tier,'green');
   get('accept').click();
-  check('live inferred values pass correction validation',!document.getElementById('storage-keep').disabled && get('correct').querySelector('.scanner-perk-value').value==='6');
+  check('live inferred values pass correction validation: '+document.getElementById('storage-keep-status').textContent,!document.getElementById('storage-keep').disabled && get('correct').querySelector('.scanner-perk-value').value==='6');
   const current=get('correct').querySelector('.scanner-edit-row');
   const unknownValue=current.querySelector('.scanner-perk-value'),unknownLevel=current.querySelector('.scanner-perk-level'),unknownTier=current.querySelector('.scanner-perk-tier');
   unknownLevel.value='';unknownTier.value='';edit(unknownValue,'');
@@ -92,12 +98,34 @@
   await wait(()=>get('progress').textContent.startsWith('Finished'));
   const diceButtons=Array.from(get('correct').querySelectorAll('.scanner-perk-reroll'));
   check('unreadable storage dice stay amber unknown',diceButtons.length===5 && diceButtons.every(button=>button.value==='' && button.classList.contains('is-unknown')));
+  check('unknown reroll blocks keeping',document.getElementById('storage-keep').disabled);
   diceButtons.forEach((button,i)=>{button.click();if(i!==4)button.click();});
   get('accept').click();document.getElementById('storage-keep').click();
   await wait(()=>document.getElementById('storage-count').textContent.startsWith('1 artifacts'));
   await new Promise(resolve=>setTimeout(resolve,50));
   const kept=(await window.DNStoredArtifacts.read('items')).find(item=>item.name==='Dice persistence');
   check('Keep persists one eligible dice independently of stars',!!kept && JSON.stringify(kept.rows.map(row=>row.rerollEligible))==='[false,false,false,false,true]' && kept.rows.every(row=>row.unlocked===true));
-  check('inventory shows per-row reroll availability',document.getElementById('storage-items').textContent.includes('Reroll available') && document.getElementById('storage-items').textContent.includes('Cannot reroll'));
+  check('inventory shows per-row reroll availability',document.getElementById('storage-items').textContent.includes('Available') && document.getElementById('storage-items').textContent.includes('Unavailable'));
+  const columns=Array.from(document.querySelectorAll('.storage-inventory-stats > li'));
+  check('inventory stats occupy separate columns',columns.length===5 && columns.every(column=>Math.abs(column.getBoundingClientRect().top-columns[0].getBoundingClientRect().top)<1) && columns[1].getBoundingClientRect().left>columns[0].getBoundingClientRect().left);
+  check('exact inventory duplicate blocks keeping',document.getElementById('storage-keep').disabled && document.getElementById('storage-keep-status').textContent.includes('Exact duplicate'));
+  let automaticReads=0;
+  window.DNScannerReading.reset();get('layout').value='storage';get('auto').checked=true;
+  window.DNStorageRecognition.inspect=()=>({expectedRows:5,hall:'war'});
+  window.DNScannerRecognition.create=()=>({close:async()=>{},recognize:async()=>{automaticReads++;await new Promise(resolve=>setTimeout(resolve,250));return {valid:true,rows:keepRows,warnings:[],artifact:{name:'Animated artwork fixture',type:'War Weapon',hall:'war'}};}});
+  const paint=canvas.getContext('2d');paint.fillStyle='#a07850';paint.fillRect(0,0,canvas.width,canvas.height);
+  paint.fillStyle='#fff';paint.font='18px sans-serif';paint.fillText('Steady artifact stats',canvas.width*.4,canvas.height*.2);
+  for(let sample=0;sample<16;sample++) {
+    paint.fillStyle=sample%2?'#ffd800':'#6827cd';paint.fillRect(0,0,canvas.width*.29,canvas.height*.4);
+    window.DNScannerReading.update(canvas,{session:4,current:true});await new Promise(resolve=>setTimeout(resolve,80));
+  }
+  check('storage reads automatically while artwork animates',automaticReads===1 && get('progress').textContent.startsWith('Finished'));
+  get('auto').checked=false;
+  window.DNScannerReading.reset();
+  check('action buttons stay fixed when a scan clears',Math.abs(actionTop()-emptyActionTop)<1);
+  for(let sample=0;sample<3;sample++)window.DNScannerReading.update(canvas,{session:5,current:true});
+  get('read').click();
+  for(let sample=0;sample<8;sample++){window.DNScannerReading.update(canvas,{session:5,current:true});await new Promise(resolve=>setTimeout(resolve,80));}
+  check('manual storage read survives identical coloured live frames',automaticReads===2 && get('progress').textContent.startsWith('Finished') && !get('result-status').textContent.includes('cancelled'));
   return {passed:Object.values(checks).every(Boolean),ui:checks};
 })()

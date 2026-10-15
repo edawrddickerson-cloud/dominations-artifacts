@@ -4,7 +4,7 @@
  */
 (async () => {
   const load = src => new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=src;script.onload=resolve;script.onerror=()=>reject(new Error('Failed to load '+src));document.head.append(script);});
-  for(const src of ['data/army_catalog.js','shared.js','scanner-core.js','scanner-frames.js','artifact-scoring.js','vendor/tesseract/tesseract.min.js','scanner-recognition.js']) await load(src);
+  for(const src of ['data/army_catalog.js','shared.js','scanner-core.js','scanner-frames.js','artifact-scoring.js','vendor/tesseract/tesseract.min.js','scanner-name-catalog.js','scanner-recognition.js']) await load(src);
   const labels=await(await fetch('../tests/scanner/pic1.labels.json')).json();
   const bitmap=await createImageBitmap(await(await fetch('../tests/scanner/pic1.png')).blob());
   const source=document.createElement('canvas');source.width=bitmap.width;source.height=bitmap.height;source.getContext('2d').drawImage(bitmap,0,0);bitmap.close();

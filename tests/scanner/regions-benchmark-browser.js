@@ -4,7 +4,8 @@
  * Constraints: Cropped fixtures cannot establish category/hall accuracy. */
 (async () => {
   const R=window.DNScannerRecognition, C=window.DNScannerCore;
-  const fixtures=window.DNRegionsTight?['pic1']:['pic1','greenissue','invaders-cyan','invaders-green','review-215133','review-215714','review-225540','review-225703'];
+  const fixtures=window.DNRegionsFixtures || (window.DNRegionsTight?['pic1']:['pic1','greenissue','invaders-cyan','invaders-green','review-215133','review-215714','review-225540','review-225703']);
+  const scales=window.DNRegionsScales || [1];
   const defaults=await(await fetch('data/perk_rating_defaults.json')).json();
   const names=Object.keys(defaults),canonPerk=window.DN.makeCanonPerk(window.DN.parseMappingCsv(await(await fetch('data/perk_name_mapping.csv')).text()));
   const engine=R.create({names,canonPerk}),runs=[];
@@ -13,10 +14,10 @@
     const warm=document.createElement('canvas');warm.width=400;warm.height=200;
     warm.getContext('2d').fillRect(0,0,400,200);
     await engine.recognize(warm,{layout:'text'});warm.width=warm.height=0;
-    for(const fixture of fixtures) {
+    for(const fixture of fixtures)for(const scale of scales) {
       const labels=await(await fetch('../tests/scanner/'+fixture+'.labels.json')).json();
       const bitmap=await createImageBitmap(await(await fetch('../tests/scanner/'+fixture+'.png')).blob());
-      const full=document.createElement('canvas');full.width=bitmap.width;full.height=bitmap.height;full.getContext('2d').drawImage(bitmap,0,0);bitmap.close();
+      const full=document.createElement('canvas');full.width=Math.round(bitmap.width*scale);full.height=Math.round(bitmap.height*scale);full.getContext('2d').drawImage(bitmap,0,0,full.width,full.height);bitmap.close();
       const panel=R.detectPanel(full),rect=C.cropPixels(panel,full.width,full.height);
       if(!rect)throw new Error('Missing panel: '+fixture);
       const crop=document.createElement('canvas');crop.width=rect.width;crop.height=rect.height;crop.getContext('2d').drawImage(full,rect.x,rect.y,rect.width,rect.height,0,0,rect.width,rect.height);
@@ -47,9 +48,9 @@
       const starsCorrect=stars.filter((state,i)=>result.unlocked?.states[i]===state).length;
       const categoryCorrect=labels.category?result.artifact?.type===labels.category:null;
       const firstCategoryCorrect=labels.category?result.observations?.[0]?.artifact?result.observations[0].artifact.type===labels.category:window.DNRegionsBaseline?categoryCorrect:false:null;
-      runs.push({fixture,elapsedMs,accuracy,first,starsCorrect,categoryCorrect,firstCategoryCorrect,allStats:accuracy.names===5 && accuracy.percentages===5,complete:accuracy.names===5 && accuracy.percentages===5 && starsCorrect===5 && (categoryCorrect ?? true),fullArtifactAssessable:!!labels.category,confidentlyIncorrect:result.valid && (accuracy.names!==5 || accuracy.percentages!==5),missingRows:result.rows.filter(row=>!row.name).length,extraRows:Math.max(0,result.rows.length-5),retry:result.observations?.length>1,ocrCalls:result.ocrCalls,...result});
+      runs.push({fixture,scale,elapsedMs,accuracy,first,starsCorrect,categoryCorrect,firstCategoryCorrect,allStats:accuracy.names===5 && accuracy.percentages===5,complete:accuracy.names===5 && accuracy.percentages===5 && starsCorrect===5 && (categoryCorrect ?? true),fullArtifactAssessable:!!labels.category,confidentlyIncorrect:result.valid && (accuracy.names!==5 || accuracy.percentages!==5),missingRows:result.rows.filter(row=>!row.name).length,extraRows:Math.max(0,result.rows.length-5),retry:result.observations?.length>1,ocrCalls:result.ocrCalls,...result});
       full.width=full.height=crop.width=crop.height=0;if(categorySource)categorySource.width=categorySource.height=0;
     }
   } finally {await engine.close();}
-  return {mode:window.DNRegionsBaseline?'baseline':window.DNRegionsTight?'manual-tight':'calibrated',browser:navigator.userAgent,runs,passed:runs.length===fixtures.length && runs.every(run=>!run.confidentlyIncorrect && run.complete),limitations:'Eight selected original game screenshots, not a representative live-capture dataset. Seven have no category/hall pixels. Seeded overlapping name/value regions test one broad template; the separate tight run uses hand-selected pixel boxes on pic1 only. Original fixture labels supply names/values; star counts visually checked (one except review-225540: two).'};
+  return {mode:window.DNRegionsBaseline?'baseline':window.DNRegionsTight?'manual-tight':'calibrated',browser:navigator.userAgent,runs,passed:runs.length===fixtures.length*scales.length && runs.every(run=>!run.confidentlyIncorrect && run.complete),limitations:'Repository screenshots and Canvas-derived scale probes, not a representative live-capture dataset. Most images omit category/hall pixels. Seeded overlapping name/value regions test one broad template; the separate tight run uses hand-selected pixel boxes on pic1 only. Timings exclude model startup.'};
 })()

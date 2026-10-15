@@ -96,7 +96,8 @@
       if(nativeFrame.width!==size.width || nativeFrame.height!==size.height){nativeFrame.width=size.width;nativeFrame.height=size.height;}
       nativeFrame.getContext('2d').drawImage(source,0,0,size.width,size.height);
       const layout=document.getElementById('scanner-layout')?.value || 'panel';
-      const candidate=layout==='panel'?window.DNScannerRecognition?.detectPanel(nativeFrame):null;
+      const storage=!!window.DNStorageRecognition;
+      const candidate=storage && layout==='storage'?region:layout==='panel'?window.DNScannerRecognition?.detectPanel(nativeFrame):null;
       if(calibration.hasTemplate && candidate && !selecting && !calibration.editing) {
         const moved=!region || ['x','y','width','height'].some(key=>Math.abs(region[key]-candidate[key])>.002);
         if(moved){region=candidate;window.DNScannerReading?.invalidate('Panel moved or resized. Checking its saved field boxes.',{preserveDisplay:true});}
@@ -274,6 +275,7 @@
   window.addEventListener("pagehide", release);
   window.addEventListener('dn-scanner-fields-change',()=>{if(image || stream)renderFrame();});
   document.getElementById('scanner-layout')?.addEventListener('change',()=>{if(calibration && (image || stream))renderFrame();});
+  document.getElementById('scanner-rows')?.addEventListener('change',()=>{if(calibration && (image || stream))renderFrame();});
   release();
   status(supported ? "Disconnected" : "Unsupported browser", supported ? "Connect Game to share its window, or open a local screenshot to test calibration." : "Screen capture requires a supported desktop browser on HTTPS or localhost. Local screenshot calibration is still available.");
 })();

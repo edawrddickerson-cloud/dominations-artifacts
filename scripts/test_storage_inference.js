@@ -51,6 +51,7 @@ function canvas() {
   })};
 }
 context.document={createElement:canvas};
+vm.runInContext(fs.readFileSync('ui/scanner-name-catalog.js','utf8'),context);
 vm.runInContext(fs.readFileSync('ui/scanner-recognition.js','utf8'),context);
 vm.runInContext(fs.readFileSync('ui/storage-recognition.js','utf8'),context);
 async function scan(missing,{known=true,priorName='Positive',priorHall='war'}={}) {

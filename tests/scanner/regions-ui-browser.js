@@ -51,7 +51,7 @@
   check('actual OCR uses calibrated fields',observed.recognitionPath==='calibrated-fields' && observed.valid);
   check('calibrated fields capture tier provenance',observed.rows.every(row=>row.tier==='white' && row.tierSource==='colour' && row.base===1));
   check('category and stars recognised',observed.artifact.type==='Pottery' && observed.unlocked.count===1);
-  check('existing scorer rates calibrated input',get('result').querySelector('.scanner-score')?.textContent.includes('120') && !get('item-total').textContent.includes('—'));
+  check('existing scorer rates calibrated input with current defensive weights',get('result').querySelector('.scanner-score')?.textContent.includes('Def 100') && get('item-total').textContent==='180');
   check('compact stats retained',get('result').querySelectorAll('.scanner-perk').length===5 && !get('result').textContent.includes('Recognition:'));
   get('layout').value='text';fire(get('layout'));DNScannerCalibration.report('standard');
   check('text-only mode retains standard path status',field('status').textContent.includes('Choose Gold-framed panel') && field('edit').disabled);

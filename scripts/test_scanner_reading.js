@@ -22,19 +22,19 @@ function element() {
   };
 }
 async function harness({storage=false}={}) {
-  const store=new Map(),elements={},jobs=[],engines=[],timers=new Map();let nextTimer=0;
+  const store=new Map(),elements={},jobs=[],engines=[],timers=new Map();let nextTimer=0,now=1000;
   for(const id of ['read','auto','layout','rows','hall','infer','progress','result-status','warnings','result','correct','accept','names','mode','off','def','profile-label'])elements[id]=element();
   elements.hall.value='main';
   elements.auto.checked=false;elements.rows.value='5';elements.layout.value='gold';
   const window=element(),keepStates=[];
   if(storage){window.DNStorageRecognition={inspect:()=>({expectedRows:5,hall:'main'})};window.DNStorageScanner={update:(result,confirmed,state)=>keepStates.push({result,confirmed,...state})};}
-  const canvas=()=>({width:1920,height:1080,pixel:0,getContext(){let source;return {drawImage(value){source=value;},putImageData(){},getImageData(){const data=new Uint8ClampedArray(96*64*4).fill(source?.pixel||0);if(source?.jitter)data.fill(255,(source.jitterOffset || 0)*4,((source.jitterOffset || 0)+source.jitter)*4);return {data};}};}});
+  const canvas=()=>({width:1920,height:1080,pixel:0,getContext(){let source,coords;return {drawImage(value,...rect){source=value;coords=rect;},putImageData(){},getImageData(){const data=new Uint8ClampedArray(96*64*4).fill(source?.pixel||0);if(source?.rgb)for(let i=0;i<data.length;i+=4)data.set([...source.rgb,255],i);if(source?.jitter)data.fill(255,(source.jitterOffset || 0)*4,((source.jitterOffset || 0)+source.jitter)*4);if(source?.artworkPixel && coords?.[0]===0)data.fill(source.artworkPixel,0,data.length/4);return {data};}};}});
   const context={window,localStorage:{getItem:key=>store.get(key)??null,setItem:(key,value)=>store.set(key,value),removeItem:key=>store.delete(key)},
-    document:{getElementById:id=>elements[id.replace('scanner-','')],createElement:canvas},performance:{now:()=>1000},
-    setTimeout(fn){const id=++nextTimer;timers.set(id,fn);return id;},clearTimeout(id){timers.delete(id);},
+    document:{getElementById:id=>elements[id.replace('scanner-','')],createElement:canvas},performance:{now:()=>now},
+    setTimeout(fn,delay=0){const id=++nextTimer;timers.set(id,{fn,due:now+delay});return id;},clearTimeout(id){timers.delete(id);},
     fetch:async url=>({ok:true,text:async()=>read('data/perk_name_mapping.csv'),json:async()=>JSON.parse(read('data/perk_rating_defaults.json'))})};
   vm.createContext(context);
-  for(const file of ['data/army_catalog.js','shared.js','artifact-scoring.js','stored-artifacts.js','scanner-frames.js','scanner-recognition.js'])vm.runInContext(read(file),context);
+  for(const file of ['data/army_catalog.js','shared.js','artifact-scoring.js','stored-artifacts.js','scanner-frames.js','scanner-name-catalog.js','scanner-recognition.js'])vm.runInContext(read(file),context);
   vm.runInContext(read('scanner-collection.js'),context);
   const collector=window.DNScannerCollectionCore.createCollector();
   window.DNScannerCollection={isEnabled:()=>false,record:result=>collector.record(result),recordItem:(result,id,options)=>collector.recordItem(result,id,options)};
@@ -42,7 +42,7 @@ async function harness({storage=false}={}) {
   window.DNScannerComparison={update:(result,confirmed,options,state)=>comparisons.push({result,confirmed,options,state})};
   window.DNScannerRecognition.create=function(){const engine={closed:0,async close(){this.closed++;},recognize(snapshot,options){const job=deferred();jobs.push({...job,snapshot,options,engine});return job.promise;}};engines.push(engine);return engine;};
   vm.runInContext(read('scanner-reading.js'),context);await flush();
-  return {comparisons,collector,window,e:elements,jobs,engines,canvas,keepStates,DN:window.DN,reader:window.DNScannerReading,runTimers(){const pending=[...timers.values()];timers.clear();pending.forEach(fn=>fn());}};
+  return {comparisons,collector,window,e:elements,jobs,engines,canvas,keepStates,DN:window.DN,reader:window.DNScannerReading,runTimers(){const pending=[...timers.values()];timers.clear();pending.forEach(timer=>timer.fn());},advance(ms){now+=ms;for(const [id,timer] of [...timers])if(timer.due<=now){timers.delete(id);timer.fn();}}};
 }
 function parsed(name='Heavy Tank Damage',value=10){return {valid:true,warnings:[],unlocked:{count:2},rows:Array.from({length:5},(_,i)=>({name,value,known:true,unlocked:i<2}))};}
 function edits(e,rows){e.correct.editRows=rows.map(({name,value,base,max,level,unlocked,tier})=>({querySelector(selector){return {value:selector.includes('name')?name:selector.endsWith('-base')?String(base??''):selector.endsWith('-max')?String(max??''):selector.endsWith('-level')?String(level??''):selector.endsWith('-tier')?String(tier??''):selector.endsWith('-unlocked')?String(unlocked??''):String(value??'')};}}));}
@@ -62,13 +62,13 @@ async function main(){
   e.read.fire('click');
   assert.equal(h.comparisons.at(-1).state.captureResult,captured,'pending read retains actual capture evidence');
   assert.equal(h.comparisons.at(-1).state.captureRetained,true);
-  assert.match(e.result.innerHTML,/scanner-stat-score">19<button/,'weighted stats stay visible throughout the retry');
+  assert.match(e.result.innerHTML,/scanner-stat-score">19<\/span>/,'weighted stats stay visible throughout the retry');
   h.jobs.at(-1).resolve(parsed());await flush();
   assert.equal(h.comparisons.at(-1).state.captureRetained,false,'new completed read replaces the last-read state');
   const latestCapture=h.comparisons.at(-1).state.captureResult;
   reader.invalidate('Panel moved',{preserveDisplay:true});
   assert.equal(h.comparisons.at(-1).state.captureResult,latestCapture,'automatic movement keeps the displayed read');
-  assert.match(e.result.innerHTML,/scanner-stat-score">19<button/);
+  assert.match(e.result.innerHTML,/scanner-stat-score">19<\/span>/);
   reader.update(source,{session:1,current:true});e.read.fire('click');h.jobs.at(-1).resolve(parsed());await flush();
   DN.savePerkGroupDefaults({'single:damage':{offensive:4,defensive:2}});h.window.fire('storage');
   assert.match(e.result.innerHTML,/Off <strong>380<\/strong>/);assert.match(e.result.innerHTML,/Def <strong>190<\/strong>/);
@@ -94,7 +94,7 @@ async function main(){
   assert.match(e.warnings.textContent,/expected a negative/,'Invading manual values must be negative');
   edits(e,Array.from({length:5},()=>({name:'Heavy Tank Damage',value:10})));e.accept.fire('click');
   assert.match(e['result-status'].textContent,/verified values/);assert.match(e.result.innerHTML,/Def <strong>190<\/strong>/,'maximum magnitudes use weighted scoring');
-  assert.match(e.result.innerHTML,/scanner-stat-score">38<button/,'weighted row score uses maximum 19 percent times perk rating 2');
+  assert.match(e.result.innerHTML,/scanner-stat-score">38<\/span>/,'weighted row score uses maximum 19 percent times perk rating 2');
   assert.equal(h.collector.summary().itemCount,1,'corrections update the existing log entry');
   assert.equal(h.collector.exportData().items[0].corrected,true);
   assert.equal(h.comparisons.at(-1).confirmed,true,'accepted corrections refresh the comparison');
@@ -160,6 +160,37 @@ async function main(){
   edits(six.e,sixResult.rows);six.e.correct.fire('input');six.e.accept.fire('click');
   assert.match(six.e.result.innerHTML,/Off <strong>114<\/strong>/,'six corrections preserve the sixth perk');
   const stored=await harness({storage:true}),storedFrame=stored.canvas();
+  const stationary=await harness({storage:true}),coloredFrame=stationary.canvas();coloredFrame.rgb=[160,120,80];
+  for(let sample=0;sample<3;sample++)stationary.reader.update(coloredFrame,{session:1,current:true});
+  stationary.e.read.fire('click');
+  for(let sample=0;sample<4;sample++)stationary.reader.update(coloredFrame,{session:1,current:true});
+  stationary.jobs[0].resolve(parsed());await flush();
+  assert.equal(stationary.keepStates.at(-1).confirmed,true,'identical coloured frames cannot cancel a manual storage read after the three-frame median');
+  assert.match(stationary.e.progress.textContent,/Finished/);
+  assert.doesNotMatch(stationary.e['result-status'].textContent,/cancelled/);
+  const shimmer=await harness({storage:true}),shimmerFrame=shimmer.canvas();shimmer.e.auto.checked=true;
+  for(let frame=0;frame<12;frame++) {
+    shimmerFrame.jitter=10;shimmerFrame.jitterOffset=frame*2;
+    shimmer.reader.update(shimmerFrame,{session:1,current:true});shimmer.advance(100);
+  }
+  assert.equal(shimmer.jobs.length,1,'small continuous storage shimmer cannot starve the auto-read timer');
+  shimmer.jobs[0].resolve(parsed());await flush();
+  assert.equal(shimmer.keepStates.at(-1).confirmed,true,'a stable storage item completes despite minor shimmer');
+  const artwork=await harness({storage:true}),artFrame=artwork.canvas();artwork.e.layout.value='storage';artwork.e.auto.checked=true;
+  for(let frame=0;frame<12;frame++) {
+    artFrame.artworkPixel=frame%2?255:64;artwork.reader.update(artFrame,{session:1,current:true});artwork.advance(100);
+  }
+  assert.equal(artwork.jobs.length,1,'animated artwork outside the storage text region cannot prevent OCR');
+  artFrame.pixel=255;artwork.reader.update(artFrame,{session:1,current:true});
+  artwork.jobs[0].resolve(parsed());await flush();
+  assert.equal(artwork.keepStates.at(-1).reviewable,false,'a genuine text change still rejects in-flight storage results');
+  assert.match(artwork.e['result-status'].textContent,/Read cancelled because the watched fields changed/,'cancelled storage reads explain why no result appears');
+  const setupFailure=await harness({storage:true});setupFailure.e.layout.value='storage';
+  setupFailure.reader.update(setupFailure.canvas(),{session:1,current:true});
+  setupFailure.window.DNStorageRecognition.inspect=()=>{throw new Error('fixture: unreadable source pixels');};
+  await setupFailure.e.read.fire('click');await flush();
+  assert.match(setupFailure.e['result-status'].textContent,/Could not start reading: fixture: unreadable source pixels/,'pre-OCR errors are visible instead of leaving Waiting for a steady image');
+  assert.equal(setupFailure.e.read.disabled,false,'a failed setup leaves manual retry available');
   stored.reader.update(storedFrame,{session:1,current:true});stored.e.read.fire('click');
   assert.equal(stored.keepStates.at(-1).reviewable,false,'in-flight reads cannot save the prior item');
   stored.jobs[0].resolve({...parsed(),valid:false,warnings:['OCR evidence is weak']});await flush();

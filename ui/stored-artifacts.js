@@ -50,6 +50,31 @@
       transaction.onabort = transaction.onerror = () => reject(transaction.error);
     });
   }
+  async function readBackupRecords() {
+    const db=await open();
+    return new Promise((resolve,reject)=>{
+      const transaction=db.transaction('inventory','readonly');
+      const request=transaction.objectStore('inventory').getAll();
+      transaction.oncomplete=()=>resolve(request.result);
+      transaction.onabort=transaction.onerror=()=>reject(transaction.error);
+    });
+  }
+  // The synchronous settings write runs before this transaction commits. An error
+  // aborts the artifact restore; the caller restores the previous settings too.
+  async function restoreBackupRecords(records,writeSettings) {
+    const db=await open();
+    return new Promise((resolve,reject)=>{
+      const transaction=db.transaction('inventory','readwrite'),store=transaction.objectStore('inventory');
+      let failure;
+      transaction.oncomplete=()=>resolve();
+      transaction.onabort=transaction.onerror=()=>reject(failure || transaction.error);
+      try {
+        store.clear();
+        for(const record of records)store.put(record);
+        writeSettings();
+      } catch(error) {failure=error;transaction.abort();}
+    });
+  }
   async function remove(id) {
     const key=collectionKey(), db=await open();
     return new Promise((resolve,reject)=>{
@@ -196,23 +221,11 @@
   }
   function statKey(row, ranges=false) {
     const range=ranges?impliedRange(row):null;
-    return JSON.stringify(ranges?[normalize(row.name),range?.base,range?.max]:[normalize(row.name),row.value]);
+    return JSON.stringify(ranges?[normalize(row.name),range?.base,range?.max]:[normalize(row.name),row.value,row.level ?? null,row.tier ?? null]);
   }
   function signature(item, ranges=false) {
     if(ranges && item.rows.some(row=>row.tierConflict || !impliedRange(row)))return null;
     return JSON.stringify(item.rows.map(row=>statKey(row,ranges)).sort());
-  }
-  function rerollCompatible(a,b) {
-    // Dice eligibility belongs to its ordered row, including repeated perks.
-    if(a.rows.length!==b.rows.length)return false;
-    if(a.rows.every(row=>row.rerollEligible==null) || b.rows.every(row=>row.rerollEligible==null))return true;
-    let incoming=b.rows;
-    if(signature(a,true) && signature(a,true)===signature(b,true))incoming=alignRows(a,b);
-    return a.rows.every((row,i)=>{
-      const next=incoming[i];
-      return normalize(row.name)===normalize(next.name) &&
-        (row.rerollEligible==null || next.rerollEligible==null || row.rerollEligible===next.rerollEligible);
-    });
   }
   function alignRows(existing, incoming) {
     const buckets=new Map();
@@ -236,22 +249,20 @@
     })};
   }
   function merge(existing, incoming) {
-    const collection=existing.slice(), result={added:0,updated:0,duplicates:0,blocked:0,consumedIds:[],issues:[]};
+    const collection=existing.map(backfillItem), result={added:0,updated:0,duplicates:0,blocked:0,consumedIds:[],issues:[]};
     for(const raw of identify(incoming)) {
       if(!raw.reviewed){result.blocked++;result.issues.push(raw.name+': verify this artifact first.');continue;}
-      const item=withRanges(raw), candidates=collection.filter(other=>identity(other)===identity(item) && rerollCompatible(other,item));
+      const item=withRanges(raw), candidates=collection.filter(other=>identity(other)===identity(item));
       if(item.rows.some(row=>row.tierConflict)){result.blocked++;result.issues.push(item.name+': percentage and level or colour evidence conflict. Verify the tier.');continue;}
       const range=signature(item,true), sameRange=range && candidates.find(other=>signature(other,true)===range);
       const exact=candidates.find(other=>signature(other)===signature(item));
       if(sameRange) {
         const aligned=alignRows(sameRange,item);
-        const weaker=aligned.some((row,index)=>Math.abs(row.value)<Math.abs(sameRange.rows[index].value) ||
-          (sameRange.rows[index].unlocked===true && row.unlocked===false));
-        if(weaker){result.blocked++;result.issues.push(item.name+': at least one perk is weaker or has become locked.');continue;}
-        const improved=aligned.some((row,index)=>Math.abs(row.value)>Math.abs(sameRange.rows[index].value) ||
-          (row.unlocked===true && sameRange.rows[index].unlocked!==true) ||
-          (typeof row.rerollEligible==='boolean' && sameRange.rows[index].rerollEligible==null));
-        if(improved) {
+        const changed=aligned.some((row,index)=>row.value!==sameRange.rows[index].value ||
+          row.level!==sameRange.rows[index].level ||
+          (row.unlocked!=null && row.unlocked!==sameRange.rows[index].unlocked) ||
+          (typeof row.rerollEligible==='boolean' && row.rerollEligible!==sameRange.rows[index].rerollEligible));
+        if(changed) {
           collection[collection.indexOf(sameRange)]={...sameRange,...item,id:sameRange.id,
             acceptedAt:sameRange.acceptedAt,updatedAt:new Date().toISOString(),image:item.image || sameRange.image,
             rows:aligned.map((row,index)=>({...row,unlocked:row.unlocked ?? sameRange.rows[index].unlocked,
@@ -314,6 +325,6 @@
     });
     return row;
   }
-  window.DNStoredArtifacts = {read, write, accept, remove, update, identify, toRow, collectionKey, impliedRange, tierBases, tierMetadata, craftingTier, inferStorageRow, backfillItem, merge,
+  window.DNStoredArtifacts = {read, write, readBackupRecords, restoreBackupRecords, accept, remove, update, identify, toRow, collectionKey, impliedRange, tierBases, tierMetadata, craftingTier, inferStorageRow, backfillItem, merge,
     newId:() => 'scan-' + crypto.randomUUID()};
 })();

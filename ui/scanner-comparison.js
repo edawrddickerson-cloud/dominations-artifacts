@@ -7,38 +7,41 @@
   const DN=window.DN;
   const hallName=value=>String(value || '').toLowerCase()==='war'?'War':'Main';
   const typeName=value=>String(value || '').trim().replace(/^war[ -]/i,'').toLowerCase();
+  const scoreable=row=>!!row?.name && row.known!==false && Number.isFinite(row.value) && row.hasPercent!==false && !row.assumed && !row.inferred && !row.conflict && !row.tierConflict && !row.estimated && !row.scoreExcluded;
+  function craftOptions(options,{hall,type,rows}={}) {
+    if(!options || !options.prefSortAxes.offensive && !options.prefSortAxes.defensive)return options;
+    const category=typeName(type);
+    if(hallName(hall)==='Main' && category==='weapon')return options;
+    let axis=hallName(hall)==='War'?'offensive':['armor','pottery'].includes(category)?'defensive':['jewelry','jewellery'].includes(category)?'offensive':null;
+    // An unread Main category could belong to either role. Show the stronger
+    // complete total, while each category's actual comparison uses its own role.
+    if(!axis && rows?.length && rows.every(row=>row.name && Number.isFinite(row.value))) {
+      const roles=[null,'offensive','defensive'];
+      const totals=roles.map(role=>scoreCraftRows(rows,role?{...options,prefSortAxes:{offensive:role==='offensive',defensive:role==='defensive'}}:options,hall,type).potentialPreference);
+      axis=roles[totals.indexOf(Math.max(...totals))];
+    }
+    return axis?{...options,prefSortAxes:{offensive:axis==='offensive',defensive:axis==='defensive'}}:options;
+  }
+  function scoreCraftRows(rows,options,hall,type) {
+    return window.DNArtifactScoring.comparisonScore(statRow(rows.map(perk=>scoreable(perk)?{...perk,value:Math.sign(perk.value)*(Math.abs(perk.value)+9)}:{name:'',value:0})),options,
+      {hall,grade:type,eligible:rows.map(perk=>!scoreable(perk)?false:typeof perk.rerollEligible==='boolean'?perk.rerollEligible:null)});
+  }
   function statRow(rows) {
     const row={};
     rows.forEach((perk,index)=>{row['perk_'+(index+1)+'_name']=perk.name;row['perk_'+(index+1)+'_base']=String(perk.value);row['perk_'+(index+1)+'_max']='';});
     return row;
   }
-  function estimate(result,{names,options,hall,expectedRows=5}) {
+  function estimate(result,{expectedRows=5}={}) {
     if(!result?.rows || expectedRows!==5 || result.rows.length>5)return null;
-    const usable=row=>row?.known && !!row.name && Number.isFinite(row.value) && !row.conflict;
     const rows=Array.from({length:5},(_,index)=>result.rows[index]);
-    const captured=rows.filter(usable).length;
-    if(captured<4)return null;
-    if(result.valid && captured===5)return result;
-    let assumption='All five stats scored provisionally; OCR needs review.';
-    if(captured===4) {
-      const index=rows.findIndex(row=>!usable(row)),missing=rows[index];
-      // An optimistic placeholder is only a scoring scenario. Never write it
-      // into the recognised result, saved log, or correction form.
-      let name=missing?.known && !missing.conflict?missing.name:null;
-      const magnitude=Number.isFinite(missing?.value) && !missing.conflict?Math.abs(missing.value):hallName(hall)==='War'?6:11;
-      if(!name) {
-        let best=-Infinity;
-        for(const candidate of names) {
-          const value=(options.prefSortAxes.offensive?options.ratingOf(candidate,'offensive'):0)+(options.prefSortAxes.defensive?options.ratingOf(candidate,'defensive'):0);
-          if(value>best){name=candidate;best=value;}
-        }
-      }
-      if(!name)return null;
-      const value=(DN.expectedPerkSign?.(name) ?? (/^invading\b/i.test(name)?-1:1))*magnitude;
-      rows[index]={name,value,known:true,estimated:true};
-      assumption='4/5 read · Assume '+name+' '+(value>=0?'+':'')+value+'% for row '+(index+1)+'.';
-    }
-    return {...result,rows,valid:true,provisional:true,assumption};
+    const usable=row=>row?.known && scoreable(row);
+    const scoredCount=rows.filter(usable).length;
+    if(!scoredCount)return null;
+    if(scoredCount===5)return result.valid?result:{...result,valid:true,provisional:true,assumption:'All five stats are readable; OCR needs review.'};
+    // This is a separate scoring view. Keep raw OCR and saved observations intact.
+    // Empty slots preserve row positions but have no score or reroll eligibility.
+    return {...result,rows:rows.map(row=>usable(row)?{...row}:{name:'',value:null,known:false,scoreExcluded:true,rerollEligible:false}),
+      valid:true,partial:true,scoredCount,provisional:true,assumption:scoredCount+'/5 stats scored · Unread rows excluded. Subtotal only.'};
   }
   function currentRows(row,options,levels={}) {
     const id=DN.artifactKey(row), revision=row.scanned && (Date.parse(row.scanned.updatedAt || row.scanned.capturedAt) || 0);
@@ -72,22 +75,15 @@
     return {captured,expected,percent:Math.round(captured/expected*100),names,values,stars,type,hall,dice,diceExpected:diceRows.length};
   }
   function craftScore(result,options) {
-    if(!result?.valid || !result.rows?.length || result.rows.some(row=>!row.name || !Number.isFinite(row.value)))return null;
+    if(!result?.valid || result.rows?.length!==5 || !result.rows.some(scoreable) || result.rows.some(row=>!scoreable(row) && !(result.partial && row.scoreExcluded)))return null;
     return craftPotential(result,options).potentialPreference;
   }
   function craftPotential(result,options) {
-    return window.DNArtifactScoring.comparisonScore(statRow(result.rows.map(perk=>({...perk,value:Math.sign(perk.value)*(Math.abs(perk.value)+9)}))),options,
-      {hall:result.hall || result.artifact?.hall,grade:result.artifact?.type,
-        eligible:result.rows.map(perk=>Object.prototype.hasOwnProperty.call(perk,'rerollEligible')?perk.rerollEligible:true)});
+    const hall=result.hall || result.artifact?.hall,type=result.artifact?.type;
+    return scoreCraftRows(result.rows,craftOptions(options,{hall,type,rows:result.rows}),hall,type);
   }
-  function compare(result,{type,hall,owned,options,levels={},limit=null}) {
-    options=options?{...options,scoreMode:'combined'}:options;
-    const normalized=typeName(type),grade=normalized.charAt(0).toUpperCase()+normalized.slice(1),slots=DN.artifactSlotCapacity(grade,hallName(hall));
-    if(!slots || ['legendary','mythical'].includes(normalized))return {status:'type'};
-    const capacity=Number.isInteger(limit) && limit>0?limit:slots;
-    if(!options?.prefSortAxes.offensive && !options?.prefSortAxes.defensive)return {status:'axes',capacity};
-    const scoringResult=result?{...result,hall:result.hall || hall}:result;
-    const score=craftScore(scoringResult,options);
+  function ownedBenchmark({type,hall,owned,options}) {
+    const normalized=typeName(type);
     const candidates=[],seen=new Set();let incomplete=0;
     for(const row of owned) {
       if(hallName(row.hall)!==hallName(hall) || typeName(row.grade)!==normalized)continue;
@@ -98,6 +94,34 @@
       candidates.push({id,name:row.name,score:potential.potentialPreference,baseScore:potential.basePreference,uncertain:potential.rerollUncertain,possibleScore:potential.possiblePotentialPreference});
     }
     candidates.sort((a,b)=>b.score-a.score);
+    return {candidates,incomplete};
+  }
+  // Each UI refresh replaces the owned snapshot and rating resolver. A stable
+  // snapshot only needs its category cutoffs scored once, across all OCR frames.
+  function createComparator() {
+    let previousOwned,previousRatings,previousCanon;
+    const cache=new Map();
+    function benchmark(params) {
+      const {owned,options,hall,type}=params;
+      if(owned!==previousOwned || options.ratingOf!==previousRatings || options.canonPerk!==previousCanon){
+        cache.clear();previousOwned=owned;previousRatings=options.ratingOf;previousCanon=options.canonPerk;
+      }
+      const key=JSON.stringify([hallName(hall),typeName(type),options.scoreMode,!!options.prefSortAxes.offensive,!!options.prefSortAxes.defensive]);
+      if(!cache.has(key))cache.set(key,ownedBenchmark(params));
+      return cache.get(key);
+    }
+    return (result,params)=>compare(result,params,benchmark);
+  }
+  function compare(result,{type,hall,owned,options,levels={},limit=null},benchmark=ownedBenchmark) {
+    options=options?{...options,scoreMode:'combined'}:options;
+    const normalized=typeName(type),grade=normalized.charAt(0).toUpperCase()+normalized.slice(1),slots=DN.artifactSlotCapacity(grade,hallName(hall));
+    if(!slots || ['legendary','mythical'].includes(normalized))return {status:'type'};
+    const capacity=Number.isInteger(limit) && limit>0?limit:slots;
+    options=craftOptions(options,{hall,type});
+    if(!options?.prefSortAxes.offensive && !options?.prefSortAxes.defensive)return {status:'axes',capacity};
+    const scoringResult=result?{...result,hall:result.hall || hall,artifact:{...result.artifact,type:grade}}:result;
+    const score=craftScore(scoringResult,options);
+    const {candidates,incomplete}=benchmark({type,hall,owned,options});
     if(incomplete)return {status:'incomplete',capacity,incomplete};
     const threshold=candidates[capacity-1]?.score ?? null;
     if(score===null)return {status:'unconfirmed',capacity,threshold,count:candidates.length,top:candidates.slice(0,capacity)};
@@ -105,13 +129,14 @@
     // A tie does not displace an owned item. An underfilled group is a vacancy,
     // not evidence that the craft beats an existing top-N threshold.
     const potential=result?.valid?craftPotential(scoringResult,options):null;
-    return {status:threshold===null?'vacancy':score>threshold?'better':score===threshold?'tie':'below',
+    return {status:result?.partial?'partial':threshold===null?'vacancy':score>threshold?'better':score===threshold?'tie':'below',
       provisional:!!potential?.rerollUncertain || candidates.some(item=>item.uncertain),baseScore:potential?.basePreference,rerollGain:potential?.rerollGain,rerollIndex:potential?.rerollIndex,
       capacity,score,rank,threshold,count:candidates.length,top:candidates.slice(0,capacity)};
   }
   const isUnlockedKeeper=result=>result?.unlocked?.count===3;
-  window.DNScannerComparisonCore={compare,currentRows,maxRows,statRow,estimate,isUnlockedKeeper,captureCompleteness,craftScore,craftPotential};
+  window.DNScannerComparisonCore={compare,createComparator,currentRows,maxRows,statRow,estimate,isUnlockedKeeper,captureCompleteness,craftScore,craftPotential,craftOptions};
   const type=document.getElementById('scanner-compare-type');if(!type)return;
+  const compareOwned=createComparator();
   const flag=document.getElementById('scanner-comparison'),detail=document.getElementById('scanner-comparison-detail'),hall=document.getElementById('scanner-hall');
   let latest=null,confirmed=false,options=null,owned=[],loading=true,error='',request=0,loadedProfile=null;
   let cataloguePromise;
@@ -119,6 +144,7 @@
   let typeHall=null;
   let captureResult=null;
   let captureRetained=false;
+  let keeperResult=null;
   function showCategory() {
     const label=document.getElementById('scanner-category-label');
     const choice=document.getElementById('scanner-category-choice');
@@ -134,9 +160,24 @@
     if((DN.ARTIFACT_TYPE_EXHIBITS[hallName(hall.value)] || []).some(ex=>ex.key.replace(/^war-/,'')===previous))type.value=previous;
     showCategory();
   }
+  function renderBenchmarks() {
+    const list=document.getElementById('scanner-benchmarks');
+    if(!list)return;
+    document.getElementById('scanner-benchmarks-label').textContent=hallName(hall.value)+' · Top 2 cutoffs';
+    const available=options && (options.prefSortAxes.offensive || options.prefSortAxes.defensive) && !error && loadedProfile===DN.activeProfileId();
+    list.innerHTML=(DN.ARTIFACT_TYPE_EXHIBITS[hallName(hall.value)] || []).map(ex=>{
+      const category=ex.key.replace(/^war-/,''),role=hallName(hall.value)==='War'?'Off':category==='weapon'?[options?.prefSortAxes.offensive?'Off':'',options?.prefSortAxes.defensive?'Def':''].filter(Boolean).join('+') || 'Off/Def':['armor','pottery'].includes(category)?'Def':'Off',label=ex.label.replace(/ Exhibit$/,'').replace(/^War /,'')+' · '+role;
+      const result=available?compareOwned(null,{type:category,hall:hall.value,owned,options,limit:2}):null;
+      const uncertain=result?.top?.some(item=>item.uncertain);
+      const value=!result || result.status==='incomplete'?'—':result.threshold===null?'Open':(uncertain?'~':'')+result.threshold;
+      const note=!available?'Benchmark unavailable':result.status==='incomplete'?'Owned stats need review':result.threshold===null?result.count+' / 2 owned':'Must score above '+value+(uncertain?' · Reroll availability needs review':'');
+      return '<div data-category="'+DN.esc(category)+'"'+(type.value===category?' class="is-current"':'')+' title="'+DN.esc(note)+'"><dt>'+DN.esc(label)+'</dt><dd>'+DN.esc(value)+'</dd></div>';
+    }).join('');
+  }
   function render() {
     const benchmark=document.getElementById('scanner-benchmark');
     if(!benchmark)return;
+    renderBenchmarks();
     const get=id=>document.getElementById('scanner-'+id),capture=captureCompleteness(captureResult);
     const board=get('glance-board');
     board.style.setProperty('--capture-hue',String(capture.percent*1.2));
@@ -144,30 +185,60 @@
     get('capture-meter').value=capture.percent;
     get('capture-detail').textContent=capture.captured+' / '+capture.expected+' fields captured'+(captureRetained?' · Last read':'');
     board.title=capture.names+'/5 names · '+capture.values+'/5 percentages · '+capture.stars+'/5 stars · Type '+(capture.type?'read':'unread')+' · Hall '+(capture.hall?'read':'unread')+(capture.diceExpected?' · '+capture.dice+'/'+capture.diceExpected+' dice':'');
-    benchmark.className='scanner-summary-card scanner-benchmark';
+    const keeper=isUnlockedKeeper(keeperResult);
+    benchmark.className='scanner-summary-card scanner-benchmark is-unknown'+(keeper?' is-unlocked-keeper':'');
     const label=type.value?type.value.charAt(0).toUpperCase()+type.value.slice(1):'Item';
-    get('item-type').textContent=label+' total';get('item-total').textContent='—';get('benchmark-value').textContent='—';
-    flag.textContent='Waiting for an item';detail.textContent='';
+    const scoreLabel=label+(latest?.partial?' subtotal':' total');
+    get('item-type').textContent=scoreLabel;get('item-total').textContent='—';get('benchmark-value').textContent='—';
+    flag.textContent='Waiting for an item';detail.textContent=keeper?'3 open stats · Keep for review':'';
     if(!options){flag.textContent='Waiting for an item';return;}
     if(!options.prefSortAxes.offensive && !options.prefSortAxes.defensive){flag.textContent='Select Off or Def';return;}
-    const potential=confirmed && latest?.valid?craftPotential({...latest,hall:latest.hall || hall.value},options):null;
+    const potential=confirmed && latest?.valid?craftPotential({...latest,hall:latest.hall || hall.value,artifact:{...latest.artifact,type:type.value || latest.artifact?.type}},options):null;
     const score=potential?.potentialPreference ?? null;
-    if(score!==null)get('item-total').textContent=(latest.provisional || potential.rerollUncertain?'~':'')+score;
-    if(!type.value){flag.textContent='Item type unread';return;}
+    if(score!==null){
+      get('item-total').textContent=(latest.provisional || potential.rerollUncertain?'~':'')+score;
+      const axes=craftOptions(options,{hall:latest.hall || hall.value,type:type.value,rows:latest.rows}).prefSortAxes;
+      get('item-type').textContent=scoreLabel+' · '+[axes.offensive?'Off':'',axes.defensive?'Def':''].filter(Boolean).join('+');
+    }
+    if(!type.value){
+      flag.textContent='Item type unread';
+      if(latest?.partial)flag.textContent='Incomplete · '+latest.scoredCount+'/5 stats scored · Item type unread';
+      if(score!==null && !latest?.partial && !error && loadedProfile===DN.activeProfileId()) {
+        const categories=DN.ARTIFACT_TYPE_EXHIBITS[hallName(hall.value)] || [];
+        const belowAll=categories.length>0 && categories.every(ex=>{
+          const result=compareOwned(latest,{type:ex.key.replace(/^war-/,''),hall:hall.value,owned,options,limit:2});
+          return ['below','tie'].includes(result.status);
+        });
+        if(belowAll){
+          benchmark.classList.remove('is-unknown');
+          benchmark.classList.add('is-below-cutoff');
+          flag.textContent='Below top 2 in every category · Item type unread';
+        }
+      }
+      return;
+    }
     if(loading && loadedProfile!==DN.activeProfileId()){flag.textContent='Loading your collection…';return;}
     if(error){flag.textContent=error;return;}
-    const comparison=compare(confirmed?latest:null,{type:type.value,hall:hall.value,owned,options,levels:DN.loadLevels(),limit:2});
+    const comparison=compareOwned(confirmed?latest:null,{type:type.value,hall:hall.value,owned,options,limit:2});
     if(comparison.status==='incomplete'){flag.textContent='Benchmark unavailable · owned stats incomplete';return;}
     if(comparison.status==='type'){flag.textContent='Item type needs review';return;}
     get('benchmark-value').textContent=comparison.threshold===null?'Open slot':String(comparison.threshold);
+    if(comparison.status==='partial') {
+      flag.textContent='Incomplete · '+latest.scoredCount+'/5 stats scored';
+      detail.textContent='Readable stats '+comparison.baseScore+' · Reroll gain +'+comparison.rerollGain+(keeper?' · 3 open stats · Keep for review':'');
+      return;
+    }
     if(comparison.status==='unconfirmed'){flag.textContent=latest?'Stats need review':'Waiting for an item';return;}
     const qualifies=comparison.status==='better' || comparison.status==='vacancy';
+    const provisional=latest.provisional || comparison.provisional;
+    benchmark.classList.remove('is-unknown');
     benchmark.classList.add(qualifies?'is-top-two':'is-below-cutoff');
-    if(latest.provisional || comparison.provisional)benchmark.classList.add('is-provisional');
+    if(provisional)benchmark.classList.add('is-provisional');
     flag.textContent=(latest.provisional || comparison.provisional?'Estimated · ':'')+(qualifies?'Makes top 2':comparison.status==='tie'?'Ties benchmark':'Below top 2');
     detail.textContent=comparison.threshold===null?comparison.count+' / 2 owned':
       (comparison.score-comparison.threshold>0?'+':'')+(comparison.score-comparison.threshold)+' points · Rank '+comparison.rank;
     detail.textContent+=' · Upgraded '+comparison.baseScore+' → Potential '+comparison.score+(comparison.rerollGain>0?' (+ '+comparison.rerollGain+' from stat '+(comparison.rerollIndex+1)+')':'')+(comparison.provisional?' · Reroll availability needs review':'');
+    if(keeper)detail.textContent+=' · 3 open stats · Keep for review';
   }
   async function refresh() {
     const ticket=++request,profile=DN.activeProfileId();loading=true;error='';render();
@@ -185,6 +256,7 @@
   }
   window.DNScannerComparison={update(result,isConfirmed,opts,state={}){
     latest=result;confirmed=isConfirmed;options=opts;
+    keeperResult=Object.prototype.hasOwnProperty.call(state,'keeperResult')?state.keeperResult:result;
     captureResult=Object.prototype.hasOwnProperty.call(state,'captureResult')?state.captureResult:result;
     captureRetained=!!state.captureRetained;
     const detectedResult=Object.prototype.hasOwnProperty.call(state,'categoryResult')?state.categoryResult:result;

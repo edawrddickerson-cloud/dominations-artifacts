@@ -78,7 +78,7 @@
       const hall=hallOf(result);
       const observations=(result.observations || [{pass:'read',rows:result.rows || [],warnings:result.warnings || []}])
         .map(item=>({...item,rows:item.rows.filter(row=>row.known || /%/.test(row.raw || ''))}));
-      const fingerprint=JSON.stringify({hall,type:result.artifact?.type,observations:observations.map(item=>item.rows.map(row=>[row.raw,row.name,row.value])),presentation:result.presentation});
+      const fingerprint=JSON.stringify({hall,type:result.artifact?.type,observations:observations.map(item=>item.rows.map(row=>[row.raw,row.name,row.value,!!row.known,!!row.assumed,row.nameMatch?.automatic])),presentation:result.presentation});
       if(previous===fingerprint || !observations.some(item=>item.rows.length))return false;
       if(scans.length>=5000)return false;
       previous=fingerprint;
@@ -88,9 +88,12 @@
       for(const observation of observations)for(const row of observation.rows) {
         const name=String(row.name || '').trim();if(!name)continue;
         const key=labelKey(name,hall);
-        if(seen.has(key))continue;seen.add(key);
         if(!labels.has(key))labels.set(key,{name,hall,known:!!row.known && !row.assumed,assumed:!!row.assumed,seenInScans:0,values:[],samples:[],firstSeen:timestamp,lastSeen:timestamp});
-        const entry=labels.get(key);entry.seenInScans++;entry.lastSeen=timestamp;
+        const entry=labels.get(key);
+        if(!seen.has(key)){entry.seenInScans++;seen.add(key);}entry.lastSeen=timestamp;
+        // A later clear match can resolve an earlier assumption, including an
+        // independent row pass in the same scan. Weaker retries cannot undo it.
+        if(row.known && !row.assumed){entry.known=true;entry.assumed=false;}
         if(row.value!==null && Number.isFinite(row.value) && !entry.values.includes(row.value))entry.values.push(row.value);
         if(row.raw && entry.samples.length<5 && !entry.samples.includes(row.raw))entry.samples.push(row.raw);
       }
@@ -125,14 +128,12 @@
     count.textContent=data.scanCount+' distinct reads · '+data.labels.length+' unique labels · '+unknown.length+' not in current perk settings'+(data.scanCount>=5000?' · Limit reached; export and clear.':'');
     const hallLabel=hall=>hall==='war'?'War':hall==='main'?'Main (Multiplayer)':'Hall unclear';
     list.textContent=unknown.map(item=>hallLabel(item.hall)+' · '+item.name+' ('+item.seenInScans+' reads)').join('\n') || 'No unknown labels collected yet.';
-    document.getElementById('scanner-export').disabled=!data.scanCount;
     const log=document.getElementById('scanner-item-log');
     if(log) {
       document.getElementById('scanner-item-count').textContent=data.itemCount+' items logged'+(data.itemCount>=5000?' · Limit reached; export and clear.':'');
       const escape=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
       log.innerHTML=data.items.slice().reverse().map((item,index)=>'<li><strong>Item '+(data.itemCount-index)+'</strong> · '+escape(hallLabel(item.hall))+' · '+(item.corrected?'Corrected':item.validated?'Read complete':'Needs review')+
         '<ol>'+Array.from({length:item.expectedRows},(_,i)=>{const row=item.rows[i];return '<li>'+escape(row?.name || row?.raw || 'Unread stat')+' <strong>'+escape(Number.isFinite(row?.value)?(row.value>=0?'+':'')+row.value+'%':'?%')+'</strong>'+(row?.inferred?' (inferred)':row?.assumed?' (assumed)':'')+'</li>';}).join('')+'</ol></li>').join('');
-      document.getElementById('scanner-export').disabled=!data.scanCount && !data.itemCount;
     }
   }
   window.DNScannerCollection={isEnabled:()=>enabled.checked,record:result=>{if(enabled.checked){collector.record(result);persist();render();}},recordItem:(result,id,options)=>{if(enabled.checked){collector.recordItem(result,id,options);persist();render();}}};
@@ -146,10 +147,6 @@
     render();
   });
   enabled.addEventListener('change',()=>{if(enabled.checked)document.getElementById('scanner-read').click();});
-  document.getElementById('scanner-export').addEventListener('click',()=>{
-    const blob=new Blob([JSON.stringify(collector.exportData(),null,2)],{type:'application/json'}), url=URL.createObjectURL(blob);
-    const anchor=document.createElement('a');anchor.href=url;anchor.download='artifact-perk-observations-'+new Date().toISOString().slice(0,10)+'.json';anchor.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
-  });
   document.getElementById('scanner-collection-clear').addEventListener('click',()=>{if(confirm('Clear the item log and collected labels, including saved logs? Export first if you want to keep them.')){collector.clear();persist();render();}});
   if(initialData)persist();
   render();

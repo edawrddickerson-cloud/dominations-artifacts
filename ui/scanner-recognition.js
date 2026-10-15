@@ -2,7 +2,7 @@
  * Authority: Approved scanner brief; pic1.png is the first verified five-row layout.
  * Ownership: Local panel candidate detection and OCR input validation, never scoring.
  * Invariants: Preserve locked/duplicate rows; unknown or partial input needs review;
- * pixels remain local; five or six percentage-bearing rows; close matches stay labelled assumptions;
+ * pixels remain local; five or six percentage-bearing rows; strong unique name matches register automatically;
  * each stat has fixed polarity and every Invading effect is negative; raw signs stay untouched.
  * History: Gold-frame layout evidence comes from one screenshot, not all game UIs.
  * Saved crafting field boxes use independent OCR with a bounded standard fallback;
@@ -28,14 +28,14 @@
     for(let i=1;i<=a.length;i++)for(let j=1;j<=b.length;j++) {
       rows[i][j]=Math.min(rows[i-1][j]+1,rows[i][j-1]+1,rows[i-1][j-1]+(a[i-1]===b[j-1]?0:alike(a[i-1],b[j-1])?.3:1));
       if(i>1 && j>1 && a[i-1]===b[j-2] && a[i-2]===b[j-1])rows[i][j]=Math.min(rows[i][j],rows[i-2][j-2]+.7);
-      for(const [wide,narrow] of [['rn','m'],['vv','w'],['cl','d']]) {
+      for(const [wide,narrow] of [['rn','m'],['ri','n'],['vv','w'],['cl','d']]) {
         if(i>1 && a.slice(i-2,i)===wide && b[j-1]===narrow)rows[i][j]=Math.min(rows[i][j],rows[i-2][j-1]+.4);
         if(j>1 && b.slice(j-2,j)===wide && a[i-1]===narrow)rows[i][j]=Math.min(rows[i][j],rows[i-1][j-2]+.4);
       }
     }
     return rows[a.length][b.length];
   }
-  const nameParts=new WeakMap();
+  const nameParts=new WeakMap(),nameVocabulary=new WeakMap();
   function splitName(text,recoverPrefix=false) {
     let words=normalized(text).replace(/^[^a-z]+/,'').split(' '),prefix='',prefixCost=0;
     if(['enemy','invading'].includes(words[0]))prefix=words.shift();
@@ -94,8 +94,7 @@
   function closeName(label,names,value) {
     // Observed OCR token confusions only. Still a suggestion against the catalogue,
     // never an alias, a new perk definition, or a percentage correction.
-    const confusions={bitpomis:'hitpoints',hitporis:'hitpoints',hithomits:'hitpoints',htpoiris:'hitpoints',hitpoinis:'hitpoints',figjhites:'fighter',hitpomts:'hitpoints',hitpomnts:'hitpoints',hitpainis:'hitpoints',hipomnis:'hitpoints',hitpoimis:'hitpoints',hitpairits:'hitpoints',guernlla:'guerrilla',guernla:'guerrilla',tactucal:'tactical',siper:'sniper',sripes:'sniper',sriped:'sniper',oll:'oil',dannage:'damage',danmage:'damage',dantage:'damage',bomiber:'bomber',vauk:'vault',heawy:'heavy',assauli:'assault',farest:'forest'};
-    const words=normalized(label).replace(/\bexpan san\b/g,'expansion').split(' ').map(word=>confusions[word] || word);
+    const words=correctNameWords(normalized(label),names).text.split(' ');
     if(words[0]?.length>=5 && !['enemy','invading'].includes(words[0])) {
       const prefixes=['enemy','invading'].filter(prefix=>distance(words[0],prefix)<=2);
       if(prefixes.length===1)words[0]=prefixes[0];
@@ -108,6 +107,43 @@
       .map(item=>({...item,distance:distance(text,item.text)})).sort((a,b)=>a.distance-b.distance);
     const best=candidates[0], limit=text.length>=28?3:text.length>=20?2:1;
     return best && best.distance<=limit && (!candidates[1] || candidates[1].distance>best.distance+1)?best.name:structuredName(label,names,value);
+  }
+  // Similarity is a matching heuristic, not a calibrated OCR probability.
+  // Require strong absolute evidence and separation from the runner-up.
+  const NAME_MATCH_THRESHOLD=.90, NAME_MATCH_MARGIN=1.25;
+  function correctNameWords(text,names) {
+    if(!nameVocabulary.has(names))nameVocabulary.set(names,new Set(names.flatMap(name=>normalized(name).split(' '))));
+    const protectedWords=nameVocabulary.get(names);
+    return window.DNScannerNameCatalog?.correct(text,{protectedWords}) || {text,corrections:[],confidence:1};
+  }
+  function matchName(label,names,value,{threshold=NAME_MATCH_THRESHOLD}={}) {
+    const raw=normalized(label),exact=names.find(name=>normalized(name)===raw);
+    if(exact)return {name:exact,confidence:1,automatic:true,method:'exact'};
+    const corrected=correctNameWords(raw,names),text=corrected.text,source=splitName(text,true);
+    if(text.length<10 || source.entity.length<3)return null;
+    if(!nameParts.has(names))nameParts.set(names,names.map(name=>({name,...splitName(name)})));
+    const effects=new Set(nameParts.get(names).map(item=>item.effect));
+    const candidates=[],input=text.replace(/\s/g,''),rawInput=raw.replace(/\s/g,'');
+    const rawSimilarity=name=>{
+      const target=normalized(name).replace(/\s/g,'');
+      return Math.max(0,1-glyphDistance(rawInput,target)/Math.max(rawInput.length,target.length));
+    };
+    for(const candidate of nameParts.get(names)) {
+      if(source.prefix!==candidate.prefix)continue;
+      if(Number.isFinite(value) && expectedSign(candidate.name)!==null && expectedSign(candidate.name)!==Math.sign(value))continue;
+      if(effects.has(source.effect) && source.effect!==candidate.effect)continue;
+      const target=normalized(candidate.name).replace(/\s/g,'');
+      const cost=glyphDistance(input,target),similarity=Math.max(0,1-cost/Math.max(input.length,target.length));
+      candidates.push({name:candidate.name,cost,confidence:similarity*corrected.confidence});
+    }
+    candidates.sort((a,b)=>a.cost-b.cost || a.name.localeCompare(b.name));
+    const best=candidates[0],margin=best?(candidates[1]?.cost ?? Infinity)-best.cost:0;
+    if(best && best.confidence>=threshold && best.cost<=4 && margin>=NAME_MATCH_MARGIN && source.prefixCost<=1) {
+      return {name:best.name,confidence:best.confidence,rawSimilarity:rawSimilarity(best.name),corrections:corrected.corrections,margin:Number.isFinite(margin)?margin:null,automatic:true,method:corrected.corrections.length?'ocr-catalogue':'ocr-glyphs'};
+    }
+    const suggestion=closeName(label,names,value);
+    const candidate=candidates.find(item=>item.name===suggestion);
+    return suggestion?{name:suggestion,confidence:candidate?.confidence ?? 0,rawSimilarity:rawSimilarity(suggestion),corrections:corrected.corrections,margin:Number.isFinite(margin)?margin:null,automatic:false,method:'suggestion'}:null;
   }
   function usefulRow(row) {
     if(!row || !Number.isFinite(row.value) || Math.abs(row.value)>40 || row.value===null)return false;
@@ -150,13 +186,14 @@
       const label = match ? match[1].trim() : (tail?tail[1]:damagedTail?damagedTail[1]:raw.replace(/\s+[+-].*$/, "")).trim();
       const exact = catalogue.get(normalized(canonPerk(label))) || catalogue.get(normalized(label));
       const value = match ? Number(match[2].replace(/\s/g, "").replace(",", ".")) : null;
-      const canonical = exact || closeName(label,names,value);
+      const matched=exact?{name:exact,confidence:1,automatic:true,method:'exact'}:matchName(label,names,value);
+      const canonical = matched?.name;
       if(!canonical && !raw.includes('%'))continue;
       const outOfRange=Number.isFinite(value) && Math.abs(value)>40;
-      rows.push({raw, name: canonical || label, value: Number.isFinite(value) && !outOfRange ? value : null, known: !!canonical, assumed:!!canonical && !exact, hasPercent:raw.includes('%'),...(outOfRange?{outOfRange:true}:{}),...(trailingNoise?{trailingNoise:true}:{})});
+      rows.push({raw, rawName:label, name: canonical || label, value: Number.isFinite(value) && !outOfRange ? value : null, known: !!canonical, assumed:!!canonical && !matched.automatic, nameCorrected:!!canonical && !exact, nameMatch:matched, hasPercent:raw.includes('%'),...(outOfRange?{outOfRange:true}:{}),...(trailingNoise?{trailingNoise:true}:{})});
       if(outOfRange)warnings.push('Percentage outside -40% to +40%: '+raw+'. Retry or correct this row.');
       if(trailingNoise)warnings.push('Ignored background text after the percentage for '+canonical+'. Verify this row.');
-      if(canonical && !exact)warnings.push('Assumed OCR spelling: '+label+' → '+canonical+'. Verify this row.');
+      if(canonical && !matched.automatic)warnings.push('Assumed OCR spelling: '+label+' → '+canonical+'. Verify this row.');
       if (!canonical) warnings.push("Unknown or ambiguous perk: " + label);
       if (!match || !Number.isFinite(value)) warnings.push("Unreadable signed percentage: " + raw);
     }
@@ -186,11 +223,12 @@
     const amount=signed?Number(percentage.replace(/[\s%]/g,'').replace(',','.')):null;
     const value=Number.isFinite(amount) && Math.abs(amount)<=40?amount:null;
     const exact=names.find(name=>normalized(name)===normalized(canonPerk(label)) || normalized(name)===normalized(label));
-    const name=exact || closeName(label,names,value);
-    const row={raw:label+' '+percentage,rawName:String(nameText || ''),rawPercentage:percentage,name:name || label,value,known:!!name,assumed:!!name && !exact,hasPercent:percentage.includes('%')};
+    const matched=exact?{name:exact,confidence:1,automatic:true,method:'exact'}:matchName(label,names,value);
+    const name=matched?.name;
+    const row={raw:label+' '+percentage,rawName:String(nameText || ''),rawPercentage:percentage,name:name || label,value,known:!!name,assumed:!!name && !matched.automatic,nameCorrected:!!name && !exact,nameMatch:matched,hasPercent:percentage.includes('%')};
     const warnings=[];
     if(!name)warnings.push('Unknown or ambiguous perk: '+label);
-    else if(!exact)warnings.push('Assumed OCR spelling: '+label+' → '+name+'. Verify this row.');
+    else if(!matched.automatic)warnings.push('Assumed OCR spelling: '+label+' → '+name+'. Verify this row.');
     if(value===null)warnings.push('Unreadable signed percentage: '+percentage);
     warnings.push(...signIssues([row]));
     // Overlapping crops provide an independent contradiction check.
@@ -266,7 +304,8 @@
     return {...classifyStars(fills),fills};
   }
   function reconcileReads(first, retry,expectedRows=5) {
-    if(!retry.valid && (coverage(retry.rows,expectedRows).total<coverage(first.rows,expectedRows).total || (coverage(retry.rows,expectedRows).total===coverage(first.rows,expectedRows).total && first.rows.length===expectedRows)))return first;
+    if(!retry.valid && retry.rows.length<first.rows.length && retry.rows.every((row,i)=>
+      !row.conflict && row.name===first.rows[i].name && (row.value===null || row.value===first.rows[i].value)))return first;
     if(first.rows.length && first.rows.length!==retry.rows.length) {
       // A complete independent row pass may recover omitted dim text, provided
       // the initial rows occur in order and contain no contradictory evidence.
@@ -279,18 +318,20 @@
         }
         return false;
       });
-      if(!compatible)return {...retry,valid:false,warnings:[...retry.warnings,'OCR reads disagree about the visible row count. Verify the full panel.']};
+      if(!compatible)return {...retry,rows:retry.rows.map(row=>({...row,conflict:true})),valid:false,warnings:[...retry.warnings,'OCR reads disagree about the visible row count. Verify the full panel.']};
     }
     if(first.rows.length===retry.rows.length) {
-      const conflicts=first.rows.some((row,index)=>{
+      const conflicting=first.rows.map((row,index)=>{
         const next=retry.rows[index];
         const qualifier=name=>normalized(name).match(/^(enemy|invading)\b/)?.[1] || '';
-        return (row.known && (row.name!==next.name || (row.value!==null && row.value!==next.value))) ||
+        return row.conflict || next.conflict || (row.known && next.known && row.name!==next.name) ||
+          (row.known && Number.isFinite(row.value) && Number.isFinite(next.value) && row.value!==next.value) ||
           (Number.isFinite(row.value) && Number.isFinite(next.value) && Math.sign(row.value)!==Math.sign(next.value)) ||
-          qualifier(row.name)!==qualifier(next.name);
+          (!!row.name && !!next.name && qualifier(row.name)!==qualifier(next.name));
       });
-      if(conflicts)return {...retry,valid:false,warnings:[...retry.warnings,'OCR reads disagree about perk names or values. Verify the conflicting rows.']};
+      if(conflicting.some(Boolean))return {...retry,rows:retry.rows.map((row,index)=>conflicting[index]?{...row,conflict:true}:row),valid:false,warnings:[...retry.warnings,'OCR reads disagree about perk names or values. Verify the conflicting rows.']};
     }
+    if(!retry.valid && (coverage(retry.rows,expectedRows).total<coverage(first.rows,expectedRows).total || (coverage(retry.rows,expectedRows).total===coverage(first.rows,expectedRows).total && first.rows.length===expectedRows)))return first;
     return retry;
   }
   function combineReads(first,retry,expectedRows=5) {
@@ -301,7 +342,7 @@
     let conflicts=false,changed=false;
     const rows=first.rows.map((row,index)=>{
       const next=retry.rows[index],a=qualifier(row),b=qualifier(next);
-      const conflict=!!row.name && !!next.name && (
+      const conflict=row.conflict || next.conflict || !!row.name && !!next.name && (
         row.known && next.known && row.name!==next.name ||
         Number.isFinite(row.value) && Number.isFinite(next.value) && row.value!==next.value ||
         a!==b && (row.known && next.known || a && b));
@@ -405,35 +446,43 @@
     return {hall:selected==='war'?'war':'main',source:'selected-hall'};
   }
   function create({names, canonPerk}) {
-    let worker=null, initializing=null, closed=false;
-    async function getWorker() {
+    const workers=new Map(),initializing=new Map();let closed=false;
+    async function getWorker(kind='standard') {
       if(closed) throw new Error("Recognition stopped");
-      if(!initializing) initializing = (async () => {
+      if(!initializing.has(kind)) initializing.set(kind,(async () => {
         const base = new URL("./vendor/tesseract/", document.baseURI).href;
         const created = await window.Tesseract.createWorker("eng", 1, {
-          workerPath:base+"worker.min.js", corePath:base+"core/", langPath:base+"lang/",
-          workerBlobURL:false, cacheMethod:"none", logger:() => {},
+          workerPath:base+"worker.min.js", corePath:base+"core/", langPath:base+(kind==='fast'?'lang-fast/':'lang/'),
+          workerBlobURL:false, cachePath:kind==='fast'?'dn-eng-fast-7d4322bd':'dn-eng-standard-ed350f37',logger:() => {},
         });
         if(closed) { await created.terminate(); throw new Error("Recognition stopped"); }
-        worker=created;
-        await worker.setParameters({tessedit_pageseg_mode:"6", preserve_interword_spaces:"1"});
-        return worker;
-      })();
-      return initializing;
+        workers.set(kind,created);
+        await created.setParameters({tessedit_pageseg_mode:"6", preserve_interword_spaces:"1"});
+        return created;
+      })());
+      return initializing.get(kind);
     }
     async function recognize(source, {expectedRows=5, layout="panel",hall='main',inferColours=false,categorySource=null,fields=null,colourHall=null,knownTiers=[]}={}) {
       expectedRows=Number(expectedRows)===6?6:5;
       // Freeze small field crops synchronously, before worker initialization yields.
       const fieldViews=layout==='panel' && fields?window.DNScannerFieldRecognition?.snapshot(fields):null;
       let activeWorker;
-      try {activeWorker=await getWorker();}catch(error){fieldViews?.release?.();throw error;}
+      try {activeWorker=await getWorker(fieldViews?.valid?'fast':'standard');}catch(error){fieldViews?.release?.();throw error;}
       let ocrCalls=0;
       const readView=(...args)=>{ocrCalls++;return activeWorker.recognize(...args);};
-      if(layout==='storage' || layout==='storage-rows' || layout==='storage-rows-dice')return window.DNStorageRecognition.recognize(source,{worker:activeWorker,names,canonPerk,expectedRows,layout,hall,knownTiers,isClosed:()=>closed});
+      if(layout==='storage' || layout==='storage-rows' || layout==='storage-rows-dice')return window.DNStorageRecognition.recognize(source,{worker:activeWorker,names,canonPerk,expectedRows,layout,hall,knownTiers,fields,isClosed:()=>closed});
       if(fieldViews?.valid) {
         try {
-          const calibrated=await window.DNScannerFieldRecognition.recognize(fieldViews,{worker:activeWorker,readView,names,canonPerk,hall,inferColours,categorySource,isClosed:()=>closed,ocrCalls:()=>ocrCalls});
-          if(calibrated.valid && calibrated.unlocked.count!==null && (calibrated.artifact?.type || !fieldViews.crops.category && !categorySource?.width))return calibrated;
+          let calibrated=await window.DNScannerFieldRecognition.recognize(fieldViews,{worker:activeWorker,readView,names,canonPerk,hall,inferColours,categorySource,isClosed:()=>closed,ocrCalls:()=>ocrCalls});
+          // Metadata uses its own pixels. Repeating every text row cannot repair
+          // an unread category or star, and used to multiply complete read time.
+          if(calibrated.valid) {
+            if(calibrated.unlocked.count===null) {
+              const stars=readStars(source,layout);
+              if(stars.count!==null)calibrated={...calibrated,unlocked:stars,rows:calibrated.rows.map((row,i)=>({...row,unlocked:stars.states[i]}))};
+            }
+            return calibrated;
+          }
           // A bounded standard pass protects established successful reads.
           // Contradictory field evidence still goes through the conflict rules.
           await activeWorker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});
@@ -627,8 +676,8 @@
         }
       } finally { canvas.width=canvas.height=0;if(calibrated)calibrated.width=calibrated.height=0; }
     }
-    async function close() { closed=true; if(worker) { const previous=worker; worker=null; await previous.terminate(); } }
-    return {recognize,close};
+    async function close() { closed=true;const previous=[...workers.values()];workers.clear();await Promise.all(previous.map(worker=>worker.terminate())); }
+    return {recognize,close,warm:({fast=false}={})=>getWorker(fast?'fast':'standard')};
   }
-  window.DNScannerRecognition={parseText,parseFieldRow,positionRows,signIssues,reconcileReads,combineReads,classifyBrightness,classifyStars,rowColours,inferColourValues,usefulRow,coverage,textContrast,detectPanel,parseCraftCategory,craftCategoryEvidence,classifyHallColour,hallColour,craftHall,categoryRect,create};
+  window.DNScannerRecognition={matchName,NAME_MATCH_THRESHOLD,parseText,parseFieldRow,positionRows,signIssues,reconcileReads,combineReads,classifyBrightness,classifyStars,rowColours,inferColourValues,usefulRow,coverage,textContrast,detectPanel,parseCraftCategory,craftCategoryEvidence,classifyHallColour,hallColour,craftHall,categoryRect,create};
 })();

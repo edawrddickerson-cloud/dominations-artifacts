@@ -21,7 +21,7 @@
   const elapsedMs=performance.now()-started;
   const rows=[...get('result').querySelectorAll('.scanner-perk')].map(row=>({name:row.querySelector('span').textContent.replace(/^\d+\. /,''),value:Number(row.querySelectorAll('span')[1].textContent.replace('%',''))}));
   const exact=JSON.stringify(rows)===JSON.stringify(labels.rows);
-  const automaticCategory=get('compare-type').value==='pottery' && get('item-type').textContent==='Pottery total';
+  const automaticCategory=get('compare-type').value==='pottery' && get('item-type').textContent==='Pottery total · Def';
   const rating=get('result').querySelector('.scanner-score')?.textContent;
   const unlocked=get('result').querySelectorAll('.scanner-perk.is-unlocked').length===1;
   const colourBadges=[...get('result').querySelectorAll('.scanner-colour')].map(badge=>badge.textContent);
@@ -40,12 +40,12 @@
   const crop={width:get('crop').width,height:get('crop').height};
   const autoDetected=crop.width<1316 && crop.width>500 && get('layout').value==='panel';
   const collectionBeforeStop=get('collection-count').textContent;
-  const collected=collectionBeforeStop.startsWith('1 distinct reads · 4 unique labels') && !get('export').disabled;
+  const collected=collectionBeforeStop.startsWith('1 distinct reads · 4 unique labels') && !!savedCraft;
   get('stop').click();
   const cleared=get('result').textContent.includes('Waiting for stat') && !get('result').querySelector('.is-unlocked') && get('correct').textContent==='' && get('read').disabled && get('stop').disabled && get('status').textContent==='Disconnected';
   await new Promise(resolve=>setTimeout(resolve,1000));
   const remainsCleared=get('result').textContent.includes('Waiting for stat') && get('result-status').textContent==='No artifact read yet.';
   const liveScoreCleared=get('item-total').textContent.includes('—') && get('capture-percent').textContent==='0%';
-  const collectionRetained=get('collection-count').textContent===collectionBeforeStop && !get('export').disabled;
+  const collectionRetained=get('collection-count').textContent===collectionBeforeStop && !!JSON.parse(localStorage.getItem('dn-crafting-scanner-log-v2'))?.items.length;
   return {fixture:'pic1.png',browser:navigator.userAgent,elapsedMs,rows,exact,automaticCategory,categoryEvidence,rating,unlocked,colourBadges,coloursShown,glance,scoreSummaryVisible,liveScoreCleared,warnings,resultStatus,crop,autoDetected,collected,collectionRetained,collectionBeforeStop,stopCleared:cleared,remainsCleared,passed:exact&&automaticCategory&&!!rating&&unlocked&&coloursShown&&glance&&scoreSummaryVisible&&liveScoreCleared&&!warnings&&autoDetected&&cleared&&remainsCleared&&collected&&collectionRetained,limitations:'Actual screenshot file-loading/detection/OCR/rating/collection/Stop UI exercised, including automatic Pottery category, colour labels with percentage inference disabled and pinned score visibility. Does not test getDisplayMedia permission, live game captures or background scheduling.'};
 })()

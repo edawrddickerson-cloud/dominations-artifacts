@@ -18,23 +18,25 @@
     {name:'Invading Generals\' Damage',value:-6,level:1,unlocked:false,base:-6,max:-15},
     {name:'Heavy Infantry Hitpoints',value:1,level:null,unlocked:true,base:null,max:null},
     {name:'Heavy Infantry Hitpoints',value:6,level:1,unlocked:true,base:6,max:15},
-    {name:'Tactical Helicopter Hitpoints',value:1,level:1,unlocked:null,base:1,max:10}]
-    .map(row=>({...row,known:true,hasPercent:true,levelSource:row.level==null?null:'ocr'}));
+    {name:'Tactical Helicopter Hitpoints',value:1,level:1,unlocked:true,base:1,max:10}]
+    .map(row=>({...row,known:true,hasPercent:true,rerollEligible:false,levelSource:row.level==null?null:'ocr'}));
   const canvas=document.createElement('canvas');canvas.width=canvas.height=10;
   const image=canvas.toDataURL('image/jpeg');
   const result={valid:true,warnings:[],rows,artifact:{name:'Transfer fixture',type:'Weapon',hall:'main',image}};
   window.DNStorageScanner.update(result,true,{reviewable:true,expectedRows:5});
   check('review enables keep',!get('keep').disabled);
   get('keep').click();get('keep').click();
-  check('separate copies kept',get('items').children.length===2);
+  check('duplicate rejected while scanning',get('items').children.length===1 && get('keep').disabled && get('keep-status').textContent.includes('Exact duplicate'));
   const saved=await store.read('items');
-  check('saved detail',saved.length===2 && saved[0].rows[0].base===11 && saved[0].rows[1].max===-15 && saved[0].image===image && saved[0].id!==saved[1].id);
+  check('saved detail',saved.length===1 && saved[0].rows[0].base===11 && saved[0].rows[1].max===-15 && saved[0].image===image);
   check('saved tiers include inference source',saved[0].rows.every((row,i)=>row.tier===['blue','green','white','green','white'][i] && row.tierSource===(i===2?'unique-percentage':'percentage-level')));
   get('add-collection').click();
   await wait(()=>get('collection-status').textContent.includes('1 added'));
   check('identical copies import once',(await store.read(store.collectionKey())).length===1);
   check('import clears scanned inventory',get('items').children.length===0 && (await store.read('items')).length===0);
-  get('keep').click();get('add-collection').click();await wait(()=>get('collection-status').textContent.startsWith('0 added'));
+  check('collection duplicate disables keeping',get('keep').disabled && get('keep-status').textContent.includes('Exact duplicate'));
+  const duplicateImport=await store.accept([{...saved[0],id:'duplicate-import'}]);
+  check('import rejects exact duplicates',duplicateImport.duplicates===1 && duplicateImport.added===0);
   check('rescanned duplicate clears without importing',(await store.read(store.collectionKey())).length===1 && get('items').children.length===0);
   await store.accept([{...saved[0],id:'scan-second',name:'Transfer second fixture'}]);
   const legacy=store.identify([{capturedAt:'2026-10-12',reviewed:true}, {capturedAt:'2026-10-12',reviewed:true}]);
@@ -42,12 +44,31 @@
   check('accepted collection survives inventory cleanup',(await store.read(store.collectionKey())).length===2);
   const inferredRows=rows.map((row,index)=>index===0?{...row,value:null,tier:'blue',tierSource:'manual'}:
     index===1?{...row,level:null,tier:'green',tierSource:'manual'}:row);
-  window.DNStorageScanner.update({...result,valid:false,rows:inferredRows},false,{reviewable:true,expectedRows:5});
+  window.DNStorageScanner.update({...result,artifact:{...result.artifact,name:'Inference fixture'},valid:false,rows:inferredRows},false,{reviewable:true,expectedRows:5});
   check('known tier fills missing value and level before keeping',!get('keep').disabled);
   get('keep').click();
   const inferredSaved=(await store.read('items'))[0];
   check('inferred values and provenance survive inventory saving',inferredSaved.rows[0].value===13 && inferredSaved.rows[0].valueSource==='tier-level' && inferredSaved.rows[0].inferredFields.includes('value') && inferredSaved.rows[1].level===1 && inferredSaved.rows[1].levelSource==='locked-star' && inferredSaved.rows[1].inferredFields.includes('level'));
-  get('add-collection').click();await wait(()=>get('collection-status').textContent.startsWith('0 added'));
+  get('add-collection').click();await wait(()=>get('items').children.length===0);
+  await store.remove(inferredSaved.id);
+  const replacementName='Replacement fixture';
+  const scanLevels=level=>window.DNStorageScanner.update({...result,artifact:{...result.artifact,name:replacementName},rows:rows.map((row,index)=>index===0?{...row,value:11+level-1,level}:row)},true,{reviewable:true,expectedRows:5});
+  scanLevels(3);get('keep').click();
+  const stagedId=(await store.read('items'))[0].id;
+  scanLevels(4);get('keep').click();
+  let staged=await store.read('items');
+  check('new levels replace staged inventory in place',staged.length===1 && staged[0].id===stagedId && staged[0].rows[0].level===4);
+  get('add-collection').click();await wait(()=>get('items').children.length===0);
+  const previousLoadout=window.DN.loadLoadout(),assigned=window.DN.loadLoadout();
+  assigned.Main.mains.push(stagedId);assigned.Main.scannedPlaced.push(stagedId);window.DN.saveLoadout(assigned);
+  scanLevels(5);get('keep').click();get('add-collection').click();await wait(()=>get('items').children.length===0);
+  let replacement=(await store.read(store.collectionKey())).find(item=>item.id===stagedId);
+  check('updated scan inherits assigned exhibit',replacement?.rows[0].level===5 && JSON.stringify(window.DN.loadLoadout())===JSON.stringify(assigned));
+  scanLevels(2);get('keep').click();get('add-collection').click();await wait(()=>get('items').children.length===0);
+  replacement=(await store.read(store.collectionKey())).find(item=>item.id===stagedId);
+  check('latest lower levels also replace old scan',replacement?.rows[0].level===2 && window.DN.loadLoadout().Main.mains.includes(stagedId));
+  check('replacement cannot be kept again',get('keep').disabled && get('keep-status').textContent.includes('Exact duplicate'));
+  await store.remove(stagedId);window.DN.saveLoadout(previousLoadout);
   if(window.DNInventoryTierOnly) {
     const accepted=await store.read(store.collectionKey());
     check('accepted tiers retain their source',accepted.every(item=>item.rows.every((row,i)=>row.tier===saved[0].rows[i].tier && row.tierSource===saved[0].rows[i].tierSource)));
@@ -212,6 +233,7 @@
   check('profile accepts one copy',(await store.read(store.collectionKey())).length===1 && (await store.read(mainKey)).length===14);
   const complete={...saved[0],name:'Upgrade fixture',rows:saved[0].rows.map(row=>({...row,known:true,hasPercent:true,level:row.level??1,base:null,max:null}))};
   window.DNStorageScanner.update({...result,artifact:{...result.artifact,name:complete.name},rows:complete.rows},true,{reviewable:true,expectedRows:5});
+  await wait(()=>!get('keep').disabled);
   get('keep').click();get('add-collection').click();await wait(()=>get('collection-status').textContent.startsWith('1 added'));
   const before=(await store.read(store.collectionKey())).find(item=>item.name===complete.name);
   const upgraded=complete.rows.map((row,index)=>index<2?{...row,value:Math.sign(row.value)*(Math.abs(row.value)+1),level:row.level+1}:row);
@@ -221,8 +243,8 @@
   check('upgraded scan updates in place and clears staging',after.id===before.id && after.rows[0].value===14 && after.rows[1].value===-9 && get('items').children.length===0);
   const downgraded=upgraded.map((row,index)=>index===0?{...row,value:13,level:3}:row);
   window.DNStorageScanner.update({...result,artifact:{...result.artifact,name:complete.name},rows:downgraded},true,{reviewable:true,expectedRows:5});
-  get('keep').click();get('add-collection').click();await wait(()=>get('collection-status').textContent.includes('1 left for review'));
-  check('weaker scan stays in inventory without overwriting',get('items').children.length===1 && (await store.read('items')).length===1 && (await store.read(store.collectionKey())).find(item=>item.id===before.id).rows[0].value===14);
+  get('keep').click();get('add-collection').click();await wait(()=>get('items').children.length===0);
+  check('latest matching scan replaces previous levels',get('items').children.length===0 && (await store.read('items')).length===0 && (await store.read(store.collectionKey())).find(item=>item.id===before.id).rows[0].value===13);
   const catalogue=(await(await fetch('data/artifacts.json')).json()).find(item=>item.hall==='Main');
   window.DN.lsSet(window.DN.COLLECTED_KEY,JSON.stringify([catalogue.artifact_id]));
   window.DN.saveCollectionUi({hall:'Main',viewMode:'list',valueMode:'actual'});window.DN.lsSet('dn-artifact-hall-filter','Main');

@@ -51,11 +51,15 @@
     const strongest=Math.max(g,b);
     return strongest>25 && (soft?strongest-r>8 && strongest>r*1.15:strongest>r*1.6);
   }
-  async function recognize(source,{worker,names,canonPerk,expectedRows=5,layout='storage',hall='main',knownTiers=[],isClosed=()=>false}) {
+  async function recognize(source,{worker,names,canonPerk,expectedRows=5,layout='storage',hall='main',knownTiers=[],fields=null,isClosed=()=>false}) {
     expectedRows=Number(expectedRows)===6?6:5;
     const canvases=[];
     const make=()=>{const c=document.createElement('canvas');canvases.push(c);return c;};
     const full=layout==='storage';
+    const calibrated=full && fields?.template?.kind==='storage';
+    if(calibrated && (!window.DNStorageRegions?.resolve(fields.template,{x:0,y:0,width:1,height:1},source).valid || fields.template.rows.length!==expectedRows))throw new Error('Saved storage field boxes do not fit this dialog. Recalibrate fields.');
+    const boxes=calibrated?Object.fromEntries(window.DNStorageRegions.fields(fields.template).map(field=>[field.id,field.box])):null;
+    const box=(id,fallback)=>calibrated?boxes[id]:fallback;
     // Full dialog includes the left type banner, title, all row stars and footer.
     // Legacy rows-only crops end at percentages. Dice-inclusive crops extend
     // that same stat geometry; expanding it must not move any OCR field.
@@ -64,7 +68,10 @@
     const originalContext=original.getContext('2d',{willReadFrequently:true});originalContext.drawImage(source,0,0);
     const sourcePixels=originalContext.getImageData(0,0,source.width,source.height).data;
     // Fixed before the first async worker call; never borrow a previous item.
-    const rerolls=window.DNScannerRerollRecognition?.detectStorage(sourcePixels,source.width,source.height,{expectedRows,layout}) ||
+    const rerolls=(calibrated?fields.template.rows.map((row,i)=>{
+      const rect=row.dice && window.DNScannerCore.cropPixels(row.dice,source.width,source.height);
+      return rect?window.DNScannerRerollRecognition?.classify(sourcePixels,source.width,source.height,rect):window.DNScannerRerollRecognition?.unknown('uncalibrated-dice');
+    }):window.DNScannerRerollRecognition?.detectStorage(sourcePixels,source.width,source.height,{expectedRows,layout})) ||
       Array.from({length:expectedRows},()=>({rerollEligible:null,rerollSource:null,rerollConfidence:'unknown'}));
     function fitInk(rect,colour=false,soft=false) {
       const left=Math.round(rect.x*source.width),top=Math.round(rect.y*source.height),width=Math.ceil(rect.width*source.width),height=Math.ceil(rect.height*source.height),counts=[];
@@ -123,34 +130,40 @@
     let artifact={name:'',type:'',source:'storage',metadataWarnings:[]};
     try {
       if(full) {
-        let title=await read({x:.31,y:.018,width:.553,height:.110},'','title','6');
+        const titleRect=box('title',{x:.31,y:.018,width:.553,height:.110});
+        let title=await read(titleRect,'','title','6');
         if(title.confidence<80) {
           for(const ink of ['title-soft','raw']) {
-            const alternative=await read({x:.31,y:.018,width:.553,height:.110},'',ink,'6');
+            const alternative=await read(titleRect,'',ink,'6');
             if(alternative.confidence>title.confidence)title=alternative;
           }
         }
-        const type=await read({x:.072,y:.439,width:.2,height:.058},'','banner');
+        const type=await read(box('category',{x:.072,y:.439,width:.2,height:.058}),'','banner');
         const matched=types.find(t=>t.toLowerCase()===type.text.toLowerCase());
         artifact={...artifact,name:title.text.replace(/\s+/g,' '),type:matched || '',rawType:type.text,titleConfidence:title.confidence,hall:inspect(source).hall};
+        if(calibrated && boxes.hall) {
+          const rect=window.DNScannerCore.cropPixels(boxes.hall,source.width,source.height);
+          const pixels=originalContext.getImageData(rect.x,rect.y,rect.width,rect.height).data;
+          artifact.hall=recognition.classifyHallColour(pixels) || hall;
+        }
         const picture=make();picture.width=192;picture.height=Math.round(192*(source.height*.295)/(source.width*.226));
-        picture.getContext('2d').drawImage(source,source.width*.037,source.height*.067,source.width*.226,source.height*.295,0,0,picture.width,picture.height);
-        artifact.image=picture.toDataURL('image/jpeg',.88);
+        const artwork=box('artwork',{x:.037,y:.067,width:.226,height:.295});
+        if(artwork){picture.height=Math.max(1,Math.round(192*(source.height*artwork.height)/(source.width*artwork.width)));picture.getContext('2d').drawImage(source,source.width*artwork.x,source.height*artwork.y,source.width*artwork.width,source.height*artwork.height,0,0,picture.width,picture.height);artifact.image=picture.toDataURL('image/jpeg',.88);}
         if(!artifact.name || title.confidence<80)artifact.metadataWarnings.push('Check the artifact name.');
         if(!matched)artifact.metadataWarnings.push('Choose the artifact category.');
       } else artifact.metadataWarnings.push('Enter the artifact name and category for this rows-only crop.');
       for(let i=0;i<expectedRows;i++) {
-        const labelRect=expectedRows===5?rect(i,.15,.665,.12,.31):fitInk(rect(i,.15,.665,.06,.54));
-        const amountRect=fitInk(rect(i,.85,.15,.20,.60),true);
+        const labelRect=box(i+'-name',expectedRows===5?rect(i,.15,.665,.12,.31):fitInk(rect(i,.15,.665,.06,.54)));
+        const amountRect=box(i+'-percentage',fitInk(rect(i,.85,.15,.20,.60),true));
         let label=await read(labelRect,'','grey');
         let amount=await read(amountRect,'+-0123456789.,%','colour');
         if(!signedPercent(amount.text)) {
           // Capture can reduce colour saturation, especially on locked rows.
           // Retry actual glyphs before using tier evidence as a backup.
-          const alternative=await read(fitInk(rect(i,.85,.15,.20,.60),true,true),'+-0123456789.,%','colour-soft');
+          const alternative=await read(calibrated?amountRect:fitInk(rect(i,.85,.15,.20,.60),true,true),'+-0123456789.,%','colour-soft');
           if(signedPercent(alternative.text))amount={...alternative,alternative:amount,method:'soft-colour'};
         }
-        if(expectedRows===6 && !recognition.parseText(label.text+' '+amount.text,names,canonPerk,1).rows[0]?.known) {
+        if(!calibrated && expectedRows===6 && !recognition.parseText(label.text+' '+amount.text,names,canonPerk,1).rows[0]?.known) {
           const fixed=await read(rect(i,.15,.665,.12,.31),'','grey');
           if(recognition.parseText(fixed.text+' '+amount.text,names,canonPerk,1).rows[0]?.known)label=fixed;
         }
@@ -162,9 +175,9 @@
           if(alternative.confidence>label.confidence)label={...alternative,alternative:label,corroborated};
           else label={...label,alternative,corroborated};
         }
-        const levelRect=rect(i,.40,.14,.51,.32);
+        const levelRect=box(i+'-level',rect(i,.40,.14,.51,.32));
         let level=await read(levelRect,'0123456789/','level');
-        const tightLevel=rect(i,.422,.085,.59,.18);
+        const tightLevel=calibrated?levelRect:rect(i,.422,.085,.59,.18);
         for(const [crop,ink,mode] of [[tightLevel,'level-green','7'],[tightLevel,'level-soft','7'],[tightLevel,'level-channel','7'],[tightLevel,'raw','7'],[levelRect,'raw','7']]) {
           if(levelOf(level.text)!==null && level.confidence>=60)break;
           const alternative=await read(crop,'0123456789/',ink,mode);
@@ -173,7 +186,7 @@
         const parsed=recognition.parseText(label.text.replace(/[’‘]/g,"'")+' '+amount.text,names,canonPerk,1);
         const canonical=canonPerk(label.text);
         const row=parsed.rows.length===1?parsed.rows[0]:{name:canonical,raw:label.text+' '+amount.text,value:null,known:names.includes(canonical),hasPercent:false};
-        const star=rect(i,.043,.048,.40,.30),c=make();c.width=30;c.height=30;
+        const star=box(i+'-star',rect(i,.043,.048,.40,.30)),c=make();c.width=30;c.height=30;
         const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(source,star.x*source.width,star.y*source.height,star.width*source.width,star.height*source.height,0,0,30,30);
         const unlocked=starState(ctx.getImageData(0,0,30,30).data);
         const value=level.confidence>=60?levelOf(level.text):null;
@@ -194,7 +207,7 @@
       warnings.push(...recognition.signIssues(tiered));
       if(tiered.some(r=>!r.known || !recognition.usefulRow(r)))warnings.push('Each visible row needs a known perk and signed percentage.');
       for(const [index,row] of tiered.entries())if(row.inferredFields?.length)warnings.push('Row '+(index+1)+': '+row.inferredFields.join(' and ')+' inferred from tier evidence. Verify before keeping.');
-      return {rows:tiered,warnings:[...new Set(warnings)],valid:warnings.length===0,artifact,expectedRows,hall:artifact.hall,
+      return {rows:tiered,warnings:[...new Set(warnings)],valid:warnings.length===0,artifact,expectedRows,hall:artifact.hall,recognitionPath:calibrated?'storage-calibrated-fields':'storage-fields',
         unlocked:{count,states,method:'storage-row-stars'},reroll:window.DNScannerRerollRecognition?.summarize(tiered),observations:[{pass:'storage-fields',rows:tiered,warnings}],evidence};
     } finally {
       for(const c of canvases)c.width=c.height=0;

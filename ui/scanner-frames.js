@@ -8,7 +8,10 @@
   'use strict';
   function median(samples) {
     if(samples.length!==3 || samples.some(sample=>sample.length!==samples[0].length))throw new Error('Three equal-sized samples required');
-    const output=new Uint8ClampedArray(samples[0].length),[a,b,c]=samples;
+    // Capture signatures are numeric arrays with signed chroma. Clamping those
+    // values to pixel bytes makes identical frames look different after filtering.
+    // Actual RGBA buffers retain their byte type for ImageData.
+    const output=Array.isArray(samples[0])?new Array(samples[0].length):new Uint8ClampedArray(samples[0].length),[a,b,c]=samples;
     for(let i=0;i<output.length;i++)output[i]=a[i]+b[i]+c[i]-Math.min(a[i],b[i],c[i])-Math.max(a[i],b[i],c[i]);
     return output;
   }

@@ -4,6 +4,7 @@ const context={window:{},document:{getElementById:()=>null},localStorage:{getIte
 vm.createContext(context);
 for(const file of ['data/army_catalog.js','shared.js','artifact-scoring.js','stored-artifacts.js','scanner-comparison.js'])vm.runInContext(fs.readFileSync('ui/'+file,'utf8'),context);
 const {DN,DNScannerComparisonCore:core,DNStoredArtifacts:store}=context.window;
+vm.runInContext(fs.readFileSync('ui/scanner-recognition.js','utf8'),context);
 assert.equal(core.isUnlockedKeeper({valid:false,unlocked:{count:3},rows:[]}),true,'three unlocked stats do not require readable perks or a score');
 for(const count of [null,0,1,2])assert.equal(core.isUnlockedKeeper({unlocked:{count}}),false,'fewer or unclear unlocked stats do not override scoring');
 const options={canonPerk:name=>name,ratingOf:(name,axis)=>axis==='offensive'?1:2,scoreMode:'combined',prefSortAxes:{offensive:true,defensive:false}};
@@ -29,7 +30,14 @@ assert.equal(core.compare({valid:false,rows:craft(99).rows},{type:'Weapon',hall:
 assert.equal(compare(99,items,{options:{...options,prefSortAxes:{offensive:false,defensive:false}}}).status,'axes');
 assert.equal(compare(99,items,{type:'Equipment',hall:'main'}).status,'type');
 assert.equal(compare(11,items,{options:{...options,scoreMode:'maxrow'}}).threshold,95,'craft comparison always sums all five stats regardless of an old Showcase preference');
-assert.equal(compare(11,items,{options:{...options,prefSortAxes:{offensive:false,defensive:true}}}).threshold,190,'selected axes apply to both sides');
+assert.equal(compare(11,items,{options:{...options,prefSortAxes:{offensive:false,defensive:true}}}).threshold,190,'Main Weapon follows defensive page selection');
+for(const type of ['Armor','Pottery']) {
+  const result=core.compare(craft(11),{type,hall:'main',owned:[owned(type+'1',20,{type}),owned(type+'2',10,{type})],options});
+  assert.equal(result.score,200,type+' uses defensive ratings despite Off-only page');
+  assert.equal(result.threshold,190,type+' benchmark uses the same defensive ratings');
+}
+assert.equal(core.compare(craft(11),{type:'Jewelry',hall:'main',owned:[],options:{...options,prefSortAxes:{offensive:false,defensive:true}}}).score,100,'Jewelry uses offensive ratings on a defensive base');
+assert.equal(core.compare(craft(11),{type:'Armor',hall:'war',owned:[],options:{...options,prefSortAxes:{offensive:false,defensive:true}}}).score,100,'War categories use offensive ratings even on a defensive base');
 assert.equal(compare(-11,items).score,100,'negative percentage magnitudes match the existing scorer');
 assert.equal(compare(11,[owned('locked',20,{unlocked:false}),owned('unused',10)]).status,'better','all visible stats count even if locked');
 const partialOwned=owned('partial',10);partialOwned.scanned.rows[2].max=null;partialOwned.scanned.rows[2].level=null;
@@ -51,19 +59,33 @@ const partial=craft(1);partial.valid=false;partial.rows[4]={name:'',value:null,k
 const snapshot=JSON.stringify(partial);
 const estimateOptions={...options,ratingOf:(name,axis)=>name==='Good Damage'?(axis==='offensive'?5:1):1};
 let estimate=core.estimate(partial,{names:['Damage','Good Damage'],options:estimateOptions,hall:'main'});
-assert.equal(estimate.provisional,true);assert.equal(estimate.rows[4].name,'Good Damage');assert.equal(estimate.rows[4].value,11);
-assert.equal(JSON.stringify(partial),snapshot,'optimistic stats never alter the recognised/logged item');
-assert.equal(core.compare(estimate,{type:'Weapon',hall:'Main',owned:items,options:estimateOptions}).status,'better','optimistic fifth is used in the top-group comparison');
+assert.equal(estimate.partial,true);assert.equal(estimate.scoredCount,4);
+assert.equal(estimate.rows[4].scoreExcluded,true,'a missing fifth stat contributes no score');
+assert.equal(core.craftScore(estimate,estimateOptions),40,'four readable rows contribute exactly their own scores');
+assert.equal(core.compare(estimate,{type:'Weapon',hall:'main',owned:items,options:estimateOptions}).status,'partial','a subtotal never becomes a completed benchmark decision');
+assert.equal(JSON.stringify(partial),snapshot,'scoring never alters the recognised/logged item');
 partial.rows[4]={name:'Damage',value:null,known:true};
 estimate=core.estimate(partial,{names:['Good Damage'],options:estimateOptions,hall:'war'});
-assert.equal(estimate.rows[4].name,'Damage','known fifth name stays fixed when only its percentage is missing');assert.equal(estimate.rows[4].value,6,'War uses its crafting top tier');
+assert.equal(estimate.rows[4].scoreExcluded,true,'a missing percentage cannot be replaced with the highest War tier');
 partial.rows[4]={name:'unknown',value:6,known:false};
 estimate=core.estimate(partial,{names:['Good Damage'],options:estimateOptions,hall:'main'});
-assert.equal(estimate.rows[4].value,6,'known percentage is retained when only the fifth name is missing');
+assert.equal(estimate.rows[4].scoreExcluded,true,'a readable percentage cannot justify inventing its perk name');
 partial.rows[3]={name:'',value:null,known:false};
-assert.equal(core.estimate(partial,{names:['Good Damage'],options:estimateOptions,hall:'main'}),null,'two unread stats cannot manufacture a decision');
+assert.equal(core.estimate(partial).scoredCount,3,'three readable rows still show a subtotal');
+assert.equal(core.estimate({valid:false,rows:[]}),null,'no readable rows show no score');
+const missingMiddle=craft(1);missingMiddle.valid=false;missingMiddle.rows[2]={name:'',value:null,known:false,rerollEligible:true};
+missingMiddle.rows[3].rerollEligible=true;
+const middleScore=core.estimate(missingMiddle);
+assert.equal(core.craftPotential(middleScore,options).rerollIndex,3,'excluded middle row cannot receive reroll gain or shift later rows');
+assert.equal(core.craftPotential(middleScore,options).potentialPreference,130,'subtotal 40 adds one eligible 90-point gain');
 assert.equal(core.estimate(craft(1),{names:['Damage'],options,hall:'main'}).provisional,undefined,'complete valid reads remain confirmed');
-console.log('Four-of-five optimistic scores, fixed known names/values, hall tiers, untouched OCR evidence, and minimum coverage passed.');
+const missingDice=craft(1);missingDice.rows.forEach(row=>delete row.rerollEligible);
+assert.equal(core.craftPotential(missingDice,options).rerollGain,0,'missing dice data cannot add a default 100-point reroll');
+const fourRows={...craft(1),rows:craft(1).rows.slice(0,4)};
+assert.equal(core.craftScore(fourRows,options),null,'four rows cannot be presented as a complete item score');
+const fabricated=craft(1);fabricated.rows[4].estimated=true;
+assert.equal(core.craftScore(fabricated,options),null,'fabricated rows cannot contribute to a total');
+console.log('Unread names/percentages, missing dice, partial items and fabricated scoring rows are rejected without altering OCR evidence.');
 const complete={...craft(11),artifact:{type:'Weapon'},hall:'main',hallSource:'hall-colour',unlocked:{states:[true,true,false,false,false]}};
 assert.equal(core.captureCompleteness(complete).percent,100,'all 17 actual fields are captured');
 assert.equal(core.captureCompleteness(null).percent,0);
@@ -77,10 +99,44 @@ assert.equal(core.captureCompleteness({...complete,hallSource:'selected-hall',ar
 const uncertainStar={...complete,unlocked:{states:[true,null,false,false,false]}};
 assert.equal(core.captureCompleteness(uncertainStar).stars,4,'locked stars count; an unclear star does not');
 assert.equal(core.compare({valid:false,rows:complete.rows},{type:'Weapon',hall:'main',owned:items,options,limit:2}).threshold,95,'collection benchmark remains available with incomplete current OCR');
+const conflicting=context.window.DNScannerRecognition.reconcileReads(
+  {valid:false,warnings:[],rows:complete.rows.map(row=>({...row,value:6}))},{...complete,warnings:[]});
+assert.ok(conflicting.rows.every(row=>row.conflict),'a complete retry retains each numeric conflict');
+assert.equal(core.estimate(conflicting),null,'conflicting readings cannot be promoted to a provisional total');
+const tierConflict=craft(1);tierConflict.rows[2].tierConflict=true;
+assert.equal(core.estimate(tierConflict).scoredCount,4,'a percentage/colour tier conflict contributes no score');
+for(const kind of ['assumed','inferred']){
+  const uncertain=craft(1);uncertain.rows[2][kind]=true;
+  assert.equal(core.estimate(uncertain).scoredCount,4,kind+' evidence is excluded until verified');
+  assert.equal(core.craftScore(uncertain,options),null,'uncertain names/values cannot make a complete keep/sell comparison');
+}
+
+const cached=core.createComparator();let ratingCalls=0;
+const counted={...options,ratingOf:(...args)=>{ratingCalls++;return options.ratingOf(...args);}};
+let params={type:'Weapon',hall:'main',owned:items,options:counted,limit:2};
+assert.deepEqual(cached(craft(11),params),core.compare(craft(11),params),'cached comparison equals the shared scorer');
+cached(null,params);ratingCalls=0;cached(null,params);
+assert.equal(ratingCalls,0,'stable owned cutoffs are not rescored on each preview update');
+for(const extra of [{limit:1},{type:'Armor'},{hall:'war'},{options:{...counted,prefSortAxes:{offensive:false,defensive:true}}},{owned:items.slice(1)},{options:{...counted,ratingOf:()=>4}}]){
+  const next={...params,...extra};
+  assert.deepEqual(cached(craft(11),next),core.compare(craft(11),next),'cache respects category, Hall, axes, capacity, owned snapshot and ratings');
+}
+console.log('Conflicting values are excluded; cached benchmarks preserve scorer parity and invalidate with collection/rating changes.');
+
+if(process.argv.includes('--benchmark')) {
+  const ownedItems=Array.from({length:500},(_,i)=>owned('benchmark-'+i,1+i%11));
+  const benchmarkParams={...params,owned:ownedItems},iterations=50,optimized=core.createComparator();
+  const input=craft(6),measure=fn=>{const start=performance.now();for(let i=0;i<iterations;i++)fn(input,benchmarkParams);return (performance.now()-start)/iterations;};
+  optimized(input,benchmarkParams);
+  const uncachedMs=measure(core.compare),cachedMs=measure(optimized);
+  const report={ownedItems:ownedItems.length,iterations,uncachedMs,cachedMs,speedup:uncachedMs/cachedMs,scope:'Warm score comparison only, synthetic 500-item collection; excludes OCR and capture.'};
+  if(process.argv.includes('--report'))fs.writeFileSync('reports/scanner-comparison-performance.json',JSON.stringify(report,null,2)+'\n');
+  console.log(JSON.stringify(report));
+}
 
 async function browserChecks() {
   const elements={},events={},storage=new Map();let profile='a',fail=false;
-  for(const id of ['scanner-compare-type','scanner-comparison','scanner-comparison-detail','scanner-hall','scanner-glance-board','scanner-benchmark','scanner-capture-percent','scanner-capture-meter','scanner-capture-detail','scanner-item-type','scanner-item-total','scanner-benchmark-value'])elements[id]={value:'',textContent:'',listeners:{},className:'',style:{setProperty(key,value){this[key]=value;}},classList:{add(name){elements[id].className+=' '+name;}},addEventListener(event,fn){this.listeners[event]=fn;},set innerHTML(value){this.html=value;this.value='';}};
+  for(const id of ['scanner-compare-type','scanner-comparison','scanner-comparison-detail','scanner-hall','scanner-glance-board','scanner-benchmark','scanner-capture-percent','scanner-capture-meter','scanner-capture-detail','scanner-item-type','scanner-item-total','scanner-benchmark-value'])elements[id]={value:'',textContent:'',listeners:{},className:'',style:{setProperty(key,value){this[key]=value;}},classList:{add(name){elements[id].className+=' '+name;},remove(name){elements[id].className=elements[id].className.split(' ').filter(value=>value!==name).join(' ');}},addEventListener(event,fn){this.listeners[event]=fn;},set innerHTML(value){this.html=value;this.value='';}};
   elements['scanner-hall'].value='main';
   const browser={window:{addEventListener:(name,fn)=>{const prior=events[name];events[name]=()=>{prior?.();fn();};}},document:{getElementById:id=>elements[id] || null},Date,
     localStorage:{getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},
@@ -95,7 +151,8 @@ async function browserChecks() {
   elements['scanner-compare-type'].value='weapon';
   browser.window.DNScannerComparison.update(complete,true,options);
   assert.equal(elements['scanner-comparison'].textContent,'Makes top 2');
-  assert.match(elements['scanner-benchmark'].className,/is-top-two/,'qualifying item uses the red benchmark state');
+  assert.match(elements['scanner-benchmark'].className,/is-top-two/,'qualifying item uses the green benchmark state');
+  assert.doesNotMatch(elements['scanner-benchmark'].className,/is-unknown/);
   assert.equal(elements['scanner-item-total'].textContent,'100');assert.equal(elements['scanner-benchmark-value'].textContent,'95');
   assert.equal(elements['scanner-capture-percent'].textContent,'100%');
   assert.equal(elements['scanner-glance-board'].style['--capture-hue'],'120');
@@ -103,7 +160,8 @@ async function browserChecks() {
   assert.match(elements['scanner-comparison'].textContent,/review/);
   assert.equal(elements['scanner-item-total'].textContent,'—');
   assert.equal(elements['scanner-benchmark-value'].textContent,'95','incomplete score retains an independently known collection benchmark');
-  assert.doesNotMatch(elements['scanner-benchmark'].className,/is-top-two/,'unconfirmed reads clear the red benchmark state');
+  assert.doesNotMatch(elements['scanner-benchmark'].className,/is-top-two/,'unconfirmed reads clear the green benchmark state');
+  assert.match(elements['scanner-benchmark'].className,/is-unknown/,'unconfirmed reads are amber');
   browser.window.DNScannerComparison.update({...complete,rows:craft(10).rows},true,options);
   assert.equal(elements['scanner-comparison'].textContent,'Ties benchmark');assert.doesNotMatch(elements['scanner-benchmark'].className,/is-top-two/);
   browser.window.DNScannerComparison.update(complete,true,options,{captureResult:unknownName});
@@ -115,6 +173,7 @@ async function browserChecks() {
   elements['scanner-compare-type'].value='';
   browser.window.DNScannerComparison.update(threeStars,false,null,{keeperResult:threeStars});
   assert.doesNotMatch(elements['scanner-benchmark'].className,/is-top-two/,'three stars alone do not establish a top-two score');
+  assert.match(elements['scanner-benchmark'].className,/is-unlocked-keeper/,'three open stats override unknown benchmark colour');
   browser.window.DNScannerComparison.update(threeStars,false,null,{keeperResult:null});
   assert.equal(elements['scanner-capture-percent'].textContent,'0%','star count alone does not establish five individual star states');
   const detected={...craft(11),artifact:{type:'Armor'}};
@@ -125,6 +184,20 @@ async function browserChecks() {
   assert.equal(elements['scanner-compare-type'].value,'','next unread item cannot inherit the previous auto-detected category');
   events.focus();await flush();
   assert.equal(elements['scanner-compare-type'].value,'','background refresh cannot resurrect a stale detected category');
+  fail=false;profile='a';
+  const screenshotOptions={...options,ratingOf:name=>name==='Strong'?5:name==='Medium'?1:0};
+  browser.window.DNStoredArtifacts.read=async()=>[0,1].map(index=>({id:'screenshot-'+index,name:'Screenshot benchmark '+index,hall:'main',type:'Weapon',rows:Array.from({length:5},()=>({name:'Medium',value:23,base:23,max:32,level:1,rerollEligible:false}))}));
+  events.focus();await flush();
+  const screenshotResult={valid:true,provisional:true,hall:'main',artifact:{type:'Weapon'},rows:[
+    {name:'Strong',value:-6,known:true,rerollEligible:true},
+    {name:'Medium',value:11,known:true,rerollEligible:true},
+    ...Array.from({length:3},()=>({name:'Weak',value:6,known:true,rerollEligible:true}))]};
+  browser.window.DNScannerComparison.update(screenshotResult,true,screenshotOptions);
+  assert.equal(elements['scanner-item-total'].textContent,'~195','screenshot total includes 100 points of reroll potential');
+  assert.equal(elements['scanner-benchmark-value'].textContent,'160');
+  assert.match(elements['scanner-benchmark'].className,/is-top-two/);
+  assert.doesNotMatch(elements['scanner-benchmark'].className,/is-unknown/,'estimated 195 beats 160 and gets the green state');
+  assert.match(elements['scanner-benchmark'].className,/is-provisional/,'estimated read still keeps its review styling');
   console.log('Capture completeness, top-two scores/cutoffs, ties, pending reads, profile reloads, and failed storage passed.');
 }
 browserChecks().catch(error=>{console.error(error);process.exitCode=1;});

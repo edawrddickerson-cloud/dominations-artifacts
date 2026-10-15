@@ -10,7 +10,7 @@ const root=path.resolve(__dirname,'..');
 const read=file=>fs.readFileSync(path.join(root,file),'utf8');
 const context={window:{},localStorage:{getItem:()=>null,setItem(){},removeItem(){}}};
 vm.createContext(context);
-for(const file of ['ui/data/army_catalog.js','ui/shared.js','ui/scanner-recognition.js'])vm.runInContext(read(file),context);
+for(const file of ['ui/data/army_catalog.js','ui/shared.js','ui/scanner-name-catalog.js','ui/scanner-recognition.js'])vm.runInContext(read(file),context);
 const DN=context.window.DN, parse=context.window.DNScannerRecognition.parseText;
 const categoryRecognition=context.window.DNScannerRecognition;
 for(const [text,type] of [['Weapon','Weapon'],['War Armor','Armor'],['Armour','Armor'],['Jewellery','Jewelry'],['Pottery','Pottery'],['War Equipment','Equipment']])assert.equal(categoryRecognition.parseCraftCategory(text),type);
@@ -91,9 +91,9 @@ assert.ok(contrast(15,95,15)<contrast(95,95,95),'saturated text receives extra c
 assert.equal(reconcile({rows:good.rows.slice(0,4),valid:false,warnings:['partial']},{rows:[...good.rows.slice(0,4),{name:'New Unit Healing',value:1,raw:'New Unit Healing +1%',known:false}],valid:false,warnings:['Unknown or ambiguous perk: New Unit Healing']}).rows.length,5,'improved retry displays collected rows while keeping rating unconfirmed');
 
 assert.equal(parse(text+'\nyou want to sell Caterina',names,canon).rows.length,5);
-assert.equal(parse('Sniper Tower Hitpomts +1%',names,canon).rows[0].assumed,true);
+assert.equal(parse('Sniper Tower Hitpomts +1%',names,canon).rows[0].nameCorrected,true);
 assert.equal(parse('Sniper Tower Hitpomts +1%',names,canon).rows[0].name,'Sniper Tower Hitpoints');
-assert.equal(parse('Sniper Tower Hitpomts +1%',names,canon).valid,false);
+assert.equal(parse('Sniper Tower Hitpomts +1%',names,canon,1).valid,true,'clear spelling corrections register automatically');
 assert.equal(parse('Enemy Sniper Tower Hitpoints -1%',names.filter(name=>name!=='Enemy Sniper Tower Hitpoints'),canon).rows[0].known,false);
 const brightness=context.window.DNScannerRecognition.classifyBrightness;
 for(let count=1;count<=3;count++)assert.equal(brightness(Array.from({length:5},(_,i)=>i<count?180:95)).count,count);
@@ -105,14 +105,14 @@ assert.equal(parse('Long Unit Damag +1%',['Long Unit Damage','Long Unit Damages'
 assert.equal(parse('Invading Raider Damag -6%', ['Raider Damage','Invading Raider Damage'],value=>value).rows[0].name,'Invading Raider Damage');
 assert.equal(parse('Raider Damag +I%', ['Raider Damage'],value=>value).rows[0].value,null,'matching a name never repairs percentage glyphs');
 for(const [raw,name] of [['Enemy Siper Tower Hitpomts -6%','Enemy Sniper Tower Hitpoints'],['Guernlla Damage +6%','Guerrilla Damage'],['Bazooka Hitpomts +6%','Bazooka Hitpoints'],['Invading Guernlla Hitpomnts -6%','Invading Guerrilla Hitpoints']]) {
-  const row=parse(raw,[name],value=>value).rows[0];assert.equal(row.name,name);assert.equal(row.assumed,true);
+  const row=parse(raw,[name],value=>value).rows[0];assert.equal(row.name,name);assert.equal(row.nameCorrected,true);
 }
 const coverage=context.window.DNScannerRecognition.coverage;
 assert.equal(coverage([]).light,'red');
 for(let count=1;count<5;count++)assert.equal(coverage(good.rows.slice(0,count)).light,'orange');
 assert.equal(coverage(good.rows).light,'green','duplicate perk rows count individually');
 const mixed=[...good.rows.slice(0,3),{raw:'New Unit Healing +1%',name:'New Unit Healing',value:1,known:false},parse('Bazooka Hitpomts +6%',['Bazooka Hitpoints'],value=>value).rows[0]];
-assert.equal(coverage(mixed).total,5);assert.equal(coverage(mixed).known,3);assert.equal(coverage(mixed).collected,1);assert.equal(coverage(mixed).assumed,1);assert.equal(coverage(mixed).light,'green');
+assert.equal(coverage(mixed).total,5);assert.equal(coverage(mixed).known,4);assert.equal(coverage(mixed).collected,1);assert.equal(coverage(mixed).assumed,0);assert.equal(coverage(mixed).light,'green');
 assert.equal(coverage([{name:'Er tpoints',raw:'Er tpoints +1%',value:1,known:false}]).light,'red');
 assert.equal(coverage(parse('for 307 and 18%? It will be',names,canon).rows).light,'red');
 assert.equal(coverage([...good.rows,good.rows[0]]).light,'orange','extra rows cannot produce green');
@@ -158,7 +158,7 @@ for(const raw of ['Invading Raider Damage +6%','Invading Brand New Unit Hitpoint
   assert.equal(coverage(result.rows).light,'orange','wrong-sign rows cannot produce a green completeness badge');
 }
 assert.equal(parse('Invading Raider Damag +6%',names,canon).rows[0].known,false,'wrong-sign fuzzy candidate is excluded');
-assert.equal(parse('Invading Raider Damag -6%',names,canon).rows[0].assumed,true);
+assert.equal(parse('Invading Raider Damag -6%',names,canon).rows[0].assumed,false);
 assert.equal(parse('Sniper Tower Hitpomts -6%',names,canon).rows[0].known,false,'positive stat cannot be suggested for a negative value');
 assert.equal(parse(panel('Enemy Defender Spawn Time +6%'),names,canon).valid,true,'Enemy prefix alone does not determine polarity');
 assert.equal(parse(panel('Defender Spawn Time -6%'),names,canon).valid,true,'own stat can legitimately be negative');
@@ -181,7 +181,7 @@ for(const raw of ['Catapult Damage +1% oo','Catapult Damage +1% Co oo B']) {
 }
 for(const raw of ['Catapult Damage +1% extra damage','Catapult Damage +1% 6','New Unit Healing +1% oo'])assert.equal(parse(raw,names,canon).rows[0].value,null,'do not absorb extra values, words or unknown labels');
 for(const [raw,name] of [['Figjhites Hitpoints «6%','Fighter Hitpoints'],['Invading Guernlla Bitpomis 6%','Invading Guerrilla Hitpoints'],['Enemy Air Defense Hithomits -6%','Enemy Air Defense Hitpoints']]) {
-  const row=parse(raw,[name],value=>value).rows[0];assert.equal(row.name,name);assert.equal(row.assumed,true);
+  const row=parse(raw,[name],value=>value).rows[0];assert.equal(row.name,name);assert.equal(row.nameCorrected,true);
 }
 const missingFifth={valid:false,warnings:['Missing row'],rows:good.rows.slice(0,4)};
 const sparse=parse('Catapult Damage +1%\nSniper Tower Hitpoints +1%',names,canon);
@@ -208,7 +208,7 @@ const palette=[[100,100,100],[15,75,15],[15,60,65],[100,100,100],[15,75,15]];
 for(let row=0;row<5;row++)for(let y=row*20+4;y<row*20+13;y++)for(let x=10;x<60;x+=4){const p=(y*100+x)*4;colourPixels.set([...palette[row],255],p);}
 assert.equal(JSON.stringify(recognition.rowColours(colourPixels,100,100)),JSON.stringify(colours));
 for(const [raw,name] of [['Irwading Bomiber Dannage «6%','Invading Bomber Damage'],['Vauk Capacity +6%','Vault Capacity'],['Invading Fughier Dantage 6%','Invading Fighter Damage'],['Invading Ranged Siege Hipomnis 6%','Invading Ranged Siege Hitpoints'],['Farest Expan san Cost Refund +11%,','Forest Expansion Cost Refund']]) {
-  const row=parse(raw,[name],value=>value).rows[0];assert.equal(row.name,name);assert.equal(row.assumed,true);
+  const row=parse(raw,[name],value=>value).rows[0];assert.equal(row.name,name);assert.equal(row.nameCorrected,true);
 }
 
 // Stored artifacts can have a sixth perk; callers select the required count.

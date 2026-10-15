@@ -1,0 +1,757 @@
+{
+  "known_stat_count": 198,
+  "notes": [
+    "Pattern gaps are hypotheses only; no catalogue entries or ratings were added.",
+    "Army aliases describe the same unit, but Enemy and Invading remain separate stat identities.",
+    "Damage/HP symmetry is not evidence of availability in Main or War."
+  ],
+  "units": [
+    {
+      "unit": "Heavy Infantry",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [
+        "Heavy Infantry Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Heavy Infantry Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Heavy Infantry",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [
+        "Invading Heavy Infantry Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Invading Heavy Infantry Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Ranged Infantry",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [
+        "Ranged Infantry Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Ranged Infantry Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Ranged Infantry",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [
+        "Invading Ranged Infantry Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Invading Ranged Infantry Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Raider",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [
+        "Raider Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Raider Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Raider",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [
+        "Invading Raider Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Invading Raider Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Heavy Cavalry",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [
+        "Heavy Cavalry Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Heavy Cavalry Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Heavy Cavalry",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [
+        "Invading Heavy Cavalry Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Invading Heavy Cavalry Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Wall Breacher",
+      "qualifier": "own",
+      "aliases": [
+        "Wall Miner",
+        "Wall Sapper"
+      ],
+      "damage": [
+        "Wall Miner Damage",
+        "Wall Sapper Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Wall Miner Hitpoints",
+        "Wall Sapper Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Wall Breacher",
+      "qualifier": "Invading",
+      "aliases": [
+        "Wall Miner",
+        "Wall Sapper"
+      ],
+      "damage": [],
+      "healing": [],
+      "hitpoints": [],
+      "missing": [
+        "Damage",
+        "Hitpoints"
+      ],
+      "exception": null
+    },
+    {
+      "unit": "Ranged Siege",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [
+        "Ranged Siege Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Ranged Siege Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Ranged Siege",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [
+        "Invading Ranged Siege Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Invading Ranged Siege Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Supply Vehicle",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [],
+      "healing": [
+        "Supply Vehicle Healing"
+      ],
+      "hitpoints": [
+        "Supply Vehicle Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Supply Vehicle",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [],
+      "healing": [
+        "Invading Supply Vehicle Healing"
+      ],
+      "hitpoints": [
+        "Invading Supply Vehicle Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Mortar Troop",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [
+        "Mortar Troop Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Mortar Troop Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Mortar Troop",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [
+        "Invading Mortar Troop Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Invading Mortar Troop Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Attack Helicopter",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [
+        "Attack Helicopter Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Attack Helicopter Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Attack Helicopter",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [
+        "Invading Attack Helicopter Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Invading Attack Helicopter Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Assault Vehicle",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [
+        "Assault Vehicle Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Assault Vehicle Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Assault Vehicle",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [
+        "Invading Assault Vehicle Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Invading Assault Vehicle Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Machine Gun Infantry",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [
+        "Machine Gun Infantry Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Machine Gun Infantry Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Machine Gun Infantry",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [
+        "Invading Machine Gun Infantry Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Invading Machine Gun Infantry Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Commando",
+      "qualifier": "own",
+      "aliases": [
+        "Guerrilla"
+      ],
+      "damage": [
+        "Commando Damage",
+        "Guerrilla Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Commando Hitpoints",
+        "Guerrilla Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Commando",
+      "qualifier": "Invading",
+      "aliases": [
+        "Guerrilla"
+      ],
+      "damage": [
+        "Invading Guerrilla Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Invading Guerrilla Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Heavy Tank",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [
+        "Heavy Tank Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Heavy Tank Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Heavy Tank",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [
+        "Invading Heavy Tank Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Invading Heavy Tank Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Bazooka",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [
+        "Bazooka Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Bazooka Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Bazooka",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [
+        "Invading Bazooka Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Invading Bazooka Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Armored Car",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [
+        "Armored Car Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Armored Car Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Armored Car",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [
+        "Invading Armored Car Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Invading Armored Car Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "APC",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [
+        "APC Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "APC Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "APC",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [
+        "Invading APC Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Invading APC Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Tactical Helicopter",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [],
+      "healing": [
+        "Tactical Helicopter Healing"
+      ],
+      "hitpoints": [
+        "Tactical Helicopter Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Tactical Helicopter",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [],
+      "healing": [
+        "Invading Tactical Helicopter Healing"
+      ],
+      "hitpoints": [
+        "Invading Tactical Helicopter Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "MRL",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [
+        "MRL Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "MRL Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "MRL",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [
+        "Invading MRL Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Invading MRL Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Fighter",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [
+        "Fighter Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Fighter Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Fighter",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [
+        "Invading Fighter Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Invading Fighter Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Bomber",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [
+        "Bomber Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Bomber Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Bomber",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [
+        "Invading Bomber Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Invading Bomber Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Paratrooper",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [
+        "Paratrooper Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Paratrooper Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Paratrooper",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [
+        "Invading Paratrooper Damage"
+      ],
+      "healing": [],
+      "hitpoints": [
+        "Invading Paratrooper Hitpoints"
+      ],
+      "missing": [],
+      "exception": null
+    },
+    {
+      "unit": "Recon",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [],
+      "healing": [],
+      "hitpoints": [],
+      "missing": [
+        "Damage",
+        "Hitpoints"
+      ],
+      "exception": "special role: ordinary damage/HP symmetry may not apply"
+    },
+    {
+      "unit": "Recon",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [],
+      "healing": [],
+      "hitpoints": [],
+      "missing": [
+        "Damage",
+        "Hitpoints"
+      ],
+      "exception": "special role: ordinary damage/HP symmetry may not apply"
+    },
+    {
+      "unit": "Transport",
+      "qualifier": "own",
+      "aliases": [],
+      "damage": [],
+      "healing": [],
+      "hitpoints": [],
+      "missing": [
+        "Damage",
+        "Hitpoints"
+      ],
+      "exception": "special role: ordinary damage/HP symmetry may not apply"
+    },
+    {
+      "unit": "Transport",
+      "qualifier": "Invading",
+      "aliases": [],
+      "damage": [],
+      "healing": [],
+      "hitpoints": [
+        "Invading Transport Hitpoints"
+      ],
+      "missing": [
+        "Damage"
+      ],
+      "exception": "special role: ordinary damage/HP symmetry may not apply"
+    }
+  ],
+  "excluded_candidates": [
+    {
+      "candidate": "Invading Wall Breacher Damage",
+      "priority": "review",
+      "reason": "User considers this stat absent. Do not suggest it from symmetry alone.",
+      "aliases_checked": [
+        "Wall Breacher",
+        "Wall Miner",
+        "Wall Sapper"
+      ],
+      "evidence": [],
+      "confirmed": false,
+      "status": "dismissed_by_user"
+    },
+    {
+      "candidate": "Invading Wall Breacher Hitpoints",
+      "priority": "review",
+      "reason": "User considers this stat absent. Do not suggest it from symmetry alone.",
+      "aliases_checked": [
+        "Wall Breacher",
+        "Wall Miner",
+        "Wall Sapper"
+      ],
+      "evidence": [],
+      "confirmed": false,
+      "status": "dismissed_by_user"
+    },
+    {
+      "candidate": "Coalition Troop Hitpoints",
+      "priority": "review",
+      "reason": "User considers this stat absent. Do not suggest it from symmetry alone.",
+      "evidence": [
+        "Coalition Troop Damage"
+      ],
+      "confirmed": false,
+      "status": "dismissed_by_user"
+    },
+    {
+      "candidate": "Enemy Defender Damage",
+      "priority": "review",
+      "reason": "User considers this stat absent. Do not suggest it from symmetry alone.",
+      "evidence": [
+        "Enemy Defender Hitpoints"
+      ],
+      "confirmed": false,
+      "status": "dismissed_by_user"
+    }
+  ],
+  "gaps": [
+    {
+      "candidate": "Invading Transport Damage",
+      "priority": "low",
+      "reason": "Special unit role; existence cannot be inferred from symmetry.",
+      "aliases_checked": [
+        "Transport"
+      ],
+      "evidence": [
+        "Invading Transport Hitpoints"
+      ],
+      "confirmed": false
+    },
+    {
+      "candidate": "Transport Damage",
+      "priority": "low",
+      "reason": "Special unit role; existence cannot be inferred from symmetry.",
+      "aliases_checked": [
+        "Transport"
+      ],
+      "evidence": [],
+      "confirmed": false
+    },
+    {
+      "candidate": "Transport Hitpoints",
+      "priority": "low",
+      "reason": "Special unit role; existence cannot be inferred from symmetry.",
+      "aliases_checked": [
+        "Transport"
+      ],
+      "evidence": [],
+      "confirmed": false
+    }
+  ],
+  "naming_inconsistencies": [
+    {
+      "name": "Invading Airstrip Unit Hitpoints",
+      "counterpart": "Invading Airstrip Troop Damage",
+      "reason": "Unit versus Troop; verify the displayed game wording before renaming."
+    }
+  ],
+  "integration": {
+    "rating_names_missing_mapping": [],
+    "artifact_names_missing_ratings": []
+  }
+}

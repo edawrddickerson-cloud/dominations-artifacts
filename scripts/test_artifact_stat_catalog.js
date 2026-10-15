@@ -22,7 +22,7 @@ const context = {window: {}, localStorage: {
   removeItem: key => stored.delete(key),
 }};
 vm.createContext(context);
-for (const file of ['ui/data/army_catalog.js', 'ui/shared.js', 'ui/scanner-recognition.js']) {
+for (const file of ['ui/data/army_catalog.js', 'ui/shared.js', 'ui/scanner-name-catalog.js', 'ui/scanner-recognition.js']) {
   vm.runInContext(read(file), context);
 }
 const DN = context.window.DN;
