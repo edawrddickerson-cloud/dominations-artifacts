@@ -1,386 +1,123 @@
 (() => {
   "use strict";
-
   const DN = window.DN;
   if (!DN) return;
-
   const DEFAULTS_URL = "./data/perk_rating_defaults.json";
   const MAPPING_URL = "./data/perk_name_mapping.csv";
   const AXES = DN.RATING_AXES;
-
   const el = {
-    q: document.getElementById("ratings-q"),
-    grid: document.getElementById("ratings-grid"),
-    error: document.getElementById("error"),
-    hint: document.getElementById("ratings-hint"),
-    resetGlobal: document.getElementById("ratings-reset-global"),
+    q: document.getElementById("ratings-q"), grid: document.getElementById("ratings-grid"),
+    error: document.getElementById("error"), resetGlobal: document.getElementById("ratings-reset-global"),
     clearOverrides: document.getElementById("ratings-clear-overrides"),
   };
-
-  /** @type {Record<string, { offensive: number, defensive: number }>} */
-  let factoryDefaults = {};
-  /** @type {string[]} */
-  let allPerkNames = [];
-  /** @type {Record<string, { offensive?: number, defensive?: number }>} */
-  let globalBag = {};
-  /** @type {Record<string, Record<string, { offensive?: number, defensive?: number }>>} */
-  let profileBags = {};
-  /** @type {{ id: string, name: string }[]} */
-  let profiles = [];
-
-  /** @type {{ key: string, dir: 1 | -1 }} */
-  let sortState = { key: "name", dir: 1 };
-
-  function showError(msg) {
-    el.error.hidden = !msg;
-    el.error.textContent = msg || "";
+  let factoryDefaults = {}, allPerkNames = [], globalBag = {}, groupBag = {}, profileBags = {}, profiles = [];
+  const expanded = new Set();
+  const kindLabels = { damage: "Damage", hp: "Hitpoints", speed: "Attack speed", movement: "Movement speed",
+    spawn: "Spawn time", healing: "Healing", cooldown: "Cooldown and deploy time", other: "Other bonuses",
+    resources: "Resources looted", refund: "Loot refund", chance: "Trade good chance", production: "Resource production",
+    capacity: "Vault capacity", interest: "Vault interest", time: "Research time", cost: "Research cost",
+    training: "Training cost", expansion: "Expansion refund", recon: "Recon effects", rally: "Rally",
+    victory: "Quick victory", tactics: "Tactic effects" };
+  function showError(msg) { el.error.hidden = !msg; el.error.textContent = msg; }
+  function persistGlobal() { DN.saveGlobalPerkRatings(globalBag); }
+  function persistProfile(id) { DN.saveProfilePerkOverrides(id, profileBags[id] || {}); }
+  function inherited(name, axis) {
+    return DN.groupPerkRating(name, axis, groupBag) ?? factoryDefaults[name]?.[axis] ?? 0;
   }
-
-  function factoryOf(name, axis) {
-    const entry = factoryDefaults[name];
-    if (!entry) return 0;
-    return entry[axis] || 0;
+  function globalValue(name, axis) { return DN.perkRatingAxisOrNull(globalBag, name, axis) ?? inherited(name, axis); }
+  function setAxis(bag, key, axis, value) {
+    if (value == null) {
+      if (bag[key]) { delete bag[key][axis]; if (!Object.keys(bag[key]).length) delete bag[key]; }
+    } else { bag[key] = { ...(bag[key] || {}), [axis]: DN.clampPerkRating(value) }; }
   }
-
-  function showOverrides() {
-    return profiles.length >= 2;
+  function input(layer, key, axis, value, placeholder, profileId = "") {
+    return '<label class="rating-axis ' + (value == null ? 'is-inherit' : 'is-override') + '">' +
+      '<span class="visually-hidden">' + DN.esc(key + ' ' + (profileId ? profiles.find(p => p.id === profileId)?.name : layer) + ' ' + axis) + '</span>' +
+      '<input type="number" class="rating-input" min="' + DN.RATING_MIN + '" max="' + DN.RATING_MAX + '" step="1"' +
+      ' data-layer="' + layer + '" data-key="' + DN.esc(key) + '" data-axis="' + axis + '" data-profile-id="' + DN.esc(profileId) + '"' +
+      ' value="' + (value ?? '') + '" placeholder="' + DN.esc(String(placeholder)) + '" /></label>';
   }
-
-  function globalValue(name, axis) {
-    const v = DN.perkRatingAxisOrNull(globalBag, name, axis);
-    return v != null ? v : factoryOf(name, axis);
+  function pair(layer, key, bag, fallback, profileId = "") {
+    return '<div class="ratings-page-pair">' + AXES.map(axis => input(layer, key, axis,
+      DN.perkRatingAxisOrNull(bag, key, axis), fallback(axis), profileId)).join('') + '</div>';
   }
-
-  function profileHas(profileId, name, axis) {
-    return DN.perkRatingAxisOrNull(profileBags[profileId] || {}, name, axis) != null;
+  function perkRow(name) {
+    let html = '<div class="ratings-page-row"><span class="rating-name">' + DN.esc(name) + '</span>' +
+      pair('global', name, globalBag, axis => inherited(name, axis));
+    for (const p of profiles) html += pair('profile', name, profileBags[p.id] || {}, axis => globalValue(name, axis), p.id);
+    return html + '</div>';
   }
-
-  function profileDisplay(profileId, name, axis) {
-    const v = DN.perkRatingAxisOrNull(profileBags[profileId] || {}, name, axis);
-    if (v != null) return v;
-    return null;
+  function perkHead() {
+    return '<div class="ratings-page-head"><div class="ratings-page-corner">Individual stat</div>' +
+      [{name: 'Global'}, ...profiles].map(p => '<div class="ratings-page-group"><div class="ratings-page-group-title">' + DN.esc(p.name) +
+      '</div><div class="ratings-page-group-axes"><div>Off</div><div>Def</div></div></div>').join('') + '</div>';
   }
-
-  function persistGlobal() {
-    DN.saveGlobalPerkRatings(globalBag);
+  function groupPlaceholder(perks, kind, axis) {
+    const values = new Set(perks.filter(p => p.kind === kind).map(p => factoryDefaults[p.name]?.[axis] ?? 0));
+    return values.size === 1 ? [...values][0] : 'Mixed';
   }
-
-  function persistProfile(profileId) {
-    DN.saveProfilePerkOverrides(profileId, profileBags[profileId] || {});
-  }
-
-  /**
-   * @param {string} name
-   * @param {"offensive" | "defensive"} axis
-   * @param {number} value
-   */
-  function setGlobalAxis(name, axis, value) {
-    const clamped = DN.clampPerkRating(value);
-    const factory = factoryOf(name, axis);
-    let entry = globalBag[name];
-    if (clamped === factory) {
-      if (!entry) return;
-      delete entry[axis];
-      if (
-        !Object.prototype.hasOwnProperty.call(entry, "offensive") &&
-        !Object.prototype.hasOwnProperty.call(entry, "defensive")
-      ) {
-        delete globalBag[name];
-      }
-      persistGlobal();
-      return;
-    }
-    if (!entry) {
-      entry = {};
-      globalBag[name] = entry;
-    }
-    entry[axis] = clamped;
-    persistGlobal();
-  }
-
-  /**
-   * @param {string} profileId
-   * @param {string} name
-   * @param {"offensive" | "defensive"} axis
-   * @param {number | null} value null clears override
-   */
-  function setProfileAxis(profileId, name, axis, value) {
-    if (!profileBags[profileId]) profileBags[profileId] = {};
-    const bag = profileBags[profileId];
-    let entry = bag[name];
-
-    if (value == null || Number.isNaN(value)) {
-      if (!entry) return;
-      delete entry[axis];
-      if (
-        !Object.prototype.hasOwnProperty.call(entry, "offensive") &&
-        !Object.prototype.hasOwnProperty.call(entry, "defensive")
-      ) {
-        delete bag[name];
-      }
-      persistProfile(profileId);
-      return;
-    }
-
-    const clamped = DN.clampPerkRating(value);
-    const inherit = globalValue(name, axis);
-    if (clamped === inherit) {
-      if (!entry) return;
-      delete entry[axis];
-      if (
-        !Object.prototype.hasOwnProperty.call(entry, "offensive") &&
-        !Object.prototype.hasOwnProperty.call(entry, "defensive")
-      ) {
-        delete bag[name];
-      }
-      persistProfile(profileId);
-      return;
-    }
-    if (!entry) {
-      entry = {};
-      bag[name] = entry;
-    }
-    entry[axis] = clamped;
-    persistProfile(profileId);
-  }
-
-  function sortValue(name, key) {
-    if (key === "name") return name.toLowerCase();
-    if (key === "global:offensive") return globalValue(name, "offensive");
-    if (key === "global:defensive") return globalValue(name, "defensive");
-    const m = /^profile:([^:]+):(offensive|defensive)$/.exec(key);
-    if (m) {
-      const v = profileDisplay(m[1], name, /** @type {"offensive"|"defensive"} */ (m[2]));
-      return v != null ? v : globalValue(name, /** @type {"offensive"|"defensive"} */ (m[2]));
-    }
-    return name.toLowerCase();
-  }
-
-  function sortedNames(filterQ) {
-    const q = DN.text(filterQ).toLowerCase();
-    const items = allPerkNames.filter((n) => !q || n.toLowerCase().includes(q));
-    const dir = sortState.dir;
-    const key = sortState.key;
-    items.sort((a, b) => {
-      const va = sortValue(a, key);
-      const vb = sortValue(b, key);
-      if (typeof va === "number" && typeof vb === "number") {
-        if (va !== vb) return (va - vb) * dir;
-      } else {
-        const cmp = String(va).localeCompare(String(vb));
-        if (cmp) return cmp * dir;
-      }
-      return a.localeCompare(b);
-    });
-    return items;
-  }
-
-  function sortAria(key) {
-    if (sortState.key !== key) return "none";
-    return sortState.dir === 1 ? "ascending" : "descending";
-  }
-
-  function sortBtn(label, key) {
-    return (
-      `<button type="button" class="th-sort ratings-sort-btn" data-sort-key="${DN.esc(key)}" ` +
-      `aria-sort="${sortAria(key)}">${DN.esc(label)}</button>`
-    );
-  }
-
-  function groupCount() {
-    return 1 + (showOverrides() ? profiles.length : 0);
-  }
-
   function render() {
-    const showProf = showOverrides();
-    el.grid.style.setProperty("--ratings-groups", String(groupCount()));
-    if (el.clearOverrides) el.clearOverrides.hidden = !showProf;
-
-    const names = sortedNames(el.q ? el.q.value : "");
-    if (!names.length) {
-      el.grid.innerHTML = `<p class="empty-hint">No perks match.</p>`;
-      return;
-    }
-
-    let head =
-      `<div class="ratings-page-head" role="row">` +
-      `<div class="ratings-page-corner" role="columnheader">${sortBtn("Perk", "name")}</div>` +
-      `<div class="ratings-page-group ratings-page-group-global" role="group" aria-label="Global">` +
-      `<div class="ratings-page-group-title">Global</div>` +
-      `<div class="ratings-page-group-axes">` +
-      `<div role="columnheader">${sortBtn("Off", "global:offensive")}</div>` +
-      `<div role="columnheader">${sortBtn("Def", "global:defensive")}</div>` +
-      `</div></div>`;
-
-    if (showProf) {
-      for (const p of profiles) {
-        head +=
-          `<div class="ratings-page-group" role="group" aria-label="${DN.esc(p.name)} overrides">` +
-          `<div class="ratings-page-group-title">${DN.esc(p.name)}</div>` +
-          `<div class="ratings-page-group-axes">` +
-          `<div role="columnheader">${sortBtn("Off", `profile:${p.id}:offensive`)}</div>` +
-          `<div role="columnheader">${sortBtn("Def", `profile:${p.id}:defensive`)}</div>` +
-          `</div></div>`;
+    const q = DN.text(el.q.value).toLowerCase();
+    el.grid.style.setProperty('--ratings-groups', String(1 + profiles.length));
+    el.clearOverrides.hidden = !profiles.length;
+    const known = new Set(DN.PERK_GROUPS.flatMap(g => g.perks.map(p => p.name)));
+    const sections = [...DN.PERK_GROUPS, {id:'unmapped',label:'Other stats',perks:allPerkNames.filter(n => !known.has(n)).map(name=>({name,kind:name}))}];
+    let html = '';
+    for (const section of sections) {
+      const perks = section.perks.filter(p => allPerkNames.includes(p.name));
+      const matches = perks.filter(p => !q || section.label.toLowerCase().includes(q) || p.name.toLowerCase().includes(q));
+      if (!matches.length) continue;
+      const kinds = [...new Set(perks.map(p => p.kind))].filter(k => k !== 'combined');
+      html += '<section class="rating-section" data-section="' + section.id + '"><div class="rating-section-heading"><h2>' + DN.esc(section.label) +
+        '</h2><span>' + perks.length + ' stats</span></div><div class="rating-group-head"><span>Global defaults</span><span>Off</span><span>Def</span></div>';
+      for (const kind of kinds) {
+        const key = section.id + ':' + kind;
+        html += '<div class="rating-group-row"><span>' + DN.esc(kindLabels[kind] || kind) + '</span>' +
+          AXES.map(axis => input('group',key,axis,DN.perkRatingAxisOrNull(groupBag,key,axis),groupPlaceholder(perks,kind,axis))).join('') + '</div>';
       }
+      if (perks.some(p => p.kind === 'combined')) html += '<p class="rating-section-note">Combined HP &amp; damage inherits the higher rating.</p>';
+      html += '<details class="rating-section-details" data-section-id="' + section.id + '"' + (q || expanded.has(section.id) ? ' open' : '') +
+        '><summary>Individual stats and profile overrides</summary><div class="rating-section-perks">' + perkHead() +
+        matches.map(p => perkRow(p.name)).join('') + '</div></details></section>';
     }
-    head += `</div>`;
-
-    function axisInput(opts) {
-      const {
-        layer,
-        axis,
-        value,
-        placeholder,
-        overrideCls,
-        profileId,
-        label,
-      } = opts;
-      const profileAttr = profileId ? ` data-profile-id="${DN.esc(profileId)}"` : "";
-      const valAttr =
-        value == null
-          ? `value="" placeholder="${placeholder != null ? DN.esc(String(placeholder)) : ""}"`
-          : `value="${value}"`;
-      return (
-        `<label class="rating-axis ${overrideCls}">` +
-        `<span class="visually-hidden">${DN.esc(label)}</span>` +
-        `<input type="number" class="rating-input" data-layer="${DN.esc(layer)}"${profileAttr} ` +
-        `data-axis="${axis}" min="${DN.RATING_MIN}" max="${DN.RATING_MAX}" step="1" ${valAttr} /></label>`
-      );
-    }
-
-    const rows = names
-      .map((name) => {
-        const gOff = globalValue(name, "offensive");
-        const gDef = globalValue(name, "defensive");
-        const gOffOv = DN.perkRatingAxisOrNull(globalBag, name, "offensive") != null;
-        const gDefOv = DN.perkRatingAxisOrNull(globalBag, name, "defensive") != null;
-        let html =
-          `<div class="ratings-page-row" role="row" data-perk="${DN.esc(name)}">` +
-          `<span class="rating-name">${DN.esc(name)}</span>` +
-          `<div class="ratings-page-pair">` +
-          axisInput({
-            layer: "global",
-            axis: "offensive",
-            value: gOff,
-            overrideCls: gOffOv ? "is-override" : "is-default",
-            label: "Global offensive",
-          }) +
-          axisInput({
-            layer: "global",
-            axis: "defensive",
-            value: gDef,
-            overrideCls: gDefOv ? "is-override" : "is-default",
-            label: "Global defensive",
-          }) +
-          `</div>`;
-
-        if (showProf) {
-          for (const p of profiles) {
-            html += `<div class="ratings-page-pair">`;
-            for (const axis of AXES) {
-              const has = profileHas(p.id, name, axis);
-              const val = profileDisplay(p.id, name, axis);
-              const ph = globalValue(name, axis);
-              html += axisInput({
-                layer: "profile",
-                profileId: p.id,
-                axis,
-                value: has ? val : null,
-                placeholder: ph,
-                overrideCls: has ? "is-override" : "is-inherit",
-                label: `${p.name} ${axis}`,
-              });
-            }
-            html += `</div>`;
-          }
-        }
-        html += `</div>`;
-        return html;
-      })
-      .join("");
-
-    el.grid.innerHTML = head + rows;
+    el.grid.innerHTML = html || '<p class="empty-hint">No perks match.</p>';
   }
-
-  function setSort(key) {
-    if (sortState.key === key) sortState.dir = /** @type {1 | -1} */ (-sortState.dir);
-    else {
-      sortState.key = key;
-      sortState.dir = key === "name" ? 1 : -1;
-    }
-    render();
-  }
-
   function bind() {
-    if (el.q) {
-      el.q.addEventListener("input", render);
-      el.q.addEventListener("keydown", (ev) => {
-        if (ev.key === "Enter") ev.preventDefault();
-      });
-    }
-
-    el.grid.addEventListener("click", (ev) => {
-      const btn = /** @type {HTMLElement} */ (ev.target).closest("[data-sort-key]");
-      if (!btn) return;
-      const key = btn.getAttribute("data-sort-key");
-      if (key) setSort(key);
+    el.q.addEventListener('input', render);
+    el.grid.addEventListener('toggle', ev => {
+      const details = ev.target;
+      if (!details.matches?.('details[data-section-id]') || el.q.value) return;
+      if (details.open) expanded.add(details.dataset.sectionId); else expanded.delete(details.dataset.sectionId);
+    }, true);
+    el.grid.addEventListener('change', ev => {
+      const target = ev.target;
+      if (!(target instanceof HTMLInputElement) || !target.matches('.rating-input')) return;
+      const {layer,key,axis,profileId} = target.dataset;
+      if (!AXES.includes(axis) || !key || !target.validity.valid) return;
+      const value = target.value === '' ? null : Number(target.value);
+      // Capture open sections before replacing their contents.
+      el.grid.querySelectorAll('details[open]').forEach(d => { if (!el.q.value) expanded.add(d.dataset.sectionId); });
+      if (layer === 'group') { setAxis(groupBag,key,axis,value); DN.savePerkGroupDefaults(groupBag); }
+      else if (layer === 'global') { setAxis(globalBag,key,axis,value); persistGlobal(); }
+      else if (layer === 'profile' && profileId) { profileBags[profileId] ||= {}; setAxis(profileBags[profileId],key,axis,value); persistProfile(profileId); }
+      render();
     });
-
-    el.grid.addEventListener("change", (ev) => {
-      const input = ev.target;
-      if (!(input instanceof HTMLInputElement) || !input.classList.contains("rating-input")) return;
-      const row = input.closest("[data-perk]");
-      const perk = row && row.getAttribute("data-perk");
-      const axis = input.getAttribute("data-axis");
-      const layer = input.getAttribute("data-layer");
-      if (!perk || (axis !== "offensive" && axis !== "defensive")) return;
-
-      if (layer === "global") {
-        const n = DN.clampPerkRating(Number(input.value) || 0);
-        setGlobalAxis(perk, axis, n);
-        render();
-        return;
-      }
-
-      if (layer === "profile") {
-        const profileId = input.getAttribute("data-profile-id");
-        if (!profileId) return;
-        if (input.value === "") {
-          setProfileAxis(profileId, perk, axis, null);
-        } else {
-          setProfileAxis(profileId, perk, axis, Number(input.value));
-        }
-        render();
-      }
+    el.resetGlobal.addEventListener('click', () => {
+      if (!confirm('Reset group defaults and individual global ratings to factory defaults? Profile overrides are kept.')) return;
+      globalBag = {}; groupBag = {}; persistGlobal(); DN.savePerkGroupDefaults(groupBag); render();
     });
-
-    if (el.resetGlobal) {
-      el.resetGlobal.addEventListener("click", () => {
-        if (!confirm("Reset all global perk ratings to factory defaults? Profile overrides are kept.")) return;
-        globalBag = {};
-        persistGlobal();
-        render();
-      });
-    }
-
-    if (el.clearOverrides) {
-      el.clearOverrides.addEventListener("click", () => {
-        if (!confirm("Clear perk-rating overrides for every profile?")) return;
-        for (const p of profiles) {
-          profileBags[p.id] = {};
-          persistProfile(p.id);
-        }
-        render();
-      });
-    }
+    el.clearOverrides.addEventListener('click', () => {
+      if (!confirm('Clear perk-rating overrides for every profile?')) return;
+      for (const p of profiles) { profileBags[p.id] = {}; persistProfile(p.id); } render();
+    });
   }
-
   async function load() {
     try {
       DN.ensurePerkRatingsMigrated();
       const state = DN.ensureProfiles();
       profiles = state.profiles.slice();
-      globalBag = DN.loadGlobalPerkRatings();
+      globalBag = DN.loadStoredGlobalPerkRatings();
+      groupBag = DN.loadPerkGroupDefaults();
       profileBags = {};
       for (const p of profiles) {
         profileBags[p.id] = DN.loadProfilePerkOverrides(p.id);

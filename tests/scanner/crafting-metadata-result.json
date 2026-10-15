@@ -1,0 +1,238 @@
+{
+  "fixture": "calibration-203330.png",
+  "checks": {
+    "user category and hall boxes fit the captured frame": true,
+    "wide category crop recognises Pottery beside its icon": true,
+    "small red hall crop overrides selected War": true,
+    "missing hall box uses the red benefits ribbon": true,
+    "same-sized blue patch identifies War": true
+  },
+  "ui": {
+    "user category and hall boxes fit the captured frame": true,
+    "wide category crop recognises Pottery beside its icon": true,
+    "small red hall crop overrides selected War": true,
+    "missing hall box uses the red benefits ribbon": true,
+    "same-sized blue patch identifies War": true
+  },
+  "artifact": {
+    "type": "Pottery",
+    "rawType": "J  Pottery od",
+    "categoryConfidence": 42,
+    "source": "calibrated-label",
+    "hall": "main"
+  },
+  "hall": "main",
+  "hallSource": "hall-colour",
+  "recognitionPath": "calibrated-fields+standard-fallback",
+  "warnings": [
+    "Unknown or ambiguous perk: Ped Tech OF Cost 6%",
+    "Unreadable signed percentage: .3",
+    "Row 1: OCR field evidence is weak. Verify the name and percentage.",
+    "Unknown or ambiguous perk: (ane von Gun HRpones «%",
+    "Unreadable signed percentage: 2 %",
+    "Row 2: OCR field evidence is weak. Verify the name and percentage.",
+    "Unknown or ambiguous perk: [a8 meeurces om Hunting",
+    "Row 3: OCR field evidence is weak. Verify the name and percentage.",
+    "Unknown or ambiguous perk: Samet Hitpoints",
+    "Row 4: OCR field evidence is weak. Verify the name and percentage.",
+    "Assumed OCR spelling: [™   issile Silo Hitpoints → Missile Silo Hitpoints. Verify this row.",
+    "Row 5: OCR field evidence is weak. Verify the name and percentage.",
+    "Unknown or ambiguous perk: \"aon Yaak Gun HEpOnE",
+    "Unknown or ambiguous perk: \"28 Aaequrces from Hunting",
+    "Unknown or ambiguous perk: oma t Hitpoints",
+    "Expected 5 visible rows; read 4. Check the complete panel.",
+    "Some individual rows are still unclear. Verify their names and percentages.",
+    "OCR reads disagree about the visible row count. Verify the full panel.",
+    "Combined the clearest compatible rows from separate reads. Verify these rows."
+  ],
+  "passed": true,
+  "limitations": "One real calibration screenshot verifies Main colour and Pottery OCR. The blue patch checks the stated mapping; live War capture remains untested.",
+  "network": {
+    "requests": [
+      {
+        "requestId": "B86F4BF32B3C9225FB56F8919030CC38",
+        "url": "http://127.0.0.1:55311/ui/scanner.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.2",
+        "url": "http://127.0.0.1:55311/ui/navigation.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.3",
+        "url": "http://127.0.0.1:55311/ui/styles.css?v=41",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.4",
+        "url": "http://127.0.0.1:55311/ui/scanner.css?v=18",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.5",
+        "url": "http://127.0.0.1:55311/ui/scanner-core.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.6",
+        "url": "http://127.0.0.1:55311/ui/scanner-regions.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.7",
+        "url": "http://127.0.0.1:55311/ui/scanner-frames.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.8",
+        "url": "http://127.0.0.1:55311/ui/data/army_catalog.js?v=7",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.9",
+        "url": "http://127.0.0.1:55311/ui/shared.js?v=37",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.10",
+        "url": "http://127.0.0.1:55311/ui/profiles-ui.js?v=12",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.11",
+        "url": "http://127.0.0.1:55311/ui/artifact-scoring.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.12",
+        "url": "http://127.0.0.1:55311/ui/stored-artifacts.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.13",
+        "url": "http://127.0.0.1:55311/ui/scanner-comparison.js?v=6",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.14",
+        "url": "http://127.0.0.1:55311/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.15",
+        "url": "http://127.0.0.1:55311/ui/scanner-recognition.js?v=23",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.16",
+        "url": "http://127.0.0.1:55311/ui/scanner-field-recognition.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.17",
+        "url": "http://127.0.0.1:55311/ui/scanner-calibration.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.18",
+        "url": "http://127.0.0.1:55311/ui/scanner-collection.js?v=11",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.19",
+        "url": "http://127.0.0.1:55311/ui/scanner-reading.js?v=33",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.20",
+        "url": "http://127.0.0.1:55311/ui/scanner.js?v=6",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.33",
+        "url": "http://127.0.0.1:55311/ui/data/artifacts.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.40",
+        "url": "http://127.0.0.1:55311/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.41",
+        "url": "http://127.0.0.1:55311/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.43",
+        "url": "http://127.0.0.1:55311/favicon.ico",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.44",
+        "url": "http://127.0.0.1:55311/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.45",
+        "url": "http://127.0.0.1:55311/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.46",
+        "url": "http://127.0.0.1:55311/tests/scanner/calibration-203330.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "938790B9587FAF1C1146DE5C1B55B7FE",
+        "url": "http://127.0.0.1:55311/ui/vendor/tesseract/worker.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.48",
+        "url": "http://127.0.0.1:55311/ui/vendor/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193456.49",
+        "url": "http://127.0.0.1:55311/ui/vendor/tesseract/lang/eng.traineddata.gz",
+        "method": "GET",
+        "hasPostData": false
+      }
+    ],
+    "blockedRequests": [],
+    "externalRequests": [],
+    "nonGetRequests": [],
+    "browserErrors": []
+  }
+}

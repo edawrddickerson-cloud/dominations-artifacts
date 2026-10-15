@@ -1,0 +1,26 @@
+{
+  "source": "User game/app review pairs, 22:54?22:57; names and values manually transcribed from game pixels",
+  "reviewPair": true,
+  "rows": [
+    {
+      "name": "Air Defense Hitpoints",
+      "value": 1
+    },
+    {
+      "name": "Anti-Tank Gun Damage",
+      "value": 1
+    },
+    {
+      "name": "Vault Interest",
+      "value": 6
+    },
+    {
+      "name": "Missile Silo Hitpoints",
+      "value": 6
+    },
+    {
+      "name": "Sniper Tower Hitpoints",
+      "value": 11
+    }
+  ]
+}

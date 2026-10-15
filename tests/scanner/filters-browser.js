@@ -1,0 +1,33 @@
+(async()=>{
+  const checks={},check=(name,value)=>{checks[name]=!!value;if(!value)throw new Error(name);};
+  const wait=async fn=>{const until=performance.now()+15000;while(!fn()){if(performance.now()>until)throw new Error('Timed out loading page');await new Promise(resolve=>setTimeout(resolve,30));}};
+  await wait(()=>window.DNPrimaryFilters && document.getElementById('scanner-names').children.length);
+  const frame=document.createElement('iframe');frame.style.cssText='position:fixed;left:-2000px;width:1000px;height:800px';document.body.append(frame);
+  frame.src='artifacts.html';await wait(()=>frame.contentWindow.DNPrimaryFilters);
+  const art=frame.contentDocument;
+  art.getElementById('hall-main').click();
+  if(art.getElementById('sort-off').getAttribute('aria-pressed')!=='true')art.getElementById('sort-off').click();
+  if(art.getElementById('sort-def').getAttribute('aria-pressed')==='true')art.getElementById('sort-def').click();
+  window.dispatchEvent(new Event('focus'));
+  check('crafting inherits Main from Priority',document.getElementById('scanner-hall').value==='main' && document.getElementById('header-main').getAttribute('aria-pressed')==='true');
+  check('crafting inherits Off-only from Priority',document.getElementById('scanner-off').checked && !document.getElementById('scanner-def').checked);
+  document.getElementById('header-war').click();document.getElementById('header-def').click();document.getElementById('header-off').click();
+  check('header buttons drive scanner values',document.getElementById('scanner-hall').value==='war' && !document.getElementById('scanner-off').checked && document.getElementById('scanner-def').checked);
+  const type=document.getElementById('scanner-compare-type');type.value='equipment';type.dispatchEvent(new Event('change'));
+  check('crafted category remembered per hall',DN.loadScannerArtifactType('war')==='equipment');
+  frame.src='storage-scanner.html';await wait(()=>frame.contentWindow.location.pathname.endsWith('/storage-scanner.html') && frame.contentWindow.DNStorageScanner && frame.contentDocument.getElementById('scanner-names').children.length);
+  const stored=frame.contentDocument;
+  check('Storage Scanner inherits War and Def-only',stored.getElementById('scanner-hall').value==='war' && !stored.getElementById('scanner-off').checked && stored.getElementById('scanner-def').checked);
+  check('Storage Scanner inherits crafted category',stored.getElementById('storage-type').value==='War Equipment');
+  const category=stored.getElementById('storage-type');category.value='War Armor';category.dispatchEvent(new Event('input'));
+  window.dispatchEvent(new Event('focus'));
+  check('Storage category feeds crafting comparison',type.value==='armor');
+  stored.getElementById('header-main').click();stored.getElementById('header-off').click();stored.getElementById('header-def').click();
+  window.dispatchEvent(new Event('focus'));
+  check('Storage header changes feed crafting',document.getElementById('scanner-hall').value==='main' && document.getElementById('scanner-off').checked && !document.getElementById('scanner-def').checked);
+  frame.src='scanner.html';await wait(()=>frame.contentWindow.location.pathname.endsWith('/scanner.html') && frame.contentWindow.DNPrimaryFilters && frame.contentDocument.getElementById('scanner-names').children.length);
+  check('preferences survive scanner page reload',frame.contentDocument.getElementById('scanner-hall').value==='main' && frame.contentDocument.getElementById('scanner-off').checked && !frame.contentDocument.getElementById('scanner-def').checked);
+  frame.contentDocument.getElementById('header-war').click();
+  check('remembered category restores for its hall',frame.contentDocument.getElementById('scanner-compare-type').value==='armor');
+  frame.remove();return {passed:Object.values(checks).every(Boolean),ui:checks};
+})()

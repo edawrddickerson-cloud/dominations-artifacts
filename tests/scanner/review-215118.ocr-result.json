@@ -1,0 +1,445 @@
+{
+  "fixture": "review-215118.png",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+  "panel": {
+    "x": 0.03076923076923077,
+    "y": 0.029498525073746312,
+    "width": 0.9692307692307692,
+    "height": 0.9616519174041298
+  },
+  "detectorMs": 6.800000190734863,
+  "runs": [
+    {
+      "kind": "detected",
+      "rect": {
+        "x": 20,
+        "y": 10,
+        "width": 630,
+        "height": 326
+      },
+      "elapsedMs": 880.3999996185303,
+      "exact": true,
+      "complete": true,
+      "starsCorrect": true,
+      "percentageRecovery": true,
+      "expectedKnown": true,
+      "scoringParity": true,
+      "passed": true,
+      "rows": [
+        {
+          "raw": "Tower Damage +6%",
+          "name": "Tower Damage",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": true
+        },
+        {
+          "raw": "Anti-Tank Gun Damage +6%",
+          "name": "Anti-Tank Gun Damage",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Sniper Tower Hitpoints +6%",
+          "name": "Sniper Tower Hitpoints",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Anti-Tank Gun Damage +6%",
+          "name": "Anti-Tank Gun Damage",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Redoubt Hitpoints +6%",
+          "name": "Redoubt Hitpoints",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": false
+        }
+      ],
+      "warnings": [],
+      "valid": true,
+      "observations": [
+        {
+          "pass": "block",
+          "rows": [
+            {
+              "raw": "Tower Damage +6%",
+              "name": "Tower Damage",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Anti-Tank Gun Damage +6%",
+              "name": "Anti-Tank Gun Damage",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Sniper Tower Hitpoints +6%",
+              "name": "Sniper Tower Hitpoints",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Anti-Tank Gun Damage +6%",
+              "name": "Anti-Tank Gun Damage",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Redoubt Hitpoints +6%",
+              "name": "Redoubt Hitpoints",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            }
+          ],
+          "warnings": []
+        }
+      ],
+      "hall": "main",
+      "inferColours": true,
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.9835164835164835,
+          0,
+          0.011904761904761904,
+          0.03296703296703297,
+          0.038461538461538464
+        ]
+      }
+    },
+    {
+      "kind": "calibration-margin",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 696,
+        "height": 367
+      },
+      "elapsedMs": 248.09999990463257,
+      "exact": true,
+      "complete": true,
+      "starsCorrect": true,
+      "percentageRecovery": true,
+      "expectedKnown": true,
+      "scoringParity": true,
+      "passed": true,
+      "rows": [
+        {
+          "raw": "Tower Damage +6%",
+          "name": "Tower Damage",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": true
+        },
+        {
+          "raw": "Anti-Tank Gun Damage +6%",
+          "name": "Anti-Tank Gun Damage",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Sniper Tower Hitpoints +6%",
+          "name": "Sniper Tower Hitpoints",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Anti-Tank Gun Damage +6%",
+          "name": "Anti-Tank Gun Damage",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Redoubt Hitpoints +6%",
+          "name": "Redoubt Hitpoints",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": false
+        }
+      ],
+      "warnings": [],
+      "valid": true,
+      "observations": [
+        {
+          "pass": "block",
+          "rows": [
+            {
+              "raw": "Tower Damage +6%",
+              "name": "Tower Damage",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Anti-Tank Gun Damage +6%",
+              "name": "Anti-Tank Gun Damage",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Sniper Tower Hitpoints +6%",
+              "name": "Sniper Tower Hitpoints",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Anti-Tank Gun Damage +6%",
+              "name": "Anti-Tank Gun Damage",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Redoubt Hitpoints +6%",
+              "name": "Redoubt Hitpoints",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            }
+          ],
+          "warnings": []
+        }
+      ],
+      "hall": "main",
+      "inferColours": true,
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.9835164835164835,
+          0,
+          0.01098901098901099,
+          0.02197802197802198,
+          0.038461538461538464
+        ]
+      }
+    }
+  ],
+  "passed": true,
+  "limitations": "One screenshot plus Canvas-derived scale probes and a deliberately injected first-pass failure only. First native and forced-failure OCR include worker initialization; other runs are warm. Scoring parity uses repository rating defaults for all modes/axes. No representative accuracy or continuous capture claim.",
+  "network": {
+    "requests": [
+      {
+        "url": "http://127.0.0.1:53760/ui/scanner.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/navigation.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/styles.css?v=39",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/scanner.css?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/scanner-core.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/data/army_catalog.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/shared.js?v=33",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/artifact-scoring.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/scanner-recognition.js?v=11",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/scanner-collection.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/scanner-reading.js?v=10",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/scanner.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/favicon.ico",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/data/army_catalog.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/shared.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/scanner-core.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/artifact-scoring.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/scanner-recognition.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/tests/scanner/review-215118.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/tests/scanner/review-215118.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/vendor/tesseract/worker.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/vendor/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:53760/ui/vendor/tesseract/lang/eng.traineddata.gz",
+        "method": "GET",
+        "hasPostData": false
+      }
+    ],
+    "externalRequests": [],
+    "nonGetRequests": [],
+    "browserErrors": []
+  }
+}

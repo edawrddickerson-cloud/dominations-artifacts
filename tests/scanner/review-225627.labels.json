@@ -1,0 +1,26 @@
+{
+  "source": "User game/app review pairs, 22:54?22:57; names and values manually transcribed from game pixels",
+  "reviewPair": true,
+  "rows": [
+    {
+      "name": "Invading Attack Helicopter Damage",
+      "value": -1
+    },
+    {
+      "name": "Invading Ranged Siege Damage",
+      "value": -6
+    },
+    {
+      "name": "Invading MRL Hitpoints",
+      "value": -6
+    },
+    {
+      "name": "Invading Generals' Hitpoints",
+      "value": -1
+    },
+    {
+      "name": "Invading Fighter Damage",
+      "value": -1
+    }
+  ]
+}

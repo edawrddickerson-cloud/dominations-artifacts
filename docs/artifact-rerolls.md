@@ -1,0 +1,11 @@
+# Artifact reroll availability
+
+Each scanned perk stores `rerollEligible` as true, false, or null. Blue dice button backgrounds indicate true; grey backgrounds indicate false; missing or ambiguous dice indicate null. Dice are independent of the unlocked star and upgrade level. Storage uses original source pixels before OCR processing. A change between the latest frame and the noise-filtered frame produces an unknown observation rather than a guessed mask.
+
+Fresh crafts default to all five perks available. Optional calibrated dice observations override this per row, including explicit unknown observations. Legendary and Mythical perks are unavailable. Existing storage records without dice data stay unknown. Manual dice controls cycle available, unavailable, unknown; unknown controls have amber borders. Eligibility survives Keep, export, import, Collection edits, and rescans. Different confirmed masks do not merge as duplicates.
+
+Collection and Crafting comparisons use the same scoring helper. Start with the factual fully upgraded sum under the selected rating axes. Among eligible included rows, choose the smallest weighted contribution and replace that contribution with 100 for Main or 75 for War. Only one row is replaced, regardless of the number of blue dice. No replacement reduces the score. These caps are totals across the selected axes.
+
+Unknown eligibility contributes no guaranteed bonus. If an unknown row could improve the potential beyond known eligible rows, show the comparison as provisional. Captured percentages, rating values, ordinary scores and loadout totals remain factual. Fresh craft defaults are semantic information and do not increase the capture meter; explicitly sampled dice do count as capture fields.
+
+Verification: `node scripts/test_reroll_potential.js`, `node scripts/test_scanner_reroll_recognition.js`, and browser fixture modes `--reroll-ui`, `--crafting-edits`, `--storage-layout`, and `--collection-comparison`.

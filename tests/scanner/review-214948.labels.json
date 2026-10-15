@@ -1,0 +1,26 @@
+{
+  "source": "User game/app review pairs; names and values manually transcribed from game pixels",
+  "reviewPair": true,
+  "rows": [
+    {
+      "name": "Enemy Anti-Tank Gun Damage",
+      "value": -1
+    },
+    {
+      "name": "Enemy Anti-Tank Gun Hitpoints",
+      "value": -11
+    },
+    {
+      "name": "Looted Resource Refund",
+      "value": 6
+    },
+    {
+      "name": "Enemy Air Defense Hitpoints",
+      "value": -1
+    },
+    {
+      "name": "Looted Resource Refund",
+      "value": 1
+    }
+  ]
+}

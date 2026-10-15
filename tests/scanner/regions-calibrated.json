@@ -1,0 +1,2307 @@
+{
+  "mode": "calibrated",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+  "runs": [
+    {
+      "fixture": "pic1",
+      "elapsedMs": 631.5999999046326,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": true,
+      "firstCategoryCorrect": false,
+      "allStats": true,
+      "complete": true,
+      "fullArtifactAssessable": true,
+      "confidentlyIncorrect": false,
+      "missingRows": 0,
+      "extraRows": 0,
+      "retry": true,
+      "ocrCalls": 18,
+      "rows": [
+        {
+          "raw": "Air Defense Damage +1%",
+          "name": "Air Defense Damage",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "neutral",
+          "unlocked": true,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Sniper Tower Hitpoints +1%",
+          "name": "Sniper Tower Hitpoints",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Catapult Hitpoints +1%",
+          "name": "Catapult Hitpoints",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 93,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Catapult Damage +1%",
+          "name": "Catapult Damage",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Catapult Damage +1%",
+          "name": "Catapult Damage",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 93,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        }
+      ],
+      "warnings": [],
+      "valid": true,
+      "observations": [
+        {
+          "pass": "calibrated-fields",
+          "rows": [
+            {
+              "raw": "Air Defense Damage +1%",
+              "rawName": "Air Defense Damage +1%",
+              "rawPercentage": "+1%",
+              "name": "Air Defense Damage",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Sniper Tower Hitpoints +1%",
+              "rawName": "Sniper Tower Hitpoints +1%",
+              "rawPercentage": "+1%",
+              "name": "Sniper Tower Hitpoints",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Catapult Hitpoints +1%",
+              "rawName": "Catapult Hitpoints +1%",
+              "rawPercentage": "+1%",
+              "name": "Catapult Hitpoints",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Catapult Damage +1%",
+              "rawName": "Catapult Damage +1%",
+              "rawPercentage": "+1%",
+              "name": "Catapult Damage",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Catapult Damage +1%",
+              "rawName": "Catapult Damage +1%",
+              "rawPercentage": "+1%",
+              "name": "Catapult Damage",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 93
+            }
+          ],
+          "warnings": [],
+          "artifact": {
+            "type": "",
+            "rawType": "Pottery &",
+            "categoryConfidence": 63,
+            "source": "calibrated-label"
+          },
+          "unlocked": {
+            "count": 1,
+            "states": [
+              true,
+              false,
+              false,
+              false,
+              false
+            ],
+            "method": "stars",
+            "fills": [
+              0.9692307692307692,
+              0,
+              0.02564102564102564,
+              0.03333333333333333,
+              0.05128205128205128
+            ]
+          }
+        },
+        {
+          "pass": "block",
+          "rows": [
+            {
+              "raw": "Air Defense Damage +1%",
+              "name": "Air Defense Damage",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Sniper Tower Hitpoints +1%",
+              "name": "Sniper Tower Hitpoints",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Catapult Hitpoints +1%",
+              "name": "Catapult Hitpoints",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 93
+            },
+            {
+              "raw": "Catapult Damage +1%",
+              "name": "Catapult Damage",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Catapult Damage +1%",
+              "name": "Catapult Damage",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 93
+            }
+          ],
+          "warnings": []
+        }
+      ],
+      "artifact": {
+        "type": "Pottery",
+        "hall": "main",
+        "source": "crafting-label",
+        "rawType": "Pottery\n",
+        "categoryConfidence": 48
+      },
+      "hall": "main",
+      "hallSource": "crafting-label",
+      "inferColours": true,
+      "colours": [
+        "neutral",
+        "neutral",
+        "neutral",
+        "neutral",
+        "neutral"
+      ],
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.9444444444444444,
+          0.035897435897435895,
+          0.027777777777777776,
+          0.046153846153846156,
+          0.05
+        ]
+      },
+      "recognitionPath": "calibrated-fields+standard-fallback",
+      "calibrationWarnings": []
+    },
+    {
+      "fixture": "greenissue",
+      "elapsedMs": 516.0999999046326,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "firstCategoryCorrect": null,
+      "allStats": true,
+      "complete": true,
+      "fullArtifactAssessable": false,
+      "confidentlyIncorrect": false,
+      "missingRows": 0,
+      "extraRows": 0,
+      "retry": false,
+      "ocrCalls": 15,
+      "rows": [
+        {
+          "raw": "Sniper Tower Damage +1%",
+          "rawName": "Sniper Tower Damage +1%",
+          "rawPercentage": "+1%",
+          "name": "Sniper Tower Damage",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "neutral",
+          "unlocked": true,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Oil from Oil Wells +1%",
+          "rawName": "Oil from Oil Wells +1%",
+          "rawPercentage": "+1%",
+          "name": "Oil From Oil Wells",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 88,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Redoubt Hitpoints +6%",
+          "rawName": "Redoubt Hitpoints +6%",
+          "rawPercentage": "+6%",
+          "name": "Redoubt Hitpoints",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 93,
+          "colour": "green",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Catapult Hitpoints +1%",
+          "rawName": "Catapult Hitpoints +1%",
+          "rawPercentage": "+1%",
+          "name": "Catapult Hitpoints",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 90,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Tower Damage +1%",
+          "rawName": "Tower Damage +1%",
+          "rawPercentage": "+1%",
+          "name": "Tower Damage",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 93,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        }
+      ],
+      "warnings": [],
+      "valid": true,
+      "artifact": null,
+      "hall": "main",
+      "hallSource": "percentage-tier",
+      "colours": [
+        "neutral",
+        "neutral",
+        "green",
+        "neutral",
+        "neutral"
+      ],
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.9222222222222223,
+          0.011111111111111112,
+          0.015384615384615385,
+          0.03076923076923077,
+          0.035897435897435895
+        ]
+      },
+      "inferColours": true,
+      "metadataConflict": false,
+      "recognitionPath": "calibrated-fields",
+      "observations": [
+        {
+          "pass": "calibrated-fields",
+          "rows": [
+            {
+              "raw": "Sniper Tower Damage +1%",
+              "rawName": "Sniper Tower Damage +1%",
+              "rawPercentage": "+1%",
+              "name": "Sniper Tower Damage",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Oil from Oil Wells +1%",
+              "rawName": "Oil from Oil Wells +1%",
+              "rawPercentage": "+1%",
+              "name": "Oil From Oil Wells",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 88
+            },
+            {
+              "raw": "Redoubt Hitpoints +6%",
+              "rawName": "Redoubt Hitpoints +6%",
+              "rawPercentage": "+6%",
+              "name": "Redoubt Hitpoints",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 93
+            },
+            {
+              "raw": "Catapult Hitpoints +1%",
+              "rawName": "Catapult Hitpoints +1%",
+              "rawPercentage": "+1%",
+              "name": "Catapult Hitpoints",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 90
+            },
+            {
+              "raw": "Tower Damage +1%",
+              "rawName": "Tower Damage +1%",
+              "rawPercentage": "+1%",
+              "name": "Tower Damage",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 93
+            }
+          ],
+          "warnings": [],
+          "artifact": null,
+          "unlocked": {
+            "count": 1,
+            "states": [
+              true,
+              false,
+              false,
+              false,
+              false
+            ],
+            "method": "stars",
+            "fills": [
+              0.9222222222222223,
+              0.011111111111111112,
+              0.015384615384615385,
+              0.03076923076923077,
+              0.035897435897435895
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "fixture": "invaders-cyan",
+      "elapsedMs": 646.1999998092651,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "firstCategoryCorrect": null,
+      "allStats": true,
+      "complete": true,
+      "fullArtifactAssessable": false,
+      "confidentlyIncorrect": false,
+      "missingRows": 0,
+      "extraRows": 0,
+      "retry": false,
+      "ocrCalls": 15,
+      "rows": [
+        {
+          "raw": "Invading APC Hitpoints -1%",
+          "rawName": "Invading APC Hitpoints -1%",
+          "rawPercentage": "-1%",
+          "name": "Invading APC Hitpoints",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "neutral",
+          "unlocked": true,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Invading Fighter Damage -1%",
+          "rawName": "Invading Fighter Damage -1%",
+          "rawPercentage": "-1%",
+          "name": "Invading Fighter Damage",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Invading MRL Damage -1%",
+          "rawName": "Invading MRL Damage -1%",
+          "rawPercentage": "-1%",
+          "name": "Invading MRL Damage",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 90,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Invading Machine Gun Infantry Hitpoints -1%",
+          "rawName": "Invading Machine Gun Infantry Hitpoints -1%",
+          "rawPercentage": "-1%",
+          "name": "Invading Machine Gun Infantry Hitpoints",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Invading MRL Hitpoints -11%",
+          "rawName": "Invading MRL Hitpoints -11%",
+          "rawPercentage": "-11%",
+          "name": "Invading MRL Hitpoints",
+          "value": -11,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "blue",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        }
+      ],
+      "warnings": [],
+      "valid": true,
+      "artifact": null,
+      "hall": "main",
+      "hallSource": "percentage-tier",
+      "colours": [
+        "neutral",
+        "neutral",
+        "neutral",
+        "neutral",
+        "blue"
+      ],
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.9611111111111111,
+          0,
+          0.015384615384615385,
+          0.020512820512820513,
+          0.041025641025641026
+        ]
+      },
+      "inferColours": true,
+      "metadataConflict": false,
+      "recognitionPath": "calibrated-fields",
+      "observations": [
+        {
+          "pass": "calibrated-fields",
+          "rows": [
+            {
+              "raw": "Invading APC Hitpoints -1%",
+              "rawName": "Invading APC Hitpoints -1%",
+              "rawPercentage": "-1%",
+              "name": "Invading APC Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Invading Fighter Damage -1%",
+              "rawName": "Invading Fighter Damage -1%",
+              "rawPercentage": "-1%",
+              "name": "Invading Fighter Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Invading MRL Damage -1%",
+              "rawName": "Invading MRL Damage -1%",
+              "rawPercentage": "-1%",
+              "name": "Invading MRL Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 90
+            },
+            {
+              "raw": "Invading Machine Gun Infantry Hitpoints -1%",
+              "rawName": "Invading Machine Gun Infantry Hitpoints -1%",
+              "rawPercentage": "-1%",
+              "name": "Invading Machine Gun Infantry Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Invading MRL Hitpoints -11%",
+              "rawName": "Invading MRL Hitpoints -11%",
+              "rawPercentage": "-11%",
+              "name": "Invading MRL Hitpoints",
+              "value": -11,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            }
+          ],
+          "warnings": [],
+          "artifact": null,
+          "unlocked": {
+            "count": 1,
+            "states": [
+              true,
+              false,
+              false,
+              false,
+              false
+            ],
+            "method": "stars",
+            "fills": [
+              0.9611111111111111,
+              0,
+              0.015384615384615385,
+              0.020512820512820513,
+              0.041025641025641026
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "fixture": "invaders-green",
+      "elapsedMs": 974.4000000953674,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 4,
+        "directPercentages": 4
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "firstCategoryCorrect": null,
+      "allStats": true,
+      "complete": true,
+      "fullArtifactAssessable": false,
+      "confidentlyIncorrect": false,
+      "missingRows": 0,
+      "extraRows": 0,
+      "retry": true,
+      "ocrCalls": 21,
+      "rows": [
+        {
+          "raw": "Invading Bazooka Damage -1%",
+          "name": "Invading Bazooka Damage",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": true,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Invading Attack Helicopter Hitpoints -6%",
+          "name": "Invading Attack Helicopter Hitpoints",
+          "value": -6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Invading Mortar Troop Damage -1%",
+          "name": "Invading Mortar Troop Damage",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Invading Ranged Siege Damage -1%",
+          "name": "Invading Ranged Siege Damage",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Invading Machine Gun Infantry Damage -6%",
+          "name": "Invading Machine Gun Infantry Damage",
+          "value": -6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        }
+      ],
+      "warnings": [],
+      "valid": true,
+      "hall": "main",
+      "hallSource": "percentage-tier",
+      "inferColours": true,
+      "colours": [
+        "neutral",
+        "green",
+        "neutral",
+        "neutral",
+        "green"
+      ],
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.9282051282051282,
+          0.010256410256410256,
+          0.016666666666666666,
+          0.041025641025641026,
+          0.035897435897435895
+        ]
+      },
+      "recognitionPath": "calibrated-fields+standard-fallback",
+      "colourReads": [
+        {
+          "index": 4,
+          "text": "Invading Machine Gun Infantry Damage -6%",
+          "quality": 93
+        }
+      ],
+      "percentageReads": [],
+      "observations": [
+        {
+          "pass": "calibrated-fields",
+          "rows": [
+            {
+              "raw": "Invading Bazooka Damage -1%",
+              "rawName": "Invading Bazooka Damage -1%",
+              "rawPercentage": "-1%",
+              "name": "Invading Bazooka Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 90
+            },
+            {
+              "raw": "Invading Attack Helicopter Hitpoints -6%",
+              "rawName": "Invading Attack Helicopter Hitpoints -6%",
+              "rawPercentage": "-6%",
+              "name": "Invading Attack Helicopter Hitpoints",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Invading Mortar Troop Damage -1%",
+              "rawName": "Invading Mortar Troop Damage -1%",
+              "rawPercentage": "-1%",
+              "name": "Invading Mortar Troop Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 91
+            },
+            {
+              "raw": "Invading Ranged Siege Damage -1%",
+              "rawName": "Invading Ranged Siege Damage -1%",
+              "rawPercentage": "-1%",
+              "name": "Invading Ranged Siege Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Invading Machine Gun Infantry Damage -6'. 61",
+              "rawName": "Invading Machine Gun Infantry Damage -6'.",
+              "rawPercentage": "61",
+              "name": "Invading Machine Gun Infantry Damage",
+              "value": null,
+              "known": true,
+              "assumed": true,
+              "hasPercent": false,
+              "confidence": 16
+            }
+          ],
+          "warnings": [
+            "Assumed OCR spelling: Invading Machine Gun Infantry Damage -6'. → Invading Machine Gun Infantry Damage. Verify this row.",
+            "Unreadable signed percentage: 61",
+            "Row 5: OCR field evidence is weak. Verify the name and percentage."
+          ],
+          "artifact": null,
+          "unlocked": {
+            "count": 1,
+            "states": [
+              true,
+              false,
+              false,
+              false,
+              false
+            ],
+            "method": "stars",
+            "fills": [
+              0.9222222222222223,
+              0.011111111111111112,
+              0.015384615384615385,
+              0.03076923076923077,
+              0.035897435897435895
+            ]
+          }
+        },
+        {
+          "pass": "calibrated-colour-retry",
+          "rows": [
+            {
+              "raw": "Invading Bazooka Damage -1%",
+              "rawName": "Invading Bazooka Damage -1%",
+              "rawPercentage": "-1%",
+              "name": "Invading Bazooka Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 90
+            },
+            {
+              "raw": "Invading Attack Helicopter Hitpoints -6%",
+              "rawName": "Invading Attack Helicopter Hitpoints -6%",
+              "rawPercentage": "-6%",
+              "name": "Invading Attack Helicopter Hitpoints",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Invading Mortar Troop Damage -1%",
+              "rawName": "Invading Mortar Troop Damage -1%",
+              "rawPercentage": "-1%",
+              "name": "Invading Mortar Troop Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 91
+            },
+            {
+              "raw": "Invading Ranged Siege Damage -1%",
+              "rawName": "Invading Ranged Siege Damage -1%",
+              "rawPercentage": "-1%",
+              "name": "Invading Ranged Siege Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Invading Machine Gun Infantry Damage -6'. 61",
+              "rawName": "Invading Machine Gun Infantry Damage -6'.",
+              "rawPercentage": "61",
+              "name": "Invading Machine Gun Infantry Damage",
+              "value": null,
+              "known": true,
+              "assumed": true,
+              "hasPercent": false,
+              "confidence": 16
+            }
+          ],
+          "warnings": [
+            "Assumed OCR spelling: Invading Machine Gun Infantry Damage -6'. → Invading Machine Gun Infantry Damage. Verify this row.",
+            "Unreadable signed percentage: 61",
+            "Row 5: OCR field evidence is weak. Verify the name and percentage."
+          ]
+        },
+        {
+          "pass": "block",
+          "rows": [
+            {
+              "raw": "Invading Bazooka Damage -1%",
+              "name": "Invading Bazooka Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Invading Attack Helicopter Hitpoints -6%",
+              "name": "Invading Attack Helicopter Hitpoints",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Invading Mortar Troop Damage -1%",
+              "name": "Invading Mortar Troop Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Invading Ranged Siege Damage -1%",
+              "name": "Invading Ranged Siege Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Invading Machine Gun Infantry Damage -6'..",
+              "name": "Invading Machine Gun Infantry Damage",
+              "value": null,
+              "known": true,
+              "assumed": false,
+              "hasPercent": false,
+              "confidence": 71
+            }
+          ],
+          "warnings": [
+            "Unreadable signed percentage: Invading Machine Gun Infantry Damage -6'..",
+            "OCR evidence is weak on 1 line(s). Verify the names and percentages."
+          ]
+        },
+        {
+          "pass": "individual-rows",
+          "rows": [
+            {
+              "raw": "Invading Bazooka Damage -1%",
+              "name": "Invading Bazooka Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Attack Helicopter Hitpoints -6%",
+              "name": "Invading Attack Helicopter Hitpoints",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Mortar Troop Damage -1%",
+              "name": "Invading Mortar Troop Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Ranged Siege Damage -1%",
+              "name": "Invading Ranged Siege Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Machine Gun Infantry Damage -6%",
+              "name": "Invading Machine Gun Infantry Damage",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            }
+          ],
+          "warnings": []
+        }
+      ],
+      "calibrationWarnings": [
+        "Assumed OCR spelling: Invading Machine Gun Infantry Damage -6'. → Invading Machine Gun Infantry Damage. Verify this row.",
+        "Unreadable signed percentage: 61",
+        "Row 5: OCR field evidence is weak. Verify the name and percentage.",
+        "Row 5: percentage inferred from green text and the known perk sign. Verify it."
+      ]
+    },
+    {
+      "fixture": "review-215133",
+      "elapsedMs": 620.1000003814697,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 4,
+        "percentages": 3,
+        "directPercentages": 3
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "firstCategoryCorrect": null,
+      "allStats": true,
+      "complete": true,
+      "fullArtifactAssessable": false,
+      "confidentlyIncorrect": false,
+      "missingRows": 0,
+      "extraRows": 0,
+      "retry": true,
+      "ocrCalls": 21,
+      "rows": [
+        {
+          "raw": "National Trade Good Loot Chance +6%",
+          "rawName": "National Trade Good Loot Chance +6%",
+          "rawPercentage": "+6%",
+          "name": "National Trade Good Loot Chance",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 91,
+          "colour": "green",
+          "unlocked": true,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Enemy Anti-Tank Gun Hitpoints -1%",
+          "rawName": "Enemy Anti-Tank Gun Hitpoints -1%",
+          "rawPercentage": "-1%",
+          "name": "Enemy Anti-Tank Gun Hitpoints",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 91,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Enemy Tower Hitpoints -1%",
+          "rawName": "Enemy Tower Hitpoints -1%",
+          "rawPercentage": "-1%",
+          "name": "Enemy Tower Hitpoints",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Enemy Catapult Damage -6%",
+          "rawName": "Enemy Catapult Damage -6%",
+          "rawPercentage": "-6%",
+          "name": "Enemy Catapult Damage",
+          "value": -6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "green",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Library Tech Gold Cost -6%",
+          "rawName": "Library Tech Gold Cost -6%",
+          "rawPercentage": "-6%",
+          "name": "Library Tech Gold Cost",
+          "value": -6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 91,
+          "colour": "green",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        }
+      ],
+      "warnings": [],
+      "valid": true,
+      "artifact": null,
+      "hall": "main",
+      "hallSource": "percentage-tier",
+      "colours": [
+        "green",
+        "neutral",
+        "neutral",
+        "green",
+        "green"
+      ],
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.9222222222222223,
+          0.011111111111111112,
+          0.015384615384615385,
+          0.03076923076923077,
+          0.035897435897435895
+        ]
+      },
+      "inferColours": true,
+      "metadataConflict": false,
+      "recognitionPath": "calibrated-fields",
+      "observations": [
+        {
+          "pass": "calibrated-fields",
+          "rows": [
+            {
+              "raw": "National Trade Good Loot Chance +6%",
+              "rawName": "National Trade Good Loot Chance +6%",
+              "rawPercentage": "+6%",
+              "name": "National Trade Good Loot Chance",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 91
+            },
+            {
+              "raw": "Enemy Anti-Tank Gun Hitpoints -1%",
+              "rawName": "Enemy Anti-Tank Gun Hitpoints -1%",
+              "rawPercentage": "-1%",
+              "name": "Enemy Anti-Tank Gun Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 91
+            },
+            {
+              "raw": "Enemy Tower Hitpoints -1%",
+              "rawName": "Enemy Tower Hitpoints -1%",
+              "rawPercentage": "-1%",
+              "name": "Enemy Tower Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Enemy Catapult Damage -6 -6",
+              "rawName": "Enemy Catapult Damage -6",
+              "rawPercentage": "-6",
+              "name": "Enemy Catapult Damage",
+              "value": null,
+              "known": true,
+              "assumed": true,
+              "hasPercent": false,
+              "confidence": 90
+            },
+            {
+              "raw": "Library Tech Gold Cost tu 4",
+              "rawName": "Library Tech Gold Cost tu",
+              "rawPercentage": "4",
+              "name": "Library Tech Gold Cost tu",
+              "value": null,
+              "known": false,
+              "assumed": false,
+              "hasPercent": false,
+              "confidence": 0
+            }
+          ],
+          "warnings": [
+            "Assumed OCR spelling: Enemy Catapult Damage -6 → Enemy Catapult Damage. Verify this row.",
+            "Unreadable signed percentage: -6",
+            "Unknown or ambiguous perk: Library Tech Gold Cost tu",
+            "Unreadable signed percentage: 4",
+            "Row 5: OCR field evidence is weak. Verify the name and percentage."
+          ],
+          "artifact": null,
+          "unlocked": {
+            "count": 1,
+            "states": [
+              true,
+              false,
+              false,
+              false,
+              false
+            ],
+            "method": "stars",
+            "fills": [
+              0.9222222222222223,
+              0.011111111111111112,
+              0.015384615384615385,
+              0.03076923076923077,
+              0.035897435897435895
+            ]
+          }
+        },
+        {
+          "pass": "calibrated-colour-retry",
+          "rows": [
+            {
+              "raw": "National Trade Good Loot Chance +6%",
+              "rawName": "National Trade Good Loot Chance +6%",
+              "rawPercentage": "+6%",
+              "name": "National Trade Good Loot Chance",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 91
+            },
+            {
+              "raw": "Enemy Anti-Tank Gun Hitpoints -1%",
+              "rawName": "Enemy Anti-Tank Gun Hitpoints -1%",
+              "rawPercentage": "-1%",
+              "name": "Enemy Anti-Tank Gun Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 91
+            },
+            {
+              "raw": "Enemy Tower Hitpoints -1%",
+              "rawName": "Enemy Tower Hitpoints -1%",
+              "rawPercentage": "-1%",
+              "name": "Enemy Tower Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Enemy Catapult Damage -6%",
+              "rawName": "Enemy Catapult Damage -6%",
+              "rawPercentage": "-6%",
+              "name": "Enemy Catapult Damage",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Library Tech Gold Cost -6%",
+              "rawName": "Library Tech Gold Cost -6%",
+              "rawPercentage": "-6%",
+              "name": "Library Tech Gold Cost",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 91
+            }
+          ],
+          "warnings": []
+        }
+      ]
+    },
+    {
+      "fixture": "review-215714",
+      "elapsedMs": 431.59999990463257,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "firstCategoryCorrect": null,
+      "allStats": true,
+      "complete": true,
+      "fullArtifactAssessable": false,
+      "confidentlyIncorrect": false,
+      "missingRows": 0,
+      "extraRows": 0,
+      "retry": false,
+      "ocrCalls": 15,
+      "rows": [
+        {
+          "raw": "Vault Interest +6%",
+          "rawName": "Vault Interest +6%",
+          "rawPercentage": "+6%",
+          "name": "Vault Interest",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "green",
+          "unlocked": true,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Forest Expansion Cost Refund +11%",
+          "rawName": "Forest Expansion Cost Refund +11%",
+          "rawPercentage": "+11%",
+          "name": "Forest Expansion Cost Refund",
+          "value": 11,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "blue",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Vault Capacity +1%",
+          "rawName": "Vault Capacity +1%",
+          "rawPercentage": "+1%",
+          "name": "Vault Capacity",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 93,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Redoubt Hitpoints +1%",
+          "rawName": "Redoubt Hitpoints +1%",
+          "rawPercentage": "+1%",
+          "name": "Redoubt Hitpoints",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Sniper Tower Damage +6%",
+          "rawName": "Sniper Tower Damage +6%",
+          "rawPercentage": "+6%",
+          "name": "Sniper Tower Damage",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "green",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        }
+      ],
+      "warnings": [],
+      "valid": true,
+      "artifact": null,
+      "hall": "main",
+      "hallSource": "percentage-tier",
+      "colours": [
+        "green",
+        "blue",
+        "neutral",
+        "neutral",
+        "green"
+      ],
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.9611111111111111,
+          0,
+          0.015384615384615385,
+          0.020512820512820513,
+          0.041025641025641026
+        ]
+      },
+      "inferColours": true,
+      "metadataConflict": false,
+      "recognitionPath": "calibrated-fields",
+      "observations": [
+        {
+          "pass": "calibrated-fields",
+          "rows": [
+            {
+              "raw": "Vault Interest +6%",
+              "rawName": "Vault Interest +6%",
+              "rawPercentage": "+6%",
+              "name": "Vault Interest",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Forest Expansion Cost Refund +11%",
+              "rawName": "Forest Expansion Cost Refund +11%",
+              "rawPercentage": "+11%",
+              "name": "Forest Expansion Cost Refund",
+              "value": 11,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Vault Capacity +1%",
+              "rawName": "Vault Capacity +1%",
+              "rawPercentage": "+1%",
+              "name": "Vault Capacity",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 93
+            },
+            {
+              "raw": "Redoubt Hitpoints +1%",
+              "rawName": "Redoubt Hitpoints +1%",
+              "rawPercentage": "+1%",
+              "name": "Redoubt Hitpoints",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Sniper Tower Damage +6%",
+              "rawName": "Sniper Tower Damage +6%",
+              "rawPercentage": "+6%",
+              "name": "Sniper Tower Damage",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            }
+          ],
+          "warnings": [],
+          "artifact": null,
+          "unlocked": {
+            "count": 1,
+            "states": [
+              true,
+              false,
+              false,
+              false,
+              false
+            ],
+            "method": "stars",
+            "fills": [
+              0.9611111111111111,
+              0,
+              0.015384615384615385,
+              0.020512820512820513,
+              0.041025641025641026
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "fixture": "review-225540",
+      "elapsedMs": 464,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "firstCategoryCorrect": null,
+      "allStats": true,
+      "complete": true,
+      "fullArtifactAssessable": false,
+      "confidentlyIncorrect": false,
+      "missingRows": 0,
+      "extraRows": 0,
+      "retry": false,
+      "ocrCalls": 15,
+      "rows": [
+        {
+          "raw": "Invading Heavy Tank Hitpoints -1%",
+          "rawName": "Invading Heavy Tank Hitpoints -1%",
+          "rawPercentage": "-1%",
+          "name": "Invading Heavy Tank Hitpoints",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 88,
+          "colour": "neutral",
+          "unlocked": true,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Invading Fighter Damage -6%",
+          "rawName": "Invading Fighter Damage -6%",
+          "rawPercentage": "-6%",
+          "name": "Invading Fighter Damage",
+          "value": -6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 91,
+          "colour": "green",
+          "unlocked": true,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Invading Fighter Hitpoints -1%",
+          "rawName": "Invading Fighter Hitpoints -1%",
+          "rawPercentage": "-1%",
+          "name": "Invading Fighter Hitpoints",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Invading Mortar Troop Damage -6%",
+          "rawName": "Invading Mortar Troop Damage -6%",
+          "rawPercentage": "-6%",
+          "name": "Invading Mortar Troop Damage",
+          "value": -6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "green",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Invading Assault Vehicle Hitpoints -6%",
+          "rawName": "Invading Assault Vehicle Hitpoints -6%",
+          "rawPercentage": "-6%",
+          "name": "Invading Assault Vehicle Hitpoints",
+          "value": -6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 91,
+          "colour": "green",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        }
+      ],
+      "warnings": [],
+      "valid": true,
+      "artifact": null,
+      "hall": "main",
+      "hallSource": "percentage-tier",
+      "colours": [
+        "neutral",
+        "green",
+        "neutral",
+        "green",
+        "green"
+      ],
+      "unlocked": {
+        "count": 2,
+        "states": [
+          true,
+          true,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.9611111111111111,
+          0.9777777777777777,
+          0.015384615384615385,
+          0.020512820512820513,
+          0.041025641025641026
+        ]
+      },
+      "inferColours": true,
+      "metadataConflict": false,
+      "recognitionPath": "calibrated-fields",
+      "observations": [
+        {
+          "pass": "calibrated-fields",
+          "rows": [
+            {
+              "raw": "Invading Heavy Tank Hitpoints -1%",
+              "rawName": "Invading Heavy Tank Hitpoints -1%",
+              "rawPercentage": "-1%",
+              "name": "Invading Heavy Tank Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 88
+            },
+            {
+              "raw": "Invading Fighter Damage -6%",
+              "rawName": "Invading Fighter Damage -6%",
+              "rawPercentage": "-6%",
+              "name": "Invading Fighter Damage",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 91
+            },
+            {
+              "raw": "Invading Fighter Hitpoints -1%",
+              "rawName": "Invading Fighter Hitpoints -1%",
+              "rawPercentage": "-1%",
+              "name": "Invading Fighter Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Invading Mortar Troop Damage -6%",
+              "rawName": "Invading Mortar Troop Damage -6%",
+              "rawPercentage": "-6%",
+              "name": "Invading Mortar Troop Damage",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Invading Assault Vehicle Hitpoints -6%",
+              "rawName": "Invading Assault Vehicle Hitpoints -6%",
+              "rawPercentage": "-6%",
+              "name": "Invading Assault Vehicle Hitpoints",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 91
+            }
+          ],
+          "warnings": [],
+          "artifact": null,
+          "unlocked": {
+            "count": 2,
+            "states": [
+              true,
+              true,
+              false,
+              false,
+              false
+            ],
+            "method": "stars",
+            "fills": [
+              0.9611111111111111,
+              0.9777777777777777,
+              0.015384615384615385,
+              0.020512820512820513,
+              0.041025641025641026
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "fixture": "review-225703",
+      "elapsedMs": 389.5,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "firstCategoryCorrect": null,
+      "allStats": true,
+      "complete": true,
+      "fullArtifactAssessable": false,
+      "confidentlyIncorrect": false,
+      "missingRows": 0,
+      "extraRows": 0,
+      "retry": false,
+      "ocrCalls": 15,
+      "rows": [
+        {
+          "raw": "Redoubt Hitpoints +1%",
+          "rawName": "Redoubt Hitpoints +1%",
+          "rawPercentage": "+1%",
+          "name": "Redoubt Hitpoints",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "neutral",
+          "unlocked": true,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "All Resources from Hunting +6%",
+          "rawName": "All Resources from Hunting +6%",
+          "rawPercentage": "+6%",
+          "name": "All Resources from Hunting",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "green",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Gold from Gold Mines +6%",
+          "rawName": "Gold from Gold Mines +6%",
+          "rawPercentage": "+6%",
+          "name": "Gold from Gold Mines",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "green",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Food from Fruit Trees +1%",
+          "rawName": "Food from Fruit Trees +1%",
+          "rawPercentage": "+1%",
+          "name": "Food from Fruit Trees",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Redoubt Hitpoints +6%",
+          "rawName": "Redoubt Hitpoints +6%",
+          "rawPercentage": "+6%",
+          "name": "Redoubt Hitpoints",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 93,
+          "colour": "green",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        }
+      ],
+      "warnings": [],
+      "valid": true,
+      "artifact": null,
+      "hall": "main",
+      "hallSource": "percentage-tier",
+      "colours": [
+        "neutral",
+        "green",
+        "green",
+        "neutral",
+        "green"
+      ],
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.9222222222222223,
+          0.011111111111111112,
+          0.015384615384615385,
+          0.03076923076923077,
+          0.035897435897435895
+        ]
+      },
+      "inferColours": true,
+      "metadataConflict": false,
+      "recognitionPath": "calibrated-fields",
+      "observations": [
+        {
+          "pass": "calibrated-fields",
+          "rows": [
+            {
+              "raw": "Redoubt Hitpoints +1%",
+              "rawName": "Redoubt Hitpoints +1%",
+              "rawPercentage": "+1%",
+              "name": "Redoubt Hitpoints",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "All Resources from Hunting +6%",
+              "rawName": "All Resources from Hunting +6%",
+              "rawPercentage": "+6%",
+              "name": "All Resources from Hunting",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Gold from Gold Mines +6%",
+              "rawName": "Gold from Gold Mines +6%",
+              "rawPercentage": "+6%",
+              "name": "Gold from Gold Mines",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Food from Fruit Trees +1%",
+              "rawName": "Food from Fruit Trees +1%",
+              "rawPercentage": "+1%",
+              "name": "Food from Fruit Trees",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Redoubt Hitpoints +6%",
+              "rawName": "Redoubt Hitpoints +6%",
+              "rawPercentage": "+6%",
+              "name": "Redoubt Hitpoints",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 93
+            }
+          ],
+          "warnings": [],
+          "artifact": null,
+          "unlocked": {
+            "count": 1,
+            "states": [
+              true,
+              false,
+              false,
+              false,
+              false
+            ],
+            "method": "stars",
+            "fills": [
+              0.9222222222222223,
+              0.011111111111111112,
+              0.015384615384615385,
+              0.03076923076923077,
+              0.035897435897435895
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "passed": true,
+  "limitations": "Eight selected original game screenshots, not a representative live-capture dataset. Seven have no category/hall pixels. Seeded overlapping name/value regions test one broad template; the separate tight run uses hand-selected pixel boxes on pic1 only. Original fixture labels supply names/values; star counts visually checked (one except review-225540: two).",
+  "network": {
+    "requests": [
+      {
+        "requestId": "67AE57691CE425B90B0DB3A53D76C4BF",
+        "url": "http://127.0.0.1:53202/ui/scanner.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.2",
+        "url": "http://127.0.0.1:53202/ui/navigation.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.3",
+        "url": "http://127.0.0.1:53202/ui/styles.css?v=41",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.4",
+        "url": "http://127.0.0.1:53202/ui/scanner.css?v=18",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.5",
+        "url": "http://127.0.0.1:53202/ui/scanner-core.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.6",
+        "url": "http://127.0.0.1:53202/ui/scanner-regions.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.7",
+        "url": "http://127.0.0.1:53202/ui/scanner-frames.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.8",
+        "url": "http://127.0.0.1:53202/ui/data/army_catalog.js?v=7",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.9",
+        "url": "http://127.0.0.1:53202/ui/shared.js?v=37",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.10",
+        "url": "http://127.0.0.1:53202/ui/profiles-ui.js?v=12",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.11",
+        "url": "http://127.0.0.1:53202/ui/artifact-scoring.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.12",
+        "url": "http://127.0.0.1:53202/ui/stored-artifacts.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.13",
+        "url": "http://127.0.0.1:53202/ui/scanner-comparison.js?v=6",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.14",
+        "url": "http://127.0.0.1:53202/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.15",
+        "url": "http://127.0.0.1:53202/ui/scanner-recognition.js?v=22",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.16",
+        "url": "http://127.0.0.1:53202/ui/scanner-field-recognition.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.17",
+        "url": "http://127.0.0.1:53202/ui/scanner-calibration.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.18",
+        "url": "http://127.0.0.1:53202/ui/scanner-collection.js?v=11",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.19",
+        "url": "http://127.0.0.1:53202/ui/scanner-reading.js?v=32",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.20",
+        "url": "http://127.0.0.1:53202/ui/scanner.js?v=6",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.33",
+        "url": "http://127.0.0.1:53202/ui/data/artifacts.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.40",
+        "url": "http://127.0.0.1:53202/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.41",
+        "url": "http://127.0.0.1:53202/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.43",
+        "url": "http://127.0.0.1:53202/favicon.ico",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.44",
+        "url": "http://127.0.0.1:53202/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.45",
+        "url": "http://127.0.0.1:53202/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "50BC29928A7F4F4A344229AFE1317079",
+        "url": "http://127.0.0.1:53202/ui/vendor/tesseract/worker.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.47",
+        "url": "http://127.0.0.1:53202/ui/vendor/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.48",
+        "url": "http://127.0.0.1:53202/ui/vendor/tesseract/lang/eng.traineddata.gz",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.49",
+        "url": "http://127.0.0.1:53202/tests/scanner/pic1.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.50",
+        "url": "http://127.0.0.1:53202/tests/scanner/pic1.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.51",
+        "url": "http://127.0.0.1:53202/tests/scanner/greenissue.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.52",
+        "url": "http://127.0.0.1:53202/tests/scanner/greenissue.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.53",
+        "url": "http://127.0.0.1:53202/tests/scanner/invaders-cyan.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.54",
+        "url": "http://127.0.0.1:53202/tests/scanner/invaders-cyan.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.55",
+        "url": "http://127.0.0.1:53202/tests/scanner/invaders-green.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.56",
+        "url": "http://127.0.0.1:53202/tests/scanner/invaders-green.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.57",
+        "url": "http://127.0.0.1:53202/tests/scanner/review-215133.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.58",
+        "url": "http://127.0.0.1:53202/tests/scanner/review-215133.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.59",
+        "url": "http://127.0.0.1:53202/tests/scanner/review-215714.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.60",
+        "url": "http://127.0.0.1:53202/tests/scanner/review-215714.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.61",
+        "url": "http://127.0.0.1:53202/tests/scanner/review-225540.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.62",
+        "url": "http://127.0.0.1:53202/tests/scanner/review-225540.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.63",
+        "url": "http://127.0.0.1:53202/tests/scanner/review-225703.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "100036.64",
+        "url": "http://127.0.0.1:53202/tests/scanner/review-225703.png",
+        "method": "GET",
+        "hasPostData": false
+      }
+    ],
+    "blockedRequests": [],
+    "externalRequests": [],
+    "nonGetRequests": [],
+    "browserErrors": []
+  }
+}

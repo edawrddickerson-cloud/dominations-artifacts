@@ -1,0 +1,192 @@
+{
+  "passed": true,
+  "viewport": {
+    "width": 640,
+    "height": 720
+  },
+  "ui": {
+    "setup is first and starts collapsed": true,
+    "disconnected status is one red label in banner": true,
+    "active capture turns banner label green": true,
+    "stopping capture restores red label": true,
+    "confirmed improvement signals KEEP": true,
+    "offensive and defensive scores visible": true,
+    "collapsed setup leaves scores visible": true,
+    "decision visible without scrolling": true,
+    "comparison visible without scrolling": true,
+    "live-score visible without scrolling": true,
+    "comparison-detail visible without scrolling": true,
+    "decision uses a large peripheral signal": true,
+    "numeric score is prominent": true,
+    "crafting has no single-stat score mode": true,
+    "per-stat scores shown": true,
+    "numbers stay steady throughout a retry": true,
+    "keep flag stays steady throughout a retry": true,
+    "retained read is explicitly marked": true,
+    "background collection refresh does not blank the keep flag": true,
+    "fresh result clears the updating label": true,
+    "image transition retains scores until replacement": true,
+    "summary stays pinned while reviewing logs": true,
+    "weaker craft signals PASS": true,
+    "four of five scores provisionally": true,
+    "optimistic keep is visibly provisional": true,
+    "assumption visible without scrolling": true,
+    "weak even with optimistic fifth signals PASS?": true,
+    "too little evidence shows CHECK with last score retained": true,
+    "three unlocked stats override a below-cutoff score": true,
+    "three-star keeper survives pending stat corrections": true,
+    "three unlocked stats keep even with no readable percentages": true,
+    "automatic keeper needs no category selection": true,
+    "automatic keeper label is visible without scrolling": true,
+    "reset clears a stale three-star keeper": true
+  },
+  "summaryBounds": {
+    "top": 220.96875,
+    "bottom": 390.96875,
+    "left": 61.59375,
+    "right": 617
+  },
+  "sessionBounds": {
+    "top": 215.375,
+    "bottom": 435.75,
+    "left": 53.59375,
+    "right": 625
+  },
+  "decisionFont": 48,
+  "scoreFont": 32,
+  "limitations": "Real browser layout and controller tested with synthetic OCR responses. Does not measure live recognition accuracy or human peripheral perception.",
+  "network": {
+    "requests": [
+      {
+        "requestId": "247282539F383D67EC8386CEC34FF3D3",
+        "url": "http://127.0.0.1:55574/ui/scanner.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.2",
+        "url": "http://127.0.0.1:55574/ui/navigation.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.3",
+        "url": "http://127.0.0.1:55574/ui/styles.css?v=41",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.4",
+        "url": "http://127.0.0.1:55574/ui/scanner.css?v=17",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.5",
+        "url": "http://127.0.0.1:55574/ui/scanner-core.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.6",
+        "url": "http://127.0.0.1:55574/ui/scanner-frames.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.7",
+        "url": "http://127.0.0.1:55574/ui/data/army_catalog.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.8",
+        "url": "http://127.0.0.1:55574/ui/shared.js?v=36",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.9",
+        "url": "http://127.0.0.1:55574/ui/profiles-ui.js?v=12",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.10",
+        "url": "http://127.0.0.1:55574/ui/artifact-scoring.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.11",
+        "url": "http://127.0.0.1:55574/ui/stored-artifacts.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.12",
+        "url": "http://127.0.0.1:55574/ui/scanner-comparison.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.13",
+        "url": "http://127.0.0.1:55574/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.14",
+        "url": "http://127.0.0.1:55574/ui/scanner-recognition.js?v=16",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.15",
+        "url": "http://127.0.0.1:55574/ui/scanner-collection.js?v=8",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.16",
+        "url": "http://127.0.0.1:55574/ui/scanner-reading.js?v=25",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.17",
+        "url": "http://127.0.0.1:55574/ui/scanner.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.29",
+        "url": "http://127.0.0.1:55574/ui/data/artifacts.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.34",
+        "url": "http://127.0.0.1:55574/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.35",
+        "url": "http://127.0.0.1:55574/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "159328.37",
+        "url": "http://127.0.0.1:55574/favicon.ico",
+        "method": "GET",
+        "hasPostData": false
+      }
+    ],
+    "blockedRequests": [],
+    "externalRequests": [],
+    "nonGetRequests": [],
+    "browserErrors": []
+  }
+}

@@ -1,0 +1,855 @@
+{
+  "fixture": "review-225627.png",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+  "panel": {
+    "x": 0.006289308176100629,
+    "y": 0.017699115044247787,
+    "width": 0.9937106918238994,
+    "height": 0.9616519174041298
+  },
+  "detectorMs": 7.5,
+  "runs": [
+    {
+      "kind": "detected",
+      "rect": {
+        "x": 4,
+        "y": 6,
+        "width": 632,
+        "height": 326
+      },
+      "elapsedMs": 1450.5999999046326,
+      "exact": true,
+      "complete": true,
+      "starsCorrect": true,
+      "percentageRecovery": true,
+      "expectedKnown": false,
+      "scoringParity": true,
+      "passed": true,
+      "rows": [
+        {
+          "raw": "Invading Attack Helicopter Damage -1%",
+          "name": "Invading Attack Helicopter Damage",
+          "value": -1,
+          "known": false,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "neutral",
+          "unlocked": true
+        },
+        {
+          "raw": "Invading Ranged Siege Damage -6%",
+          "name": "Invading Ranged Siege Damage",
+          "value": -6,
+          "known": false,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading MRL Hitpoints -6%",
+          "name": "Invading MRL Hitpoints",
+          "value": -6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading Generals’ Hitpoints -1%",
+          "name": "Invading Generals' Hitpoints",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 78,
+          "colour": "neutral",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading Fighter Damage -1%",
+          "name": "Invading Fighter Damage",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "neutral",
+          "unlocked": false
+        }
+      ],
+      "warnings": [
+        "Unknown or ambiguous perk: Invading Attack Helicopter Damage",
+        "Unknown or ambiguous perk: Invading Ranged Siege Damage",
+        "OCR evidence is weak on 1 line(s). Verify the names and percentages."
+      ],
+      "valid": false,
+      "hall": "main",
+      "inferColours": true,
+      "colours": [
+        "neutral",
+        "green",
+        "green",
+        "neutral",
+        "neutral"
+      ],
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.9282051282051282,
+          0.010256410256410256,
+          0.016666666666666666,
+          0.041025641025641026,
+          0.035897435897435895
+        ]
+      },
+      "ocrCalls": 6,
+      "colourReads": [
+        {
+          "index": 0,
+          "text": "",
+          "quality": 0
+        },
+        {
+          "index": 1,
+          "text": "Invading Ranged Siege Damage -6%",
+          "quality": 94
+        }
+      ],
+      "percentageReads": [],
+      "observations": [
+        {
+          "pass": "block",
+          "rows": [
+            {
+              "raw": "Invading Attack Helicopter Damage -1%",
+              "name": "Invading Attack Helicopter Damage",
+              "value": -1,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Invading Ranged Siege Damage -6%",
+              "name": "Invading Ranged Siege Damage",
+              "value": -6,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Invading MRL Hitpoints -6%",
+              "name": "Invading MRL Hitpoints",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Invading Generals’ Hitpoints -1%",
+              "name": "Invading Generals' Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 78
+            },
+            {
+              "raw": "Invading Fighter Damage -1%",
+              "name": "Invading Fighter Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            }
+          ],
+          "warnings": [
+            "Unknown or ambiguous perk: Invading Attack Helicopter Damage",
+            "Unknown or ambiguous perk: Invading Ranged Siege Damage",
+            "OCR evidence is weak on 1 line(s). Verify the names and percentages."
+          ]
+        },
+        {
+          "pass": "individual-rows",
+          "rows": [
+            {
+              "raw": "Invading Attack Helicopter Damage -1%",
+              "name": "Invading Attack Helicopter Damage",
+              "value": -1,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Ranged Siege Damage -6%",
+              "name": "Invading Ranged Siege Damage",
+              "value": -6,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading MRL Hitpoints -6%",
+              "name": "Invading MRL Hitpoints",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Generals’ Hitpoints -1%",
+              "name": "Invading Generals' Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Fighter Damage -1%",
+              "name": "Invading Fighter Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            }
+          ],
+          "warnings": [
+            "Unknown or ambiguous perk: Invading Attack Helicopter Damage",
+            "Unknown or ambiguous perk: Invading Ranged Siege Damage",
+            "Some individual rows are still unclear. Verify their names and percentages."
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "detected-scale-0.75",
+      "rect": {
+        "x": 3,
+        "y": 5,
+        "width": 474,
+        "height": 244
+      },
+      "elapsedMs": 422.30000019073486,
+      "exact": true,
+      "complete": true,
+      "starsCorrect": true,
+      "percentageRecovery": true,
+      "expectedKnown": false,
+      "scoringParity": true,
+      "passed": true,
+      "rows": [
+        {
+          "raw": "Invading Attack Helicopter Damage -1%",
+          "name": "Invading Attack Helicopter Damage",
+          "value": -1,
+          "known": false,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "neutral",
+          "unlocked": true
+        },
+        {
+          "raw": "Invading Ranged Siege Damage -6%",
+          "name": "Invading Ranged Siege Damage",
+          "value": -6,
+          "known": false,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 93,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading MRL Hitpoints -6%",
+          "name": "Invading MRL Hitpoints",
+          "value": -6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading Generals’ Hitpoints -1%",
+          "name": "Invading Generals' Hitpoints",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 84,
+          "colour": "neutral",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading Fighter Damage -1%",
+          "name": "Invading Fighter Damage",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 93,
+          "colour": "neutral",
+          "unlocked": false
+        }
+      ],
+      "warnings": [
+        "Unknown or ambiguous perk: Invading Attack Helicopter Damage",
+        "Unknown or ambiguous perk: Invading Ranged Siege Damage"
+      ],
+      "valid": false,
+      "hall": "main",
+      "inferColours": true,
+      "colours": [
+        "neutral",
+        "green",
+        "green",
+        "neutral",
+        "neutral"
+      ],
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.9272727272727272,
+          0,
+          0.00909090909090909,
+          0.020202020202020204,
+          0.04040404040404041
+        ]
+      },
+      "ocrCalls": 5,
+      "colourReads": [
+        {
+          "index": 0,
+          "text": "",
+          "quality": 0
+        },
+        {
+          "index": 1,
+          "text": "Invading Ranged Siege Damage -6%",
+          "quality": 94
+        }
+      ],
+      "percentageReads": [],
+      "observations": [
+        {
+          "pass": "block",
+          "rows": [
+            {
+              "raw": "Invading Attack Helicopter Damage -1%",
+              "name": "Invading Attack Helicopter Damage",
+              "value": -1,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Invading Ranged Siege Damage -6%",
+              "name": "Invading Ranged Siege Damage",
+              "value": -6,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 93
+            },
+            {
+              "raw": "Invading MRL Hitpoints -6%",
+              "name": "Invading MRL Hitpoints",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Invading Generals’ Hitpoints -1%",
+              "name": "Invading Generals' Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 84
+            },
+            {
+              "raw": "Invading Fighter Damage -1%",
+              "name": "Invading Fighter Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 93
+            }
+          ],
+          "warnings": [
+            "Unknown or ambiguous perk: Invading Attack Helicopter Damage",
+            "Unknown or ambiguous perk: Invading Ranged Siege Damage"
+          ]
+        },
+        {
+          "pass": "individual-rows",
+          "rows": [
+            {
+              "raw": "Invading Attack Helicopter Damage -1%",
+              "name": "Invading Attack Helicopter Damage",
+              "value": -1,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Ranged Siege Damage -6%",
+              "name": "Invading Ranged Siege Damage",
+              "value": -6,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading MRL Hitpoints -6%",
+              "name": "Invading MRL Hitpoints",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Generals’ Hitpoints -1%",
+              "name": "Invading Generals' Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Fighter Damage -1%",
+              "name": "Invading Fighter Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            }
+          ],
+          "warnings": [
+            "Unknown or ambiguous perk: Invading Attack Helicopter Damage",
+            "Unknown or ambiguous perk: Invading Ranged Siege Damage"
+          ]
+        }
+      ]
+    },
+    {
+      "kind": "calibration-margin",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 682,
+        "height": 367
+      },
+      "elapsedMs": 412,
+      "exact": true,
+      "complete": true,
+      "starsCorrect": true,
+      "percentageRecovery": true,
+      "expectedKnown": false,
+      "scoringParity": true,
+      "passed": true,
+      "rows": [
+        {
+          "raw": "Invading Attack Helicopter Damage -1%",
+          "name": "Invading Attack Helicopter Damage",
+          "value": -1,
+          "known": false,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "neutral",
+          "unlocked": true
+        },
+        {
+          "raw": "Invading Ranged Siege Damage -6%",
+          "name": "Invading Ranged Siege Damage",
+          "value": -6,
+          "known": false,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading MRL Hitpoints -6%",
+          "name": "Invading MRL Hitpoints",
+          "value": -6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading Generals’ Hitpoints -1%",
+          "name": "Invading Generals' Hitpoints",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 82,
+          "colour": "neutral",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading Fighter Damage -1%",
+          "name": "Invading Fighter Damage",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "neutral",
+          "unlocked": false
+        }
+      ],
+      "warnings": [
+        "Unknown or ambiguous perk: Invading Attack Helicopter Damage",
+        "Unknown or ambiguous perk: Invading Ranged Siege Damage"
+      ],
+      "valid": false,
+      "hall": "main",
+      "inferColours": true,
+      "colours": [
+        "neutral",
+        "green",
+        "green",
+        "neutral",
+        "neutral"
+      ],
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.9222222222222223,
+          0.011111111111111112,
+          0.015384615384615385,
+          0.03076923076923077,
+          0.035897435897435895
+        ]
+      },
+      "ocrCalls": 5,
+      "colourReads": [
+        {
+          "index": 0,
+          "text": "",
+          "quality": 0
+        },
+        {
+          "index": 1,
+          "text": "Invading Ranged Siege Damage -6%",
+          "quality": 94
+        }
+      ],
+      "percentageReads": [],
+      "observations": [
+        {
+          "pass": "block",
+          "rows": [
+            {
+              "raw": "Invading Attack Helicopter Damage -1%",
+              "name": "Invading Attack Helicopter Damage",
+              "value": -1,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Invading Ranged Siege Damage -6%",
+              "name": "Invading Ranged Siege Damage",
+              "value": -6,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Invading MRL Hitpoints -6%",
+              "name": "Invading MRL Hitpoints",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Invading Generals’ Hitpoints -1%",
+              "name": "Invading Generals' Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 82
+            },
+            {
+              "raw": "Invading Fighter Damage -1%",
+              "name": "Invading Fighter Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            }
+          ],
+          "warnings": [
+            "Unknown or ambiguous perk: Invading Attack Helicopter Damage",
+            "Unknown or ambiguous perk: Invading Ranged Siege Damage"
+          ]
+        },
+        {
+          "pass": "individual-rows",
+          "rows": [
+            {
+              "raw": "Invading Attack Helicopter Damage -1%",
+              "name": "Invading Attack Helicopter Damage",
+              "value": -1,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Ranged Siege Damage -6%",
+              "name": "Invading Ranged Siege Damage",
+              "value": -6,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading MRL Hitpoints -6%",
+              "name": "Invading MRL Hitpoints",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Generals’ Hitpoints -1%",
+              "name": "Invading Generals' Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Fighter Damage -1%",
+              "name": "Invading Fighter Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            }
+          ],
+          "warnings": [
+            "Unknown or ambiguous perk: Invading Attack Helicopter Damage",
+            "Unknown or ambiguous perk: Invading Ranged Siege Damage"
+          ]
+        }
+      ]
+    }
+  ],
+  "passed": true,
+  "limitations": "One screenshot plus Canvas-derived scale probes and a deliberately injected first-pass failure only. First native and forced-failure OCR include worker initialization; other runs are warm. Scoring parity uses repository rating defaults for all modes/axes. No representative accuracy or continuous capture claim.",
+  "network": {
+    "requests": [
+      {
+        "url": "http://127.0.0.1:62086/ui/scanner.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/navigation.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/styles.css?v=39",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/scanner.css?v=6",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/scanner-core.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/scanner-frames.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/data/army_catalog.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/shared.js?v=33",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/artifact-scoring.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/scanner-recognition.js?v=15",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/scanner-collection.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/scanner-reading.js?v=14",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/scanner.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/favicon.ico",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/data/army_catalog.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/shared.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/scanner-core.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/scanner-frames.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/artifact-scoring.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/scanner-recognition.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/tests/scanner/review-225627.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/tests/scanner/review-225627.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/vendor/tesseract/worker.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/vendor/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:62086/ui/vendor/tesseract/lang/eng.traineddata.gz",
+        "method": "GET",
+        "hasPostData": false
+      }
+    ],
+    "externalRequests": [],
+    "nonGetRequests": [],
+    "browserErrors": []
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "source": "Hand-selected bounds from original pic1.png pixels, October 2026. These boxes illustrate per-field calibration for this one artifact, not a reusable tight percentage column.",
+  "category": {"x":320,"y":94,"width":150,"height":49},
+  "rows": [
+    {"name":{"x":570,"y":272,"width":168,"height":36},"percentage":{"x":738,"y":272,"width":47,"height":36}},
+    {"name":{"x":570,"y":317,"width":188,"height":36},"percentage":{"x":758,"y":317,"width":50,"height":36}},
+    {"name":{"x":570,"y":361,"width":149,"height":36},"percentage":{"x":719,"y":361,"width":48,"height":36}},
+    {"name":{"x":570,"y":405,"width":146,"height":36},"percentage":{"x":716,"y":405,"width":50,"height":36}},
+    {"name":{"x":570,"y":449,"width":146,"height":36},"percentage":{"x":716,"y":449,"width":50,"height":36}}
+  ]
+}

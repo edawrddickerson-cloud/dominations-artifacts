@@ -1,0 +1,26 @@
+{
+  "source": "User game/app review pairs, 22:54?22:57; names and values manually transcribed from game pixels",
+  "reviewPair": true,
+  "rows": [
+    {
+      "name": "Library Tech Oil Cost",
+      "value": -1
+    },
+    {
+      "name": "Redoubt Damage",
+      "value": 1
+    },
+    {
+      "name": "Gold from Caravans",
+      "value": 6
+    },
+    {
+      "name": "Gold from Caravans",
+      "value": 1
+    },
+    {
+      "name": "Anti-Tank Gun Damage",
+      "value": 6
+    }
+  ]
+}

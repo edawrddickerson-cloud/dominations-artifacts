@@ -1,0 +1,436 @@
+{
+  "mode": "manual-tight",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+  "runs": [
+    {
+      "fixture": "pic1",
+      "elapsedMs": 185.40000009536743,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": true,
+      "firstCategoryCorrect": true,
+      "allStats": true,
+      "complete": true,
+      "fullArtifactAssessable": true,
+      "confidentlyIncorrect": false,
+      "missingRows": 0,
+      "extraRows": 0,
+      "retry": false,
+      "ocrCalls": 11,
+      "rows": [
+        {
+          "raw": "Air Defense Damage +1%",
+          "rawName": "Air Defense Damage",
+          "rawPercentage": "+1%",
+          "name": "Air Defense Damage",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "neutral",
+          "unlocked": true,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Sniper Tower Hitpoints +1%",
+          "rawName": "Sniper Tower Hitpoints",
+          "rawPercentage": "+1%",
+          "name": "Sniper Tower Hitpoints",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Catapult Hitpoints +1%",
+          "rawName": "Catapult Hitpoints",
+          "rawPercentage": "+1%",
+          "name": "Catapult Hitpoints",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 93,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Catapult Damage +1%",
+          "rawName": "Catapult Damage",
+          "rawPercentage": "+1%",
+          "name": "Catapult Damage",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 91,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        },
+        {
+          "raw": "Catapult Damage +1%",
+          "rawName": "Catapult Damage",
+          "rawPercentage": "+1%",
+          "name": "Catapult Damage",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "neutral",
+          "unlocked": false,
+          "level": 1,
+          "levelSource": "crafting"
+        }
+      ],
+      "warnings": [],
+      "valid": true,
+      "artifact": {
+        "type": "Pottery",
+        "rawType": "Pottery",
+        "categoryConfidence": 93,
+        "source": "calibrated-label",
+        "hall": "main"
+      },
+      "hall": "main",
+      "hallSource": "crafting-label",
+      "colours": [
+        "neutral",
+        "neutral",
+        "neutral",
+        "neutral",
+        "neutral"
+      ],
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.9692307692307692,
+          0,
+          0.02564102564102564,
+          0.03333333333333333,
+          0.05128205128205128
+        ]
+      },
+      "inferColours": true,
+      "metadataConflict": false,
+      "recognitionPath": "calibrated-fields",
+      "observations": [
+        {
+          "pass": "calibrated-fields",
+          "rows": [
+            {
+              "raw": "Air Defense Damage +1%",
+              "rawName": "Air Defense Damage",
+              "rawPercentage": "+1%",
+              "name": "Air Defense Damage",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Sniper Tower Hitpoints +1%",
+              "rawName": "Sniper Tower Hitpoints",
+              "rawPercentage": "+1%",
+              "name": "Sniper Tower Hitpoints",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Catapult Hitpoints +1%",
+              "rawName": "Catapult Hitpoints",
+              "rawPercentage": "+1%",
+              "name": "Catapult Hitpoints",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 93
+            },
+            {
+              "raw": "Catapult Damage +1%",
+              "rawName": "Catapult Damage",
+              "rawPercentage": "+1%",
+              "name": "Catapult Damage",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 91
+            },
+            {
+              "raw": "Catapult Damage +1%",
+              "rawName": "Catapult Damage",
+              "rawPercentage": "+1%",
+              "name": "Catapult Damage",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            }
+          ],
+          "warnings": [],
+          "artifact": {
+            "type": "Pottery",
+            "rawType": "Pottery",
+            "categoryConfidence": 93,
+            "source": "calibrated-label"
+          },
+          "unlocked": {
+            "count": 1,
+            "states": [
+              true,
+              false,
+              false,
+              false,
+              false
+            ],
+            "method": "stars",
+            "fills": [
+              0.9692307692307692,
+              0,
+              0.02564102564102564,
+              0.03333333333333333,
+              0.05128205128205128
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "passed": true,
+  "limitations": "Eight selected original game screenshots, not a representative live-capture dataset. Seven have no category/hall pixels. Seeded overlapping name/value regions test one broad template; the separate tight run uses hand-selected pixel boxes on pic1 only. Original fixture labels supply names/values; star counts visually checked (one except review-225540: two).",
+  "network": {
+    "requests": [
+      {
+        "requestId": "569C3E19D266953790EE449532EF812C",
+        "url": "http://127.0.0.1:59780/ui/scanner.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.2",
+        "url": "http://127.0.0.1:59780/ui/navigation.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.3",
+        "url": "http://127.0.0.1:59780/ui/styles.css?v=41",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.4",
+        "url": "http://127.0.0.1:59780/ui/scanner.css?v=18",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.5",
+        "url": "http://127.0.0.1:59780/ui/scanner-core.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.6",
+        "url": "http://127.0.0.1:59780/ui/scanner-regions.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.7",
+        "url": "http://127.0.0.1:59780/ui/scanner-frames.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.8",
+        "url": "http://127.0.0.1:59780/ui/data/army_catalog.js?v=7",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.9",
+        "url": "http://127.0.0.1:59780/ui/shared.js?v=37",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.10",
+        "url": "http://127.0.0.1:59780/ui/profiles-ui.js?v=12",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.11",
+        "url": "http://127.0.0.1:59780/ui/artifact-scoring.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.12",
+        "url": "http://127.0.0.1:59780/ui/stored-artifacts.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.13",
+        "url": "http://127.0.0.1:59780/ui/scanner-comparison.js?v=6",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.14",
+        "url": "http://127.0.0.1:59780/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.15",
+        "url": "http://127.0.0.1:59780/ui/scanner-recognition.js?v=22",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.16",
+        "url": "http://127.0.0.1:59780/ui/scanner-field-recognition.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.17",
+        "url": "http://127.0.0.1:59780/ui/scanner-calibration.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.18",
+        "url": "http://127.0.0.1:59780/ui/scanner-collection.js?v=11",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.19",
+        "url": "http://127.0.0.1:59780/ui/scanner-reading.js?v=32",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.20",
+        "url": "http://127.0.0.1:59780/ui/scanner.js?v=6",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.33",
+        "url": "http://127.0.0.1:59780/ui/data/artifacts.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.40",
+        "url": "http://127.0.0.1:59780/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.41",
+        "url": "http://127.0.0.1:59780/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.43",
+        "url": "http://127.0.0.1:59780/favicon.ico",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.44",
+        "url": "http://127.0.0.1:59780/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.45",
+        "url": "http://127.0.0.1:59780/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "7660001EA3C2D9DAC5971177C2661502",
+        "url": "http://127.0.0.1:59780/ui/vendor/tesseract/worker.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.47",
+        "url": "http://127.0.0.1:59780/ui/vendor/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.48",
+        "url": "http://127.0.0.1:59780/ui/vendor/tesseract/lang/eng.traineddata.gz",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.49",
+        "url": "http://127.0.0.1:59780/tests/scanner/pic1.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.50",
+        "url": "http://127.0.0.1:59780/tests/scanner/pic1.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "170116.51",
+        "url": "http://127.0.0.1:59780/tests/scanner/pic1.regions.json",
+        "method": "GET",
+        "hasPostData": false
+      }
+    ],
+    "blockedRequests": [],
+    "externalRequests": [],
+    "nonGetRequests": [],
+    "browserErrors": []
+  }
+}

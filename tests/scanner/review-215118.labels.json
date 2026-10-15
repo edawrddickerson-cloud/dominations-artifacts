@@ -1,0 +1,26 @@
+{
+  "source": "User game/app review pairs; names and values manually transcribed from game pixels",
+  "reviewPair": true,
+  "rows": [
+    {
+      "name": "Tower Damage",
+      "value": 6
+    },
+    {
+      "name": "Anti-Tank Gun Damage",
+      "value": 6
+    },
+    {
+      "name": "Sniper Tower Hitpoints",
+      "value": 6
+    },
+    {
+      "name": "Anti-Tank Gun Damage",
+      "value": 6
+    },
+    {
+      "name": "Redoubt Hitpoints",
+      "value": 6
+    }
+  ]
+}

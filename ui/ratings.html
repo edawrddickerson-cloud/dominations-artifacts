@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <script src="navigation.js?v=1"></script>
+  <script src="navigation.js?v=5"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts · Perk ratings</title>
-  <link rel="stylesheet" href="styles.css?v=38" />
+  <link rel="stylesheet" href="styles.css?v=39" />
 </head>
 <body class="page-ratings">
   <nav class="site-nav" aria-label="Pages">
@@ -17,6 +17,9 @@
       <h2 class="site-nav-label">Artifacts</h2>
       <a href="artifacts.html">Priority</a>
       <a href="collection.html">Collection</a>
+      <a href="totals.html">Active totals</a>
+      <a href="scanner.html?v=2">Crafting Scanner</a>
+      <a href="storage-scanner.html?v=2">Storage Scanner</a>
     </div>
     <div class="site-nav-section">
       <h2 class="site-nav-label">Council</h2>
@@ -52,7 +55,7 @@
 
   <p id="error" class="error" hidden></p>
   <p class="ratings-hint" id="ratings-hint">
-    Global column is shared by every profile. With two or more profiles, each profile gets Off/Def override columns; blank means inherit global.
+    Set shared Off/Def defaults by group, then expand a section for individual stats and profile overrides. Blank fields inherit the value shown; clear a field to restore inheritance. Mixed means factory ratings vary. Changes save automatically.
   </p>
 
   <div class="ratings-page-scroll" id="ratings-scroll">
@@ -60,10 +63,10 @@
   </div>
   </div>
 
-  <script src="data/army_catalog.js?v=1"></script>
-  <script src="shared.js?v=29"></script>
-  <script src="profiles-ui.js?v=8"></script>
-  <script src="ratings.js?v=1"></script>
+  <script src="data/army_catalog.js?v=8"></script>
+  <script src="shared.js?v=40"></script>
+  <script src="profiles-ui.js?v=13"></script>
+  <script src="ratings.js?v=2"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9c4fcfc024144c4aa34a78ae6332dc9f"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

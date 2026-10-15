@@ -1,0 +1,26 @@
+{
+  "source": "User game/app review pairs; names and values manually transcribed from game pixels",
+  "reviewPair": true,
+  "rows": [
+    {
+      "name": "Invading Bazooka Hitpoints",
+      "value": -6
+    },
+    {
+      "name": "Invading APC Hitpoints",
+      "value": -1
+    },
+    {
+      "name": "Invading Ranged Siege Hitpoints",
+      "value": -6
+    },
+    {
+      "name": "Invading Heavy Cavalry Hitpoints",
+      "value": -1
+    },
+    {
+      "name": "Invading Heavy Cavalry Damage",
+      "value": -1
+    }
+  ]
+}

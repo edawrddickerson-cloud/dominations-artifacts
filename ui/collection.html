@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <script src="navigation.js?v=1"></script>
+  <script src="navigation.js?v=5"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts · Collection</title>
-  <link rel="stylesheet" href="styles.css?v=38" />
+  <link rel="stylesheet" href="styles.css?v=62" />
 </head>
 <body class="page-collection">
   <nav class="site-nav" aria-label="Pages">
@@ -17,6 +17,9 @@
       <h2 class="site-nav-label">Artifacts</h2>
       <a href="artifacts.html">Priority</a>
       <a href="collection.html" aria-current="page">Collection</a>
+      <a href="totals.html">Active totals</a>
+      <a href="scanner.html?v=2">Crafting Scanner</a>
+      <a href="storage-scanner.html?v=2">Storage Scanner</a>
     </div>
     <div class="site-nav-section">
       <h2 class="site-nav-label">Council</h2>
@@ -45,18 +48,18 @@
         <legend>View</legend>
         <div class="seg" role="group" aria-label="View mode">
           <button type="button" class="seg-btn" data-view-mode="list" id="view-list" aria-pressed="false">List</button>
-          <button type="button" class="seg-btn" data-view-mode="structured" id="view-structured" aria-pressed="false">Structured</button>
+          <button type="button" class="seg-btn is-active" data-view-mode="structured" id="view-structured" aria-pressed="true">Structured</button>
         </div>
       </fieldset>
       <fieldset class="seg-field">
-        <legend>Values</legend>
-        <div class="seg" role="group" aria-label="Value mode">
-          <button type="button" class="seg-btn" data-value-mode="actual" id="mode-actual" aria-pressed="false">Actual</button>
-          <button type="button" class="seg-btn" data-value-mode="max" id="mode-max" aria-pressed="false">Max</button>
+        <legend>Compare rows</legend>
+        <div class="seg seg-mini" role="group" aria-label="Rows included in comparison">
+          <button type="button" class="seg-btn" id="compare-unlocked" aria-pressed="false">Unlocked now</button>
+          <button type="button" class="seg-btn is-active" id="compare-all" aria-pressed="true">All rows</button>
         </div>
       </fieldset>
+      <a class="btn btn-accent collection-scanner-link" href="storage-scanner.html?v=2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M21 16v5h-5M8 21H3v-5M7 12h10" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" /></svg><span>Storage Scanner</span></a>
     </div>
-    <p class="collection-hint" id="collection-hint"></p>
   </section>
 
   <p id="error" class="error" hidden></p>
@@ -65,31 +68,41 @@
     <section class="collection-list-panel" aria-label="Owned artifacts">
       <h2 class="panel-title">Owned</h2>
       <div id="collection-list" class="collection-list"></div>
-      <div id="museum-board" class="museum-board" hidden></div>
+      <div id="museum-workspace" class="museum-workspace" hidden>
+        <div id="museum-board" class="museum-board" hidden></div>
+        <div id="slot-picker" class="museum-swap-picker" hidden>
+          <header class="slot-picker-head">
+            <h3 id="slot-picker-title">Choose artifact</h3>
+            <button type="button" class="slot-picker-close" data-action="picker-close" aria-label="Close replacements">×</button>
+          </header>
+          <div id="slot-picker-list" class="slot-picker-list"></div>
+        </div>
+      </div>
     </section>
-    <aside class="totals-panel" aria-label="Active perk totals">
-      <h2 class="panel-title">Active totals</h2>
-      <p class="totals-sub" id="totals-sub"></p>
-      <div id="totals-list" class="totals-list"></div>
-    </aside>
-  </div>
-
-  <div id="slot-picker" class="slot-picker" hidden>
-    <div class="slot-picker-backdrop" data-action="picker-close"></div>
-    <div class="slot-picker-panel" role="dialog" aria-modal="true" aria-labelledby="slot-picker-title">
-      <header class="slot-picker-head">
-        <h3 id="slot-picker-title">Choose artifact</h3>
-        <button type="button" class="slot-picker-close" data-action="picker-close" aria-label="Close">×</button>
-      </header>
-      <div id="slot-picker-list" class="slot-picker-list"></div>
+    <div class="collection-summary" aria-hidden="true" inert>
+        <aside class="museum-inspector" aria-label="Highlighted artifact and eligible replacements">
+          <section class="collection-comparison" aria-label="Artifact stat comparison">
+            <div class="comparison-headline">
+              <div id="collection-comparison-totals" aria-live="polite"></div>
+              <button type="button" class="btn btn-accent comparison-swap" id="collection-compare-swap" disabled hidden><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16m-5-5 5 5-5 5M20 17H4m5-5-5 5 5 5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" /></svg><span>Swap</span></button>
+            </div>
+            <div class="comparison-controls">
+              <label>Compare with <select id="collection-compare-item" aria-label="Compared artifact, highest score first"></select></label>
+            </div>
+            <div id="collection-comparison" aria-live="polite"></div>
+            <details class="comparison-edit"><summary>Edit selected artifact</summary><div id="museum-detail" aria-live="polite"></div></details>
+          </section>
+        </aside>
     </div>
   </div>
 
   </div>
-  <script src="data/army_catalog.js?v=1"></script>
-  <script src="shared.js?v=29"></script>
-  <script src="profiles-ui.js?v=8"></script>
-  <script src="collection.js?v=18"></script>
+  <script src="data/army_catalog.js?v=8"></script>
+  <script src="shared.js?v=40"></script>
+  <script src="profiles-ui.js?v=13"></script>
+  <script src="stored-artifacts.js?v=13"></script>
+  <script src="artifact-scoring.js?v=2"></script>
+  <script src="collection.js?v=48"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9c4fcfc024144c4aa34a78ae6332dc9f"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

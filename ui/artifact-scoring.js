@@ -1,0 +1,154 @@
+/*
+ * Authority: Untitled-1.md, approved Phase 3 recognition/rating integration.
+ * Ownership: Shared artifact scorer; callers own canonical names and rating inheritance.
+ * Invariants: Existing Hall/Showcase calculations preserved; absolute strongest base/max,
+ * one selected Showcase line, enabled-axis selection, earliest-line tie handling.
+ * Constraints: No DOM, storage, capture, recognition, or alternative rating algorithm.
+ * History: Extracted from app.js without changing established calculation behavior.
+ */
+(() => {
+  "use strict";
+  function text(v) {
+    if (v == null) return "";
+    return String(v).trim();
+  }
+  /** Parse a perk base/max field to a finite number, or null. */
+  function parseStatNum(v) {
+    const raw = text(v).replace(/,/g, "").replace(/%/g, "");
+    if (!raw) return null;
+    const n = Number(raw);
+    return Number.isFinite(n) ? n : null;
+  }
+
+  /**
+   * Strongest available magnitude among base/max (absolute value).
+   * Missing side is ignored; both missing → 0.
+   */
+  function perkMagnitude(base, max) {
+    const nums = [parseStatNum(base), parseStatNum(max)].filter((n) => n != null);
+    if (!nums.length) return 0;
+    return Math.max(...nums.map((n) => Math.abs(/** @type {number} */ (n))));
+  }
+
+  /**
+   * @typedef {{
+   *   index: number,
+   *   name: string,
+   *   base: string,
+   *   max: string,
+   *   mag: number,
+   *   offRating: number,
+   *   defRating: number,
+   *   offensive: number,
+   *   defensive: number
+   * }} PerkLineScore
+   */
+
+  /** @returns {PerkLineScore[]} */
+  function perkLines(row, { canonPerk, ratingOf }) {
+    /** @type {PerkLineScore[]} */
+    const lines = [];
+    for (let i = 1; i <= 6; i++) {
+      const rawName = text(row[`perk_${i}_name`]);
+      const name = canonPerk(rawName);
+      const base = text(row[`perk_${i}_base`]);
+      const max = text(row[`perk_${i}_max`]);
+      if (!rawName && !base && !max) continue;
+      const mag = perkMagnitude(base, max);
+      const offRating = name ? ratingOf(name, "offensive") : 0;
+      const defRating = name ? ratingOf(name, "defensive") : 0;
+      lines.push({
+        index: lines.length,
+        name,
+        base,
+        max,
+        mag,
+        offRating,
+        defRating,
+        offensive: offRating * mag,
+        defensive: defRating * mag,
+      });
+    }
+    return lines;
+  }
+
+  /** Active-axis line score for Best-line selection. */
+  function lineActiveScore(line, prefSortAxes) {
+    let sum = 0;
+    if (prefSortAxes.offensive) sum += line.offensive;
+    if (prefSortAxes.defensive) sum += line.defensive;
+    return sum;
+  }
+
+  /**
+   * @returns {{
+   *   lines: PerkLineScore[],
+   *   bestIndex: number,
+   *   offensive: number,
+   *   defensive: number,
+   *   preference: number
+   * }}
+   */
+  function score(row, { canonPerk, ratingOf, scoreMode, prefSortAxes }) {
+    const lines = perkLines(row, { canonPerk, ratingOf });
+    if (!lines.length) {
+      return { lines, bestIndex: -1, offensive: 0, defensive: 0, preference: 0 };
+    }
+    if (scoreMode === "maxrow") {
+      let bestIndex = 0;
+      let bestActive = lineActiveScore(lines[0], prefSortAxes);
+      for (let i = 1; i < lines.length; i++) {
+        const active = lineActiveScore(lines[i], prefSortAxes);
+        if (active > bestActive) {
+          bestActive = active;
+          bestIndex = i;
+        }
+      }
+      const best = lines[bestIndex];
+      return {
+        lines,
+        bestIndex,
+        offensive: best.offensive,
+        defensive: best.defensive,
+        preference: bestActive,
+      };
+    }
+    let offensive = 0;
+    let defensive = 0;
+    for (const line of lines) {
+      offensive += line.offensive;
+      defensive += line.defensive;
+    }
+    let preference = 0;
+    if (prefSortAxes.offensive) preference += offensive;
+    if (prefSortAxes.defensive) preference += defensive;
+    return { lines, bestIndex: -1, offensive, defensive, preference };
+  }
+
+
+  function withRerollPotential(base,{hall,grade,eligible=[]}={}) {
+    const target=String(hall).toLowerCase()==='war'?75:100;
+    const special=/legendary|mythical/i.test(String(grade || '')) || (base.axes && !base.axes.offensive && !base.axes.defensive);
+    const active=line=>(base.axes?.offensive?line.offensive:0)+(base.axes?.defensive?line.defensive:0);
+    // Callers provide their selected axes; older score objects can use an explicit
+    // line preference assigned by the comparison adapter.
+    const points=line=>Number.isFinite(line.preference)?line.preference:active(line);
+    let index=-1,possibleIndex=-1;
+    if(!special)for(let i=0;i<base.lines.length;i++) {
+      if(eligible[i]===true && (index<0 || points(base.lines[i])<points(base.lines[index])))index=i;
+      if(eligible[i]!==false && (possibleIndex<0 || points(base.lines[i])<points(base.lines[possibleIndex])))possibleIndex=i;
+    }
+    const gain=i=>i<0?0:Math.max(0,target-points(base.lines[i]));
+    const rerollGain=gain(index),possibleGain=gain(possibleIndex);
+    return {...base,basePreference:base.preference,potentialPreference:base.preference+rerollGain,
+      possiblePotentialPreference:base.preference+possibleGain,rerollGain,rerollIndex:rerollGain>0?index:-1,
+      rerollTarget:target,rerollUncertain:possibleGain>rerollGain,
+      rerollUnknown:special?0:base.lines.filter((_,i)=>eligible[i]!==true && eligible[i]!==false).length};
+  }
+  function comparisonScore(row,options,{hall,grade,eligible=[]}={}) {
+    const base=score(row,{...options,scoreMode:'combined'});
+    return withRerollPotential({...base,axes:options.prefSortAxes,
+      lines:base.lines.map(line=>({...line,preference:lineActiveScore(line,options.prefSortAxes)}))},{hall,grade,eligible});
+  }
+  window.DNArtifactScoring = { score, perkLines, withRerollPotential, comparisonScore };
+})();

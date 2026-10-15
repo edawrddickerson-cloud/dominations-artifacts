@@ -1,0 +1,26 @@
+{
+  "source": "User game/app review pairs; names and values manually transcribed from game pixels",
+  "reviewPair": true,
+  "rows": [
+    {
+      "name": "Invading Supply Vehicle Healing",
+      "value": -1
+    },
+    {
+      "name": "Invading Guerrilla Hitpoints",
+      "value": -6
+    },
+    {
+      "name": "Invading Generals' Damage",
+      "value": -6
+    },
+    {
+      "name": "Invading Generals' Damage",
+      "value": -6
+    },
+    {
+      "name": "Invading Tactical Helicopter Hitpoints",
+      "value": -1
+    }
+  ]
+}

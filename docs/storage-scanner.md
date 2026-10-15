@@ -1,0 +1,74 @@
+# Storage scanner
+
+Newly crafted perks start at level 1. Locked storage perks are always level 1. A confirmed hollow star supplies that level, and the current percentage then resolves the starting tier. Unlocked perks may be upgraded; unknown star states do not supply a level.
+
+Opening the local artifact database resolves ordinary Main artifact ranges using base magnitudes 1, 6, and 11, and ordinary War ranges using 1, 3, and 6, with one point per upgrade. A recorded level selects the base; a single possible tier can also establish a missing level. Prior unverified unlocked level-1 assumptions are not trusted. Ambiguous ranges are cleared, retained as candidates with their previous evidence, and marked for confirmation in Inventory and Collection. Conflicting observed levels remain visible for correction rather than being replaced with a guessed level. This applies across saved profiles and restored crafting logs. Legendary/Mythical items are excluded from the ordinary tier rule.
+
+Tier capture (2026-10-14): Each ordinary stat now saves `tier` (`white`, `green`, `blue`, or `null`), `tierSource`, and `tierConflict`. Crafting uses detected text colour, cross-checks a directly read starting percentage, and falls back to the starting percentage when colour is unclear. `tierSource` is `colour`, `starting-percentage`, or `manual`. Both standard and calibrated crafting reads, saved item logs and exports retain these fields. An inferred percentage is not treated as an independent confirmation of its source colour.
+
+Storage fallback inference (2026-10-14): Tier + level fills an unclear signed percentage; tier + current percentage fills an unclear level; current percentage + level determines the tier. War bases are 1/3/6 and Main bases are 1/6/11. Tier evidence comes from a previous complete read of the same artifact and row, or the Tier field in Correct Recognition. Storage percentage text is green across tiers and is never used to identify the tier. A retry carries confirmed tier evidence only while the artifact remains current, with matching hall and perk name. Inferred percentage and level fields are marked for review and exported with their provenance. Unknown signs, contradictory manual tiers, ambiguous one-field reads and Legendary/Mythical tiers are not guessed. Unlocking a star no longer supplies a level-1 assumption. Validate with node scripts/test_storage_inference.js and node scripts/test_scanner_reading.js.
+
+Storage derives the signed starting range from `abs(current percentage) - (level - 1)` and maps it to the ordinary hall's tiers, recording `tierSource: percentage-level`. Storage's green percentage text does not establish a tier. A missing level can yield `unique-percentage` only when exactly one tier/level combination is possible; ambiguous combinations retain `tier: null`. Verified manual ranges use `manual`. Legendary/Mythical rows retain their numeric ranges without an ordinary tier. Tier/source fields survive Keep Artifact, IndexedDB reload, inventory JSON export and collection import, and existing records are annotated from their available evidence. Inventory rows and correction range summaries show resolved tiers. No OCR current percentage is rewritten by tier inference.
+
+Tier verification: `node scripts/test_stored_artifacts.js`, the scanner collection/reading/recognition/region/comparison/capture/frame suites, and actual Chrome `--storage`, `--ui`, `--regions-ui --viewport=480x640`, `--crafting-metadata`, `--collection-comparison`, and `--inventory-tiers` checks pass through `scripts/run_scanner_ocr_fixture.js`. The storage OCR harness verifies real five-row ordinary tiers and six-row special-item exclusion, export and a second-page reload; the focused inventory mode verifies actual Keep/import transactions, ambiguous tiers, War mapping, manual tier correction and persistence. Observed traffic was local only. The older full `--inventory` layout harness still stops at its obsolete `#museum-detail .collection-perk-value` expectation: the current editor uses named form inputs, which the current collection comparison/editor harness verifies. Its synthetic ordinary War items were corrected to use War starting percentages rather than copied Main percentages.
+
+Authority: User request to reuse the scanner for crafted artifacts in storage, verify the eleven supplied screenshots, and capture each item's artwork. Ownership: Separate page and storage OCR crops; existing capture, local Tesseract worker, canonical perk validation and profile rating engine remain shared.
+
+Open **Storage Scanner** in the Artifacts navigation. Open an item in the game, connect the game window, and check the automatically selected full item dialog. Manual selection should include the title, left category banner, every stat row and footer. The full dialog detects the red Multiplayer/Main or blue War banner and five or six rows on each read, including when cycling between items. The rows-only option expects the complete star-to-percentage area without the dice column; choose the visible row count and enter the name/category manually. Rows-only crops cannot capture artwork.
+
+Scanner setup starts collapsed. Below it, one compact review panel places each scanned name and signed percentage beside its editable name, value, level and star fields. Optional manual endpoints expand under Range. Artwork, identity and rating share a compact header; Use Corrected Values, Keep Artifact and Add Inventory to Collection stay immediately below the rows. Saved inventory and Export Inventory expand separately. `node scripts/run_scanner_ocr_fixture.js --storage-layout --summary` verifies a six-row review and all primary actions fit at 1440×900 without a page scroll or internal review scrollbar, and exercises keeping/importing in this layout. Narrow screens wrap the fields.
+
+The storage layout reads names and actual signed percentages separately from upgrade bars, lock icons and dice. It never infers a percentage from crafting colour tiers: an upgraded +13% remains +13%. All visible perks, including locked rows and duplicates, use the existing Hall/Showcase scorer and current profile ratings. Weak reads retain an unconfirmed rating but can be explicitly reviewed with Keep Artifact when every stat is present and known. Missing values, unknown perks, incorrect signs, conflicting reads, pending edits and stale captures block saving. The disabled button is grey and displays the reason below it.
+
+Review the item name/category and stats, then choose **Keep Artifact** to confirm the values shown. The storage review area has visible editable perk names, percentages, tiers, upgrade levels (1–10 or blank) and unlocked stars. Use **Use Corrected Values** to apply edits before keeping. The crafting scanner's results display is unchanged. Levels are best effort: weak or unreadable fractions stay blank and produce a metadata notice; blank levels do not block saving. Kept items retain their hall, category, name, signed percentages, levels, star states, artwork and review timestamp. Identical items can be kept as separate copies and removed individually.
+
+Artwork is cropped from the left item card into a 192-pixel-wide JPEG thumbnail, previewed before keeping, and rendered beside each inventory entry. Only this crop persists; full screenshots and OCR field crops remain temporary. The inventory is saved in IndexedDB (`dn-stored-artifacts`, store `inventory`) on this browser/device and restored when reopening the same site. Kept inventory is ready for explicit transfer into Collection. Stop retains kept items. When browser storage is unavailable, the page explains that export is needed before closing.
+
+**Add Inventory to Collection** accepts reviewed scans into the active profile's Collection. The same IndexedDB transaction saves the collection and removes imported/updated scans and already-present duplicates from scanned inventory. Failed transactions retain the inventory. Duplicate identity uses normalized name, hall, category and the multiset of perk names/current signed values, preserving repeated perk rows. Known levels imply level-1 base and level-10 max using one percentage point of magnitude per upgrade. Matching inferred ranges update the existing ID only if every perk is at least as strong; negative effects compare magnitude. Weaker or ambiguous matches stay in inventory with a review reason. Inferred ranges ignore manually entered endpoints for matching; missing levels never supply guessed ranges. Collection snapshots use `collection:<profile id>` in the existing IndexedDB store; pictures are not put in localStorage.
+
+**Export Inventory** writes a local JSON file with `version: 3`, `kind: "stored-artifact-inventory"` and an `items` array. Each item's `image` is an embedded JPEG data URL, or null for rows-only capture. Each perk retains its signed current `value`, `level`, `unlocked`, and nullable `base`/`max` endpoints. The scanner calculates ranges during recognition and when corrected levels are applied, using one percentage point of magnitude per upgrade: +13% at level 3 has base +11% and max +20%; -23% at level 8 has base -16% and max -25%. The Range summary displays both endpoints and identifies inferred ranges. Manual endpoints remain editable; unclear levels leave ranges blank. Level OCR uses separate masks for bright and dim fractions with bounded retries. Images and data are processed locally without uploads. Browser storage is specific to the site origin; opening a different site address uses a different inventory.
+
+Collection uses scanned current values in Actual mode. Captured levels, stars and base/max endpoints appear on each card, with inferred ranges labeled. Actual totals exclude locked perks and perks with unknown stars; Max totals include potential locked perks and omit unknown endpoints. On first collection load, scans fill their matching Main or War exhibits. Crafted overflow stays in **Unused**, never Showcase, and contributes no active stats. Legendary/Mythical overflow goes to Showcase. Updated scans keep their ID and slot; stale manual value adjustments reset on collection load.
+
+Structured view has at most three slots per row, with Hermitage on its own row below Legendary. Clicking a filled slot shows its stats and eligible replacements in a panel between the board and active totals. Crafted replacements come only from the matching category in Unused; Legendary/Mythical replacements come only from Showcase. Swapping activates all eligible perks for the incoming artifact and moves the displaced crafted item to Unused, or the displaced Legendary/Mythical item to a single-perk Showcase. Clicking blank space or pressing Escape clears the highlight and replacement list. Delete buttons appear on every List card and in the Structured details; deleting clears ownership, slots and active contributions.
+
+Validation: `node scripts/test_stored_artifacts.js` checks duplicate signatures, inferred ranges, positive/negative non-regression, repeated-perk alignment and ambiguous levels. `node scripts/run_scanner_ocr_fixture.js --inventory --summary` exercises real IndexedDB and page DOM without OCR: inventory cleanup, duplicate imports, in-place upgrades, profile isolation, placement, Unused, restricted swaps, contribution modes, deletion, highlight clearing and layout.
+
+## Screenshot coverage
+
+| Hall | Category | Supplied example | Stats |
+| --- | --- | --- | --- |
+| Multiplayer/Main | Weapon | Kusarigama | 5 |
+| Multiplayer/Main | Armor | Gush X’een’s Tlingit Armor | 5 |
+| Multiplayer/Main | Jewelry | Moche Ear Ornament | 5 |
+| Multiplayer/Main | Pottery | Dancing Dog | 5 |
+| Multiplayer/Main | Legendary | Thinker of Cernavoda | 5 |
+| Multiplayer/Main | Mythical | Ruyi Scepter | 6 |
+| War | Weapon | Luger Pistol | 5 |
+| War | Armor | Casimir Zeglen’s Brewster Body Shield | 5 |
+| War | Equipment | Ernest Hemingway’s Field Surgery Kit | 5 |
+| War | Legendary | British Kettle Drum | 5 |
+| War | Mythical | Maori War Club | 6 |
+
+Hermitage is intentionally excluded. Titles can wrap across two lines. Mythical first rows have a gold highlight; actual percentages are still read from glyphs. The slot count and footer buttons are excluded from stats. Repeated perks remain in their original positions.
+
+Run:
+
+```powershell
+node scripts/test_scanner_recognition.js
+node scripts/test_scanner_reading.js
+node scripts/test_scanner_capture.js
+node scripts/test_scanner_collection.js
+node scripts/test_scanner_frames.js
+node scripts/test_artifact_scoring.js
+node scripts/run_scanner_ocr_fixture.js --storage --storage-coverage --report --summary
+node scripts/run_scanner_ocr_fixture.js --storage --storage-percent --report --summary
+node scripts/run_scanner_ocr_fixture.js --storage --report --summary
+node scripts/run_scanner_ocr_fixture.js --ui --report --summary
+```
+
+`tests/scanner/storage-coverage.labels.json` contains independently transcribed expected names, signed stats and star counts for all eleven real screenshots. The coverage report checks exact stats, titles, category, hall, row count, unlocked stars and decodable artwork for all eleven. The UI report checks full/detected crops, a 0.75 resize, real six-row OCR, manual corrections, duplicates, removal, image preview/render/export, restored inventory in a second page, switching from a five-row Main item to a six-row War item, settings invalidation and Stop retention. Page/worker requests are checked for external traffic and browser exceptions. Shared scoring parity covers 3,672 configurations.
+
+Limits: These English screenshots establish the supplied layout, not general OCR accuracy at every resolution. Some exact reads still have weak evidence and require review. Upgrade levels are less reliable than perk extraction; unreadable fractions remain blank. Live screen-sharing and Hermitage have not been tested. No deployment is performed by this task.
+
+Percentage regression (2026-10-12): The newest screenshots show Chatan Yara's Sai and Ching Shih's Sword with +6%, +1%, +1%, +1%, +1%; their paired UI images miss nine of ten values. The game screenshots read correctly as files and through a canvas/video round trip. Reducing percentage saturation reproduces missing locked-row values because the original colour mask removes those glyphs. A targeted retry uses a softer colour mask only when the primary read lacks a complete signed percentage, preserving actual upgraded values and review warnings. `storage-percent.labels.json` independently records the two new items; the percentage fixture covers native, video and reduced-saturation cases. The paired UI screenshots do not expose the exact live OCR input, so the actual capture's colour change remains unconfirmed.

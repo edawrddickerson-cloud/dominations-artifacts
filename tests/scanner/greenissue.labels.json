@@ -1,0 +1,11 @@
+{
+  "source": "User-supplied greenissue.png; manually transcribed from visible pixels",
+  "rows": [
+    {"name": "Sniper Tower Damage", "value": 1},
+    {"name": "Oil from Oil Wells", "value": 1},
+    {"name": "Redoubt Hitpoints", "value": 6},
+    {"name": "Catapult Hitpoints", "value": 1},
+    {"name": "Tower Damage", "value": 1}
+  ],
+  "notes": "One unlocked row, four faded rows including green Redoubt Hitpoints."
+}

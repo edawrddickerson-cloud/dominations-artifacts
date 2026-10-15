@@ -44,11 +44,32 @@ for (const row of rows) {
   if (row[0] !== row[1]) assert.strictEqual(catalog.perk_aliases[row[0]], row[1], row[0]);
 }
 const artifacts = JSON.parse(fs.readFileSync(path.join(root, "data/artifacts.json"), "utf8"));
+const seenSigns = new Map();
+for (const [name, sign] of Object.entries(catalog.perk_signs || {})) {
+  assert([-1, 1].includes(sign), `Invalid fixed sign for ${name}`);
+  if (/^invading\b/i.test(name)) assert.strictEqual(sign, -1, `Invading stat must be negative: ${name}`);
+}
 for (const artifact of artifacts) {
   for (let i = 1; i <= 6; i++) {
     const name = artifact[`perk_${i}_name`];
     if (name) assert(catalog.perk_scopes[catalog.perk_aliases[name] || name],
       `Add canonical army scope for artifact perk ${name}`);
+    const canonical = catalog.perk_aliases[name] || name;
+    const sign = /^invading\b/i.test(canonical) ? -1 : catalog.perk_signs?.[canonical];
+    if (name) for (const suffix of ['base', 'max']) {
+      const raw = artifact[`perk_${i}_${suffix}`];
+      if (raw === '' || raw == null || !Number.isFinite(Number(raw))) continue;
+      const actual = Math.sign(Number(raw));
+      assert(actual !== 0, `Zero benefit value for ${artifact.name}: ${canonical}`);
+      if (seenSigns.has(canonical)) assert.strictEqual(actual, seenSigns.get(canonical),
+        `Mixed signs for ${canonical}: ${artifact.name}`);
+      seenSigns.set(canonical, actual);
+    }
+    if (sign) for (const suffix of ['base', 'max']) {
+      const raw = artifact[`perk_${i}_${suffix}`];
+      if (raw !== '' && raw != null) assert(Number(raw) * sign > 0,
+        `Wrong sign for ${artifact.name}: ${canonical} ${suffix}=${raw}`);
+    }
   }
 }
 fs.writeFileSync(path.join(root, "ui/data/army_catalog.json"), source);

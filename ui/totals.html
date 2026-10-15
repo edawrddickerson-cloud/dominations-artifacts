@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <script src="navigation.js?v=5"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Artifacts · Active totals</title>
+  <link rel="stylesheet" href="styles.css?v=59" />
+</head>
+<body class="page-totals">
+  <nav class="site-nav" aria-label="Pages">
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Army Loadout</h2>
+      <a href="army.html">Army</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Artifacts</h2>
+      <a href="artifacts.html">Priority</a>
+      <a href="collection.html">Collection</a>
+      <a href="totals.html" aria-current="page">Active totals</a>
+      <a href="scanner.html?v=2">Crafting Scanner</a>
+      <a href="storage-scanner.html?v=2">Storage Scanner</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Council</h2>
+      <a href="council.html">Priority</a>
+      <a href="council-collection.html">Collection</a>
+    </div>
+  </nav>
+  <div class="app-main">
+    <header class="top">
+      <div class="top-inner"><h1>DomiNations Artifacts</h1></div>
+      <div class="header-controls" aria-label="Primary filters">
+        <fieldset class="seg-field">
+          <legend>Museum hall</legend>
+          <div class="seg" role="group" aria-label="Museum hall">
+            <button type="button" class="seg-btn" id="header-main" aria-pressed="false">Main</button>
+            <button type="button" class="seg-btn" id="header-war" aria-pressed="false">War</button>
+          </div>
+        </fieldset>
+        <div id="header-profile" class="header-profile"></div>
+      </div>
+    </header>
+    <main class="active-totals-page">
+      <div class="active-totals-heading">
+        <div>
+          <h2>Active totals</h2>
+          <p id="totals-sub" aria-live="polite">Loading your collection…</p>
+        </div>
+        <label class="filter-control">Search stats<input type="search" id="totals-search" placeholder="Find a bonus…" autocomplete="off" /></label>
+      </div>
+      <p class="active-totals-note">Current bonuses from Hall, exhibits, Hermitage, and your selected Showcase perks. Locked scanned stats are excluded. Expand a stat to see its artifacts.</p>
+      <p id="error" class="error" hidden></p>
+      <div id="totals-list" class="active-totals-grid" aria-live="polite"></div>
+    </main>
+  </div>
+  <script src="data/army_catalog.js?v=8"></script>
+  <script src="shared.js?v=40"></script>
+  <script src="profiles-ui.js?v=13"></script>
+  <script src="stored-artifacts.js?v=13"></script>
+  <script src="totals.js?v=1"></script>
+<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9c4fcfc024144c4aa34a78ae6332dc9f"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

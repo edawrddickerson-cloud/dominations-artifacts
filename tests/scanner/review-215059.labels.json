@@ -1,0 +1,26 @@
+{
+  "source": "User game/app review pairs; names and values manually transcribed from game pixels",
+  "reviewPair": true,
+  "rows": [
+    {
+      "name": "Catapult Damage",
+      "value": 6
+    },
+    {
+      "name": "Missile Silo Hitpoints",
+      "value": 1
+    },
+    {
+      "name": "Redoubt Hitpoints",
+      "value": 1
+    },
+    {
+      "name": "Catapult Damage",
+      "value": 11
+    },
+    {
+      "name": "Anti-Tank Gun Damage",
+      "value": 1
+    }
+  ]
+}

@@ -1,0 +1,587 @@
+{
+  "fixture": "review-215628.png",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+  "panel": {
+    "x": 0,
+    "y": 0.034383954154727794,
+    "width": 0.9859375,
+    "height": 0.9369627507163324
+  },
+  "detectorMs": 7.399999618530273,
+  "runs": [
+    {
+      "kind": "detected",
+      "rect": {
+        "x": 0,
+        "y": 12,
+        "width": 631,
+        "height": 327
+      },
+      "elapsedMs": 1400.7000002861023,
+      "exact": true,
+      "complete": true,
+      "starsCorrect": true,
+      "percentageRecovery": true,
+      "expectedKnown": false,
+      "scoringParity": true,
+      "passed": true,
+      "rows": [
+        {
+          "raw": "Invading APC Damage -6%",
+          "name": "Invading APC Damage",
+          "value": -6,
+          "known": false,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": true
+        },
+        {
+          "raw": "Invading Fighter Damage -6%",
+          "name": "Invading Fighter Damage",
+          "value": -6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading Heavy Cavalry Damage -1%",
+          "name": "Invading Heavy Cavalry Damage",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading Ranged Siege Damage -6%",
+          "name": "Invading Ranged Siege Damage",
+          "value": -6,
+          "known": false,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading Guerrilla Hitpoints -1%",
+          "name": "Invading Guerrilla Hitpoints",
+          "value": -1,
+          "known": false,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": false
+        }
+      ],
+      "warnings": [
+        "Unknown or ambiguous perk: Invading APC Damage",
+        "Unknown or ambiguous perk: Invading Ranged Siege Damage",
+        "Unknown or ambiguous perk: Invading Guerrilla Hitpoints"
+      ],
+      "valid": false,
+      "colourReads": [
+        {
+          "index": 0,
+          "text": "l",
+          "quality": 0
+        },
+        {
+          "index": 3,
+          "text": "Invading Ranged Siege Damage -6%",
+          "quality": 94
+        }
+      ],
+      "percentageReads": [],
+      "observations": [
+        {
+          "pass": "block",
+          "rows": [
+            {
+              "raw": "Invading APC Damage -6%",
+              "name": "Invading APC Damage",
+              "value": -6,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Fighter Damage -6%",
+              "name": "Invading Fighter Damage",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Heavy Cavalry Damage -1%",
+              "name": "Invading Heavy Cavalry Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Ranged Siege Damage -6%",
+              "name": "Invading Ranged Siege Damage",
+              "value": -6,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Guerrilla Hitpoints -1%",
+              "name": "Invading Guerrilla Hitpoints",
+              "value": -1,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true
+            }
+          ],
+          "warnings": [
+            "Unknown or ambiguous perk: Invading APC Damage",
+            "Unknown or ambiguous perk: Invading Ranged Siege Damage",
+            "Unknown or ambiguous perk: Invading Guerrilla Hitpoints"
+          ]
+        },
+        {
+          "pass": "individual-rows",
+          "rows": [
+            {
+              "raw": "Invading APC Damage -6%",
+              "name": "Invading APC Damage",
+              "value": -6,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Fighter Damage -6%",
+              "name": "Invading Fighter Damage",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Heavy Cavalry Damage -1%",
+              "name": "Invading Heavy Cavalry Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Ranged Siege Damage -6%",
+              "name": "Invading Ranged Siege Damage",
+              "value": -6,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Guerrilla Hitpoints -1%",
+              "name": "Invading Guerrilla Hitpoints",
+              "value": -1,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true
+            }
+          ],
+          "warnings": [
+            "Unknown or ambiguous perk: Invading APC Damage",
+            "Unknown or ambiguous perk: Invading Ranged Siege Damage",
+            "Unknown or ambiguous perk: Invading Guerrilla Hitpoints"
+          ]
+        }
+      ],
+      "hall": "main",
+      "inferColours": true,
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.8777777777777778,
+          0.016666666666666666,
+          0.02564102564102564,
+          0.035897435897435895,
+          0.035897435897435895
+        ]
+      }
+    },
+    {
+      "kind": "calibration-margin",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 686,
+        "height": 377
+      },
+      "elapsedMs": 849.8000001907349,
+      "exact": true,
+      "complete": true,
+      "starsCorrect": true,
+      "percentageRecovery": true,
+      "expectedKnown": false,
+      "scoringParity": true,
+      "passed": true,
+      "rows": [
+        {
+          "raw": "Invading APC Damage -6%",
+          "name": "Invading APC Damage",
+          "value": -6,
+          "known": false,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": true
+        },
+        {
+          "raw": "Invading Fighter Damage -6%",
+          "name": "Invading Fighter Damage",
+          "value": -6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading Heavy Cavalry Damage -1%",
+          "name": "Invading Heavy Cavalry Damage",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading Ranged Siege Damage -6%",
+          "name": "Invading Ranged Siege Damage",
+          "value": -6,
+          "known": false,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading Guerrilla Hitpoints -1%",
+          "name": "Invading Guerrilla Hitpoints",
+          "value": -1,
+          "known": false,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": false
+        }
+      ],
+      "warnings": [
+        "Unknown or ambiguous perk: Invading APC Damage",
+        "Unknown or ambiguous perk: Invading Ranged Siege Damage",
+        "Unknown or ambiguous perk: Invading Guerrilla Hitpoints"
+      ],
+      "valid": false,
+      "colourReads": [
+        {
+          "index": 0,
+          "text": "l",
+          "quality": 0
+        },
+        {
+          "index": 3,
+          "text": "Invading Ranged Siege Damage -6%",
+          "quality": 94
+        }
+      ],
+      "percentageReads": [],
+      "observations": [
+        {
+          "pass": "block",
+          "rows": [
+            {
+              "raw": "Invading APC Damage -6%",
+              "name": "Invading APC Damage",
+              "value": -6,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Fighter Damage -6%",
+              "name": "Invading Fighter Damage",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Heavy Cavalry Damage -1%",
+              "name": "Invading Heavy Cavalry Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Ranged Siege Damage -6%",
+              "name": "Invading Ranged Siege Damage",
+              "value": -6,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Guerrilla Hitpoints -1%",
+              "name": "Invading Guerrilla Hitpoints",
+              "value": -1,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true
+            }
+          ],
+          "warnings": [
+            "Unknown or ambiguous perk: Invading APC Damage",
+            "Unknown or ambiguous perk: Invading Ranged Siege Damage",
+            "Unknown or ambiguous perk: Invading Guerrilla Hitpoints"
+          ]
+        },
+        {
+          "pass": "individual-rows",
+          "rows": [
+            {
+              "raw": "Invading APC Damage -6%",
+              "name": "Invading APC Damage",
+              "value": -6,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Fighter Damage -6%",
+              "name": "Invading Fighter Damage",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Heavy Cavalry Damage -1%",
+              "name": "Invading Heavy Cavalry Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Ranged Siege Damage -6%",
+              "name": "Invading Ranged Siege Damage",
+              "value": -6,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Guerrilla Hitpoints -1%",
+              "name": "Invading Guerrilla Hitpoints",
+              "value": -1,
+              "known": false,
+              "assumed": false,
+              "hasPercent": true
+            }
+          ],
+          "warnings": [
+            "Unknown or ambiguous perk: Invading APC Damage",
+            "Unknown or ambiguous perk: Invading Ranged Siege Damage",
+            "Unknown or ambiguous perk: Invading Guerrilla Hitpoints"
+          ]
+        }
+      ],
+      "hall": "main",
+      "inferColours": true,
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.8564102564102564,
+          0.020512820512820513,
+          0.015384615384615385,
+          0.020512820512820513,
+          0.02564102564102564
+        ]
+      }
+    }
+  ],
+  "passed": true,
+  "limitations": "One screenshot plus Canvas-derived scale probes and a deliberately injected first-pass failure only. First native and forced-failure OCR include worker initialization; other runs are warm. Scoring parity uses repository rating defaults for all modes/axes. No representative accuracy or continuous capture claim.",
+  "network": {
+    "requests": [
+      {
+        "url": "http://127.0.0.1:57267/ui/scanner.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/navigation.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/styles.css?v=39",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/scanner.css?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/scanner-core.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/data/army_catalog.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/shared.js?v=33",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/artifact-scoring.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/scanner-recognition.js?v=11",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/scanner-collection.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/scanner-reading.js?v=10",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/scanner.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/favicon.ico",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/data/army_catalog.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/shared.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/scanner-core.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/artifact-scoring.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/scanner-recognition.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/tests/scanner/review-215628.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/tests/scanner/review-215628.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/vendor/tesseract/worker.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/vendor/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57267/ui/vendor/tesseract/lang/eng.traineddata.gz",
+        "method": "GET",
+        "hasPostData": false
+      }
+    ],
+    "externalRequests": [],
+    "nonGetRequests": [],
+    "browserErrors": []
+  }
+}

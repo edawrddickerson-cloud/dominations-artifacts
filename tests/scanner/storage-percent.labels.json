@@ -1,0 +1,16 @@
+[
+  {"stamp":"221542","name":"Chatan Yara’s Sai","type":"Weapon","hall":"main","unlocked":1,"rows":[
+    {"name":"Ranged Siege Hitpoints","value":6},
+    {"name":"Fighter Damage","value":1},
+    {"name":"Raider Hitpoints","value":1},
+    {"name":"Wall Sapper Damage","value":1},
+    {"name":"Generals' Hitpoints","value":1}
+  ]},
+  {"stamp":"221600","name":"Ching Shih’s Sword","type":"Weapon","hall":"main","unlocked":2,"rows":[
+    {"name":"Ranged Infantry Damage","value":6},
+    {"name":"Supply Vehicle Hitpoints","value":1},
+    {"name":"Generals' Damage","value":1},
+    {"name":"Attack Helicopter Damage","value":1},
+    {"name":"APC Hitpoints","value":1}
+  ]}
+]

@@ -1,0 +1,175 @@
+{
+  "passed": true,
+  "viewport": {
+    "width": 960,
+    "height": 720
+  },
+  "ui": {
+    "confirmed improvement signals KEEP": true,
+    "offensive and defensive scores visible": true,
+    "setup can stay expanded without hiding scores": true,
+    "decision visible without scrolling": true,
+    "comparison visible without scrolling": true,
+    "live-score visible without scrolling": true,
+    "comparison-detail visible without scrolling": true,
+    "progress visible without scrolling": true,
+    "decision uses a large peripheral signal": true,
+    "numeric score is prominent": true,
+    "summary stays pinned while reviewing logs": true,
+    "weaker craft signals PASS": true,
+    "four of five scores provisionally": true,
+    "optimistic keep is visibly provisional": true,
+    "assumption visible without scrolling": true,
+    "weak even with optimistic fifth signals PASS?": true,
+    "too little evidence shows CHECK": true
+  },
+  "summaryBounds": {
+    "top": 128.21875,
+    "bottom": 300.125,
+    "left": 196,
+    "right": 933
+  },
+  "sessionBounds": {
+    "top": 0,
+    "bottom": 348.78125,
+    "left": 184,
+    "right": 945
+  },
+  "decisionFont": 48,
+  "scoreFont": 33.6,
+  "limitations": "Real browser layout and controller tested with synthetic OCR responses. Does not measure live recognition accuracy or human peripheral perception.",
+  "network": {
+    "requests": [
+      {
+        "requestId": "4A84E83545872A4026B7F22E2E2F9128",
+        "url": "http://127.0.0.1:62993/ui/scanner.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.2",
+        "url": "http://127.0.0.1:62993/ui/navigation.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.3",
+        "url": "http://127.0.0.1:62993/ui/styles.css?v=41",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.4",
+        "url": "http://127.0.0.1:62993/ui/scanner.css?v=14",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.5",
+        "url": "http://127.0.0.1:62993/ui/scanner-core.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.6",
+        "url": "http://127.0.0.1:62993/ui/scanner-frames.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.7",
+        "url": "http://127.0.0.1:62993/ui/data/army_catalog.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.8",
+        "url": "http://127.0.0.1:62993/ui/shared.js?v=36",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.9",
+        "url": "http://127.0.0.1:62993/ui/profiles-ui.js?v=12",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.10",
+        "url": "http://127.0.0.1:62993/ui/artifact-scoring.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.11",
+        "url": "http://127.0.0.1:62993/ui/stored-artifacts.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.12",
+        "url": "http://127.0.0.1:62993/ui/scanner-comparison.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.13",
+        "url": "http://127.0.0.1:62993/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.14",
+        "url": "http://127.0.0.1:62993/ui/scanner-recognition.js?v=16",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.15",
+        "url": "http://127.0.0.1:62993/ui/scanner-collection.js?v=7",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.16",
+        "url": "http://127.0.0.1:62993/ui/scanner-reading.js?v=22",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.17",
+        "url": "http://127.0.0.1:62993/ui/scanner.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.29",
+        "url": "http://127.0.0.1:62993/ui/data/artifacts.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.34",
+        "url": "http://127.0.0.1:62993/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.35",
+        "url": "http://127.0.0.1:62993/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "137300.37",
+        "url": "http://127.0.0.1:62993/favicon.ico",
+        "method": "GET",
+        "hasPostData": false
+      }
+    ],
+    "blockedRequests": [],
+    "externalRequests": [],
+    "nonGetRequests": [],
+    "browserErrors": []
+  }
+}

@@ -227,8 +227,8 @@
     return '<div class="axis-stack">' + scores.lines.map((line, i) => {
       const best = scoreMode === "maxrow" && i === scores.bestIndex ? " is-best" : "";
       return '<div class="axis-line rating-line' + best + '" title="' + C.esc(line.name) + '">' +
-        '<span aria-label="Offensive rating">O ' + format(line.offRating) + '</span>' +
-        '<span aria-label="Defensive rating">D ' + format(line.defRating) + '</span></div>';
+        (prefSortAxes.offensive ? '<span aria-label="Offensive rating">O ' + format(line.offRating) + '</span>' : '') +
+        (prefSortAxes.defensive ? '<span aria-label="Defensive rating">D ' + format(line.defRating) + '</span>' : '') + '</div>';
     }).join("") + '</div>';
   }
 
@@ -263,6 +263,7 @@
     if (!name) return "";
     const parts = [];
     for (const axis of C.AXES) {
+      if (!prefSortAxes[axis]) continue;
       const rating = ratingOf(name, axis);
       if (!rating) continue;
       const label = axis === "offensive" ? "O" : "D";
@@ -476,6 +477,13 @@
     }
     if (av < bv) return -1 * dir;
     if (av > bv) return 1 * dir;
+    if (prefSortAxes.offensive && prefSortAxes.defensive &&
+        (sortState.key === "offensive" || sortState.key === "defensive")) {
+      const secondary = sortState.key === "offensive" ? "defensive" : "offensive";
+      const aSecondary = axisScore(a, secondary);
+      const bSecondary = axisScore(b, secondary);
+      if (aSecondary !== bSecondary) return (aSecondary < bSecondary ? -1 : 1) * sortState.dir;
+    }
     const ka = defaultSortKey(a);
     const kb = defaultSortKey(b);
     for (let i = 0; i < ka.length; i++) {
@@ -533,7 +541,7 @@
   function resolvePrefSortKey(requested) {
     const off = !!prefSortAxes.offensive;
     const def = !!prefSortAxes.defensive;
-    if (off && def) return "preference";
+    if (off && def) return requested === "defensive" ? "defensive" : "offensive";
     if (off) return "offensive";
     if (def) return "defensive";
     return requested;
@@ -581,14 +589,16 @@
     const active = sortState.key;
     for (const th of el.table.querySelectorAll("th[data-sort]")) {
       const key = th.getAttribute("data-sort");
-      let matched = active === key;
-      if (active === "preference" && (key === "offensive" || key === "defensive")) matched = true;
+      const matched = active === key;
       th.setAttribute("aria-sort", matched ? (sortState.dir === 1 ? "ascending" : "descending") : "none");
     }
   }
 
   function setMode(mode) {
     ui.mode = C.normalizeMode(mode);
+    prefSortAxes = C.loadPrefSortAxes();
+    syncPrefSortAxisInputs();
+    if (isPrefSortKey(sortState.key)) sortState = { key: resolvePrefSortKey(sortState.key), dir: -1 };
     C.saveUi(ui);
     syncModeButtons();
     render();
@@ -609,6 +619,9 @@
   }
 
   function render() {
+    document.querySelectorAll("th[data-score-axis]").forEach((header) => {
+      header.hidden = !prefSortAxes[header.dataset.scoreAxis];
+    });
     const filtered = rows.filter(matches).sort(compareRows);
     const ownedCount = rows.filter((r) => isOwnedHere(C.text(r.id))).length;
     const modeLabel = C.modeLabel(ui.mode);
@@ -633,7 +646,7 @@
 
     if (!filtered.length) {
       el.tbody.innerHTML =
-        `<tr class="empty-row"><td colspan="9">No councilors match these filters.</td></tr>`;
+        `<tr class="empty-row"><td colspan="${5 + 2 * (Number(prefSortAxes.offensive) + Number(prefSortAxes.defensive))}">No councilors match these filters.</td></tr>`;
       return;
     }
 
@@ -673,10 +686,10 @@
           `<td>${C.esc(C.show(row.type))}</td>` +
           `<td>${statsBlock(row, scores)}</td>` +
           `<td class="perk-rating-cell">${ratingLinesBlock(scores)}</td>` +
-          `<td class="pref-cell">${axisLinesBlock(scores, "offensive")}</td>` +
-          `<td class="pref-cell">${axisLinesBlock(scores, "defensive")}</td>` +
-          `<td class="pref-cell pref-total-cell">${axisTotalBlock(scores, "offensive")}</td>` +
-          `<td class="pref-cell pref-total-cell">${axisTotalBlock(scores, "defensive")}</td>` +
+          (prefSortAxes.offensive ? `<td class="pref-cell">${axisLinesBlock(scores, "offensive")}</td>` : "") +
+          (prefSortAxes.defensive ? `<td class="pref-cell">${axisLinesBlock(scores, "defensive")}</td>` : "") +
+          (prefSortAxes.offensive ? `<td class="pref-cell pref-total-cell">${axisTotalBlock(scores, "offensive")}</td>` : "") +
+          (prefSortAxes.defensive ? `<td class="pref-cell pref-total-cell">${axisTotalBlock(scores, "defensive")}</td>` : "") +
           `</tr>`
         );
       })

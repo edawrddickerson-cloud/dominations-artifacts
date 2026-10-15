@@ -1,0 +1,445 @@
+{
+  "fixture": "review-215233.png",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+  "panel": {
+    "x": 0.04354136429608128,
+    "y": 0.02849002849002849,
+    "width": 0.9172714078374455,
+    "height": 0.9287749287749287
+  },
+  "detectorMs": 8.199999809265137,
+  "runs": [
+    {
+      "kind": "detected",
+      "rect": {
+        "x": 30,
+        "y": 10,
+        "width": 632,
+        "height": 326
+      },
+      "elapsedMs": 973.5,
+      "exact": true,
+      "complete": true,
+      "starsCorrect": true,
+      "percentageRecovery": true,
+      "expectedKnown": true,
+      "scoringParity": true,
+      "passed": true,
+      "rows": [
+        {
+          "raw": "Invading Bazooka Hitpoints -6%",
+          "name": "Invading Bazooka Hitpoints",
+          "value": -6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": true
+        },
+        {
+          "raw": "Invading APC Hitpoints -1%",
+          "name": "Invading APC Hitpoints",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading Ranged Siege Hitpoints -6%",
+          "name": "Invading Ranged Siege Hitpoints",
+          "value": -6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading Heavy Cavalry Hitpoints -1%",
+          "name": "Invading Heavy Cavalry Hitpoints",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading Heavy Cavalry Damage -1%",
+          "name": "Invading Heavy Cavalry Damage",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": false
+        }
+      ],
+      "warnings": [],
+      "valid": true,
+      "observations": [
+        {
+          "pass": "block",
+          "rows": [
+            {
+              "raw": "Invading Bazooka Hitpoints -6%",
+              "name": "Invading Bazooka Hitpoints",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading APC Hitpoints -1%",
+              "name": "Invading APC Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Ranged Siege Hitpoints -6%",
+              "name": "Invading Ranged Siege Hitpoints",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Heavy Cavalry Hitpoints -1%",
+              "name": "Invading Heavy Cavalry Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Heavy Cavalry Damage -1%",
+              "name": "Invading Heavy Cavalry Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            }
+          ],
+          "warnings": []
+        }
+      ],
+      "hall": "main",
+      "inferColours": true,
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.9282051282051282,
+          0.010256410256410256,
+          0.016666666666666666,
+          0.041025641025641026,
+          0.035897435897435895
+        ]
+      }
+    },
+    {
+      "kind": "calibration-margin",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 735,
+        "height": 379
+      },
+      "elapsedMs": 272.09999990463257,
+      "exact": true,
+      "complete": true,
+      "starsCorrect": true,
+      "percentageRecovery": true,
+      "expectedKnown": true,
+      "scoringParity": true,
+      "passed": true,
+      "rows": [
+        {
+          "raw": "Invading Bazooka Hitpoints -6%",
+          "name": "Invading Bazooka Hitpoints",
+          "value": -6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": true
+        },
+        {
+          "raw": "Invading APC Hitpoints -1%",
+          "name": "Invading APC Hitpoints",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading Ranged Siege Hitpoints -6%",
+          "name": "Invading Ranged Siege Hitpoints",
+          "value": -6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading Heavy Cavalry Hitpoints -1%",
+          "name": "Invading Heavy Cavalry Hitpoints",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": false
+        },
+        {
+          "raw": "Invading Heavy Cavalry Damage -1%",
+          "name": "Invading Heavy Cavalry Damage",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": false
+        }
+      ],
+      "warnings": [],
+      "valid": true,
+      "observations": [
+        {
+          "pass": "block",
+          "rows": [
+            {
+              "raw": "Invading Bazooka Hitpoints -6%",
+              "name": "Invading Bazooka Hitpoints",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading APC Hitpoints -1%",
+              "name": "Invading APC Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Ranged Siege Hitpoints -6%",
+              "name": "Invading Ranged Siege Hitpoints",
+              "value": -6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Heavy Cavalry Hitpoints -1%",
+              "name": "Invading Heavy Cavalry Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Invading Heavy Cavalry Damage -1%",
+              "name": "Invading Heavy Cavalry Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            }
+          ],
+          "warnings": []
+        }
+      ],
+      "hall": "main",
+      "inferColours": true,
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.9222222222222223,
+          0.011111111111111112,
+          0.015384615384615385,
+          0.03076923076923077,
+          0.035897435897435895
+        ]
+      }
+    }
+  ],
+  "passed": true,
+  "limitations": "One screenshot plus Canvas-derived scale probes and a deliberately injected first-pass failure only. First native and forced-failure OCR include worker initialization; other runs are warm. Scoring parity uses repository rating defaults for all modes/axes. No representative accuracy or continuous capture claim.",
+  "network": {
+    "requests": [
+      {
+        "url": "http://127.0.0.1:57959/ui/scanner.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/navigation.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/styles.css?v=39",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/scanner.css?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/scanner-core.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/data/army_catalog.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/shared.js?v=33",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/artifact-scoring.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/scanner-recognition.js?v=11",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/scanner-collection.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/scanner-reading.js?v=10",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/scanner.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/favicon.ico",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/data/army_catalog.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/shared.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/scanner-core.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/artifact-scoring.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/scanner-recognition.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/tests/scanner/review-215233.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/tests/scanner/review-215233.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/vendor/tesseract/worker.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/vendor/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:57959/ui/vendor/tesseract/lang/eng.traineddata.gz",
+        "method": "GET",
+        "hasPostData": false
+      }
+    ],
+    "externalRequests": [],
+    "nonGetRequests": [],
+    "browserErrors": []
+  }
+}

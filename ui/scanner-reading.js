@@ -1,0 +1,581 @@
+/*
+ * Authority: Scanner brief, user-selected all visible perks, shared artifact scorer.
+ * Ownership: Scanner recognition results and correction form; no rating/state writes.
+ * Invariants: Locked rows and duplicates count; OCR/manual use the same scorer;
+ * incomplete/ambiguous input has no confirmed rating; superseded work never renders;
+ * manual correction cannot bypass the fixed sign of a stat.
+ * History: Added user-requested storage layout with five/six rows and shared ratings.
+ * Crafting field calibration adds geometry invalidation and freezes median crops;
+ * optional metadata fields also participate in frame-change signatures.
+ * Completed crafting reads stay visible during retries and automatic panel movement.
+ */
+(() => {
+  "use strict";
+  const DN=window.DN, recognition=window.DNScannerRecognition;
+  const get=id=>document.getElementById("scanner-"+id);
+  const el=Object.fromEntries(["read","auto","layout","rows","hall","infer","progress","result-status","warnings","result","correct","accept","names","mode","off","def","profile-label"].map(id=>[id,get(id)]));
+  let factory={}, names=[], canonPerk=value=>value, ready=false, engine=null;
+  let token=0, session=null, busy=null, latestCanvas=null, hash=null, stableSince=0, readHash=null, result=null, confirmed=false, editing=false, stableTimer=null;
+  let attempts=0,settled=false,best=null,anchor=null,phase='idle',resultCurrent=false;
+  const frames=window.DNScannerFrames.create();
+  let signatures=[];
+  let itemId=0,itemAnchor=null,itemBoundary=false;
+  let displayedScore=null;
+  let displayedKeeper=null;
+  let displayedCapture=null,renderedResultHtml=null;
+  let latestCategorySource=null,categoryRegion=null;
+  let latestFields=null,fieldGeometry=null;
+  const preview=document.createElement("canvas");
+  preview.width=256;preview.height=128;
+  const previewContext=preview.getContext("2d",{willReadFrequently:true});
+  const storage=!!window.DNStorageRecognition;
+  const rowCount=()=>Number(el.rows.value)===6?6:5;
+  function say(text){el["result-status"].textContent=text;}
+  function progress(next,text){phase=next;el.progress.className='scanner-progress is-'+next;el.progress.textContent=text;}
+  function schedule(delay=700) {
+    clearTimeout(stableTimer);
+    stableTimer=setTimeout(()=>{stableTimer=null;if(ready && latestCanvas && (el.auto.checked || window.DNScannerCollection?.isEnabled()) && !editing && !busy && !settled)read();},delay);
+  }
+  function invalidate(message="Previous result is no longer current.",{preserveDisplay=false}={}) {
+    if(!preserveDisplay || storage){displayedScore=null;displayedKeeper=null;displayedCapture=null;}
+    frames.clear();signatures=[];hash=null;readHash=null;
+    clearTimeout(stableTimer);stableTimer=null;
+    token++; confirmed=false; resultCurrent=false; result=null; score(); el.warnings.textContent="";
+    el.correct.textContent="";
+    say(message); el.accept.disabled=true;
+    window.DNStorageScanner?.update(null,false);
+    attempts=0;settled=false;best=null;anchor=null;progress('idle','Waiting for an artifact');
+  }
+  function reset() {
+    latestCategorySource=null;categoryRegion=null;
+    latestFields=null;fieldGeometry=null;
+    itemAnchor=null;itemBoundary=true;
+    invalidate("No artifact read yet."); session=null; latestCanvas=null; hash=null; readHash=null;
+    stableSince=0; editing=false; el.read.disabled=true;
+    if(busy){busy.snapshot.width=busy.snapshot.height=0;if(busy.categorySource)busy.categorySource.width=busy.categorySource.height=0;busy=null;}
+    if(engine){const previous=engine;engine=null;previous.close().catch(()=>{});}
+  }
+  function signature(canvas) {
+    const roi=storage || el.layout.value==='text'?{x:0,y:0,width:canvas.width,height:canvas.height}:
+      {x:canvas.width*.115,y:canvas.height*.275,width:canvas.width*.84,height:canvas.height*.657};
+    previewContext.drawImage(canvas,roi.x,roi.y,roi.width,roi.height,0,0,256,128);
+    const pixels=previewContext.getImageData(0,0,256,128).data;
+    const values=[];
+    for(let i=0;i<pixels.length;i+=4) {
+      values.push(Math.round((pixels[i]+pixels[i+1]+pixels[i+2])/24));
+      if(storage)values.push(Math.round((pixels[i+2]-Math.max(pixels[i],pixels[i+1]))/16));
+    }
+    if(latestFields && window.DNScannerRegions) {
+      const resolved=window.DNScannerRegions.resolve(latestFields.template,latestFields.panel,latestFields.source);
+      for(const id of ['category','hall',...Array.from({length:5},(_,i)=>i+'-dice')])if(resolved.valid && resolved.boxes[id]) {
+        const box=resolved.boxes[id];previewContext.drawImage(latestFields.source,box.x,box.y,box.width,box.height,0,0,32,16);
+        const labelPixels=previewContext.getImageData(0,0,32,16).data;
+        for(let i=0;i<labelPixels.length;i+=4)values.push(Math.round((labelPixels[i]+labelPixels[i+1]+labelPixels[i+2])/24),Math.round((labelPixels[i+2]-Math.max(labelPixels[i],labelPixels[i+1]))/16));
+      }
+    }
+    return values;
+  }
+  function changed(a,b,threshold=.0005) {
+    if(!a || !b) return true;
+    let differences=0;
+    for(let i=0;i<a.length;i++) if(Math.abs(a[i]-b[i])>1) differences++;
+    return differences>a.length*threshold;
+  }
+  function update(canvas, state) {
+    if(session!==state.session){reset();session=state.session;}
+    if(!storage && Object.prototype.hasOwnProperty.call(state,'fields')) {
+      const next=state.fields || null,key=next?JSON.stringify([next.template,next.panel]):null;
+      if(key!==fieldGeometry){invalidate('Field regions changed. Checking the current artifact.',{preserveDisplay:true});hash=null;readHash=null;latestCanvas=null;}
+      latestFields=next;fieldGeometry=key;
+    }
+    if(Object.prototype.hasOwnProperty.call(state,'categorySource'))latestCategorySource=state.categorySource || null;
+    if(Object.prototype.hasOwnProperty.call(state,'panelRegion'))categoryRegion=state.panelRegion || null;
+    if(!state.current){
+      resultCurrent=false;
+      frames.clear();signatures=[];
+      if(latestCanvas){token++;confirmed=false;clearTimeout(stableTimer);progress('paused','Paused · showing the last capture');score();say('Preview unavailable or delayed; displayed rows are the last capture.');}
+      latestCanvas=null;el.read.disabled=true;return;
+    }
+    const resuming=!latestCanvas;latestCanvas=canvas; el.read.disabled=!ready || busy;
+    const current=signature(canvas),now=performance.now();
+    signatures.push(current);if(signatures.length>3)signatures.shift();
+    // A broad scene transition is immediate; small overlays get the temporal gate.
+    if(anchor && changed(anchor,current,.08))signatures=[current];
+    const next=signatures.length===3?window.DNScannerFrames.median(signatures):signatures[0];
+    if(changed(itemAnchor,next,.003)){
+      if(changed(itemAnchor,next,.08))itemBoundary=true;
+      itemId++;itemAnchor=next;
+    }
+    frames.push(canvas);
+    // Storage import keeps its immediate invalidation contract. Crafting uses
+    // the median below, so a transient star cannot continually cancel OCR.
+    if(storage && busy && changed(anchor,current,.003)){token++;confirmed=false;score();}
+    if(resuming){settled=false;attempts=0;best=null;readHash=null;schedule();}
+    const differentArtifact=changed(anchor,next,.003);
+    if(settled && !differentArtifact)return;
+    if(changed(hash,next)) {
+      hash=next;stableSince=now;readHash=null;
+      if(differentArtifact){token++;attempts=0;settled=false;best=null;anchor=next;frames.clear();frames.push(canvas);editing=false;confirmed=false;resultCurrent=false;el.correct.textContent='';el.accept.disabled=true;}
+      if(!busy || differentArtifact){progress('waiting','Waiting for a steady image'+(result?' · keeping the last capture visible':''));say('Checking the artifact region. Displayed rows will update when the read finishes.');}
+      score();schedule();
+    }
+    // Small bounded change/stability gate; no overlapping worker jobs or queue.
+    if(ready && (el.auto.checked || window.DNScannerCollection?.isEnabled()) && !editing && !busy && !settled && now-stableSince>=650 && readHash!==hash) read();
+  }
+  function options() {
+    const layers=DN.loadActivePerkRatingLayers();
+    const ratings=DN.mergePerkRatingLayers(layers.global,layers.profile);
+    const applied=DN.lsHas(DN.ARMY_PRESETS_KEY)?DN.armyEffectiveAppliedSet():null;
+    el["profile-label"].textContent="Profile: "+DN.activeProfile().name+". All visible perks, including locked rows, count.";
+    return {canonPerk,scoreMode:storage?el.mode.value:'combined',prefSortAxes:{offensive:el.off.checked,defensive:el.def.checked},
+      ratingOf:(name,axis)=>DN.perkRatingAxisOrNull(ratings,name,axis) ??
+        (applied?DN.armyAwareDefault(factory,applied,name,axis,{expanded:true}):factory[name]?.[axis] || 0)};
+  }
+  function score() {
+    const hallStatus=get('hall-label');
+    if(!storage && hallStatus)hallStatus.textContent=(result?.hall || el.hall.value)==='war'?'War item':'Main (Multiplayer) item';
+    if(!storage && hallStatus)hallStatus.textContent+=' · '+({
+      'hall-colour':'detected from ribbon colour','crafting-label':'detected from label','percentage-tier':'detected from percentages','selected-hall':'using selected Hall'
+    }[result?.hallSource] || 'using selected Hall');
+    const opts=ready?options():null;
+    const row={};
+    result?.rows.forEach((perk,index)=>{row["perk_"+(index+1)+"_name"]=perk.name;row["perk_"+(index+1)+"_base"]=String(perk.value);row["perk_"+(index+1)+"_max"]="";});
+    const current=resultCurrent && !!latestCanvas && (!editing || confirmed);
+    const starCurrent=resultCurrent && !!latestCanvas;
+    if(!storage && starCurrent && result){displayedKeeper=result;displayedCapture=result;}
+    const captureHolding=!storage && !!displayedCapture && !starCurrent;
+    const visibleResult=captureHolding?displayedCapture:result;
+    const estimate=!storage && current && opts?window.DNScannerComparisonCore?.estimate(result,{names,options:opts,hall:el.hall.value,expectedRows:rowCount()}):null;
+    const candidate=estimate || (confirmed?result:null);
+    if(!storage && current && candidate)displayedScore=candidate;
+    const holding=!storage && !!displayedScore && !(current && candidate);
+    const scoreResult=holding?displayedScore:candidate;
+    if(!storage && scoreResult)scoreResult.rows.forEach((perk,index)=>{
+      row['perk_'+(index+1)+'_name']=perk.name;row['perk_'+(index+1)+'_base']=String(perk.value);
+      row['perk_'+(index+1)+'_max']=String(Math.sign(perk.value)*(Math.abs(perk.value)+9));
+    });
+    const totals=scoreResult && opts?window.DNArtifactScoring.score(!storage && window.DNScannerComparisonCore?window.DNScannerComparisonCore.statRow(scoreResult.rows.map(perk=>({...perk,value:Math.sign(perk.value)*(Math.abs(perk.value)+9)}))):row,opts):null;
+    const retainDecision=holding && !editing && ['waiting','reading'].includes(phase);
+    const keeperResult=starCurrent?result:!editing && ['waiting','reading'].includes(phase)?displayedKeeper:null;
+    const keeperHolding=!starCurrent && keeperResult?.unlocked?.count===3;
+    window.DNScannerComparison?.update(scoreResult || result,(current && !!candidate) || retainDecision,opts,{keeperResult,categoryResult:starCurrent?result:null,captureResult:visibleResult,captureRetained:captureHolding});
+    const live=get('live-score'),assumption=get('score-assumption');
+    if(live) {
+      const visible=totals;
+      live.innerHTML=[['Off','offensive',opts?.prefSortAxes.offensive],['Def','defensive',opts?.prefSortAxes.defensive],['Total','preference',opts && (opts.prefSortAxes.offensive || opts.prefSortAxes.defensive)]].map(([label,key,selected])=>'<div><span>'+label+'</span><strong>'+(!selected?'Off':visible?String(totals[key]):'—')+'</strong></div>').join('');
+    }
+    if(assumption)assumption.textContent=scoreResult?.provisional?(scoreResult.assumption || 'Provisional score · verify OCR values')+' · Review before deciding.':'';
+    const freshness=get('score-freshness');
+    if(freshness)freshness.textContent=holding || keeperHolding || captureHolding?'LAST READ · '+(phase==='paused'?'Capture paused':editing?'Corrections pending':retainDecision || keeperHolding || captureHolding?'Updating…':'Current item needs review'):'';
+    const count=visibleResult?.unlocked?.count;
+    const progress=recognition.coverage(visibleResult?.rows || [],rowCount());
+    const lightText=progress.light==='green'?rowCount()+' stats captured':progress.light==='orange'?'Incomplete / check rows':'Nothing useful in view';
+    const correctionError=storage && editing && !confirmed?corrections().error:'';
+    const correctionStatus=get('correction-status');
+    if(correctionStatus)correctionStatus.textContent=correctionError || (editing && !confirmed?'Changes are valid. Use Corrected Values, then Keep Artifact.':'');
+    window.DNStorageScanner?.update(result,confirmed && !!latestCanvas,{reviewable:resultCurrent && !!latestCanvas && (!editing || confirmed),pending:editing && !confirmed,correctionError,expectedRows:rowCount()});
+    const resultHtml='<div class="scanner-glance"><div class="scanner-traffic is-'+progress.light+'" role="status"><span class="scanner-light" aria-hidden="true"></span><strong>'+progress.total+'/'+rowCount()+' · '+lightText+'</strong><small>'+progress.known+' known · '+progress.assumed+' assumed · '+progress.collected+' new names</small></div>'+
+      '<div class="scanner-enabled"><strong>'+(count ?? '?')+'</strong><span>ENABLED STATS<small>'+(count!=null?'Filled yellow stars':storage?'Include row stars in the full item crop':'Include all five stars in the panel crop')+'</small></span></div></div>'+
+      '<div class="scanner-score">'+(!holding && totals?
+      (opts.prefSortAxes.offensive?'<span>Off <strong>'+totals.offensive+'</strong></span>':'')+
+      (opts.prefSortAxes.defensive?'<span>Def <strong>'+totals.defensive+'</strong></span>':''):'<span>Rating unconfirmed</span>')+'</div>'+
+      '<p>'+(count!=null?count+' of '+rowCount()+' unlocked — filled stars':storage?'Unlocked stars unclear':'Star count unclear — expected 1–3 filled stars')+' · All '+rowCount()+' count toward rating'+(visibleResult?.temporal?.frames===3?' · 3-frame noise filtering':'')+'</p>'+
+      (storage?'':'<div class="scanner-stat-table"><div class="scanner-stat-heading"><span>Stat</span><span>%</span><span>Weighted</span></div>'+Array.from({length:rowCount()},(_,index)=>{
+        const perk=visibleResult?.rows[index],edit=editing && !confirmed?el.correct.querySelectorAll('.scanner-edit-row')[index]:null;
+        const star=edit?.querySelector('.scanner-perk-unlocked');
+        const state=star?.tagName==='BUTTON'?star.value===''?null:star.value==='true':perk?.unlocked;
+        const selectedTier=edit?.querySelector('.scanner-perk-tier')?.value || perk?.tier;
+        const editedDice=edit?.querySelector('.scanner-perk-reroll');
+        const rerollEligible=editedDice?.tagName==='BUTTON'?editedDice.value===''?null:editedDice.value==='true':perk?.rerollEligible;
+        const colour=selectedTier==='white'?'neutral':['green','blue'].includes(selectedTier)?selectedTier:visibleResult?.colours?.[index] ?? perk?.colour;
+        const scored=scoreResult?.rows[index], line=totals?.lines[index];
+        const matches=perk && scored && perk.name===scored.name && (perk.value===scored.value || scored.estimated);
+        // Crafting rows are level 1; nine upgrades add nine percentage points.
+        const maxMagnitude=scored && Number.isFinite(scored.value)?Math.abs(scored.value)+9:null;
+        const rowScore=matches && line && opts && maxMagnitude!=null?maxMagnitude*((opts.prefSortAxes.offensive?line.offRating:0)+(opts.prefSortAxes.defensive?line.defRating:0)):null;
+        const colourClass=['neutral','green','blue'].includes(colour)?' is-'+colour:'';
+        return '<div class="scanner-perk'+colourClass+(state===true?' is-unlocked':'')+'"><span class="scanner-stat-title">'+starMarkup(state,index)+(index+1)+'. '+DN.esc(perk?.name || 'Waiting for stat')+'</span><span class="scanner-stat-value">'+
+          (perk?.value!=null?(perk.value>=0?'+':'')+perk.value+'%':'?%')+'</span><span class="scanner-stat-score"'+(scored?.estimated?' title="Estimated maximum percentage times perk rating"':'')+'>'+(rowScore!=null?(scored?.estimated?'~':'')+rowScore:'&mdash;')+rerollMarkup(rerollEligible,index)+'</span></div>';
+      }).join('')+'</div>');
+    if(storage || resultHtml!==renderedResultHtml){el.result.innerHTML=resultHtml;renderedResultHtml=resultHtml;}
+    const rerollStatus=get('reroll-status');
+    if(rerollStatus) {
+      const diceRows=(visibleResult?.rows || []).map((row,i)=>{
+        const button=editing && !confirmed?el.correct.querySelectorAll('.scanner-edit-row')[i]?.querySelector('.scanner-perk-reroll'):null;
+        return button?.tagName==='BUTTON'?button.value===''?null:button.value==='true':row.rerollEligible;
+      });
+      const count=diceRows.filter(value=>value===true).length,unknown=diceRows.filter(value=>typeof value!=='boolean').length;
+      rerollStatus.textContent=!diceRows.length?'Read an artifact to check reroll availability.':unknown?'Reroll availability needs review · '+unknown+' unknown':count===0?'Cannot reroll':count===diceRows.length?'All '+count+' stats rerollable':count===1?'Only stat '+(diceRows.indexOf(true)+1)+' rerollable':count+' stats rerollable · Verify dice pattern';
+      rerollStatus.classList?.toggle('scanner-warning',unknown>0 || count>1 && count<diceRows.length);
+    }
+    if(storage)el.correct.querySelectorAll('.storage-read-stat').forEach((cell,index)=>{
+      const perk=result?.rows[index];
+      const name=cell.querySelector?.('.storage-read-name'),value=cell.querySelector?.('strong');
+      if(name)name.textContent=perk?.name || 'Waiting for stat';
+      if(value)value.textContent=perk?.value!=null?(perk.value>=0?'+':'')+perk.value+'%':'?%';
+      if(!editing || confirmed)syncStar(cell.querySelector?.('.scanner-perk-unlocked'),perk?.unlocked,index);
+    });
+  }
+  const starShape='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.9-6.2-3.3-6.2 3.3L7 14.2 2 9.3l6.9-1z" /></svg>';
+  const diceShape='<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8" cy="8" r="1.4"/><circle cx="16" cy="8" r="1.4"/><circle cx="12" cy="12" r="1.4"/><circle cx="8" cy="16" r="1.4"/><circle cx="16" cy="16" r="1.4"/></svg>';
+  function rerollMarkup(eligible,index) {
+    const special=/legendary|mythical/i.test(result?.artifact?.type || '');
+    const state=special?'false':eligible===true?'true':eligible===false?'false':'';
+    return '<button type="button" class="scanner-perk-reroll reroll-dice'+(state==='true'?' is-rerollable':state===''?' is-unknown':'')+'" data-row-index="'+index+'" value="'+state+'"'+(special?' disabled':'')+' aria-label="Row '+(index+1)+' reroll: '+(state==='true'?'available':state==='false'?'unavailable':'unknown')+'. Click to change." title="Reroll '+(state==='true'?'available':state==='false'?'unavailable':'unknown')+' (click: available / unavailable / unknown)">'+diceShape+'</button>';
+  }
+  function cycleReroll(button) {
+    if(!button || button.disabled)return;
+    button.value=button.value===''?'true':button.value==='true'?'false':'';
+    button.classList.toggle('is-rerollable',button.value==='true');button.classList.toggle('is-unknown',button.value==='');
+    button.title='Reroll '+(button.value==='true'?'available':button.value==='false'?'unavailable':'unknown');
+    button.setAttribute('aria-label','Reroll '+(button.value==='true'?'available':button.value==='false'?'unavailable':'unknown')+'. Click to change.');
+    button.dataset.manual='true';
+  }
+  function starMarkup(unlocked,index) {
+    const state=unlocked===true?'true':unlocked===false?'false':'';
+    return '<button type="button" data-row-index="'+index+'" class="scanner-perk-unlocked storage-star'+(unlocked===true?' is-unlocked':'')+(state===''?' is-unknown':'')+'" value="'+state+'" aria-pressed="'+(state || 'mixed')+'" aria-label="Row '+(index+1)+': '+(state===''?'star unknown. Click to unlock':unlocked?'unlocked. Click to lock':'locked. Click to unlock')+'">'+starShape+'</button>';
+  }
+  function syncStar(button,unlocked,index) {
+    if(!button)return;
+    const state=unlocked===true?'true':unlocked===false?'false':'';
+    button.value=state;
+    button.classList?.toggle('is-unlocked',unlocked===true);
+    button.classList?.toggle('is-unknown',state==='');
+    button.setAttribute?.('aria-pressed',state || 'mixed');
+    button.setAttribute?.('aria-label','Row '+(index+1)+': '+(state===''?'star unknown. Click to unlock':unlocked?'unlocked. Click to lock':'locked. Click to unlock'));
+  }
+  function highlightUnknownFields() {
+    const category=get('compare-type');
+    if(!storage && category)category.classList?.toggle('is-unknown',!category.value);
+    for(const field of el.correct.querySelectorAll('.scanner-edit-row')) {
+      for(const key of ['name','value','tier','level','base','max','reroll']) {
+        const input=field.querySelector('.scanner-perk-'+key);
+        if(!input)continue;
+        const empty=!String(input.value || '').trim();
+        const unknown=empty || key==='name' && !names.includes(canonPerk(input.value.trim())) || input.validity?.valid===false;
+        input.classList?.toggle('is-unknown',!!unknown);
+      }
+      const base=field.querySelector('.scanner-perk-base'),max=field.querySelector('.scanner-perk-max');
+      field.querySelector('.storage-range-edit summary')?.classList?.toggle('is-unknown',!base?.value || !max?.value);
+      const title=field.querySelector('.storage-read-name'),tier=field.querySelector('.scanner-perk-tier')?.value;
+      title?.classList?.toggle('is-green',tier==='green');
+      title?.classList?.toggle('is-blue',tier==='blue');
+    }
+  }
+  function autofillLockedLevels() {
+    if(!storage)return;
+    for(const field of el.correct.querySelectorAll('.scanner-edit-row')) {
+      const star=field.querySelector('.scanner-perk-unlocked'),level=field.querySelector('.scanner-perk-level');
+      if(!star || !level)continue;
+      const locked=star.value==='false';
+      level.readOnly=locked;
+      if(locked) {
+        const inferred=level.value!=='1' || level.dataset?.autoInferred==='true';
+        if(level.value!=='1') {
+          level.value='1';
+          if(level.dataset)level.dataset.autoInferred='true';
+        }
+        // A confirmed level also resolves the tier when the percentage is present.
+        autofillEditedRow(level);
+        if(inferred && level.dataset)level.dataset.autoInferred='true';
+        level.title='Locked stats are always level 1.';
+      }else if(level.title==='Locked stats are always level 1.')level.title='';
+    }
+  }
+  function showCorrection() {
+    const rows=Array.from({length:rowCount()},(_,index)=>result?.rows[index] || {name:'',value:null});
+    el.correct.innerHTML=rows.map((perk,index)=>'<div class="scanner-edit-row">'+(storage?'<div class="storage-read-stat">'+starMarkup(perk.unlocked,index)+'<span class="storage-read-name">'+DN.esc(perk.name || 'Waiting for stat')+'</span><strong>'+(perk.value!=null?(perk.value>=0?'+':'')+perk.value+'%':'?%')+'</strong>'+(perk.inferredFields?.length?'<small class="storage-inference-note">Inferred '+DN.esc(perk.inferredFields.join(' and '))+'. Verify before keeping.</small>':'')+'</div>':'')+'<label>'+(storage?'Edit perk':'Perk')+(!storage?'<div class="crafting-perk-name-field">'+starMarkup(perk.unlocked,index):'')+'<input class="scanner-perk-name" list="scanner-names" aria-label="Perk '+(index+1)+' name" value="'+DN.esc(perk.name)+'" />'+(!storage?'</div>':'')+'</label>'+ 
+      '<label>Value %<input class="scanner-perk-value"'+(perk.inferred || perk.inferredFields?.includes('value')?' data-auto-inferred="true"':'')+' type="number" step="any" value="'+(perk.value??'')+'" /></label>'+
+      '<label>Tier<select class="scanner-perk-tier"'+(perk.tier && perk.tierSource!=='manual'?' data-auto-inferred="true"':'')+'><option value="">Unknown</option>'+['white','green','blue'].map(tier=>'<option value="'+tier+'"'+((perk.tier || perk.tierEvidence)===tier?' selected':'')+'>'+tier[0].toUpperCase()+tier.slice(1)+'</option>').join('')+'</select></label>'+ 
+      (storage?'<label>Level /10<input class="scanner-perk-level"'+(perk.inferredFields?.includes('level')?' data-auto-inferred="true"':'')+' type="number" min="1" max="10" step="1" value="'+(perk.level??'')+'" /></label>'+ 
+      '<details class="storage-range-edit"><summary>Range'+(perk.tier?' · '+DN.esc(perk.tier[0].toUpperCase()+perk.tier.slice(1))+' tier':'')+(perk.base!=null && perk.max!=null?' · '+perk.base+'% → '+perk.max+'%'+(['inferred-level','inferred-tier'].includes(perk.rangeSource)?' (inferred)':''):' · level needed')+'</summary><label>Base %<input class="scanner-perk-base" type="number" step="any" value="'+(perk.base??'')+'" /></label><label>Max %<input class="scanner-perk-max" type="number" step="any" value="'+(perk.max??'')+'" /></label></details>':'')+'<label>Reroll'+rerollMarkup(perk.rerollEligible,index)+'</label></div>').join('');
+    el.accept.disabled=false;
+    autofillLockedLevels();
+    highlightUnknownFields();
+  }
+  async function read() {
+    if(!ready || busy || !latestCanvas)return;
+    const request=token, source=latestCanvas;
+    const snapshot=document.createElement("canvas"),temporal=frames.snapshot(snapshot,source);
+    let rerollObservations=null;
+    let categorySource=null;
+    const metadataPanel=!storage && el.layout.value==='text' && latestCategorySource?recognition.detectPanel(latestCategorySource) || categoryRegion:categoryRegion;
+    const categoryRect=!storage?recognition.categoryRect(latestCategorySource,metadataPanel):null;
+    if(categoryRect) {
+      categorySource=document.createElement('canvas');const scale=Math.min(2,1800/categoryRect.width);
+      categorySource.width=Math.round(categoryRect.width*scale);categorySource.height=Math.round(categoryRect.height*scale);
+      categorySource.getContext('2d').drawImage(latestCategorySource,categoryRect.x,categoryRect.y,categoryRect.width,categoryRect.height,0,0,categorySource.width,categorySource.height);
+      const context=categorySource.getContext('2d',{willReadFrequently:true}),pixels=context.getImageData(0,0,categorySource.width,categorySource.height);
+      const coloured=(r,g,b)=>g>90 && g>r*1.25 && g>b*.8;
+      let ink=0;for(let i=0;i<pixels.data.length;i+=4)if(coloured(pixels.data[i],pixels.data[i+1],pixels.data[i+2]))ink++;
+      if(ink>=30) {
+        for(let i=0;i<pixels.data.length;i+=4){const value=coloured(pixels.data[i],pixels.data[i+1],pixels.data[i+2])?0:255;pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=value;pixels.data[i+3]=255;}
+        context.putImageData(pixels,0,0);
+      }
+    }
+    if(storage && el.layout.value==='storage') {
+      const info=window.DNStorageRecognition.inspect(snapshot);
+      if(rowCount()!==info.expectedRows){el.rows.value=String(info.expectedRows);best=null;result=null;confirmed=false;}
+      if(info.hall){el.hall.value=info.hall;window.DNPrimaryFilters?.setHall(info.hall);}
+    }
+    if(storage && window.DNScannerRerollRecognition) {
+      const detect=canvas=>window.DNScannerRerollRecognition.detectStorage(canvas.getContext('2d',{willReadFrequently:true}).getImageData(0,0,canvas.width,canvas.height).data,canvas.width,canvas.height,{expectedRows:rowCount(),layout:el.layout.value});
+      const currentDice=detect(source),medianDice=detect(snapshot);
+      rerollObservations=currentDice.map((row,i)=>row.rerollEligible===medianDice[i]?.rerollEligible?row:
+        {...row,rerollEligible:null,rerollConfidence:'unknown',rerollConflict:true,rerollEvidence:{reason:'transition'}});
+    }
+    const previous=resultCurrent?result:best;
+    const knownTiers=(previous?.rows || []).map(row=>({...row,hall:previous?.artifact?.hall || previous?.hall || el.hall.value}));
+    const job={snapshot,categorySource};busy=job;attempts++;el.read.disabled=true;progress('reading','Reading · attempt '+attempts+' of 2 · keep this artifact open');say("Reading artifact locally…");
+    resultCurrent=false;score();
+    readHash=hash;
+    const owner=engine || (engine=recognition.create({names,canonPerk}));
+    try {
+      const parsed=await owner.recognize(snapshot,{expectedRows:Number(el.rows.value),layout:el.layout.value,hall:el.hall.value,inferColours:el.infer.checked,categorySource,fields:latestFields?{...latestFields,panelSource:snapshot}:null,knownTiers});
+      if(request!==token || owner!==engine)return;
+      if(rerollObservations)parsed.rows=parsed.rows.map((row,i)=>({...row,...rerollObservations[i]}));
+      parsed.rows=parsed.rows.map((row,i)=>{
+        const prior=previous?.rows[i];
+        return prior?.rerollSource==='manual' && prior.name===row.name && prior.value===row.value?{
+          ...row,rerollEligible:prior.rerollEligible,rerollSource:'manual',rerollConfidence:prior.rerollConfidence}:row;
+      });
+      if(window.DNStoredArtifacts)parsed.rows=window.DNStoredArtifacts.backfillItem({hall:parsed.hall || el.hall.value,type:parsed.artifact?.type,freshCraft:!storage,rows:parsed.rows}).rows;
+      if(!storage)window.DNScannerCalibration?.report(parsed.recognitionPath,parsed.calibrationReason);
+      if(!storage && parsed.hall && parsed.hall!==el.hall.value){el.hall.value=parsed.hall;window.DNPrimaryFilters?.setHall(parsed.hall);}
+      parsed.temporal=temporal;
+      const useful=recognition.coverage(parsed.rows,rowCount()).total;
+      if(!best)best=parsed;
+      else if(best.hall && parsed.hall && best.hall!==parsed.hall)best=parsed;
+      else if(!best.valid)best=recognition.combineReads(best,parsed,rowCount());
+      if(best!==parsed)best={...best,rows:best.rows.map((row,i)=>row.name===parsed.rows[i]?.name?{
+        ...row,rerollEligible:parsed.rows[i].rerollEligible,rerollSource:parsed.rows[i].rerollSource,
+        rerollConfidence:parsed.rows[i].rerollConfidence,rerollEvidence:parsed.rows[i].rerollEvidence,
+        rerollConflict:parsed.rows[i].rerollConflict}:row)};
+      if(useful===0 && !parsed.rows.some(row=>row.known))best=null;
+      if(parsed.unlocked?.count===3)best={...(best || parsed),unlocked:parsed.unlocked};
+      result=best;confirmed=!!result?.valid;resultCurrent=true;editing=false;
+      el.warnings.textContent=(result?.warnings || parsed.warnings).join(" ");
+      if(!confirmed && result)el.warnings.textContent+=' Verify inferred values and unclear names in Correct Recognition.';
+      settled=confirmed || attempts>=2 || useful===0 || (!el.auto.checked && !window.DNScannerCollection?.isEnabled());
+      parsed.presentation={attempt:attempts,finished:settled,coverage:recognition.coverage(result?.rows || [],rowCount()),rows:result?.rows || [],temporal:result?.temporal || temporal};
+      window.DNScannerCollection?.record(parsed);
+      window.DNScannerCollection?.recordItem(result,itemId,{expectedRows:rowCount(),continuous:true,newEncounter:itemBoundary});
+      if(result?.rows?.length)itemBoundary=false;
+      progress(settled?'finished':'reading',settled?'Finished · '+recognition.coverage(result?.rows || [],rowCount()).total+'/'+rowCount()+' · '+(confirmed?'ready to move on':result?'best read · review or move on':'nothing useful in view'):'Improving the read · keeping these rows visible');
+      say(confirmed?"Visible perks read. Check the values before making a game decision.":"Recognition needs correction; no rating confirmed.");
+      showCorrection();score();
+    } catch {
+      if(request===token && owner===engine){confirmed=false;resultCurrent=false;settled=true;progress('finished','Finished · read failed · retained last capture');say("Could not read this artifact. Check the crop and retry, or enter corrections.");score();showCorrection();}
+      if(owner===engine){engine=null;owner.close().catch(()=>{});}
+    } finally {
+      if(categorySource)categorySource.width=categorySource.height=0;
+      snapshot.width=snapshot.height=0;
+      if(busy===job){busy=null;el.read.disabled=!ready || !latestCanvas;if(!settled && !editing && latestCanvas)schedule(350);}
+    }
+  }
+  el.read.addEventListener("click",()=>{editing=false;attempts=0;settled=false;best=null;read();});
+  function autofillCraftingRow(target) {
+    if(storage)return;
+    const field=target?.closest?.('.scanner-edit-row');
+    if(!field)return;
+    if(target.dataset)delete target.dataset.autoInferred;
+    const tier=field.querySelector('.scanner-perk-tier'),value=field.querySelector('.scanner-perk-value'),name=field.querySelector('.scanner-perk-name');
+    if(!tier || !value || !name)return;
+    const bases=window.DNStoredArtifacts?.tierBases({hall:result?.hall || el.hall.value,type:result?.artifact?.type,crafting:true});
+    if(!bases)return;
+    const tiers=['white','green','blue'],sign=names.includes(canonPerk(name.value.trim()))?DN.expectedPerkSign(canonPerk(name.value.trim())):null;
+    if(target!==value && (value.value.trim()==='' || value.dataset?.autoInferred==='true') && tiers.includes(tier.value) && (sign===1 || sign===-1)) {
+      value.value=String(sign*bases[tiers.indexOf(tier.value)]);
+      if(value.dataset)value.dataset.autoInferred='true';
+      value.title='Inferred from tier at level 1. Verify before applying.';
+    }else if(target!==tier && (tier.value==='' || tier.dataset?.autoInferred==='true') && value.value.trim()!=='' && bases.includes(Math.abs(Number(value.value)))) {
+      tier.value=tiers[bases.indexOf(Math.abs(Number(value.value)))];
+      if(tier.dataset)tier.dataset.autoInferred='true';
+    }
+  }
+  function autofillEditedRow(target) {
+    const field=target?.closest?.('.scanner-edit-row');
+    if(!storage || !field || !window.DNStoredArtifacts)return;
+    if(target.dataset)delete target.dataset.autoInferred;
+    target.title='';
+    const inputs=Object.fromEntries(['tier','value','level','name','base','max'].map(key=>[key,field.querySelector('.scanner-perk-'+key)]));
+    if(!inputs.tier || !inputs.value || !inputs.level)return;
+    const context={hall:el.hall.value,type:document.getElementById('storage-type')?.value || result?.artifact?.type};
+    const bases=window.DNStoredArtifacts.tierBases(context);
+    if(!bases)return;
+    const tiers=['white','green','blue'];
+    const number=input=>input.value.trim()===''?null:Number(input.value);
+    const name=canonPerk(inputs.name.value.trim()),sign=names.includes(name)?DN.expectedPerkSign(name):null;
+    const candidates=['value','level','tier'].filter(key=>inputs[key]!==target &&
+      (inputs[key].value.trim()==='' || inputs[key].dataset?.autoInferred==='true'));
+    candidates.sort((a,b)=>Number(inputs[a].value!=='')-Number(inputs[b].value!==''));
+    for(const key of candidates) {
+      const value=number(inputs.value),level=number(inputs.level),base=bases[tiers.indexOf(inputs.tier.value)];
+      let inferred=null;
+      if(key==='value' && base!=null && Number.isInteger(level) && level>=1 && level<=10 && (sign===1 || sign===-1))inferred=sign*(base+level-1);
+      if(key==='level' && base!=null && Number.isFinite(value)) {
+        const next=Math.abs(value)-base+1;
+        if(Number.isInteger(next) && next>=1 && next<=10)inferred=next;
+      }
+      if(key==='tier' && Number.isFinite(value) && Number.isInteger(level) && level>=1 && level<=10) {
+        inferred=tiers[bases.indexOf(Math.abs(value)-(level-1))] || null;
+      }
+      if(inferred!=null) {
+        inputs[key].value=String(inferred);
+        if(inputs[key].dataset)inputs[key].dataset.autoInferred='true';
+        inputs[key].title='Inferred from the other two fields. Verify before keeping.';
+        break;
+      }
+    }
+    const range=window.DNStoredArtifacts.impliedRange({value:number(inputs.value),level:number(inputs.level)});
+    const index=[...el.correct.querySelectorAll('.scanner-edit-row')].indexOf(field),prior=result?.rows[index];
+    const automatic=inputs.base && inputs.max && (inputs.base.value==='' && inputs.max.value==='' ||
+      inputs.base.dataset?.autoInferred==='true' && inputs.max.dataset?.autoInferred==='true' ||
+      ['inferred-level','inferred-tier'].includes(prior?.rangeSource) &&
+      number(inputs.base)===prior.base && number(inputs.max)===prior.max);
+    if(automatic) {
+      for(const key of ['base','max']) {
+        inputs[key].value=range && bases.includes(Math.abs(range.base))?String(range[key]):'';
+        if(inputs[key].dataset)inputs[key].dataset.autoInferred='true';
+      }
+    }
+  }
+  el.correct.addEventListener("input",event=>{
+    autofillCraftingRow(event?.target);
+    autofillEditedRow(event?.target);
+    autofillLockedLevels();
+    highlightUnknownFields();
+    token++;editing=true;confirmed=false;progress('finished','Finished · your corrections are pending');score();say("Corrections pending; rating is unconfirmed.");
+  });
+  el.correct.addEventListener('click',event=>{
+    const dice=event.target.closest?.('.scanner-perk-reroll');
+    if(dice) {cycleReroll(dice);dice.dispatchEvent(new Event('input',{bubbles:true}));return;}
+    const button=event.target.closest?.('.scanner-perk-unlocked');
+    if(!button)return;
+    const index=[...el.correct.querySelectorAll('.scanner-edit-row')].indexOf(button.closest('.scanner-edit-row'));
+    syncStar(button,button.value!=='true',index);
+    button.dispatchEvent(new Event('input',{bubbles:true}));
+  });
+  el.result.addEventListener('click',event=>{
+    if(storage)return;
+    const dice=event.target.closest?.('.scanner-perk-reroll');
+    if(dice && resultCurrent && latestCanvas) {
+      const edit=el.correct.querySelectorAll('.scanner-edit-row')[Number(dice.dataset.rowIndex)]?.querySelector('.scanner-perk-reroll');
+      cycleReroll(edit);edit?.dispatchEvent(new Event('input',{bubbles:true}));return;
+    }
+    const button=event.target.closest?.('.scanner-perk-unlocked');
+    if(!button || !resultCurrent || !latestCanvas)return;
+    const edit=el.correct.querySelectorAll('.scanner-edit-row')[Number(button.dataset.rowIndex)]?.querySelector('.scanner-perk-unlocked');
+    if(!edit)return;
+    syncStar(edit,button.value!=='true',Number(button.dataset.rowIndex));
+    edit.dispatchEvent(new Event('input',{bubbles:true}));
+    el.result.querySelector?.('.scanner-perk-unlocked[data-row-index="'+button.dataset.rowIndex+'"]')?.focus();
+  });
+  function corrections() {
+    let rows=[...el.correct.querySelectorAll(".scanner-edit-row")].map((row,rowsIndex)=>{
+      const name=canonPerk(row.querySelector(".scanner-perk-name").value.trim());
+      const raw=row.querySelector(".scanner-perk-value").value.trim();
+      const level=storage?row.querySelector('.scanner-perk-level').value.trim():'';
+      const starInput=row.querySelector('.scanner-perk-unlocked');
+      const star=starInput?.value || '';
+      const base=storage?row.querySelector('.scanner-perk-base')?.value.trim() || '':'';
+      const max=storage?row.querySelector('.scanner-perk-max')?.value.trim() || '':'';
+      const next={...result?.rows[rowsIndex],name,value:raw===''?null:Number(raw),known:names.includes(name),
+        ...(storage?{level:level===''?null:Number(level),unlocked:star===''?null:star==='true',base:base===''?null:Number(base),max:max===''?null:Number(max)}:{unlocked:starInput?.tagName==='BUTTON'?star===''?null:star==='true':result?.rows[rowsIndex]?.unlocked}),
+        raw:name+' '+raw+'%',hasPercent:true,assumed:false,inferred:false,conflict:false};
+      const dice=row.querySelector('.scanner-perk-reroll');
+      if(dice?.tagName==='BUTTON') {
+        next.rerollEligible=dice.value===''?null:dice.value==='true';
+        if(dice.dataset.manual==='true'){next.rerollSource='manual';next.rerollConfidence=next.rerollEligible==null?'unknown':'high';next.rerollConflict=false;}
+      }
+      if(storage) {
+        next.inferredFields=['value','level','tier'].filter(key=>row.querySelector('.scanner-perk-'+key)?.dataset?.autoInferred==='true');
+        next.inferred=next.inferredFields.includes('value');
+        next.valueSource=next.inferred?'tier-level':null;
+      }
+      if(storage)next.levelSource=next.level!=null?next.unlocked===false?'locked-star':next.inferredFields.includes('level')?'tier-percentage':'manual':null;
+      if(storage) {
+        next.tier=null;next.tierSource=null;next.tierConflict=false;
+        const tier=row.querySelector('.scanner-perk-tier')?.value;
+        if(['white','green','blue'].includes(tier)) {
+          const prior=result?.rows[rowsIndex];
+          const changed=tier!==(prior?.tier || prior?.tierEvidence);
+          next.tier=tier;next.tierSource=changed?'manual':prior?.tierSource || null;
+          next.tierEvidence=changed || prior?.tierSource==='manual'?tier:prior?.tierEvidence || null;
+          if(row.querySelector('.scanner-perk-tier')?.dataset?.autoInferred==='true') {
+            next.tierSource='percentage-level';next.tierEvidence=null;
+          }
+        }else next.tierEvidence=null;
+        const prior=result?.rows[rowsIndex],range=window.DNStoredArtifacts?.impliedRange(next);
+        const endpointsUnchanged=next.base===prior?.base && next.max===prior?.max;
+        const valueOrLevelChanged=next.value!==prior?.value || next.level!==prior?.level;
+        const liveRange=row.querySelector('.scanner-perk-base')?.dataset?.autoInferred==='true' && row.querySelector('.scanner-perk-max')?.dataset?.autoInferred==='true';
+        const automatic=liveRange || next.base==null && next.max==null || endpointsUnchanged &&
+          (['inferred-level','inferred-tier'].includes(prior?.rangeSource) || valueOrLevelChanged);
+        if(automatic)return {...next,base:range?.base ?? null,max:range?.max ?? null,rangeSource:range?'inferred-level':null};
+        if(next.base!==prior?.base || next.max!==prior?.max)next.rangeSource='manual';
+      }else if(window.DNStoredArtifacts) {
+        const tierInput=row.querySelector('.scanner-perk-tier'),tier=tierInput?.value;
+        const context={hall:result?.hall || el.hall.value,type:result?.artifact?.type,crafting:true};
+        const bases=window.DNStoredArtifacts.tierBases(context),tiers=['white','green','blue'];
+        const selected=tiers.includes(tier),inferred=row.querySelector('.scanner-perk-value')?.dataset?.autoInferred==='true';
+        if(selected || next.value!==result?.rows[rowsIndex]?.value || result?.rows[rowsIndex]?.tierConflict)next.tierSource='manual';
+        if(next.value==null && selected && bases && next.known) {
+          const sign=DN.expectedPerkSign(next.name);
+          if(sign===1 || sign===-1)next.value=sign*bases[tiers.indexOf(tier)];
+        }
+        const resolved=window.DNStoredArtifacts.craftingTier(next,context);
+        if(selected && bases && Number.isFinite(next.value) && Math.abs(next.value)!==bases[tiers.indexOf(tier)])return {...resolved,tierConflict:true};
+        return {...resolved,...(inferred?{inferred:true,valueSource:'tier-level',inferredFields:['value']}:{} )};
+      }
+      return next;
+    });
+    const fields=[...el.correct.querySelectorAll('.scanner-edit-row')];
+    if(storage && window.DNStoredArtifacts)rows=window.DNStoredArtifacts.backfillItem({hall:el.hall.value,type:document.getElementById('storage-type')?.value || result?.artifact?.type,rows}).rows;
+    fields.forEach((field,index)=>field.querySelector('.scanner-perk-name')?.setAttribute?.('aria-invalid',String(!rows[index].known)));
+    const unknown=rows.findIndex(row=>!row.known),missing=rows.findIndex(row=>row.value===null || !Number.isFinite(row.value));
+    const outOfRange=rows.findIndex(row=>Number.isFinite(row.value) && Math.abs(row.value)>40);
+    if(outOfRange>=0)return {rows,error:'Row '+(outOfRange+1)+': percentage must be between -40% and +40%.'};
+    if(storage && unknown>=0)return {rows,error:'Row '+(unknown+1)+': "'+rows[unknown].name+'" is not a known perk. Choose a name from the suggestions.'};
+    if(storage && missing>=0)return {rows,error:'Row '+(missing+1)+': enter a numeric percentage.'};
+    if(rows.length!==Number(el.rows.value) || unknown>=0 || missing>=0)return {rows,error:"Each visible row needs a known perk and a numeric value. Expected row count must match."};
+    if(storage && rows.some(row=>row.level!=null && (!Number.isInteger(row.level) || row.level<1 || row.level>10)))return {rows,error:'Levels must be whole numbers from 1 to 10, or blank if unclear.'};
+    if(storage && rows.some(row=>[row.base,row.max].some(value=>value!=null && !Number.isFinite(value)) ||
+      (row.base!=null && row.max!=null && (row.value<Math.min(row.base,row.max) || row.value>Math.max(row.base,row.max)))))return {rows,error:'Base and max must be numeric, and the current value must be within their range. Leave unclear endpoints blank.'};
+    const signWarnings=recognition.signIssues(rows);
+    if(storage && window.DNStoredArtifacts) {
+      rows=window.DNStoredArtifacts.backfillItem({hall:el.hall.value,type:document.getElementById('storage-type')?.value || result?.artifact?.type,rows}).rows;
+      if(rows.some(row=>row.tierConflict))return {rows,error:'Percentage and upgrade level conflict with this tier. Correct or clear the unclear level.'};
+    }
+    if(!storage && rows.some(row=>row.tierConflict))return {rows,error:'Tier and starting percentage conflict. Check the tier or percentage.'};
+    return {rows,error:signWarnings.join(' ')};
+  }
+  el.accept.addEventListener("click",()=>{
+    if(!latestCanvas || !ready)return;
+    const {rows,error}=corrections();
+    if(error){el.warnings.textContent=error;const status=get('correction-status');if(status)status.textContent=error;return;}
+    token++;result={...result,rows,warnings:[],valid:true,colours:result?.colours,hall:result?.hall,unlocked:result?.unlocked};confirmed=true;resultCurrent=true;editing=true;
+    const states=rows.map(r=>r.unlocked);result.unlocked={states,count:states.every(s=>s!==null)?states.filter(Boolean).length:null,method:'verified'};showCorrection();
+    settled=true;progress('finished','Finished · using your verified corrections');
+    window.DNScannerCollection?.recordItem({...result,hall:result.hall || el.hall.value},itemId,{corrected:true,expectedRows:rowCount(),continuous:true});
+    el.warnings.textContent="";say(storage?"Using your verified values. Corrections apply only to this view.":"Using your verified values. The current item log is updated when logging is enabled.");score();
+  });
+  for(const input of [el.layout,el.rows,el.hall,el.infer])input.addEventListener("change",()=>{editing=false;readHash=null;invalidate("Recognition settings changed. Read the artifact again.");showCorrection();});
+  for(const input of [el.mode,el.off,el.def])input.addEventListener("change",score);
+  get('compare-type')?.addEventListener('change',highlightUnknownFields);
+  window.addEventListener("focus",()=>{if(ready)score();});
+  window.addEventListener("storage",()=>{if(ready)score();});
+  window.DNScannerReading={update,reset,invalidate};
+  score();
+  (async()=>{
+    try {
+      const [mapping,defaults]=await Promise.all([fetch("./data/perk_name_mapping.csv",{cache:"no-store"}),fetch("./data/perk_rating_defaults.json",{cache:"no-store"})]);
+      if(!mapping.ok || !defaults.ok)throw new Error("ratings unavailable");
+      canonPerk=DN.makeCanonPerk(DN.parseMappingCsv(await mapping.text()));factory=await defaults.json();names=Object.keys(factory);
+      el.names.innerHTML=names.map(name=>'<option value="'+DN.esc(name)+'"></option>').join('');
+      el.mode.value=storage && DN.lsGet("dn-artifact-score-mode")==="maxrow"?"maxrow":"combined";
+      options();ready=true;el.read.disabled=!latestCanvas;showCorrection();say("Select a region to read all visible perks.");
+      if(latestCanvas)update(latestCanvas,{session,current:true});
+    } catch {say("Could not load perk ratings. Reload this page through the local server.");}
+  })();
+})();

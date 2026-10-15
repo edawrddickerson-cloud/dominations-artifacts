@@ -1,0 +1,445 @@
+{
+  "fixture": "review-214948.png",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+  "panel": {
+    "x": 0.014018691588785047,
+    "y": 0.0377906976744186,
+    "width": 0.9844236760124611,
+    "height": 0.9476744186046512
+  },
+  "detectorMs": 7.100000381469727,
+  "runs": [
+    {
+      "kind": "detected",
+      "rect": {
+        "x": 9,
+        "y": 13,
+        "width": 632,
+        "height": 326
+      },
+      "elapsedMs": 952.5999999046326,
+      "exact": true,
+      "complete": true,
+      "starsCorrect": true,
+      "percentageRecovery": true,
+      "expectedKnown": true,
+      "scoringParity": true,
+      "passed": true,
+      "rows": [
+        {
+          "raw": "Enemy Anti-Tank Gun Damage -1%",
+          "name": "Enemy Anti-Tank Gun Damage",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": true
+        },
+        {
+          "raw": "Enemy Anti-Tank Gun Hitpoints -11%",
+          "name": "Enemy Anti-Tank Gun Hitpoints",
+          "value": -11,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "blue",
+          "unlocked": false
+        },
+        {
+          "raw": "Looted Resource Refund +6%",
+          "name": "Looted Resource Refund",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Enemy Air Defense Hitpoints -1%",
+          "name": "Enemy Air Defense Hitpoints",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": false
+        },
+        {
+          "raw": "Looted Resource Refund +1%",
+          "name": "Looted Resource Refund",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": false
+        }
+      ],
+      "warnings": [],
+      "valid": true,
+      "observations": [
+        {
+          "pass": "block",
+          "rows": [
+            {
+              "raw": "Enemy Anti-Tank Gun Damage -1%",
+              "name": "Enemy Anti-Tank Gun Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Enemy Anti-Tank Gun Hitpoints -11%",
+              "name": "Enemy Anti-Tank Gun Hitpoints",
+              "value": -11,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Looted Resource Refund +6%",
+              "name": "Looted Resource Refund",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Enemy Air Defense Hitpoints -1%",
+              "name": "Enemy Air Defense Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Looted Resource Refund +1%",
+              "name": "Looted Resource Refund",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            }
+          ],
+          "warnings": []
+        }
+      ],
+      "hall": "main",
+      "inferColours": true,
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.9282051282051282,
+          0.010256410256410256,
+          0.016666666666666666,
+          0.041025641025641026,
+          0.035897435897435895
+        ]
+      }
+    },
+    {
+      "kind": "calibration-margin",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 688,
+        "height": 372
+      },
+      "elapsedMs": 290.90000009536743,
+      "exact": true,
+      "complete": true,
+      "starsCorrect": true,
+      "percentageRecovery": true,
+      "expectedKnown": true,
+      "scoringParity": true,
+      "passed": true,
+      "rows": [
+        {
+          "raw": "Enemy Anti-Tank Gun Damage -1%",
+          "name": "Enemy Anti-Tank Gun Damage",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": true
+        },
+        {
+          "raw": "Enemy Anti-Tank Gun Hitpoints -11%",
+          "name": "Enemy Anti-Tank Gun Hitpoints",
+          "value": -11,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "blue",
+          "unlocked": false
+        },
+        {
+          "raw": "Looted Resource Refund +6%",
+          "name": "Looted Resource Refund",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Enemy Air Defense Hitpoints -1%",
+          "name": "Enemy Air Defense Hitpoints",
+          "value": -1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": false
+        },
+        {
+          "raw": "Looted Resource Refund +1%",
+          "name": "Looted Resource Refund",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "colour": "neutral",
+          "unlocked": false
+        }
+      ],
+      "warnings": [],
+      "valid": true,
+      "observations": [
+        {
+          "pass": "block",
+          "rows": [
+            {
+              "raw": "Enemy Anti-Tank Gun Damage -1%",
+              "name": "Enemy Anti-Tank Gun Damage",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Enemy Anti-Tank Gun Hitpoints -11%",
+              "name": "Enemy Anti-Tank Gun Hitpoints",
+              "value": -11,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Looted Resource Refund +6%",
+              "name": "Looted Resource Refund",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Enemy Air Defense Hitpoints -1%",
+              "name": "Enemy Air Defense Hitpoints",
+              "value": -1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            },
+            {
+              "raw": "Looted Resource Refund +1%",
+              "name": "Looted Resource Refund",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true
+            }
+          ],
+          "warnings": []
+        }
+      ],
+      "hall": "main",
+      "inferColours": true,
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.9222222222222223,
+          0.011111111111111112,
+          0.015384615384615385,
+          0.03076923076923077,
+          0.035897435897435895
+        ]
+      }
+    }
+  ],
+  "passed": true,
+  "limitations": "One screenshot plus Canvas-derived scale probes and a deliberately injected first-pass failure only. First native and forced-failure OCR include worker initialization; other runs are warm. Scoring parity uses repository rating defaults for all modes/axes. No representative accuracy or continuous capture claim.",
+  "network": {
+    "requests": [
+      {
+        "url": "http://127.0.0.1:56004/ui/scanner.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/navigation.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/styles.css?v=39",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/scanner.css?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/scanner-core.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/data/army_catalog.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/shared.js?v=33",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/artifact-scoring.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/scanner-recognition.js?v=11",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/scanner-collection.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/scanner-reading.js?v=10",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/scanner.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/favicon.ico",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/data/army_catalog.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/shared.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/scanner-core.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/artifact-scoring.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/scanner-recognition.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/tests/scanner/review-214948.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/tests/scanner/review-214948.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/vendor/tesseract/worker.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/vendor/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:56004/ui/vendor/tesseract/lang/eng.traineddata.gz",
+        "method": "GET",
+        "hasPostData": false
+      }
+    ],
+    "externalRequests": [],
+    "nonGetRequests": [],
+    "browserErrors": []
+  }
+}

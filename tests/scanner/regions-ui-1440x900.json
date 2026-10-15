@@ -1,0 +1,233 @@
+{
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "checks": {
+    "calibration unavailable before capture": true,
+    "editor opens and pauses reads": true,
+    "trusted pointer draws optional category box": true,
+    "trusted pointer moves selected box": true,
+    "trusted pointer resizes selected box": true,
+    "valid numeric editing permits save": true,
+    "save resumes capture and closes editor": true,
+    "one coordinate template persisted": true,
+    "actual OCR uses calibrated fields": true,
+    "category and stars recognised": true,
+    "existing scorer rates calibrated input": true,
+    "compact stats retained": true,
+    "text-only mode retains standard path status": true,
+    "invalid row boxes cannot save": true,
+    "cancel preserves saved template": true,
+    "saved template follows moved resized panel": true,
+    "moved resized field OCR remains correct": true,
+    "incompatible shape uses standard fallback": true,
+    "missing anchor pauses reads": true,
+    "reset removes persisted template": true,
+    "stop clears frozen editor and source": true,
+    "editor fits viewport horizontally": true,
+    "numeric inputs adapt to narrow widths": true
+  },
+  "passed": true,
+  "limitations": "Real CDP pointer draw/move/resize, numeric editing, local-file OCR, coordinate persistence, capture transforms, invalid anchors, reset, cancel and Stop. Live getDisplayMedia and background scheduling remain untested.",
+  "network": {
+    "requests": [
+      {
+        "requestId": "A5482034DA212DED656832396BD4CC40",
+        "url": "http://127.0.0.1:61418/ui/scanner.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.2",
+        "url": "http://127.0.0.1:61418/ui/navigation.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.3",
+        "url": "http://127.0.0.1:61418/ui/styles.css?v=41",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.4",
+        "url": "http://127.0.0.1:61418/ui/scanner.css?v=18",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.5",
+        "url": "http://127.0.0.1:61418/ui/scanner-core.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.6",
+        "url": "http://127.0.0.1:61418/ui/scanner-regions.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.7",
+        "url": "http://127.0.0.1:61418/ui/scanner-frames.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.8",
+        "url": "http://127.0.0.1:61418/ui/data/army_catalog.js?v=7",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.9",
+        "url": "http://127.0.0.1:61418/ui/shared.js?v=37",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.10",
+        "url": "http://127.0.0.1:61418/ui/profiles-ui.js?v=12",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.11",
+        "url": "http://127.0.0.1:61418/ui/artifact-scoring.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.12",
+        "url": "http://127.0.0.1:61418/ui/stored-artifacts.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.13",
+        "url": "http://127.0.0.1:61418/ui/scanner-comparison.js?v=6",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.14",
+        "url": "http://127.0.0.1:61418/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.15",
+        "url": "http://127.0.0.1:61418/ui/scanner-recognition.js?v=22",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.16",
+        "url": "http://127.0.0.1:61418/ui/scanner-field-recognition.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.17",
+        "url": "http://127.0.0.1:61418/ui/scanner-calibration.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.18",
+        "url": "http://127.0.0.1:61418/ui/scanner-collection.js?v=11",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.19",
+        "url": "http://127.0.0.1:61418/ui/scanner-reading.js?v=32",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.20",
+        "url": "http://127.0.0.1:61418/ui/scanner.js?v=6",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.33",
+        "url": "http://127.0.0.1:61418/ui/data/artifacts.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.40",
+        "url": "http://127.0.0.1:61418/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.41",
+        "url": "http://127.0.0.1:61418/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.43",
+        "url": "http://127.0.0.1:61418/favicon.ico",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.44",
+        "url": "http://127.0.0.1:61418/tests/scanner/pic1.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.45",
+        "url": "http://127.0.0.1:61418/tests/scanner/pic1.regions.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "801819C445C55833CD58A15E5E7382CC",
+        "url": "http://127.0.0.1:61418/ui/vendor/tesseract/worker.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.47",
+        "url": "http://127.0.0.1:61418/ui/vendor/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.48",
+        "url": "http://127.0.0.1:61418/ui/vendor/tesseract/lang/eng.traineddata.gz",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "E3DF5601CF3B501D347C0E1F149364EB",
+        "url": "http://127.0.0.1:61418/ui/vendor/tesseract/worker.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.50",
+        "url": "http://127.0.0.1:61418/ui/vendor/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "193864.51",
+        "url": "http://127.0.0.1:61418/ui/vendor/tesseract/lang/eng.traineddata.gz",
+        "method": "GET",
+        "hasPostData": false
+      }
+    ],
+    "blockedRequests": [],
+    "externalRequests": [],
+    "nonGetRequests": [],
+    "browserErrors": []
+  }
+}

@@ -1,3 +1,7 @@
+/* Authority: existing multi-page navigation and approved Phase 2 scanner.
+ * Ownership: page routing only; scanner may be opened without starting capture.
+ * Invariants: remembered page must belong to the allowlist; no capture permissions.
+ * History: scanner added as a separate, optional page; default Army route retained. */
 (() => {
   "use strict";
 
@@ -5,7 +9,10 @@
   const pages = new Set([
     "army.html",
     "artifacts.html",
+    "scanner.html",
+    "storage-scanner.html",
     "collection.html",
+    "totals.html",
     "council.html",
     "council-collection.html",
     "ratings.html",
@@ -22,7 +29,11 @@
     } catch {
       // Browsers with storage disabled still open the default page.
     }
-    location.replace(destination + location.search + location.hash);
+    const destinationUrl = new URL(destination + location.search + location.hash, location.href);
+    if (destination === "scanner.html" || destination === "storage-scanner.html") {
+      destinationUrl.searchParams.set("v", "2");
+    }
+    location.replace(destinationUrl.href);
     return;
   }
 

@@ -1,0 +1,108 @@
+/* Authority: User-approved crafting calibration risks, October 2026.
+ * Ownership: Deterministic VM tests only. Real pixels are tested in Chrome.
+ * Invariants: Geometry must fit; signs/duplicates/conflicts stay explicit;
+ * field snapshots freeze before async OCR and are released after processing. */
+const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
+const root=path.resolve(__dirname,'..');
+const canvases=[];
+function canvas() {
+  const item={width:0,height:0,pixel:0,draws:[],getContext(){return {fillRect(){},drawImage(input,...args){item.pixel=input.pixel;item.draws.push({input,args});},putImageData(){},getImageData(x,y,w,h){const data=new Uint8ClampedArray(w*h*4);const rgb=Array.isArray(item.pixel)?item.pixel:[item.pixel || 0,item.pixel || 0,item.pixel || 0];for(let i=0;i<data.length;i+=4){data[i]=rgb[0];data[i+1]=rgb[1];data[i+2]=rgb[2];data[i+3]=255;}return {data};}};}};
+  canvases.push(item);return item;
+}
+const store=new Map();
+const context={window:{},URL,document:{baseURI:'http://localhost/ui/scanner.html',createElement:canvas},localStorage:{getItem:k=>store.get(k) || null,setItem:(k,v)=>store.set(k,v),removeItem:k=>store.delete(k)}};
+vm.createContext(context);
+for(const file of ['scanner-core.js','scanner-regions.js','scanner-recognition.js','scanner-field-recognition.js'])vm.runInContext(fs.readFileSync(path.join(root,'ui',file),'utf8'),context);
+const G=context.window.DNScannerRegions,R=context.window.DNScannerRecognition,F=context.window.DNScannerFieldRecognition;
+const plain=value=>JSON.parse(JSON.stringify(value));
+const source=canvas();source.width=1200;source.height=800;source.pixel=42;
+const panel={x:.25,y:.25,width:.5,height:.375},template=G.defaults(2);
+assert.equal(G.valid(template),true);
+let resolved=G.resolve(template,panel,source);assert.equal(resolved.valid,true);
+const moved={x:.1,y:.1,width:.75,height:.5625};
+assert.equal(G.resolve(template,moved,source).valid,true,'translation and uniform resizing preserve calibration');
+assert.equal(G.resolve(template,{...moved,width:.5},source).valid,false,'incompatible panel aspect rejected');
+assert.equal(G.resolve(template,null,source).valid,false,'no fields without anchor');
+assert.equal(G.resolve(template,panel,{width:1200,height:0}).valid,false);
+const box=template.rows[2].name,absolute=G.toSource(box,panel),roundTrip=G.fromSource(absolute,panel);
+for(const key of ['x','y','width','height'])assert.ok(Math.abs(box[key]-roundTrip[key])<1e-9);
+assert.equal(G.toSource({x:-1,y:-1,width:.2,height:.2},panel),null,'external label clipping rejected');
+const external=G.copy(template);external.category={x:-.2,y:-.2,width:.3,height:.1};
+assert.equal(G.resolve(external,panel,source).valid,true,'category may sit above/outside panel');
+assert.equal(G.resolve(external,{...panel,y:0},source).valid,false,'clipped external label invalidates fields');
+for(const mutate of [t=>t.version=2,t=>t.rows.pop(),t=>t.rows[0].name.width=NaN,t=>t.rows[2].percentage.y=.9,t=>t.rows[3].star.y=t.rows[2].star.y,t=>t.rows[0].name.x=-.01,t=>t.rows[1].star=null]){
+  const invalid=G.copy(template);mutate(invalid);assert.equal(G.valid(invalid),false);
+}
+assert.equal(G.save(template),true);assert.deepEqual(plain(G.load()),plain(template));
+store.set(G.KEY,'{"version":1}');assert.equal(G.load(),null,'malformed persisted template ignored');
+assert.equal(G.save(template,{setItem(){throw new Error('quota');}}),false);
+assert.equal(G.reset({removeItem(){throw new Error('blocked');}}),false);
+G.reset();assert.equal(G.load(),null);
+const names=['Catapult Damage','Invading MRL Damage'];
+for(const value of ['1%','--1%','+41%','+1','+1% extra','+NaN%'])assert.equal(R.parseFieldRow('Catapult Damage',value,names,v=>v).row.value,null,value+' is not a confirmed signed percentage');
+assert.equal(R.parseFieldRow('Invading MRL Damage','-11%',names,v=>v).row.value,-11);
+assert.equal(R.parseFieldRow('Invading MRL Damage','+11%',names,v=>v).valid,false,'polarity is still authoritative');
+assert.equal(R.parseFieldRow('Catapult Damage +6%','+1%',names,v=>v).row.conflict,true,'overlap evidence cannot contradict value crop');
+assert.equal(R.parseFieldRow('Catapult Damage','+1%',names,v=>v).valid,true);
+async function run(percentages) {
+  const narrow=G.copy(template);narrow.rows.forEach(row=>{row.percentage.x=.78;row.percentage.width=.15;});
+  const snapshot=F.snapshot({template:narrow,panel,source});assert.equal(snapshot.valid,true);
+  source.pixel=99;
+  assert.equal(snapshot.crops['0-name'].pixel,42,'all field pixels freeze before async recognition');
+  const calls=[],settings=[];
+  const texts=percentages.flatMap((value,i)=>[i===1?'Invading MRL Damage':'Catapult Damage',value]);
+  const result=await F.recognize(snapshot,{names,canonPerk:v=>v,hall:'main',inferColours:false,isClosed:()=>false,ocrCalls:()=>calls.length,
+    worker:{async setParameters(value){settings.push(value);}},readView:async input=>{calls.push(input);const text=texts.shift();return {data:{text,blocks:[{paragraphs:[{lines:[{text,confidence:95}]}]}]}};}});
+  assert.equal(calls.length,10,'five independent names and percentages, no needless retry');
+  assert.equal(settings.filter(s=>s.tessedit_char_whitelist==='+-0123456789.,%').length,5);
+  assert.equal(result.rows.length,5);assert.equal(result.rows[2].name,result.rows[4].name,'duplicate rows keep their positions');
+  assert.equal(result.rows[1].name,'Invading MRL Damage');
+  snapshot.release();assert.equal(snapshot.crops['0-name'].width,0);
+  assert.ok(calls.every(input=>input.width===0),'preprocessed views cleaned up');
+  source.pixel=42;return result;
+}
+(async()=>{
+  let result=await run(['+1%','-11%','+1%','+6%','+1%']);assert.equal(result.valid,true);assert.equal(result.rows[1].value,-11);
+  result=await run(['1%','-11%','+1%','+6%','+1%']);assert.equal(result.valid,false);assert.equal(result.rows[0].value,null,'missing plus is never fabricated');
+  const metadataTemplate=G.copy(template);metadataTemplate.rows.forEach(row=>{row.percentage.x=.78;row.percentage.width=.15;});
+  const metadata=F.snapshot({template:metadataTemplate,panel,source});
+  metadata.crops.category=canvas();metadata.crops.category.width=120;metadata.crops.category.height=30;metadata.crops.category.pixel=[40,210,50];
+  metadata.crops.hall=canvas();metadata.crops.hall.width=20;metadata.crops.hall.height=20;metadata.crops.hall.pixel=[15,50,150];
+  let calls=0;
+  const texts=[...Array.from({length:5},()=>['Catapult Damage','+1%']).flat(),'unreadable icon','Equipment'];
+  const recovered=await F.recognize(metadata,{names,canonPerk:v=>v,hall:'main',inferColours:false,isClosed:()=>false,ocrCalls:()=>calls,
+    worker:{async setParameters(){}},readView:async()=>{calls++;const text=texts.shift();return {data:{text,blocks:[{paragraphs:[{lines:[{text,confidence:95}]}]}]}};}});
+  assert.equal(recovered.artifact.type,'Equipment','failed green category OCR retries with normal contrast');
+  assert.equal(recovered.hall,'war','blue calibrated patch overrides the previous Main selection');
+  assert.equal(recovered.hallSource,'hall-colour');
+  assert.equal(calls,12,'hall colour needs no OCR call');metadata.release();
+  const invalid=G.copy(template);invalid.rows[0].name.x=-1;
+  assert.equal(F.snapshot({template:invalid,panel,source}).valid,false);
+  const temporal=canvas();temporal.width=600;temporal.height=300;temporal.pixel=17;
+  const snapshot=F.snapshot({template,panel,source,panelSource:temporal});
+  assert.equal(snapshot.crops['0-name'].pixel,17,'calibrated fields use the median panel snapshot');snapshot.release();
+  const originalSnapshot=F.snapshot,originalRecognize=F.recognize;let released=0;
+  F.snapshot=()=>({valid:true,release(){released++;}});
+  context.window.Tesseract={async createWorker(){return {async setParameters(){},async terminate(){},async recognize(input){
+    const lines=Array.from({length:5},(_,i)=>({text:'Catapult Damage +1%',confidence:95,bbox:{y0:(i+.3)*input.height/5,y1:(i+.7)*input.height/5}}));
+    return {data:{text:lines.map(line=>line.text).join('\n'),blocks:[{paragraphs:[{lines}]}]}};
+  }};}};
+  try {
+    for(const kind of ['metadata','field']) {
+      F.recognize=async()=>({rows:Array.from({length:5},()=>({name:'Catapult Damage',value:1,known:true,hasPercent:true,...(kind==='field'?{conflict:true}:{})})),artifact:{type:'Equipment'},hall:'war',hallSource:'hall-colour',warnings:['Calibrated evidence conflicts.'],valid:false,metadataConflict:kind==='metadata',unlocked:{count:null,states:Array(5).fill(null)},observations:[]});
+      const engine=R.create({names,canonPerk:v=>v});
+      const result=await engine.recognize(source,{fields:{},layout:'panel'});
+      assert.equal(result.recognitionPath,'calibrated-fields+standard-fallback');
+      assert.equal(result.valid,false,'a valid standard read cannot erase '+kind+' conflicts');
+      assert.equal(result.hall,'war','standard fallback retains the calibrated banner colour');
+      assert.equal(result.hallSource,'hall-colour');
+      assert.equal(result.artifact.type,'Equipment','standard fallback cannot lose the calibrated category');
+      assert.match(result.warnings.join(' '),/conflicts/);await engine.close();
+    }
+    assert.equal(released,2,'field snapshots released after fallback');
+    const stopped=R.create({names,canonPerk:v=>v});await stopped.close();
+    await assert.rejects(stopped.recognize(source,{fields:{}}),/stopped/i);
+    assert.equal(released,3,'field snapshots released after initialization cancellation');
+  }finally {F.snapshot=originalSnapshot;F.recognize=originalRecognize;}
+  console.log('Scanner field geometry, persistence, independent row association, signs, conflicts, frozen crops and temporal input passed.');
+})().catch(error=>{console.error(error);process.exitCode=1;});

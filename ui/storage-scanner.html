@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<!-- Authority: User-requested stored artifact extraction. Ownership: Dedicated storage scanner sharing passive capture, local OCR and ratings. Invariants: Reviewed five/six row items; only requested artwork crops persist; no game control. -->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <script src="navigation.js?v=5"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Artifacts - Storage Scanner</title>
+  <link rel="stylesheet" href="styles.css?v=41" />
+  <link rel="stylesheet" href="scanner.css?v=25" />
+</head>
+<body class="page-scanner page-storage-scanner">
+  <nav class="site-nav" aria-label="Pages">
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Army Loadout</h2>
+      <a href="army.html">Army</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Artifacts</h2>
+      <a href="artifacts.html">Priority</a>
+      <a href="collection.html">Collection</a>
+      <a href="totals.html">Active totals</a>
+      <a href="scanner.html?v=2">Crafting Scanner</a>
+      <a href="storage-scanner.html?v=2" aria-current="page">Storage Scanner</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Council</h2>
+      <a href="council.html">Priority</a>
+      <a href="council-collection.html">Collection</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Settings</h2>
+      <a href="config.html">Profiles</a>
+      <a href="ratings.html">Perk ratings</a>
+    </div>
+  </nav>
+  <div class="app-main scanner-main">
+    <div class="scanner-session">
+      <header class="top"><div class="top-inner"><h1>DomiNations Storage Scanner</h1></div><div class="header-controls" aria-label="Primary filters">
+        <fieldset class="seg-field"><legend>Hall</legend><div class="seg" role="group" aria-label="Hall"><button type="button" class="seg-btn" id="header-main" aria-pressed="false">Main</button><button type="button" class="seg-btn" id="header-war" aria-pressed="false">War</button></div></fieldset>
+        <fieldset class="seg-field"><legend>Base Type</legend><div class="seg seg-mini" role="group" aria-label="Base Type"><button type="button" class="seg-btn" id="header-off" aria-pressed="true">Off</button><button type="button" class="seg-btn" id="header-def" aria-pressed="true">Def</button></div></fieldset>
+        <div id="header-profile" class="header-profile"></div></div></header>
+    </div>
+    <section class="scanner-status" aria-label="Capture status">
+      <strong id="scanner-status" role="status" aria-live="polite">Disconnected</strong>
+      <p id="scanner-message">Connect Game to begin.</p>
+      <p id="scanner-freshness">No calibrated region.</p>
+    </section>
+    <details id="scanner-setup" class="scanner-setup">
+      <summary><span class="scanner-setup-title">Scanner setup</span><span class="scanner-setup-actions" role="group" aria-label="Scanning controls"><button type="button" class="btn" id="scanner-connect">Connect Game</button><button type="button" class="btn" id="scanner-stop" disabled>Stop Scanning</button><button type="button" class="btn" id="scanner-read" disabled>Read Artifact</button><button type="button" class="btn" id="scanner-find">Find Panel</button></span></summary>
+      <section class="scanner-intro">
+        <h2>Look through your stored artifacts</h2>
+        <p>Open an item in your game storage. Choose the game in your browser's screen-sharing dialog, then select the complete item dialog, including its title, category banner and perk rows. Keep this window visible beside the game for the most reliable preview.</p>
+        <p>The full dialog detects Multiplayer or War and five or six perks, including locked rows. Read the name, category and upgrade levels; actual upgraded percentages use your existing profile ratings. Verify each item before keeping it in your inventory.</p>
+        <p>Images stay on your device. No audio or video recording is used. First recognition loads the local OCR model and may take longer.</p>
+      </section>
+      <section class="scanner-controls" aria-label="Capture setup">
+        <label>Prefer sharing <select id="scanner-source"><option value="window">Window</option><option value="browser">Browser tab</option><option value="monitor">Screen</option></select></label>
+        <button type="button" class="btn" id="scanner-select" aria-pressed="false" disabled>Select Region</button>
+        <button type="button" class="btn" id="scanner-retry" disabled>Refresh Preview</button>
+        <label><input type="checkbox" id="scanner-auto" checked /> Auto read stable changes</label>
+      </section>
+      <div class="scanner-controls">
+        <label>Crop layout <select id="scanner-layout"><option value="storage">Full stored-item dialog</option><option value="storage-rows">Stored perk rows only (stars through percentages)</option><option value="storage-rows-dice">Stored perk rows including dice</option></select></label>
+        <label>Visible rows <select id="scanner-rows"><option value="5">5</option><option value="6">6</option></select></label>
+        <select id="scanner-hall" hidden><option value="main">Main</option><option value="war">War</option></select>
+        <input type="checkbox" id="scanner-infer" hidden />
+      </div>
+      <div class="scanner-workspace">
+        <section class="scanner-panel">
+          <h3>Shared source</h3>
+          <canvas id="scanner-frame" class="scanner-preview" width="640" height="360" tabindex="0" aria-label="Source preview. Select Region, then drag over the artifact panel. Alternatively use the region percentage fields below."></canvas>
+          <p>Drag around the complete stored-item dialog. For a rows-only crop, include every row from the star column through the percentages. Include the dice column to read reroll availability. The legacy rows-only layout excludes dice. Press Escape to cancel selection.</p>
+          <details class="scanner-calibration"><summary>Enter region percentages</summary>
+            <div class="scanner-region-fields">
+              <label>Left %<input id="scanner-x" type="number" min="0" max="100" step="0.01" value="0" /></label>
+              <label>Top %<input id="scanner-y" type="number" min="0" max="100" step="0.01" value="0" /></label>
+              <label>Width %<input id="scanner-width" type="number" min="0.01" max="100" step="0.01" value="100" /></label>
+              <label>Height %<input id="scanner-height" type="number" min="0.01" max="100" step="0.01" value="100" /></label>
+            </div>
+            <button type="button" class="btn" id="scanner-apply" disabled>Apply Region</button>
+          </details>
+        </section>
+        <section class="scanner-panel">
+          <h3>Artifact region preview</h3>
+          <canvas id="scanner-crop" class="scanner-preview" width="640" height="360" aria-label="Selected artifact region preview"></canvas>
+          <p id="scanner-meta" class="scanner-meta">No source connected.</p>
+          <p>Check that the complete artifact panel is visible and its text is readable. Preview sampling does not prove that the captured game has continued updating.</p>
+          <label class="scanner-local-file">Test with a local screenshot<br /><input id="scanner-file" type="file" accept="image/png,image/jpeg,image/webp" /></label>
+        <p>PNG, JPEG, or WebP under 20 MB and 32 megapixels. The full screenshot stays temporary; keeping an artifact saves its picture and checked stats.</p>
+        </section>
+      </div>
+    </details>
+    <section class="scanner-reading scanner-panel storage-review" aria-label="Artifact recognition and rating">
+      <div class="storage-review-heading">
+        <img id="storage-picture" class="storage-artwork" alt="Captured artifact artwork" hidden />
+        <div class="storage-identity">
+          <h3>Review artifact</h3>
+          <div class="storage-identity-fields">
+            <label>Artifact name <input id="storage-name" type="text" maxlength="160" /></label>
+            <label>Category <select id="storage-type"><option value="">Choose category</option><option>Weapon</option><option>Armor</option><option>Jewelry</option><option>Pottery</option><option>Legendary</option><option>Mythical</option><option>War Weapon</option><option>War Armor</option><option>War Equipment</option><option>War Legendary</option><option>War Mythical</option></select></label>
+          </div>
+          <p id="storage-metadata" role="status">Read an artifact, then check its name and stats.</p>
+        </div>
+        <div class="storage-rating">
+          <div class="scanner-controls">
+            <label>Rating <select id="scanner-mode"><option value="combined">Hall</option><option value="maxrow">Showcase</option></select></label>
+            <input type="checkbox" id="scanner-off" checked hidden />
+            <input type="checkbox" id="scanner-def" checked hidden />
+          </div>
+          <p id="scanner-profile-label"></p>
+          <div id="scanner-result"></div>
+        </div>
+      </div>
+      <div class="storage-read-status">
+        <p id="scanner-progress" class="scanner-progress is-idle" role="status" aria-live="polite">Waiting for an artifact</p>
+        <p id="scanner-result-status" role="status" aria-live="polite">Loading perk settings…</p>
+      </div>
+      <p id="scanner-warnings" class="scanner-warning"></p>
+      <datalist id="scanner-names"></datalist>
+      <div id="scanner-correct" class="storage-stat-editor"></div>
+      <p id="scanner-correction-status" class="scanner-warning" role="status"></p>
+      <div class="storage-review-actions">
+        <button type="button" class="btn" id="scanner-accept" disabled>Use Corrected Values</button>
+        <button type="button" class="btn" id="storage-keep" aria-describedby="storage-keep-status" disabled>Keep Artifact</button>
+        <button type="button" class="btn btn-accent" id="storage-add-collection" disabled>Add Inventory to Collection</button>
+        <a class="btn" href="collection.html">View Collection</a>
+      </div>
+      <p id="storage-keep-status" role="status"></p>
+      <p id="storage-collection-status" role="status" aria-live="polite"></p>
+      <details class="storage-inventory-details" open>
+        <summary>Scanned inventory · <span id="storage-count" role="status"></span></summary>
+        <p id="storage-saved" role="status">Loading saved inventory…</p>
+        <button type="button" class="btn" id="storage-export" disabled>Export Inventory</button>
+        <ol id="storage-items" class="storage-items"></ol>
+      </details>
+    </section>
+    <section class="scanner-reading scanner-panel" aria-label="Collect attribute names">
+      <h3>Collect attribute names</h3>
+      <label><input type="checkbox" id="scanner-collect" checked /> Collect names while I cycle through artifacts</label>
+      <p>Pause on each artifact until its read finishes. Keep the planner visible. Unknown labels with a % are collected for review; unrecognisable text without a % is discarded.</p>
+      <p id="scanner-collection-count" role="status"></p>
+      <button type="button" class="btn" id="scanner-export" disabled>Export Collected Names</button>
+      <button type="button" class="btn" id="scanner-collection-clear">Clear Collected Names</button>
+      <details><summary>Labels needing review</summary><pre id="scanner-collected-labels" style="white-space:pre-wrap"></pre></details>
+      <p>Text only, held in this tab until you export. Stop Scanning keeps the collection; refreshing or closing this page loses it. Nothing is added to perk settings automatically.</p>
+    </section>
+    <video id="scanner-video" class="scanner-video" muted playsinline aria-hidden="true"></video>
+  </div>
+  <script src="scanner-core.js?v=1"></script>
+  <script src="scanner-frames.js?v=1"></script>
+  <script src="data/army_catalog.js?v=8"></script>
+  <script src="shared.js?v=40"></script>
+  <script src="profiles-ui.js?v=13"></script>
+  <script src="artifact-scoring.js?v=2"></script>
+  <script src="vendor/tesseract/tesseract.min.js"></script>
+  <script src="scanner-reroll-recognition.js?v=1"></script>
+  <script src="scanner-recognition.js?v=27"></script>
+  <script src="scanner-collection.js?v=48"></script>
+  <script src="storage-recognition.js?v=10"></script>
+  <script src="stored-artifacts.js?v=13"></script>
+  <script src="storage-scanner.js?v=17"></script>
+  <script src="scanner-reading.js?v=44"></script>
+  <script src="scanner.js?v=5"></script>
+</body>
+</html>

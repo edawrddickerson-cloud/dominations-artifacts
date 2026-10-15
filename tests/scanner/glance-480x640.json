@@ -1,0 +1,214 @@
+{
+  "passed": true,
+  "viewport": {
+    "width": 480,
+    "height": 640
+  },
+  "ui": {
+    "setup starts collapsed above summary": true,
+    "old score category and hall strip removed": true,
+    "manual category correction moved out of top bar": true,
+    "empty capture begins red at zero": true,
+    "all 17 captured fields show 100 percent": true,
+    "complete capture is green": true,
+    "type total and same-type cutoff use shared maximum scores": true,
+    "qualifying top-two item is red": true,
+    "glance-board fits initial viewport": true,
+    "benchmark fits initial viewport": true,
+    "capture-percent fits initial viewport": true,
+    "item-total fits initial viewport": true,
+    "benchmark-value fits initial viewport": true,
+    "summary numbers are prominent": true,
+    "no horizontal overflow": true,
+    "five-stat weighted rows remain visible": true,
+    "retry retains last score and benchmark explicitly": true,
+    "pending retry retains capture completeness with a last-read label": true,
+    "all five weighted scores remain visible during retry": true,
+    "new current result restores completion and clears last-read label": true,
+    "both summary boxes stay pinned while scrolling": true,
+    "tie does not qualify": true,
+    "below-cutoff item is green": true,
+    "unread name and percentage reduce completion": true,
+    "optimistic score is marked without inflating captured fields": true,
+    "unrecognised name loses only its own field credit": true,
+    "94 percent remains visible throughout retry 0": true,
+    "partial-read weighted scores remain visible throughout retry 0": true,
+    "94 percent remains visible throughout retry 1": true,
+    "partial-read weighted scores remain visible throughout retry 1": true,
+    "94 percent remains visible throughout retry 2": true,
+    "partial-read weighted scores remain visible throughout retry 2": true,
+    "automatic panel movement retains percentage and weighted rows": true,
+    "paused capture retains numbers without presenting them as current": true,
+    "unchanged refresh reuses stat rows": true,
+    "too little stat evidence leaves benchmark available without a score": true,
+    "three stars alone do not turn a below-cutoff item red": true,
+    "reset clears score and captured fields": true
+  },
+  "captureFont": 40,
+  "scoreFont": 40,
+  "captureBounds": {
+    "top": 321.5625,
+    "bottom": 507.921875,
+    "left": 61.59375,
+    "right": 242.515625
+  },
+  "benchmarkBounds": {
+    "top": 321.5625,
+    "bottom": 507.921875,
+    "left": 248.90625,
+    "right": 456.984375
+  },
+  "limitations": "Actual page/controller and shared scoring tested with synthetic OCR responses. Real screenshot OCR is tested separately.",
+  "network": {
+    "requests": [
+      {
+        "requestId": "6882EF4E86221E0AD30C14FEA9DE4C91",
+        "url": "http://127.0.0.1:51078/ui/scanner.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.2",
+        "url": "http://127.0.0.1:51078/ui/navigation.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.3",
+        "url": "http://127.0.0.1:51078/ui/styles.css?v=41",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.4",
+        "url": "http://127.0.0.1:51078/ui/scanner.css?v=20",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.5",
+        "url": "http://127.0.0.1:51078/ui/scanner-core.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.6",
+        "url": "http://127.0.0.1:51078/ui/scanner-regions.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.7",
+        "url": "http://127.0.0.1:51078/ui/scanner-frames.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.8",
+        "url": "http://127.0.0.1:51078/ui/data/army_catalog.js?v=7",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.9",
+        "url": "http://127.0.0.1:51078/ui/shared.js?v=38",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.10",
+        "url": "http://127.0.0.1:51078/ui/profiles-ui.js?v=12",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.11",
+        "url": "http://127.0.0.1:51078/ui/artifact-scoring.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.12",
+        "url": "http://127.0.0.1:51078/ui/stored-artifacts.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.13",
+        "url": "http://127.0.0.1:51078/ui/scanner-comparison.js?v=8",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.14",
+        "url": "http://127.0.0.1:51078/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.15",
+        "url": "http://127.0.0.1:51078/ui/scanner-recognition.js?v=23",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.16",
+        "url": "http://127.0.0.1:51078/ui/scanner-field-recognition.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.17",
+        "url": "http://127.0.0.1:51078/ui/scanner-calibration.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.18",
+        "url": "http://127.0.0.1:51078/ui/scanner-collection.js?v=11",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.19",
+        "url": "http://127.0.0.1:51078/ui/scanner-reading.js?v=35",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.20",
+        "url": "http://127.0.0.1:51078/ui/scanner.js?v=7",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.33",
+        "url": "http://127.0.0.1:51078/ui/data/artifacts.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.40",
+        "url": "http://127.0.0.1:51078/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.41",
+        "url": "http://127.0.0.1:51078/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "195332.43",
+        "url": "http://127.0.0.1:51078/favicon.ico",
+        "method": "GET",
+        "hasPostData": false
+      }
+    ],
+    "blockedRequests": [],
+    "externalRequests": [],
+    "nonGetRequests": [],
+    "browserErrors": []
+  }
+}

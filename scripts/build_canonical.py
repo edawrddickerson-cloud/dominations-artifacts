@@ -1201,6 +1201,29 @@ def build() -> None:
             if nk in canon_by_nk:
                 r[f"perk_{i}_name"] = canon_by_nk[nk]
 
+    # User-authorised invariant: a canonical stat has a single fixed polarity.
+    # Keep source captures untouched; corrected outputs record the override.
+    sign_catalog = json.loads((DATA / "army_catalog.json").read_text(encoding="utf-8")).get("perk_signs", {})
+    for row in rows:
+        corrected = False
+        for i in range(1, 7):
+            name = row.get(f"perk_{i}_name") or ""
+            sign = -1 if name.lower().startswith("invading ") else sign_catalog.get(name)
+            if sign not in (-1, 1):
+                continue
+            for suffix in ("base", "max"):
+                key = f"perk_{i}_{suffix}"
+                raw = row.get(key) or ""
+                try:
+                    value = float(raw)
+                except ValueError:
+                    continue
+                if value * sign < 0:
+                    row[key] = ("-" if sign < 0 else "") + raw.lstrip("+-")
+                    corrected = True
+        if corrected:
+            row["notes"] = (row.get("notes") or "") + "; sign_corrected_per_user_rule_2026-10-11"
+
     # --- release reconciliation ---
     recon = []
     draft_leg_names = {norm_key(r["name"]) for r in legendary}
@@ -1261,6 +1284,9 @@ def build() -> None:
     defaults_path = DATA / "perk_rating_defaults.json"
     if defaults_path.exists():
         shutil.copy2(defaults_path, UI_DATA / "perk_rating_defaults.json")
+    stat_catalog_path = DATA / "possible_artifact_stats.json"
+    if stat_catalog_path.exists():
+        shutil.copy2(stat_catalog_path, UI_DATA / "possible_artifact_stats.json")
     for img_name in ("artifact_images.json", "army_unit_images.json"):
         img_path = RAW / img_name
         if img_path.exists():

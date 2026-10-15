@@ -10,6 +10,20 @@ Group perks retain one rating per perk, applying while any unit of that type
 is present; they do not overwrite individual unit perk ratings. APC's linked
 Heavy Infantry also activates Barracks group perks.
 
+`perk_signs` records each canonical stat's fixed polarity as `1` or `-1`,
+separate from its offensive/defensive rating weight. The user confirms that
+every Invading effect is negative and that no stat has both polarities.
+Other signs come from consistent canonical/captured evidence; missing entries
+remain unknown rather than defaulting positive. Scanner fuzzy suggestions,
+exact-name validation, manual correction, and the catalogue exporter enforce
+these rules without changing raw OCR signs or supplying missing signs.
+The canonical builder normalises inconsistent source-derived artifact signs
+to this registry and records an override in the artifact's notes.
+
+Run `node scripts/audit_artifact_signs.js` to audit all three captured batches
+and the current artifact database. The report and original correction log
+are stored under `reports/artifact-sign-*-2026-10-11.json`.
+
 Edit this file when adding units or perks, then run:
 
 ```text

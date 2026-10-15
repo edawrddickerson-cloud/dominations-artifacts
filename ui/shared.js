@@ -5,6 +5,22 @@
   const LOADOUT_KEY = "dn-artifact-loadout";
   const LEVELS_KEY = "dn-artifact-perk-levels";
   const COLLECTION_UI_KEY = "dn-artifact-collection-ui";
+  const ARTIFACT_TYPE_EXHIBITS = {
+    Main:[{key:'weapon',label:'Weapon Exhibit',count:2},{key:'armor',label:'Armor Exhibit',count:2},{key:'jewelry',label:'Jewelry Exhibit',count:2},{key:'pottery',label:'Pottery Exhibit',count:2}],
+    War:[{key:'war-weapon',label:'War Weapon Exhibit',count:2},{key:'war-armor',label:'War Armor Exhibit',count:2},{key:'war-equipment',label:'War Equipment Exhibit',count:4}]
+  };
+  function artifactSlotCapacity(grade,hall) {
+    if(grade==='Legendary' || grade==='Mythical')return 3;
+    return (ARTIFACT_TYPE_EXHIBITS[hall] || []).find(exhibit=>exhibit.key.replace(/^war-/,'')===String(grade).toLowerCase())?.count || 0;
+  }
+  function loadScannerArtifactType(hall) {
+    return lsGet('dn-scanner-artifact-type:'+activeProfileId()+':'+String(hall).toLowerCase()) || '';
+  }
+  function saveScannerArtifactType(type,hall) {
+    const grade=String(type || '').replace(/^war[ -]/i,'');
+    if(['Legendary','Mythical'].includes(grade) || !artifactSlotCapacity(grade,String(hall).toLowerCase()==='war'?'War':'Main'))return;
+    lsSet('dn-scanner-artifact-type:'+activeProfileId()+':'+String(hall).toLowerCase(),grade.toLowerCase());
+  }
   const ARMY_PRESETS_KEY = "dn-army-presets";
   const ARMY_PRESET_MAX = 5;
   const PROFILES_KEY = "dn-profiles";
@@ -25,6 +41,7 @@
     "dn-artifact-collected",
     "dn-artifact-loadout",
     "dn-artifact-perk-levels",
+    "dn-artifact-perk-edits",
     "dn-artifact-collection-ui",
     "dn-army-presets",
     PERK_RATINGS_KEY,
@@ -378,9 +395,288 @@
     perkRatingsMigrated = true;
   }
 
-  function loadGlobalPerkRatings() {
+  /* Authority: Existing factory ratings and user-confirmed Multiplayer names.
+   * Ownership: Rating sections and group inheritance, not hall availability.
+   * Invariants: Enemy/Invading identities stay distinct; existing weights persist.
+   * History: Added 23 confirmed and 9 approved Multiplayer stats on 2026-10-11. */
+  const PERK_GROUPS = [
+    { id: "single", label: "Single units", perks: [
+      {"name":"APC Damage","kind":"damage"},
+      {"name":"APC Hitpoints","kind":"hp"},
+      {"name":"Armored Car Damage","kind":"damage"},
+      {"name":"Assault Vehicle Damage","kind":"damage"},
+      {"name":"Assault Vehicle Hitpoints","kind":"hp"},
+      {"name":"Attack Helicopter Damage","kind":"damage"},
+      {"name":"Attack Helicopter Hitpoints","kind":"hp"},
+      {"name":"Bazooka Damage","kind":"damage"},
+      {"name":"Bazooka Hitpoints","kind":"hp"},
+      {"name":"Bomber Damage","kind":"damage"},
+      {"name":"Bomber Hitpoints","kind":"hp"},
+      {"name":"Commando Damage","kind":"damage"},
+      {"name":"Commando Hitpoints","kind":"hp"},
+      {"name":"Fighter Damage","kind":"damage"},
+      {"name":"Fighter Hitpoints","kind":"hp"},
+      {"name":"Fighter Hitpoints & Damage","kind":"combined"},
+      {"name":"Guerrilla Damage","kind":"damage"},
+      {"name":"Guerrilla Hitpoints","kind":"hp"},
+      {"name":"Heavy Cavalry Damage","kind":"damage"},
+      {"name":"Heavy Cavalry Hitpoints","kind":"hp"},
+      {"name":"Heavy Infantry Damage","kind":"damage"},
+      {"name":"Heavy Infantry Hitpoints","kind":"hp"},
+      {"name":"Heavy Tank Damage","kind":"damage"},
+      {"name":"Heavy Tank Hitpoints","kind":"hp"},
+      {"name":"MRL Damage","kind":"damage"},
+      {"name":"Machine Gun Infantry Damage","kind":"damage"},
+      {"name":"Machine Gun Infantry Hitpoints","kind":"hp"},
+      {"name":"Mortar Troop Damage","kind":"damage"},
+      {"name":"Mortar Troop Hitpoints","kind":"hp"},
+      {"name":"Paratrooper Damage","kind":"damage"},
+      {"name":"Paratrooper Hitpoints","kind":"hp"},
+      {"name":"Raider Damage","kind":"damage"},
+      {"name":"Raider Hitpoints","kind":"hp"},
+      {"name":"Ranged Infantry Damage","kind":"damage"},
+      {"name":"Ranged Infantry Hitpoints","kind":"hp"},
+      {"name":"Ranged Siege Damage","kind":"damage"},
+      {"name":"Ranged Siege Hitpoints","kind":"hp"},
+      {"name":"Wall Miner Damage","kind":"damage"},
+      {"name":"Wall Sapper Damage","kind":"damage"},
+      {"name":"Wall Sapper Hitpoints","kind":"hp"},
+      {"name":"Wall Miner Hitpoints","kind":"hp"},
+      {"name":"Armored Car Hitpoints","kind":"hp"},
+      {"name":"MRL Hitpoints","kind":"hp"},
+      {"name":"Supply Vehicle Hitpoints","kind":"hp"},
+      {"name":"Tactical Helicopter Hitpoints","kind":"hp"}
+    ] },
+    { id: "multi", label: "Multiple units", perks: [
+      {"name":"Airstrip Troop Damage","kind":"damage"},
+      {"name":"Airstrip Troop Hitpoints","kind":"hp"},
+      {"name":"Barracks Troop Damage","kind":"damage"},
+      {"name":"Barracks Troop Hitpoints","kind":"hp"},
+      {"name":"Coalition Troop Damage","kind":"damage"},
+      {"name":"Factory Troop Damage","kind":"damage"},
+      {"name":"Factory Troop Hitpoints","kind":"hp"}
+    ] },
+    { id: "generals", label: "Generals", perks: [
+      {"name":"Generals' Attack Speed","kind":"speed"},
+      {"name":"Generals' Damage","kind":"damage"},
+      {"name":"Generals' Hitpoints","kind":"hp"},
+      {"name":"Generals' Hitpoints & Damage","kind":"combined"},
+      {"name":"Generals' Movement Speed","kind":"movement"}
+    ] },
+    { id: "buildings", label: "Defensive buildings", perks: [
+      {"name":"Air Defense Attack Speed","kind":"speed"},
+      {"name":"Air Defense Damage","kind":"damage"},
+      {"name":"Air Defense Hitpoints","kind":"hp"},
+      {"name":"Anti-Tank Gun Damage","kind":"damage"},
+      {"name":"Anti-Tank Gun Hitpoints","kind":"hp"},
+      {"name":"Catapult Damage","kind":"damage"},
+      {"name":"Catapult Hitpoints","kind":"hp"},
+      {"name":"Missile Silo Damage","kind":"damage"},
+      {"name":"Missile Silo Hitpoints","kind":"hp"},
+      {"name":"Missile Silo and Big Red Button Damage","kind":"damage"},
+      {"name":"Redoubt Damage","kind":"damage"},
+      {"name":"Redoubt Hitpoints","kind":"hp"},
+      {"name":"Sniper Tower Damage","kind":"damage"},
+      {"name":"Sniper Tower Hitpoints","kind":"hp"},
+      {"name":"Tower Damage","kind":"damage"},
+      {"name":"Tower Hitpoints","kind":"hp"}
+    ] },
+    { id: "all-towers", label: "All defensive towers", perks: [
+      {"name":"All Defensive Towers Damage","kind":"damage"},
+      {"name":"All Defensive Towers Hitpoints","kind":"hp"},
+      {"name":"All Defensive Towers Hitpoints & Damage","kind":"combined"}
+    ] },
+    { id: "defenders", label: "Defenders", perks: [
+      {"name":"Defender Damage","kind":"damage"},
+      {"name":"Defender Hitpoints","kind":"hp"},
+      {"name":"Defender Movement Speed","kind":"movement"},
+      {"name":"Defender Spawn Time","kind":"spawn"}
+    ] },
+    { id: "enemy-buildings", label: "Enemy defensive buildings", perks: [
+      {"name":"Enemy Air Defense Damage","kind":"damage"},
+      {"name":"Enemy Air Defense Hitpoints","kind":"hp"},
+      {"name":"Enemy Anti-Tank Gun Damage","kind":"damage"},
+      {"name":"Enemy Anti-Tank Gun Hitpoints","kind":"hp"},
+      {"name":"Enemy Catapult Damage","kind":"damage"},
+      {"name":"Enemy Catapult Hitpoints","kind":"hp"},
+      {"name":"Enemy Missile Silo Damage","kind":"damage"},
+      {"name":"Enemy Missile Silo Hitpoints","kind":"hp"},
+      {"name":"Enemy Redoubt Damage","kind":"damage"},
+      {"name":"Enemy Redoubt Hitpoints","kind":"hp"},
+      {"name":"Enemy Sniper Tower Damage","kind":"damage"},
+      {"name":"Enemy Sniper Tower Hitpoints","kind":"hp"},
+      {"name":"Enemy Tower Damage","kind":"damage"},
+      {"name":"Enemy Tower Hitpoints","kind":"hp"}
+    ] },
+    { id: "enemy-all", label: "All enemy defensive towers", perks: [
+      {"name":"All Enemy Defensive Towers Damage","kind":"damage"},
+      {"name":"All Enemy Defensive Towers Hitpoints","kind":"hp"}
+    ] },
+    { id: "enemy-defenders", label: "Enemy defenders", perks: [
+      {"name":"Enemy Defender Hitpoints","kind":"hp"},
+      {"name":"Enemy Defender Spawn Time","kind":"spawn"}
+    ] },
+    { id: "invading-single", label: "Invading single units", perks: [
+      {"name":"Invading Bazooka Damage","kind":"damage"},
+      {"name":"Invading Bomber Damage","kind":"damage"},
+      {"name":"Invading Bomber Hitpoints","kind":"hp"},
+      {"name":"Invading Fighter Damage","kind":"damage"},
+      {"name":"Invading Fighter Hitpoints","kind":"hp"},
+      {"name":"Invading Guerrilla Damage","kind":"damage"},
+      {"name":"Invading Guerrilla Hitpoints","kind":"hp"},
+      {"name":"Invading Heavy Cavalry Damage","kind":"damage"},
+      {"name":"Invading Heavy Tank Damage","kind":"damage"},
+      {"name":"Invading Heavy Tank Hitpoints","kind":"hp"},
+      {"name":"Invading Machine Gun Infantry Damage","kind":"damage"},
+      {"name":"Invading Mortar Troop Damage","kind":"damage"},
+      {"name":"Invading Paratrooper Damage","kind":"damage"},
+      {"name":"Invading Paratrooper Hitpoints","kind":"hp"},
+      {"name":"Invading Transport Hitpoints","kind":"hp"},
+      {"name":"Invading Raider Damage","kind":"damage"},
+      {"name":"Invading Ranged Infantry Hitpoints","kind":"hp"},
+      {"name":"Invading Heavy Infantry Damage","kind":"damage"},
+      {"name":"Invading Heavy Infantry Hitpoints","kind":"hp"},
+      {"name":"Invading Heavy Cavalry Hitpoints","kind":"hp"},
+      {"name":"Invading Attack Helicopter Hitpoints","kind":"hp"},
+      {"name":"Invading Attack Helicopter Damage","kind":"damage"},
+      {"name":"Invading Armored Car Damage","kind":"damage"},
+      {"name":"Invading Supply Vehicle Hitpoints","kind":"hp"},
+      {"name":"Invading MRL Hitpoints","kind":"hp"},
+      {"name":"Invading Bazooka Hitpoints","kind":"hp"},
+      {"name":"Invading Machine Gun Infantry Hitpoints","kind":"hp"},
+      {"name":"Invading APC Hitpoints","kind":"hp"},
+      {"name":"Invading MRL Damage","kind":"damage"},
+      {"name":"Invading Assault Vehicle Hitpoints","kind":"hp"},
+      {"name":"Invading Ranged Infantry Damage","kind":"damage"},
+      {"name":"Invading Ranged Siege Hitpoints","kind":"hp"},
+      {"name":"Invading Ranged Siege Damage","kind":"damage"},
+      {"name":"Invading Tactical Helicopter Hitpoints","kind":"hp"},
+      {"name":"Invading Assault Vehicle Damage","kind":"damage"},
+      {"name":"Invading Armored Car Hitpoints","kind":"hp"},
+      {"name":"Invading Raider Hitpoints","kind":"hp"},
+      {"name":"Invading Mortar Troop Hitpoints","kind":"hp"},
+      {"name":"Invading APC Damage","kind":"damage"}
+    ] },
+    { id: "invading-multi", label: "Invading multiple units", perks: [
+      {"name":"Invading Airstrip Troop Damage","kind":"damage"},
+      {"name":"Invading Airstrip Unit Hitpoints","kind":"hp"},
+      {"name":"Invading Barracks Troop Damage","kind":"damage"},
+      {"name":"Invading Barracks Troop Hitpoints","kind":"hp"},
+      {"name":"Invading Factory Troop Damage","kind":"damage"},
+      {"name":"Invading Factory Troop Hitpoints","kind":"hp"}
+    ] },
+    { id: "invading-generals", label: "Invading generals", perks: [
+      {"name":"Invading Generals' Damage","kind":"damage"},
+      {"name":"Invading Generals' Hitpoints","kind":"hp"}
+    ] },
+    { id: "utility", label: "Unit utility", perks: [
+      {"name":"APC Deploy Time","kind":"cooldown"},
+      {"name":"Bazooka Attack Speed","kind":"speed"},
+      {"name":"Bazooka Cooldown","kind":"cooldown"},
+      {"name":"Guerrilla Movement Speed","kind":"movement"},
+      {"name":"Heavy Infantry Attack Speed","kind":"speed"},
+      {"name":"Heavy Infantry Movement Speed","kind":"movement"},
+      {"name":"Heavy Tank Attack Speed","kind":"speed"},
+      {"name":"Mortar Troop Attack Speed","kind":"speed"},
+      {"name":"Supply Vehicle Healing","kind":"healing"},
+      {"name":"Transport Cooldown","kind":"cooldown"},
+      {"name":"Transport Movement Speed","kind":"movement"}
+    ] },
+    { id: "battle", label: "Tactics and battle utility", perks: [
+      {"name":"Decoy Tactic Hitpoints","kind":"tactics"},
+      {"name":"First Aid Duration","kind":"tactics"},
+      {"name":"Increase Rally Duration","kind":"rally"},
+      {"name":"Quick Victory Time","kind":"victory"},
+      {"name":"Rally Cooldown","kind":"rally"},
+      {"name":"Recon Bonus Duration","kind":"recon"},
+      {"name":"Recon Scan Duration","kind":"recon"},
+      {"name":"Tactical Helicopter Healing","kind":"tactics"}
+    ] },
+    { id: "enemy-utility", label: "Enemy tactics and recon", perks: [
+      {"name":"Enemy Recon Plane Scan Duration","kind":"other"},
+      {"name":"Enemy Sabotage Duration","kind":"other"},
+      {"name":"Invading Recon Scan Duration","kind":"other"},
+      {"name":"Invading Sabotage Duration","kind":"other"},
+      {"name":"Invading Tactical Helicopter Healing","kind":"healing"},
+      {"name":"Invading Supply Vehicle Healing","kind":"healing"}
+    ] },
+    { id: "loot", label: "Loot", perks: [
+      {"name":"All Resources Looted","kind":"resources"},
+      {"name":"Food Looted","kind":"resources"},
+      {"name":"Gold Looted","kind":"resources"},
+      {"name":"Looted Resource Refund","kind":"refund"},
+      {"name":"National Trade Good Loot Chance","kind":"chance"},
+      {"name":"Oil Looted","kind":"resources"}
+    ] },
+    { id: "production", label: "Resource production and storage", perks: [
+      {"name":"Food from Farms","kind":"production"},
+      {"name":"Food from Fruit Trees","kind":"production"},
+      {"name":"All Resources from Hunting","kind":"production"},
+      {"name":"Gold from Caravans","kind":"production"},
+      {"name":"Gold from Gold Mines","kind":"production"},
+      {"name":"Oil From Oil Wells","kind":"production"},
+      {"name":"Vault Capacity","kind":"capacity"},
+      {"name":"Vault Interest","kind":"interest"}
+    ] },
+    { id: "research", label: "Research", perks: [
+      {"name":"Library Research Time","kind":"time"},
+      {"name":"Library Tech Food Cost","kind":"cost"},
+      {"name":"Library Tech Gold Cost","kind":"cost"},
+      {"name":"Library Tech Oil Cost","kind":"cost"},
+      {"name":"Library Tech Resource Cost","kind":"cost"},
+      {"name":"University Research Time","kind":"time"}
+    ] },
+    { id: "costs", label: "Training and expansion costs", perks: [
+      {"name":"Barracks Troop Training Cost","kind":"training"},
+      {"name":"Factory Troop Training Cost","kind":"training"},
+      {"name":"Forest Expansion Cost Refund","kind":"expansion"}
+    ] },
+    { id: "special", label: "Special effects", perks: [
+      {"name":"APC Deploys Marines On Death","kind":"APC Deploys Marines On Death"},
+      {"name":"Castle spawns Sword Saints when Destroyed","kind":"Castle spawns Sword Saints when Destroyed"},
+      {"name":"Mercenary Camp Deploys Spartans when Destroyed","kind":"Mercenary Camp Deploys Spartans when Destroyed"},
+      {"name":"Raiders Spawn from Forest When Attacking","kind":"Raiders Spawn from Forest When Attacking"},
+      {"name":"Supply Vehicle","kind":"Supply Vehicle"}
+    ] }
+  ];
+  const PERK_GROUP_DEFAULTS_KEY = "dn_perk_group_defaults_v1";
+  function loadPerkGroupDefaults() {
+    return parsePerkRatingsPayload(lsGetRaw(PERK_GROUP_DEFAULTS_KEY));
+  }
+  function savePerkGroupDefaults(bag) {
+    lsSetRaw(PERK_GROUP_DEFAULTS_KEY, serializePerkRatingsPayload(bag || {}));
+  }
+  function groupPerkRating(name, axis, groups = loadPerkGroupDefaults()) {
+    for (const section of PERK_GROUPS) {
+      const perk = section.perks.find(p => p.name === name);
+      if (!perk) continue;
+      if (perk.kind === "combined") {
+        const hp = perkRatingAxisOrNull(groups, section.id + ":hp", axis);
+        const damage = perkRatingAxisOrNull(groups, section.id + ":damage", axis);
+        if (hp == null && damage == null) return null;
+        return Math.max(hp == null ? damage : hp, damage == null ? hp : damage);
+      }
+      return perkRatingAxisOrNull(groups, section.id + ":" + perk.kind, axis);
+    }
+    return null;
+  }
+  function loadStoredGlobalPerkRatings() {
     ensurePerkRatingsMigrated();
     return parsePerkRatingsPayload(lsGetRaw(PERK_RATINGS_GLOBAL_KEY));
+  }
+  function loadGlobalPerkRatings() {
+    const stored = loadStoredGlobalPerkRatings();
+    const groups = loadPerkGroupDefaults();
+    const result = {};
+    for (const section of PERK_GROUPS) for (const perk of section.perks) {
+      const entry = {};
+      for (const axis of RATING_AXES) {
+        const value = groupPerkRating(perk.name, axis, groups);
+        if (value != null) entry[axis] = value;
+      }
+      if (Object.keys(entry).length) result[perk.name] = entry;
+    }
+    return mergePerkRatingLayers(result, stored);
   }
 
   /**
@@ -496,6 +792,15 @@
     const name = polishPerk(perkName);
     const canonical = ARMY_CATALOG.perk_aliases[name] || name;
     return ARMY_CATALOG.perk_scopes[canonical] || null;
+  }
+
+  // User rule: one fixed polarity per stat, with every Invading effect negative.
+  function expectedPerkSign(perkName) {
+    const name = polishPerk(perkName);
+    const canonical = ARMY_CATALOG.perk_aliases[name] || name;
+    if (/^invading\b/i.test(canonical)) return -1;
+    const sign = ARMY_CATALOG.perk_signs?.[canonical];
+    return sign === -1 || sign === 1 ? sign : null;
   }
 
   function text(v) {
@@ -654,10 +959,12 @@
    */
   function perksOf(row, canonPerk) {
     const out = [];
+    const edits=row.scanned?null:artifactPerkEdits()[artifactKey(row)];
     for (let i = 1; i <= 6; i++) {
-      const rawName = text(row[`perk_${i}_name`]);
-      const baseRaw = text(row[`perk_${i}_base`]);
-      const maxRaw = text(row[`perk_${i}_max`]);
+      const edit=edits?.[i-1];
+      const rawName = text(edit?edit.name:row[`perk_${i}_name`]);
+      const baseRaw = text(edit?edit.base:row[`perk_${i}_base`]);
+      const maxRaw = text(edit?edit.max:row[`perk_${i}_max`]);
       if (!rawName && !baseRaw && !maxRaw) continue;
       const baseN = baseRaw === "" ? null : Number(baseRaw);
       const maxN = maxRaw === "" ? null : Number(maxRaw);
@@ -670,6 +977,18 @@
       });
     }
     return out;
+  }
+  let perkEditsRaw=null,perkEditsCache={};
+  function artifactPerkEdits() {
+    const raw=lsGet('dn-artifact-perk-edits');
+    if(raw!==perkEditsRaw){
+      perkEditsRaw=raw;
+      try{const parsed=JSON.parse(raw || '{}');perkEditsCache=parsed && typeof parsed==='object' && !Array.isArray(parsed)?parsed:{};}catch{perkEditsCache={};}
+    }
+    return perkEditsCache;
+  }
+  function saveArtifactPerkEdits(id,perks) {
+    lsSet('dn-artifact-perk-edits',JSON.stringify({...artifactPerkEdits(),[id]:perks}));
   }
 
   /**
@@ -712,6 +1031,7 @@
       mains: /** @type {string[]} */ ([]),
       singles: /** @type {Record<string, number>} */ ({}),
       hermitage: /** @type {string | null} */ (null),
+      scannedPlaced: /** @type {string[]} */ ([]),
     };
   }
 
@@ -744,7 +1064,8 @@
         delete singles[hermitage];
       }
       for (const id of mains) delete singles[id];
-      out[hall] = { mains, singles, hermitage: hermitage || null };
+      const scannedPlaced=Array.isArray(src.scannedPlaced)?src.scannedPlaced.map(text).filter(Boolean):[];
+      out[hall] = { mains, singles, hermitage: hermitage || null, scannedPlaced };
     }
     return out;
   }
@@ -845,14 +1166,15 @@
   function loadCollectionUi() {
     try {
       const raw = lsGet(COLLECTION_UI_KEY);
-      if (!raw) return { hall: "Main", valueMode: "actual", viewMode: "list" };
+      if (!raw) return { hall: "Main", valueMode: "actual", viewMode: "structured", compareRows: "all" };
       const parsed = JSON.parse(raw);
       const hall = parsed && parsed.hall === "War" ? "War" : "Main";
       const valueMode = parsed && parsed.valueMode === "max" ? "max" : "actual";
-      const viewMode = parsed && parsed.viewMode === "structured" ? "structured" : "list";
-      return { hall, valueMode, viewMode };
+      const viewMode = parsed && parsed.viewMode === "list" ? "list" : "structured";
+      const compareRows = parsed && parsed.compareRows === "unlocked" ? "unlocked" : "all";
+      return { hall, valueMode, viewMode, compareRows };
     } catch {
-      return { hall: "Main", valueMode: "actual", viewMode: "list" };
+      return { hall: "Main", valueMode: "actual", viewMode: "structured", compareRows: "all" };
     }
   }
 
@@ -1069,6 +1391,10 @@
   }
 
   window.DN = {
+    ARTIFACT_TYPE_EXHIBITS,
+    artifactSlotCapacity,
+    loadScannerArtifactType,
+    saveScannerArtifactType,
     COLLECTED_KEY,
     LOADOUT_KEY,
     LEVELS_KEY,
@@ -1087,6 +1413,7 @@
     ARMY_UNITS,
     armyUnitType,
     perkArmyScope,
+    expectedPerkSign,
     armyGroupRatingChanges,
     ARMY_UNIT_GROUPS,
     ARMY_UNIT_FAMILIES,
@@ -1131,6 +1458,7 @@
     parseMappingCsv,
     makeCanonPerk,
     perksOf,
+    saveArtifactPerkEdits,
     effectivePerkRange,
     clampPerkLevel,
     stepPerkLevel,
@@ -1181,6 +1509,11 @@
     mergePerkRatingLayers,
     diffPerkRatingsFromBase,
     ensurePerkRatingsMigrated,
+    PERK_GROUPS,
+    loadPerkGroupDefaults,
+    savePerkGroupDefaults,
+    groupPerkRating,
+    loadStoredGlobalPerkRatings,
     loadGlobalPerkRatings,
     saveGlobalPerkRatings,
     loadProfilePerkOverrides,

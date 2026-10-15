@@ -1,0 +1,205 @@
+/*
+ * Authority: User-requested stored-artifact scanner, artwork and eleven category screenshots.
+ * Ownership: Stored-item crops and OCR using the existing local worker/parser.
+ * Invariants: Five/six ordered rows, duplicates and locked perks survive; upgraded
+ * accurate numeric reads take priority; a confirmed tier plus one numeric field can fill an unclear field. Only the requested
+ * artwork crop is returned for explicit Keep; full screenshots never persist.
+ * History: Ordinary tiers now resolve from signed percentages and read levels;
+ * percentage text colour is not tier evidence; inferred fields remain marked for review.
+ * Constraints: English storage dialog; tested against the user's Main/War category set.
+ */
+(() => {
+  'use strict';
+  const recognition=window.DNScannerRecognition;
+  const types=['Weapon','Armor','Jewelry','Pottery','Legendary','Mythical','War Weapon','War Armor','War Equipment','War Legendary','War Mythical'];
+  function detectPanel(source) { return recognition.detectPanel(source,{storage:true}); }
+  function inspect(source) {
+    const c=document.createElement('canvas');c.width=source.width;c.height=source.height;
+    const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(source,0,0);
+    const {data}=ctx.getImageData(0,0,c.width,c.height);
+    let red=0,blue=0,longest=0,run=0;
+    for(let y=Math.round(c.height*.42);y<c.height*.52;y+=2)for(let x=Math.round(c.width*.015);x<c.width*.28;x+=2) {
+      const p=(y*c.width+x)*4,r=data[p],g=data[p+1],b=data[p+2];
+      if(r>60 && r>g*1.3 && r>b*1.3)red++;
+      if(b>60 && b>r*1.25 && b>g*1.1)blue++;
+    }
+    // A sixth row has a tall star at the bottom left. Five-row footer borders
+    // produce only short horizontal runs in this narrow column.
+    for(let y=Math.round(c.height*.825);y<c.height*.94;y++) {
+      let gold=0;
+      for(let x=Math.round(c.width*.327);x<c.width*.367;x++) {
+        const p=(y*c.width+x)*4,r=data[p],g=data[p+1],b=data[p+2];
+        if(r>190 && g>140 && r>g*1.05 && b<g*.65)gold++;
+      }
+      run=gold>1?run+1:0;longest=Math.max(longest,run);
+    }
+    const hall=blue>100 && blue>red*2?'war':red>100 && red>blue*2?'main':null;
+    c.width=c.height=0;return {hall,expectedRows:longest>source.height*.025?6:5};
+  }
+  function levelOf(text) {
+    const match=/^\s*(10|[1-9])\s*\/\s*10\s*$/.exec(text);
+    return match?Number(match[1]):null;
+  }
+  function starState(pixels) {
+    let yellow=0;
+    for(let p=0;p<pixels.length;p+=4)if(pixels[p]>160 && pixels[p+1]>100 && pixels[p+2]<pixels[p+1]*.8)yellow++;
+    const fill=yellow/(pixels.length/4);
+    return fill>=.3?true:fill<=.1?false:null;
+  }
+  const signedPercent=text=>/^[+-]\s*\d+(?:[.,]\d+)?\s*%$/.test(text.trim());
+  function colouredInk(r,g,b,soft=false) {
+    const strongest=Math.max(g,b);
+    return strongest>25 && (soft?strongest-r>8 && strongest>r*1.15:strongest>r*1.6);
+  }
+  async function recognize(source,{worker,names,canonPerk,expectedRows=5,layout='storage',hall='main',knownTiers=[],isClosed=()=>false}) {
+    expectedRows=Number(expectedRows)===6?6:5;
+    const canvases=[];
+    const make=()=>{const c=document.createElement('canvas');canvases.push(c);return c;};
+    const full=layout==='storage';
+    // Full dialog includes the left type banner, title, all row stars and footer.
+    // Legacy rows-only crops end at percentages. Dice-inclusive crops extend
+    // that same stat geometry; expanding it must not move any OCR field.
+    const area=full?{x:.303,y:.151,width:.568,height:expectedRows===6?.785:.659}:{x:0,y:0,width:layout==='storage-rows-dice'?.568/.66:1,height:1};
+    const original=make();original.width=source.width;original.height=source.height;
+    const originalContext=original.getContext('2d',{willReadFrequently:true});originalContext.drawImage(source,0,0);
+    const sourcePixels=originalContext.getImageData(0,0,source.width,source.height).data;
+    // Fixed before the first async worker call; never borrow a previous item.
+    const rerolls=window.DNScannerRerollRecognition?.detectStorage(sourcePixels,source.width,source.height,{expectedRows,layout}) ||
+      Array.from({length:expectedRows},()=>({rerollEligible:null,rerollSource:null,rerollConfidence:'unknown'}));
+    function fitInk(rect,colour=false,soft=false) {
+      const left=Math.round(rect.x*source.width),top=Math.round(rect.y*source.height),width=Math.ceil(rect.width*source.width),height=Math.ceil(rect.height*source.height),counts=[];
+      for(let y=top;y<Math.min(source.height,top+height);y++) {
+        let count=0;
+        const measureWidth=colour?width:Math.ceil(width*.6);
+        for(let x=left;x<Math.min(source.width,left+measureWidth);x++) {
+          const p=(y*source.width+x)*4,r=sourcePixels[p],g=sourcePixels[p+1],b=sourcePixels[p+2],max=Math.max(r,g,b),min=Math.min(r,g,b);
+          if(colour?colouredInk(r,g,b,soft):(max-min<65 && .299*r+.587*g+.114*b>70))count++;
+        }
+        counts.push(!colour && count>measureWidth*.7?0:count);
+      }
+      const peak=counts.indexOf(Math.max(...counts));if(counts[peak]<3)return rect;
+      let a=peak,b=peak;while(a>0&&counts[a-1]>1)a--;while(b<counts.length-1&&counts[b+1]>1)b++;
+      const y=Math.max(top,top+a-2),bottom=Math.min(top+height,top+b+3);
+      return {...rect,y:y/source.height,height:(bottom-y)/source.height};
+    }
+    function field(rect,ink='normal') {
+      const c=make(),scale=['level','level-green'].includes(ink)?6:Math.max(2,Math.min(4,2901/source.width));
+      const sx=Math.round(rect.x*source.width),sy=Math.round(rect.y*source.height);
+      const sw=Math.ceil(rect.width*source.width),sh=Math.ceil(rect.height*source.height);
+      const w=Math.max(1,Math.round(sw*scale)),h=Math.max(1,Math.round(sh*scale));
+      c.width=w+24;c.height=h+24;
+      const ctx=c.getContext('2d',{willReadFrequently:true});ctx.fillStyle='#fff';ctx.fillRect(0,0,c.width,c.height);
+      ctx.drawImage(source,sx,sy,sw,sh,12,12,w,h);
+      const pixels=ctx.getImageData(12,12,w,h);
+      for(let i=0;i<pixels.data.length;i+=4) {
+        const r=pixels.data[i],g=pixels.data[i+1],b=pixels.data[i+2];
+        if(ink==='raw')continue;
+        const v=ink==='title'?(r>205 && g>160?0:255):
+          ink==='title-soft'?(r>190 && g>145?0:255):
+          ink==='banner'?(.299*r+.587*g+.114*b>145?0:255):
+          ink==='grey'?(.299*r+.587*g+.114*b>65?0:255):
+          ink==='colour' || ink==='colour-soft'?(colouredInk(r,g,b,ink==='colour-soft')?0:255):
+          // Fractions are pale grey over a green/black progress bar. Using
+          // the green channel alone merges the glyphs with the filled bar.
+          ink==='level-green'?(g>35 && g>r*1.12 && g>b*1.12?0:255):
+          ink==='level-channel'?255-Math.min(255,Math.max(0,(g-30)*4)):
+          ink.startsWith('level')?(Math.max(r,g,b)-Math.min(r,g,b)<70 && .299*r+.587*g+.114*b>(ink==='level-soft'?35:75)?0:255):recognition.textContrast(r,g,b);
+        pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=v;
+      }
+      ctx.putImageData(pixels,12,12);return c;
+    }
+    async function read(rect,whitelist='',ink='normal',mode='7') {
+      if(isClosed())throw new Error('Recognition stopped');
+      await worker.setParameters({tessedit_pageseg_mode:mode,tessedit_char_whitelist:whitelist});
+      const c=field(rect,ink);
+      const output=await worker.recognize(c,{}, {text:true,blocks:true});
+      if(isClosed())throw new Error('Recognition stopped');
+      const lines=(output.data.blocks || []).flatMap(b=>(b.paragraphs || []).flatMap(p=>p.lines || []));
+      return {text:output.data.text.trim(),confidence:lines.length?Math.min(...lines.map(l=>l.confidence)):0};
+    }
+    const rowHeight=area.height/expectedRows;
+    const rect=(index,x,width,y,height)=>({x:area.x+x*area.width,width:width*area.width,y:area.y+(index+y)*rowHeight,height:height*rowHeight});
+    const rows=[],warnings=[],evidence=[];
+    let artifact={name:'',type:'',source:'storage',metadataWarnings:[]};
+    try {
+      if(full) {
+        let title=await read({x:.31,y:.018,width:.553,height:.110},'','title','6');
+        if(title.confidence<80) {
+          for(const ink of ['title-soft','raw']) {
+            const alternative=await read({x:.31,y:.018,width:.553,height:.110},'',ink,'6');
+            if(alternative.confidence>title.confidence)title=alternative;
+          }
+        }
+        const type=await read({x:.072,y:.439,width:.2,height:.058},'','banner');
+        const matched=types.find(t=>t.toLowerCase()===type.text.toLowerCase());
+        artifact={...artifact,name:title.text.replace(/\s+/g,' '),type:matched || '',rawType:type.text,titleConfidence:title.confidence,hall:inspect(source).hall};
+        const picture=make();picture.width=192;picture.height=Math.round(192*(source.height*.295)/(source.width*.226));
+        picture.getContext('2d').drawImage(source,source.width*.037,source.height*.067,source.width*.226,source.height*.295,0,0,picture.width,picture.height);
+        artifact.image=picture.toDataURL('image/jpeg',.88);
+        if(!artifact.name || title.confidence<80)artifact.metadataWarnings.push('Check the artifact name.');
+        if(!matched)artifact.metadataWarnings.push('Choose the artifact category.');
+      } else artifact.metadataWarnings.push('Enter the artifact name and category for this rows-only crop.');
+      for(let i=0;i<expectedRows;i++) {
+        const labelRect=expectedRows===5?rect(i,.15,.665,.12,.31):fitInk(rect(i,.15,.665,.06,.54));
+        const amountRect=fitInk(rect(i,.85,.15,.20,.60),true);
+        let label=await read(labelRect,'','grey');
+        let amount=await read(amountRect,'+-0123456789.,%','colour');
+        if(!signedPercent(amount.text)) {
+          // Capture can reduce colour saturation, especially on locked rows.
+          // Retry actual glyphs before using tier evidence as a backup.
+          const alternative=await read(fitInk(rect(i,.85,.15,.20,.60),true,true),'+-0123456789.,%','colour-soft');
+          if(signedPercent(alternative.text))amount={...alternative,alternative:amount,method:'soft-colour'};
+        }
+        if(expectedRows===6 && !recognition.parseText(label.text+' '+amount.text,names,canonPerk,1).rows[0]?.known) {
+          const fixed=await read(rect(i,.15,.665,.12,.31),'','grey');
+          if(recognition.parseText(fixed.text+' '+amount.text,names,canonPerk,1).rows[0]?.known)label=fixed;
+        }
+        if(label.confidence<80) {
+          const alternative=await read(labelRect);
+          const a=recognition.parseText(label.text+' '+amount.text,names,canonPerk,1).rows[0];
+          const b=recognition.parseText(alternative.text+' '+amount.text,names,canonPerk,1).rows[0];
+          const corroborated=a?.known && b?.known && !a.assumed && !b.assumed && a.name===b.name && label.confidence>=60 && alternative.confidence>=60;
+          if(alternative.confidence>label.confidence)label={...alternative,alternative:label,corroborated};
+          else label={...label,alternative,corroborated};
+        }
+        const levelRect=rect(i,.40,.14,.51,.32);
+        let level=await read(levelRect,'0123456789/','level');
+        const tightLevel=rect(i,.422,.085,.59,.18);
+        for(const [crop,ink,mode] of [[tightLevel,'level-green','7'],[tightLevel,'level-soft','7'],[tightLevel,'level-channel','7'],[tightLevel,'raw','7'],[levelRect,'raw','7']]) {
+          if(levelOf(level.text)!==null && level.confidence>=60)break;
+          const alternative=await read(crop,'0123456789/',ink,mode);
+          if(levelOf(alternative.text)!==null && alternative.confidence>=60)level={...alternative,alternative:level};
+        }
+        const parsed=recognition.parseText(label.text.replace(/[’‘]/g,"'")+' '+amount.text,names,canonPerk,1);
+        const canonical=canonPerk(label.text);
+        const row=parsed.rows.length===1?parsed.rows[0]:{name:canonical,raw:label.text+' '+amount.text,value:null,known:names.includes(canonical),hasPercent:false};
+        const star=rect(i,.043,.048,.40,.30),c=make();c.width=30;c.height=30;
+        const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(source,star.x*source.width,star.y*source.height,star.width*source.width,star.height*source.height,0,0,30,30);
+        const unlocked=starState(ctx.getImageData(0,0,30,30).data);
+        const value=level.confidence>=60?levelOf(level.text):null;
+        const prior=knownTiers[i];
+        const sameHall=prior?.hall===(artifact.hall || hall);
+        const tierEvidence=sameHall && prior?.name===row.name && !prior.tierConflict && ['manual','percentage-level','unique-percentage'].includes(prior.tierSource)?prior.tier:null;
+        const ranged={...row,...rerolls[i],level:value,levelSource:value==null?null:'ocr',unlocked,tierEvidence,
+          ...(amount.confidence<60 && tierEvidence && value!==null && row.known?{observedValue:row.value,value:null,hasPercent:false}:{} )};
+        const range=window.DNStoredArtifacts?.impliedRange(ranged);
+        rows.push({...ranged,...(range?{...range,rangeSource:'inferred-level'}:{})});
+        if(value===null)artifact.metadataWarnings.push('Row '+(i+1)+': upgrade level unclear; enter it in Correct Recognition if needed.');
+        warnings.push(...parsed.warnings.filter(w=>!w.startsWith('Expected ')).map(w=>'Row '+(i+1)+': '+w));
+        if((label.confidence<80 && !label.corroborated) || amount.confidence<80)warnings.push('Row '+(i+1)+': OCR evidence is weak. Verify the name and percentage.');
+        evidence.push({index:i,label,amount,level,reroll:rerolls[i]});
+      }
+      const states=rows.map(r=>r.unlocked),count=states.every(s=>s!==null)?states.filter(Boolean).length:null;
+      const tiered=window.DNStoredArtifacts?.backfillItem({hall:artifact.hall || hall,type:artifact.type,rows}).rows || rows;
+      warnings.push(...recognition.signIssues(tiered));
+      if(tiered.some(r=>!r.known || !recognition.usefulRow(r)))warnings.push('Each visible row needs a known perk and signed percentage.');
+      for(const [index,row] of tiered.entries())if(row.inferredFields?.length)warnings.push('Row '+(index+1)+': '+row.inferredFields.join(' and ')+' inferred from tier evidence. Verify before keeping.');
+      return {rows:tiered,warnings:[...new Set(warnings)],valid:warnings.length===0,artifact,expectedRows,hall:artifact.hall,
+        unlocked:{count,states,method:'storage-row-stars'},reroll:window.DNScannerRerollRecognition?.summarize(tiered),observations:[{pass:'storage-fields',rows:tiered,warnings}],evidence};
+    } finally {
+      for(const c of canvases)c.width=c.height=0;
+      if(!isClosed())await worker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});
+    }
+  }
+  window.DNStorageRecognition={detectPanel,inspect,recognize,levelOf,starState,types};
+})();

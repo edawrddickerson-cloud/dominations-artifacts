@@ -1,0 +1,28 @@
+{
+  "source": "User game/app review pairs, 22:54?22:57; names and values manually transcribed from game pixels",
+  "reviewPair": true,
+  "unlocked": 2,
+  "rows": [
+    {
+      "name": "Invading Heavy Tank Hitpoints",
+      "value": -1
+    },
+    {
+      "name": "Invading Fighter Damage",
+      "value": -6
+    },
+    {
+      "name": "Invading Fighter Hitpoints",
+      "value": -1
+    },
+    {
+      "name": "Invading Mortar Troop Damage",
+      "value": -6
+    },
+    {
+      "name": "Invading Assault Vehicle Hitpoints",
+      "value": -6
+    }
+  ],
+  "temporalProbe": true
+}

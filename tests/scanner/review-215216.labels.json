@@ -1,0 +1,26 @@
+{
+  "source": "User game/app review pairs; names and values manually transcribed from game pixels",
+  "reviewPair": true,
+  "rows": [
+    {
+      "name": "Anti-Tank Gun Hitpoints",
+      "value": 6
+    },
+    {
+      "name": "Food from Fruit Trees",
+      "value": 1
+    },
+    {
+      "name": "Gold from Gold Mines",
+      "value": 1
+    },
+    {
+      "name": "Tower Hitpoints",
+      "value": 11
+    },
+    {
+      "name": "Missile Silo Damage",
+      "value": 6
+    }
+  ]
+}

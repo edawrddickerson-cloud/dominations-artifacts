@@ -1,0 +1,227 @@
+{
+  "fixture": "pic1.png",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+  "elapsedMs": 1462,
+  "rows": [
+    {
+      "name": "Air Defense Damage",
+      "value": 1
+    },
+    {
+      "name": "Sniper Tower Hitpoints",
+      "value": 1
+    },
+    {
+      "name": "Catapult Hitpoints",
+      "value": 1
+    },
+    {
+      "name": "Catapult Damage",
+      "value": 1
+    },
+    {
+      "name": "Catapult Damage",
+      "value": 1
+    }
+  ],
+  "exact": true,
+  "automaticCategory": true,
+  "categoryEvidence": {
+    "type": "Pottery",
+    "hall": "main",
+    "source": "crafting-label",
+    "rawType": "Pottery\n",
+    "categoryConfidence": 41
+  },
+  "rating": "Off 0Def 12",
+  "unlocked": true,
+  "colourBadges": [
+    "White/grey · 1% tier",
+    "White/grey · 1% tier",
+    "White/grey · 1% tier",
+    "White/grey · 1% tier",
+    "White/grey · 1% tier"
+  ],
+  "coloursShown": true,
+  "glance": true,
+  "scoreSummaryVisible": true,
+  "liveScoreCleared": true,
+  "warnings": "",
+  "resultStatus": "Visible perks read. Check the values before making a game decision.",
+  "crop": {
+    "width": 633,
+    "height": 327
+  },
+  "autoDetected": true,
+  "collected": true,
+  "collectionRetained": true,
+  "collectionBeforeStop": "1 distinct reads · 4 unique labels · 0 not in current perk settings",
+  "stopCleared": true,
+  "remainsCleared": true,
+  "passed": true,
+  "limitations": "Actual screenshot file-loading/detection/OCR/rating/collection/Stop UI exercised, including automatic Pottery category, colour labels with percentage inference disabled and pinned score visibility. Does not test getDisplayMedia permission, live game captures or background scheduling.",
+  "network": {
+    "requests": [
+      {
+        "requestId": "5CB307BA42FAB648303CC2278BBC2A55",
+        "url": "http://127.0.0.1:60869/ui/scanner.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.2",
+        "url": "http://127.0.0.1:60869/ui/navigation.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.3",
+        "url": "http://127.0.0.1:60869/ui/styles.css?v=41",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.4",
+        "url": "http://127.0.0.1:60869/ui/scanner.css?v=17",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.5",
+        "url": "http://127.0.0.1:60869/ui/scanner-core.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.6",
+        "url": "http://127.0.0.1:60869/ui/scanner-frames.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.7",
+        "url": "http://127.0.0.1:60869/ui/data/army_catalog.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.8",
+        "url": "http://127.0.0.1:60869/ui/shared.js?v=36",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.9",
+        "url": "http://127.0.0.1:60869/ui/profiles-ui.js?v=12",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.10",
+        "url": "http://127.0.0.1:60869/ui/artifact-scoring.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.11",
+        "url": "http://127.0.0.1:60869/ui/stored-artifacts.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.12",
+        "url": "http://127.0.0.1:60869/ui/scanner-comparison.js?v=6",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.13",
+        "url": "http://127.0.0.1:60869/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.14",
+        "url": "http://127.0.0.1:60869/ui/scanner-recognition.js?v=17",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.15",
+        "url": "http://127.0.0.1:60869/ui/scanner-collection.js?v=9",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.16",
+        "url": "http://127.0.0.1:60869/ui/scanner-reading.js?v=26",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.17",
+        "url": "http://127.0.0.1:60869/ui/scanner.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.29",
+        "url": "http://127.0.0.1:60869/ui/data/artifacts.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.34",
+        "url": "http://127.0.0.1:60869/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.35",
+        "url": "http://127.0.0.1:60869/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.37",
+        "url": "http://127.0.0.1:60869/favicon.ico",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.38",
+        "url": "http://127.0.0.1:60869/tests/scanner/pic1.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.39",
+        "url": "http://127.0.0.1:60869/tests/scanner/pic1.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "A9D7B0411CED18E1C8C72B529C48E433",
+        "url": "http://127.0.0.1:60869/ui/vendor/tesseract/worker.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.41",
+        "url": "http://127.0.0.1:60869/ui/vendor/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "112696.42",
+        "url": "http://127.0.0.1:60869/ui/vendor/tesseract/lang/eng.traineddata.gz",
+        "method": "GET",
+        "hasPostData": false
+      }
+    ],
+    "blockedRequests": [],
+    "externalRequests": [],
+    "nonGetRequests": [],
+    "browserErrors": []
+  }
+}

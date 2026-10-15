@@ -1,0 +1,648 @@
+{
+  "fixture": "review-225400.png",
+  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
+  "panel": {
+    "x": 0,
+    "y": 0.00909090909090909,
+    "width": 1,
+    "height": 0.9878787878787879
+  },
+  "detectorMs": 5.100000381469727,
+  "runs": [
+    {
+      "kind": "detected",
+      "rect": {
+        "x": 0,
+        "y": 3,
+        "width": 625,
+        "height": 326
+      },
+      "elapsedMs": 683.6999998092651,
+      "exact": true,
+      "complete": true,
+      "starsCorrect": true,
+      "percentageRecovery": true,
+      "expectedKnown": true,
+      "scoringParity": true,
+      "passed": true,
+      "rows": [
+        {
+          "raw": "Air Defense Hitpoints +1%",
+          "name": "Air Defense Hitpoints",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "neutral",
+          "unlocked": true
+        },
+        {
+          "raw": "Anti-Tank Gun Damage +1%",
+          "name": "Anti-Tank Gun Damage",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "neutral",
+          "unlocked": false
+        },
+        {
+          "raw": "Vault Interest +6%",
+          "name": "Vault Interest",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 93,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Missile Silo Hitpoints +6%",
+          "name": "Missile Silo Hitpoints",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Sniper Tower Hitpoints +11%",
+          "name": "Sniper Tower Hitpoints",
+          "value": 11,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "blue",
+          "unlocked": false
+        }
+      ],
+      "warnings": [],
+      "valid": true,
+      "observations": [
+        {
+          "pass": "block",
+          "rows": [
+            {
+              "raw": "Air Defense Hitpoints +1%",
+              "name": "Air Defense Hitpoints",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Anti-Tank Gun Damage +1%",
+              "name": "Anti-Tank Gun Damage",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            },
+            {
+              "raw": "Vault Interest +6%",
+              "name": "Vault Interest",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 93
+            },
+            {
+              "raw": "Missile Silo Hitpoints +6%",
+              "name": "Missile Silo Hitpoints",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Sniper Tower Hitpoints +11%",
+              "name": "Sniper Tower Hitpoints",
+              "value": 11,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            }
+          ],
+          "warnings": []
+        }
+      ],
+      "hall": "main",
+      "inferColours": true,
+      "colours": [
+        "neutral",
+        "neutral",
+        "green",
+        "green",
+        "blue"
+      ],
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.6256410256410256,
+          0.041025641025641026,
+          0.03888888888888889,
+          0.046153846153846156,
+          0.05641025641025641
+        ]
+      },
+      "ocrCalls": 1
+    },
+    {
+      "kind": "detected-scale-0.75",
+      "rect": {
+        "x": 0,
+        "y": 2,
+        "width": 469,
+        "height": 244
+      },
+      "elapsedMs": 171.80000019073486,
+      "exact": true,
+      "complete": true,
+      "starsCorrect": true,
+      "percentageRecovery": true,
+      "expectedKnown": true,
+      "scoringParity": true,
+      "passed": true,
+      "rows": [
+        {
+          "raw": "Air Defense Hitpoints +1%",
+          "name": "Air Defense Hitpoints",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "neutral",
+          "unlocked": true
+        },
+        {
+          "raw": "Anti-Tank Gun Damage +1%",
+          "name": "Anti-Tank Gun Damage",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 93,
+          "colour": "neutral",
+          "unlocked": false
+        },
+        {
+          "raw": "Vault Interest +6%",
+          "name": "Vault Interest",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 93,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Missile Silo Hitpoints +6%",
+          "name": "Missile Silo Hitpoints",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Sniper Tower Hitpoints +11%",
+          "name": "Sniper Tower Hitpoints",
+          "value": 11,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 93,
+          "colour": "blue",
+          "unlocked": false
+        }
+      ],
+      "warnings": [],
+      "valid": true,
+      "observations": [
+        {
+          "pass": "block",
+          "rows": [
+            {
+              "raw": "Air Defense Hitpoints +1%",
+              "name": "Air Defense Hitpoints",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Anti-Tank Gun Damage +1%",
+              "name": "Anti-Tank Gun Damage",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 93
+            },
+            {
+              "raw": "Vault Interest +6%",
+              "name": "Vault Interest",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 93
+            },
+            {
+              "raw": "Missile Silo Hitpoints +6%",
+              "name": "Missile Silo Hitpoints",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Sniper Tower Hitpoints +11%",
+              "name": "Sniper Tower Hitpoints",
+              "value": 11,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 93
+            }
+          ],
+          "warnings": []
+        }
+      ],
+      "hall": "main",
+      "inferColours": true,
+      "colours": [
+        "neutral",
+        "neutral",
+        "green",
+        "green",
+        "blue"
+      ],
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.6363636363636364,
+          0.02727272727272727,
+          0.01818181818181818,
+          0,
+          0
+        ]
+      },
+      "ocrCalls": 1
+    },
+    {
+      "kind": "calibration-margin",
+      "rect": {
+        "x": 0,
+        "y": 0,
+        "width": 671,
+        "height": 358
+      },
+      "elapsedMs": 203.60000038146973,
+      "exact": true,
+      "complete": true,
+      "starsCorrect": true,
+      "percentageRecovery": true,
+      "expectedKnown": true,
+      "scoringParity": true,
+      "passed": true,
+      "rows": [
+        {
+          "raw": "Air Defense Hitpoints +1%",
+          "name": "Air Defense Hitpoints",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 93,
+          "colour": "neutral",
+          "unlocked": true
+        },
+        {
+          "raw": "Anti-Tank Gun Damage +1%",
+          "name": "Anti-Tank Gun Damage",
+          "value": 1,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 93,
+          "colour": "neutral",
+          "unlocked": false
+        },
+        {
+          "raw": "Vault Interest +6%",
+          "name": "Vault Interest",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 93,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Missile Silo Hitpoints +6%",
+          "name": "Missile Silo Hitpoints",
+          "value": 6,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 94,
+          "colour": "green",
+          "unlocked": false
+        },
+        {
+          "raw": "Sniper Tower Hitpoints +11%",
+          "name": "Sniper Tower Hitpoints",
+          "value": 11,
+          "known": true,
+          "assumed": false,
+          "hasPercent": true,
+          "confidence": 92,
+          "colour": "blue",
+          "unlocked": false
+        }
+      ],
+      "warnings": [],
+      "valid": true,
+      "observations": [
+        {
+          "pass": "block",
+          "rows": [
+            {
+              "raw": "Air Defense Hitpoints +1%",
+              "name": "Air Defense Hitpoints",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 93
+            },
+            {
+              "raw": "Anti-Tank Gun Damage +1%",
+              "name": "Anti-Tank Gun Damage",
+              "value": 1,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 93
+            },
+            {
+              "raw": "Vault Interest +6%",
+              "name": "Vault Interest",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 93
+            },
+            {
+              "raw": "Missile Silo Hitpoints +6%",
+              "name": "Missile Silo Hitpoints",
+              "value": 6,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 94
+            },
+            {
+              "raw": "Sniper Tower Hitpoints +11%",
+              "name": "Sniper Tower Hitpoints",
+              "value": 11,
+              "known": true,
+              "assumed": false,
+              "hasPercent": true,
+              "confidence": 92
+            }
+          ],
+          "warnings": []
+        }
+      ],
+      "hall": "main",
+      "inferColours": true,
+      "colours": [
+        "neutral",
+        "neutral",
+        "green",
+        "green",
+        "blue"
+      ],
+      "unlocked": {
+        "count": 1,
+        "states": [
+          true,
+          false,
+          false,
+          false,
+          false
+        ],
+        "method": "stars",
+        "fills": [
+          0.6055555555555555,
+          0.03888888888888889,
+          0.041025641025641026,
+          0.035897435897435895,
+          0.05128205128205128
+        ]
+      },
+      "ocrCalls": 1
+    }
+  ],
+  "passed": true,
+  "limitations": "One screenshot plus Canvas-derived scale probes and a deliberately injected first-pass failure only. First native and forced-failure OCR include worker initialization; other runs are warm. Scoring parity uses repository rating defaults for all modes/axes. No representative accuracy or continuous capture claim.",
+  "network": {
+    "requests": [
+      {
+        "url": "http://127.0.0.1:61517/ui/scanner.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/navigation.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/styles.css?v=39",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/scanner.css?v=6",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/scanner-core.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/scanner-frames.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/data/army_catalog.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/shared.js?v=33",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/artifact-scoring.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/scanner-recognition.js?v=15",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/scanner-collection.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/scanner-reading.js?v=14",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/scanner.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/favicon.ico",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/data/army_catalog.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/shared.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/scanner-core.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/scanner-frames.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/artifact-scoring.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/scanner-recognition.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/tests/scanner/review-225400.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/tests/scanner/review-225400.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/vendor/tesseract/worker.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/vendor/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "url": "http://127.0.0.1:61517/ui/vendor/tesseract/lang/eng.traineddata.gz",
+        "method": "GET",
+        "hasPostData": false
+      }
+    ],
+    "externalRequests": [],
+    "nonGetRequests": [],
+    "browserErrors": []
+  }
+}

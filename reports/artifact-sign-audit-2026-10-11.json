@@ -1,0 +1,46 @@
+{
+  "authority": "User fixed-sign rule 2026-10-11",
+  "files": [
+    {
+      "path": "C:/Users/edwar/Downloads/artifact-perk-observations-2026-10-11.json",
+      "scans": 60,
+      "exported_at": "2026-10-11T17:53:11.152Z"
+    },
+    {
+      "path": "C:/Users/edwar/Downloads/artifact-perk-observations-2026-10-11 (1).json",
+      "scans": 37,
+      "exported_at": "2026-10-11T18:15:39.560Z"
+    },
+    {
+      "path": "C:/Users/edwar/Downloads/artifact-perk-observations-2026-10-11 (2).json",
+      "scans": 53,
+      "exported_at": "2026-10-11T18:32:25.263Z"
+    }
+  ],
+  "captured_rows": 1269,
+  "numeric_rows": 1147,
+  "captured_sign_violations": [],
+  "captured_mixed_sign_stats": [],
+  "unresolved_invading_rows": [
+    {
+      "file": "C:/Users/edwar/Downloads/artifact-perk-observations-2026-10-11 (1).json",
+      "timestamp": "2026-10-11T18:14:37.858Z",
+      "raw": "Invading Supply Vehicle Hitpoints 6% eo        oo",
+      "name": "Invading Supply Vehicle Hitpoints 6% eo        oo",
+      "grouped_name": "invading supply vehicle hitpoints 6% eo oo",
+      "value": null
+    },
+    {
+      "file": "C:/Users/edwar/Downloads/artifact-perk-observations-2026-10-11 (2).json",
+      "timestamp": "2026-10-11T18:32:07.553Z",
+      "raw": "Invading Paratrooper Hitpomts 11%",
+      "name": "Invading Paratrooper Hitpomts 11%",
+      "grouped_name": "invading paratrooper hitpoints 11%",
+      "value": null
+    }
+  ],
+  "artifact_count": 150,
+  "artifact_sign_violations": [],
+  "artifact_mixed_sign_stats": [],
+  "raw_exports_modified": false
+}

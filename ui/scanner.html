@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<!--
+Authority: Untitled-1.md; approved capture and screenshot-backed recognition prototype.
+Ownership: Passive scanner UI only. Existing ratings and game state are untouched.
+Invariants: User-initiated capture, no audio, no uploads or persistent screenshots.
+History: One English five-row gold-frame screenshot verifies the initial layout.
+-->
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <script src="navigation.js?v=5"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Artifacts - Crafting Scanner</title>
+  <link rel="stylesheet" href="styles.css?v=41" />
+  <link rel="stylesheet" href="scanner.css?v=25" />
+</head>
+<body class="page-scanner">
+  <nav class="site-nav" aria-label="Pages">
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Army Loadout</h2>
+      <a href="army.html">Army</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Artifacts</h2>
+      <a href="artifacts.html">Priority</a>
+      <a href="collection.html">Collection</a>
+      <a href="totals.html">Active totals</a>
+      <a href="scanner.html?v=2" aria-current="page">Crafting Scanner</a>
+      <a href="storage-scanner.html?v=2">Storage Scanner</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Council</h2>
+      <a href="council.html">Priority</a>
+      <a href="council-collection.html">Collection</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Settings</h2>
+      <a href="config.html">Profiles</a>
+      <a href="ratings.html">Perk ratings</a>
+    </div>
+  </nav>
+  <div class="app-main scanner-main">
+      <header class="top scanner-page-header"><div class="top-inner"><h1>DomiNations Crafting Scanner</h1></div><div class="header-controls" aria-label="Primary filters">
+        <fieldset class="seg-field"><legend>Hall</legend><div class="seg" role="group" aria-label="Hall"><button type="button" class="seg-btn" id="header-main" aria-pressed="false">Main</button><button type="button" class="seg-btn" id="header-war" aria-pressed="false">War</button></div></fieldset>
+        <fieldset class="seg-field"><legend>Base Type</legend><div class="seg seg-mini" role="group" aria-label="Base Type"><button type="button" class="seg-btn" id="header-off" aria-pressed="true">Off</button><button type="button" class="seg-btn" id="header-def" aria-pressed="true">Def</button></div></fieldset>
+        <div id="header-profile" class="header-profile"></div></div></header>
+    <details id="scanner-setup" class="scanner-setup">
+      <summary><span class="scanner-setup-title">Scanner setup</span><strong id="scanner-status" class="scanner-connection-label is-disconnected" role="status" aria-live="polite">Disconnected</strong><span class="scanner-setup-actions" role="group" aria-label="Scanning controls"><button type="button" class="btn" id="scanner-connect">Connect Game</button><button type="button" class="btn" id="scanner-stop" disabled>Stop Scanning</button><button type="button" class="btn" id="scanner-read" disabled>Read Artifact</button><button type="button" class="btn" id="scanner-find">Find Panel</button></span></summary>
+      <p id="scanner-message" class="scanner-connection-detail">Connect Game to begin.</p>
+      <p id="scanner-freshness" class="scanner-connection-detail">No calibrated region.</p>
+      <section class="scanner-intro">
+        <h2>Share your game window</h2>
+        <p>Choose the game in your browser's screen-sharing dialog, then select the artifact panel. Keep the category label above it visible in the shared source so its type is detected automatically. Keep this window visible beside the game for the most reliable preview.</p>
+        <p>Read all visible perks, including locked rows, using your existing profile ratings. The initial layout supports English gold-framed Artifact Benefits panels. Verify recognised values before making a game decision.</p>
+        <p>Images stay on your device. No audio or video recording is used. First recognition loads the local OCR model and may take longer.</p>
+      </section>
+      <section class="scanner-controls" aria-label="Capture setup">
+        <label>Prefer sharing <select id="scanner-source"><option value="window">Window</option><option value="browser">Browser tab</option><option value="monitor">Screen</option></select></label>
+        <button type="button" class="btn" id="scanner-select" aria-pressed="false" disabled>Select Region</button>
+        <button type="button" class="btn" id="scanner-retry" disabled>Refresh Preview</button>
+        <label><input type="checkbox" id="scanner-auto" checked /> Auto read stable changes</label>
+      </section>
+      <div class="scanner-controls">
+        <label>Crop layout <select id="scanner-layout"><option value="panel">Gold-framed panel</option><option value="text">Text rows only</option></select></label>
+        <label>Visible rows <select id="scanner-rows" disabled><option value="5">5</option></select></label>
+        <select id="scanner-hall" hidden><option value="main">Main</option><option value="war">War</option></select>
+        <label><input type="checkbox" id="scanner-infer" checked /> Infer unclear values from colour</label>
+      </div>
+      <div class="scanner-workspace">
+        <section class="scanner-panel">
+          <h3>Shared source</h3>
+          <canvas id="scanner-frame" class="scanner-preview" width="640" height="360" tabindex="0" aria-label="Source preview. Select Region, then drag over the artifact panel. Alternatively use the region percentage fields below."></canvas>
+          <p>Drag from one corner of the artifact panel to the other. Include all perk names and values. Press Escape to cancel selection.</p>
+          <details class="scanner-calibration"><summary>Enter region percentages</summary>
+            <div class="scanner-region-fields">
+              <label>Left %<input id="scanner-x" type="number" min="0" max="100" step="0.01" value="0" /></label>
+              <label>Top %<input id="scanner-y" type="number" min="0" max="100" step="0.01" value="0" /></label>
+              <label>Width %<input id="scanner-width" type="number" min="0.01" max="100" step="0.01" value="100" /></label>
+              <label>Height %<input id="scanner-height" type="number" min="0.01" max="100" step="0.01" value="100" /></label>
+            </div>
+            <button type="button" class="btn" id="scanner-apply" disabled>Apply Region</button>
+          </details>
+        </section>
+        <section class="scanner-panel">
+          <h3>Artifact region preview</h3>
+          <canvas id="scanner-crop" class="scanner-preview" width="640" height="360" aria-label="Selected artifact region preview"></canvas>
+          <p id="scanner-meta" class="scanner-meta">No source connected.</p>
+          <p>Check that the complete artifact panel is visible and its text is readable. Preview sampling does not prove that the captured game has continued updating.</p>
+          <label class="scanner-local-file">Test with a local screenshot<br /><input id="scanner-file" type="file" accept="image/png,image/jpeg,image/webp" /></label>
+          <p>PNG, JPEG, or WebP under 20 MB and 32 megapixels. The screenshot is neither uploaded nor saved.</p>
+        </section>
+      </div>
+      <section class="scanner-field-setup scanner-panel" aria-label="Field calibration">
+        <h3>Field calibration</h3>
+        <div class="scanner-controls">
+          <label><input type="checkbox" id="scanner-fields-enabled" checked /> Use saved field boxes</label>
+          <button type="button" class="btn" id="scanner-fields-edit" disabled>Calibrate Fields</button>
+          <button type="button" class="btn" id="scanner-fields-reset" disabled>Reset Saved Boxes</button>
+        </div>
+        <p id="scanner-fields-status" role="status" aria-live="polite">Standard recognition · no saved field boxes.</p>
+        <div id="scanner-fields-editor" hidden>
+          <p>Scanning pauses while you edit this frozen frame. Choose a field, then drag a box around it. Drag inside the selected box to move it, or drag a corner to resize it. The percentage box must include its sign and %. Allow room for longer names and values on other artifacts. Name and percentage boxes may overlap.</p>
+          <label>Field <select id="scanner-fields-field"></select></label>
+          <canvas id="scanner-fields-canvas" class="scanner-preview" width="640" height="360" tabindex="0" aria-label="Field boxes on a frozen source. Choose a field then drag to draw, move or resize its box. Use the numeric fields for precise keyboard editing."></canvas>
+          <div class="scanner-region-fields">
+            <label>Left % of panel<input id="scanner-fields-x" type="number" step="0.1" /></label>
+            <label>Top % of panel<input id="scanner-fields-y" type="number" step="0.1" /></label>
+            <label>Width % of panel<input id="scanner-fields-width" type="number" min="0.1" step="0.1" /></label>
+            <label>Height % of panel<input id="scanner-fields-height" type="number" min="0.1" step="0.1" /></label>
+          </div>
+          <label id="scanner-fields-optional-label" hidden><input id="scanner-fields-optional" type="checkbox" /> Read this optional label</label>
+          <p>Category can sit outside the panel; its Left or Top values may be negative. For Hall colour, select a plain part of the benefits ribbon: red is Main, blue is War.</p>
+          <figure class="scanner-field-preview"><figcaption id="scanner-fields-preview-label">Selected field crop</figcaption><canvas id="scanner-fields-preview" width="320" height="64" aria-label="Selected field crop preview"></canvas></figure>
+          <p id="scanner-fields-feedback" role="status"></p>
+          <div class="scanner-controls">
+            <button type="button" class="btn" id="scanner-fields-save">Save Field Boxes</button>
+            <button type="button" class="btn" id="scanner-fields-cancel">Cancel</button>
+          </div>
+        </div>
+      </section>
+    </details>
+    <div class="scanner-session">
+
+
+      <div class="scanner-summary-bar">
+        <section id="scanner-glance-board" class="scanner-summary-card scanner-capture-card" aria-label="Capture completeness">
+          <span class="scanner-summary-label">Captured</span>
+          <strong id="scanner-capture-percent" class="scanner-summary-number" role="status" aria-live="polite">0%</strong>
+          <progress id="scanner-capture-meter" max="100" value="0" aria-label="Expected information captured"></progress>
+          <p id="scanner-capture-detail">0 / 17 fields captured</p>
+        </section>
+        <section id="scanner-benchmark" class="scanner-summary-card scanner-benchmark" aria-label="Item total and top two benchmark">
+          <span id="scanner-item-type" class="scanner-summary-label">Item total</span>
+          <strong id="scanner-item-total" class="scanner-summary-number" role="status" aria-live="polite">—</strong>
+          <div class="scanner-benchmark-cutoff"><span>Top 2 benchmark</span><strong id="scanner-benchmark-value">—</strong></div>
+          <p id="scanner-comparison" role="status" aria-live="polite">Waiting for an item</p>
+          <p id="scanner-comparison-detail"></p>
+          <p id="scanner-score-freshness" role="status"></p>
+          <p id="scanner-score-assumption"></p>
+        </section>
+      </div>
+      <select id="scanner-mode" hidden><option value="combined">All 5 stats</option></select>
+      <input type="checkbox" id="scanner-off" checked hidden />
+      <input type="checkbox" id="scanner-def" checked hidden />
+      <p id="scanner-progress" hidden>Waiting for an artifact</p>
+    </div>
+    <section class="scanner-reading scanner-panel" aria-label="Artifact recognition and rating">
+      <p id="scanner-profile-label" hidden></p>
+      <p id="scanner-result-status" hidden>Loading perk settings…</p>
+      <div id="scanner-result"></div>
+      <details><summary>How the comparison works</summary><p>Sums all five stats at maximum percentages and compares against your second-best owned item of the same type and hall in this profile, including Unused. Uses your selected Off/Def ratings on both sides. Ties do not count as better.</p></details>
+      <details><summary>Correct Recognition</summary>
+        <label id="scanner-category-choice" hidden>Category <select id="scanner-compare-type"><option value="">Choose item type</option></select></label>
+        <p id="scanner-warnings" class="scanner-warning"></p>
+        <p>Verify every visible row. Duplicate perks stay separate. Corrected values use the same rating calculation as recognised values.</p>
+        <datalist id="scanner-names"></datalist>
+        <p id="scanner-reroll-status" role="status"></p>
+        <div id="scanner-correct"></div>
+        <button type="button" class="btn" id="scanner-accept" disabled>Use Corrected Values</button>
+      </details>
+    </section>
+    <section class="scanner-reading scanner-panel" aria-label="Crafted item log">
+      <h3>Crafted item log</h3>
+      <label><input type="checkbox" id="scanner-collect" checked /> Log items and stats while I cycle through artifacts</label>
+      <label><input type="checkbox" id="scanner-save-logs" checked /> Save logs in this browser</label>
+      <p id="scanner-log-storage-status" role="status"></p>
+      <p id="scanner-item-count" role="status"></p>
+      <details open><summary>Logged items and stats</summary><ol id="scanner-item-log" class="scanner-item-log"></ol></details>
+      <p id="scanner-collection-count" role="status"></p>
+      <button type="button" class="btn" id="scanner-export" disabled>Export Item Log and Names</button>
+      <button type="button" class="btn" id="scanner-collection-clear">Clear Item Log and Names</button>
+      <details><summary>Labels needing review</summary><pre id="scanner-collected-labels" style="white-space:pre-wrap"></pre></details>
+    </section>
+    <video id="scanner-video" class="scanner-video" muted playsinline aria-hidden="true"></video>
+  </div>
+  <script src="scanner-core.js?v=1"></script>
+  <script src="scanner-regions.js?v=3"></script>
+  <script src="scanner-frames.js?v=1"></script>
+  <script src="data/army_catalog.js?v=8"></script>
+  <script src="shared.js?v=40"></script>
+  <script src="profiles-ui.js?v=13"></script>
+  <script src="artifact-scoring.js?v=2"></script>
+  <script src="stored-artifacts.js?v=13"></script>
+  <script src="scanner-comparison.js?v=10"></script>
+  <script src="vendor/tesseract/tesseract.min.js"></script>
+  <script src="scanner-reroll-recognition.js?v=1"></script>
+  <script src="scanner-recognition.js?v=27"></script>
+  <script src="scanner-field-recognition.js?v=4"></script>
+  <script src="scanner-calibration.js?v=3"></script>
+  <script src="scanner-collection.js?v=48"></script>
+  <script src="scanner-reading.js?v=44"></script>
+  <script src="scanner.js?v=7"></script>
+</body>
+</html>

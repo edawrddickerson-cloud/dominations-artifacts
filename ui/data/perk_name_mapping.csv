@@ -207,6 +207,7 @@ Invading Heavy Tank Hitpoints,Invading Heavy Tank Hitpoints,invading-heavy-tank-
 Invading Machine Gun Infantry Damage,Invading Machine Gun Infantry Damage,invading-machine-gun-infantry-damage
 Invading Mortar Troop Damage,Invading Mortar Troop Damage,invading-mortar-troop-damage
 Invading Paratrooper Damage,Invading Paratrooper Damage,invading-paratrooper-damage
+Invading Paratrooper Hitpoints,Invading Paratrooper Hitpoints,invading-paratrooper-hitpoints
 Invading Raider Damage,Invading Raider Damage,invading-raider-damage
 Invading Recon Scan Duration,Invading Recon Scan Duration,invading-recon-scan-duration
 Invading Sabotage Duration,Invading Sabotage Duration,invading-sabotage-duration
@@ -288,3 +289,38 @@ Wall Miner Movement Speed,Wall Miner Movement Speed,wall-miner-movement-speed
 Wall Sapper Damage,Wall Sapper Damage,wall-sapper-damage
 Wall Sapper HP,Wall Sapper Hitpoints,wall-sapper-hitpoints
 Wall Sapper Hitpoints,Wall Sapper Hitpoints,wall-sapper-hitpoints
+Enemy Sniper Tower Hitpoints,Enemy Sniper Tower Hitpoints,enemy-sniper-tower-hitpoints
+Enemy Missile Silo Hitpoints,Enemy Missile Silo Hitpoints,enemy-missile-silo-hitpoints
+Supply Vehicle Hitpoints,Supply Vehicle Hitpoints,supply-vehicle-hitpoints
+Enemy Air Defense Hitpoints,Enemy Air Defense Hitpoints,enemy-air-defense-hitpoints
+Invading Tactical Helicopter Healing,Invading Tactical Helicopter Healing,invading-tactical-helicopter-healing
+Invading Ranged Infantry Hitpoints,Invading Ranged Infantry Hitpoints,invading-ranged-infantry-hitpoints
+Invading Heavy Infantry Damage,Invading Heavy Infantry Damage,invading-heavy-infantry-damage
+Food from Fruit Trees,Food from Fruit Trees,food-from-fruit-trees
+Invading Heavy Cavalry Hitpoints,Invading Heavy Cavalry Hitpoints,invading-heavy-cavalry-hitpoints
+Invading Attack Helicopter Hitpoints,Invading Attack Helicopter Hitpoints,invading-attack-helicopter-hitpoints
+Invading Armored Car Damage,Invading Armored Car Damage,invading-armored-car-damage
+Invading Heavy Infantry Hitpoints,Invading Heavy Infantry Hitpoints,invading-heavy-infantry-hitpoints
+Invading Supply Vehicle Healing,Invading Supply Vehicle Healing,invading-supply-vehicle-healing
+Invading Supply Vehicle Hitpoints,Invading Supply Vehicle Hitpoints,invading-supply-vehicle-hitpoints
+Invading MRL Hitpoints,Invading MRL Hitpoints,invading-mrl-hitpoints
+Anti-Tank Gun Hitpoints,Anti-Tank Gun Hitpoints,anti-tank-gun-hitpoints
+Missile Silo Hitpoints,Missile Silo Hitpoints,missile-silo-hitpoints
+Invading Machine Gun Infantry Hitpoints,Invading Machine Gun Infantry Hitpoints,invading-machine-gun-infantry-hitpoints
+Invading APC Hitpoints,Invading APC Hitpoints,invading-apc-hitpoints
+Invading MRL Damage,Invading MRL Damage,invading-mrl-damage
+Invading Assault Vehicle Hitpoints,Invading Assault Vehicle Hitpoints,invading-assault-vehicle-hitpoints
+Invading Ranged Infantry Damage,Invading Ranged Infantry Damage,invading-ranged-infantry-damage
+Invading Ranged Siege Hitpoints,Invading Ranged Siege Hitpoints,invading-ranged-siege-hitpoints
+Invading Tactical Helicopter Hitpoints,Invading Tactical Helicopter Hitpoints,invading-tactical-helicopter-hitpoints
+Invading Assault Vehicle Damage,Invading Assault Vehicle Damage,invading-assault-vehicle-damage
+Invading Armored Car Hitpoints,Invading Armored Car Hitpoints,invading-armored-car-hitpoints
+Enemy Redoubt Hitpoints,Enemy Redoubt Hitpoints,enemy-redoubt-hitpoints
+Tactical Helicopter Hitpoints,Tactical Helicopter Hitpoints,tactical-helicopter-hitpoints
+All Resources from Hunting,All Resources from Hunting,all-resources-from-hunting
+Redoubt Hitpoints,Redoubt Hitpoints,redoubt-hitpoints
+Invading Raider Hitpoints,Invading Raider Hitpoints,invading-raider-hitpoints
+Invading Mortar Troop Hitpoints,Invading Mortar Troop Hitpoints,invading-mortar-troop-hitpoints
+Invading APC Damage,Invading APC Damage,invading-apc-damage
+Invading Attack Helicopter Damage,Invading Attack Helicopter Damage,invading-attack-helicopter-damage
+Invading Ranged Siege Damage,Invading Ranged Siege Damage,invading-ranged-siege-damage

@@ -1,0 +1,118 @@
+{
+  "authority": "User rule 2026-10-11: all Invading effects negative, one fixed polarity per canonical stat; stable signed catalogue/capture evidence for other effects.",
+  "corrections": [
+    {
+      "artifact_id": "heads-of-hevajra-legendary",
+      "artifact": "Heads of Hevajra",
+      "stat": "All Enemy Defensive Towers Damage",
+      "field": "perk_5_base",
+      "from": "11",
+      "to": "-11"
+    },
+    {
+      "artifact_id": "heads-of-hevajra-legendary",
+      "artifact": "Heads of Hevajra",
+      "stat": "All Enemy Defensive Towers Damage",
+      "field": "perk_5_max",
+      "from": "20",
+      "to": "-20"
+    },
+    {
+      "artifact_id": "fengguan-phoenix-crown-mythical",
+      "artifact": "Fengguan Phoenix Crown",
+      "stat": "All Defensive Towers Damage",
+      "field": "perk_2_base",
+      "from": "-11",
+      "to": "11"
+    },
+    {
+      "artifact_id": "fengguan-phoenix-crown-mythical",
+      "artifact": "Fengguan Phoenix Crown",
+      "stat": "All Defensive Towers Damage",
+      "field": "perk_2_max",
+      "from": "-20",
+      "to": "20"
+    },
+    {
+      "artifact_id": "li-vessel-mythical",
+      "artifact": "Li Vessel",
+      "stat": "APC Deploy Time",
+      "field": "perk_2_base",
+      "from": "11",
+      "to": "-11"
+    },
+    {
+      "artifact_id": "li-vessel-mythical",
+      "artifact": "Li Vessel",
+      "stat": "APC Deploy Time",
+      "field": "perk_2_max",
+      "from": "20",
+      "to": "-20"
+    },
+    {
+      "artifact_id": "silla-gold-crown-mythical",
+      "artifact": "Silla Gold Crown",
+      "stat": "Library Tech Resource Cost",
+      "field": "perk_1_base",
+      "from": "15",
+      "to": "-15"
+    },
+    {
+      "artifact_id": "silla-gold-crown-mythical",
+      "artifact": "Silla Gold Crown",
+      "stat": "Library Tech Resource Cost",
+      "field": "perk_1_max",
+      "from": "24",
+      "to": "-24"
+    },
+    {
+      "artifact_id": "silla-gold-crown-mythical",
+      "artifact": "Silla Gold Crown",
+      "stat": "Library Tech Resource Cost",
+      "field": "perk_6_base",
+      "from": "15",
+      "to": "-15"
+    },
+    {
+      "artifact_id": "silla-gold-crown-mythical",
+      "artifact": "Silla Gold Crown",
+      "stat": "Library Tech Resource Cost",
+      "field": "perk_6_max",
+      "from": "24",
+      "to": "-24"
+    },
+    {
+      "artifact_id": "mold-gold-cape-legendary",
+      "artifact": "Mold Gold Cape",
+      "stat": "Invading Bomber Damage",
+      "field": "perk_4_base",
+      "from": "11",
+      "to": "-11"
+    },
+    {
+      "artifact_id": "mold-gold-cape-legendary",
+      "artifact": "Mold Gold Cape",
+      "stat": "Invading Bomber Damage",
+      "field": "perk_4_max",
+      "from": "20",
+      "to": "-20"
+    },
+    {
+      "artifact_id": "gemini-8-gloves-mythical",
+      "artifact": "Gemini 8 Gloves",
+      "stat": "Enemy Missile Silo Damage",
+      "field": "perk_6_base",
+      "from": "12",
+      "to": "-12"
+    },
+    {
+      "artifact_id": "gemini-8-gloves-mythical",
+      "artifact": "Gemini 8 Gloves",
+      "stat": "Enemy Missile Silo Damage",
+      "field": "perk_6_max",
+      "from": "21",
+      "to": "-21"
+    }
+  ],
+  "source_captures_preserved": true
+}

@@ -1,0 +1,329 @@
+[
+  {
+    "stamp": "230152",
+    "hall": "main",
+    "type": "Weapon",
+    "name": "Kusarigama",
+    "unlocked": 1,
+    "rows": [
+      {
+        "name": "Enemy Defender Spawn Time",
+        "value": 13
+      },
+      {
+        "name": "MRL Hitpoints",
+        "value": 6
+      },
+      {
+        "name": "Generals' Hitpoints",
+        "value": 11
+      },
+      {
+        "name": "Heavy Infantry Hitpoints",
+        "value": 1
+      },
+      {
+        "name": "Tactical Helicopter Hitpoints",
+        "value": 1
+      }
+    ]
+  },
+  {
+    "stamp": "231624",
+    "hall": "main",
+    "type": "Armor",
+    "name": "Gush X’een’s Tlingit Armor",
+    "unlocked": 1,
+    "rows": [
+      {
+        "name": "Defender Hitpoints",
+        "value": 11
+      },
+      {
+        "name": "Invading Generals' Damage",
+        "value": -11
+      },
+      {
+        "name": "Invading Fighter Hitpoints",
+        "value": -11
+      },
+      {
+        "name": "Invading Attack Helicopter Hitpoints",
+        "value": -11
+      },
+      {
+        "name": "Invading MRL Hitpoints",
+        "value": -11
+      }
+    ]
+  },
+  {
+    "stamp": "231632",
+    "hall": "main",
+    "type": "Jewelry",
+    "name": "Moche Ear Ornament",
+    "unlocked": 3,
+    "rows": [
+      {
+        "name": "Enemy Catapult Damage",
+        "value": -12
+      },
+      {
+        "name": "Enemy Air Defense Damage",
+        "value": -2
+      },
+      {
+        "name": "Oil Looted",
+        "value": 7
+      },
+      {
+        "name": "Enemy Tower Hitpoints",
+        "value": -1
+      },
+      {
+        "name": "Enemy Anti-Tank Gun Damage",
+        "value": -6
+      }
+    ]
+  },
+  {
+    "stamp": "231642",
+    "hall": "main",
+    "type": "Pottery",
+    "name": "Dancing Dog",
+    "unlocked": 2,
+    "rows": [
+      {
+        "name": "Anti-Tank Gun Damage",
+        "value": 11
+      },
+      {
+        "name": "Catapult Damage",
+        "value": 11
+      },
+      {
+        "name": "Forest Expansion Cost Refund",
+        "value": 11
+      },
+      {
+        "name": "Catapult Hitpoints",
+        "value": 11
+      },
+      {
+        "name": "Air Defense Damage",
+        "value": 11
+      }
+    ]
+  },
+  {
+    "stamp": "231706",
+    "hall": "main",
+    "type": "Mythical",
+    "name": "Ruyi Scepter",
+    "unlocked": 6,
+    "rows": [
+      {
+        "name": "Factory Troop Hitpoints",
+        "value": 20
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "value": 25
+      },
+      {
+        "name": "Enemy Anti-Tank Gun Damage",
+        "value": -23
+      },
+      {
+        "name": "Enemy Catapult Damage",
+        "value": -23
+      },
+      {
+        "name": "All Enemy Defensive Towers Hitpoints",
+        "value": -20
+      },
+      {
+        "name": "All Enemy Defensive Towers Damage",
+        "value": -20
+      }
+    ]
+  },
+  {
+    "stamp": "231712",
+    "hall": "main",
+    "type": "Legendary",
+    "name": "Thinker of Cernavoda",
+    "unlocked": 5,
+    "rows": [
+      {
+        "name": "Barracks Troop Damage",
+        "value": 19
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "value": 15
+      },
+      {
+        "name": "All Enemy Defensive Towers Damage",
+        "value": -19
+      },
+      {
+        "name": "All Resources Looted",
+        "value": 11
+      },
+      {
+        "name": "All Resources Looted",
+        "value": 11
+      }
+    ]
+  },
+  {
+    "stamp": "231728",
+    "hall": "war",
+    "type": "War Weapon",
+    "name": "Luger Pistol",
+    "unlocked": 4,
+    "rows": [
+      {
+        "name": "Ranged Siege Damage",
+        "value": 1
+      },
+      {
+        "name": "Ranged Infantry Damage",
+        "value": 10
+      },
+      {
+        "name": "Ranged Infantry Damage",
+        "value": 12
+      },
+      {
+        "name": "Heavy Infantry Damage",
+        "value": 10
+      },
+      {
+        "name": "Fighter Damage",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "stamp": "231732",
+    "hall": "war",
+    "type": "War Armor",
+    "name": "Casimir Zeglen’s Brewster Body Shield",
+    "unlocked": 5,
+    "rows": [
+      {
+        "name": "Fighter Hitpoints",
+        "value": 15
+      },
+      {
+        "name": "Bomber Hitpoints",
+        "value": 4
+      },
+      {
+        "name": "APC Hitpoints",
+        "value": 15
+      },
+      {
+        "name": "Heavy Infantry Hitpoints",
+        "value": 15
+      },
+      {
+        "name": "Paratrooper Hitpoints",
+        "value": 10
+      }
+    ]
+  },
+  {
+    "stamp": "231739",
+    "hall": "war",
+    "type": "War Equipment",
+    "name": "Ernest Hemingway’s Field Surgery Kit",
+    "unlocked": 1,
+    "rows": [
+      {
+        "name": "Enemy Defender Spawn Time",
+        "value": 6
+      },
+      {
+        "name": "All Enemy Defensive Towers Hitpoints",
+        "value": -1
+      },
+      {
+        "name": "Enemy Catapult Damage",
+        "value": -6
+      },
+      {
+        "name": "Redoubt Damage",
+        "value": 3
+      },
+      {
+        "name": "Catapult Hitpoints",
+        "value": 3
+      }
+    ]
+  },
+  {
+    "stamp": "231746",
+    "hall": "war",
+    "type": "War Legendary",
+    "name": "British Kettle Drum",
+    "unlocked": 5,
+    "rows": [
+      {
+        "name": "Mortar Troop Damage",
+        "value": 7
+      },
+      {
+        "name": "Barracks Troop Damage",
+        "value": 14
+      },
+      {
+        "name": "Barracks Troop Hitpoints",
+        "value": 10
+      },
+      {
+        "name": "Ranged Siege Damage",
+        "value": 7
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "value": 16
+      }
+    ]
+  },
+  {
+    "stamp": "231751",
+    "hall": "war",
+    "type": "War Mythical",
+    "name": "Maori War Club",
+    "unlocked": 6,
+    "rows": [
+      {
+        "name": "Generals' Hitpoints and Damage",
+        "value": 15
+      },
+      {
+        "name": "All Defensive Towers Hitpoints and Damage",
+        "value": 8
+      },
+      {
+        "name": "Defender Spawn Time",
+        "value": -11
+      },
+      {
+        "name": "Defender Movement Speed",
+        "value": 8
+      },
+      {
+        "name": "Invading Recon Scan Duration",
+        "value": -10
+      },
+      {
+        "name": "Generals' Attack Speed",
+        "value": 11
+      }
+    ]
+  }
+]

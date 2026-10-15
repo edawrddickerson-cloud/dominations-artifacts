@@ -579,6 +579,9 @@
     "Invading Paratrooper Damage": {
       "kind": "independent"
     },
+    "Invading Paratrooper Hitpoints": {
+      "kind": "independent"
+    },
     "Invading Raider Damage": {
       "kind": "independent"
     },
@@ -854,6 +857,113 @@
     },
     "Food, Gold and Oil Generated": {
       "kind": "independent"
+    },
+    "Enemy Sniper Tower Hitpoints": {
+      "kind": "independent"
+    },
+    "Enemy Missile Silo Hitpoints": {
+      "kind": "independent"
+    },
+    "Supply Vehicle Hitpoints": {
+      "kind": "unit",
+      "unit": "Supply Vehicle"
+    },
+    "Enemy Air Defense Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Tactical Helicopter Healing": {
+      "kind": "independent"
+    },
+    "Invading Ranged Infantry Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Heavy Infantry Damage": {
+      "kind": "independent"
+    },
+    "Food from Fruit Trees": {
+      "kind": "independent"
+    },
+    "Invading Heavy Cavalry Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Attack Helicopter Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Armored Car Damage": {
+      "kind": "independent"
+    },
+    "Invading Heavy Infantry Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Supply Vehicle Healing": {
+      "kind": "independent"
+    },
+    "Invading Supply Vehicle Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading MRL Hitpoints": {
+      "kind": "independent"
+    },
+    "Anti-Tank Gun Hitpoints": {
+      "kind": "independent"
+    },
+    "Missile Silo Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Machine Gun Infantry Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading APC Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading MRL Damage": {
+      "kind": "independent"
+    },
+    "Invading Assault Vehicle Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Ranged Infantry Damage": {
+      "kind": "independent"
+    },
+    "Invading Ranged Siege Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Tactical Helicopter Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Assault Vehicle Damage": {
+      "kind": "independent"
+    },
+    "Invading Armored Car Hitpoints": {
+      "kind": "independent"
+    },
+    "Enemy Redoubt Hitpoints": {
+      "kind": "independent"
+    },
+    "Tactical Helicopter Hitpoints": {
+      "kind": "unit",
+      "unit": "Tactical Helicopter"
+    },
+    "All Resources from Hunting": {
+      "kind": "independent"
+    },
+    "Redoubt Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Raider Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading Mortar Troop Hitpoints": {
+      "kind": "independent"
+    },
+    "Invading APC Damage": {
+      "kind": "independent"
+    },
+    "Invading Attack Helicopter Damage": {
+      "kind": "independent"
+    },
+    "Invading Ranged Siege Damage": {
+      "kind": "independent"
     }
   },
   "perk_aliases": {
@@ -963,5 +1073,208 @@
     "Supply Vehicles Healing": "Supply Vehicle Healing",
     "Tower HP": "Tower Hitpoints",
     "Wall Sapper HP": "Wall Sapper Hitpoints"
-  }
+  },
+  "perk_signs": {
+    "Air Defense Attack Speed": 1,
+    "Air Defense Damage": 1,
+    "Air Defense Hitpoints": 1,
+    "Airstrip Troop Damage": 1,
+    "Airstrip Troop Hitpoints": 1,
+    "All Defensive Towers Damage": 1,
+    "All Defensive Towers Hitpoints": 1,
+    "All Defensive Towers Hitpoints & Damage": 1,
+    "All Enemy Defensive Towers Damage": -1,
+    "All Enemy Defensive Towers Hitpoints": -1,
+    "All Resources from Hunting": 1,
+    "All Resources Looted": 1,
+    "Anti-Tank Gun Damage": 1,
+    "Anti-Tank Gun Hitpoints": 1,
+    "APC Damage": 1,
+    "APC Deploy Time": -1,
+    "APC Deploys Marines On Death": 1,
+    "APC Hitpoints": 1,
+    "Armored Car Damage": 1,
+    "Armored Car Hitpoints": 1,
+    "Assault Vehicle Damage": 1,
+    "Assault Vehicle Hitpoints": 1,
+    "Attack Helicopter Damage": 1,
+    "Attack Helicopter Hitpoints": 1,
+    "Barracks Troop Damage": 1,
+    "Barracks Troop Hitpoints": 1,
+    "Barracks Troop Training Cost": -1,
+    "Bazooka Attack Speed": 1,
+    "Bazooka Cooldown": 1,
+    "Bazooka Damage": 1,
+    "Bazooka Hitpoints": 1,
+    "Bomber Damage": 1,
+    "Bomber Hitpoints": 1,
+    "Castle spawns Sword Saints when Destroyed": 1,
+    "Catapult Damage": 1,
+    "Catapult Hitpoints": 1,
+    "Coalition Troop Damage": 1,
+    "Commando Damage": 1,
+    "Commando Hitpoints": 1,
+    "Decoy Tactic Hitpoints": 1,
+    "Defender Damage": 1,
+    "Defender Hitpoints": 1,
+    "Defender Movement Speed": 1,
+    "Defender Spawn Time": -1,
+    "Enemy Air Defense Damage": -1,
+    "Enemy Air Defense Hitpoints": -1,
+    "Enemy Anti-Tank Gun Damage": -1,
+    "Enemy Anti-Tank Gun Hitpoints": -1,
+    "Enemy Catapult Damage": -1,
+    "Enemy Catapult Hitpoints": -1,
+    "Enemy Defender Hitpoints": -1,
+    "Enemy Defender Spawn Time": 1,
+    "Enemy Missile Silo Damage": -1,
+    "Enemy Missile Silo Hitpoints": -1,
+    "Enemy Recon Plane Scan Duration": -1,
+    "Enemy Redoubt Damage": -1,
+    "Enemy Redoubt Hitpoints": -1,
+    "Enemy Sabotage Duration": -1,
+    "Enemy Sniper Tower Damage": -1,
+    "Enemy Sniper Tower Hitpoints": -1,
+    "Enemy Tower Damage": -1,
+    "Enemy Tower Hitpoints": -1,
+    "Factory Troop Damage": 1,
+    "Factory Troop Hitpoints": 1,
+    "Factory Troop Training Cost": -1,
+    "Fighter Damage": 1,
+    "Fighter Hitpoints": 1,
+    "Fighter Hitpoints & Damage": 1,
+    "First Aid Duration": 1,
+    "Food from Farms": 1,
+    "Food from Fruit Trees": 1,
+    "Food Looted": 1,
+    "Forest Expansion Cost Refund": 1,
+    "Generals' Attack Speed": 1,
+    "Generals' Damage": 1,
+    "Generals' Hitpoints": 1,
+    "Generals' Hitpoints & Damage": 1,
+    "Generals' Movement Speed": 1,
+    "Gold from Caravans": 1,
+    "Gold from Gold Mines": 1,
+    "Gold Looted": 1,
+    "Guerrilla Damage": 1,
+    "Guerrilla Hitpoints": 1,
+    "Guerrilla Movement Speed": 1,
+    "Heavy Cavalry Damage": 1,
+    "Heavy Cavalry Hitpoints": 1,
+    "Heavy Infantry Attack Speed": 1,
+    "Heavy Infantry Damage": 1,
+    "Heavy Infantry Hitpoints": 1,
+    "Heavy Infantry Movement Speed": 1,
+    "Heavy Tank Attack Speed": 1,
+    "Heavy Tank Damage": 1,
+    "Heavy Tank Hitpoints": 1,
+    "Increase Rally Duration": 1,
+    "Invading Airstrip Troop Damage": -1,
+    "Invading Airstrip Unit Hitpoints": -1,
+    "Invading APC Hitpoints": -1,
+    "Invading Armored Car Damage": -1,
+    "Invading Armored Car Hitpoints": -1,
+    "Invading Assault Vehicle Damage": -1,
+    "Invading Assault Vehicle Hitpoints": -1,
+    "Invading Attack Helicopter Hitpoints": -1,
+    "Invading Barracks Troop Damage": -1,
+    "Invading Barracks Troop Hitpoints": -1,
+    "Invading Bazooka Damage": -1,
+    "Invading Bazooka Hitpoints": -1,
+    "Invading Bomber Damage": -1,
+    "Invading Bomber Hitpoints": -1,
+    "Invading Factory Troop Damage": -1,
+    "Invading Factory Troop Hitpoints": -1,
+    "Invading Fighter Damage": -1,
+    "Invading Fighter Hitpoints": -1,
+    "Invading Fighter Hitpoints & Damage": -1,
+    "Invading Generals' Attack Speed": -1,
+    "Invading Generals' Damage": -1,
+    "Invading Generals' Hitpoints": -1,
+    "Invading Generals' Hitpoints & Damage": -1,
+    "Invading Guerrilla Damage": -1,
+    "Invading Guerrilla Hitpoints": -1,
+    "Invading Heavy Cavalry Damage": -1,
+    "Invading Heavy Cavalry Hitpoints": -1,
+    "Invading Heavy Infantry Damage": -1,
+    "Invading Heavy Infantry Hitpoints": -1,
+    "Invading Heavy Tank Damage": -1,
+    "Invading Heavy Tank Hitpoints": -1,
+    "Invading Machine Gun Infantry Damage": -1,
+    "Invading Machine Gun Infantry Hitpoints": -1,
+    "Invading Mortar Troop Damage": -1,
+    "Invading MRL Damage": -1,
+    "Invading MRL Hitpoints": -1,
+    "Invading Paratrooper Damage": -1,
+    "Invading Paratrooper Hitpoints": -1,
+    "Invading Raider Damage": -1,
+    "Invading Ranged Infantry Damage": -1,
+    "Invading Ranged Infantry Hitpoints": -1,
+    "Invading Ranged Siege Hitpoints": -1,
+    "Invading Recon Scan Duration": -1,
+    "Invading Sabotage Duration": -1,
+    "Invading Supply Vehicle Healing": -1,
+    "Invading Supply Vehicle Hitpoints": -1,
+    "Invading Tactical Helicopter Healing": -1,
+    "Invading Tactical Helicopter Hitpoints": -1,
+    "Invading Transport Hitpoints": -1,
+    "Library Research Time": -1,
+    "Library Tech Food Cost": -1,
+    "Library Tech Gold Cost": -1,
+    "Library Tech Oil Cost": -1,
+    "Library Tech Resource Cost": -1,
+    "Looted Resource Refund": 1,
+    "Machine Gun Infantry Damage": 1,
+    "Machine Gun Infantry Hitpoints": 1,
+    "Mercenary Camp Deploys Spartans when Destroyed": 1,
+    "Missile Silo and Big Red Button Damage": 1,
+    "Missile Silo Damage": 1,
+    "Missile Silo Hitpoints": 1,
+    "Mortar Troop Attack Speed": 1,
+    "Mortar Troop Damage": 1,
+    "Mortar Troop Hitpoints": 1,
+    "MRL Damage": 1,
+    "MRL Hitpoints": 1,
+    "National Trade Good Loot Chance": 1,
+    "Oil From Oil Wells": 1,
+    "Oil Looted": 1,
+    "Paratrooper Damage": 1,
+    "Paratrooper Hitpoints": 1,
+    "Quick Victory Time": 1,
+    "Raider Damage": 1,
+    "Raider Hitpoints": 1,
+    "Raiders Spawn from Forest When Attacking": 1,
+    "Rally Cooldown": -1,
+    "Ranged Infantry Damage": 1,
+    "Ranged Infantry Hitpoints": 1,
+    "Ranged Siege Damage": 1,
+    "Ranged Siege Hitpoints": 1,
+    "Recon Bonus Duration": 1,
+    "Recon Scan Duration": 1,
+    "Redoubt Damage": 1,
+    "Redoubt Hitpoints": 1,
+    "Sniper Tower Damage": 1,
+    "Sniper Tower Hitpoints": 1,
+    "Supply Vehicle": 1,
+    "Supply Vehicle Healing": 1,
+    "Supply Vehicle Hitpoints": 1,
+    "Tactical Helicopter Healing": 1,
+    "Tactical Helicopter Hitpoints": 1,
+    "Tower Damage": 1,
+    "Tower Hitpoints": 1,
+    "Transport Cooldown": -1,
+    "Transport Movement Speed": 1,
+    "University Research Time": -1,
+    "Vault Capacity": 1,
+    "Vault Interest": 1,
+    "Wall Miner Damage": 1,
+    "Wall Sapper Damage": 1,
+    "Wall Sapper Hitpoints": 1,
+    "Invading Raider Hitpoints": -1,
+    "Invading Mortar Troop Hitpoints": -1,
+    "Invading APC Damage": -1,
+    "Invading Attack Helicopter Damage": -1,
+    "Invading Ranged Siege Damage": -1
+  },
+  "perk_sign_authority": "User rule 2026-10-11: all Invading effects negative, one fixed polarity per canonical stat; stable signed catalogue/capture evidence for other effects."
 }

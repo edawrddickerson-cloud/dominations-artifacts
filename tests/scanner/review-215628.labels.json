@@ -1,0 +1,26 @@
+{
+  "source": "User game/app review pairs; names and values manually transcribed from game pixels",
+  "reviewPair": true,
+  "rows": [
+    {
+      "name": "Invading APC Damage",
+      "value": -6
+    },
+    {
+      "name": "Invading Fighter Damage",
+      "value": -6
+    },
+    {
+      "name": "Invading Heavy Cavalry Damage",
+      "value": -1
+    },
+    {
+      "name": "Invading Ranged Siege Damage",
+      "value": -6
+    },
+    {
+      "name": "Invading Guerrilla Hitpoints",
+      "value": -1
+    }
+  ]
+}

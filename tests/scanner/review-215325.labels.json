@@ -1,0 +1,26 @@
+{
+  "source": "User game/app review pairs; names and values manually transcribed from game pixels",
+  "reviewPair": true,
+  "rows": [
+    {
+      "name": "Invading Heavy Infantry Damage",
+      "value": -6
+    },
+    {
+      "name": "Invading Bomber Damage",
+      "value": -6
+    },
+    {
+      "name": "Invading Assault Vehicle Hitpoints",
+      "value": -1
+    },
+    {
+      "name": "Invading Bomber Damage",
+      "value": -1
+    },
+    {
+      "name": "Invading Bazooka Damage",
+      "value": -1
+    }
+  ]
+}

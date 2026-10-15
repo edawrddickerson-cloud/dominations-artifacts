@@ -2,10 +2,10 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <script src="navigation.js?v=1"></script>
+  <script src="navigation.js?v=5"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts · Priority</title>
-  <link rel="stylesheet" href="styles.css?v=38" />
+  <link rel="stylesheet" href="styles.css?v=39" />
 </head>
 <body class="page-priority">
   <nav class="site-nav" aria-label="Pages">
@@ -17,6 +17,9 @@
       <h2 class="site-nav-label">Artifacts</h2>
       <a href="artifacts.html" aria-current="page">Priority</a>
       <a href="collection.html">Collection</a>
+      <a href="totals.html">Active totals</a>
+      <a href="scanner.html?v=2">Crafting Scanner</a>
+      <a href="storage-scanner.html?v=2">Storage Scanner</a>
     </div>
     <div class="site-nav-section">
       <h2 class="site-nav-label">Council</h2>
@@ -127,10 +130,10 @@
           <th data-sort="grade" aria-sort="none" scope="col"><button type="button" class="th-sort">Grade</button></th>
           <th data-sort="perks" aria-sort="none" scope="col" title="Perk name and stat range"><button type="button" class="th-sort">Stats</button></th>
           <th scope="col" class="th-plain" title="Off and Def ratings for each stat, before multiplying by magnitude"><span class="th-label">Perk rating</span></th>
-          <th scope="col" class="th-plain th-numeric" title="Per-line Offensive scores (rating × stat magnitude)"><span class="th-label">Off</span></th>
-          <th scope="col" class="th-plain th-numeric" title="Per-line Defensive scores (rating × stat magnitude)"><span class="th-label">Def</span></th>
-          <th class="th-numeric" data-sort="offensive" aria-sort="none" scope="col" title="Offensive total: Hall sum or Showcase line. With both Base Type axes checked, Off/Def headers sort by Off+Def."><button type="button" class="th-sort">Off Σ</button></th>
-          <th class="th-numeric" data-sort="defensive" aria-sort="none" scope="col" title="Defensive total: Hall sum or Showcase line. With both Base Type axes checked, Off/Def headers sort by Off+Def."><button type="button" class="th-sort">Def Σ</button></th>
+          <th data-score-axis="offensive" scope="col" class="th-plain th-numeric" title="Per-line Offensive scores (rating × stat magnitude)"><span class="th-label">Off</span></th>
+          <th data-score-axis="defensive" scope="col" class="th-plain th-numeric" title="Per-line Defensive scores (rating × stat magnitude)"><span class="th-label">Def</span></th>
+          <th class="th-numeric" data-score-axis="offensive" data-sort="offensive" aria-sort="none" scope="col" title="Offensive total: Hall sum or Showcase line. Sorts by this total first; with both axes selected, the other total breaks ties."><button type="button" class="th-sort">Off Σ</button></th>
+          <th class="th-numeric" data-score-axis="defensive" data-sort="defensive" aria-sort="none" scope="col" title="Defensive total: Hall sum or Showcase line. Sorts by this total first; with both axes selected, the other total breaks ties."><button type="button" class="th-sort">Def Σ</button></th>
           <th class="th-numeric" data-sort="cost" aria-sort="none" scope="col" title="Sort by cost tier"><button type="button" class="th-sort">Cost</button></th>
           <th class="th-numeric" data-sort="pref_per_cost" aria-sort="none" scope="col" title="Active preference score ÷ token cost. Blank when cost unknown."><button type="button" class="th-sort">Pref/cost</button></th>
         </tr>
@@ -140,10 +143,11 @@
   </div>
 
   </div>
-  <script src="data/army_catalog.js?v=1"></script>
-  <script src="shared.js?v=29"></script>
-  <script src="profiles-ui.js?v=8"></script>
-  <script src="app.js?v=26"></script>
+  <script src="data/army_catalog.js?v=8"></script>
+  <script src="shared.js?v=40"></script>
+  <script src="profiles-ui.js?v=13"></script>
+  <script src="artifact-scoring.js?v=2"></script>
+  <script src="app.js?v=31"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9c4fcfc024144c4aa34a78ae6332dc9f"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

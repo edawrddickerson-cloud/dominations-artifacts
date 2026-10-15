@@ -706,8 +706,8 @@
     "perk_4_base": "11",
     "perk_4_max": "20",
     "perk_5_name": "All Enemy Defensive Towers Damage",
-    "perk_5_base": "11",
-    "perk_5_max": "20",
+    "perk_5_base": "-11",
+    "perk_5_max": "-20",
     "perk_6_name": "",
     "perk_6_base": "",
     "perk_6_max": "",
@@ -719,7 +719,7 @@
     "source_secondary": "wiki:statistic_table:Heads of Hevajra",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9; sign_corrected_per_user_rule_2026-10-11"
   },
   {
     "artifact_id": "helg-buddha-legendary",
@@ -2179,8 +2179,8 @@
     "perk_1_base": "-11",
     "perk_1_max": "-20",
     "perk_2_name": "All Defensive Towers Damage",
-    "perk_2_base": "-11",
-    "perk_2_max": "-20",
+    "perk_2_base": "11",
+    "perk_2_max": "20",
     "perk_3_name": "Defender Spawn Time",
     "perk_3_base": "-15",
     "perk_3_max": "-24",
@@ -2201,7 +2201,7 @@
     "source_secondary": "wiki:statistic_table:Fengguan Phoenix Crown(Mythical Artifacts)",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9; sign_corrected_per_user_rule_2026-10-11"
   },
   {
     "artifact_id": "fire-breathing-bunny-fossil-mythical",
@@ -2293,8 +2293,8 @@
     "perk_1_base": "12",
     "perk_1_max": "21",
     "perk_2_name": "APC Deploy Time",
-    "perk_2_base": "11",
-    "perk_2_max": "20",
+    "perk_2_base": "-11",
+    "perk_2_max": "-20",
     "perk_3_name": "APC Hitpoints",
     "perk_3_base": "12",
     "perk_3_max": "21",
@@ -2315,7 +2315,7 @@
     "source_secondary": "wiki:statistic_table:Li Vessel(Mythical Artifacts)",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9; sign_corrected_per_user_rule_2026-10-11"
   },
   {
     "artifact_id": "mask-of-agamemnon-mythical",
@@ -2442,8 +2442,8 @@
     "release_date": "",
     "perk_count": "6",
     "perk_1_name": "Library Tech Resource Cost",
-    "perk_1_base": "15",
-    "perk_1_max": "24",
+    "perk_1_base": "-15",
+    "perk_1_max": "-24",
     "perk_2_name": "Gold Looted",
     "perk_2_base": "15",
     "perk_2_max": "24",
@@ -2457,8 +2457,8 @@
     "perk_5_base": "15",
     "perk_5_max": "24",
     "perk_6_name": "Library Tech Resource Cost",
-    "perk_6_base": "15",
-    "perk_6_max": "24",
+    "perk_6_base": "-15",
+    "perk_6_max": "-24",
     "cost": "1000",
     "cost_currency": "Legendary Tokens",
     "acquisition_method": "Marco / official release",
@@ -2467,7 +2467,7 @@
     "source_secondary": "wiki:statistic_table:Silla Gold Crown(Mythical Artifacts)",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "Added from official June 2026 Marco's Wares; duplicate Library Tech Resource Cost perk is real per BHG post. No wiki perk extract in batch.; perks_from_official_bhg; perk_max_derived_base_plus_9"
+    "notes": "Added from official June 2026 Marco's Wares; duplicate Library Tech Resource Cost perk is real per BHG post. No wiki perk extract in batch.; perks_from_official_bhg; perk_max_derived_base_plus_9; sign_corrected_per_user_rule_2026-10-11"
   },
   {
     "artifact_id": "soul-catcher-mythical",
@@ -4085,8 +4085,8 @@
     "perk_3_base": "8",
     "perk_3_max": "17",
     "perk_4_name": "Invading Bomber Damage",
-    "perk_4_base": "11",
-    "perk_4_max": "20",
+    "perk_4_base": "-11",
+    "perk_4_max": "-20",
     "perk_5_name": "All Defensive Towers Hitpoints & Damage",
     "perk_5_base": "3",
     "perk_5_max": "12",
@@ -4101,7 +4101,7 @@
     "source_secondary": "wiki:statistic_table:Mold Gold Cape",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "Official BHG; perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9"
+    "notes": "Official BHG; perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9; sign_corrected_per_user_rule_2026-10-11"
   },
   {
     "artifact_id": "napoleon-s-boxlock-pistol-legendary",
@@ -5231,8 +5231,8 @@
     "perk_5_base": "12",
     "perk_5_max": "21",
     "perk_6_name": "Enemy Missile Silo Damage",
-    "perk_6_base": "12",
-    "perk_6_max": "21",
+    "perk_6_base": "-12",
+    "perk_6_max": "-21",
     "cost": "1000",
     "cost_currency": "Legendary Tokens",
     "acquisition_method": "Marco / official release",
@@ -5241,7 +5241,7 @@
     "source_secondary": "wiki:statistic_table:Gemini 8 Gloves(Mythical War Artifacts)",
     "source_checked_date": "2026-09-05",
     "confidence": "High",
-    "notes": "perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9"
+    "notes": "perks_prefer_draft_over_wiki; perk_max_derived_base_plus_9; sign_corrected_per_user_rule_2026-10-11"
   },
   {
     "artifact_id": "gemini-8-helmet-mythical",

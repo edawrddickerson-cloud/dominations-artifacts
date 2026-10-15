@@ -1,0 +1,26 @@
+{
+  "source": "User game/app review pairs; names and values manually transcribed from game pixels",
+  "reviewPair": true,
+  "rows": [
+    {
+      "name": "Vault Interest",
+      "value": 6
+    },
+    {
+      "name": "Forest Expansion Cost Refund",
+      "value": 11
+    },
+    {
+      "name": "Vault Capacity",
+      "value": 1
+    },
+    {
+      "name": "Redoubt Hitpoints",
+      "value": 1
+    },
+    {
+      "name": "Sniper Tower Damage",
+      "value": 6
+    }
+  ]
+}

@@ -1,3 +1,10 @@
+/*
+ * Authority: Existing artifact priority behavior; approved scanner Phase 3 reuse.
+ * Ownership: Catalogue UI and effective rating state; artifact-scoring.js owns arithmetic.
+ * Invariants: Preserve canonical names, global/group/profile precedence, army fallback,
+ * enabled axes and Hall/Showcase selection. Scanner integration must not change scores.
+ * History: Private arithmetic extracted unchanged for scanner/manual-input reuse.
+ */
 (() => {
   "use strict";
 
@@ -524,117 +531,13 @@
     return names;
   }
 
-  /** Parse a perk base/max field to a finite number, or null. */
-  function parseStatNum(v) {
-    const raw = text(v).replace(/,/g, "").replace(/%/g, "");
-    if (!raw) return null;
-    const n = Number(raw);
-    return Number.isFinite(n) ? n : null;
-  }
-
-  /**
-   * Strongest available magnitude among base/max (absolute value).
-   * Missing side is ignored; both missing → 0.
-   */
-  function perkMagnitude(base, max) {
-    const nums = [parseStatNum(base), parseStatNum(max)].filter((n) => n != null);
-    if (!nums.length) return 0;
-    return Math.max(...nums.map((n) => Math.abs(/** @type {number} */ (n))));
-  }
-
-  /**
-   * @typedef {{
-   *   index: number,
-   *   name: string,
-   *   base: string,
-   *   max: string,
-   *   mag: number,
-   *   offRating: number,
-   *   defRating: number,
-   *   offensive: number,
-   *   defensive: number
-   * }} PerkLineScore
-   */
-
-  /** @returns {PerkLineScore[]} */
+  /** Existing callers retain their rating/canonicalization state. */
   function perkLinesOf(row) {
-    /** @type {PerkLineScore[]} */
-    const lines = [];
-    for (let i = 1; i <= 6; i++) {
-      const rawName = text(row[`perk_${i}_name`]);
-      const name = canonPerk(rawName);
-      const base = text(row[`perk_${i}_base`]);
-      const max = text(row[`perk_${i}_max`]);
-      if (!rawName && !base && !max) continue;
-      const mag = perkMagnitude(base, max);
-      const offRating = name ? ratingOf(name, "offensive") : 0;
-      const defRating = name ? ratingOf(name, "defensive") : 0;
-      lines.push({
-        index: lines.length,
-        name,
-        base,
-        max,
-        mag,
-        offRating,
-        defRating,
-        offensive: offRating * mag,
-        defensive: defRating * mag,
-      });
-    }
-    return lines;
+    return window.DNArtifactScoring.perkLines(row, { canonPerk, ratingOf });
   }
 
-  /** Active-axis line score for Best-line selection. */
-  function lineActiveScore(line) {
-    let sum = 0;
-    if (prefSortAxes.offensive) sum += line.offensive;
-    if (prefSortAxes.defensive) sum += line.defensive;
-    return sum;
-  }
-
-  /**
-   * @returns {{
-   *   lines: PerkLineScore[],
-   *   bestIndex: number,
-   *   offensive: number,
-   *   defensive: number,
-   *   preference: number
-   * }}
-   */
   function artifactScores(row) {
-    const lines = perkLinesOf(row);
-    if (!lines.length) {
-      return { lines, bestIndex: -1, offensive: 0, defensive: 0, preference: 0 };
-    }
-    if (scoreMode === "maxrow") {
-      let bestIndex = 0;
-      let bestActive = lineActiveScore(lines[0]);
-      for (let i = 1; i < lines.length; i++) {
-        const active = lineActiveScore(lines[i]);
-        if (active > bestActive) {
-          bestActive = active;
-          bestIndex = i;
-        }
-      }
-      const best = lines[bestIndex];
-      return {
-        lines,
-        bestIndex,
-        offensive: best.offensive,
-        defensive: best.defensive,
-        preference: bestActive,
-      };
-    }
-    let offensive = 0;
-    let defensive = 0;
-    for (const line of lines) {
-      offensive += line.offensive;
-      defensive += line.defensive;
-    }
-    let preference = 0;
-    if (prefSortAxes.offensive) preference += offensive;
-    if (prefSortAxes.defensive) preference += defensive;
-    return { lines, bestIndex: -1, offensive, defensive, preference };
+    return window.DNArtifactScoring.score(row, { canonPerk, ratingOf, scoreMode, prefSortAxes });
   }
 
   /** @param {"offensive" | "defensive"} axis */
@@ -667,8 +570,8 @@
     return '<div class="axis-stack">' + scores.lines.map((line, i) => {
       const best = scoreMode === "maxrow" && i === scores.bestIndex ? " is-best" : "";
       return '<div class="axis-line rating-line' + best + '" title="' + esc(line.name) + '">' +
-        '<span aria-label="Offensive rating">O ' + format(line.offRating) + '</span>' +
-        '<span aria-label="Defensive rating">D ' + format(line.defRating) + '</span></div>';
+        (prefSortAxes.offensive ? '<span aria-label="Offensive rating">O ' + format(line.offRating) + '</span>' : '') +
+        (prefSortAxes.defensive ? '<span aria-label="Defensive rating">D ' + format(line.defRating) + '</span>' : '') + '</div>';
     }).join("") + '</div>';
   }
 
@@ -710,6 +613,7 @@
     if (!name) return "";
     const parts = [];
     for (const axis of AXES) {
+      if (!prefSortAxes[axis]) continue;
       const rating = ratingOf(name, axis);
       if (!rating) continue;
       const label = axis === "offensive" ? "O" : "D";
@@ -958,6 +862,13 @@
     }
     const c = cmpValues(sortValue(a, sortState.key), sortValue(b, sortState.key));
     if (c) return c * sortState.dir;
+    if (prefSortAxes.offensive && prefSortAxes.defensive &&
+        (sortState.key === "offensive" || sortState.key === "defensive")) {
+      const secondary = sortState.key === "offensive" ? "defensive" : "offensive";
+      const aSecondary = axisScore(a, secondary);
+      const bSecondary = axisScore(b, secondary);
+      if (aSecondary !== bSecondary) return (aSecondary < bSecondary ? -1 : 1) * sortState.dir;
+    }
     return cmpValues(defaultSortKey(a), defaultSortKey(b));
   }
 
@@ -1041,6 +952,9 @@
   }
 
   function render() {
+    document.querySelectorAll("th[data-score-axis]").forEach((header) => {
+      header.hidden = !prefSortAxes[header.dataset.scoreAxis];
+    });
     const filtered = rows.filter(matches).sort(compareRows);
 
     updateSortHeaders();
@@ -1050,7 +964,7 @@
 
     if (!filtered.length) {
       el.tbody.innerHTML =
-        `<tr class="empty-row"><td colspan="12">No artifacts match these filters.</td></tr>`;
+        `<tr class="empty-row"><td colspan="${8 + 2 * (Number(prefSortAxes.offensive) + Number(prefSortAxes.defensive))}">No artifacts match these filters.</td></tr>`;
       return;
     }
 
@@ -1094,10 +1008,10 @@
           `<td>${esc(show(row.grade))}</td>` +
           `<td>${perkBlock(row, scores)}</td>` +
           `<td class="perk-rating-cell">${ratingLinesBlock(scores)}</td>` +
-          `<td class="pref-cell">${axisLinesBlock(scores, "offensive")}</td>` +
-          `<td class="pref-cell">${axisLinesBlock(scores, "defensive")}</td>` +
-          `<td class="pref-cell pref-total-cell">${axisTotalBlock(scores, "offensive")}</td>` +
-          `<td class="pref-cell pref-total-cell">${axisTotalBlock(scores, "defensive")}</td>` +
+          (prefSortAxes.offensive ? `<td class="pref-cell">${axisLinesBlock(scores, "offensive")}</td>` : "") +
+          (prefSortAxes.defensive ? `<td class="pref-cell">${axisLinesBlock(scores, "defensive")}</td>` : "") +
+          (prefSortAxes.offensive ? `<td class="pref-cell pref-total-cell">${axisTotalBlock(scores, "offensive")}</td>` : "") +
+          (prefSortAxes.defensive ? `<td class="pref-cell pref-total-cell">${axisTotalBlock(scores, "defensive")}</td>` : "") +
           `<td class="cost-cell">${costBlock(row)}</td>` +
           `<td class="pref-cell pref-per-cost-cell">${prefPerCostBlock(row)}</td>` +
           `</tr>`
@@ -1110,11 +1024,11 @@
     return key === "preference" || key === "offensive" || key === "defensive";
   }
 
-  /** Resolve Off/Def header clicks into Off-only, Def-only, or Off+Def (both). */
+  /** Keep the selected score column primary, falling back to the visible axis. */
   function resolvePrefSortKey(requested) {
     const off = !!prefSortAxes.offensive;
     const def = !!prefSortAxes.defensive;
-    if (off && def) return "preference";
+    if (off && def) return requested === "defensive" ? "defensive" : "offensive";
     if (off) return "offensive";
     if (def) return "defensive";
     return requested;
@@ -1164,9 +1078,7 @@
     const active = sortState.key;
     for (const th of el.table.querySelectorAll("th[data-sort]")) {
       const key = th.getAttribute("data-sort");
-      let matched = active === key;
-      // Both Off/Def headers light up when sorting by combined preference.
-      if (active === "preference" && (key === "offensive" || key === "defensive")) matched = true;
+      const matched = active === key;
       if (matched) {
         th.setAttribute("aria-sort", sortState.dir === 1 ? "ascending" : "descending");
       } else {
@@ -1207,14 +1119,17 @@
 
   function setHallFilter(hall) {
     hallFilter = hall === "Main" ? "Main" : "War";
+    prefSortAxes = loadPrefSortAxes();
+    syncPrefSortAxisInputs();
+    if (isPrefSortKey(sortState.key)) sortState = { key: resolvePrefSortKey(sortState.key), dir: -1 };
     saveHallFilter();
     syncHallToggle();
     render();
   }
 
   function bind() {
+    // Input covers typing and clearing; change on blur would replace a checkbox mid-click.
     el.q.addEventListener("input", render);
-    el.q.addEventListener("change", render);
 
     if (el.hallMain) {
       el.hallMain.addEventListener("click", () => setHallFilter("Main"));

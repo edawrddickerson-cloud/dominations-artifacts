@@ -118,7 +118,7 @@
    */
   function applyFamilies(families, target, lastApplied, layer) {
     const layers = loadLayers();
-    const globalBag = layers.global;
+    const globalBag = layer === "global" ? DN.loadStoredGlobalPerkRatings() : layers.global;
     const profileBag = layers.profile;
     const bag = layer === "profile" ? profileBag : globalBag;
 
@@ -127,10 +127,10 @@
         for (const axis of AXES) {
           const value =
             target === "factory"
-              ? DN.armyAwareDefault(factoryDefaults, lastApplied, perk, axis)
+              ? (DN.groupPerkRating(perk, axis) ?? DN.armyAwareDefault(factoryDefaults, lastApplied, perk, axis))
               : target;
           if (layer === "global") {
-            const factory = DN.armyAwareDefault(factoryDefaults, lastApplied, perk, axis);
+            const factory = DN.groupPerkRating(perk, axis) ?? DN.armyAwareDefault(factoryDefaults, lastApplied, perk, axis);
             setBagAxis(bag, perk, axis, value, factory);
           } else {
             const inherit =
@@ -153,6 +153,39 @@
     const removed = [...b].filter((u) => !a.has(u)).sort((x, y) => x.localeCompare(y));
     const added = [...a].filter((u) => !b.has(u)).sort((x, y) => x.localeCompare(y));
     return { removed, added };
+  }
+
+  function buildUnusedUnitRows(nextUnits) {
+    const applied = DN.armyEffectiveAppliedSet(nextUnits);
+    const current = DN.armyEffectiveAppliedSet(state.lastApplied);
+    const layers = loadLayers();
+    return allPerkNames.flatMap(perk => {
+      const scope = DN.perkArmyScope(perk);
+      if (scope?.kind !== 'unit' || applied.has(scope.unit)) return [];
+      const curOff = effectiveRating(layers.global, layers.profile, current, perk, 'offensive');
+      const curDef = effectiveRating(layers.global, layers.profile, current, perk, 'defensive');
+      return [{ family: scope.unit, perk, curOff, curDef, newOff: 0, newDef: curDef }];
+    }).sort((a, b) => a.family.localeCompare(b.family) || a.perk.localeCompare(b.perk));
+  }
+
+  function zeroUnusedUnitRows(rows, layer) {
+    const bag = layer === 'profile'
+      ? DN.loadProfilePerkOverrides(DN.activeProfileId())
+      : DN.loadStoredGlobalPerkRatings();
+    for (const { perk } of rows) bag[perk] = { ...bag[perk], offensive: 0 };
+    if (layer === 'profile') DN.saveProfilePerkOverrides(DN.activeProfileId(), bag);
+    else DN.saveGlobalPerkRatings(bag);
+  }
+
+  async function offerZeroUnusedUnits(nextUnits) {
+    const rows = buildUnusedUnitRows(nextUnits);
+    if (!rows.length) return;
+    const layer = await showRatingConfirm({
+      title: 'Zero offensive ratings for unused units',
+      hint: 'Set all individual offensive perk ratings for units outside this army to 0? Linked units are kept. Defensive ratings are kept. Choose Global or This profile, or Skip to keep your ratings.',
+      rows,
+    });
+    if (layer) zeroUnusedUnitRows(rows, layer);
   }
 
   function fmtAxisPair(off, def) {
@@ -496,15 +529,21 @@
     });
 
     el.save.addEventListener("click", async () => {
-      saveActiveDraftIntoPreset();
-      await promptAndApplyDelta(draftSorted());
-      persistState();
-      loadDraftFromActive();
-      render();
-      if (el.hint) {
-        el.hint.textContent =
-          `Saved “${activePreset().name}” · ${draftSorted().length} troops · ` +
-          `applied army drives Priority perk defaults.`;
+      el.save.disabled = true;
+      try {
+        saveActiveDraftIntoPreset();
+        await promptAndApplyDelta(draftSorted());
+        await offerZeroUnusedUnits(draftSorted());
+        persistState();
+        loadDraftFromActive();
+        render();
+        if (el.hint) {
+          el.hint.textContent =
+            `Saved “${activePreset().name}” · ${draftSorted().length} troops · ` +
+            `applied army drives Priority perk defaults.`;
+        }
+      } finally {
+        el.save.disabled = false;
       }
     });
   }

@@ -1,0 +1,13 @@
+{
+  "source": "User-supplied pic1.png; manually transcribed from visible pixels",
+  "category": "Pottery",
+  "artifactName": "The Yongle Emperor’s Vase",
+  "rows": [
+    {"name": "Air Defense Damage", "value": 1},
+    {"name": "Sniper Tower Hitpoints", "value": 1},
+    {"name": "Catapult Hitpoints", "value": 1},
+    {"name": "Catapult Damage", "value": 1},
+    {"name": "Catapult Damage", "value": 1}
+  ],
+  "notes": "All five visible rows are included, including locked rows and duplicate Catapult Damage. This single fixture cannot establish representative accuracy."
+}

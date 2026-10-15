@@ -1,0 +1,26 @@
+{
+  "source": "User game/app review pairs, 22:54?22:57; names and values manually transcribed from game pixels",
+  "reviewPair": true,
+  "rows": [
+    {
+      "name": "Redoubt Hitpoints",
+      "value": 1
+    },
+    {
+      "name": "All Resources from Hunting",
+      "value": 6
+    },
+    {
+      "name": "Gold from Gold Mines",
+      "value": 6
+    },
+    {
+      "name": "Food from Fruit Trees",
+      "value": 1
+    },
+    {
+      "name": "Redoubt Hitpoints",
+      "value": 6
+    }
+  ]
+}

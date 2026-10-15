@@ -1,0 +1,26 @@
+{
+  "source": "User game/app review pairs; names and values manually transcribed from game pixels",
+  "reviewPair": true,
+  "rows": [
+    {
+      "name": "Invading Mortar Troop Damage",
+      "value": -6
+    },
+    {
+      "name": "Invading MRL Hitpoints",
+      "value": -6
+    },
+    {
+      "name": "Invading Ranged Siege Hitpoints",
+      "value": -1
+    },
+    {
+      "name": "Invading Attack Helicopter Hitpoints",
+      "value": -1
+    },
+    {
+      "name": "Invading Mortar Troop Hitpoints",
+      "value": -1
+    }
+  ]
+}
