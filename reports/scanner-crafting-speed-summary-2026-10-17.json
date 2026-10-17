@@ -1,0 +1,836 @@
+{
+  "kind": "paired-crafting-scanner-speed-review",
+  "createdAt": "2026-10-17T13:43:36.937Z",
+  "sourceReports": {
+    "baseline": "scanner-crafting-speed-baseline-2026-10-17.json",
+    "candidate": "scanner-crafting-speed-candidate-2026-10-17.json"
+  },
+  "sourceHashes": {
+    "baseline": {
+      "scanner-reading.js": "3e601d88bc985ffbf5be4828e03e3def5063dc54e7018bba91fb236cb4ef9464",
+      "scanner-recognition.js": "5407ed586f838ba1a3154428fa1796339e1b11e1d6c6e523bbcb03eb7ccd7499",
+      "scanner-field-recognition.js": "5fcf032e7176f45345c135c93e3460ca24d3a3c6ff205469609e4e68b24bf122",
+      "scanner-collection.js": "68677f98934442bb8c343ebb1b736a6f8010be7b167c4b8ac9af914468cd54ce",
+      "scanner-comparison.js": "b5c09c0bb42b5bbdb2fd35cdd206ca8d8fd153eb58f1a2adcc000d186b424c7c",
+      "scanner-frames.js": "725008be86f61b5ca9f0f2cc48adef4d6007f6ff2de1777c2398baf10ead7711",
+      "shared.js": "0970349209b98c3b53affda700bf0e808211794bd848653151cf250213f15f24"
+    },
+    "candidate": {
+      "scanner-reading.js": "6e3f7a5f37ed46718244f30230117f6b610a377303eec165bc42a681b8b78402",
+      "scanner-recognition.js": "bf3433b5efda8fc4853b2a49e638d83a9eb535a784ce6dd7a5f1369538426302",
+      "scanner-field-recognition.js": "975772d51ce030167adf78615f08e8f69bb2b252b7ff1e8ebd9d439755373d9f",
+      "scanner-collection.js": "7f880f1ba14c0f8b821d10e70266594cb8f9b325a2cf6081d746b6a09765ebd9",
+      "scanner-comparison.js": "b5c09c0bb42b5bbdb2fd35cdd206ca8d8fd153eb58f1a2adcc000d186b424c7c",
+      "scanner-frames.js": "2411a3a9165e8161e5ff05f60e29df77f3f4174b0f4164657233ae825ded5a69",
+      "shared.js": "0970349209b98c3b53affda700bf0e808211794bd848653151cf250213f15f24"
+    }
+  },
+  "config": {
+    "fixtureNames": [
+      "video161",
+      "pic1"
+    ],
+    "logs": [
+      10,
+      1000
+    ],
+    "temperatures": [
+      "cold",
+      "warm"
+    ],
+    "repeat": 3,
+    "owned": 500,
+    "timeoutMs": 12000
+  },
+  "overall": {
+    "samples": 24,
+    "baseline": {
+      "complete": 24,
+      "exact": 24,
+      "completeCapturePaintedMs": {
+        "p50": 1291.2000000029802,
+        "p95": 4794.89999999851
+      },
+      "observedCollectorCallMs": {
+        "p50": 9.5,
+        "p95": 582.6000000014901
+      }
+    },
+    "candidate": {
+      "complete": 24,
+      "exact": 24,
+      "completeCapturePaintedMs": {
+        "p50": 711.1000000014901,
+        "p95": 3692.39999999851
+      },
+      "observedCollectorCallMs": {
+        "p50": 37,
+        "p95": 109.29999999701977
+      }
+    },
+    "collectorTimingScope": "Baseline sums record + recordItem; candidate recordResult also contains the publication/scoring callback. These overlapping scopes are diagnostic and must not be interpreted as an isolated logging A/B. End-to-end paint measurements include all work on both sides.",
+    "latencyRatio": {
+      "p50": 0.5507280049565124,
+      "p95": 0.7700681974597295
+    },
+    "reductionPercent": {
+      "p50": 44.927199504348756,
+      "p95": 22.993180254027045
+    },
+    "sameAccuracyCompletionSignature": true
+  },
+  "sameTemperatureLogGroups": [
+    {
+      "logs": 10,
+      "temperature": "cold",
+      "samples": 6,
+      "baseline": {
+        "complete": 6,
+        "exact": 6,
+        "completeCapturePaintedMs": {
+          "p50": 753.8000000044703,
+          "p95": 3276.10000000149
+        },
+        "observedCollectorCallMs": {
+          "p50": 4.200000002980232,
+          "p95": 6.5
+        }
+      },
+      "candidate": {
+        "complete": 6,
+        "exact": 6,
+        "completeCapturePaintedMs": {
+          "p50": 678.1999999955297,
+          "p95": 3830.10000000149
+        },
+        "observedCollectorCallMs": {
+          "p50": 17.099999994039536,
+          "p95": 34.5
+        }
+      },
+      "collectorTimingScope": "Baseline sums record + recordItem; candidate recordResult also contains the publication/scoring callback. These overlapping scopes are diagnostic and must not be interpreted as an isolated logging A/B. End-to-end paint measurements include all work on both sides.",
+      "latencyRatio": {
+        "p50": 0.8997081453853909,
+        "p95": 1.1691035072188725
+      },
+      "reductionPercent": {
+        "p50": 10.02918546146091,
+        "p95": -16.910350721887248
+      },
+      "sameAccuracyCompletionSignature": true
+    },
+    {
+      "logs": 10,
+      "temperature": "warm",
+      "samples": 6,
+      "baseline": {
+        "complete": 6,
+        "exact": 6,
+        "completeCapturePaintedMs": {
+          "p50": 760.5,
+          "p95": 3603.9000000059605
+        },
+        "observedCollectorCallMs": {
+          "p50": 5.700000002980232,
+          "p95": 9.5
+        }
+      },
+      "candidate": {
+        "complete": 6,
+        "exact": 6,
+        "completeCapturePaintedMs": {
+          "p50": 545.7999999970198,
+          "p95": 2687.39999999851
+        },
+        "observedCollectorCallMs": {
+          "p50": 14.5,
+          "p95": 37
+        }
+      },
+      "collectorTimingScope": "Baseline sums record + recordItem; candidate recordResult also contains the publication/scoring callback. These overlapping scopes are diagnostic and must not be interpreted as an isolated logging A/B. End-to-end paint measurements include all work on both sides.",
+      "latencyRatio": {
+        "p50": 0.7176857330664297,
+        "p95": 0.7456921668176324
+      },
+      "reductionPercent": {
+        "p50": 28.23142669335703,
+        "p95": 25.43078331823676
+      },
+      "sameAccuracyCompletionSignature": true
+    },
+    {
+      "logs": 1000,
+      "temperature": "cold",
+      "samples": 6,
+      "baseline": {
+        "complete": 6,
+        "exact": 6,
+        "completeCapturePaintedMs": {
+          "p50": 1291.2000000029802,
+          "p95": 4946.70000000298
+        },
+        "observedCollectorCallMs": {
+          "p50": 260.30000000447035,
+          "p95": 585
+        }
+      },
+      "candidate": {
+        "complete": 6,
+        "exact": 6,
+        "completeCapturePaintedMs": {
+          "p50": 711.1000000014901,
+          "p95": 3692.39999999851
+        },
+        "observedCollectorCallMs": {
+          "p50": 48.899999998509884,
+          "p95": 117
+        }
+      },
+      "collectorTimingScope": "Baseline sums record + recordItem; candidate recordResult also contains the publication/scoring callback. These overlapping scopes are diagnostic and must not be interpreted as an isolated logging A/B. End-to-end paint measurements include all work on both sides.",
+      "latencyRatio": {
+        "p50": 0.5507280049565124,
+        "p95": 0.7464370186177219
+      },
+      "reductionPercent": {
+        "p50": 44.927199504348756,
+        "p95": 25.356298138227807
+      },
+      "sameAccuracyCompletionSignature": true
+    },
+    {
+      "logs": 1000,
+      "temperature": "warm",
+      "samples": 6,
+      "baseline": {
+        "complete": 6,
+        "exact": 6,
+        "completeCapturePaintedMs": {
+          "p50": 1012.4000000059605,
+          "p95": 3753.10000000149
+        },
+        "observedCollectorCallMs": {
+          "p50": 283.79999999701977,
+          "p95": 582.6000000014901
+        }
+      },
+      "candidate": {
+        "complete": 6,
+        "exact": 6,
+        "completeCapturePaintedMs": {
+          "p50": 684.9000000059605,
+          "p95": 3525.6999999955297
+        },
+        "observedCollectorCallMs": {
+          "p50": 57.5,
+          "p95": 109.29999999701977
+        }
+      },
+      "collectorTimingScope": "Baseline sums record + recordItem; candidate recordResult also contains the publication/scoring callback. These overlapping scopes are diagnostic and must not be interpreted as an isolated logging A/B. End-to-end paint measurements include all work on both sides.",
+      "latencyRatio": {
+        "p50": 0.6765112603732992,
+        "p95": 0.9394100876593029
+      },
+      "reductionPercent": {
+        "p50": 32.348873962670076,
+        "p95": 6.05899123406971
+      },
+      "sameAccuracyCompletionSignature": true
+    }
+  ],
+  "perFixture": [
+    {
+      "fixture": "video161",
+      "logs": 10,
+      "temperature": "cold",
+      "samples": 3,
+      "baseline": {
+        "complete": 3,
+        "exact": 3,
+        "completeCapturePaintedMs": {
+          "p50": 3039.60000000149,
+          "p95": 3276.10000000149
+        },
+        "observedCollectorCallMs": {
+          "p50": 5.399999998509884,
+          "p95": 6.5
+        }
+      },
+      "candidate": {
+        "complete": 3,
+        "exact": 3,
+        "completeCapturePaintedMs": {
+          "p50": 3059.10000000149,
+          "p95": 3830.10000000149
+        },
+        "observedCollectorCallMs": {
+          "p50": 34.100000001490116,
+          "p95": 34.5
+        }
+      },
+      "collectorTimingScope": "Baseline sums record + recordItem; candidate recordResult also contains the publication/scoring callback. These overlapping scopes are diagnostic and must not be interpreted as an isolated logging A/B. End-to-end paint measurements include all work on both sides.",
+      "latencyRatio": {
+        "p50": 1.0064153178049713,
+        "p95": 1.1691035072188725
+      },
+      "reductionPercent": {
+        "p50": -0.6415317804971288,
+        "p95": -16.910350721887248
+      },
+      "sameAccuracyCompletionSignature": true
+    },
+    {
+      "fixture": "pic1",
+      "logs": 10,
+      "temperature": "cold",
+      "samples": 3,
+      "baseline": {
+        "complete": 3,
+        "exact": 3,
+        "completeCapturePaintedMs": {
+          "p50": 645.4000000059605,
+          "p95": 753.8000000044703
+        },
+        "observedCollectorCallMs": {
+          "p50": 3.7000000029802322,
+          "p95": 4.200000002980232
+        }
+      },
+      "candidate": {
+        "complete": 3,
+        "exact": 3,
+        "completeCapturePaintedMs": {
+          "p50": 577.1999999955297,
+          "p95": 678.1999999955297
+        },
+        "observedCollectorCallMs": {
+          "p50": 14.600000001490116,
+          "p95": 17.099999994039536
+        }
+      },
+      "collectorTimingScope": "Baseline sums record + recordItem; candidate recordResult also contains the publication/scoring callback. These overlapping scopes are diagnostic and must not be interpreted as an isolated logging A/B. End-to-end paint measurements include all work on both sides.",
+      "latencyRatio": {
+        "p50": 0.8943290982184676,
+        "p95": 0.8997081453853909
+      },
+      "reductionPercent": {
+        "p50": 10.567090178153238,
+        "p95": 10.02918546146091
+      },
+      "sameAccuracyCompletionSignature": true
+    },
+    {
+      "fixture": "video161",
+      "logs": 10,
+      "temperature": "warm",
+      "samples": 3,
+      "baseline": {
+        "complete": 3,
+        "exact": 3,
+        "completeCapturePaintedMs": {
+          "p50": 2992.2999999970198,
+          "p95": 3603.9000000059605
+        },
+        "observedCollectorCallMs": {
+          "p50": 5.700000002980232,
+          "p95": 9.299999997019768
+        }
+      },
+      "candidate": {
+        "complete": 3,
+        "exact": 3,
+        "completeCapturePaintedMs": {
+          "p50": 2376,
+          "p95": 2687.39999999851
+        },
+        "observedCollectorCallMs": {
+          "p50": 36.20000000298023,
+          "p95": 37
+        }
+      },
+      "collectorTimingScope": "Baseline sums record + recordItem; candidate recordResult also contains the publication/scoring callback. These overlapping scopes are diagnostic and must not be interpreted as an isolated logging A/B. End-to-end paint measurements include all work on both sides.",
+      "latencyRatio": {
+        "p50": 0.7940380309468859,
+        "p95": 0.7456921668176324
+      },
+      "reductionPercent": {
+        "p50": 20.596196905311416,
+        "p95": 25.43078331823676
+      },
+      "sameAccuracyCompletionSignature": true
+    },
+    {
+      "fixture": "pic1",
+      "logs": 10,
+      "temperature": "warm",
+      "samples": 3,
+      "baseline": {
+        "complete": 3,
+        "exact": 3,
+        "completeCapturePaintedMs": {
+          "p50": 594.3999999985099,
+          "p95": 760.5
+        },
+        "observedCollectorCallMs": {
+          "p50": 6.5999999940395355,
+          "p95": 9.5
+        }
+      },
+      "candidate": {
+        "complete": 3,
+        "exact": 3,
+        "completeCapturePaintedMs": {
+          "p50": 535.3999999985099,
+          "p95": 545.7999999970198
+        },
+        "observedCollectorCallMs": {
+          "p50": 12.699999995529652,
+          "p95": 14.5
+        }
+      },
+      "collectorTimingScope": "Baseline sums record + recordItem; candidate recordResult also contains the publication/scoring callback. These overlapping scopes are diagnostic and must not be interpreted as an isolated logging A/B. End-to-end paint measurements include all work on both sides.",
+      "latencyRatio": {
+        "p50": 0.9007402422608548,
+        "p95": 0.7176857330664297
+      },
+      "reductionPercent": {
+        "p50": 9.92597577391452,
+        "p95": 28.23142669335703
+      },
+      "sameAccuracyCompletionSignature": true
+    },
+    {
+      "fixture": "video161",
+      "logs": 1000,
+      "temperature": "cold",
+      "samples": 3,
+      "baseline": {
+        "complete": 3,
+        "exact": 3,
+        "completeCapturePaintedMs": {
+          "p50": 4794.89999999851,
+          "p95": 4946.70000000298
+        },
+        "observedCollectorCallMs": {
+          "p50": 474.5000000074506,
+          "p95": 585
+        }
+      },
+      "candidate": {
+        "complete": 3,
+        "exact": 3,
+        "completeCapturePaintedMs": {
+          "p50": 3667,
+          "p95": 3692.39999999851
+        },
+        "observedCollectorCallMs": {
+          "p50": 108.39999999850988,
+          "p95": 117
+        }
+      },
+      "collectorTimingScope": "Baseline sums record + recordItem; candidate recordResult also contains the publication/scoring callback. These overlapping scopes are diagnostic and must not be interpreted as an isolated logging A/B. End-to-end paint measurements include all work on both sides.",
+      "latencyRatio": {
+        "p50": 0.7647709024173892,
+        "p95": 0.7464370186177219
+      },
+      "reductionPercent": {
+        "p50": 23.52290975826108,
+        "p95": 25.356298138227807
+      },
+      "sameAccuracyCompletionSignature": true
+    },
+    {
+      "fixture": "pic1",
+      "logs": 1000,
+      "temperature": "cold",
+      "samples": 3,
+      "baseline": {
+        "complete": 3,
+        "exact": 3,
+        "completeCapturePaintedMs": {
+          "p50": 1275.8999999985099,
+          "p95": 1291.2000000029802
+        },
+        "observedCollectorCallMs": {
+          "p50": 250.89999999850988,
+          "p95": 260.30000000447035
+        }
+      },
+      "candidate": {
+        "complete": 3,
+        "exact": 3,
+        "completeCapturePaintedMs": {
+          "p50": 667.0999999940395,
+          "p95": 711.1000000014901
+        },
+        "observedCollectorCallMs": {
+          "p50": 48.20000000298023,
+          "p95": 48.899999998509884
+        }
+      },
+      "collectorTimingScope": "Baseline sums record + recordItem; candidate recordResult also contains the publication/scoring callback. These overlapping scopes are diagnostic and must not be interpreted as an isolated logging A/B. End-to-end paint measurements include all work on both sides.",
+      "latencyRatio": {
+        "p50": 0.5228466180694558,
+        "p95": 0.5507280049565124
+      },
+      "reductionPercent": {
+        "p50": 47.71533819305442,
+        "p95": 44.927199504348756
+      },
+      "sameAccuracyCompletionSignature": true
+    },
+    {
+      "fixture": "video161",
+      "logs": 1000,
+      "temperature": "warm",
+      "samples": 3,
+      "baseline": {
+        "complete": 3,
+        "exact": 3,
+        "completeCapturePaintedMs": {
+          "p50": 3633.5999999940395,
+          "p95": 3753.10000000149
+        },
+        "observedCollectorCallMs": {
+          "p50": 528.1000000014901,
+          "p95": 582.6000000014901
+        }
+      },
+      "candidate": {
+        "complete": 3,
+        "exact": 3,
+        "completeCapturePaintedMs": {
+          "p50": 2969.89999999851,
+          "p95": 3525.6999999955297
+        },
+        "observedCollectorCallMs": {
+          "p50": 83.5,
+          "p95": 109.29999999701977
+        }
+      },
+      "collectorTimingScope": "Baseline sums record + recordItem; candidate recordResult also contains the publication/scoring callback. These overlapping scopes are diagnostic and must not be interpreted as an isolated logging A/B. End-to-end paint measurements include all work on both sides.",
+      "latencyRatio": {
+        "p50": 0.8173436811986409,
+        "p95": 0.9394100876593029
+      },
+      "reductionPercent": {
+        "p50": 18.265631880135913,
+        "p95": 6.05899123406971
+      },
+      "sameAccuracyCompletionSignature": true
+    },
+    {
+      "fixture": "pic1",
+      "logs": 1000,
+      "temperature": "warm",
+      "samples": 3,
+      "baseline": {
+        "complete": 3,
+        "exact": 3,
+        "completeCapturePaintedMs": {
+          "p50": 868,
+          "p95": 1012.4000000059605
+        },
+        "observedCollectorCallMs": {
+          "p50": 248.10000000149012,
+          "p95": 283.79999999701977
+        }
+      },
+      "candidate": {
+        "complete": 3,
+        "exact": 3,
+        "completeCapturePaintedMs": {
+          "p50": 610.2999999970198,
+          "p95": 684.9000000059605
+        },
+        "observedCollectorCallMs": {
+          "p50": 47.899999998509884,
+          "p95": 57.5
+        }
+      },
+      "collectorTimingScope": "Baseline sums record + recordItem; candidate recordResult also contains the publication/scoring callback. These overlapping scopes are diagnostic and must not be interpreted as an isolated logging A/B. End-to-end paint measurements include all work on both sides.",
+      "latencyRatio": {
+        "p50": 0.7031105990749076,
+        "p95": 0.6765112603732992
+      },
+      "reductionPercent": {
+        "p50": 29.68894009250924,
+        "p95": 32.348873962670076
+      },
+      "sameAccuracyCompletionSignature": true
+    }
+  ],
+  "pairedSignatures": [
+    {
+      "fixture": "video161",
+      "logs": 10,
+      "temperature": "cold",
+      "repetition": 0,
+      "baseline": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "candidate": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "equal": true
+    },
+    {
+      "fixture": "video161",
+      "logs": 10,
+      "temperature": "cold",
+      "repetition": 1,
+      "baseline": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "candidate": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "equal": true
+    },
+    {
+      "fixture": "video161",
+      "logs": 10,
+      "temperature": "cold",
+      "repetition": 2,
+      "baseline": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "candidate": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "equal": true
+    },
+    {
+      "fixture": "pic1",
+      "logs": 10,
+      "temperature": "cold",
+      "repetition": 0,
+      "baseline": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "candidate": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "equal": true
+    },
+    {
+      "fixture": "pic1",
+      "logs": 10,
+      "temperature": "cold",
+      "repetition": 1,
+      "baseline": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "candidate": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "equal": true
+    },
+    {
+      "fixture": "pic1",
+      "logs": 10,
+      "temperature": "cold",
+      "repetition": 2,
+      "baseline": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "candidate": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "equal": true
+    },
+    {
+      "fixture": "video161",
+      "logs": 10,
+      "temperature": "warm",
+      "repetition": 0,
+      "baseline": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "candidate": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "equal": true
+    },
+    {
+      "fixture": "video161",
+      "logs": 10,
+      "temperature": "warm",
+      "repetition": 1,
+      "baseline": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "candidate": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "equal": true
+    },
+    {
+      "fixture": "video161",
+      "logs": 10,
+      "temperature": "warm",
+      "repetition": 2,
+      "baseline": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "candidate": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "equal": true
+    },
+    {
+      "fixture": "pic1",
+      "logs": 10,
+      "temperature": "warm",
+      "repetition": 0,
+      "baseline": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "candidate": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "equal": true
+    },
+    {
+      "fixture": "pic1",
+      "logs": 10,
+      "temperature": "warm",
+      "repetition": 1,
+      "baseline": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "candidate": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "equal": true
+    },
+    {
+      "fixture": "pic1",
+      "logs": 10,
+      "temperature": "warm",
+      "repetition": 2,
+      "baseline": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "candidate": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "equal": true
+    },
+    {
+      "fixture": "video161",
+      "logs": 1000,
+      "temperature": "cold",
+      "repetition": 0,
+      "baseline": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "candidate": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "equal": true
+    },
+    {
+      "fixture": "video161",
+      "logs": 1000,
+      "temperature": "cold",
+      "repetition": 1,
+      "baseline": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "candidate": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "equal": true
+    },
+    {
+      "fixture": "video161",
+      "logs": 1000,
+      "temperature": "cold",
+      "repetition": 2,
+      "baseline": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "candidate": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "equal": true
+    },
+    {
+      "fixture": "pic1",
+      "logs": 1000,
+      "temperature": "cold",
+      "repetition": 0,
+      "baseline": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "candidate": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "equal": true
+    },
+    {
+      "fixture": "pic1",
+      "logs": 1000,
+      "temperature": "cold",
+      "repetition": 1,
+      "baseline": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "candidate": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "equal": true
+    },
+    {
+      "fixture": "pic1",
+      "logs": 1000,
+      "temperature": "cold",
+      "repetition": 2,
+      "baseline": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "candidate": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "equal": true
+    },
+    {
+      "fixture": "video161",
+      "logs": 1000,
+      "temperature": "warm",
+      "repetition": 0,
+      "baseline": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "candidate": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "equal": true
+    },
+    {
+      "fixture": "video161",
+      "logs": 1000,
+      "temperature": "warm",
+      "repetition": 1,
+      "baseline": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "candidate": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "equal": true
+    },
+    {
+      "fixture": "video161",
+      "logs": 1000,
+      "temperature": "warm",
+      "repetition": 2,
+      "baseline": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "candidate": "fe62ae5efdbc9f59346e71fbc1ed8f11dd21bb0b3beb6ded176ab94f261909a4",
+      "equal": true
+    },
+    {
+      "fixture": "pic1",
+      "logs": 1000,
+      "temperature": "warm",
+      "repetition": 0,
+      "baseline": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "candidate": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "equal": true
+    },
+    {
+      "fixture": "pic1",
+      "logs": 1000,
+      "temperature": "warm",
+      "repetition": 1,
+      "baseline": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "candidate": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "equal": true
+    },
+    {
+      "fixture": "pic1",
+      "logs": 1000,
+      "temperature": "warm",
+      "repetition": 2,
+      "baseline": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "candidate": "a1fa434045dc4ec0a9fbf4ae4e05bab87cdaed81904c2f66578a7cae7b152530",
+      "equal": true
+    }
+  ],
+  "oneThirdLatencyTargetMet": false,
+  "decisions": [
+    {
+      "step": 1,
+      "decision": "Keep reproducible full capture and comparison painted benchmark; distinguish incomplete and partial truth."
+    },
+    {
+      "step": 2,
+      "decision": "Keep bounded exact pixel reuse within an explicitly scoped encounter; fresh metadata and changed/ambiguous fields still run OCR.",
+      "cases": 15,
+      "baselineMs": 3285.0000000074506,
+      "repeatedMs": 1178.7000000029802,
+      "baselineCalls": 30,
+      "repeatedCalls": 15
+    },
+    {
+      "step": 3,
+      "decision": "Reject second production OCR worker: no consistent latency improvement justifies worker startup and lifecycle complexity.",
+      "pairs": 40,
+      "sequential": {
+        "p50Ms": 203.30000000447035,
+        "p95Ms": 464.70000000298023,
+        "totalMs": 10237.5
+      },
+      "concurrent": {
+        "p50Ms": 206.60000000149012,
+        "p95Ms": 463,
+        "totalMs": 9851.899999983609
+      }
+    },
+    {
+      "step": 4,
+      "decision": "Keep atomic log batches, incremental item rendering, encounter indexes and duplicate-save suppression."
+    },
+    {
+      "step": 5,
+      "decision": "Keep equivalent buffer reuse and in-place median.",
+      "kind": "scanner-frames-median-microbenchmark",
+      "crop": {
+        "width": 960,
+        "height": 540
+      },
+      "samples": 7,
+      "baselineMs": 12.426699999999983,
+      "candidateMs": 10.933899999999994,
+      "reductionPercent": 12.01284331318846,
+      "outputBytesAvoidedPerSnapshot": 2073600,
+      "pixelEquality": true,
+      "note": "Node pixel-loop microbenchmark only; excludes browser canvas readback, allocation/reset costs, OCR, and end-to-end latency."
+    },
+    {
+      "step": 6,
+      "decision": "Keep existing 100ms sampling and 220ms crafting settling; no evidence justifies reducing stability."
+    }
+  ],
+  "limitations": "Two source images, three repetitions per fixture/temperature/log size, headless Chrome static readable samples, fresh isolated browser profiles, 500 seeded owned items, 10/1000 seeded logs. Warm initializes fast and standard model workers outside timing; cold includes worker/model startup. Controlled snapshots isolate speed edits from concurrent strategy/scoring changes. Two requestAnimationFrame callbacks approximate painted availability; this is not a screen-share/game latency or withheld live accuracy study. Small sample p95 is the slowest of three within a fixture group. The one-third end-to-end latency target is not achieved overall. Repeated-crop OCR gains and pixel-loop microbenchmarks do not establish a threefold improvement for a new live capture."
+}

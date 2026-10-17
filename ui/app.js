@@ -93,6 +93,14 @@
    * @type {Record<string, { offensive?: number, defensive?: number }>}
    */
   let ratings = {};
+  let strategyContexts=new Map();
+  function strategyContext(strategyId=window.DN.activeStrategyId()) {
+    if(!strategyContexts.has(strategyId))strategyContexts.set(strategyId,window.DN.createStrategyRatingContext(defaultRatings,{strategyId,canonPerk}));
+    return strategyContexts.get(strategyId);
+  }
+  function strategyScore(row,strategyId) {
+    return window.DNArtifactScoring.score(row,{canonPerk,ratingOf:strategyContext(strategyId).ratingOf,scoreMode,prefSortAxes}).preference;
+  }
 
   /** Which axes feed preference sort (at least one should be on). */
   let prefSortAxes = { offensive: true, defensive: true };
@@ -443,11 +451,7 @@
   /** Effective rating: user override if set (incl. 0), else factory default. */
   /** @param {"offensive" | "defensive"} axis */
   function ratingOf(name, axis) {
-    const entry = ratings[name];
-    if (entry && Object.prototype.hasOwnProperty.call(entry, axis)) {
-      return entry[axis] || 0;
-    }
-    return defaultRating(name, axis);
+    return strategyContext().ratingOf(name,axis);
   }
 
   function hasAnyRatings() {
@@ -788,6 +792,7 @@
   }
 
   function sortValue(row, key) {
+    if(key.startsWith('strategy:'))return strategyScore(row,key.slice(9));
     switch (key) {
       case "preference":
         return preferenceScore(row);
@@ -952,6 +957,16 @@
   }
 
   function render() {
+    strategyContexts=new Map();
+    const strategies=window.DN.comparisonStrategies();
+    el.table.querySelectorAll('th.priority-strategy-heading').forEach(header=>header.remove());
+    for(const strategy of strategies){
+      const header=document.createElement('th');header.scope='col';header.className='priority-strategy-heading';header.dataset.sort='strategy:'+strategy.id;
+      const button=document.createElement('button');button.type='button';button.className='th-sort';button.textContent=strategy.name;header.append(button);
+      el.table.querySelector('thead tr').append(header);
+    }
+    const context=document.getElementById('priority-strategy-context');
+    context.textContent='Active strategy: '+window.DN.activeStrategy().name+' · Comparison scores use '+(scoreMode==='maxrow'?'Showcase best line':'Hall sum')+' with the selected Off / Def axes. Each strategy has its own ratings; scores are not added together.';
     document.querySelectorAll("th[data-score-axis]").forEach((header) => {
       header.hidden = !prefSortAxes[header.dataset.scoreAxis];
     });
@@ -964,7 +979,7 @@
 
     if (!filtered.length) {
       el.tbody.innerHTML =
-        `<tr class="empty-row"><td colspan="${8 + 2 * (Number(prefSortAxes.offensive) + Number(prefSortAxes.defensive))}">No artifacts match these filters.</td></tr>`;
+        `<tr class="empty-row"><td colspan="${8 + strategies.length + 2 * (Number(prefSortAxes.offensive) + Number(prefSortAxes.defensive))}">No artifacts match these filters.</td></tr>`;
       return;
     }
 
@@ -1014,6 +1029,7 @@
           (prefSortAxes.defensive ? `<td class="pref-cell pref-total-cell">${axisTotalBlock(scores, "defensive")}</td>` : "") +
           `<td class="cost-cell">${costBlock(row)}</td>` +
           `<td class="pref-cell pref-per-cost-cell">${prefPerCostBlock(row)}</td>` +
+          strategies.map(strategy=>`<td class="priority-strategy-score">${Math.round(strategyScore(row,strategy.id)*100)/100}<small>${esc(strategy.name)}</small></td>`).join('')+
           `</tr>`
         );
       })
@@ -1040,7 +1056,7 @@
       sortState.dir = /** @type {1 | -1} */ (sortState.dir === 1 ? -1 : 1);
     } else {
       // Preference axes and Pref/cost default to highest-first; other columns asc.
-      const highFirst = isPrefSortKey(resolved) || resolved === "pref_per_cost" || resolved === "collected";
+      const highFirst = isPrefSortKey(resolved) || resolved.startsWith('strategy:') || resolved === "pref_per_cost" || resolved === "collected";
       sortState = { key: resolved, dir: highFirst ? -1 : 1 };
     }
     render();
@@ -1314,5 +1330,13 @@
   }
 
   bind();
+  const refreshStrategies=()=>{
+    if(!rows.length)return;
+    strategyContexts=new Map();collected=loadCollected();ratings=loadEffectiveRatings();
+    renderPerkFilterList();render();
+  };
+  window.addEventListener('focus',refreshStrategies);
+  window.addEventListener('storage',refreshStrategies);
+  window.addEventListener('dn-strategies-changed',refreshStrategies);
   load();
 })();

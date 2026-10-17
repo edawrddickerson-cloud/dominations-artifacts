@@ -65,7 +65,7 @@ function files(data){const json=JSON.stringify(data,null,2)+'\n';return {
 };}
 function main(){
   const data=build(),check=process.argv.includes('--check');
-  for(const [file,content] of Object.entries(files(data))){if(check){if(read(file)!==content)throw new Error('Regenerate '+file);}else fs.writeFileSync(path.join(root,file),content);}
+  for(const [file,content] of Object.entries(files(data))){if(check){if(read(file).replace(/\r\n/g,'\n')!==content)throw new Error('Regenerate '+file);}else fs.writeFileSync(path.join(root,file),content);}
   const summary={stats:Object.keys(data.stats).length,withSign:Object.values(data.stats).filter(stat=>stat.expected_sign).length,
     missingSign:Object.entries(data.stats).filter(([,stat])=>!stat.expected_sign).map(([name])=>name),
     ordinaryAvailability:Object.fromEntries(['main','war'].map(hall=>[hall,Object.values(data.stats).filter(stat=>stat.ordinary_availability[hall].status!=='unknown').length])),tierProfiles:data.tier_profiles};

@@ -20,8 +20,8 @@
   const select=doc.getElementById('collection-compare-item');select.value='One dice';select.dispatchEvent(new win.Event('change'));
   const totals=()=>Array.from(doc.querySelectorAll('.comparison-total')).map(node=>node.textContent);
   check('collection uses one weakest eligible reroll on both sides: '+JSON.stringify(totals()),JSON.stringify(totals())==='["160","150"]');
-  check('comparison names the two selected reroll rows',doc.querySelectorAll('.comparison-stat .comparison-reroll-note').length===2);
-  check('factual upgraded scores remain visible',Array.from(doc.querySelectorAll('.comparison-item-heading small')).every(node=>node.textContent.includes('Upgraded 70')));
+  check('per-row reroll availability remains visible',doc.querySelectorAll('.collection-stat-comparison .comparison-dice.is-rerollable').length===6);
+  check('factual upgraded scores remain visible',[0,1].every(column=>Array.from(doc.querySelectorAll('.collection-stat-comparison tbody tr')).reduce((sum,row)=>sum+Number(row.querySelectorAll('.comparison-line-score b')[column].textContent),0)===70));
   check('comparison does not alter stored values',JSON.stringify((await store.read(store.collectionKey())).map(item=>item.rows.map(row=>row.value)))===JSON.stringify(records.map(item=>item.rows.map(row=>row.value))));
   select.value='Unknown dice';select.dispatchEvent(new win.Event('change'));
   check('unknown dice receive no guaranteed bonus',JSON.stringify(totals())==='["160","~70"]');

@@ -6,12 +6,14 @@
  * History: Added after frozen screenshot reads outperformed reported live reads. */
 (() => {
   'use strict';
-  function median(samples) {
+  function median(samples,output) {
     if(samples.length!==3 || samples.some(sample=>sample.length!==samples[0].length))throw new Error('Three equal-sized samples required');
     // Capture signatures are numeric arrays with signed chroma. Clamping those
     // values to pixel bytes makes identical frames look different after filtering.
     // Actual RGBA buffers retain their byte type for ImageData.
-    const output=Array.isArray(samples[0])?new Array(samples[0].length):new Uint8ClampedArray(samples[0].length),[a,b,c]=samples;
+    if(output && output.length!==samples[0].length)throw new Error('Equal-sized median output required');
+    output ||= Array.isArray(samples[0])?new Array(samples[0].length):new Uint8ClampedArray(samples[0].length);
+    const [a,b,c]=samples;
     for(let i=0;i<output.length;i++)output[i]=a[i]+b[i]+c[i]-Math.min(a[i],b[i],c[i])-Math.max(a[i],b[i],c[i]);
     return output;
   }
@@ -22,7 +24,13 @@
       if(!source.width || !source.height || source.width*source.height>4000000){clear();return;}
       if(frames[0] && (frames[0].width!==source.width || frames[0].height!==source.height))clear();
       const canvas=frames.length===3?frames.shift():document.createElement('canvas');
-      canvas.width=source.width;canvas.height=source.height;canvas.getContext('2d').drawImage(source,0,0);frames.push(canvas);
+      const resized=canvas.width!==source.width || canvas.height!==source.height;
+      if(resized){canvas.width=source.width;canvas.height=source.height;}
+      const context=canvas.getContext('2d');
+      // Reusing the backing buffer must still match a fresh transparent canvas;
+      // drawing a transparent screenshot over the old sample would retain it.
+      if(!resized)context.clearRect(0,0,canvas.width,canvas.height);
+      context.drawImage(source,0,0);frames.push(canvas);
     }
     function snapshot(target,source) {
       target.width=source.width;target.height=source.height;
@@ -31,7 +39,9 @@
         context.drawImage(source,0,0);return {frames:1,method:'single'};
       }
       const images=frames.map(frame=>frame.getContext('2d',{willReadFrequently:true}).getImageData(0,0,frame.width,frame.height));
-      images[0].data.set(median(images.map(image=>image.data)));context.putImageData(images[0],0,0);
+      // Each channel depends only on its own three values, so the first input
+      // can also hold the output without an extra full-size buffer and copy.
+      median(images.map(image=>image.data),images[0].data);context.putImageData(images[0],0,0);
       return {frames:3,method:'median'};
     }
     return {push,snapshot,clear};

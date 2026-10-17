@@ -1,0 +1,623 @@
+{
+  "passed": true,
+  "workerStartupMs": 366.1000000014901,
+  "cases": 15,
+  "baselineMs": 3285.0000000074506,
+  "repeatedMs": 1178.7000000029802,
+  "baselineCalls": 30,
+  "repeatedCalls": 15,
+  "runs": [
+    {
+      "fixture": "pic1",
+      "repeat": 0,
+      "baselineMs": 224.60000000149012,
+      "primeMs": 210.79999999701977,
+      "repeatedMs": 72.20000000298023,
+      "changedByteMs": 96.5,
+      "newEncounterMs": 191.60000000149012,
+      "baselineCalls": 3,
+      "primeCalls": 3,
+      "repeatedCalls": 2,
+      "changedByteCalls": 3,
+      "newEncounterCalls": 3,
+      "reusedFields": 5,
+      "changedByteReusedFields": 4,
+      "newEncounterReusedFields": 0,
+      "changedField": "0-name",
+      "exact": true,
+      "metadataEquivalent": true,
+      "validEquivalent": true,
+      "provenance": true,
+      "passed": true
+    },
+    {
+      "fixture": "pic1-tight",
+      "repeat": 0,
+      "baselineMs": 144.79999999701977,
+      "primeMs": 149.89999999850988,
+      "repeatedMs": 25.80000000447035,
+      "changedByteMs": 31.399999998509884,
+      "newEncounterMs": 142.60000000149012,
+      "baselineCalls": 3,
+      "primeCalls": 3,
+      "repeatedCalls": 1,
+      "changedByteCalls": 2,
+      "newEncounterCalls": 3,
+      "reusedFields": 10,
+      "changedByteReusedFields": 9,
+      "newEncounterReusedFields": 0,
+      "changedField": "0-percentage",
+      "exact": true,
+      "metadataEquivalent": true,
+      "validEquivalent": true,
+      "provenance": true,
+      "passed": true
+    },
+    {
+      "fixture": "greenissue",
+      "repeat": 0,
+      "baselineMs": 129.10000000149012,
+      "primeMs": 147.10000000149012,
+      "repeatedMs": 17.700000002980232,
+      "changedByteMs": 53,
+      "newEncounterMs": 178,
+      "baselineCalls": 1,
+      "primeCalls": 1,
+      "repeatedCalls": 0,
+      "changedByteCalls": 1,
+      "newEncounterCalls": 1,
+      "reusedFields": 5,
+      "changedByteReusedFields": 4,
+      "newEncounterReusedFields": 0,
+      "changedField": "0-name",
+      "exact": true,
+      "metadataEquivalent": true,
+      "validEquivalent": true,
+      "provenance": true,
+      "passed": true
+    },
+    {
+      "fixture": "invaders-cyan",
+      "repeat": 0,
+      "baselineMs": 309.69999999552965,
+      "primeMs": 359.80000000447035,
+      "repeatedMs": 38.099999994039536,
+      "changedByteMs": 85.69999999552965,
+      "newEncounterMs": 270.3999999985099,
+      "baselineCalls": 1,
+      "primeCalls": 1,
+      "repeatedCalls": 0,
+      "changedByteCalls": 1,
+      "newEncounterCalls": 1,
+      "reusedFields": 5,
+      "changedByteReusedFields": 4,
+      "newEncounterReusedFields": 0,
+      "changedField": "0-name",
+      "exact": true,
+      "metadataEquivalent": true,
+      "validEquivalent": true,
+      "provenance": true,
+      "passed": true
+    },
+    {
+      "fixture": "invaders-green",
+      "repeat": 0,
+      "baselineMs": 466.8999999985099,
+      "primeMs": 419.80000000447035,
+      "repeatedMs": 286.59999999403954,
+      "changedByteMs": 330.59999999403954,
+      "newEncounterMs": 472.80000000447035,
+      "baselineCalls": 2,
+      "primeCalls": 2,
+      "repeatedCalls": 2,
+      "changedByteCalls": 2,
+      "newEncounterCalls": 2,
+      "reusedFields": 4,
+      "changedByteReusedFields": 3,
+      "newEncounterReusedFields": 0,
+      "changedField": "0-name",
+      "exact": true,
+      "metadataEquivalent": true,
+      "validEquivalent": true,
+      "provenance": true,
+      "passed": true
+    },
+    {
+      "fixture": "pic1",
+      "repeat": 1,
+      "baselineMs": 235.39999999850988,
+      "primeMs": 203.20000000298023,
+      "repeatedMs": 67.60000000149012,
+      "changedByteMs": 93.5,
+      "newEncounterMs": 170.10000000149012,
+      "baselineCalls": 3,
+      "primeCalls": 3,
+      "repeatedCalls": 2,
+      "changedByteCalls": 3,
+      "newEncounterCalls": 3,
+      "reusedFields": 5,
+      "changedByteReusedFields": 4,
+      "newEncounterReusedFields": 0,
+      "changedField": "0-name",
+      "exact": true,
+      "metadataEquivalent": true,
+      "validEquivalent": true,
+      "provenance": true,
+      "passed": true
+    },
+    {
+      "fixture": "pic1-tight",
+      "repeat": 1,
+      "baselineMs": 133.80000000447035,
+      "primeMs": 134,
+      "repeatedMs": 19.900000005960464,
+      "changedByteMs": 29.600000001490116,
+      "newEncounterMs": 129.80000000447035,
+      "baselineCalls": 3,
+      "primeCalls": 3,
+      "repeatedCalls": 1,
+      "changedByteCalls": 2,
+      "newEncounterCalls": 3,
+      "reusedFields": 10,
+      "changedByteReusedFields": 9,
+      "newEncounterReusedFields": 0,
+      "changedField": "0-percentage",
+      "exact": true,
+      "metadataEquivalent": true,
+      "validEquivalent": true,
+      "provenance": true,
+      "passed": true
+    },
+    {
+      "fixture": "greenissue",
+      "repeat": 1,
+      "baselineMs": 117.5,
+      "primeMs": 112.20000000298023,
+      "repeatedMs": 12.5,
+      "changedByteMs": 36.79999999701977,
+      "newEncounterMs": 122.79999999701977,
+      "baselineCalls": 1,
+      "primeCalls": 1,
+      "repeatedCalls": 0,
+      "changedByteCalls": 1,
+      "newEncounterCalls": 1,
+      "reusedFields": 5,
+      "changedByteReusedFields": 4,
+      "newEncounterReusedFields": 0,
+      "changedField": "0-name",
+      "exact": true,
+      "metadataEquivalent": true,
+      "validEquivalent": true,
+      "provenance": true,
+      "passed": true
+    },
+    {
+      "fixture": "invaders-cyan",
+      "repeat": 1,
+      "baselineMs": 146.60000000149012,
+      "primeMs": 154.39999999850988,
+      "repeatedMs": 15.600000001490116,
+      "changedByteMs": 39.5,
+      "newEncounterMs": 149.09999999403954,
+      "baselineCalls": 1,
+      "primeCalls": 1,
+      "repeatedCalls": 0,
+      "changedByteCalls": 1,
+      "newEncounterCalls": 1,
+      "reusedFields": 5,
+      "changedByteReusedFields": 4,
+      "newEncounterReusedFields": 0,
+      "changedField": "0-name",
+      "exact": true,
+      "metadataEquivalent": true,
+      "validEquivalent": true,
+      "provenance": true,
+      "passed": true
+    },
+    {
+      "fixture": "invaders-green",
+      "repeat": 1,
+      "baselineMs": 309.5,
+      "primeMs": 307.3999999985099,
+      "repeatedMs": 214.5,
+      "changedByteMs": 235.29999999701977,
+      "newEncounterMs": 314.1000000014901,
+      "baselineCalls": 2,
+      "primeCalls": 2,
+      "repeatedCalls": 2,
+      "changedByteCalls": 2,
+      "newEncounterCalls": 2,
+      "reusedFields": 4,
+      "changedByteReusedFields": 3,
+      "newEncounterReusedFields": 0,
+      "changedField": "0-name",
+      "exact": true,
+      "metadataEquivalent": true,
+      "validEquivalent": true,
+      "provenance": true,
+      "passed": true
+    },
+    {
+      "fixture": "pic1",
+      "repeat": 2,
+      "baselineMs": 182.90000000596046,
+      "primeMs": 159.39999999850988,
+      "repeatedMs": 54.5,
+      "changedByteMs": 85.89999999850988,
+      "newEncounterMs": 170.39999999850988,
+      "baselineCalls": 3,
+      "primeCalls": 3,
+      "repeatedCalls": 2,
+      "changedByteCalls": 3,
+      "newEncounterCalls": 3,
+      "reusedFields": 5,
+      "changedByteReusedFields": 4,
+      "newEncounterReusedFields": 0,
+      "changedField": "0-name",
+      "exact": true,
+      "metadataEquivalent": true,
+      "validEquivalent": true,
+      "provenance": true,
+      "passed": true
+    },
+    {
+      "fixture": "pic1-tight",
+      "repeat": 2,
+      "baselineMs": 127.60000000149012,
+      "primeMs": 144,
+      "repeatedMs": 22.399999998509884,
+      "changedByteMs": 28.700000002980232,
+      "newEncounterMs": 139.40000000596046,
+      "baselineCalls": 3,
+      "primeCalls": 3,
+      "repeatedCalls": 1,
+      "changedByteCalls": 2,
+      "newEncounterCalls": 3,
+      "reusedFields": 10,
+      "changedByteReusedFields": 9,
+      "newEncounterReusedFields": 0,
+      "changedField": "0-percentage",
+      "exact": true,
+      "metadataEquivalent": true,
+      "validEquivalent": true,
+      "provenance": true,
+      "passed": true
+    },
+    {
+      "fixture": "greenissue",
+      "repeat": 2,
+      "baselineMs": 132,
+      "primeMs": 125.70000000298023,
+      "repeatedMs": 14.399999998509884,
+      "changedByteMs": 49.399999998509884,
+      "newEncounterMs": 125.59999999403954,
+      "baselineCalls": 1,
+      "primeCalls": 1,
+      "repeatedCalls": 0,
+      "changedByteCalls": 1,
+      "newEncounterCalls": 1,
+      "reusedFields": 5,
+      "changedByteReusedFields": 4,
+      "newEncounterReusedFields": 0,
+      "changedField": "0-name",
+      "exact": true,
+      "metadataEquivalent": true,
+      "validEquivalent": true,
+      "provenance": true,
+      "passed": true
+    },
+    {
+      "fixture": "invaders-cyan",
+      "repeat": 2,
+      "baselineMs": 153.89999999850988,
+      "primeMs": 160.60000000149012,
+      "repeatedMs": 17.200000002980232,
+      "changedByteMs": 45.399999998509884,
+      "newEncounterMs": 204.10000000149012,
+      "baselineCalls": 1,
+      "primeCalls": 1,
+      "repeatedCalls": 0,
+      "changedByteCalls": 1,
+      "newEncounterCalls": 1,
+      "reusedFields": 5,
+      "changedByteReusedFields": 4,
+      "newEncounterReusedFields": 0,
+      "changedField": "0-name",
+      "exact": true,
+      "metadataEquivalent": true,
+      "validEquivalent": true,
+      "provenance": true,
+      "passed": true
+    },
+    {
+      "fixture": "invaders-green",
+      "repeat": 2,
+      "baselineMs": 470.70000000298023,
+      "primeMs": 459.79999999701977,
+      "repeatedMs": 299.69999999552965,
+      "changedByteMs": 356.29999999701977,
+      "newEncounterMs": 456.5,
+      "baselineCalls": 2,
+      "primeCalls": 2,
+      "repeatedCalls": 2,
+      "changedByteCalls": 2,
+      "newEncounterCalls": 2,
+      "reusedFields": 4,
+      "changedByteReusedFields": 3,
+      "newEncounterReusedFields": 0,
+      "changedField": "0-name",
+      "exact": true,
+      "metadataEquivalent": true,
+      "validEquivalent": true,
+      "provenance": true,
+      "passed": true
+    }
+  ],
+  "limitations": "Warm static exact screenshot repetition and a single changed source byte; explicit same encounter/profile. The speedup applies to repeated identical directly verified fields, not new artifacts or moving text.",
+  "network": {
+    "requests": [
+      {
+        "requestId": "845D84FF8FFFCB60C20D0B073ECF72BA",
+        "url": "http://127.0.0.1:61775/ui/scanner.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.2",
+        "url": "http://127.0.0.1:61775/ui/navigation.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.3",
+        "url": "http://127.0.0.1:61775/ui/styles.css?v=41",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.4",
+        "url": "http://127.0.0.1:61775/ui/scanner.css?v=34",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.5",
+        "url": "http://127.0.0.1:61775/ui/scanner-core.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.6",
+        "url": "http://127.0.0.1:61775/ui/scanner-regions.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.7",
+        "url": "http://127.0.0.1:61775/ui/scanner-frames.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.8",
+        "url": "http://127.0.0.1:61775/ui/data/army_catalog.js?v=8",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.9",
+        "url": "http://127.0.0.1:61775/ui/shared.js?v=43",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.10",
+        "url": "http://127.0.0.1:61775/ui/data/artifact_stat_context.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.11",
+        "url": "http://127.0.0.1:61775/ui/artifact-stat-context.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.12",
+        "url": "http://127.0.0.1:61775/ui/profiles-ui.js?v=13",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.13",
+        "url": "http://127.0.0.1:61775/ui/artifact-scoring.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.14",
+        "url": "http://127.0.0.1:61775/ui/stored-artifacts.js?v=20",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.15",
+        "url": "http://127.0.0.1:61775/ui/scanner-comparison.js?v=25",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.16",
+        "url": "http://127.0.0.1:61775/ui/scanner-keep.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.17",
+        "url": "http://127.0.0.1:61775/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.18",
+        "url": "http://127.0.0.1:61775/ui/scanner-reroll-recognition.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.19",
+        "url": "http://127.0.0.1:61775/ui/scanner-name-catalog.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.20",
+        "url": "http://127.0.0.1:61775/ui/scanner-recognition.js?v=35",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.21",
+        "url": "http://127.0.0.1:61775/ui/scanner-field-recognition.js?v=6",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.22",
+        "url": "http://127.0.0.1:61775/ui/scanner-calibration.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.23",
+        "url": "http://127.0.0.1:61775/ui/scanner-collection.js?v=56",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.24",
+        "url": "http://127.0.0.1:61775/ui/scanner-reading.js?v=69",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.25",
+        "url": "http://127.0.0.1:61775/ui/scanner.js?v=11",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.40",
+        "url": "http://127.0.0.1:61775/ui/data/artifacts.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.50",
+        "url": "http://127.0.0.1:61775/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.51",
+        "url": "http://127.0.0.1:61775/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.53",
+        "url": "http://127.0.0.1:61775/favicon.ico",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.54",
+        "url": "http://127.0.0.1:61775/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.55",
+        "url": "http://127.0.0.1:61775/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "CCDC77C7F76D36945D124F6C89D5A221",
+        "url": "http://127.0.0.1:61775/ui/vendor/tesseract/worker.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.57",
+        "url": "http://127.0.0.1:61775/ui/vendor/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.58",
+        "url": "http://127.0.0.1:61775/ui/vendor/tesseract/lang-fast/eng.traineddata.gz",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.59",
+        "url": "http://127.0.0.1:61775/tests/scanner/pic1.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.60",
+        "url": "http://127.0.0.1:61775/tests/scanner/pic1.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.61",
+        "url": "http://127.0.0.1:61775/tests/scanner/pic1.regions.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.62",
+        "url": "http://127.0.0.1:61775/tests/scanner/greenissue.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.63",
+        "url": "http://127.0.0.1:61775/tests/scanner/greenissue.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.64",
+        "url": "http://127.0.0.1:61775/tests/scanner/invaders-cyan.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.65",
+        "url": "http://127.0.0.1:61775/tests/scanner/invaders-cyan.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.66",
+        "url": "http://127.0.0.1:61775/tests/scanner/invaders-green.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "24936.67",
+        "url": "http://127.0.0.1:61775/tests/scanner/invaders-green.png",
+        "method": "GET",
+        "hasPostData": false
+      }
+    ],
+    "blockedRequests": [],
+    "externalRequests": [],
+    "nonGetRequests": [],
+    "browserErrors": []
+  }
+}

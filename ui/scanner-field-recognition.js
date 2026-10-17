@@ -39,7 +39,9 @@
         const a=resolved.boxes[i+'-name'],b=resolved.boxes[i+'-percentage'];
         return ['x','y','width','height'].every(key=>a[key]===b[key]);
       });
-      return {valid:true,crops,release,sharedPercentages,diceRequested:fields.template.rows.map(row=>!!row.dice),unavailable:resolved.unavailable || {}};
+      const reuseGeometry=JSON.stringify({boxes:resolved.boxes,template:fields.template,
+        source:[fields.source.width,fields.source.height],panelSource:fields.panelSource?[fields.panelSource.width,fields.panelSource.height]:null});
+      return {valid:true,crops,release,sharedPercentages,reuseGeometry,diceRequested:fields.template.rows.map(row=>!!row.dice),unavailable:resolved.unavailable || {}};
     }catch(error){release();throw error;}
   }
   function percentageRect(data,width,height) {
@@ -117,7 +119,7 @@
       return {text:String(line.text || '').trim(),confidence:line.confidence || 0,words:line.words || []};
     });
   }
-  async function recognize(snapshot,{worker,readView,names,canonPerk,hall='main',inferColours=false,categorySource,isClosed,ocrCalls}) {
+  async function recognize(snapshot,{worker,readView,names,canonPerk,hall='main',inferColours=false,categorySource,isClosed,ocrCalls,reuse=null}) {
     const rerolls=Array.from({length:5},(_,i)=>{
       if(!snapshot.diceRequested?.[i] && !snapshot.crops[i+'-dice'])return null;
       return snapshot.crops[i+'-dice']?window.DNScannerRerollRecognition?.classifyCanvas(snapshot.crops[i+'-dice']) ||
@@ -173,9 +175,33 @@
         return result;
       }finally {prepared.canvas.width=prepared.canvas.height=0;if(focused)focused.width=focused.height=0;}
     }
+    // Only an explicitly scoped encounter may replay directly verified OCR.
+    // Compare the complete original RGBA crop, not a visual or approximate hash.
+    // Replaying a batch cell leaves all existing retry and contradiction checks
+    // in place; category, colour, stars, dice and fallback still read fresh pixels.
+    const batchEvidence=new Map();let evidenceBytes=0,reusedFields=0;
+    const samePixels=(first,second)=>{if(first.length!==second.length)return false;for(let i=0;i<first.length;i++)if(first[i]!==second[i])return false;return true;};
+    const copyEvidence=value=>({...value,words:(value.words || []).map(word=>({...word,...(word.bbox?{bbox:{...word.bbox}}:{})}))});
     async function batch(kind,mode='contrast') {
       check();
-      const prepared=Array.from({length:5},(_,i)=>view(snapshot.crops[i+'-'+kind],mode,true));
+      const results=Array(5),missing=[];
+      for(let i=0;i<5;i++) {
+        const source=snapshot.crops[i+'-'+kind],key=kind+':'+mode+':'+i;
+        // This operation has a fixed compact view, PSM 6 and kind-specific
+        // whitelist. Other views/parameters cannot consume these entries.
+        if(reuse && mode==='contrast' && evidenceBytes+source.width*source.height*4<=reuse.byteLimit) {
+          const pixels=source.getContext('2d',{willReadFrequently:true}).getImageData(0,0,source.width,source.height).data;
+          evidenceBytes+=pixels.byteLength;
+          batchEvidence.set(key,{key,pixels,width:source.width,height:source.height});
+          const prior=reuse.entries.get(key);
+          if(prior && prior.width===source.width && prior.height===source.height && samePixels(prior.pixels,pixels)) {
+            results[i]={...copyEvidence(prior.evidence),reused:true};reusedFields++;continue;
+          }
+        }
+        missing.push(i);
+      }
+      if(!missing.length)return results;
+      const prepared=missing.map(i=>view(snapshot.crops[i+'-'+kind],mode,true));
       if(mode==='colour' && prepared.every(item=>item.ink<30)){for(const item of prepared)item.canvas.width=item.canvas.height=0;return null;}
       const canvas=document.createElement('canvas'),cells=[];
       canvas.width=Math.max(...prepared.map(item=>item.canvas.width));
@@ -186,19 +212,22 @@
       try {
         await worker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:kind==='percentage'?'+-0123456789.,%':''});
         const output=await readView(canvas,{}, {text:true,blocks:true});check();
-        return atlasEvidence(output,cells);
+        const fresh=atlasEvidence(output,cells);
+        missing.forEach((index,i)=>{results[index]=fresh[i];});
+        return results;
       }finally {canvas.width=canvas.height=0;for(const item of prepared)item.canvas.width=item.canvas.height=0;}
     }
     const fields=[],firstRows=[],firstWarnings=[],fieldReads=Array.from({length:5},()=>[]);
     const recordFields=(i,pass,name,percentage)=>{
-      const raw=value=>value?{text:value.text,confidence:value.confidence,...(value.guideText?{guideText:value.guideText}: {})}:null;
+      const raw=value=>value?{text:value.text,confidence:value.confidence,...(value.guideText?{guideText:value.guideText}: {}),
+        ...(value.reused?{reused:true,evidenceSource:'same-encounter-identical-pixels'}:{})}:null;
       fieldReads[i].push({pass,name:raw(name),percentage:raw(percentage)});
     };
     const batchNames=await batch('name');
     // Identical calibrated boxes contain the same evidence. Read their signed
     // suffix once instead of repeating identical pixels through a guide pass.
     const batchPercentages=snapshot.sharedPercentages?.every(Boolean)?null:await batch('percentage');
-    const suffixOf=name=>({text:/([+-]\s*\d+(?:[.,]\d+)?)\s*%\s*$/.exec(name.text)?.[0]?.trim() || '',confidence:name.confidence,words:[],source:'shared-crop'});
+    const suffixOf=name=>({text:/([+-]\s*\d+(?:[.,]\d+)?)\s*%\s*$/.exec(name.text)?.[0]?.trim() || '',confidence:name.confidence,words:[],source:'shared-crop',...(name.reused?{reused:true}:{})});
     const batchRows=batchNames.map((name,i)=>{
       const percentage=batchPercentages?.[i] || suffixOf(name);
       return {...R().parseFieldRow(name.text,percentage.text,names,canonPerk).row,confidence:Math.min(name.confidence,percentage.confidence)};
@@ -265,7 +294,7 @@
       const type=R().craftCategoryEvidence(output);
       if(type)artifact={type,rawType:output.text,categoryConfidence:output.confidence,source:'crafting-label'};
     }
-    const observations=[{pass:'calibrated-fields',rows:firstRows.map(row=>({...row})),warnings:[...firstWarnings],artifact:artifact?{...artifact}:null,unlocked}];
+    const observations=[{pass:'calibrated-fields',rows:firstRows.map(row=>({...row})),warnings:[...firstWarnings],artifact:artifact?{...artifact}:null,unlocked,...(reusedFields?{reusedFields}: {})}];
     if(batchRows.some((row,i)=>row.raw!==firstRows[i].raw || row.confidence!==firstRows[i].confidence))
       observations.unshift({pass:'calibrated-batch',rows:batchRows,warnings:[],artifact:artifact?{...artifact}:null,unlocked});
     const rows=firstRows.map(row=>({...row})),warnings=[];let retried=false;
@@ -308,7 +337,26 @@
       return window.DNStoredArtifacts?.craftingTier(next,{hall,type:artifact?.type}) || next;
     });
     const conflicts=tieredRows.flatMap((row,i)=>row.tierConflict?['Row '+(i+1)+': colour and starting percentage conflict. Verify the tier.']:[]);
-    return {...annotated,valid:annotated.valid && !conflicts.length,warnings:[...annotated.warnings,...conflicts],artifact,hall,hallSource,colours,unlocked,inferColours,metadataConflict,recognitionPath:'calibrated-fields',ocrCalls:ocrCalls(),observations,rows:tieredRows};
+    const valid=annotated.valid && !conflicts.length;
+    if(reuse) {
+      const verified=new Map();
+      for(let i=0;i<5;i++) {
+        const name=batchNames[i],percentage=batchPercentages?.[i] || suffixOf(name),row=tieredRows[i];
+        const initial=R().parseFieldRow(name.text,percentage.text,names,canonPerk);
+        // Never cache recovered, inferred, weak, unknown or conflicting batch
+        // evidence, even when later independent reads made the row valid.
+        if(!initial.valid || initial.row.assumed || name.confidence<80 || percentage.confidence<80 ||
+          !row.known || row.assumed || row.inferred || row.conflict || row.tierConflict || row.confidence<80 ||
+          row.name!==initial.row.name || row.value!==initial.row.value)continue;
+        for(const [kind,evidence] of [['name',name],['percentage',percentage]]) {
+          const key=kind+':contrast:'+i,candidate=batchEvidence.get(key);
+          if(candidate)verified.set(key,{...candidate,index:i,name:row.name,value:row.value,evidence:copyEvidence(evidence)});
+        }
+      }
+      // The engine commits this transaction only after its cancellation check.
+      reuse.verified=verified;
+    }
+    return {...annotated,valid,warnings:[...annotated.warnings,...conflicts],artifact,hall,hallSource,colours,unlocked,inferColours,metadataConflict,recognitionPath:'calibrated-fields',ocrCalls:ocrCalls(),...(reuse?{reusedFields}:{}),observations,rows:tieredRows};
   }
   window.DNScannerFieldRecognition={snapshot,recognize,atlasEvidence,percentageRect};
 })();

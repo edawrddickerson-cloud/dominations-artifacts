@@ -13,12 +13,29 @@
       request.onupgradeneeded = () => request.result.createObjectStore('inventory', {keyPath:'id'});
       request.onsuccess = () => {
         const db=request.result,transaction=db.transaction('inventory','readwrite'),store=transaction.objectStore('inventory');
-        const cursor=store.openCursor();
+        const records=new Map(),cursor=store.openCursor();
         cursor.onsuccess=()=>{
-          const entry=cursor.result;if(!entry)return;
+          const entry=cursor.result;
+          if(!entry){
+            // Earlier Keep buttons left owned crafts in the pending scan inbox.
+            // Recover each into its original profile without merging physical copies.
+            const inbox=records.get('items');
+            if(!inbox)return;
+            const remaining=[];
+            for(const item of inbox.items){
+              if(!item.keptFromCraft || !item.profileId){remaining.push(item);continue;}
+              const key='collection:'+item.profileId;
+              const owned=records.get(key) || {id:key,items:[]};
+              if(!owned.items.some(other=>other.id===item.id))owned.items.push(item);
+              records.set(key,owned);store.put(owned);
+            }
+            if(remaining.length!==inbox.items.length)store.put({...inbox,items:remaining});
+            return;
+          }
           const record=entry.value;
           if(Array.isArray(record.items)) {
             const items=record.items.map(backfillItem);
+            records.set(record.id,{...record,items});
             if(JSON.stringify(items)!==JSON.stringify(record.items))entry.update({...record,items});
           }
           entry.continue();
@@ -382,14 +399,17 @@
       const owned=records.get(profileKey),inventory=records.get('items');let pending=2,result;
       function finish(){
         if(--pending)return;
-        const items=identify(inventory.result?.items || []);
-        result={action:'cancelled',items};
+        const items=identify(inventory.result?.items || []),collection=identify(owned.result?.items || []);
+        result={action:'cancelled',items,collection};
         if(profileKey!==collectionKey())return;
-        if(items.some(other=>other.id===item.id) || owned.result?.items?.some(other=>other.id===item.id)){
+        if(collection.some(other=>other.id===item.id)){
           result.action='duplicate';return;
         }
-        items.push(backfillItem(item));result={action:'added',items};
-        const write=records.put({id:'items',items});
+        collection.push({...backfillItem(item),acceptedAt:new Date().toISOString()});
+        const remaining=items.filter(other=>other.id!==item.id);
+        result={action:'added',items:remaining,collection};
+        if(remaining.length!==items.length)records.put({id:'items',items:remaining});
+        const write=records.put({id:profileKey,items:collection});
         write.onsuccess=()=>{if(profileKey!==collectionKey())transaction.abort();};
       }
       owned.onsuccess=inventory.onsuccess=finish;

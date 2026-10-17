@@ -4,6 +4,11 @@
   const DN = window.DN;
   if (!DN) return;
 
+  const strategyStyles = document.createElement('link');
+  strategyStyles.rel = 'stylesheet';
+  strategyStyles.href = 'strategies.css?v=20261017-strategies';
+  document.head.appendChild(strategyStyles);
+
   const NAV_COLLAPSED_KEY = "dn-nav-collapsed";
 
   const ICONS = {
@@ -177,7 +182,9 @@
     select.addEventListener("change", () => {
       const id = select.value;
       if (!id || id === DN.activeProfileId()) return;
-      if (DN.setActiveProfile(id)) location.reload();
+      if (window.DNStrategyEditor && !window.DNStrategyEditor.canLeave()) { select.value = DN.activeProfileId(); return; }
+      try { if (DN.setActiveProfile(id)) location.reload(); }
+      catch (err) { showStrategyError(err); select.value = DN.activeProfileId(); }
     });
 
     const collapseBtn = document.getElementById("nav-collapse-btn");
@@ -186,7 +193,63 @@
     });
 
     mountPrimaryFilters();
+    mountStrategies();
     setCollapsed(loadCollapsed());
+  }
+
+  function showStrategyError(err) {
+    let node = document.getElementById('strategy-storage-error');
+    if (!node) {
+      node = document.createElement('p'); node.id = 'strategy-storage-error'; node.className = 'error'; node.setAttribute('role', 'alert');
+      (document.querySelector('.app-main') || document.body).appendChild(node);
+    }
+    node.textContent = `Your strategy change could not be saved. ${err?.message || err}`;
+  }
+
+  function mountStrategies() {
+    if (!DN.loadStrategies) return;
+    const file = fileForHref(location.pathname).replace(/^(army|artifacts|collection|totals|ratings|scanner|storage-scanner)$/, '$1.html');
+    if (!['army.html', 'artifacts.html', 'collection.html', 'totals.html', 'ratings.html', 'scanner.html', 'storage-scanner.html'].includes(file)) return;
+    const scanner = file === 'scanner.html' || file === 'storage-scanner.html';
+    const parent = document.getElementById('header-profile') || document.querySelector('.header-controls');
+    if (!parent) return;
+    const picker = document.createElement('label'); picker.className = 'header-strategy-picker';
+    picker.innerHTML = '<span class="filter-label">Strategy</span><select id="strategy-select" class="site-nav-profile-select" aria-label="Active strategy"></select>';
+    parent.appendChild(picker);
+    const select = picker.querySelector('select');
+    let comparison;
+    if (['artifacts.html', 'collection.html', 'scanner.html', 'storage-scanner.html'].includes(file)) {
+      comparison = document.createElement('details'); comparison.className = 'strategy-comparison-picker';
+      comparison.innerHTML = '<summary>Compare strategies</summary><div class="strategy-comparison-options"></div>';
+      parent.appendChild(comparison);
+      comparison.addEventListener('change', ev => {
+        if (!ev.target.matches('[data-compare-strategy]')) return;
+        const selected = [...comparison.querySelectorAll('[data-compare-strategy]:checked')].map(input => input.value);
+        try { DN.setComparisonStrategyIds(selected); }
+        catch (err) { showStrategyError(err); refresh(); }
+      });
+    }
+    function refresh() {
+      try {
+        const state = DN.loadStrategies();
+        const strategies = state.strategies.filter(s => !s.archived);
+        select.innerHTML = strategies.map(s => `<option value="${DN.esc(s.id)}"${s.id === state.activeId ? ' selected' : ''}>${s.favorite ? '★ ' : ''}${DN.esc(s.name)}</option>`).join('');
+        if (comparison) {
+          const ids = state.comparisonIds || [];
+          comparison.querySelector('summary').textContent = `Compare strategies (${ids.length})`;
+          comparison.querySelector('.strategy-comparison-options').innerHTML = '<p>Choose the strategies used for comparison. At least one stays selected. The active strategy is shown separately.</p>' + strategies.map(s => `<label><input type="checkbox" data-compare-strategy value="${DN.esc(s.id)}"${ids.includes(s.id) ? ' checked' : ''}/> ${DN.esc(s.name)}${s.id === state.activeId ? ' (active)' : ''}</label>`).join('');
+        }
+      } catch (err) { showStrategyError(err); }
+    }
+    select.addEventListener('change', () => {
+      const id = select.value;
+      if (id === DN.activeStrategyId()) return;
+      if (window.DNStrategyEditor && !window.DNStrategyEditor.canLeave()) { refresh(); return; }
+      try { if (DN.setActiveStrategy(id) && !scanner && file !== 'army.html') location.reload(); }
+      catch (err) { showStrategyError(err); refresh(); }
+    });
+    for (const event of ['dn-strategies-changed','focus','storage']) window.addEventListener(event, refresh);
+    refresh();
   }
 
   function mountPrimaryFilters() {

@@ -2,7 +2,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const root=path.resolve(__dirname,'..'),{build,files}=require('./build_artifact_stat_context.js');
 const {create}=require('../ui/artifact-stat-context.js'),data=build(),context=create(data);
-for(const [file,content] of Object.entries(files(data)))assert.equal(fs.readFileSync(path.join(root,file),'utf8'),content,'Generated metadata stays synchronized: '+file);
+for(const [file,content] of Object.entries(files(data)))assert.equal(fs.readFileSync(path.join(root,file),'utf8').replace(/\r\n/g,'\n'),content,'Generated metadata stays synchronized: '+file);
 assert.equal(Object.keys(data.stats).length,201);assert.equal(Object.values(data.stats).filter(stat=>stat.expected_sign).length,200);
 assert.equal(context.lookup('Wall Miner Hitpoints').expected_sign,null,'A known identity does not invent a missing sign');
 assert.equal(context.lookup('Enemy Tower HP').name,'Enemy Tower Hitpoints','Reviewed aliases resolve to the same stat');

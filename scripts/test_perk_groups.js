@@ -54,7 +54,7 @@ console.log("Perk grouping, persistence, inheritance, and profile checks passed.
 
 async function testRatingsPage() {
   const elements = {};
-  for (const id of ["ratings-q", "ratings-grid", "error", "ratings-reset-global", "ratings-clear-overrides"]) {
+  for (const id of ["ratings-q", "ratings-grid", "error", "ratings-reset-global", "ratings-clear-overrides", "ratings-reset-strategy", "ratings-strategy-inherit", "ratings-adopt-defaults", "ratings-keep-snapshot", "ratings-strategy-name", "ratings-strategy-legacy", "ratings-shared-preview"]) {
     elements[id] = {
       value: "", innerHTML: "", hidden: false, listeners: {},
       style: { setProperty() {} },
@@ -71,6 +71,8 @@ async function testRatingsPage() {
   }
   context.document = { getElementById: id => elements[id] };
   context.HTMLInputElement = Input;
+  context.structuredClone = structuredClone;
+  context.window.addEventListener = () => {};
   context.fetch = async url => ({
     ok: true,
     text: async () => read("ui/data/perk_name_mapping.csv"),
@@ -87,6 +89,11 @@ async function testRatingsPage() {
   assert.doesNotMatch(grid.innerHTML, /data-section-id="single" open/, "sections start collapsed");
   grid.listeners.change({ target: new Input("group", "single:damage", "offensive", "5") });
   assert.equal(DN.loadGlobalPerkRatings()["Heavy Tank Damage"].offensive, 5);
+  const sharedBefore = JSON.stringify(DN.loadStoredGlobalPerkRatings());
+  grid.listeners.change({ target: new Input("strategy", "Heavy Tank Damage", "offensive", "3") });
+  assert.equal(DN.activeStrategy().overrides["Heavy Tank Damage"].offensive, 3);
+  assert.equal(JSON.stringify(DN.loadStoredGlobalPerkRatings()), sharedBefore, "strategy rating leaves shared global ratings unchanged");
+  assert.match(grid.innerHTML, /Strategy override/, "strategy column explains actual rating source");
   grid.listeners.change({ target: new Input("global", "Heavy Tank Damage", "offensive", "2") });
   assert.equal(DN.loadGlobalPerkRatings()["Heavy Tank Damage"].offensive, 2);
   grid.listeners.change({ target: new Input("global", "Heavy Tank Damage", "offensive", "") });
@@ -98,6 +105,13 @@ async function testRatingsPage() {
   elements["ratings-q"].value = "no such perk";
   elements["ratings-q"].listeners.input();
   assert.match(grid.innerHTML, /No perks match/);
+  const snapshotBefore = DN.createStrategyRatingContext(factory);
+  elements["ratings-keep-snapshot"].listeners.click();
+  assert.equal(DN.activeStrategy().legacy, undefined, "explicit snapshot import leaves migration mode");
+  const importedSnapshot = DN.createStrategyRatingContext(factory);
+  for (const name of Object.keys(factory)) for (const axis of DN.RATING_AXES) {
+    assert.equal(importedSnapshot.ratingOf(name, axis), snapshotBefore.ratingOf(name, axis), "snapshot import preserves " + name + " " + axis);
+  }
   console.log("Grouped ratings page loading, editing, clearing, and search checks passed.");
 }
 testRatingsPage().catch(error => { console.error(error); process.exitCode = 1; });

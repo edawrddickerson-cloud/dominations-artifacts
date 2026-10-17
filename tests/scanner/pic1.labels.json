@@ -1,6 +1,9 @@
 {
   "source": "User-supplied pic1.png; manually transcribed from visible pixels",
   "category": "Pottery",
+  "hall": "main",
+  "unlocked": 1,
+  "metadataLabelProvenance": "Manually checked original pic1.png on 2026-10-17: Main Hall is checked, the benefits ribbon is red, and the stat panel shows one filled gold star followed by four empty outlines. Assessment labels only; never supplied to recognition.",
   "artifactName": "The Yongle Emperor’s Vase",
   "rows": [
     {"name": "Air Defense Damage", "value": 1},

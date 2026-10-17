@@ -16,7 +16,13 @@
     image:'data:image/svg+xml,'+encodeURIComponent('<svg xmlns="http://www.w3.org/2000/svg" width="100" height="100"><circle cx="50" cy="50" r="40" fill="gold"/></svg>'),
     rows:values.map((value, index) => ({name:'Catapult Damage', value, unlocked:index===0, level:1, levelSource:'manual',rerollEligible:false}))});
   await store.write(store.collectionKey(), [item('Best now',[6,1,1,1,1]), item('Other exhibit',[1,1,1,1,1]), item('Best unlocked',[1,11,1,1,1]), item('Alternative',[4,1,1,1,1])]);
-  const source = (await (await fetch('collection.html')).text()).replace(/<!-- Cloudflare Web Analytics -->.*<!-- End Cloudflare Web Analytics -->/g,'');
+  // Fresh strategies leave scans unassigned. This fixture starts with two occupied exhibits.
+  const initialStrategy=DN.activeStrategyId(),initialLayout=DN.loadLoadout(initialStrategy);
+  initialLayout.Main.mains=['Best now','Other exhibit'];
+  initialLayout.Main.scannedPlaced=['Best now','Other exhibit','Best unlocked','Alternative'];
+  DN.saveLoadout(initialLayout,initialStrategy);
+  const source = (await (await fetch('collection.html')).text()).replace(/<!-- Cloudflare Web Analytics -->.*<!-- End Cloudflare Web Analytics -->/g,'')
+    .replace('<head>','<head><script>const originalFetch=window.fetch.bind(window);window.fetch=(url,options)=>String(url).includes("artifact_images.json")?Promise.resolve(new Response("{}")):originalFetch(url,options);</script>');
   const frame = document.createElement('iframe'); frame.width = '1400'; frame.height = '900'; frame.style.flex='none'; frame.srcdoc = source; document.body.append(frame);
   await wait(() => frame.contentDocument?.querySelectorAll('#collection-list .artifact-card').length === 4);
   const doc = frame.contentDocument, win = frame.contentWindow;
@@ -27,6 +33,7 @@
   if (doc.getElementById('header-def').getAttribute('aria-pressed') === 'true') doc.getElementById('header-def').click();
   doc.querySelector('#collection-list [data-artifact-id="Best now"] .card-name').click();
   await new Promise(resolve => setTimeout(resolve, 350));
+  await Promise.all(doc.querySelector('.collection-layout').getAnimations().map(animation=>animation.finished));
   const select = doc.getElementById('collection-compare-item');
   check('restores remembered unlocked rows', doc.getElementById('compare-unlocked').getAttribute('aria-pressed') === 'true');
   check('selection does not start a comparison', select.value === '' && doc.querySelectorAll('.comparison-portrait').length === 1 && doc.querySelectorAll('.collection-stat-comparison th').length === 3);
@@ -136,7 +143,7 @@
   const activeProfile=editWin.DN.activeProfileId(),catalog=(await(await fetch('data/artifacts.json')).json()).find(row=>row.grade==='Legendary');
   editWin.DN.lsSet(editWin.DN.COLLECTED_KEY,JSON.stringify([editWin.DN.artifactKey(catalog)]));
   const catalogFrame=document.createElement('iframe');catalogFrame.width='1400';catalogFrame.height='900';catalogFrame.style.flex='none';
-  catalogFrame.srcdoc=source.replace('<head>','<head><script>const originalFetch=window.fetch.bind(window);window.fetch=(url,options)=>String(url).includes("artifact_images.json")?Promise.resolve(new Response("{}")):originalFetch(url,options);</script>');document.body.append(catalogFrame);
+  catalogFrame.srcdoc=source;document.body.append(catalogFrame);
   await wait(()=>catalogFrame.contentDocument?.querySelectorAll('#collection-list .artifact-card').length===5);
   const catalogDoc=catalogFrame.contentDocument;
   catalogDoc.querySelector('#collection-list [data-artifact-id="'+editWin.DN.artifactKey(catalog)+'"] .card-name').click();
@@ -162,6 +169,11 @@
   const war=item('War blue dice',[6,1,1,1,1]);war.hall='war';
   blue.rows.forEach(row=>row.rerollEligible=true);war.rows.forEach(row=>row.rerollEligible=true);unknown.rows.forEach(row=>row.rerollEligible=null);
   await store.write(store.collectionKey(),[blue,item('Other dice exhibit',[1,1,1,1,1]),grey,unknown,war]);
+  const diceStrategy=DN.activeStrategyId(),diceLayout=DN.loadLoadout(diceStrategy);
+  diceLayout.Main.mains=['Main blue dice','Other dice exhibit'];
+  diceLayout.Main.scannedPlaced=['Main blue dice','Other dice exhibit','Main grey dice','Main unknown dice'];
+  diceLayout.War.mains=['War blue dice'];diceLayout.War.scannedPlaced=['War blue dice'];
+  DN.saveLoadout(diceLayout,diceStrategy);
   const rerollFrame=document.createElement('iframe');rerollFrame.width='1400';rerollFrame.height='900';rerollFrame.srcdoc=source;document.body.append(rerollFrame);
   await wait(()=>rerollFrame.contentDocument?.querySelectorAll('#collection-list .artifact-card').length===4);
   const rerollDoc=rerollFrame.contentDocument,rerollWin=rerollFrame.contentWindow;
@@ -196,7 +208,7 @@
   if(warDoc.getElementById('header-off').getAttribute('aria-pressed')!=='true')warDoc.getElementById('header-off').click();
   if(warDoc.getElementById('header-def').getAttribute('aria-pressed')==='true')warDoc.getElementById('header-def').click();
   warDoc.querySelector('[data-artifact-id="War blue dice"] .card-name').click();
-  check('War header shows current unlocked score and full potential with 75-point cap',warDoc.querySelector('.comparison-unlocked-score').textContent==='6' && warDoc.querySelector('.comparison-potential-total').textContent==='120');
+  check('War Weapon reroll uses its highest category rating of 2 at 15 percent',warDoc.querySelector('.comparison-unlocked-score').textContent==='6' && warDoc.querySelector('.comparison-potential-total').textContent==='75');
   warFrame.remove();
   DN.setActiveProfile(DN.addProfile('Sortable artifact table'));
   DN.saveCollectionUi({hall:'Main',viewMode:'list',valueMode:'actual',compareRows:'all'});DN.lsSet('dn-artifact-hall-filter','Main');

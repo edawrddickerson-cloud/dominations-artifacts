@@ -1,0 +1,14 @@
+{
+  "kind": "scanner-frames-median-microbenchmark",
+  "crop": {
+    "width": 960,
+    "height": 540
+  },
+  "samples": 7,
+  "baselineMs": 12.426699999999983,
+  "candidateMs": 10.933899999999994,
+  "reductionPercent": 12.01284331318846,
+  "outputBytesAvoidedPerSnapshot": 2073600,
+  "pixelEquality": true,
+  "note": "Node pixel-loop microbenchmark only; excludes browser canvas readback, allocation/reset costs, OCR, and end-to-end latency."
+}

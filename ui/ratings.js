@@ -11,6 +11,13 @@
     clearOverrides: document.getElementById("ratings-clear-overrides"),
   };
   let factoryDefaults = {}, allPerkNames = [], globalBag = {}, groupBag = {}, profileBags = {}, profiles = [];
+  let strategy, strategyBag = {}, strategyContext;
+  let canonicalizePerk = name => name;
+  function refreshStrategy() {
+    strategy = DN.activeStrategy();
+    strategyBag = structuredClone(strategy.overrides || {});
+    strategyContext = DN.createStrategyRatingContext(factoryDefaults, {canonPerk: canonicalizePerk});
+  }
   const expanded = new Set();
   const kindLabels = { damage: "Damage", hp: "Hitpoints", speed: "Attack speed", movement: "Movement speed",
     spawn: "Spawn time", healing: "Healing", cooldown: "Cooldown and deploy time", other: "Other bonuses",
@@ -45,11 +52,16 @@
     let html = '<div class="ratings-page-row"><span class="rating-name">' + DN.esc(name) + '</span>' +
       pair('global', name, globalBag, axis => inherited(name, axis));
     for (const p of profiles) html += pair('profile', name, profileBags[p.id] || {}, axis => globalValue(name, axis), p.id);
+    html += '<div class="ratings-page-pair strategy-rating-pair">' + AXES.map(axis => {
+      const detail = strategyContext.explain(name, axis);
+      const source = {override:'Strategy override',legacy:'Migrated snapshot',army:'Army default',profile:'Profile preference',global:'Global preference',group:'Group default',factory:'Factory default'}[detail.source] || detail.source;
+      return '<div title="' + DN.esc(source + ': ' + detail.value) + '">' + input('strategy', name, axis, DN.perkRatingAxisOrNull(strategyBag,name,axis),detail.value) + '<small class="strategy-rating-source">' + DN.esc(source) + '</small></div>';
+    }).join('') + '</div>';
     return html + '</div>';
   }
   function perkHead() {
     return '<div class="ratings-page-head"><div class="ratings-page-corner">Individual stat</div>' +
-      [{name: 'Global'}, ...profiles].map(p => '<div class="ratings-page-group"><div class="ratings-page-group-title">' + DN.esc(p.name) +
+      [{name: 'Global'}, ...profiles, {name: 'Strategy: ' + strategy.name}].map(p => '<div class="ratings-page-group"><div class="ratings-page-group-title">' + DN.esc(p.name) +
       '</div><div class="ratings-page-group-axes"><div>Off</div><div>Def</div></div></div>').join('') + '</div>';
   }
   function groupPlaceholder(perks, kind, axis) {
@@ -57,8 +69,14 @@
     return values.size === 1 ? [...values][0] : 'Mixed';
   }
   function render() {
+    if (!strategy) return;
     const q = DN.text(el.q.value).toLowerCase();
-    el.grid.style.setProperty('--ratings-groups', String(1 + profiles.length));
+    el.grid.style.setProperty('--ratings-groups', String(2 + profiles.length));
+    document.getElementById('ratings-strategy-name').textContent = strategy.name;
+    document.getElementById('ratings-strategy-inherit').value = strategy.inheritRatings ? 'shared' : 'army';
+    document.getElementById('ratings-strategy-legacy').hidden = !strategy.legacy;
+    const shared = DN.mergePerkRatingLayers(globalBag, profileBags[DN.activeProfileId()] || {});
+    document.getElementById('ratings-shared-preview').innerHTML = Object.entries(shared).map(([name, values]) => '<li>' + DN.esc(name) + ': ' + AXES.map(axis => `${axis === 'offensive' ? 'Off' : 'Def'} ${values[axis] ?? 'inherit'}`).join(' · ') + '</li>').join('') || '<li>No individual global or profile preferences. Group defaults still apply.</li>';
     el.clearOverrides.hidden = !profiles.length;
     const known = new Set(DN.PERK_GROUPS.flatMap(g => g.perks.map(p => p.name)));
     const sections = [...DN.PERK_GROUPS, {id:'unmapped',label:'Other stats',perks:allPerkNames.filter(n => !known.has(n)).map(name=>({name,kind:name}))}];
@@ -97,18 +115,53 @@
       const value = target.value === '' ? null : Number(target.value);
       // Capture open sections before replacing their contents.
       el.grid.querySelectorAll('details[open]').forEach(d => { if (!el.q.value) expanded.add(d.dataset.sectionId); });
-      if (layer === 'group') { setAxis(groupBag,key,axis,value); DN.savePerkGroupDefaults(groupBag); }
-      else if (layer === 'global') { setAxis(globalBag,key,axis,value); persistGlobal(); }
-      else if (layer === 'profile' && profileId) { profileBags[profileId] ||= {}; setAxis(profileBags[profileId],key,axis,value); persistProfile(profileId); }
-      render();
+      try {
+        if (layer === 'group') { setAxis(groupBag,key,axis,value); DN.savePerkGroupDefaults(groupBag); }
+        else if (layer === 'global') { setAxis(globalBag,key,axis,value); persistGlobal(); }
+        else if (layer === 'profile' && profileId) { profileBags[profileId] ||= {}; setAxis(profileBags[profileId],key,axis,value); persistProfile(profileId); }
+        else if (layer === 'strategy') { setAxis(strategyBag,key,axis,value); DN.saveStrategyOverrides(strategy.id, strategyBag); }
+        refreshStrategy(); render(); showError('');
+      } catch (err) { showError(`Could not save rating: ${err.message || err}`); }
     });
     el.resetGlobal.addEventListener('click', () => {
       if (!confirm('Reset group defaults and individual global ratings to factory defaults? Profile overrides are kept.')) return;
-      globalBag = {}; groupBag = {}; persistGlobal(); DN.savePerkGroupDefaults(groupBag); render();
+      try { globalBag = {}; groupBag = {}; persistGlobal(); DN.savePerkGroupDefaults(groupBag); refreshStrategy(); render(); } catch (err) { showError(`Could not reset ratings: ${err.message || err}`); }
     });
     el.clearOverrides.addEventListener('click', () => {
       if (!confirm('Clear perk-rating overrides for every profile?')) return;
-      for (const p of profiles) { profileBags[p.id] = {}; persistProfile(p.id); } render();
+      try { for (const p of profiles) { profileBags[p.id] = {}; persistProfile(p.id); } refreshStrategy(); render(); } catch (err) { showError(`Could not clear profile ratings: ${err.message || err}`); }
+    });
+    document.getElementById('ratings-reset-strategy').addEventListener('click', () => {
+      if (!confirm(`Clear only the strategy overrides for “${strategy.name}”? Its current inheritance choice is kept.`)) return;
+      try { DN.saveStrategyOverrides(strategy.id, {}); refreshStrategy(); render(); } catch (err) { showError(`Could not clear strategy overrides: ${err.message || err}`); }
+    });
+    document.getElementById('ratings-strategy-inherit').addEventListener('change', ev => {
+      const inherit = ev.target.value === 'shared';
+      const message = inherit ? 'Use the reviewed global and profile preferences for this strategy? Old shared zero ratings will apply. Your strategy overrides take precedence.' : 'Use army and group defaults for this strategy? Its strategy overrides are kept.';
+      if (!confirm(message + (strategy.legacy ? ' This replaces its migrated rating snapshot.' : ''))) { render(); return; }
+      try { DN.updateStrategy(strategy.id, {inheritRatings: inherit}); refreshStrategy(); render(); } catch (err) { render(); showError(`Could not change inheritance: ${err.message || err}`); }
+    });
+    document.getElementById('ratings-adopt-defaults').addEventListener('click', () => {
+      if (!confirm('Clear this strategy’s migrated snapshot and overrides, and adopt army defaults?')) return;
+      try { DN.updateStrategy(strategy.id, {inheritRatings: false, overrides: {}, legacy: null}); refreshStrategy(); render(); } catch (err) { showError(`Could not adopt defaults: ${err.message || err}`); }
+    });
+    document.getElementById('ratings-keep-snapshot').addEventListener('click', () => {
+      if (!confirm('Copy the migrated snapshot into this strategy’s explicit overrides? This preserves previous zero ratings for review and editing.')) return;
+      try {
+        const snapshot = DN.mergePerkRatingLayers(strategy.legacy?.ratings || {}, strategy.overrides);
+        for (const name of allPerkNames) snapshot[name] = Object.fromEntries(AXES.map(axis => [axis, strategyContext.ratingOf(name, axis)]));
+        DN.updateStrategy(strategy.id, {overrides: snapshot, legacy: null, inheritRatings: false}); refreshStrategy(); render();
+      } catch (err) { showError(`Could not import snapshot: ${err.message || err}`); }
+    });
+    window.addEventListener('dn-strategies-changed', () => { if (allPerkNames.length) { refreshStrategy(); render(); } });
+    for (const event of ['focus','storage']) window.addEventListener(event, () => {
+      if (!allPerkNames.length) return;
+      try {
+        profiles = DN.ensureProfiles().profiles.slice();
+        globalBag = DN.loadStoredGlobalPerkRatings(); groupBag = DN.loadPerkGroupDefaults();
+        profileBags = Object.fromEntries(profiles.map(profile => [profile.id, DN.loadProfilePerkOverrides(profile.id)]));
+        refreshStrategy(); render();
+      } catch (err) { showError(`Could not refresh ratings: ${err.message || err}`); }
     });
   }
   async function load() {
@@ -131,6 +184,7 @@
       const canonPerk = DN.makeCanonPerk(
         mapRes.ok ? DN.parseMappingCsv(await mapRes.text()) : {}
       );
+      canonicalizePerk = canonPerk;
       const rawDefaults = await defRes.json();
       /** @type {Record<string, { offensive: number, defensive: number }>} */
       const defaults = {};
@@ -168,6 +222,8 @@
         profileBags[p.id] = migrateBag(profileBags[p.id] || {});
         persistProfile(p.id);
       }
+
+      refreshStrategy();
 
       showError("");
       render();

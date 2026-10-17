@@ -189,21 +189,19 @@
     if(!document.hidden && ready && (el.auto.checked || window.DNScannerCollection?.isEnabled()) && !editing && !busy && !settled && now-stableSince>=settleDelay && readHash!==hash) startRead();
   }
   function options() {
-    if(!ratingContext || ratingContext.profile!==DN.activeProfileId()) {
-      const layers=DN.loadActivePerkRatingLayers();
-      const ratings=DN.mergePerkRatingLayers(layers.global,layers.profile);
-      const applied=DN.lsHas(DN.ARMY_PRESETS_KEY)?DN.armyEffectiveAppliedSet():null;
-      const values=new Map();
-      ratingContext={profile:DN.activeProfileId(),ratingOf:(name,axis)=>{
-        const key=name+'\n'+axis;
-        if(!values.has(key))values.set(key,DN.perkRatingAxisOrNull(ratings,name,axis) ??
-          (applied?DN.armyAwareDefault(factory,applied,name,axis,{expanded:true}):factory[name]?.[axis] || 0));
-        return values.get(key);
-      }};
+    const revision=DN.strategyRevision();
+    if(!ratingContext || ratingContext.profile!==DN.activeProfileId() || ratingContext.revision!==revision) {
+      const active=DN.createStrategyRatingContext(factory,{canonPerk});
+      const strategies=DN.comparisonStrategies().map(strategy=>({id:strategy.id,name:strategy.name,favorite:strategy.favorite,
+        context:strategy.id===active.strategy.id?active:DN.createStrategyRatingContext(factory,{strategyId:strategy.id,canonPerk})}));
+      ratingContext={profile:DN.activeProfileId(),revision,active,strategies};
     }
-    el["profile-label"].textContent="Profile: "+DN.activeProfile().name+". All visible perks, including locked rows, count.";
-    return {canonPerk,scoreMode:'combined',prefSortAxes:{offensive:el.off.checked,defensive:el.def.checked},
-      ratingOf:ratingContext.ratingOf};
+    el["profile-label"].textContent="Profile: "+DN.activeProfile().name+" · Strategy: "+ratingContext.active.strategy.name+". All visible perks, including locked rows, count.";
+    const base={canonPerk,scoreMode:'combined',prefSortAxes:{offensive:el.off.checked,defensive:el.def.checked}};
+    return {...base,ratingOf:ratingContext.active.ratingOf,strategyId:ratingContext.active.strategy.id,
+      strategyName:ratingContext.active.strategy.name,revision,
+      strategyOptions:ratingContext.strategies.map(strategy=>({id:strategy.id,name:strategy.name,favorite:strategy.favorite,
+        options:{...base,ratingOf:strategy.context.ratingOf,strategyId:strategy.id,revision}}))};
   }
   function score() {
     const hallStatus=get('hall-label');
@@ -211,7 +209,8 @@
     if(!storage && hallStatus)hallStatus.textContent+=' · '+({
       'hall-colour':'detected from ribbon colour','crafting-label':'detected from label','percentage-tier':'detected from percentages','selected-hall':'using selected Hall'
     }[result?.hallSource] || 'using selected Hall');
-    let opts=ready?options():null;
+    const baseOpts=ready?options():null;
+    let opts=baseOpts;
     if(!storage && opts)opts=window.DNScannerComparisonCore?.craftOptions(opts,{hall:result?.hall || el.hall.value,type:result?.artifact?.type,rows:result?.rows}) || opts;
     const row={};
     result?.rows.forEach((perk,index)=>{row["perk_"+(index+1)+"_name"]=perk.name;row["perk_"+(index+1)+"_base"]=String(perk.value);row["perk_"+(index+1)+"_max"]="";});
@@ -230,12 +229,16 @@
       row['perk_'+(index+1)+'_name']=perk.name;row['perk_'+(index+1)+'_base']=String(perk.value);
       row['perk_'+(index+1)+'_max']=String(Math.sign(perk.value)*(Math.abs(perk.value)+9));
     });
-    const totals=scoreResult && opts?window.DNArtifactScoring.score(!storage && window.DNScannerComparisonCore?window.DNScannerComparisonCore.statRow(scoreResult.rows.map(perk=>({...perk,value:Math.sign(perk.value)*(Math.abs(perk.value)+9)}))):row,opts):null;
-    const rerollTotal=!storage && scoreResult && opts?window.DNScannerComparisonCore?.craftPotential?.(scoreResult,opts):null;
     const retainDecision=holding && !editing && ['waiting','reading'].includes(phase);
     const keeperResult=starCurrent?result:!editing && ['waiting','reading'].includes(phase)?displayedKeeper:null;
-    window.DNScannerComparison?.update(scoreResult || result,(current && !!candidate) || retainDecision,opts,{keeperResult,categoryResult:starCurrent?result:null,captureResult:visibleResult,captureRetained:captureHolding});
+    const draft=!storage && editing && !confirmed && resultCurrent?corrections(true):null;
+    const captureResult=draft?{...visibleResult,rows:draft.rows,unlocked:{states:draft.rows.map(row=>row.unlocked)}}:visibleResult;
+    window.DNScannerComparison?.update(scoreResult || result,(current && !!candidate) || retainDecision,baseOpts,{keeperResult,categoryResult:starCurrent?result:null,captureResult,captureRetained:captureHolding,encounterId:JSON.stringify([session,itemId])});
     window.DNScannerKeep?.update(result,{current,confirmed,profileKey:resultProfile,encounterId:JSON.stringify([session,itemId])});
+    const rerollType=get('compare-type')?.value || scoreResult?.artifact?.type;
+    if(!storage && baseOpts && scoreResult)opts=window.DNScannerComparisonCore?.craftOptions(baseOpts,{hall:scoreResult.hall || el.hall.value,type:rerollType,rows:scoreResult.rows}) || baseOpts;
+    const totals=scoreResult && opts?window.DNArtifactScoring.score(!storage && window.DNScannerComparisonCore?window.DNScannerComparisonCore.statRow(scoreResult.rows.map(perk=>({...perk,value:Math.sign(perk.value)*(Math.abs(perk.value)+9)}))):row,opts):null;
+    const rerollTotal=!storage && scoreResult && opts?window.DNScannerComparisonCore?.craftPotential?.({...scoreResult,artifact:{...scoreResult.artifact,type:rerollType}},opts):null;
     const live=get('live-score'),assumption=get('score-assumption');
     if(live) {
       const visible=totals;
@@ -251,6 +254,7 @@
     const unknownEditable=storage && [...el.correct.querySelectorAll('input,select,.scanner-perk-unlocked,.scanner-perk-reroll')].some(input=>!input.disabled && !input.classList?.contains('scanner-perk-tier') &&
       (String(input.value ?? '').trim()==='' || input.classList.contains('is-unknown') || input.validity?.valid===false));
     window.DNStorageScanner?.update(result,confirmed && !!latestCanvas,{reviewable:resultCurrent && !!latestCanvas && (!editing || confirmed),pending:editing && !confirmed,correctionError,expectedRows:rowCount(),unknownEditable,profileKey:resultProfile,encounterId:JSON.stringify([session,itemId]),manualCorrection:editing && confirmed});
+    let previewOpts;
     const resultHtml='<div class="scanner-glance"><div class="scanner-traffic is-'+progress.light+'" role="status"><span class="scanner-light" aria-hidden="true"></span><strong>'+progress.total+'/'+rowCount()+' · '+lightText+'</strong><small>'+progress.known+' known · '+progress.assumed+' assumed · '+progress.collected+' new names</small></div>'+
       '<div class="scanner-enabled"><strong>'+(count ?? '?')+'</strong><span>ENABLED STATS<small>'+(count!=null?'Filled yellow stars':storage?'Include row stars in the full item crop':'Include all five stars in the panel crop')+'</small></span></div></div>'+
       '<div class="scanner-score">'+(!holding && totals?
@@ -269,13 +273,21 @@
         const matches=perk && scored && perk.name===scored.name && (perk.value===scored.value || scored.estimated);
         // Crafting rows are level 1; nine upgrades add nine percentage points.
         const maxMagnitude=scored && Number.isFinite(scored.value)?Math.abs(scored.value)+9:null;
-        const rowScore=matches && line && opts && maxMagnitude!=null?maxMagnitude*((opts.prefSortAxes.offensive?line.offRating:0)+(opts.prefSortAxes.defensive?line.defRating:0)):null;
-        const scoreTitle=rowScore===null?(window.DNScannerComparisonCore?.scoreExclusion(perk) || (!opts?'Perk ratings are still loading':editing?'Apply the corrected values to score this row':'Waiting for a scoring result matching this row')):perk?.inferred?'Score uses the displayed percentage, inferred from text colour':scored?.estimated?'Estimated maximum percentage times perk rating':'';
-        const gain=rowScore!==null && rerollTotal && rerollEligible===true?Math.max(0,rerollTotal.rerollTarget-rowScore):null;
+        const acceptedScore=matches && line && opts && maxMagnitude!=null?window.DNArtifactScoring.lineActiveScore(line,opts.prefSortAxes):null;
+        let previewScore=null;
+        if(acceptedScore===null && !storage && !editing && perk?.known && Number.isFinite(perk.value)) {
+          if(previewOpts===undefined)previewOpts=baseOpts && window.DNScannerComparisonCore?.craftOptions(baseOpts,{hall:visibleResult.hall || el.hall.value,type:visibleResult.artifact?.type || get('compare-type')?.value,rows:visibleResult.rows}) || baseOpts;
+          previewScore=window.DNScannerComparisonCore?.previewRowScore(perk,previewOpts) ?? null;
+        }
+        const provisional=previewScore!==null;
+        const rowScore=acceptedScore ?? previewScore;
+        const scoreTitle=provisional?'Provisional score for the best current reading; excluded from the item subtotal. '+window.DNScannerComparisonCore.scoreExclusion(perk):rowScore===null?(window.DNScannerComparisonCore?.scoreExclusion(perk) || (!opts?'Perk ratings are still loading':editing?'Apply the corrected values to score this row':'Waiting for a scoring result matching this row')):perk?.inferred?'Score uses the displayed percentage, inferred from text colour':scored?.estimated?'Estimated maximum percentage times perk rating':'';
+        const gain=!provisional && rowScore!==null && rerollTotal && rerollEligible===true?Math.max(0,rerollTotal.rerollTarget-rowScore):null;
         const best=rerollTotal?.rerollIndex===index && gain>0;
+        const rerollTitle=best?'Best single reroll gain, included in the item total. '+rerollTotal.rerollStat+' at '+rerollTotal.rerollMagnitude+'%: '+rerollTotal.rerollTarget+' points before replacing this row.':'Gain is shown only for the lowest-scoring rerollable row';
         const colourClass=['neutral','green','blue'].includes(colour)?' is-'+colour:'';
         return '<div class="scanner-perk'+colourClass+(state===true?' is-unlocked':'')+'"><span class="scanner-stat-title">'+starMarkup(state,index)+(index+1)+'. '+DN.esc(perk?.name || 'Waiting for stat')+'</span><span class="scanner-stat-value">'+
-          (perk?.value!=null?(perk.value>=0?'+':'')+perk.value+'%':'?%')+'</span><span class="scanner-stat-score"'+(scoreTitle?' title="'+DN.esc(scoreTitle)+'" tabindex="0"':'')+'>'+(rowScore!=null?(scored?.estimated?'~':'')+rowScore:'&mdash;')+'</span><span class="scanner-stat-reroll'+(best?' is-best-reroll':'')+'" title="'+(best?'Best single reroll gain, included in the item total':'Gain is shown only for the lowest-scoring rerollable row')+'"><span class="scanner-reroll-gain">'+(best?'+'+gain:'')+'</span>'+rerollMarkup(rerollEligible,index)+'</span></div>';
+          (perk?.value!=null?(perk.value>=0?'+':'')+perk.value+'%':'?%')+'</span><span class="scanner-stat-score"'+(scoreTitle?' title="'+DN.esc(scoreTitle)+'" tabindex="0"':'')+'>'+(rowScore!=null?(provisional || scored?.estimated?'~':'')+rowScore:'&mdash;')+'</span><span class="scanner-stat-reroll'+(best?' is-best-reroll':'')+'" title="'+DN.esc(rerollTitle)+'"><span class="scanner-reroll-gain">'+(best?'+'+gain:'')+'</span>'+rerollMarkup(rerollEligible,index)+'</span></div>';
       }).join('')+'</div>');
     if(storage || resultHtml!==renderedResultHtml){el.result.innerHTML=resultHtml;renderedResultHtml=resultHtml;}
     const rerollStatus=get('reroll-status');
@@ -380,10 +392,15 @@
     if(el.accept)el.accept.disabled=false;
     autofillLockedLevels();
     highlightUnknownFields();
+    const hall=get('correct-hall');
+    if(hall)hall.value=['hall-colour','crafting-label','percentage-tier','manual'].includes(result?.hallSource)?result.hall:'';
   }
   async function read() {
     if(!ready || busy || !latestCanvas)return;
     const request=token, source=latestCanvas,readingProfile=window.DNStoredArtifacts?.collectionKey();
+    // Optional local benchmark observer; diagnostics cannot change read behavior.
+    const timing=stage=>{try{window.DNScannerPerformance?.({stage,time:performance.now(),session,itemId,request});}catch{}};
+    timing('read-start');
     const snapshot=document.createElement("canvas"),temporal=frames.snapshot(snapshot,source);
     let rerollObservations=null;
     let categorySource=null;
@@ -439,8 +456,11 @@
     readHash=hash;
     const owner=engine || (engine=recognition.create({names,canonPerk}));
     try {
+      timing('ocr-start');
       const parsed=await owner.recognize(snapshot,{expectedRows:Number(el.rows.value),layout:el.layout.value,hall:el.hall.value,inferColours:el.infer.checked,categorySource,fields:latestFields?{...latestFields,panelSource:snapshot}:null,knownTiers,
+        fieldReuse:!storage?{epoch:JSON.stringify([session,itemId,fieldGeometry,request]),profile:readingProfile || DN.activeProfileId()}:null,
         isCurrent:()=>request===token && owner===engine && !!latestCanvas});
+      timing('ocr-end');
       if(request!==token || owner!==engine || storage && readingProfile!==window.DNStoredArtifacts?.collectionKey()){if(storage && latestCanvas && !editing)say(readingProfile!==window.DNStoredArtifacts?.collectionKey()?'Profile changed while reading. Read the current artifact again.':'Read cancelled because the watched fields changed. Check Field calibration and try Read Artifact again.');return;}
       if(rerollObservations)parsed.rows=parsed.rows.map((row,i)=>({...row,...rerollObservations[i]}));
       parsed.rows=parsed.rows.map((row,i)=>{
@@ -471,12 +491,21 @@
       const recognized=result?.rows?.some(row=>row.known && !row.assumed);
       settled=confirmed || (storage?attempts>=2 || useful===0:!recognized) || (!el.auto.checked && !window.DNScannerCollection?.isEnabled());
       parsed.presentation={attempt:attempts,finished:settled,coverage:recognition.coverage(result?.rows || [],rowCount()),rows:result?.rows || [],temporal:result?.temporal || temporal};
-      window.DNScannerCollection?.record(parsed);
-      window.DNScannerCollection?.recordItem(result,itemId,{expectedRows:rowCount(),continuous:true,newEncounter:itemBoundary,steadyState:!storage,profileKey:readingProfile,encounterId:JSON.stringify([session,itemId])});
-      if(result?.rows?.length)itemBoundary=false;
-      progress(settled?'finished':'reading',settled?'Finished · '+recognition.coverage(result?.rows || [],rowCount()).total+'/'+rowCount()+' · '+(confirmed?'ready to move on':result?'best read · review or move on':'nothing useful in view'):'Improving the read · keeping these rows visible');
-      say(confirmed?"Visible perks read. Check the values before making a game decision.":"Recognition needs correction; no rating confirmed.");
-      showCorrection();score();
+      const logOptions={expectedRows:rowCount(),continuous:true,newEncounter:itemBoundary,steadyState:!storage,profileKey:readingProfile,encounterId:JSON.stringify([session,itemId])};
+      const publish=()=>{
+        if(result?.rows?.length)itemBoundary=false;
+        progress(settled?'finished':'reading',settled?'Finished · '+recognition.coverage(result?.rows || [],rowCount()).total+'/'+rowCount()+' · '+(confirmed?'ready to move on':result?'best read · review or move on':'nothing useful in view'):'Improving the read · keeping these rows visible');
+        say(confirmed?"Visible perks read. Check the values before making a game decision.":"Recognition needs correction; no rating confirmed.");
+        showCorrection();score();
+        timing('published');
+      };
+      const collection=window.DNScannerCollection;
+      if(collection?.recordResult)collection.recordResult(parsed,result,itemId,logOptions,publish);
+      else {
+        collection?.record(parsed);
+        collection?.recordItem(result,itemId,logOptions);
+        publish();
+      }
     } catch (error) {
       if(request!==token || owner!==engine)return;
       if(request===token && owner===engine){confirmed=false;resultCurrent=false;settled=true;progress('finished','Finished · read failed · retained last capture');say('Could not read this artifact: '+(error?.message || 'unknown recognition error')+'. Check the crop or Field calibration and retry.');score();showCorrection();}
@@ -562,6 +591,7 @@
     }
   }
   el.correct.addEventListener("input",event=>{
+    if(!storage && event?.target?.dataset)event.target.dataset.manual='true';
     autofillCraftingRow(event?.target);
     autofillEditedRow(event?.target);
     autofillLockedLevels();
@@ -614,6 +644,20 @@
       const next={...result?.rows[rowsIndex],name,value:raw===''?null:Number(raw),known:names.includes(name),
         ...(storage?{level:level===''?null:Number(level),unlocked:star===''?null:star==='true',base:base===''?null:Number(base),max:max===''?null:Number(max)}:{unlocked:starInput?.tagName==='BUTTON'?star===''?null:star==='true':result?.rows[rowsIndex]?.unlocked}),
         raw:name+' '+raw+'%',hasPercent:true,assumed:false,inferred:false,conflict:false};
+      if(!storage) {
+        const prior=result?.rows[rowsIndex];
+        const manual=key=>row.querySelector('.scanner-perk-'+key)?.dataset?.manual==='true';
+        next.nameSource=manual('name') || name!==prior?.name || prior?.assumed?'manual':prior?.nameSource;
+        next.unlockedSource=manual('unlocked') || next.unlocked!==prior?.unlocked?'manual':prior?.unlockedSource;
+        const inferred=row.querySelector('.scanner-perk-value')?.dataset?.autoInferred==='true' || !manual('value') && next.value===prior?.value && prior?.inferred;
+        next.inferred=!!inferred;
+        next.inferredFields=inferred?['value']:[];
+        next.valueSource=inferred?'tier-level':manual('value') || next.value!==prior?.value || prior?.conflict?'manual':prior?.valueSource;
+        if(automatic) {
+          next.assumed=!!prior?.assumed && !manual('name') && name===prior?.name;
+          next.conflict=!!prior?.conflict && !manual('name') && !manual('value') && name===prior?.name && next.value===prior?.value;
+        }
+      }
       if(storage && automatic) {
         const touched=storageEdits.get(rowsIndex),prior=result?.rows[rowsIndex];
         if(!touched)return {...prior};
@@ -623,7 +667,7 @@
       const dice=row.querySelector('.scanner-perk-reroll');
       if(dice?.tagName==='BUTTON') {
         next.rerollEligible=dice.value===''?null:dice.value==='true';
-        if(dice.dataset.manual==='true'){next.rerollSource='manual';next.rerollConfidence=next.rerollEligible==null?'unknown':'high';next.rerollConflict=false;}
+        if(dice.dataset.manual==='true'){next.rerollCaptureExpected=next.rerollCaptureExpected || next.rerollSource==='dice-background';next.rerollSource='manual';next.rerollConfidence=next.rerollEligible==null?'unknown':'high';next.rerollConflict=false;}
       }
       if(storage) {
         next.inferredFields=['value','level','tier'].filter(key=>row.querySelector('.scanner-perk-'+key)?.dataset?.autoInferred==='true');
@@ -655,7 +699,7 @@
         const tierInput=row.querySelector('.scanner-perk-tier'),tier=tierInput?.value;
         const context={hall:result?.hall || el.hall.value,type:result?.artifact?.type,crafting:true};
         const bases=window.DNStoredArtifacts.tierBases(context),tiers=['white','green','blue'];
-        const selected=tiers.includes(tier),inferred=row.querySelector('.scanner-perk-value')?.dataset?.autoInferred==='true';
+        const selected=tiers.includes(tier),inferred=next.inferred || next.value==null && selected;
         if(selected || next.value!==result?.rows[rowsIndex]?.value || result?.rows[rowsIndex]?.tierConflict)next.tierSource='manual';
         if(next.value==null && selected && bases && next.known) {
           const sign=DN.expectedPerkSign(next.name);
@@ -703,10 +747,26 @@
     el.warnings.textContent=warnings.join(' ');say(storage?"Edits applied. Complete items save automatically.":"Using your verified values. The current item log is updated when logging is enabled.");highlightUnknownFields();score();
   }
   el.accept?.addEventListener("click",()=>applyCorrections());
+  get('correct-hall')?.addEventListener('change',()=>{
+    const hall=get('correct-hall').value;
+    if(!resultCurrent || !result)return;
+    const selected=['main','war'].includes(hall);
+    token++;result={...result,hall:selected?hall:result.hall,hallSource:selected?'manual':'selected-hall',artifact:{...result.artifact,...(selected?{hall}:{})}};
+    if(selected){el.hall.value=hall;window.DNPrimaryFilters?.setHall(hall);}score();
+  });
+  get('capture-review')?.addEventListener('click',()=>{
+    const details=get('corrections');if(!details)return;
+    details.open=true;
+    const missing=window.DNScannerComparison?.identification().missing[0];
+    const match=/^Row (\d+) (name|percentage|star|reroll)$/.exec(missing || '');
+    const selector={name:'name',percentage:'value',star:'unlocked',reroll:'reroll'};
+    const target=match?el.correct.querySelectorAll('.scanner-edit-row')[Number(match[1])-1]?.querySelector('.scanner-perk-'+selector[match[2]]):get(missing==='Hall'?'correct-hall':'compare-type');
+    target?.focus();details.scrollIntoView({block:'nearest'});
+  });
   for(const input of [el.layout,el.rows,el.hall,el.infer])input.addEventListener("change",()=>{editing=false;readHash=null;invalidate("Recognition settings changed. Read the artifact again.");showCorrection();});
   for(const input of [el.off,el.def])input.addEventListener("change",score);
   get('compare-type')?.addEventListener('change',highlightUnknownFields);
-  for(const event of ['focus','storage'])window.addEventListener(event,()=>{ratingContext=null;if(ready)score();});
+  for(const event of ['focus','storage','dn-strategies-changed'])window.addEventListener(event,()=>{ratingContext=null;if(ready)score();});
   window.DNScannerReading={update,reset,invalidate};
   score();
   (async()=>{

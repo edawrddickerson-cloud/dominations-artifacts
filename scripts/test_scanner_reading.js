@@ -28,7 +28,7 @@ async function harness({storage=false}={}) {
   elements.auto.checked=false;elements.rows.value='5';elements.layout.value='gold';
   const window=element(),keepStates=[];
   if(storage){window.DNStorageRecognition={inspect:()=>({expectedRows:5,hall:'main'})};window.DNStorageScanner={update:(result,confirmed,state)=>keepStates.push({result,confirmed,...state})};}
-  const canvas=()=>({width:1920,height:1080,pixel:0,getContext(){let source,coords;return {drawImage(value,...rect){source=value;coords=rect;},putImageData(){},getImageData(){const data=new Uint8ClampedArray(96*64*4).fill(source?.pixel||0);if(source?.rgb)for(let i=0;i<data.length;i+=4)data.set([...source.rgb,255],i);if(source?.jitter)data.fill(255,(source.jitterOffset || 0)*4,((source.jitterOffset || 0)+source.jitter)*4);if(source?.artworkPixel && coords?.[0]===0)data.fill(source.artworkPixel,0,data.length/4);return {data};}};}});
+  const canvas=()=>({width:1920,height:1080,pixel:0,getContext(){let source,coords;return {clearRect(){},drawImage(value,...rect){source=value;coords=rect;},putImageData(){},getImageData(){const data=new Uint8ClampedArray(96*64*4).fill(source?.pixel||0);if(source?.rgb)for(let i=0;i<data.length;i+=4)data.set([...source.rgb,255],i);if(source?.jitter)data.fill(255,(source.jitterOffset || 0)*4,((source.jitterOffset || 0)+source.jitter)*4);if(source?.artworkPixel && coords?.[0]===0)data.fill(source.artworkPixel,0,data.length/4);return {data};}};}});
   const context={window,localStorage:{getItem:key=>store.get(key)??null,setItem:(key,value)=>store.set(key,value),removeItem:key=>store.delete(key)},
     document:{getElementById:id=>elements[id.replace('scanner-','')],createElement:canvas},performance:{now:()=>now},
     setTimeout(fn,delay=0){const id=++nextTimer;timers.set(id,{fn,due:now+delay});return id;},clearTimeout(id){timers.delete(id);},
@@ -36,13 +36,14 @@ async function harness({storage=false}={}) {
   vm.createContext(context);
   for(const file of ['data/army_catalog.js','shared.js','data/artifact_stat_context.js','artifact-stat-context.js','artifact-scoring.js','stored-artifacts.js','scanner-frames.js','scanner-name-catalog.js','scanner-recognition.js'])vm.runInContext(read(file),context);
   vm.runInContext(read('scanner-collection.js'),context);
-  const collector=window.DNScannerCollectionCore.createCollector();
-  window.DNScannerCollection={isEnabled:()=>false,record:result=>collector.record(result),recordItem:(result,id,options)=>collector.recordItem(result,id,options)};
+  const collector=window.DNScannerCollectionCore.createCollector(),batches=[];
+  window.DNScannerCollection={isEnabled:()=>false,record:result=>collector.record(result),recordItem:(result,id,options)=>collector.recordItem(result,id,options),
+    recordResult(observation,result,id,options,publish){collector.record(observation);collector.recordItem(result,id,options);batches.push({observation,result,options});publish();}};
   const comparisons=[];
   window.DNScannerComparison={update:(result,confirmed,options,state)=>comparisons.push({result,confirmed,options,state})};
   window.DNScannerRecognition.create=function(){const engine={closed:0,async close(){this.closed++;},recognize(snapshot,options){const job=deferred();jobs.push({...job,snapshot,options,engine});return job.promise;}};engines.push(engine);return engine;};
   vm.runInContext(read('scanner-reading.js'),context);await flush();
-  return {comparisons,collector,window,e:elements,jobs,engines,canvas,keepStates,DN:window.DN,reader:window.DNScannerReading,setVisible(visible){context.document.hidden=!visible;},runTimers(){const pending=[...timers.values()];timers.clear();pending.forEach(timer=>timer.fn());},advance(ms){now+=ms;for(const [id,timer] of [...timers])if(timer.due<=now){timers.delete(id);timer.fn();}}};
+  return {comparisons,collector,batches,window,e:elements,jobs,engines,canvas,keepStates,DN:window.DN,reader:window.DNScannerReading,setVisible(visible){context.document.hidden=!visible;},runTimers(){const pending=[...timers.values()];timers.clear();pending.forEach(timer=>timer.fn());},advance(ms){now+=ms;for(const [id,timer] of [...timers])if(timer.due<=now){timers.delete(id);timer.fn();}}};
 }
 function parsed(name='Heavy Tank Damage',value=10){return {valid:true,warnings:[],unlocked:{count:2},rows:Array.from({length:5},(_,i)=>({name,value,known:true,unlocked:i<2}))};}
 function edits(e,rows){e.correct.editRows=rows.map(({name,value,base,max,level,unlocked,tier})=>({querySelector(selector){return {value:selector.includes('name')?name:selector.endsWith('-base')?String(base??''):selector.endsWith('-max')?String(max??''):selector.endsWith('-level')?String(level??''):selector.endsWith('-tier')?String(tier??''):selector.endsWith('-unlocked')?String(unlocked??''):String(value??'')};}}));}
@@ -53,6 +54,9 @@ async function main(){
   h.jobs[0].resolve(parsed());await flush();
   assert.equal(h.comparisons.at(-1).confirmed,true,'current confirmed stats are eligible for the comparison flag');
   assert.equal(h.collector.summary().itemCount,1);
+  assert.equal(h.batches.length,1,'one completed read records evidence and item as one batch');
+  assert.equal(h.batches[0].observation.presentation.rows,h.batches[0].result.rows,'raw observation keeps the selected presentation without a second persistence call');
+  assert.equal(h.jobs[0].options.fieldReuse.profile,'collection:main','field evidence is scoped to the active profile');
   assert.equal(h.collector.summary().items[0].rows[0].statContext.expectedSign,1,'Recorded scanner rows include shared stat context');
   e.read.fire('click');assert.equal(h.comparisons.at(-1).confirmed,true,'retry retains the last comparison while reading');h.jobs.at(-1).resolve(parsed());await flush();
   assert.equal(h.collector.summary().itemCount,1,'manual retry keeps the current item identity');
@@ -78,10 +82,10 @@ async function main(){
   DN.saveProfilePerkOverrides(DN.activeProfileId(),{'Heavy Tank Damage':{offensive:0}});h.window.fire('storage');
   assert.match(e.result.innerHTML,/Off <strong>0<\/strong>/,'explicit zero beats inherited group/global values');
   DN.saveProfilePerkOverrides(DN.activeProfileId(),{});DN.saveGlobalPerkRatings({});DN.savePerkGroupDefaults({});
-  DN.saveArmyPresets({presets:[{id:'test',name:'Test',units:[]}],activeId:'test',lastApplied:[]});h.window.fire('storage');
+  DN.updateStrategy(DN.activeStrategyId(),{units:[]});h.window.fire('storage');
   assert.match(e.result.innerHTML,/Off <strong>0<\/strong>/,'configured empty army gates factory unit defaults');
   DN.savePerkGroupDefaults({'single:damage':{offensive:4,defensive:2}});h.window.fire('storage');
-  assert.match(e.result.innerHTML,/Off <strong>380<\/strong>/,'explicit group settings bypass factory army gate');
+  assert.match(e.result.innerHTML,/Off <strong>0<\/strong>/,'shared group settings do not re-enable troops outside this strategy');
   DN.saveProfilePerkOverrides(DN.activeProfileId(),{'Heavy Tank Damage':{offensive:0}});h.window.fire('storage');
   edits(e,Array.from({length:5},()=>({name:'Unknown perk',value:10})));e.correct.fire('input');e.accept.fire('click');
   assert.match(e.result.innerHTML,/Rating unconfirmed/);assert.match(e.warnings.textContent,/known perk/);

@@ -1,7 +1,7 @@
 /* Authority: User-requested capture percentage and top-two benchmark, October 2026.
  * Ownership: Crafting summary and same-type, same-hall collection comparison.
  * Invariants: Shared maximum weighted scoring; ties do not displace owned items;
- * inferred/estimated fields are not captured evidence. Logs are not ownership. */
+ * identified fields retain read/inferred/typed provenance. Logs are not ownership. */
 (() => {
   'use strict';
   const DN=window.DN;
@@ -43,6 +43,16 @@
     rows.forEach((perk,index)=>{row['perk_'+(index+1)+'_name']=perk.name;row['perk_'+(index+1)+'_base']=String(perk.value);row['perk_'+(index+1)+'_max']='';});
     return row;
   }
+  function previewRowScore(row,options) {
+    if(!options || !row?.known || !row.name || !Number.isFinite(row.value) || Math.abs(row.value)>40 ||
+      row.hasPercent===false || row.outOfRange || row.estimated || row.scoreExcluded)return null;
+    const sign=DN.expectedPerkSign?.(row.name);
+    if((sign===1 || sign===-1) && Math.sign(row.value)!==sign)return null;
+    // Display the current candidate without admitting uncertain evidence to
+    // item totals, reroll gains, completeness or confirmed comparisons.
+    const total=window.DNArtifactScoring.score(statRow([{name:row.name,value:Math.sign(row.value)*(Math.abs(row.value)+9)}]),options);
+    return total.lines[0]?window.DNArtifactScoring.lineActiveScore(total.lines[0],options.prefSortAxes):null;
+  }
   function estimate(result,{expectedRows=5}={}) {
     if(!result?.rows || expectedRows!==5 || result.rows.length>5)return null;
     const rows=Array.from({length:5},(_,index)=>result.rows[index]);
@@ -76,15 +86,28 @@
   }
   function captureCompleteness(result) {
     const rows=Array.from({length:5},(_,i)=>result?.rows?.[i]);
-    const names=rows.filter(row=>row?.known && row.name && !row.assumed && !row.estimated && !row.conflict).length;
-    const values=rows.filter(row=>Number.isFinite(row?.value) && row.hasPercent!==false && !row.inferred && !row.estimated && !row.conflict).length;
-    const stars=rows.filter((row,i)=>typeof (result?.unlocked?.states?.[i] ?? row?.unlocked)==='boolean').length;
-    const type=!!result?.artifact?.type && !result.metadataConflict;
-    const hall=result?.hallSource==='hall-colour' && ['main','war'].includes(result.hall);
-    const diceRows=rows.filter(row=>row?.rerollSource==='dice-background');
-    const dice=diceRows.filter(row=>typeof row.rerollEligible==='boolean' && row.rerollConfidence==='high').length;
-    const captured=names+values+stars+Number(type)+Number(hall)+dice,expected=17+diceRows.length;
-    return {captured,expected,percent:Math.round(captured/expected*100),names,values,stars,type,hall,dice,diceExpected:diceRows.length};
+    const fields=[];
+    const add=(label,known,source='read')=>fields.push({label,source:known?source:null});
+    const source=(manual,inferred)=>manual?'typed':inferred?'inferred':'read';
+    rows.forEach((row,i)=>{
+      const usable=row && !row.estimated && !row.conflict;
+      const sign=DN.expectedPerkSign?.(row?.name),validSign=sign!==1 && sign!==-1 || Math.sign(row?.value)===sign;
+      add('Row '+(i+1)+' name',usable && row.known && row.name && !row.assumed,source(row?.nameSource==='manual',row?.inferredFields?.includes('name')));
+      add('Row '+(i+1)+' percentage',usable && Number.isFinite(row.value) && Math.abs(row.value)<=40 && validSign && row.hasPercent!==false && !row.tierConflict,
+        source(row?.valueSource==='manual',row?.inferred || row?.inferredFields?.includes('value')));
+      add('Row '+(i+1)+' star',typeof (result?.unlocked?.states?.[i] ?? row?.unlocked)==='boolean',source(row?.unlockedSource==='manual',row?.inferredFields?.includes('unlocked')));
+    });
+    add('Category',!!result?.artifact?.type && !result.metadataConflict,source(result?.artifact?.typeSource==='manual',result?.artifact?.typeSource==='inferred'));
+    const hallSource=result?.hallSource;
+    add('Hall',['main','war'].includes(result?.hall) && ['hall-colour','crafting-label','percentage-tier','manual'].includes(hallSource),
+      source(hallSource==='manual',['crafting-label','percentage-tier'].includes(hallSource)));
+    const diceRows=rows.map((row,i)=>({row,i})).filter(({row})=>row?.rerollSource==='dice-background' || row?.rerollCaptureExpected);
+    diceRows.forEach(({row,i})=>add('Row '+(i+1)+' reroll',typeof row.rerollEligible==='boolean' && row.rerollConfidence==='high' && !row.rerollConflict,source(row.rerollSource==='manual',false)));
+    const read=fields.filter(field=>field.source==='read').length,inferred=fields.filter(field=>field.source==='inferred').length,typed=fields.filter(field=>field.source==='typed').length;
+    const identified=read+inferred+typed,expected=fields.length,missing=fields.filter(field=>!field.source).map(field=>field.label);
+    const count=suffix=>fields.filter(field=>field.label.endsWith(suffix) && field.source).length;
+    return {identified,read,inferred,typed,captured:read,expected,percent:Math.round(identified/expected*100),missing,
+      names:count(' name'),values:count(' percentage'),stars:count(' star'),type:!!fields[15].source,hall:!!fields[16].source,dice:count(' reroll'),diceExpected:diceRows.length};
   }
   function craftScore(result,options) {
     if(!result?.valid || result.rows?.length!==5 || !result.rows.some(scoreable) || result.rows.some(row=>!scoreable(row) && !(result.partial && row.scoreExcluded)))return null;
@@ -111,18 +134,38 @@
   // Each UI refresh replaces the owned snapshot and rating resolver. A stable
   // snapshot only needs its category cutoffs scored once, across all OCR frames.
   function createComparator() {
-    let previousOwned,previousRatings,previousCanon;
-    const cache=new Map();
+    let previousOwned,previousCanon;
+    let ratingsCaches=new WeakMap();
     function benchmark(params) {
       const {owned,options,hall,type}=params;
-      if(owned!==previousOwned || options.ratingOf!==previousRatings || options.canonPerk!==previousCanon){
-        cache.clear();previousOwned=owned;previousRatings=options.ratingOf;previousCanon=options.canonPerk;
+      if(owned!==previousOwned || options.canonPerk!==previousCanon){
+        ratingsCaches=new WeakMap();previousOwned=owned;previousCanon=options.canonPerk;
       }
-      const key=JSON.stringify([hallName(hall),typeName(type),options.scoreMode,!!options.prefSortAxes.offensive,!!options.prefSortAxes.defensive]);
+      let cache=ratingsCaches.get(options.ratingOf);
+      if(!cache){cache=new Map();ratingsCaches.set(options.ratingOf,cache);}
+      const key=JSON.stringify([options.strategyId,options.revision,hallName(hall),typeName(type),options.scoreMode,!!options.prefSortAxes.offensive,!!options.prefSortAxes.defensive]);
       if(!cache.has(key))cache.set(key,ownedBenchmark(params));
       return cache.get(key);
     }
     return (result,params)=>compare(result,params,benchmark);
+  }
+  // Display contract: docs/scanner-comparison.md, "Crafting display rules".
+  // Colour follows the displayed numbers, including provisional subtotals.
+  // Keep confirmation/completeness separate from that visual comparison.
+  function compareStrategies(result,{strategies=[],...params},comparator=compare) {
+    const results=strategies.map(strategy=>({strategyId:strategy.id,name:strategy.name,favorite:strategy.favorite,
+      ...comparator(result,{...params,options:strategy.options,limit:2})}));
+    const reliable=item=>!result?.provisional && !item.provisional && !['partial','incomplete','unconfirmed','axes','type'].includes(item.status);
+    const improvements=results.filter(item=>reliable(item) && item.status==='better');
+    const vacancies=results.filter(item=>reliable(item) && item.status==='vacancy');
+    const ties=results.filter(item=>reliable(item) && item.status==='tie');
+    const below=results.filter(item=>reliable(item) && item.status==='below');
+    const status=!results.length?'check':improvements.length?'better':vacancies.length?'vacancy':
+      results.every(item=>reliable(item) && item.status==='below')?'below':
+      results.every(item=>reliable(item) && ['below','tie'].includes(item.status))?'tie':'check';
+    const belowDisplayedBenchmarks=results.length>0 && results.every(item=>
+      Number.isFinite(item.score) && Number.isFinite(item.threshold) && item.score<item.threshold);
+    return {status,results,belowDisplayedBenchmarks,improvements:improvements.length,vacancies:vacancies.length,ties:ties.length,below:below.length};
   }
   function compare(result,{type,hall,owned,options,levels={},limit=null},benchmark=ownedBenchmark) {
     options=options?{...options,scoreMode:'combined'}:options;
@@ -146,7 +189,7 @@
       capacity,score,rank,threshold,count:candidates.length,top:candidates.slice(0,capacity)};
   }
   const isUnlockedKeeper=result=>result?.unlocked?.count===3;
-  window.DNScannerComparisonCore={compare,createComparator,currentRows,maxRows,statRow,estimate,isUnlockedKeeper,captureCompleteness,craftScore,craftPotential,craftOptions,scoreExclusion};
+  window.DNScannerComparisonCore={compare,compareStrategies,createComparator,currentRows,maxRows,statRow,estimate,previewRowScore,isUnlockedKeeper,captureCompleteness,craftScore,craftPotential,craftOptions,scoreExclusion};
   const type=document.getElementById('scanner-compare-type');if(!type)return;
   const compareOwned=createComparator();
   const flag=document.getElementById('scanner-comparison'),detail=document.getElementById('scanner-comparison-detail'),hall=document.getElementById('scanner-hall');
@@ -155,7 +198,13 @@
   let categoryOrigin='remembered',categoryRead=null;
   let typeHall=null;
   let captureResult=null;
+  let captureEncounter=null;
   let keeperResult=null;
+  let strategyColumnsExpanded=false;
+  function identification() {
+    const overridden=categoryOrigin==='override' && !!type.value && !!captureResult;
+    return captureCompleteness(overridden?{...captureResult,metadataConflict:false,artifact:{...captureResult.artifact,type:type.value,typeSource:'manual'}}:captureResult);
+  }
   function showCategory() {
     const label=document.getElementById('scanner-category-label');
     const choice=document.getElementById('scanner-category-choice');
@@ -174,7 +223,7 @@
   function renderBenchmarks() {
     const list=document.getElementById('scanner-benchmarks');
     if(!list)return;
-    document.getElementById('scanner-benchmarks-label').textContent='Benchmarks';
+    document.getElementById('scanner-benchmarks-label').textContent='Benchmarks'+(options?.strategyName?' · '+options.strategyName:'');
     const available=options && (options.prefSortAxes.offensive || options.prefSortAxes.defensive) && !error && loadedProfile===DN.activeProfileId();
     list.innerHTML=(DN.ARTIFACT_TYPE_EXHIBITS[hallName(hall.value)] || []).map(ex=>{
       const category=ex.key.replace(/^war-/,''),role=hallName(hall.value)==='War'?'Off':category==='weapon'?[options?.prefSortAxes.offensive?'Off':'',options?.prefSortAxes.defensive?'Def':''].filter(Boolean).join('+') || 'Off/Def':['armor','pottery'].includes(category)?'Def':'Off',label=ex.label.replace(/ Exhibit$/,'').replace(/^War /,'')+' · '+role;
@@ -185,19 +234,75 @@
       return '<div data-category="'+DN.esc(category)+'"'+(type.value===category?' class="is-current"':'')+' title="'+DN.esc(note)+'"><dt>'+DN.esc(label)+'</dt><dd>'+DN.esc(value)+'</dd></div>';
     }).join('');
   }
+  function renderStrategyResults() {
+    const panel=document.getElementById('scanner-strategy-results');
+    const strategies=options?.strategyOptions;
+    if(!panel || !strategies?.length){if(panel)panel.hidden=true;return;}
+    panel.hidden=false;
+    const activeLabel=document.getElementById('scanner-benchmark-label');
+    if(activeLabel)activeLabel.textContent='Top 2 · '+options.strategyName;
+    const available=!error && loadedProfile===DN.activeProfileId();
+    const comparison=available && type.value?compareStrategies(confirmed?latest:null,
+      {type:type.value,hall:hall.value,owned,strategies},compareOwned):null;
+    const statusText=item=>{
+      if(!item)return error || (available?'Choose the artifact category':'Loading collection…');
+      if(item.status==='incomplete')return 'Owned stats need review';
+      if(item.status==='unconfirmed')return latest?'Stats need review':'Waiting for an item';
+      if(item.status==='partial')return 'Incomplete subtotal · review';
+      if(item.status==='axes')return 'Select Off or Def';
+      if(item.status==='type')return 'Category needs review';
+      const note=item.status==='vacancy'?'Open slot · '+item.count+'/2 owned':item.status==='better'?'New #'+item.rank+' · +'+(item.score-item.threshold):
+        item.status==='tie'?'Ties #2 · no replacement':'Below #2 · '+(item.score-item.threshold);
+      return (latest?.provisional || item.provisional?'Review · ':'')+note;
+    };
+    const metric=(value,uncertain=false)=>Number.isFinite(value)?(uncertain?'~':'')+value:'—';
+    const results=new Map(comparison?.results.map(item=>[item.strategyId,item]) || []);
+    const summary=comparison?comparison.belowDisplayedBenchmarks?(comparison.status==='below'?'':'Estimated · ')+'Below top 2 in all '+strategies.length+' selected strategies':
+      comparison.status==='better'?'Improves top 2 for '+comparison.improvements+' of '+strategies.length+' strategies':
+      comparison.status==='vacancy'?'Open top-two slot for '+comparison.vacancies+' of '+strategies.length+' strategies':
+      comparison.status==='below'?'Below top 2 in all '+strategies.length+' selected strategies':
+      comparison.status==='tie'?'Ties top 2 for '+comparison.ties+' strategies · no replacement':'Check strategy comparisons · incomplete or uncertain evidence':
+      available?'Choose the artifact category to compare strategies':'Strategy benchmarks unavailable';
+    panel.classList.toggle('show-all',strategyColumnsExpanded);
+    panel.innerHTML='<h3>Strategy comparisons</h3><p class="scanner-strategy-summary" role="status">'+DN.esc(summary)+'</p>'+
+      '<label class="scanner-strategy-columns"><input type="checkbox" data-strategy-columns'+(strategyColumnsExpanded?' checked':'')+' /> Show all benchmark columns</label>'+
+      '<p class="scanner-strategy-scope">All owned artifacts of the same hall and category, including Unused. Target: two per strategy.</p>'+
+      '<div class="scanner-strategy-scroll"><table><thead><tr><th>Strategy</th><th>Upgraded</th><th>Potential</th><th>Best owned</th><th>Second owned</th><th>Result</th></tr></thead><tbody>'+
+      strategies.map(strategy=>{const item=results.get(strategy.id),uncertain=latest?.provisional || item?.provisional;
+        return '<tr data-strategy-id="'+DN.esc(strategy.id)+'"'+(strategy.id===options.strategyId?' class="is-current"':'')+'><th scope="row">'+DN.esc(strategy.name)+
+          (strategy.id===options.strategyId?' <small>Active</small>':'')+'</th><td>'+metric(item?.baseScore,latest?.provisional)+'</td><td>'+metric(item?.score,uncertain)+
+          '</td><td title="'+DN.esc(item?.top?.[0]?.name || '')+'">'+metric(item?.top?.[0]?.score,item?.top?.[0]?.uncertain)+'</td><td title="'+DN.esc(item?.top?.[1]?.name || '')+'">'+
+          (item?.threshold===null?'Open slot':metric(item?.threshold,item?.top?.[1]?.uncertain))+'</td><td>'+DN.esc(statusText(item))+'</td></tr>';
+      }).join('')+'</tbody></table></div>';
+    const benchmark=document.getElementById('scanner-benchmark');
+    benchmark.classList.remove('is-top-two');benchmark.classList.remove('is-below-cutoff');
+    if(!comparison || !confirmed){benchmark.classList.add('is-unknown');return;}
+    if(comparison.belowDisplayedBenchmarks) {
+      benchmark.classList.remove('is-unknown');benchmark.classList.add('is-below-cutoff');
+      if(comparison.status!=='below')benchmark.classList.add('is-provisional');
+    }else if(['better','vacancy','below'].includes(comparison.status)) {
+      benchmark.classList.remove('is-unknown');benchmark.classList.add(comparison.status==='below'?'is-below-cutoff':'is-top-two');
+    }else benchmark.classList.add('is-unknown');
+    flag.textContent=summary;
+    if(options.strategyName && detail.textContent)detail.textContent=options.strategyName+' · '+detail.textContent;
+  }
   function render() {
     const benchmark=document.getElementById('scanner-benchmark');
     if(!benchmark)return;
+    try {
     renderBenchmarks();
-    const get=id=>document.getElementById('scanner-'+id),capture=captureCompleteness(captureResult);
+    const get=id=>document.getElementById('scanner-'+id),capture=identification();
     const board=get('glance-board');
     const artwork=get('artwork'),image=latest?.artifact?.image;
     if(artwork){artwork.hidden=!image;if(image && artwork.getAttribute('src')!==image)artwork.src=image;if(!image)artwork.removeAttribute('src');}
-    board.style.setProperty('--capture-hue',String(capture.percent*1.2));
-    get('capture-percent').textContent=capture.percent+'%';
+    board.style.setProperty('--capture-hue',capture.identified===capture.expected?'120':capture.identified?'40':'0');
+    board.className='scanner-summary-card scanner-capture-card'+(capture.missing.length && captureResult?' is-incomplete':'');
+    get('capture-percent').textContent=capture.identified+'/'+capture.expected+' identified';
     get('capture-meter').value=capture.percent;
-    get('capture-detail').textContent=capture.captured+' / '+capture.expected+' fields captured';
-    board.title=capture.names+'/5 names · '+capture.values+'/5 percentages · '+capture.stars+'/5 stars · Type '+(capture.type?'read':'unread')+' · Hall '+(capture.hall?'read':'unread')+(capture.diceExpected?' · '+capture.dice+'/'+capture.diceExpected+' dice':'');
+    get('capture-detail').textContent=capture.read+' read · '+capture.inferred+' inferred · '+capture.typed+' typed';
+    const review=get('capture-review');
+    if(review){review.hidden=!captureResult || !capture.missing.length;review.textContent=review.hidden?'':'Manual entry required: '+capture.missing.join(', ');}
+    board.title=capture.names+'/5 names · '+capture.values+'/5 percentages · '+capture.stars+'/5 stars · Category '+(capture.type?'identified':'unknown')+' · Hall '+(capture.hall?'identified':'unknown')+(capture.diceExpected?' · '+capture.dice+'/'+capture.diceExpected+' dice':'');
     const keeper=isUnlockedKeeper(keeperResult);
     const keeperReason=get('keeper-reason');
     if(keeperReason){keeperReason.hidden=!keeper;keeperReason.textContent=keeper?'Keep — 3 stats unlocked':'';}
@@ -249,6 +354,7 @@
       (comparison.score-comparison.threshold>0?'+':'')+(comparison.score-comparison.threshold)+' points · Rank '+comparison.rank;
     detail.textContent+=' · Upgraded '+comparison.baseScore+' → Potential '+comparison.score+(comparison.rerollGain>0?' (+ '+comparison.rerollGain+' from stat '+(comparison.rerollIndex+1)+')':'')+(comparison.provisional?' · Reroll availability needs review':'');
     if(keeper)detail.textContent+=' · 3 open stats · Keep for review';
+    } finally {renderStrategyResults();}
   }
   async function refresh() {
     const ticket=++request,profile=DN.activeProfileId();loading=true;error='';render();
@@ -267,22 +373,28 @@
     } catch {if(ticket===request)error='Could not load your collection. Refocus this window to retry.';}
     finally {if(ticket===request){loading=false;render();}}
   }
-  window.DNScannerComparison={update(result,isConfirmed,opts,state={}){
+  window.DNScannerComparison={identification,update(result,isConfirmed,opts,state={}){
     latest=result;confirmed=isConfirmed;options=opts;
     keeperResult=Object.prototype.hasOwnProperty.call(state,'keeperResult')?state.keeperResult:result;
     captureResult=Object.prototype.hasOwnProperty.call(state,'captureResult')?state.captureResult:result;
+    if(!captureResult || state.encounterId!=null && state.encounterId!==captureEncounter){categoryOrigin='unread';categoryRead=null;}
+    captureEncounter=state.encounterId ?? captureEncounter;
     const detectedResult=Object.prototype.hasOwnProperty.call(state,'categoryResult')?state.categoryResult:result;
     if(typeHall!==hallName(hall.value))types();
     if(detectedResult && detectedResult!==categoryRead) {
       categoryRead=detectedResult;
       const detected=typeName(detectedResult.artifact?.type);
-      if((DN.ARTIFACT_TYPE_EXHIBITS[hallName(hall.value)] || []).some(ex=>ex.key.replace(/^war-/,'')===detected)) {
+      if(categoryOrigin!=='override' && (DN.ARTIFACT_TYPE_EXHIBITS[hallName(hall.value)] || []).some(ex=>ex.key.replace(/^war-/,'')===detected)) {
         type.value=detected;categoryOrigin='detected';DN.saveScannerArtifactType?.(detected,hall.value);
       } else if(categoryOrigin!=='override') {type.value='';categoryOrigin='unread';}
     }
     showCategory();render();
   }};
   type.addEventListener('change',()=>{categoryOrigin='override';DN.saveScannerArtifactType?.(type.value,hall.value);showCategory();render();});
+  document.getElementById('scanner-strategy-results')?.addEventListener('change',event=>{
+    if(!event.target.matches('[data-strategy-columns]'))return;
+    strategyColumnsExpanded=event.target.checked;renderStrategyResults();
+  });
   hall.addEventListener('change',()=>{types();render();});
   window.addEventListener('focus',refresh);
   window.addEventListener('storage',refresh);

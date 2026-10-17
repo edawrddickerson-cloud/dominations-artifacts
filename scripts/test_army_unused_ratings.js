@@ -3,62 +3,53 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const read = file => fs.readFileSync(path.join(__dirname, '..', file), 'utf8');
-const store = new Map();
+const store = new Map(), elements = {}, events = new Map();
+for (const id of ['preset-strip','preset-name','preset-add','preset-remove','army-save','army-discard','unit-grid','error','army-hint','strategy-status','strategy-legacy','strategy-archived','strategy-archive','strategy-favorite','strategy-duplicate','strategy-earlier','strategy-later','strategy-adopt-defaults']) {
+  elements[id] = {value:'', checked:false, disabled:false, hidden:false, innerHTML:'', textContent:'', listeners:{}, classList:{toggle(){}}, addEventListener(type,handler){this.listeners[type]=handler;}};
+}
 const context = {
-  window: {}, document: { getElementById: () => ({}) },
-  localStorage: {
-    getItem: key => store.get(key) ?? null,
-    setItem: (key, value) => store.set(key, value),
-    removeItem: key => store.delete(key),
-  },
+  window: {addEventListener(type,handler){if(!events.has(type))events.set(type,[]);events.get(type).push(handler);},dispatchEvent(ev){for(const listener of events.get(ev.type)||[])listener(ev);},Event},
+  document: {getElementById:id=>elements[id],addEventListener(){}},
+  localStorage: {getItem:key=>store.get(key)??null,setItem:(key,value)=>store.set(key,value),removeItem:key=>store.delete(key)},
+  fetch:async()=>({ok:true,json:async()=>({})}), confirm:()=>true,
 };
 vm.createContext(context);
-for (const file of ['ui/data/army_catalog.js', 'ui/shared.js']) vm.runInContext(read(file), context);
-const DN = context.window.DN;
-const defaults = JSON.parse(read('ui/data/perk_rating_defaults.json'));
-context.defaults = defaults;
-const armySource = read('ui/army.js').replace(/  bind\(\);\s+load\(\);\s*\}\)\(\);\s*$/, `
-  factoryDefaults = defaults;
-  allPerkNames = Object.keys(defaults);
-  window.testArmy = { buildUnusedUnitRows, zeroUnusedUnitRows, offerZeroUnusedUnits,
-    choose(layer) { showRatingConfirm = async () => layer; } };
-})();`);
-assert.notEqual(armySource, read('ui/army.js'));
-vm.runInContext(armySource, context);
-const army = context.window.testArmy;
-const rows = army.buildUnusedUnitRows(['APC', 'Fighter']);
-const names = new Set(rows.map(row => row.perk));
-assert(names.has('Heavy Tank Damage'));
-assert(names.has('Heavy Tank Attack Speed'));
-for (const name of ['APC Damage', 'Heavy Infantry Damage', 'Fighter Hitpoints & Damage',
-  "Generals' Damage", 'Barracks Troop Damage', 'Invading Heavy Tank Damage', 'Tower Damage']) {
-  assert(!names.has(name), name);
+for(const file of ['ui/data/army_catalog.js','ui/shared.js'])vm.runInContext(read(file),context);
+const DN=context.window.DN;
+DN.savePerkGroupDefaults({'single:damage':{offensive:5}});
+DN.saveGlobalPerkRatings({'Heavy Tank Damage':{offensive:4,defensive:3}});
+DN.saveProfilePerkOverrides(DN.activeProfileId(),{'Heavy Tank Damage':{offensive:5,defensive:2}});
+async function test(){
+  vm.runInContext(read('ui/army.js'),context);
+  await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(elements.error.textContent,'');
+  const globalBefore=JSON.stringify(DN.loadStoredGlobalPerkRatings()), profileBefore=JSON.stringify(DN.loadProfilePerkOverrides(DN.activeProfileId()));
+  const first=DN.activeStrategyId();
+  const checkbox={dataset:{unit:'APC'},checked:true,matches:()=>true};
+  elements['unit-grid'].listeners.change({target:checkbox});
+  assert(!DN.activeStrategy().units.includes('APC'),'editing troops remains an unsaved draft');
+  assert.equal(elements['army-save'].disabled,false);
+  context.confirm=()=>false;
+  assert.equal(context.window.DNStrategyEditor.canLeave(),false,'unsaved draft blocks navigation when discard declined');
+  context.confirm=()=>true;
+  elements['army-save'].listeners.click();
+  assert(DN.activeStrategy().units.includes('APC'),'save persists strategy troops');
+  assert.equal(DN.activeStrategy().legacy,undefined,'editing troops explicitly leaves migrated snapshot');
+  assert.equal(JSON.stringify(DN.loadStoredGlobalPerkRatings()),globalBefore,'saving army cannot zero shared global ratings');
+  assert.equal(JSON.stringify(DN.loadProfilePerkOverrides(DN.activeProfileId())),profileBefore,'saving army cannot zero shared profile ratings');
+  DN.saveStrategyOverrides(first,{'APC Damage':{offensive:3}});
+  elements['strategy-duplicate'].listeners.click();
+  assert.notEqual(DN.activeStrategyId(),first);
+  assert.equal(DN.activeStrategy().overrides['APC Damage'].offensive,3,'duplicate keeps isolated ratings');
+  assert(DN.activeStrategy().units.includes('APC'),'duplicate keeps troops');
+  const copy=DN.activeStrategyId();
+  elements['strategy-archive'].listeners.click();
+  assert.notEqual(DN.activeStrategyId(),copy,'archive changes active strategy');
+  assert(DN.loadStrategies().strategies.find(s=>s.id===copy).archived);
+  for(let i=0;i<10;i++)elements['preset-add'].listeners.click();
+  assert(DN.loadStrategies().strategies.length>=12,'management supports at least ten strategies');
+  assert.equal(JSON.stringify(DN.loadStoredGlobalPerkRatings()),globalBefore,'create, duplicate, archive and switch keep globals unchanged');
+  assert.equal(JSON.stringify(DN.loadProfilePerkOverrides(DN.activeProfileId())),profileBefore,'management keeps profile ratings unchanged');
+  console.log('Strategy army drafts, save, discard guard, migration, duplication, archive, capacity, and shared-rating isolation passed.');
 }
-DN.savePerkGroupDefaults({ 'single:damage': { offensive: 5 } });
-DN.saveGlobalPerkRatings({ 'Heavy Tank Damage': { offensive: 4, defensive: 3 }, 'Fighter Damage': { offensive: 2 } });
-DN.saveProfilePerkOverrides(DN.activeProfileId(), { 'Heavy Tank Damage': { offensive: 5, defensive: 2 } });
-async function test() {
-  const before = JSON.stringify(DN.loadStoredGlobalPerkRatings());
-  army.choose(null);
-  await army.offerZeroUnusedUnits(['APC', 'Fighter']);
-  assert.equal(JSON.stringify(DN.loadStoredGlobalPerkRatings()), before, 'Skip preserves ratings');
-  assert.equal(DN.loadProfilePerkOverrides(DN.activeProfileId())['Heavy Tank Damage'].offensive, 5);
-  army.choose('profile');
-  await army.offerZeroUnusedUnits(['APC', 'Fighter']);
-  const profile = DN.loadProfilePerkOverrides(DN.activeProfileId());
-  assert.equal(profile['Heavy Tank Damage'].offensive, 0);
-  assert.equal(profile['Heavy Tank Damage'].defensive, 2);
-  assert.equal(JSON.stringify(DN.loadStoredGlobalPerkRatings()), before);
-  army.zeroUnusedUnitRows(rows, 'global');
-  const global = DN.loadStoredGlobalPerkRatings();
-  assert.equal(global['Heavy Tank Damage'].offensive, 0);
-  assert.equal(global['Heavy Tank Damage'].defensive, 3);
-  assert.equal(global['Fighter Damage'].offensive, 2);
-  assert.equal(DN.loadPerkGroupDefaults()['single:damage'].offensive, 5);
-  for (const row of rows) {
-    assert.equal(global[row.perk].offensive, 0, row.perk);
-    assert.equal(row.newDef, row.curDef, row.perk);
-  }
-  console.log('Unused unit selection, linked units, Skip, profile/global cleanup, and defensive preservation passed.');
-}
-test().catch(error => { console.error(error); process.exitCode = 1; });
+test().catch(error=>{console.error(error);process.exitCode=1;});

@@ -4,15 +4,17 @@
  * Constraints: The actual screenshot OCR is covered by the separate UI fixture. */
 (async()=>{
   const get=id=>document.getElementById('scanner-'+id),checks={};
-  const check=(name,condition)=>{checks[name]=!!condition;if(!condition)throw new Error(name);};
+  const check=(name,condition)=>{checks[name]=!!condition;if(!condition)throw new Error(name+' / '+get('comparison').textContent+' / '+get('benchmark').className+' / '+get('capture-percent').textContent+' / '+get('capture-detail').textContent);};
   const wait=async fn=>{const until=performance.now()+15000;while(!fn()){if(performance.now()>until)throw new Error('Timed out: '+get('result-status').textContent+' / total '+get('item-total').textContent+' / cutoff '+get('benchmark-value').textContent+' / '+get('comparison').textContent+' / axes '+get('off').checked+','+get('def').checked);await new Promise(resolve=>setTimeout(resolve,25));}};
   await wait(()=>get('names').children.length && window.DNStoredArtifacts && window.DNScannerComparisonCore);
+  // Exercise the active-strategy summary independently of the strategy table.
+  DN.comparisonStrategies=()=>[];
   const bounds=element=>{const rect=element.getBoundingClientRect();return {top:rect.top,bottom:rect.bottom,left:rect.left,right:rect.right};};
-  const visible=element=>{const rect=bounds(element);return rect.top>=0 && rect.bottom<=innerHeight && rect.left>=0 && rect.right<=innerWidth;};
+  const visible=element=>{const rect=bounds(element);return rect.top>=-1 && rect.bottom<=innerHeight+1 && rect.left>=-1 && rect.right<=innerWidth+1;};
   check('setup starts collapsed above summary',!get('setup').open && !!(get('setup').compareDocumentPosition(get('glance-board')) & Node.DOCUMENT_POSITION_FOLLOWING));
   check('old score category and hall strip removed',!document.querySelector('.scanner-score-controls') && !get('category-label') && !get('hall-label'));
   check('manual category correction moved out of top bar',!document.querySelector('.scanner-session').contains(get('compare-type')) && get('compare-type').closest('details').querySelector('summary').textContent==='Correct Recognition');
-  check('empty capture begins red at zero',get('capture-percent').textContent==='0%' && getComputedStyle(get('glance-board')).getPropertyValue('--capture-hue').trim()==='0');
+  check('empty capture begins red at zero',get('capture-percent').textContent==='0/17 identified' && getComputedStyle(get('glance-board')).getPropertyValue('--capture-hue').trim()==='0');
   get('auto').checked=false;get('collect').checked=false;
   document.getElementById('header-main').click();
   if(!get('off').checked)document.getElementById('header-off').click();
@@ -31,10 +33,10 @@
   source.getContext('2d').fillStyle='#9c7045';source.getContext('2d').fillRect(0,0,1000,600);
   async function read(result){response=result;pixel=(pixel+30)%240;canvas.getContext('2d').fillStyle='rgb('+pixel+','+pixel+','+pixel+')';canvas.getContext('2d').fillRect(0,0,640,320);DNScannerReading.update(canvas,{session:1,current:true,itemPresent:true,categorySource:source,panelRegion:{x:.4,y:.2,width:.55,height:.5}});get('read').click();await wait(()=>!get('read').disabled);}
   await read(complete(11));await wait(()=>get('benchmark-value').textContent==='150');
-  check('all 17 captured fields show 100 percent',get('capture-percent').textContent==='100%' && get('capture-detail').textContent==='17 / 17 fields captured' && get('capture-meter').value===100);
+  check('all 17 read fields are identified',get('capture-percent').textContent==='17/17 identified' && get('capture-detail').textContent==='17 read · 0 inferred · 0 typed' && get('capture-meter').value===100);
   check('complete capture is green',get('glance-board').style.getPropertyValue('--capture-hue')==='120');
   check('type total and same-type cutoff use shared maximum scores',get('item-type').textContent==='Weapon total · Off' && get('item-total').textContent==='200' && get('benchmark-value').textContent==='150');
-  check('qualifying top-two item is green',get('benchmark').classList.contains('is-top-two') && get('comparison').textContent==='Makes top 2' && getComputedStyle(get('benchmark')).backgroundColor==='rgb(18, 78, 41)');
+  check('qualifying top-two item is green',get('benchmark').classList.contains('is-top-two') && get('comparison').textContent.includes('top 2') && getComputedStyle(get('benchmark')).backgroundColor==='rgb(18, 78, 41)');
   if(innerWidth<=1100)get('benchmark').scrollIntoView({block:'end'});
   for(const id of ['glance-board','benchmark','capture-percent','item-total','benchmark-value'])check(id+' fits viewport',visible(get(id)));
   const captureFont=parseFloat(getComputedStyle(get('capture-percent')).fontSize),scoreFont=parseFloat(getComputedStyle(get('item-total')).fontSize);
@@ -55,11 +57,11 @@
   source.getContext('2d').fillStyle='#278045';source.getContext('2d').fillRect(0,0,1000,600);
   delayed={};delayed.promise=new Promise(resolve=>delayed.resolve=resolve);get('read').click();
   check('retry retains score and benchmark without a last-read warning',get('item-total').textContent===total && get('benchmark-value').textContent===cutoff && !get('score-freshness'));
-  check('pending retry retains capture completeness without a last-read label',get('capture-percent').textContent==='100%' && get('capture-detail').textContent==='17 / 17 fields captured');
+  check('pending retry retains identification',get('capture-percent').textContent==='17/17 identified' && get('capture-detail').textContent==='17 read · 0 inferred · 0 typed');
   check('retry does not recapture animated artwork',artworkEncodes===originalEncodes && artwork.src===originalArtwork);
   check('all five weighted scores remain visible during retry',[...get('result').querySelectorAll('.scanner-stat-score')].every(element=>element.textContent==='40'));
   delayed.resolve(JSON.parse(JSON.stringify(response)));delayed=null;await wait(()=>!get('read').disabled);
-  check('completed retry retains the same artwork without re-encoding',get('capture-percent').textContent==='100%' && artworkEncodes===originalEncodes && artwork.src===originalArtwork);
+  check('completed retry retains the same artwork without re-encoding',get('capture-percent').textContent==='17/17 identified' && artworkEncodes===originalEncodes && artwork.src===originalArtwork);
   window.scrollTo(0,document.body.scrollHeight);await new Promise(resolve=>requestAnimationFrame(resolve));
   check('compact capture bar stays pinned while scrolling',visible(get('glance-board')));window.scrollTo(0,0);
   await read(complete(6));check('tie is green',get('item-total').textContent==='150' && getComputedStyle(get('benchmark')).backgroundColor==='rgb(18, 78, 41)');
@@ -83,14 +85,21 @@
   ranged.rows[2]={...ranged.rows[2],name:'Ranged Infantry Hitpoints',value:11,colour:'neutral'};
   await read(ranged);
   check('readable Ranged Infantry Hitpoints scores despite a colour mismatch',get('off').checked && get('def').checked && get('result').querySelectorAll('.scanner-stat-score')[2].textContent==='20' && get('item-total').textContent==='~180');
-  const rangedConflict=JSON.parse(JSON.stringify(ranged));rangedConflict.rows[2].conflict=true;
+  const rangedConflict=JSON.parse(JSON.stringify(ranged));rangedConflict.rows[2].conflict=true;rangedConflict.rows[2].confidence=85;
   await read(rangedConflict);
   const excludedScore=get('result').querySelectorAll('.scanner-stat-score')[2];
-  check('excluded scores explain the actual reason on hover',excludedScore.textContent==='—' && excludedScore.title.includes('OCR readings disagree'));
+  check('uncertain first reading shows its provisional score instead of a dash',excludedScore.textContent==='~20' && excludedScore.title.includes('OCR readings disagree') && excludedScore.title.includes('Provisional'));
+  check('a provisional row does not complete the capture',get('capture-meter').value<100 && get('keep').disabled);
+  const weakerName=JSON.parse(JSON.stringify(rangedConflict));weakerName.rows[2]={...weakerName.rows[2],name:'Bomber Hitpoints',value:6,confidence:60};
+  await retrySameItem(weakerName);
+  check('weaker disputed name keeps the best current stat and score',get('result').querySelectorAll('.scanner-stat-title')[2].textContent.includes('Ranged Infantry Hitpoints') && get('result').querySelectorAll('.scanner-stat-score')[2].textContent==='~20');
+  const suggestedName=JSON.parse(JSON.stringify(rangedConflict));suggestedName.rows[2]={...suggestedName.rows[2],name:'Bomber Hitpoints',raw:'Bomber Hitpoints +6%',value:6,colour:'green',conflict:false,assumed:true,confidence:95};
+  await retrySameItem(suggestedName);
+  check('stronger suggested name replaces the held stat without claiming confirmation',get('result').querySelectorAll('.scanner-stat-title')[2].textContent.includes('Bomber Hitpoints') && get('result').querySelectorAll('.scanner-stat-score')[2].textContent.startsWith('~') && get('keep').disabled);
   const rangedInferred=JSON.parse(JSON.stringify(ranged));rangedInferred.rows[2].inferred=true;rangedInferred.rows[2].colour='blue';
   await read(rangedInferred);
   check('displayed inferred eleven percent is scored at rating one',get('result').querySelectorAll('.scanner-stat-value')[2].textContent==='+11%' && get('result').querySelectorAll('.scanner-stat-score')[2].textContent==='20' && get('item-total').textContent==='~180');
-  check('inferred percentage still does not count as directly captured',get('capture-percent').textContent==='94%');
+  check('inferred percentage completes identification with its source',get('capture-percent').textContent==='17/17 identified' && get('capture-detail').textContent==='16 read · 1 inferred · 0 typed' && get('capture-review').hidden);
   async function retrySameItem(result){response=result;get('read').click();await wait(()=>!get('read').disabled);}
   const conflictRetry=JSON.parse(JSON.stringify(rangedInferred));conflictRetry.rows[2]={...conflictRetry.rows[2],value:6,inferred:false,colour:'green',conflict:true,confidence:99};
   await retrySameItem(conflictRetry);
@@ -113,7 +122,7 @@
   document.getElementById('header-def').click();
   const partial=complete(11);partial.valid=false;partial.rows[4]={name:'',value:null,known:false,unlocked:false};partial.warnings=['One stat unread'];
   await read(partial);
-  check('unread name and percentage reduce completion',get('capture-percent').textContent==='88%' && get('capture-detail').textContent.startsWith('15 / 17'));
+  check('unread name and percentage require manual entry',get('capture-percent').textContent==='15/17 identified' && get('glance-board').classList.contains('is-incomplete') && !get('capture-review').hidden && get('capture-review').textContent.includes('Row 5 name') && get('capture-review').textContent.includes('Row 5 percentage'));
   check('unread fifth stat shows only the four readable scores',get('item-total').textContent==='~160' && get('item-type').textContent.includes('subtotal'));
   check('decision blurb is hidden',[get('comparison'),get('comparison-detail'),get('score-assumption')].every(node=>node.hidden && getComputedStyle(node).display==='none'));
   check('keeper reason is hidden without three unlocked stats',get('keeper-reason').hidden);
@@ -122,29 +131,38 @@
   await read(middleMissing);
   check('missing middle row preserves readable scores and single reroll position',get('item-total').textContent==='~160' && JSON.stringify(Array.from(get('result').querySelectorAll('.scanner-stat-score')).map(node=>node.textContent))==='["20","20","—","30","20"]' && get('result').querySelectorAll('.scanner-reroll-gain')[3].textContent==='+70');
   const unknownName=complete(1);unknownName.valid=false;unknownName.rows[4].known=false;unknownName.rows[4].name='Unknown stat';
-  await read(unknownName);check('unrecognised name loses only its own field credit',get('capture-percent').textContent==='94%');
+  await read(unknownName);check('unrecognised name loses only its own field credit',get('capture-percent').textContent==='16/17 identified');
+  check('one missing field remains amber and blocks Keep',getComputedStyle(get('glance-board')).backgroundColor==='rgb(88, 64, 24)' && get('keep').disabled);
+  get('capture-review').click();
+  check('manual-entry prompt opens and focuses the missing field',get('corrections').open && document.activeElement===get('correct').querySelectorAll('.scanner-perk-name')[4]);
+  const missingName=document.activeElement;missingName.value=perk;missingName.dispatchEvent(new Event('input',{bubbles:true}));
+  check('typed field updates the identified total immediately',get('capture-percent').textContent==='17/17 identified' && get('capture-detail').textContent==='16 read · 0 inferred · 1 typed' && get('capture-review').hidden);
+  get('accept').click();
+  check('applying one correction preserves the other read counts',get('capture-detail').textContent==='16 read · 0 inferred · 1 typed' && !get('keep').disabled);
+  get('corrections').open=false;
+  await read(unknownName);
   const weights=()=>[...get('result').querySelectorAll('.scanner-stat-score')].map(element=>element.textContent).join('|');
   const heldWeights=weights(),heldColour=get('glance-board').style.getPropertyValue('--capture-hue');
   for(let attempt=0;attempt<3;attempt++) {
     delayed={};delayed.promise=new Promise(resolve=>delayed.resolve=resolve);get('read').click();
-    check('94 percent remains visible throughout retry '+attempt,get('capture-percent').textContent==='94%' && get('glance-board').style.getPropertyValue('--capture-hue')===heldColour);
+    check('identified count remains visible throughout retry '+attempt,get('capture-percent').textContent==='16/17 identified' && get('glance-board').style.getPropertyValue('--capture-hue')===heldColour);
     check('partial-read weighted scores remain visible throughout retry '+attempt,weights()===heldWeights);
     delayed.resolve(JSON.parse(JSON.stringify(response)));delayed=null;await wait(()=>!get('read').disabled);
   }
   DNScannerReading.invalidate('Panel moved',{preserveDisplay:true});
-  check('automatic panel movement retains percentage and weighted rows without warnings',get('capture-percent').textContent==='94%' && weights()===heldWeights && !get('capture-detail').textContent.includes('Last read'));
+  check('automatic panel movement retains identification and weighted rows',get('capture-percent').textContent==='16/17 identified' && weights()===heldWeights);
   await read(unknownName);
   DNScannerReading.update(canvas,{session:1,current:false});
-  check('paused capture retains numbers without a last-read warning',get('capture-percent').textContent==='94%' && weights()===heldWeights && !get('score-freshness'));
+  check('paused capture retains numbers without a last-read warning',get('capture-percent').textContent==='16/17 identified' && weights()===heldWeights && !get('score-freshness'));
   await read(unknownName);
   const rowNodes=[...get('result').querySelectorAll('.scanner-perk')];
   window.dispatchEvent(new Event('focus'));
   check('unchanged refresh reuses stat rows',rowNodes.every((node,i)=>node===get('result').querySelectorAll('.scanner-perk')[i]));
   const weak=complete(1);weak.valid=false;weak.rows[3]={name:'',known:false,value:null,unlocked:false};weak.rows[4]={name:'',known:false,value:null,unlocked:false};
-  await read(weak);check('three readable stats show a marked subtotal alongside the benchmark',get('item-total').textContent==='~60' && get('benchmark-value').textContent==='150' && get('capture-percent').textContent==='76%');
+  await read(weak);check('three readable stats show a marked subtotal alongside the benchmark',get('item-total').textContent==='~60' && get('benchmark-value').textContent==='150' && get('capture-percent').textContent==='13/17 identified');
   check('readable subtotal below the benchmark is red',getComputedStyle(get('benchmark')).backgroundColor==='rgb(87, 29, 36)');
   const threeStars={...complete(1),unlocked:{count:3,states:[true,true,true,false,false]}};
-  await read(threeStars);check('three open stats keep below-cutoff item green',!get('benchmark').classList.contains('is-top-two') && getComputedStyle(get('benchmark')).backgroundColor==='rgb(18, 78, 41)' && get('comparison-detail').textContent.includes('3 open stats'));
+  await read(threeStars);check('three open stats retain their keep reason while a lower score stays red',!get('benchmark').classList.contains('is-top-two') && getComputedStyle(get('benchmark')).backgroundColor==='rgb(87, 29, 36)' && get('comparison-detail').textContent.includes('3 open stats'));
   check('three unlocked stats show a distinct keep reason',!get('keeper-reason').hidden && get('keeper-reason').textContent==='Keep — 3 stats unlocked' && getComputedStyle(get('keeper-reason')).display!=='none');
   const unreadType=complete(11);delete unreadType.artifact;
   await read(unreadType);
@@ -166,7 +184,7 @@
   await read(partialUnread);
   check('provisional unread total below all cutoffs is red',getComputedStyle(get('benchmark')).backgroundColor==='rgb(87, 29, 36)');
   await read({...lowUnread,unlocked:{count:3,states:[true,true,true,false,false]}});
-  check('three open stats stay green below every category',getComputedStyle(get('benchmark')).backgroundColor==='rgb(18, 78, 41)');
+  check('three open stats retain their reason below every category without hiding red',getComputedStyle(get('benchmark')).backgroundColor==='rgb(87, 29, 36)' && !get('keeper-reason').hidden);
   await DNStoredArtifacts.write(DNStoredArtifacts.collectionKey(),benchmarks.filter(item=>item.type!=='Pottery'));
   window.dispatchEvent(new Event('focus'));
   await wait(()=>get('benchmarks').querySelector('[data-category="pottery"] dd').textContent==='Open');
@@ -178,10 +196,10 @@
   DNScannerReading.update(canvas,{session:1,current:true,itemPresent:false});
   check('one absent-panel frame retains the score and artwork',get('item-total').textContent===heldScore && !get('artwork').hidden);
   for(let i=0;i<6;i++){await new Promise(resolve=>setTimeout(resolve,400));DNScannerReading.update(canvas,{session:1,current:true,itemPresent:false});}
-  check('confirmed empty scene clears image and stats',get('artwork').hidden && !get('artwork').hasAttribute('src') && get('item-total').textContent==='—' && get('capture-percent').textContent==='0%' && [...get('result').querySelectorAll('.scanner-stat-score')].every(node=>node.textContent==='—') && get('keeper-reason').hidden);
+  check('confirmed empty scene clears image and stats',get('artwork').hidden && !get('artwork').hasAttribute('src') && get('item-total').textContent==='—' && get('capture-percent').textContent==='0/17 identified' && [...get('result').querySelectorAll('.scanner-stat-score')].every(node=>node.textContent==='—') && get('keeper-reason').hidden);
   await read(complete(11));
   check('returning artifact restores its score and artwork',get('item-total').textContent==='200' && !get('artwork').hidden);
-  DNScannerReading.reset();check('reset clears score and captured fields',get('item-total').textContent==='—' && get('capture-percent').textContent==='0%');
+  DNScannerReading.reset();check('reset clears score and identified fields',get('item-total').textContent==='—' && get('capture-percent').textContent==='0/17 identified');
   await read(complete(11));
   return {passed:Object.values(checks).every(Boolean),viewport:{width:innerWidth,height:innerHeight},ui:checks,captureFont,scoreFont,
     captureBounds:bounds(get('glance-board')),benchmarkBounds:bounds(get('benchmark')),limitations:'Actual page/controller and shared scoring tested with synthetic OCR responses. Real screenshot OCR is tested separately.'};

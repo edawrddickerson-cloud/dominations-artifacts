@@ -65,6 +65,9 @@
   }
   const ARMY_PRESETS_KEY = "dn-army-presets";
   const ARMY_PRESET_MAX = 5;
+  const STRATEGIES_KEY = "dn-strategies";
+  const STRATEGY_MIGRATION_BACKUP_KEY = "dn-strategies-migration-backup";
+  const STRATEGY_MAX = 20;
   const PROFILES_KEY = "dn-profiles";
   const PROFILE_MAX = 20;
   const BLANK = "—";
@@ -86,6 +89,8 @@
     "dn-artifact-perk-edits",
     "dn-artifact-collection-ui",
     "dn-army-presets",
+    STRATEGIES_KEY,
+    STRATEGY_MIGRATION_BACKUP_KEY,
     PERK_RATINGS_KEY,
     "dn-artifact-pref-sort-axes",
     "dn-artifact-hide-collected",
@@ -416,6 +421,9 @@
     }
 
     const activeBag = bags[state.activeId] || {};
+    // Preserve the raw pre-layer-migration values too. Strategy migration can
+    // happen much later, after this older migration has moved profile ratings.
+    for (const profile of state.profiles) preserveStrategyMigrationBackup(profile.id);
     lsSetRaw(PERK_RATINGS_GLOBAL_KEY, serializePerkRatingsPayload(activeBag));
 
     for (const p of state.profiles) {
@@ -687,6 +695,7 @@
   }
   function savePerkGroupDefaults(bag) {
     lsSetRaw(PERK_GROUP_DEFAULTS_KEY, serializePerkRatingsPayload(bag || {}));
+    emitStrategyChange("ratings");
   }
   function groupPerkRating(name, axis, groups = loadPerkGroupDefaults()) {
     for (const section of PERK_GROUPS) {
@@ -738,6 +747,7 @@
   function saveGlobalPerkRatings(overrides) {
     ensurePerkRatingsMigrated();
     lsSetRaw(PERK_RATINGS_GLOBAL_KEY, serializePerkRatingsPayload(overrides || {}));
+    emitStrategyChange("ratings");
   }
 
   /**
@@ -764,6 +774,7 @@
     } else {
       lsRemoveRaw(scoped);
     }
+    emitStrategyChange("ratings");
   }
 
   function loadActivePerkRatingLayers() {
@@ -780,6 +791,7 @@
     if (state.activeId === profileId) return false;
     state.activeId = profileId;
     saveProfilesState(state);
+    emitStrategyChange("profile");
     return true;
   }
 
@@ -790,6 +802,9 @@
     const label = ptext(name) || `Profile ${state.profiles.length + 1}`;
     state.profiles.push({ id, name: label });
     saveProfilesState(state);
+    // New profiles inherit the current shared defaults and have no old army
+    // state to migrate, even when another profile has historical ratings.
+    localStorage.setItem(profileStorageKey(STRATEGIES_KEY, id), JSON.stringify(freshStrategyState()));
     return id;
   }
 
@@ -1123,7 +1138,7 @@
     return out;
   }
 
-  function loadLoadout() {
+  function loadLegacyLoadout() {
     try {
       const raw = lsGet(LOADOUT_KEY);
       if (!raw) return normalizeLoadout(null);
@@ -1133,31 +1148,50 @@
     }
   }
 
-  function saveLoadout(loadout) {
-    lsSet(LOADOUT_KEY, JSON.stringify(normalizeLoadout(loadout)));
+  function loadLoadout(strategyId) {
+    const state = loadStrategies();
+    const strategy = state.strategies.find(item => item.id === (strategyId || state.activeId));
+    return normalizeLoadout(strategy && strategy.loadout);
+  }
+
+  function saveLoadout(loadout, strategyId) {
+    const state = loadStrategies();
+    const strategy = state.strategies.find(item => item.id === (strategyId || state.activeId));
+    if (!strategy) return false;
+    strategy.loadout = normalizeLoadout(loadout);
+    saveStrategies(state);
+    return true;
   }
 
   function artifactSlots(id) {
-    const loadout = loadLoadout();
     const slots = [];
-    for (const hall of ["Main", "War"]) {
-      const entry = loadout[hall];
-      if (entry.mains.includes(id)) slots.push(`${hall} Hall`);
-      if (entry.hermitage === id) slots.push(`${hall} Hermitage`);
-      if (Object.prototype.hasOwnProperty.call(entry.singles, id)) slots.push(`${hall} Showcase`);
+    const state = loadStrategies();
+    for (const strategy of state.strategies) for (const hall of ["Main", "War"]) {
+      const entry = strategy.loadout[hall];
+      const label = state.strategies.length > 1 ? `${strategy.name}: ${hall}` : hall;
+      if (entry.mains.includes(id)) slots.push(`${label} Hall`);
+      if (entry.hermitage === id) slots.push(`${label} Hermitage`);
+      if (Object.prototype.hasOwnProperty.call(entry.singles, id)) slots.push(`${label} Showcase`);
     }
     return slots;
   }
 
   function removeArtifactSlots(id) {
-    const loadout = loadLoadout();
-    for (const hall of ["Main", "War"]) {
+    const state = loadStrategies();
+    const clear = loadout => { for (const hall of ["Main", "War"]) {
       const entry = loadout[hall];
       entry.mains = entry.mains.filter((key) => key !== id);
       if (entry.hermitage === id) entry.hermitage = null;
       delete entry.singles[id];
-    }
-    saveLoadout(loadout);
+      entry.scannedPlaced = entry.scannedPlaced.filter(key => key !== id);
+    } };
+    for (const strategy of state.strategies) clear(strategy.loadout);
+    // Keep the original compatibility layout clear as well, so older clients
+    // cannot restore a removed ownership reference.
+    const original = loadLegacyLoadout();
+    clear(original);
+    saveStrategies(state);
+    lsSet(LOADOUT_KEY, JSON.stringify(original));
   }
 
   function confirmUncollect(name, slots) {
@@ -1175,7 +1209,7 @@
         '<button type="submit" class="btn btn-accent" value="remove">Remove</button>' +
         '</footer></form>';
       dialog.querySelector(".ratings-hint").textContent =
-        `${name} is currently in ${slots.join(", ")}. Are you sure? Removing ownership will also clear its collection slot.`;
+        `${name} is currently in ${slots.join(", ")}. Are you sure? Removing ownership will also clear its slots from every strategy.`;
       dialog.addEventListener("close", () => {
         const confirmed = dialog.returnValue === "remove";
         dialog.remove();
@@ -1443,6 +1477,284 @@
     return Number.isFinite(n) ? n : 0;
   }
 
+  // Strategies share ownership and perk levels through the profile, while each
+  // owns its army, rating overrides and museum placement references.
+  function newStrategyId() {
+    return `s${Date.now().toString(36)}${Math.random().toString(36).slice(2, 9)}`;
+  }
+
+  function cleanRatingBag(bag) {
+    return parsePerkRatingsPayload(serializePerkRatingsPayload(bag));
+  }
+
+  function freshStrategyState() {
+    const id = newStrategyId();
+    return { v: 1, activeId: id, comparisonIds: [id], comparisonAll: true, defaultInheritRatings: true, revision: 0, strategies: [{
+      id, name: "Main strategy", units: [], overrides: {}, archived: false,
+      favorite: false, inheritRatings: true, configured: false, loadout: normalizeLoadout(null),
+    }] };
+  }
+
+  function normalizeStrategies(raw) {
+    if (!raw || typeof raw !== "object" || !Array.isArray(raw.strategies)) return freshStrategyState();
+    const strategies = [], seen = new Set();
+    // The creation limit is deliberately not an import limit. A backup from a
+    // future client must retain every strategy, including archived strategies.
+    for (const src of raw.strategies) {
+      if (!src || typeof src !== "object") continue;
+      let id = ptext(src.id);
+      if (!id || seen.has(id)) id = newStrategyId();
+      seen.add(id);
+      const strategy = {
+        id, name: ptext(src.name) || `Strategy ${strategies.length + 1}`,
+        units: normalizeArmyUnits(src.units), overrides: cleanRatingBag(src.overrides || {}),
+        archived: src.archived === true, favorite: src.favorite === true,
+        inheritRatings: src.inheritRatings !== false, configured: src.configured !== false,
+        loadout: normalizeLoadout(src.loadout),
+      };
+      if (src.legacy && typeof src.legacy === "object") strategy.legacy = {
+        configured: src.legacy.configured === true,
+        ratings: cleanRatingBag(src.legacy.ratings || {}),
+        groupDefaults: cleanRatingBag(src.legacy.groupDefaults || {}),
+      };
+      strategies.push(strategy);
+    }
+    if (!strategies.length) return freshStrategyState();
+    if (strategies.every(strategy => strategy.archived)) strategies[0].archived = false;
+    let activeId = ptext(raw.activeId);
+    if (!strategies.some(strategy => strategy.id === activeId && !strategy.archived)) {
+      activeId = strategies.find(strategy => !strategy.archived).id;
+    }
+    const available = new Set(strategies.filter(strategy => !strategy.archived).map(strategy => strategy.id));
+    const comparisonAll = raw.comparisonAll !== false;
+    let comparisonIds = comparisonAll ? [...available] : (Array.isArray(raw.comparisonIds)
+      ? [...new Set(raw.comparisonIds.map(ptext))].filter(id => available.has(id)) : [activeId]);
+    if (!comparisonIds.length) comparisonIds = [activeId];
+    const defaultInheritRatings = typeof raw.defaultInheritRatings === "boolean"
+      ? raw.defaultInheritRatings : !strategies.some(strategy => strategy.legacy);
+    return { v: 1, activeId, comparisonIds, comparisonAll, defaultInheritRatings, strategies,
+      revision: Math.max(0, Math.floor(Number(raw.revision) || 0)) };
+  }
+
+  function preserveStrategyMigrationBackup(profileId = activeProfileId()) {
+    const key = profileStorageKey(STRATEGY_MIGRATION_BACKUP_KEY, profileId);
+    const existing = localStorage.getItem(key);
+    if (existing != null) return existing;
+    const raw = {
+      army: localStorage.getItem(profileStorageKey(ARMY_PRESETS_KEY, profileId)),
+      loadout: localStorage.getItem(profileStorageKey(LOADOUT_KEY, profileId)),
+      profileRatings: localStorage.getItem(profileStorageKey(PERK_RATINGS_KEY, profileId)),
+      globalRatings: localStorage.getItem(PERK_RATINGS_GLOBAL_KEY),
+      groupDefaults: localStorage.getItem(PERK_GROUP_DEFAULTS_KEY),
+      strategies: localStorage.getItem(profileStorageKey(STRATEGIES_KEY, profileId)),
+    };
+    const backup = JSON.stringify({ v: 1, profileId, raw });
+    // Do not publish a migrated strategy state until its raw backup is durable.
+    localStorage.setItem(key, backup);
+    return backup;
+  }
+
+  function migrateStrategies() {
+    const backup = JSON.parse(preserveStrategyMigrationBackup());
+    const armyRaw = lsGet(ARMY_PRESETS_KEY);
+    let armyParsed;
+    try { armyParsed = JSON.parse(armyRaw || "null"); } catch { armyParsed = null; }
+    // Preserve all imported old presets as well, rather than normalizing through
+    // the historical five-preset UI limit.
+    const presetList = Array.isArray(armyParsed?.presets) ? armyParsed.presets.filter(p => p && typeof p === "object") : [];
+    const layers = loadActivePerkRatingLayers();
+    const groupDefaults = loadPerkGroupDefaults();
+    const rawGlobal = cleanRatingBag(layers.global);
+    for (const [name, value] of [["Generals' Damage", 3], ["Generals' Hitpoints", 2], ["Generals' Movement Speed", 2]]) {
+      const entry = rawGlobal[name];
+      if (entry && entry.offensive === value && entry.defensive === value) delete rawGlobal[name];
+    }
+    const dirty = armyRaw != null || Object.keys(layers.profile).length > 0 ||
+      Object.keys(parsePerkRatingsPayload(backup.raw?.profileRatings)).length > 0 ||
+      Object.keys(rawGlobal).length > 0 || Object.keys(groupDefaults).length > 0;
+    if (!dirty) {
+      const fresh = freshStrategyState();
+      fresh.strategies[0].loadout = loadLegacyLoadout();
+      return saveStrategies(fresh);
+    }
+    const initialLayout = loadLegacyLoadout();
+    const strategies = presetList.map((preset, index) => ({
+      id: ptext(preset.id) || newStrategyId(), name: ptext(preset.name) || `Strategy ${index + 1}`,
+      units: normalizeArmyUnits(preset.units), overrides: {}, archived: false,
+      favorite: false, inheritRatings: false, configured: true, loadout: normalizeLoadout(initialLayout),
+    }));
+    const oldApplied = normalizeArmyUnits(armyParsed?.lastApplied);
+    const selected = presetList.find(p => p.id === armyParsed?.activeId);
+    const sameArmy = selected && JSON.stringify(normalizeArmyUnits(selected.units)) === JSON.stringify(oldApplied);
+    const legacy = {
+      id: newStrategyId(), name: sameArmy ? `${ptext(selected.name) || "Current army"} (Legacy)` : "Legacy current army",
+      units: oldApplied, overrides: {}, archived: false, favorite: false,
+      inheritRatings: false, configured: armyRaw != null, loadout: normalizeLoadout(initialLayout),
+      legacy: { configured: armyRaw != null,
+        ratings: mergePerkRatingLayers(layers.global, layers.profile), groupDefaults },
+    };
+    strategies.unshift(legacy);
+    return saveStrategies({ v: 1, activeId: legacy.id, comparisonIds: strategies.map(item => item.id), comparisonAll: true,
+      defaultInheritRatings: false, strategies, revision: 0 });
+  }
+
+  function loadStrategies() {
+    const raw = lsGet(STRATEGIES_KEY);
+    if (raw != null) {
+      let parsed;
+      try { parsed = JSON.parse(raw); } catch { /* Back up corrupt input before recovering from legacy state. */ }
+      if (parsed && Array.isArray(parsed.strategies) && parsed.strategies.some(item => item && typeof item === "object")) {
+        const normalized = normalizeStrategies(parsed);
+        // Repair imported IDs and schema defaults once, so an imported
+        // strategy without an ID does not receive a different ID per read.
+        if (JSON.stringify(normalized) !== JSON.stringify(parsed)) return saveStrategies(normalized);
+        return normalized;
+      }
+    }
+    return migrateStrategies();
+  }
+
+  let lastStrategySignature = null, lastStrategyRevision = "";
+  function strategyRevision() {
+    const id = activeProfileId();
+    const signature = JSON.stringify([id, lsGet(STRATEGIES_KEY),
+      lsGetRaw(PERK_RATINGS_GLOBAL_KEY), lsGet(PERK_RATINGS_KEY), lsGetRaw(PERK_GROUP_DEFAULTS_KEY)]);
+    if (signature === lastStrategySignature) return lastStrategyRevision;
+    let hash = 2166136261;
+    for (let i = 0; i < signature.length; i++) hash = Math.imul(hash ^ signature.charCodeAt(i), 16777619);
+    lastStrategySignature = signature;
+    lastStrategyRevision = `${id}:${(hash >>> 0).toString(36)}`;
+    return lastStrategyRevision;
+  }
+
+  function emitStrategyChange(reason) {
+    if (typeof window.dispatchEvent !== "function") return;
+    const EventClass = window.CustomEvent || (typeof CustomEvent === "function" ? CustomEvent : null);
+    if (!EventClass) return;
+    window.dispatchEvent(new EventClass("dn-strategies-changed", {
+      detail: { reason, profileId: activeProfileId(), revision: strategyRevision() },
+    }));
+  }
+
+  function saveStrategies(state) {
+    const next = normalizeStrategies(state);
+    let previousRevision = 0;
+    try { previousRevision = Number(JSON.parse(lsGet(STRATEGIES_KEY) || "null")?.revision) || 0; } catch { /* first write */ }
+    next.revision = Math.max(previousRevision, next.revision) + 1;
+    lsSet(STRATEGIES_KEY, JSON.stringify(next));
+    emitStrategyChange("strategies");
+    return next;
+  }
+
+  function activeStrategyId() { return loadStrategies().activeId; }
+  function activeStrategy() {
+    const state = loadStrategies();
+    return state.strategies.find(strategy => strategy.id === state.activeId);
+  }
+  function setActiveStrategy(id) {
+    const state = loadStrategies();
+    if (state.activeId === id || !state.strategies.some(strategy => strategy.id === id && !strategy.archived)) return false;
+    state.activeId = id;
+    saveStrategies(state);
+    return true;
+  }
+  function comparisonStrategies() {
+    const state = loadStrategies();
+    return state.comparisonIds.map(id => state.strategies.find(strategy => strategy.id === id)).filter(strategy => strategy && !strategy.archived);
+  }
+  function setComparisonStrategyIds(ids) {
+    const state = loadStrategies();
+    state.comparisonIds = Array.isArray(ids) ? ids : [];
+    const selected = new Set(state.comparisonIds);
+    state.comparisonAll = state.strategies.filter(strategy => !strategy.archived).every(strategy => selected.has(strategy.id));
+    return saveStrategies(state).comparisonIds;
+  }
+  function updateStrategy(id, patch = {}) {
+    const state = loadStrategies(), strategy = state.strategies.find(item => item.id === id);
+    if (!strategy) return false;
+    const unitsChanged = Object.prototype.hasOwnProperty.call(patch, "units") &&
+      JSON.stringify(normalizeArmyUnits(patch.units)) !== JSON.stringify(strategy.units);
+    const next = { ...strategy, ...patch, id: strategy.id };
+    if (Object.prototype.hasOwnProperty.call(patch, "units")) next.configured = true;
+    if (unitsChanged || Object.prototype.hasOwnProperty.call(patch, "inheritRatings")) delete next.legacy;
+    if (patch.legacy === null) delete next.legacy;
+    if (next.archived && state.strategies.every(item => item.id === id || item.archived)) return false;
+    state.strategies[state.strategies.indexOf(strategy)] = next;
+    saveStrategies(state);
+    return true;
+  }
+  function saveStrategyOverrides(id, bag) { return updateStrategy(id, { overrides: cleanRatingBag(bag || {}) }); }
+  function addStrategy(name, options = {}) {
+    const state = loadStrategies();
+    if (state.strategies.length >= STRATEGY_MAX) return null;
+    const duplicate = options.duplicateId && state.strategies.find(strategy => strategy.id === options.duplicateId);
+    if (options.duplicateId && !duplicate) return null;
+    const id = newStrategyId();
+    const strategy = duplicate ? { ...duplicate, id, name: ptext(name) || `${duplicate.name} copy`, archived: false } : {
+      id, name: ptext(name) || `Strategy ${state.strategies.length + 1}`, units: normalizeArmyUnits(options.units),
+      overrides: {}, archived: false, favorite: false,
+      inheritRatings: state.defaultInheritRatings,
+      configured: Object.prototype.hasOwnProperty.call(options, "units"), loadout: normalizeLoadout(null),
+    };
+    if (duplicate && Object.prototype.hasOwnProperty.call(options, "units")) {
+      strategy.units = normalizeArmyUnits(options.units);
+      strategy.configured = true;
+      delete strategy.legacy;
+    }
+    state.strategies.push(strategy);
+    saveStrategies(state);
+    return id;
+  }
+  function removeStrategy(id) {
+    const state = loadStrategies();
+    if (state.strategies.length <= 1 || !state.strategies.some(strategy => strategy.id === id)) return false;
+    if (!state.strategies.some(strategy => strategy.id !== id && !strategy.archived)) return false;
+    state.strategies = state.strategies.filter(strategy => strategy.id !== id);
+    saveStrategies(state);
+    return true;
+  }
+  function archiveStrategy(id) { return updateStrategy(id, { archived: true }); }
+
+  function createStrategyRatingContext(factoryDefaults, options = {}) {
+    const state = loadStrategies();
+    const strategy = state.strategies.find(item => item.id === (options.strategyId || state.activeId));
+    if (!strategy) throw new Error(`Unknown strategy: ${options.strategyId}`);
+    const canon = typeof options.canonPerk === "function" ? options.canonPerk : name => name;
+    const canonicalBag = bag => {
+      const result = {};
+      for (const [name, entry] of Object.entries(bag || {})) result[canon(name)] = { ...(result[canon(name)] || {}), ...entry };
+      return result;
+    };
+    const overrides = canonicalBag(strategy.overrides), defaults = canonicalBag(factoryDefaults);
+    const legacy = strategy.legacy && canonicalBag(strategy.legacy.ratings);
+    const layers = strategy.inheritRatings && !legacy ? loadActivePerkRatingLayers() : { global: {}, profile: {} };
+    const global = canonicalBag(layers.global), profile = canonicalBag(layers.profile);
+    const groups = legacy ? strategy.legacy.groupDefaults : loadPerkGroupDefaults();
+    const effectiveUnits = armyEffectiveAppliedSet(strategy.units);
+    const revision = strategyRevision();
+    function explain(name, axis) {
+      name = canon(name);
+      const result = (value, source) => ({ value, source, strategyId: strategy.id });
+      let value = perkRatingAxisOrNull(overrides, name, axis);
+      if (value != null) return result(value, "override");
+      if (legacy) {
+        value = perkRatingAxisOrNull(legacy, name, axis);
+        if (value != null) return result(value, "legacy");
+        if (strategy.legacy.configured && unitFamily(name) && !effectiveUnits.has(unitFamily(name))) return result(0, "army");
+        return result(perkRatingAxisOrNull(defaults, name, axis) ?? 0, "factory");
+      }
+      if (axis === "offensive" && strategy.configured !== false && unitFamily(name) && !effectiveUnits.has(unitFamily(name))) return result(0, "army");
+      value = perkRatingAxisOrNull(profile, name, axis);
+      if (value != null) return result(value, "profile");
+      value = perkRatingAxisOrNull(global, name, axis);
+      if (value != null) return result(value, "global");
+      value = groupPerkRating(name, axis, groups);
+      if (value != null) return result(value, "group");
+      return result(perkRatingAxisOrNull(defaults, name, axis) ?? 0, "factory");
+    }
+    return { strategy, revision, explain, ratingOf: (name, axis) => explain(name, axis).value };
+  }
+
   window.DN = {
     ARTIFACT_TYPE_EXHIBITS,
     artifactSlotCapacity,
@@ -1454,6 +1766,9 @@
     COLLECTION_UI_KEY,
     ARMY_PRESETS_KEY,
     ARMY_PRESET_MAX,
+    STRATEGIES_KEY,
+    STRATEGY_MIGRATION_BACKUP_KEY,
+    STRATEGY_MAX,
     PROFILES_KEY,
     PROFILE_MAX,
     PERK_RATINGS_KEY,
@@ -1542,6 +1857,22 @@
     armyLastAppliedSet,
     armyEffectiveAppliedSet,
     armyAwareDefault,
+    newStrategyId,
+    normalizeStrategies,
+    loadStrategies,
+    saveStrategies,
+    activeStrategyId,
+    activeStrategy,
+    setActiveStrategy,
+    comparisonStrategies,
+    setComparisonStrategyIds,
+    createStrategyRatingContext,
+    saveStrategyOverrides,
+    updateStrategy,
+    addStrategy,
+    removeStrategy,
+    archiveStrategy,
+    strategyRevision,
     lsGet,
     lsSet,
     lsHas,

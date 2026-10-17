@@ -32,15 +32,17 @@
     const blocked=loggedReason(logged);if(blocked)throw new Error(blocked);
     const profileKey=logged.profileKey || store.collectionKey(),type=logged.type;
     const item=store.backfillItem({id:logged.keptId || logged.keepId || 'craft-log-'+logged.id,name:logged.name || 'Crafted '+type,
-      hall:logged.hall,type,reviewed:true,freshCraft:true,keptFromCraft:true,profileId:DN.activeProfileId(),
-      capturedAt:logged.firstSeen || new Date().toISOString(),rows:structuredClone(logged.rows)});
+      hall:logged.hall,hallSource:logged.hallSource,unlocked:structuredClone(logged.unlocked),type,reviewed:true,freshCraft:true,keptFromCraft:true,profileId:DN.activeProfileId(),
+      capturedAt:logged.firstSeen || new Date().toISOString(),image:logged.image || null,rows:structuredClone(logged.rows)});
     return saveItem(item,profileKey,logged,currentLog()?.id===logged.id?key():null);
   }
   function reason(){
-    if(!state.current || !state.confirmed || !result?.valid || result.rows?.length!==5 ||
-      result.rows.some(row=>!row.known || row.assumed || row.conflict || row.tierConflict || !Number.isFinite(row.value)))return 'Confirm all five stats before keeping this craft.';
+    if(!state.current)return 'Read the current craft before keeping it.';
+    if(!window.DNScannerCollectionCore?.isComplete(result))return 'Confirm all five stats before keeping this craft.';
     if(state.profileKey!==store.collectionKey())return 'Read this craft again for the current profile.';
     if(!get('compare-type').value)return 'Choose the artifact category before keeping.';
+    const identification=window.DNScannerComparison?.identification();
+    if(identification?.missing.length)return 'Manual entry required: '+identification.missing.join(', ')+'.';
     return '';
   }
   function render(){
@@ -48,9 +50,9 @@
     if(logged && !logged.keptId && saved.has(key()))window.DNScannerCollection?.markKept(logged.id,saved.get(key()),{keepId:saved.get(key())});
     button.textContent=busy?'Saving…':kept?'Kept':'Keep';
     button.disabled=busy || kept || !!blocked;
-    button.title=kept?'Already added to inventory':blocked || 'Add this craft to inventory and benchmarks';
+    button.title=kept?'Added to Collection':blocked || 'Add this craft to Collection and benchmarks';
     const status=get('keep-status');
-    status.textContent=failureKey===key()?failure:'';status.hidden=!status.textContent;
+    status.textContent=(failureKey===key()?failure:'') || (kept?'Added to Collection.':blocked);status.hidden=!status.textContent;
   }
   window.DNScannerKeep={loggedReason,keepLogged,update(next,nextState){result=next;state=nextState;render();}};
   button.addEventListener('click',async()=>{
@@ -60,7 +62,7 @@
     if(!ids.has(encounter))ids.set(encounter,logged?.keepId || store.newId());
     const type=get('compare-type').value.replace(/^./,letter=>letter.toUpperCase());
     const item=store.backfillItem({id:ids.get(encounter),name:result.artifact?.name || 'Crafted '+type,
-      hall:result.hall || get('hall').value,type,reviewed:true,freshCraft:true,keptFromCraft:true,profileId,
+      hall:result.hall || get('hall').value,hallSource:result.hallSource,unlocked:structuredClone(result.unlocked),type,reviewed:true,freshCraft:true,keptFromCraft:true,profileId,
       capturedAt:new Date().toISOString(),image:result.artifact?.image || null,rows:structuredClone(result.rows)});
     saving=true;failure='';render();
     try{

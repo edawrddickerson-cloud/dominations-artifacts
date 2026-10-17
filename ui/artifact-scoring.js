@@ -122,8 +122,45 @@
   }
 
 
-  function withRerollPotential(base,{hall,grade,eligible=[]}={}) {
-    const target=String(hall).toLowerCase()==='war'?75:100;
+  // Ordinary crafting/reroll families, reviewed 2026-10-17. These are separate
+  // from the Legendary/Mythical catalogue. Source and scope: docs/artifact-rerolls.md.
+  const troops=['Heavy Infantry','Ranged Infantry','Heavy Cavalry','Raider','Wall Sapper','Ranged Siege','Mortar Troop','Attack Helicopter','Machine Gun Infantry','Guerrilla','Heavy Tank','Bazooka','APC','Armored Car','Assault Vehicle','MRL','Fighter','Bomber','Paratrooper'];
+  const hitpoints=[...troops,'Supply Vehicle','Tactical Helicopter'].map(unit=>unit+' Hitpoints');
+  const damage=[...troops.map(unit=>unit+' Damage'),'Supply Vehicle Healing','Tactical Helicopter Healing'];
+  const buildings=['Tower','Catapult','Anti-Tank Gun','Redoubt','Sniper Tower','Air Defense','Missile Silo'].flatMap(building=>[building+' Damage',building+' Hitpoints']);
+  const enemyBuildings=buildings.map(name=>'Enemy '+name);
+  const generals=["Generals' Damage","Generals' Hitpoints"];
+  const invadingHP=[...hitpoints.map(name=>'Invading '+name),'Invading Transport Hitpoints'];
+  const invadingDamage=damage.map(name=>'Invading '+name);
+  const ordinaryPools={
+    main:{
+      weapon:[...damage,...hitpoints,...generals,'Enemy Defender Spawn Time','Defender Spawn Time'],
+      armor:[...invadingHP,...invadingDamage,...generals.map(name=>'Invading '+name),'Defender Damage','Defender Hitpoints'],
+      jewelry:[...enemyBuildings,'Gold Looted','Food Looted','Oil Looted','National Trade Good Loot Chance','All Resources Looted','Looted Resource Refund','Library Tech Gold Cost'],
+      pottery:[...buildings,'Gold from Gold Mines','Food from Fruit Trees','All Resources from Hunting','Gold from Caravans','Food from Farms','Oil From Oil Wells','Vault Capacity','Vault Interest','Forest Expansion Cost Refund','Library Tech Food Cost','Library Tech Oil Cost'],
+    },
+    war:{
+      weapon:[...damage,...invadingHP],
+      armor:[...hitpoints,...invadingDamage],
+      equipment:[...buildings,...enemyBuildings,...generals,...generals.map(name=>'Invading '+name),'All Defensive Towers Damage','All Defensive Towers Hitpoints','All Enemy Defensive Towers Damage','All Enemy Defensive Towers Hitpoints','Defender Damage','Defender Hitpoints','Defender Spawn Time','Enemy Defender Spawn Time'],
+    },
+  };
+  function rerollPotential({hall,grade}={},options={}) {
+    let category=text(grade).toLowerCase();
+    hall=text(hall).toLowerCase();
+    if(/^war[ -]/.test(category)){hall='war';category=category.replace(/^war[ -]/,'');}
+    category=category.replace('armour','armor').replace('jewellery','jewelry');
+    const pool=ordinaryPools[hall]?.[category],magnitude=hall==='war'?15:20;
+    let target=-Infinity,stat=null,bestMagnitude=null;
+    if(pool && options.ratingOf)for(const rawName of pool) {
+      const name=options.canonPerk?options.canonPerk(rawName):rawName;
+      const rating=lineActiveScore({offensive:options.ratingOf(name,'offensive'),defensive:options.ratingOf(name,'defensive')},options.prefSortAxes || {});
+      const candidateMagnitude=rating<0?10:magnitude,value=candidateMagnitude*rating;
+      if(Number.isFinite(value) && value>target){target=value;stat=name;bestMagnitude=candidateMagnitude;}
+    }
+    return {rerollTarget:Number.isFinite(target)?target:0,rerollStat:stat,rerollMagnitude:bestMagnitude,rerollPoolKnown:!!pool && !!options.ratingOf};
+  }
+  function withRerollPotential(base,{grade,eligible=[],rerollTarget:target=0,rerollStat=null,rerollMagnitude=null,rerollPoolKnown=false}={}) {
     const special=/legendary|mythical/i.test(String(grade || '')) || (base.axes && !base.axes.offensive && !base.axes.defensive);
     const active=line=>lineActiveScore(line,base.axes || {});
     // Callers provide their selected axes; older score objects can use an explicit
@@ -134,17 +171,17 @@
       if(eligible[i]===true && (index<0 || points(base.lines[i])<points(base.lines[index])))index=i;
       if(eligible[i]!==false && (possibleIndex<0 || points(base.lines[i])<points(base.lines[possibleIndex])))possibleIndex=i;
     }
-    const gain=i=>i<0?0:Math.max(0,target-points(base.lines[i]));
+    const gain=i=>!rerollPoolKnown || i<0?0:Math.max(0,target-points(base.lines[i]));
     const rerollGain=gain(index),possibleGain=gain(possibleIndex);
     return {...base,basePreference:base.preference,potentialPreference:base.preference+rerollGain,
       possiblePotentialPreference:base.preference+possibleGain,rerollGain,rerollIndex:rerollGain>0?index:-1,
-      rerollTarget:target,rerollUncertain:possibleGain>rerollGain,
+      rerollTarget:target,rerollStat,rerollMagnitude,rerollPoolKnown,rerollUncertain:possibleGain>rerollGain || !special && !rerollPoolKnown && eligible.some(value=>value!==false),
       rerollUnknown:special?0:base.lines.filter((_,i)=>eligible[i]!==true && eligible[i]!==false).length};
   }
   function comparisonScore(row,options,{hall,grade,eligible=[]}={}) {
     const base=score(row,{...options,scoreMode:'combined'});
     return withRerollPotential({...base,axes:options.prefSortAxes,
-      lines:base.lines.map(line=>({...line,preference:lineActiveScore(line,options.prefSortAxes)}))},{hall,grade,eligible});
+      lines:base.lines.map(line=>({...line,preference:lineActiveScore(line,options.prefSortAxes)}))},{grade,eligible,...rerollPotential({hall,grade},options)});
   }
-  window.DNArtifactScoring = { score, perkLines, lineActiveScore, withRerollPotential, comparisonScore };
+  window.DNArtifactScoring = { score, perkLines, lineActiveScore, withRerollPotential, comparisonScore, rerollPotential };
 })();

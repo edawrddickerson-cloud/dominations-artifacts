@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts · Collection</title>
   <link rel="stylesheet" href="styles.css?v=75" />
+  <link rel="stylesheet" href="strategy-collection.css?v=20261017-strategies" />
 </head>
 <body class="page-collection">
   <nav class="site-nav" aria-label="Pages">
@@ -59,6 +60,8 @@
         </div>
       </fieldset>
       <div class="collection-list-toolbar" id="collection-list-toolbar" hidden>
+        <label>Strategy scores <select id="collection-strategy-metric"><option value="all">Full potential</option><option value="unlocked">Unlocked now</option><option value="current">Current values, all known rows</option></select></label>
+        <label>Strategy coverage <select id="collection-strategy-filter"><option value="all">All artifacts</option></select></label>
         <details class="collection-slot-filter" id="collection-slot-filter">
           <summary>Slot types · <span id="collection-slot-filter-label">All</span></summary>
           <div class="collection-slot-filter-menu">
@@ -77,6 +80,7 @@
   <div class="collection-layout">
     <section class="collection-list-panel" aria-label="Owned artifacts">
       <h2 class="panel-title">Owned</h2>
+      <p class="collection-strategy-note">Strategy columns use the selected score basis. Ranks and Top 2 compare known, complete owned artifacts in this hall and type, including filtered items. Missing stats and uncertain rerolls have no rank; Top 2 is provisional when those items exist in the category. Outside Top 2 requires a complete comparison category. Crafted roles: Main Armor/Pottery Def, Jewelry Off; War Off; Weapon and named artifacts use the page axes. Scores belong to each strategy and are not added together.</p>
       <div id="collection-list" class="collection-list"></div>
       <div id="museum-workspace" class="museum-workspace" hidden>
         <div id="museum-board" class="museum-board" hidden></div>
@@ -99,6 +103,7 @@
             <div class="comparison-controls">
               <label>Compare with <select id="collection-compare-item" aria-label="Compared artifact, highest score first"></select></label>
             </div>
+            <div id="collection-strategy-summary" class="collection-strategy-summary"></div>
             <div id="collection-comparison" aria-live="polite"></div>
             <details class="comparison-edit"><summary>Edit selected artifact</summary><div id="museum-detail" aria-live="polite"></div></details>
           </section>
@@ -108,11 +113,11 @@
 
   </div>
   <script src="data/army_catalog.js?v=8"></script>
-  <script src="shared.js?v=43"></script>
-  <script src="profiles-ui.js?v=13"></script>
-  <script src="stored-artifacts.js?v=19"></script>
-  <script src="artifact-scoring.js?v=3"></script>
-  <script src="collection.js?v=64"></script>
+  <script src="shared.js?v=20261017-strategies"></script>
+  <script src="profiles-ui.js?v=20261017-strategies"></script>
+  <script src="stored-artifacts.js?v=20"></script>
+  <script src="artifact-scoring.js?v=20261017-strategies-reroll"></script>
+  <script src="collection.js?v=20261017-strategies"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9c4fcfc024144c4aa34a78ae6332dc9f"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

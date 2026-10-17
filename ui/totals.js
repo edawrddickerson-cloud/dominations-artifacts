@@ -17,7 +17,7 @@
       const row = window.DNStoredArtifacts.toRow(item), id = DN.artifactKey(row);
       byId.set(id, row); owned.add(id);
     }
-    const loadout = DN.loadLoadout()[hall], map = new Map();
+    const loadout = DN.loadLoadout(DN.activeStrategyId())[hall], map = new Map();
     const assigned = new Set([...loadout.mains, loadout.hermitage].filter(Boolean));
     function addArtifact(id, role, singleIndex) {
       const row = byId.get(id);
@@ -65,7 +65,7 @@
       button.classList.toggle('is-active', hall === value);
       button.setAttribute('aria-pressed', String(hall === value));
     }
-    el.sub.textContent = `${totals.length} active stats · ${hall} hall`;
+    el.sub.textContent = `${DN.activeStrategy().name} · ${totals.length} active stats · ${hall} hall`;
     el.list.innerHTML = shown.length ? shown.map(total => {
       const tone = total.value > 0 ? 'pref-pos' : total.value < 0 ? 'pref-neg' : '';
       return `<details class="active-total"><summary><span>${DN.esc(total.name)}</span><strong class="${tone}">${percent(total.value)}</strong></summary>` +
@@ -105,6 +105,7 @@
       window.addEventListener('focus', refresh);
       window.addEventListener('storage', refresh);
       window.addEventListener('pageshow', refresh);
+      window.addEventListener('dn-strategies-changed', refresh);
       await refresh();
     } catch {
       el.sub.textContent = '';

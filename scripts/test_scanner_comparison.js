@@ -64,6 +64,13 @@ assert.equal(estimate.rows[4].scoreExcluded,true,'a missing fifth stat contribut
 assert.equal(core.craftScore(estimate,estimateOptions),40,'four readable rows contribute exactly their own scores');
 assert.equal(core.compare(estimate,{type:'Weapon',hall:'main',owned:items,options:estimateOptions}).status,'partial','a subtotal never becomes a completed benchmark decision');
 assert.equal(JSON.stringify(partial),snapshot,'scoring never alters the recognised/logged item');
+const suggested={name:'Good Damage',value:1,known:true,assumed:true,confidence:65,hasPercent:true};
+const suggestedSnapshot=JSON.stringify(suggested);
+assert.equal(core.previewRowScore(suggested,estimateOptions),50,'a suggested canonical name has a visible provisional row score');
+assert.equal(core.previewRowScore({...suggested,assumed:false,conflict:true},estimateOptions),50,'a disputed candidate stays visible');
+assert.equal(core.estimate({...craft(1),valid:false,rows:[...craft(1).rows.slice(0,4),suggested]}).scoredCount,4,'a preview is still excluded from the item subtotal');
+assert.equal(JSON.stringify(suggested),suggestedSnapshot,'preview scoring preserves uncertain source evidence');
+for(const invalid of [{known:false},{value:null},{hasPercent:false},{outOfRange:true},{value:99},{estimated:true},{scoreExcluded:true}])assert.equal(core.previewRowScore({...suggested,...invalid},estimateOptions),null,'a preview cannot invent missing data: '+JSON.stringify(invalid));
 partial.rows[4]={name:'Damage',value:null,known:true};
 estimate=core.estimate(partial,{names:['Good Damage'],options:estimateOptions,hall:'war'});
 assert.equal(estimate.rows[4].scoreExcluded,true,'a missing percentage cannot be replaced with the highest War tier');
@@ -73,11 +80,11 @@ assert.equal(estimate.rows[4].scoreExcluded,true,'a readable percentage cannot j
 partial.rows[3]={name:'',value:null,known:false};
 assert.equal(core.estimate(partial).scoredCount,3,'three readable rows still show a subtotal');
 assert.equal(core.estimate({valid:false,rows:[]}),null,'no readable rows show no score');
-const missingMiddle=craft(1);missingMiddle.valid=false;missingMiddle.rows[2]={name:'',value:null,known:false,rerollEligible:true};
+const missingMiddle={...craft(1),hall:'main',artifact:{type:'Weapon'}};missingMiddle.valid=false;missingMiddle.rows[2]={name:'',value:null,known:false,rerollEligible:true};
 missingMiddle.rows[3].rerollEligible=true;
 const middleScore=core.estimate(missingMiddle);
 assert.equal(core.craftPotential(middleScore,options).rerollIndex,3,'excluded middle row cannot receive reroll gain or shift later rows');
-assert.equal(core.craftPotential(middleScore,options).potentialPreference,130,'subtotal 40 adds one eligible 90-point gain');
+assert.equal(core.craftPotential(middleScore,options).potentialPreference,50,'subtotal 40 adds the legal 10-point gain for a rating-one replacement');
 assert.equal(core.estimate(craft(1),{names:['Damage'],options,hall:'main'}).provisional,undefined,'complete valid reads remain confirmed');
 const missingDice=craft(1);missingDice.rows.forEach(row=>delete row.rerollEligible);
 assert.equal(core.craftPotential(missingDice,options).rerollGain,0,'missing dice data cannot add a default 100-point reroll');
@@ -93,9 +100,17 @@ const unknownName=JSON.parse(JSON.stringify(complete));unknownName.rows[4].known
 assert.equal(core.captureCompleteness(unknownName).captured,16,'unknown name loses credit while its readable percentage still counts');
 const inferred=JSON.parse(JSON.stringify(complete));inferred.rows[4].inferred=true;
 assert.equal(core.captureCompleteness(inferred).captured,16,'inferred percentage is not captured');
+assert.equal(core.captureCompleteness(inferred).identified,17,'inferred percentage completes identification');
+assert.equal(core.captureCompleteness(inferred).inferred,1);
+const mixed=JSON.parse(JSON.stringify(inferred));mixed.rows[0].nameSource='manual';mixed.rows[0].unlockedSource='manual';
+assert.equal(core.captureCompleteness(mixed).typed,2,'only individually edited fields count as typed');
+assert.equal(core.captureCompleteness(mixed).read,14);
+assert.equal(core.captureCompleteness(mixed).identified,17);
 const estimated=JSON.parse(JSON.stringify(complete));estimated.rows[4].estimated=true;
 assert.equal(core.captureCompleteness(estimated).captured,15,'optimistic row cannot inflate capture completion');
-assert.equal(core.captureCompleteness({...complete,hallSource:'selected-hall',artifact:null}).captured,15,'remembered or manually selected metadata is not captured');
+assert.equal(core.captureCompleteness({...complete,hallSource:'selected-hall',artifact:null}).identified,15,'remembered metadata is not identified');
+assert.equal(core.captureCompleteness({...complete,hallSource:'percentage-tier'}).inferred,1,'a hall established by percentages is inferred');
+assert.equal(core.captureCompleteness({...complete,hallSource:'manual'}).typed,1,'explicit hall entry is typed');
 const uncertainStar={...complete,unlocked:{states:[true,null,false,false,false]}};
 assert.equal(core.captureCompleteness(uncertainStar).stars,4,'locked stars count; an unclear star does not');
 assert.equal(core.compare({valid:false,rows:complete.rows},{type:'Weapon',hall:'main',owned:items,options,limit:2}).threshold,95,'collection benchmark remains available with incomplete current OCR');
@@ -126,7 +141,7 @@ const displayedInference={...rangedRead,rows:rangedRead.rows.map((row,index)=>in
 const inferenceSnapshot=JSON.stringify(displayedInference),inferenceScore=core.estimate(displayedInference);
 assert.equal(core.craftScore(inferenceScore,rangedOptions),20,'the displayed inferred +11% contributes 20 points at rating 1');
 assert.equal(inferenceScore.provisional,true,'inferred scoring does not claim a direct OCR read');
-assert.equal(core.captureCompleteness(displayedInference).values,4,'inferred scoring does not inflate capture completeness');
+assert.equal(core.captureCompleteness(displayedInference).values,5,'inferred percentages count as identified');
 assert.equal(JSON.stringify(displayedInference),inferenceSnapshot,'scoring preserves the original inference provenance');
 
 const cached=core.createComparator();let ratingCalls=0;
@@ -172,7 +187,8 @@ async function browserChecks() {
   assert.match(elements['scanner-benchmark'].className,/is-top-two/,'qualifying item uses the green benchmark state');
   assert.doesNotMatch(elements['scanner-benchmark'].className,/is-unknown/);
   assert.equal(elements['scanner-item-total'].textContent,'100');assert.equal(elements['scanner-benchmark-value'].textContent,'95');
-  assert.equal(elements['scanner-capture-percent'].textContent,'100%');
+  assert.equal(elements['scanner-capture-percent'].textContent,'17/17 identified');
+  assert.equal(elements['scanner-capture-detail'].textContent,'17 read · 0 inferred · 0 typed');
   assert.equal(elements['scanner-glance-board'].style['--capture-hue'],'120');
   browser.window.DNScannerComparison.update(complete,false,options);
   assert.match(elements['scanner-comparison'].textContent,/review/);
@@ -194,7 +210,13 @@ async function browserChecks() {
   browser.window.DNScannerComparison.update(partialBelow,true,options);
   assert.match(elements['scanner-benchmark'].className,/is-below-cutoff/,'readable subtotal below the benchmark is red');
   browser.window.DNScannerComparison.update(complete,true,options,{captureResult:unknownName});
-  assert.equal(elements['scanner-capture-percent'].textContent,'94%','capture meter uses raw OCR rather than a completed scoring scenario');
+  assert.equal(elements['scanner-capture-percent'].textContent,'16/17 identified','identification uses actual fields rather than a completed scoring scenario');
+  assert.match(elements['scanner-glance-board'].className,/is-incomplete/,'one missing field remains amber');
+  assert.equal(elements['scanner-glance-board'].style['--capture-hue'],'40');
+  browser.window.DNScannerComparison.update(inferred,true,options);
+  assert.equal(elements['scanner-capture-percent'].textContent,'17/17 identified');
+  assert.equal(elements['scanner-capture-detail'].textContent,'16 read · 1 inferred · 0 typed');
+  assert.doesNotMatch(elements['scanner-glance-board'].className,/is-incomplete/);
   profile='b';events.focus();assert.match(elements['scanner-comparison'].textContent,/Loading/);
   await flush();assert.equal(elements['scanner-benchmark-value'].textContent,'Open slot','profile change loads its own collection');
   fail=true;events.storage();await flush();assert.match(elements['scanner-comparison'].textContent,/Could not load/,'storage failures do not reuse a stale cutoff');
@@ -204,7 +226,7 @@ async function browserChecks() {
   assert.doesNotMatch(elements['scanner-benchmark'].className,/is-top-two/,'three stars alone do not establish a top-two score');
   assert.match(elements['scanner-benchmark'].className,/is-unlocked-keeper/,'three open stats override unknown benchmark colour');
   browser.window.DNScannerComparison.update(threeStars,false,null,{keeperResult:null});
-  assert.equal(elements['scanner-capture-percent'].textContent,'0%','star count alone does not establish five individual star states');
+  assert.equal(elements['scanner-capture-percent'].textContent,'0/17 identified','star count alone does not establish five individual star states');
   const detected={...craft(11),artifact:{type:'Armor'}};
   browser.window.DNScannerComparison.update(detected,true,options,{categoryResult:detected});
   assert.equal(elements['scanner-compare-type'].value,'armor','detected category selects the comparison automatically');
@@ -214,7 +236,7 @@ async function browserChecks() {
   events.focus();await flush();
   assert.equal(elements['scanner-compare-type'].value,'','background refresh cannot resurrect a stale detected category');
   fail=false;profile='a';
-  const screenshotOptions={...options,ratingOf:name=>name==='Strong'?5:name==='Medium'?1:0};
+  const screenshotOptions={...options,ratingOf:name=>['Strong','Enemy Defender Spawn Time'].includes(name)?5:name==='Medium'?1:0};
   browser.window.DNStoredArtifacts.read=async()=>[0,1].map(index=>({id:'screenshot-'+index,name:'Screenshot benchmark '+index,hall:'main',type:'Weapon',rows:Array.from({length:5},()=>({name:'Medium',value:23,base:23,max:32,level:1,rerollEligible:false}))}));
   events.focus();await flush();
   const screenshotResult={valid:true,provisional:true,hall:'main',artifact:{type:'Weapon'},rows:[

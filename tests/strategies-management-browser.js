@@ -1,0 +1,65 @@
+(async () => {
+  const checks = [];
+  function check(name, condition) { checks.push({name, passed: !!condition}); if (!condition) throw new Error(name); }
+  async function waitFor(fn) { for (let i=0;i<200;i++) { const value=fn(); if(value)return value; await new Promise(r=>setTimeout(r,25)); } throw new Error('UI did not become ready'); }
+  const DN = window.DN;
+  await waitFor(() => document.querySelector('#unit-grid input'));
+  window.confirm = () => true;
+  const globals = JSON.stringify(DN.loadStoredGlobalPerkRatings()), profiles = JSON.stringify(DN.loadProfilePerkOverrides(DN.activeProfileId()));
+  for(let i=0;i<10;i++) document.getElementById('preset-add').click();
+  check('More than ten strategies can be created', DN.loadStrategies().strategies.length === 11);
+  const selected = DN.activeStrategyId();
+  const name = document.getElementById('preset-name'); name.value='Browser fixture strategy'; name.dispatchEvent(new Event('input',{bubbles:true}));
+  check('Renaming remains a draft until saved', DN.activeStrategy().name !== name.value && !document.getElementById('army-save').disabled);
+  document.getElementById('army-save').click();
+  check('Saving persists strategy name', DN.activeStrategy().name === 'Browser fixture strategy');
+  let input = document.querySelector('#unit-grid input'); const family=input.dataset.unit; input.checked=true; input.dispatchEvent(new Event('change',{bubbles:true}));
+  check('Troop draft does not mutate saved army', !DN.activeStrategy().units.includes(family));
+  const picker=document.getElementById('strategy-select'), other=DN.loadStrategies().strategies.find(s=>s.id!==selected).id;
+  window.confirm=()=>false; picker.value=other; picker.dispatchEvent(new Event('change',{bubbles:true}));
+  check('Cancelled strategy switch preserves active strategy and draft', DN.activeStrategyId()===selected && document.querySelector('[data-unit="'+family+'"]').checked);
+  window.confirm=()=>true; document.getElementById('army-save').click();
+  check('Saving persists troop selection', DN.activeStrategy().units.includes(family));
+  DN.saveStrategyOverrides(selected, {'Heavy Tank Damage':{offensive:3}});
+  document.getElementById('strategy-duplicate').click();
+  check('Duplicate retains strategy rating overrides', DN.activeStrategy().overrides['Heavy Tank Damage'].offensive===3);
+  check('Duplicate retains troop selection', DN.activeStrategy().units.includes(family));
+  document.getElementById('strategy-favorite').click();
+  check('Favorite is saved', DN.activeStrategy().favorite);
+  const archived=DN.activeStrategyId(); document.getElementById('strategy-archive').click();
+  check('Archive switches active strategy and preserves archived record', DN.activeStrategyId()!==archived && DN.loadStrategies().strategies.find(s=>s.id===archived).archived);
+  check('Army editing and switching preserve shared rating layers', globals===JSON.stringify(DN.loadStoredGlobalPerkRatings()) && profiles===JSON.stringify(DN.loadProfilePerkOverrides(DN.activeProfileId())));
+  async function frame(file, ready) {
+    const iframe=document.createElement('iframe'); iframe.src=file; document.body.appendChild(iframe);
+    await waitFor(()=>iframe.contentWindow.DN && ready(iframe.contentDocument)); return iframe;
+  }
+  const ratingFrame=await frame('ratings.html', d=>d.querySelector('[data-layer="strategy"]'));
+  const rw=ratingFrame.contentWindow, rd=ratingFrame.contentDocument; rw.confirm=()=>true;
+  let rating=rd.querySelector('[data-layer="strategy"]'), perk=rating.dataset.key, axis=rating.dataset.axis;
+  rating.value='4'; rating.dispatchEvent(new rw.Event('change',{bubbles:true}));
+  check('Rating grid saves isolated strategy override', rw.DN.activeStrategy().overrides[perk][axis]===4);
+  check('Rating grid explains actual strategy source', [...rd.querySelectorAll('.strategy-rating-source')].some(n=>n.textContent==='Strategy override'));
+  check('Strategy override does not alter shared ratings', globals===JSON.stringify(DN.loadStoredGlobalPerkRatings()) && profiles===JSON.stringify(DN.loadProfilePerkOverrides(DN.activeProfileId())));
+  const active=rw.DN.activeStrategyId(); rw.DN.setActiveStrategy(other===active ? selected : other);
+  check('Another strategy keeps independent override values', !rw.DN.activeStrategy().overrides[perk] || rw.DN.activeStrategy().overrides[perk][axis]!==4);
+  rw.DN.setActiveStrategy(active);
+  rd.getElementById('ratings-reset-strategy').click();
+  check('Strategy reset clears only active strategy override bag', Object.keys(rw.DN.activeStrategy().overrides).length===0);
+  const original=rw.Storage.prototype.setItem; rw.Storage.prototype.setItem=()=>{throw new Error('Fixture storage full');};
+  rating=rd.querySelector('[data-layer="strategy"]'); rating.value='5'; rating.dispatchEvent(new rw.Event('change',{bubbles:true}));
+  check('Storage failure produces a visible error', !rd.getElementById('error').hidden && rd.getElementById('error').textContent.includes('Fixture storage full'));
+  rw.Storage.prototype.setItem=original;
+  ratingFrame.remove();
+  const council=await frame('council-ratings.html', d=>d.getElementById('profile-select'));
+  check('Council keeps profile scope without artifact strategy selector', !council.contentDocument.getElementById('strategy-select'));
+  council.remove();
+  const scanner=await frame('scanner.html', d=>d.getElementById('strategy-select'));
+  const sw=scanner.contentWindow, sd=scanner.contentDocument; sw.strategyFixtureSentinel=true;
+  const select=sd.getElementById('strategy-select'), next=[...select.options].find(o=>o.value!==select.value).value;
+  select.value=next; select.dispatchEvent(new sw.Event('change',{bubbles:true}));
+  await new Promise(r=>setTimeout(r,100));
+  check('Scanner strategy switch preserves the live page', sw.strategyFixtureSentinel===true && sw.DN.activeStrategyId()===next);
+  check('Comparison choices are visible separately from active strategy', sd.querySelectorAll('[data-compare-strategy]').length===sw.DN.loadStrategies().strategies.filter(s=>!s.archived).length);
+  scanner.remove();
+  return {passed:checks.every(c=>c.passed),checks};
+})();

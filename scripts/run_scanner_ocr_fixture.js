@@ -56,9 +56,9 @@ async function main() {
       if(message.method==='Target.attachedToTarget')client.send('Network.enable',{},message.params.sessionId).catch(error=>browserErrors.push(error.message));
     });
     await client.send('Network.enable');
-    // The cross-page preferences check visits Priority, whose existing analytics
-    // script is unrelated to the scanner. Block it in this local-only harness.
-    if(process.argv.includes('--primary-filters'))await client.send('Network.setBlockedURLs',{urls:['*://static.cloudflareinsights.com/*']});
+    // Cross-page checks visit pages with existing analytics. Block those scripts
+    // in this local-only harness.
+    if(process.argv.includes('--primary-filters') || process.argv.includes('--crafting-keep') || process.argv.includes('--collection-comparison'))await client.send('Network.setBlockedURLs',{urls:['*://static.cloudflareinsights.com/*',...(process.argv.includes('--collection-comparison')?['*://static.wikia.nocookie.net/*']:[])]});
     await client.send('Runtime.enable');
     await client.send('Target.setAutoAttach',{autoAttach:true,waitForDebuggerOnStart:false,flatten:true});
     await client.send('Page.enable');
@@ -69,7 +69,7 @@ async function main() {
     const storagePassive=process.argv.includes('--storage-passive');
     const glance=process.argv.includes('--glance');
     const viewport=process.argv.find(arg=>arg.startsWith('--viewport='))?.slice(11) || '1440x900';
-    if(glance || process.argv.includes('--crafting-keep') || process.argv.includes('--regions-ui')){if(!/^\d{3,4}x\d{3,4}$/.test(viewport))throw new Error('Invalid viewport');const [width,height]=viewport.split('x').map(Number);await client.send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:false});}
+    if(glance || process.argv.includes('--identification') || process.argv.includes('--crafting-keep') || process.argv.includes('--regions-ui')){if(!/^\d{3,4}x\d{3,4}$/.test(viewport))throw new Error('Invalid viewport');const [width,height]=viewport.split('x').map(Number);await client.send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:false});}
     if(inventory)await client.send('Emulation.setDeviceMetricsOverride',{width:1800,height:1100,deviceScaleFactor:1,mobile:false});
     if(storageLayout)await client.send('Emulation.setDeviceMetricsOverride',{width:1440,height:900,deviceScaleFactor:1,mobile:false});
     const storage=process.argv.includes('--storage') || inventory || storageLayout || storagePassive || process.argv.includes('--storage-fields');
@@ -90,10 +90,15 @@ async function main() {
     if(process.argv.includes('--storage-fields'))expression=fs.readFileSync(path.join(root,'tests/scanner/storage-fields-browser.js'),'utf8');
     if(process.argv.includes('--crafting-metadata'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-metadata-browser.js'),'utf8');
     if(process.argv.includes('--crafting-edits'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-edits-browser.js'),'utf8');
+    if(process.argv.includes('--identification'))expression=fs.readFileSync(path.join(root,'tests/scanner/identification-browser.js'),'utf8');
+    if(process.argv.includes('--provisional-colours'))expression=fs.readFileSync(path.join(root,'tests/scanner/provisional-colours-browser.js'),'utf8');
     if(process.argv.includes('--stat-context'))expression=fs.readFileSync(path.join(root,'tests/scanner/stat-context-browser.js'),'utf8');
     if(process.argv.includes('--crafting-latency'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-latency-browser.js'),'utf8');
+    if(process.argv.includes('--field-reuse'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-field-reuse-browser.js'),'utf8');
+    if(process.argv.includes('--worker-experiment'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-worker-experiment-browser.js'),'utf8');
     if(process.argv.includes('--crafting-keep'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-keep-browser.js'),'utf8');
     if(process.argv.includes('--reroll-ui'))expression=fs.readFileSync(path.join(root,'tests/scanner/reroll-browser.js'),'utf8');
+    if(process.argv.includes('--reroll-pools'))expression=fs.readFileSync(path.join(root,'tests/scanner/reroll-pools-browser.js'),'utf8');
     if(percent)expression="window.DNStorageFixtureVariants=['native','video','muted'];\n"+expression.replace('storage-coverage.labels.json','storage-percent.labels.json');
     const green=process.argv.includes('--green');
     const fixture=process.argv.find(arg=>arg.startsWith('--fixture='))?.slice(10);

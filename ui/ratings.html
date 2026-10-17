@@ -49,13 +49,16 @@
     </div>
     <div class="filter-actions">
       <button type="button" id="ratings-reset-global" class="btn">Reset global</button>
-      <button type="button" id="ratings-clear-overrides" class="btn" hidden>Clear all overrides</button>
+      <button type="button" id="ratings-clear-overrides" class="btn" hidden>Clear all profile overrides</button>
     </div>
   </section>
 
   <p id="error" class="error" hidden></p>
+  <div class="strategy-rating-controls"><strong id="ratings-strategy-name"></strong><label>Default source <select id="ratings-strategy-inherit"><option value="army">Army and group defaults</option><option value="shared">Army defaults + global and profile preferences</option></select></label><button type="button" class="btn" id="ratings-reset-strategy">Clear strategy overrides</button></div>
+  <details class="strategy-notice"><summary>Review shared preferences before inheriting</summary><p>These global and active-profile preferences can include old army zero ratings. Review them before choosing to inherit shared preferences. Strategy overrides always take precedence.</p><ul id="ratings-shared-preview"></ul></details>
+  <aside id="ratings-strategy-legacy" class="strategy-notice" hidden><strong>Migrated rating snapshot.</strong> Your previous priorities are preserved, including previous zero ratings. The strategy column shows the actual source. Adopt army defaults to start fresh, or import the snapshot as explicit strategy overrides to review and edit it.<button type="button" class="btn" id="ratings-adopt-defaults">Adopt army defaults</button><button type="button" class="btn" id="ratings-keep-snapshot">Import snapshot as overrides</button></aside>
   <p class="ratings-hint" id="ratings-hint">
-    Set shared Off/Def defaults by group, then expand a section for individual stats and profile overrides. Blank fields inherit the value shown; clear a field to restore inheritance. Mixed means factory ratings vary. Changes save automatically.
+    Set shared Off/Def defaults by group, then expand a section for individual stats, profile preferences and the active strategy’s overrides. The strategy column shows the values and sources used for artifact scoring. Blank fields inherit the value shown; clear a field to restore inheritance. Mixed means factory ratings vary. Changes save automatically.
   </p>
 
   <div class="ratings-page-scroll" id="ratings-scroll">
@@ -64,9 +67,9 @@
   </div>
 
   <script src="data/army_catalog.js?v=8"></script>
-  <script src="shared.js?v=43"></script>
-  <script src="profiles-ui.js?v=13"></script>
-  <script src="ratings.js?v=2"></script>
+  <script src="shared.js?v=20261017-strategies"></script>
+  <script src="profiles-ui.js?v=20261017-strategies"></script>
+  <script src="ratings.js?v=20261017-strategies"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9c4fcfc024144c4aa34a78ae6332dc9f"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

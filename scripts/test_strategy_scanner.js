@@ -1,0 +1,57 @@
+/* Independent strategy benchmarks, conservative aggregate decisions and cache isolation. */
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const values=new Map();
+const context={window:{},document:{getElementById:()=>null},localStorage:{getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,String(value)),removeItem:key=>values.delete(key)}};
+vm.createContext(context);
+for(const file of ['data/army_catalog.js','shared.js','artifact-scoring.js','stored-artifacts.js','scanner-comparison.js'])vm.runInContext(fs.readFileSync('ui/'+file,'utf8'),context);
+const {DN,DNStoredArtifacts:store,DNScannerComparisonCore:core}=context.window;
+const defaults={'Heavy Tank Damage':{offensive:5,defensive:1},'Fighter Damage':{offensive:5,defensive:1}};
+const tank=DN.addStrategy('Tanks',{units:['Heavy Tank']}),fighter=DN.addStrategy('Fighters',{units:['Fighter']});
+DN.updateStrategy(tank,{inheritRatings:false});DN.updateStrategy(fighter,{inheritRatings:false});
+const base={canonPerk:name=>name,prefSortAxes:{offensive:true,defensive:false},scoreMode:'combined'};
+const strategies=()=>[tank,fighter].map(id=>({id,name:DN.loadStrategies().strategies.find(item=>item.id===id).name,
+  options:{...base,...DN.createStrategyRatingContext(defaults,{strategyId:id}),strategyId:id}}));
+const rows=(name,value)=>Array.from({length:5},()=>({name,value,known:true,hasPercent:true,level:1,unlocked:true,rerollEligible:false}));
+const craft=(name,value)=>({valid:true,hall:'main',artifact:{type:'Weapon'},rows:rows(name,value)});
+const owned=[['tank-best','Heavy Tank Damage',11],['tank-second','Heavy Tank Damage',6],['fighter-best','Fighter Damage',11],['fighter-second','Fighter Damage',6]]
+  .map(([id,name,value])=>store.toRow({id,name:id,hall:'main',type:'Weapon',rows:rows(name,value)}));
+const params={type:'Weapon',hall:'main',owned};
+let evaluated=core.compareStrategies(craft('Heavy Tank Damage',11),{...params,strategies:strategies()});
+assert.equal(evaluated.status,'better');assert.equal(evaluated.improvements,1);
+assert.equal(evaluated.results[0].score,500);assert.equal(evaluated.results[1].score,0);
+assert.equal(evaluated.results[0].top[0].id,'tank-best');assert.equal(evaluated.results[1].top[0].id,'fighter-best');
+assert.equal(evaluated.results[0].threshold,375,'each strategy selects its own two best from the shared inventory');
+evaluated=core.compareStrategies(craft('Heavy Tank Damage',6),{...params,strategies:strategies()});
+assert.equal(evaluated.status,'tie');assert.equal(evaluated.improvements,0,'ties never claim a replacement');
+assert.equal(core.compareStrategies(craft('Heavy Tank Damage',1),{...params,strategies:strategies()}).status,'below');
+const partial=core.estimate({...craft('Heavy Tank Damage',1),valid:false,rows:[...rows('Heavy Tank Damage',1).slice(0,4),{name:'',value:null,known:false}]});
+assert.equal(core.compareStrategies(partial,{...params,strategies:strategies()}).status,'check','below subtotals cannot justify a rejection');
+assert.equal(core.compareStrategies(partial,{...params,strategies:strategies()}).belowDisplayedBenchmarks,true,'a displayed subtotal below every benchmark still colours the score box red');
+const inferredBelow={...craft('Heavy Tank Damage',1),provisional:true};inferredBelow.rows[0].inferred=true;
+assert.equal(core.compareStrategies(inferredBelow,{...params,strategies:strategies()}).belowDisplayedBenchmarks,true,'inferred points do not suppress the red numeric comparison');
+assert.equal(core.compareStrategies({...craft('Heavy Tank Damage',11),provisional:true},{...params,strategies:strategies()}).status,'check');
+assert.equal(core.compareStrategies({...craft('Heavy Tank Damage',11),provisional:true},{...params,strategies:strategies()}).belowDisplayedBenchmarks,false,'an estimated improvement in any strategy prevents an all-below colour');
+assert.equal(core.compareStrategies(craft('Heavy Tank Damage',1),{...params,owned:[],strategies:strategies()}).status,'vacancy');
+assert.equal(core.compareStrategies(inferredBelow,{...params,owned:[],strategies:strategies()}).belowDisplayedBenchmarks,false,'an open slot has no lower-score threshold');
+const incomplete=structuredClone(owned);incomplete[0].scanned.rows[0].max=null;incomplete[0].scanned.rows[0].level=null;
+assert.equal(core.compareStrategies(craft('Heavy Tank Damage',11),{...params,owned:incomplete,strategies:strategies()}).status,'check');
+const uncertain=craft('Heavy Tank Damage',1);uncertain.rows.forEach(row=>{row.rerollEligible=null;});
+assert.equal(core.compareStrategies(uncertain,{...params,strategies:strategies()}).status,'check','unknown rerolls cannot justify a final rejection');
+assert.equal(core.compareStrategies(uncertain,{...params,strategies:strategies()}).belowDisplayedBenchmarks,true,'unknown rerolls do not change the colour of the displayed below-cutoff score');
+const mixed=core.compareStrategies(craft('Heavy Tank Damage',1),{...params,strategies:strategies()},(_,input)=>
+  input.options.strategyId===tank?{status:'below',score:0,threshold:1}:{status:'incomplete'});
+assert.equal(mixed.status,'check','one rejected strategy cannot hide an incomplete strategy');
+assert.equal(mixed.belowDisplayedBenchmarks,false,'missing comparison numbers cannot be treated as below');
+const cached=core.createComparator();let calls=0;
+const counted=strategies().map(strategy=>{const ratingOf=strategy.options.ratingOf;return {...strategy,options:{...strategy.options,ratingOf:(...args)=>{calls++;return ratingOf(...args);}}};});
+core.compareStrategies(null,{...params,strategies:counted},cached);calls=0;
+core.compareStrategies(null,{...params,strategies:counted},cached);
+assert.equal(calls,0,'switching between strategy contexts retains each owned benchmark cache');
+DN.saveStrategyOverrides(fighter,{'Heavy Tank Damage':{offensive:5}});
+const changed=core.compareStrategies(craft('Heavy Tank Damage',11),{...params,strategies:strategies()},cached);
+assert.equal(changed.results[1].score,500,'a local rating edit changes the craft score for that strategy');
+assert.equal(changed.results[1].threshold,500,'the same edit also recomputes its owned benchmark');
+assert.equal(changed.results[1].status,'tie');
+assert.equal(DN.createStrategyRatingContext(defaults,{strategyId:tank}).ratingOf('Fighter Damage','offensive'),0,'another strategy override does not leak');
+assert.equal(core.compareStrategies(craft('Heavy Tank Damage',11),{...params,strategies:[]}).status,'check');
+console.log('Independent multi-strategy cutoffs, ties, vacancies, incomplete evidence, reroll review and interleaved cache checks passed.');

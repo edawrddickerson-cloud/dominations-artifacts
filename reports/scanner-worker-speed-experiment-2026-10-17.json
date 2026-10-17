@@ -1,0 +1,829 @@
+{
+  "passed": true,
+  "startupMs": [
+    277.6000000014901,
+    164.79999999701977
+  ],
+  "workers": 2,
+  "hardwareConcurrency": 32,
+  "deviceMemoryGiB": 32,
+  "sequential": {
+    "p50Ms": 203.30000000447035,
+    "p95Ms": 464.70000000298023,
+    "totalMs": 10237.5
+  },
+  "concurrent": {
+    "p50Ms": 206.60000000149012,
+    "p95Ms": 463,
+    "totalMs": 9851.899999983609
+  },
+  "runs": [
+    {
+      "fixture": "pic1",
+      "repeat": 0,
+      "sequentialMs": 195.39999999850988,
+      "concurrentMs": 221,
+      "sequentialCalls": 3,
+      "concurrentCalls": 3,
+      "categoryCalls": 2,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "greenissue",
+      "repeat": 0,
+      "sequentialMs": 146.30000000447035,
+      "concurrentMs": 148.5,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "invaders-cyan",
+      "repeat": 0,
+      "sequentialMs": 196.29999999701977,
+      "concurrentMs": 206.60000000149012,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "invaders-green",
+      "repeat": 0,
+      "sequentialMs": 514.5999999940395,
+      "concurrentMs": 445.90000000596046,
+      "sequentialCalls": 2,
+      "concurrentCalls": 2,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-215133",
+      "repeat": 0,
+      "sequentialMs": 311.3999999985099,
+      "concurrentMs": 335.19999999552965,
+      "sequentialCalls": 2,
+      "concurrentCalls": 2,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-215714",
+      "repeat": 0,
+      "sequentialMs": 153.60000000149012,
+      "concurrentMs": 149.5,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-225540",
+      "repeat": 0,
+      "sequentialMs": 180.29999999701977,
+      "concurrentMs": 193.59999999403954,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-225703",
+      "repeat": 0,
+      "sequentialMs": 196.10000000149012,
+      "concurrentMs": 258.30000000447035,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "pic1",
+      "repeat": 1,
+      "sequentialMs": 283.3999999985099,
+      "concurrentMs": 271.59999999403954,
+      "sequentialCalls": 3,
+      "concurrentCalls": 3,
+      "categoryCalls": 2,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "greenissue",
+      "repeat": 1,
+      "sequentialMs": 171.89999999850988,
+      "concurrentMs": 171.10000000149012,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "invaders-cyan",
+      "repeat": 1,
+      "sequentialMs": 225.30000000447035,
+      "concurrentMs": 208,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "invaders-green",
+      "repeat": 1,
+      "sequentialMs": 362.59999999403954,
+      "concurrentMs": 417.70000000298023,
+      "sequentialCalls": 2,
+      "concurrentCalls": 2,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-215133",
+      "repeat": 1,
+      "sequentialMs": 252.5,
+      "concurrentMs": 272.3999999985099,
+      "sequentialCalls": 2,
+      "concurrentCalls": 2,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-215714",
+      "repeat": 1,
+      "sequentialMs": 136.70000000298023,
+      "concurrentMs": 124.5,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-225540",
+      "repeat": 1,
+      "sequentialMs": 185,
+      "concurrentMs": 176.5,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-225703",
+      "repeat": 1,
+      "sequentialMs": 173.5,
+      "concurrentMs": 166,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "pic1",
+      "repeat": 2,
+      "sequentialMs": 215.10000000149012,
+      "concurrentMs": 212.19999999552965,
+      "sequentialCalls": 3,
+      "concurrentCalls": 3,
+      "categoryCalls": 2,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "greenissue",
+      "repeat": 2,
+      "sequentialMs": 163.29999999701977,
+      "concurrentMs": 163.70000000298023,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "invaders-cyan",
+      "repeat": 2,
+      "sequentialMs": 217.70000000298023,
+      "concurrentMs": 204.29999999701977,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "invaders-green",
+      "repeat": 2,
+      "sequentialMs": 464.70000000298023,
+      "concurrentMs": 501.29999999701977,
+      "sequentialCalls": 2,
+      "concurrentCalls": 2,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-215133",
+      "repeat": 2,
+      "sequentialMs": 405.1000000014901,
+      "concurrentMs": 413.20000000298023,
+      "sequentialCalls": 2,
+      "concurrentCalls": 2,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-215714",
+      "repeat": 2,
+      "sequentialMs": 203.30000000447035,
+      "concurrentMs": 185.89999999850988,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-225540",
+      "repeat": 2,
+      "sequentialMs": 236.70000000298023,
+      "concurrentMs": 221.89999999850988,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-225703",
+      "repeat": 2,
+      "sequentialMs": 175.90000000596046,
+      "concurrentMs": 204.80000000447035,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "pic1",
+      "repeat": 3,
+      "sequentialMs": 248.70000000298023,
+      "concurrentMs": 236.20000000298023,
+      "sequentialCalls": 3,
+      "concurrentCalls": 3,
+      "categoryCalls": 2,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "greenissue",
+      "repeat": 3,
+      "sequentialMs": 197,
+      "concurrentMs": 193.70000000298023,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "invaders-cyan",
+      "repeat": 3,
+      "sequentialMs": 235.70000000298023,
+      "concurrentMs": 230.19999999552965,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "invaders-green",
+      "repeat": 3,
+      "sequentialMs": 884.8000000044703,
+      "concurrentMs": 547.3999999985099,
+      "sequentialCalls": 2,
+      "concurrentCalls": 2,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-215133",
+      "repeat": 3,
+      "sequentialMs": 431.3999999985099,
+      "concurrentMs": 463,
+      "sequentialCalls": 2,
+      "concurrentCalls": 2,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-215714",
+      "repeat": 3,
+      "sequentialMs": 161.89999999850988,
+      "concurrentMs": 187.5,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-225540",
+      "repeat": 3,
+      "sequentialMs": 199.29999999701977,
+      "concurrentMs": 189.70000000298023,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-225703",
+      "repeat": 3,
+      "sequentialMs": 239.39999999850988,
+      "concurrentMs": 222.30000000447035,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "pic1",
+      "repeat": 4,
+      "sequentialMs": 328.19999999552965,
+      "concurrentMs": 199.89999999850988,
+      "sequentialCalls": 3,
+      "concurrentCalls": 3,
+      "categoryCalls": 2,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "greenissue",
+      "repeat": 4,
+      "sequentialMs": 185.60000000149012,
+      "concurrentMs": 188.29999999701977,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "invaders-cyan",
+      "repeat": 4,
+      "sequentialMs": 210,
+      "concurrentMs": 210.79999999701977,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "invaders-green",
+      "repeat": 4,
+      "sequentialMs": 418.3999999985099,
+      "concurrentMs": 414.3999999985099,
+      "sequentialCalls": 2,
+      "concurrentCalls": 2,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-215133",
+      "repeat": 4,
+      "sequentialMs": 303.29999999701977,
+      "concurrentMs": 275.09999999403954,
+      "sequentialCalls": 2,
+      "concurrentCalls": 2,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-215714",
+      "repeat": 4,
+      "sequentialMs": 150.09999999403954,
+      "concurrentMs": 125.5,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-225540",
+      "repeat": 4,
+      "sequentialMs": 152.20000000298023,
+      "concurrentMs": 150.29999999701977,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    },
+    {
+      "fixture": "review-225703",
+      "repeat": 4,
+      "sequentialMs": 124.79999999701977,
+      "concurrentMs": 143.89999999850988,
+      "sequentialCalls": 1,
+      "concurrentCalls": 1,
+      "categoryCalls": 0,
+      "equivalent": true,
+      "exact": true,
+      "valid": true
+    }
+  ],
+  "limitations": "Warm static screenshot field OCR only. Uses exactly two independent fast workers with disjoint parameter state. Direct field calls exclude standard fallback/controller. Memory is not measured; cold startup, low-memory behavior and cancellation lifecycle are not qualified for production.",
+  "network": {
+    "requests": [
+      {
+        "requestId": "F49567570E6915FB2B64E66579876E45",
+        "url": "http://127.0.0.1:52180/ui/scanner.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.2",
+        "url": "http://127.0.0.1:52180/ui/navigation.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.3",
+        "url": "http://127.0.0.1:52180/ui/styles.css?v=41",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.4",
+        "url": "http://127.0.0.1:52180/ui/scanner.css?v=34",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.5",
+        "url": "http://127.0.0.1:52180/ui/scanner-core.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.6",
+        "url": "http://127.0.0.1:52180/ui/scanner-regions.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.7",
+        "url": "http://127.0.0.1:52180/ui/scanner-frames.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.8",
+        "url": "http://127.0.0.1:52180/ui/data/army_catalog.js?v=8",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.9",
+        "url": "http://127.0.0.1:52180/ui/shared.js?v=43",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.10",
+        "url": "http://127.0.0.1:52180/ui/data/artifact_stat_context.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.11",
+        "url": "http://127.0.0.1:52180/ui/artifact-stat-context.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.12",
+        "url": "http://127.0.0.1:52180/ui/profiles-ui.js?v=13",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.13",
+        "url": "http://127.0.0.1:52180/ui/artifact-scoring.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.14",
+        "url": "http://127.0.0.1:52180/ui/stored-artifacts.js?v=20",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.15",
+        "url": "http://127.0.0.1:52180/ui/scanner-comparison.js?v=25",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.16",
+        "url": "http://127.0.0.1:52180/ui/scanner-keep.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.17",
+        "url": "http://127.0.0.1:52180/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.18",
+        "url": "http://127.0.0.1:52180/ui/scanner-reroll-recognition.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.19",
+        "url": "http://127.0.0.1:52180/ui/scanner-name-catalog.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.20",
+        "url": "http://127.0.0.1:52180/ui/scanner-recognition.js?v=35",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.21",
+        "url": "http://127.0.0.1:52180/ui/scanner-field-recognition.js?v=6",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.22",
+        "url": "http://127.0.0.1:52180/ui/scanner-calibration.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.23",
+        "url": "http://127.0.0.1:52180/ui/scanner-collection.js?v=56",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.24",
+        "url": "http://127.0.0.1:52180/ui/scanner-reading.js?v=69",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.25",
+        "url": "http://127.0.0.1:52180/ui/scanner.js?v=11",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.40",
+        "url": "http://127.0.0.1:52180/ui/data/artifacts.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.50",
+        "url": "http://127.0.0.1:52180/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.51",
+        "url": "http://127.0.0.1:52180/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.53",
+        "url": "http://127.0.0.1:52180/favicon.ico",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.54",
+        "url": "http://127.0.0.1:52180/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.55",
+        "url": "http://127.0.0.1:52180/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.56",
+        "url": "http://127.0.0.1:52180/ui/scanner-field-recognition.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "F3C6C5D632E499C92A7E1E8CB4995475",
+        "url": "http://127.0.0.1:52180/ui/vendor/tesseract/worker.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.58",
+        "url": "http://127.0.0.1:52180/ui/vendor/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.59",
+        "url": "http://127.0.0.1:52180/ui/vendor/tesseract/lang-fast/eng.traineddata.gz",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "E7635FB892B22C1039FEA443F6F4A0A4",
+        "url": "http://127.0.0.1:52180/ui/vendor/tesseract/worker.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.61",
+        "url": "http://127.0.0.1:52180/ui/vendor/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.62",
+        "url": "http://127.0.0.1:52180/tests/scanner/pic1.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.63",
+        "url": "http://127.0.0.1:52180/tests/scanner/pic1.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.64",
+        "url": "http://127.0.0.1:52180/tests/scanner/greenissue.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.65",
+        "url": "http://127.0.0.1:52180/tests/scanner/greenissue.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.66",
+        "url": "http://127.0.0.1:52180/tests/scanner/invaders-cyan.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.67",
+        "url": "http://127.0.0.1:52180/tests/scanner/invaders-cyan.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.68",
+        "url": "http://127.0.0.1:52180/tests/scanner/invaders-green.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.69",
+        "url": "http://127.0.0.1:52180/tests/scanner/invaders-green.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.70",
+        "url": "http://127.0.0.1:52180/tests/scanner/review-215133.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.71",
+        "url": "http://127.0.0.1:52180/tests/scanner/review-215133.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.72",
+        "url": "http://127.0.0.1:52180/tests/scanner/review-215714.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.73",
+        "url": "http://127.0.0.1:52180/tests/scanner/review-215714.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.74",
+        "url": "http://127.0.0.1:52180/tests/scanner/review-225540.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.75",
+        "url": "http://127.0.0.1:52180/tests/scanner/review-225540.png",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.76",
+        "url": "http://127.0.0.1:52180/tests/scanner/review-225703.labels.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "27572.77",
+        "url": "http://127.0.0.1:52180/tests/scanner/review-225703.png",
+        "method": "GET",
+        "hasPostData": false
+      }
+    ],
+    "blockedRequests": [],
+    "externalRequests": [],
+    "nonGetRequests": [],
+    "browserErrors": []
+  }
+}

@@ -1,0 +1,4634 @@
+{
+  "mode": "baseline",
+  "snapshot": "C:\\Projects\\Dominations Artifacts\\data\\temp\\crafting-speed-baseline-2026-10-17",
+  "sourceHashes": {
+    "scanner-reading.js": "3e601d88bc985ffbf5be4828e03e3def5063dc54e7018bba91fb236cb4ef9464",
+    "scanner-recognition.js": "5407ed586f838ba1a3154428fa1796339e1b11e1d6c6e523bbcb03eb7ccd7499",
+    "scanner-field-recognition.js": "5fcf032e7176f45345c135c93e3460ca24d3a3c6ff205469609e4e68b24bf122",
+    "scanner-collection.js": "68677f98934442bb8c343ebb1b736a6f8010be7b167c4b8ac9af914468cd54ce",
+    "scanner-comparison.js": "b5c09c0bb42b5bbdb2fd35cdd206ca8d8fd153eb58f1a2adcc000d186b424c7c",
+    "scanner-frames.js": "725008be86f61b5ca9f0f2cc48adef4d6007f6ff2de1777c2398baf10ead7711",
+    "shared.js": "0970349209b98c3b53affda700bf0e808211794bd848653151cf250213f15f24"
+  },
+  "createdAt": "2026-10-17T13:40:43.818Z",
+  "config": {
+    "fixtureNames": [
+      "video161",
+      "pic1"
+    ],
+    "logs": [
+      10,
+      1000
+    ],
+    "temperatures": [
+      "cold",
+      "warm"
+    ],
+    "repeat": 3,
+    "owned": 500,
+    "timeoutMs": 12000
+  },
+  "groups": [
+    {
+      "logs": 10,
+      "temperature": "cold",
+      "samples": 6,
+      "exactStats": 6,
+      "fullAssessable": 6,
+      "complete": 6,
+      "statsPaintedMs": {
+        "p50": 753.8000000044703,
+        "p95": 3276.10000000149
+      },
+      "completeCapturePaintedMs": {
+        "p50": 753.8000000044703,
+        "p95": 3276.10000000149
+      }
+    },
+    {
+      "logs": 10,
+      "temperature": "warm",
+      "samples": 6,
+      "exactStats": 6,
+      "fullAssessable": 6,
+      "complete": 6,
+      "statsPaintedMs": {
+        "p50": 760.5,
+        "p95": 3603.9000000059605
+      },
+      "completeCapturePaintedMs": {
+        "p50": 760.5,
+        "p95": 3603.9000000059605
+      }
+    },
+    {
+      "logs": 1000,
+      "temperature": "cold",
+      "samples": 6,
+      "exactStats": 6,
+      "fullAssessable": 6,
+      "complete": 6,
+      "statsPaintedMs": {
+        "p50": 1291.2000000029802,
+        "p95": 4946.70000000298
+      },
+      "completeCapturePaintedMs": {
+        "p50": 1291.2000000029802,
+        "p95": 4946.70000000298
+      }
+    },
+    {
+      "logs": 1000,
+      "temperature": "warm",
+      "samples": 6,
+      "exactStats": 6,
+      "fullAssessable": 6,
+      "complete": 6,
+      "statsPaintedMs": {
+        "p50": 1012.4000000059605,
+        "p95": 3753.10000000149
+      },
+      "completeCapturePaintedMs": {
+        "p50": 1012.4000000059605,
+        "p95": 3753.10000000149
+      }
+    }
+  ],
+  "fixtureGroups": [
+    {
+      "fixture": "video161",
+      "logs": 10,
+      "temperature": "cold",
+      "samples": 3,
+      "exactStats": 3,
+      "fullAssessable": 3,
+      "complete": 3,
+      "statsPaintedMs": {
+        "p50": 3039.60000000149,
+        "p95": 3276.10000000149
+      },
+      "completeCapturePaintedMs": {
+        "p50": 3039.60000000149,
+        "p95": 3276.10000000149
+      }
+    },
+    {
+      "fixture": "pic1",
+      "logs": 10,
+      "temperature": "cold",
+      "samples": 3,
+      "exactStats": 3,
+      "fullAssessable": 3,
+      "complete": 3,
+      "statsPaintedMs": {
+        "p50": 645.4000000059605,
+        "p95": 753.8000000044703
+      },
+      "completeCapturePaintedMs": {
+        "p50": 645.4000000059605,
+        "p95": 753.8000000044703
+      }
+    },
+    {
+      "fixture": "video161",
+      "logs": 10,
+      "temperature": "warm",
+      "samples": 3,
+      "exactStats": 3,
+      "fullAssessable": 3,
+      "complete": 3,
+      "statsPaintedMs": {
+        "p50": 2992.2999999970198,
+        "p95": 3603.9000000059605
+      },
+      "completeCapturePaintedMs": {
+        "p50": 2992.2999999970198,
+        "p95": 3603.9000000059605
+      }
+    },
+    {
+      "fixture": "pic1",
+      "logs": 10,
+      "temperature": "warm",
+      "samples": 3,
+      "exactStats": 3,
+      "fullAssessable": 3,
+      "complete": 3,
+      "statsPaintedMs": {
+        "p50": 594.3999999985099,
+        "p95": 760.5
+      },
+      "completeCapturePaintedMs": {
+        "p50": 594.3999999985099,
+        "p95": 760.5
+      }
+    },
+    {
+      "fixture": "video161",
+      "logs": 1000,
+      "temperature": "cold",
+      "samples": 3,
+      "exactStats": 3,
+      "fullAssessable": 3,
+      "complete": 3,
+      "statsPaintedMs": {
+        "p50": 4794.89999999851,
+        "p95": 4946.70000000298
+      },
+      "completeCapturePaintedMs": {
+        "p50": 4794.89999999851,
+        "p95": 4946.70000000298
+      }
+    },
+    {
+      "fixture": "pic1",
+      "logs": 1000,
+      "temperature": "cold",
+      "samples": 3,
+      "exactStats": 3,
+      "fullAssessable": 3,
+      "complete": 3,
+      "statsPaintedMs": {
+        "p50": 1275.8999999985099,
+        "p95": 1291.2000000029802
+      },
+      "completeCapturePaintedMs": {
+        "p50": 1275.8999999985099,
+        "p95": 1291.2000000029802
+      }
+    },
+    {
+      "fixture": "video161",
+      "logs": 1000,
+      "temperature": "warm",
+      "samples": 3,
+      "exactStats": 3,
+      "fullAssessable": 3,
+      "complete": 3,
+      "statsPaintedMs": {
+        "p50": 3633.5999999940395,
+        "p95": 3753.10000000149
+      },
+      "completeCapturePaintedMs": {
+        "p50": 3633.5999999940395,
+        "p95": 3753.10000000149
+      }
+    },
+    {
+      "fixture": "pic1",
+      "logs": 1000,
+      "temperature": "warm",
+      "samples": 3,
+      "exactStats": 3,
+      "fullAssessable": 3,
+      "complete": 3,
+      "statsPaintedMs": {
+        "p50": 868,
+        "p95": 1012.4000000059605
+      },
+      "completeCapturePaintedMs": {
+        "p50": 868,
+        "p95": 1012.4000000059605
+      }
+    }
+  ],
+  "runs": [
+    {
+      "fixture": "video161",
+      "temperature": "cold",
+      "logs": 10,
+      "owned": 500,
+      "firstStatsPaintedMs": 3039.60000000149,
+      "fullCapturePaintedMs": 3039.60000000149,
+      "elapsedMs": 3071.10000000149,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 306.1000000014901,
+          "durationMs": 2690.1999999955297,
+          "ocrCalls": 18,
+          "recognitionPath": "calibrated-fields+standard-fallback"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 2998.2000000029802,
+          "durationMs": 2.899999998509884
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 3001.2000000029802,
+          "durationMs": 2.5
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.10000000149011612,
+          "durationMs": 0.3999999985098839
+        },
+        {
+          "startMs": 8.100000001490116,
+          "durationMs": 0.19999999552965164
+        },
+        {
+          "startMs": 305.5,
+          "durationMs": 0.3999999985098839
+        },
+        {
+          "startMs": 3006.39999999851,
+          "durationMs": 15.300000004470348
+        }
+      ],
+      "stages": [],
+      "longTasks": [
+        {
+          "startMs": 243.79999999701977,
+          "durationMs": 66
+        },
+        {
+          "startMs": 2145.7999999970198,
+          "durationMs": 57
+        },
+        {
+          "startMs": 2934.7000000029802,
+          "durationMs": 56
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Estimated · Makes top 2",
+        "itemTotal": "~155",
+        "benchmark": "80",
+        "progress": "Improving the read · keeping these rows visible",
+        "logRows": 11
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "name": "Invading Guerrilla Hitpoints",
+            "value": -11,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Damage",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Tactical Helicopter Healing",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Ranged Siege Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Armor"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9647058823529412,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Row 1: OCR field evidence is weak. Verify the name and percentage."
+        ]
+      },
+      "lastParsedCalls": 18,
+      "repetition": 0,
+      "seed": {
+        "seededItems": 10,
+        "seededScans": 10,
+        "owned": 500,
+        "logBytes": 173577
+      }
+    },
+    {
+      "fixture": "video161",
+      "temperature": "cold",
+      "logs": 10,
+      "owned": 500,
+      "firstStatsPaintedMs": 3276.10000000149,
+      "fullCapturePaintedMs": 3276.10000000149,
+      "elapsedMs": 3296.9000000059605,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 279.40000000596046,
+          "durationMs": 2947.39999999851,
+          "ocrCalls": 18,
+          "recognitionPath": "calibrated-fields+standard-fallback"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 3229.4000000059605,
+          "durationMs": 3
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 3232.5,
+          "durationMs": 3.5
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.10000000149011612,
+          "durationMs": 0.3999999985098839
+        },
+        {
+          "startMs": 8.200000002980232,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 279,
+          "durationMs": 0.30000000447034836
+        },
+        {
+          "startMs": 3240.10000000149,
+          "durationMs": 17.80000000447035
+        }
+      ],
+      "stages": [],
+      "longTasks": [
+        {
+          "startMs": 229.20000000298023,
+          "durationMs": 54
+        },
+        {
+          "startMs": 2220.60000000149,
+          "durationMs": 80
+        },
+        {
+          "startMs": 3155.3000000044703,
+          "durationMs": 64
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Estimated · Makes top 2",
+        "itemTotal": "~155",
+        "benchmark": "80",
+        "progress": "Improving the read · keeping these rows visible",
+        "logRows": 11
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "name": "Invading Guerrilla Hitpoints",
+            "value": -11,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Damage",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Tactical Helicopter Healing",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Ranged Siege Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Armor"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9647058823529412,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Row 1: OCR field evidence is weak. Verify the name and percentage."
+        ]
+      },
+      "lastParsedCalls": 18,
+      "repetition": 1,
+      "seed": {
+        "seededItems": 10,
+        "seededScans": 10,
+        "owned": 500,
+        "logBytes": 173577
+      }
+    },
+    {
+      "fixture": "video161",
+      "temperature": "cold",
+      "logs": 10,
+      "owned": 500,
+      "firstStatsPaintedMs": 2962.7000000029802,
+      "fullCapturePaintedMs": 2962.7000000029802,
+      "elapsedMs": 2985,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 300.80000000447035,
+          "durationMs": 2619.7999999970198,
+          "ocrCalls": 18,
+          "recognitionPath": "calibrated-fields+standard-fallback"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 2922.60000000149,
+          "durationMs": 2.899999998509884
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 2925.5,
+          "durationMs": 2.5
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.30000000447034836,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 9,
+          "durationMs": 0.20000000298023224
+        },
+        {
+          "startMs": 300.30000000447035,
+          "durationMs": 0.3999999985098839
+        },
+        {
+          "startMs": 2930.3000000044703,
+          "durationMs": 15.799999997019768
+        }
+      ],
+      "stages": [],
+      "longTasks": [
+        {
+          "startMs": 243.80000000447035,
+          "durationMs": 61
+        },
+        {
+          "startMs": 2136.60000000149,
+          "durationMs": 61
+        },
+        {
+          "startMs": 2852.10000000149,
+          "durationMs": 61
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Estimated · Makes top 2",
+        "itemTotal": "~155",
+        "benchmark": "80",
+        "progress": "Improving the read · keeping these rows visible",
+        "logRows": 11
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "name": "Invading Guerrilla Hitpoints",
+            "value": -11,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Damage",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Tactical Helicopter Healing",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Ranged Siege Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Armor"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9647058823529412,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Row 1: OCR field evidence is weak. Verify the name and percentage."
+        ]
+      },
+      "lastParsedCalls": 18,
+      "repetition": 2,
+      "seed": {
+        "seededItems": 10,
+        "seededScans": 10,
+        "owned": 500,
+        "logBytes": 173577
+      }
+    },
+    {
+      "fixture": "pic1",
+      "temperature": "cold",
+      "logs": 10,
+      "owned": 500,
+      "firstStatsPaintedMs": 603.5,
+      "fullCapturePaintedMs": 603.5,
+      "elapsedMs": 626,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 262.29999999701977,
+          "durationMs": 307.20000000298023,
+          "ocrCalls": 3,
+          "recognitionPath": "calibrated-fields"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 571.1999999955297,
+          "durationMs": 2.3000000044703484
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 573.6999999955297,
+          "durationMs": 1.8999999985098839
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.19999999552965164,
+          "durationMs": 0.20000000298023224
+        },
+        {
+          "startMs": 7.0999999940395355,
+          "durationMs": 0.30000000447034836
+        },
+        {
+          "startMs": 262,
+          "durationMs": 0.09999999403953552
+        },
+        {
+          "startMs": 577.5999999940395,
+          "durationMs": 12.600000001490116
+        }
+      ],
+      "stages": [],
+      "longTasks": [],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Makes top 2",
+        "itemTotal": "180",
+        "benchmark": "160",
+        "progress": "Finished · 5/5 · ready to move on",
+        "logRows": 11
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "name": "Air Defense Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Sniper Tower Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Pottery"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9692307692307692,
+            0,
+            0.02564102564102564,
+            0.03333333333333333,
+            0.05128205128205128
+          ]
+        },
+        "warnings": []
+      },
+      "lastParsedCalls": 3,
+      "repetition": 0,
+      "seed": {
+        "seededItems": 10,
+        "seededScans": 10,
+        "owned": 500,
+        "logBytes": 164997
+      }
+    },
+    {
+      "fixture": "pic1",
+      "temperature": "cold",
+      "logs": 10,
+      "owned": 500,
+      "firstStatsPaintedMs": 753.8000000044703,
+      "fullCapturePaintedMs": 753.8000000044703,
+      "elapsedMs": 777.3000000044703,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 266.1000000014901,
+          "durationMs": 462.3999999985099,
+          "ocrCalls": 3,
+          "recognitionPath": "calibrated-fields"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 729.8000000044703,
+          "durationMs": 1.6000000014901161
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 731.6000000014901,
+          "durationMs": 1.5
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.30000000447034836,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 8.200000002980232,
+          "durationMs": 0.10000000149011612
+        },
+        {
+          "startMs": 265.6000000014901,
+          "durationMs": 0.30000000447034836
+        },
+        {
+          "startMs": 734.8000000044703,
+          "durationMs": 9.799999997019768
+        }
+      ],
+      "stages": [],
+      "longTasks": [],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Makes top 2",
+        "itemTotal": "180",
+        "benchmark": "160",
+        "progress": "Finished · 5/5 · ready to move on",
+        "logRows": 11
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "name": "Air Defense Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Sniper Tower Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Pottery"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9692307692307692,
+            0,
+            0.02564102564102564,
+            0.03333333333333333,
+            0.05128205128205128
+          ]
+        },
+        "warnings": []
+      },
+      "lastParsedCalls": 3,
+      "repetition": 1,
+      "seed": {
+        "seededItems": 10,
+        "seededScans": 10,
+        "owned": 500,
+        "logBytes": 164997
+      }
+    },
+    {
+      "fixture": "pic1",
+      "temperature": "cold",
+      "logs": 10,
+      "owned": 500,
+      "firstStatsPaintedMs": 645.4000000059605,
+      "fullCapturePaintedMs": 645.4000000059605,
+      "elapsedMs": 663.8000000044703,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 263.1000000014901,
+          "durationMs": 354.80000000447035,
+          "ocrCalls": 3,
+          "recognitionPath": "calibrated-fields"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 619.2000000029802,
+          "durationMs": 2.2000000029802322
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 621.4000000059605,
+          "durationMs": 1.5
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.20000000298023224,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 7.300000004470348,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 262.70000000298023,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 624.6000000014901,
+          "durationMs": 9.600000001490116
+        }
+      ],
+      "stages": [],
+      "longTasks": [],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Makes top 2",
+        "itemTotal": "180",
+        "benchmark": "160",
+        "progress": "Finished · 5/5 · ready to move on",
+        "logRows": 11
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "name": "Air Defense Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Sniper Tower Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Pottery"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9692307692307692,
+            0,
+            0.02564102564102564,
+            0.03333333333333333,
+            0.05128205128205128
+          ]
+        },
+        "warnings": []
+      },
+      "lastParsedCalls": 3,
+      "repetition": 2,
+      "seed": {
+        "seededItems": 10,
+        "seededScans": 10,
+        "owned": 500,
+        "logBytes": 164997
+      }
+    },
+    {
+      "fixture": "video161",
+      "temperature": "warm",
+      "logs": 10,
+      "owned": 500,
+      "firstStatsPaintedMs": 2438,
+      "fullCapturePaintedMs": 2438,
+      "elapsedMs": 2458.2000000029802,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 275.79999999701977,
+          "durationMs": 2119.5,
+          "ocrCalls": 18,
+          "recognitionPath": "calibrated-fields+standard-fallback"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 2397.7000000029802,
+          "durationMs": 2.5999999940395355
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 2400.39999999851,
+          "durationMs": 2.399999998509884
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.20000000298023224,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 6.399999998509884,
+          "durationMs": 0.30000000447034836
+        },
+        {
+          "startMs": 275.29999999701977,
+          "durationMs": 0.30000000447034836
+        },
+        {
+          "startMs": 2405.2999999970198,
+          "durationMs": 15.100000001490116
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm-fast",
+          "durationMs": 312.5
+        },
+        {
+          "stage": "prewarm-standard",
+          "durationMs": 838.7999999970198
+        }
+      ],
+      "longTasks": [
+        {
+          "startMs": 228.5,
+          "durationMs": 62
+        },
+        {
+          "startMs": 1496.2999999970198,
+          "durationMs": 109
+        },
+        {
+          "startMs": 2336.2000000029802,
+          "durationMs": 56
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Estimated · Makes top 2",
+        "itemTotal": "~155",
+        "benchmark": "80",
+        "progress": "Improving the read · keeping these rows visible",
+        "logRows": 11
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "name": "Invading Guerrilla Hitpoints",
+            "value": -11,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Damage",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Tactical Helicopter Healing",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Ranged Siege Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Armor"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9647058823529412,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Row 1: OCR field evidence is weak. Verify the name and percentage."
+        ]
+      },
+      "lastParsedCalls": 18,
+      "repetition": 0,
+      "seed": {
+        "seededItems": 10,
+        "seededScans": 10,
+        "owned": 500,
+        "logBytes": 173577
+      }
+    },
+    {
+      "fixture": "video161",
+      "temperature": "warm",
+      "logs": 10,
+      "owned": 500,
+      "firstStatsPaintedMs": 2992.2999999970198,
+      "fullCapturePaintedMs": 2992.2999999970198,
+      "elapsedMs": 3014.39999999851,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 291.1000000014901,
+          "durationMs": 2618.39999999851,
+          "ocrCalls": 18,
+          "recognitionPath": "calibrated-fields+standard-fallback"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 2913.1999999955297,
+          "durationMs": 5.100000001490116
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 2918.5,
+          "durationMs": 4.199999995529652
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.19999999552965164,
+          "durationMs": 0.30000000447034836
+        },
+        {
+          "startMs": 6.5,
+          "durationMs": 0.19999999552965164
+        },
+        {
+          "startMs": 290.6000000014901,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 2928.5,
+          "durationMs": 30.19999999552965
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm-fast",
+          "durationMs": 245.60000000149012
+        },
+        {
+          "stage": "prewarm-standard",
+          "durationMs": 705.2999999970198
+        }
+      ],
+      "longTasks": [
+        {
+          "startMs": 241.89999999850988,
+          "durationMs": 64
+        },
+        {
+          "startMs": 1547.6000000014901,
+          "durationMs": 117
+        },
+        {
+          "startMs": 2787.89999999851,
+          "durationMs": 109
+        },
+        {
+          "startMs": 2909.2999999970198,
+          "durationMs": 59
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Estimated · Makes top 2",
+        "itemTotal": "~155",
+        "benchmark": "80",
+        "progress": "Improving the read · keeping these rows visible",
+        "logRows": 11
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "name": "Invading Guerrilla Hitpoints",
+            "value": -11,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Damage",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Tactical Helicopter Healing",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Ranged Siege Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Armor"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9647058823529412,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Row 1: OCR field evidence is weak. Verify the name and percentage."
+        ]
+      },
+      "lastParsedCalls": 18,
+      "repetition": 1,
+      "seed": {
+        "seededItems": 10,
+        "seededScans": 10,
+        "owned": 500,
+        "logBytes": 173577
+      }
+    },
+    {
+      "fixture": "video161",
+      "temperature": "warm",
+      "logs": 10,
+      "owned": 500,
+      "firstStatsPaintedMs": 3603.9000000059605,
+      "fullCapturePaintedMs": 3603.9000000059605,
+      "elapsedMs": 3630.2000000029802,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 319.70000000298023,
+          "durationMs": 3238.7000000029802,
+          "ocrCalls": 18,
+          "recognitionPath": "calibrated-fields+standard-fallback"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 3561.3000000044703,
+          "durationMs": 3.600000001490116
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 3565,
+          "durationMs": 2.100000001490116
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.20000000298023224,
+          "durationMs": 0.3999999985098839
+        },
+        {
+          "startMs": 8.400000005960464,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 319.20000000298023,
+          "durationMs": 0.20000000298023224
+        },
+        {
+          "startMs": 3569.8000000044703,
+          "durationMs": 16.19999999552965
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm-fast",
+          "durationMs": 353.19999999552965
+        },
+        {
+          "stage": "prewarm-standard",
+          "durationMs": 1002.8000000044703
+        }
+      ],
+      "longTasks": [
+        {
+          "startMs": 244.60000000149012,
+          "durationMs": 99
+        },
+        {
+          "startMs": 861.8000000044703,
+          "durationMs": 86
+        },
+        {
+          "startMs": 1490.3000000044703,
+          "durationMs": 51
+        },
+        {
+          "startMs": 1764.7000000029802,
+          "durationMs": 66
+        },
+        {
+          "startMs": 2560.2000000029802,
+          "durationMs": 103
+        },
+        {
+          "startMs": 3484.2000000029802,
+          "durationMs": 67
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Estimated · Makes top 2",
+        "itemTotal": "~155",
+        "benchmark": "80",
+        "progress": "Improving the read · keeping these rows visible",
+        "logRows": 11
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "name": "Invading Guerrilla Hitpoints",
+            "value": -11,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Damage",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Tactical Helicopter Healing",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Ranged Siege Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Armor"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9647058823529412,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Row 1: OCR field evidence is weak. Verify the name and percentage."
+        ]
+      },
+      "lastParsedCalls": 18,
+      "repetition": 2,
+      "seed": {
+        "seededItems": 10,
+        "seededScans": 10,
+        "owned": 500,
+        "logBytes": 173577
+      }
+    },
+    {
+      "fixture": "pic1",
+      "temperature": "warm",
+      "logs": 10,
+      "owned": 500,
+      "firstStatsPaintedMs": 760.5,
+      "fullCapturePaintedMs": 760.5,
+      "elapsedMs": 778.1000000014901,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 266.79999999701977,
+          "durationMs": 426.1000000014901,
+          "ocrCalls": 3,
+          "recognitionPath": "calibrated-fields"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 695.7999999970198,
+          "durationMs": 6
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 702.1000000014901,
+          "durationMs": 3.5
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.10000000149011612,
+          "durationMs": 0.3999999985098839
+        },
+        {
+          "startMs": 5.799999997019768,
+          "durationMs": 0.10000000149011612
+        },
+        {
+          "startMs": 266.29999999701977,
+          "durationMs": 0.30000000447034836
+        },
+        {
+          "startMs": 709.7000000029802,
+          "durationMs": 27.099999994039536
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm-fast",
+          "durationMs": 381.70000000298023
+        },
+        {
+          "stage": "prewarm-standard",
+          "durationMs": 927.7999999970198
+        }
+      ],
+      "longTasks": [
+        {
+          "startMs": 229.79999999701977,
+          "durationMs": 51
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Makes top 2",
+        "itemTotal": "180",
+        "benchmark": "160",
+        "progress": "Finished · 5/5 · ready to move on",
+        "logRows": 11
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "name": "Air Defense Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Sniper Tower Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Pottery"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9692307692307692,
+            0,
+            0.02564102564102564,
+            0.03333333333333333,
+            0.05128205128205128
+          ]
+        },
+        "warnings": []
+      },
+      "lastParsedCalls": 3,
+      "repetition": 0,
+      "seed": {
+        "seededItems": 10,
+        "seededScans": 10,
+        "owned": 500,
+        "logBytes": 164997
+      }
+    },
+    {
+      "fixture": "pic1",
+      "temperature": "warm",
+      "logs": 10,
+      "owned": 500,
+      "firstStatsPaintedMs": 594.3999999985099,
+      "fullCapturePaintedMs": 594.3999999985099,
+      "elapsedMs": 628.2000000029802,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 258.8999999985099,
+          "durationMs": 291.40000000596046,
+          "ocrCalls": 3,
+          "recognitionPath": "calibrated-fields"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 552.7000000029802,
+          "durationMs": 4
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 556.8000000044703,
+          "durationMs": 2.5999999940395355
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.20000000298023224,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 4.899999998509884,
+          "durationMs": 0.30000000447034836
+        },
+        {
+          "startMs": 258.5,
+          "durationMs": 0.30000000447034836
+        },
+        {
+          "startMs": 561.8000000044703,
+          "durationMs": 17.19999999552965
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm-fast",
+          "durationMs": 320.20000000298023
+        },
+        {
+          "stage": "prewarm-standard",
+          "durationMs": 804.2999999970198
+        }
+      ],
+      "longTasks": [],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Makes top 2",
+        "itemTotal": "180",
+        "benchmark": "160",
+        "progress": "Finished · 5/5 · ready to move on",
+        "logRows": 11
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "name": "Air Defense Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Sniper Tower Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Pottery"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9692307692307692,
+            0,
+            0.02564102564102564,
+            0.03333333333333333,
+            0.05128205128205128
+          ]
+        },
+        "warnings": []
+      },
+      "lastParsedCalls": 3,
+      "repetition": 1,
+      "seed": {
+        "seededItems": 10,
+        "seededScans": 10,
+        "owned": 500,
+        "logBytes": 164997
+      }
+    },
+    {
+      "fixture": "pic1",
+      "temperature": "warm",
+      "logs": 10,
+      "owned": 500,
+      "firstStatsPaintedMs": 563.6999999955297,
+      "fullCapturePaintedMs": 563.6999999955297,
+      "elapsedMs": 589.5,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 255.69999999552965,
+          "durationMs": 281.30000000447035,
+          "ocrCalls": 3,
+          "recognitionPath": "calibrated-fields"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 538.2999999970198,
+          "durationMs": 2.7000000029802322
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 541.1000000014901,
+          "durationMs": 1.8999999985098839
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.19999999552965164,
+          "durationMs": 0.30000000447034836
+        },
+        {
+          "startMs": 4.699999995529652,
+          "durationMs": 0.20000000298023224
+        },
+        {
+          "startMs": 255.29999999701977,
+          "durationMs": 0.20000000298023224
+        },
+        {
+          "startMs": 544.7999999970198,
+          "durationMs": 10.700000002980232
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm-fast",
+          "durationMs": 273.80000000447035
+        },
+        {
+          "stage": "prewarm-standard",
+          "durationMs": 720.5
+        }
+      ],
+      "longTasks": [],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Makes top 2",
+        "itemTotal": "180",
+        "benchmark": "160",
+        "progress": "Finished · 5/5 · ready to move on",
+        "logRows": 11
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "name": "Air Defense Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Sniper Tower Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Pottery"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9692307692307692,
+            0,
+            0.02564102564102564,
+            0.03333333333333333,
+            0.05128205128205128
+          ]
+        },
+        "warnings": []
+      },
+      "lastParsedCalls": 3,
+      "repetition": 2,
+      "seed": {
+        "seededItems": 10,
+        "seededScans": 10,
+        "owned": 500,
+        "logBytes": 164997
+      }
+    },
+    {
+      "fixture": "video161",
+      "temperature": "cold",
+      "logs": 1000,
+      "owned": 500,
+      "firstStatsPaintedMs": 4260.20000000298,
+      "fullCapturePaintedMs": 4260.20000000298,
+      "elapsedMs": 4460.60000000149,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 289.6000000014901,
+          "durationMs": 3407.10000000149,
+          "ocrCalls": 18,
+          "recognitionPath": "calibrated-fields+standard-fallback"
+        },
+        {
+          "startMs": 4448.80000000447
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 3698.9000000059605,
+          "durationMs": 262.79999999701977
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 3961.9000000059605,
+          "durationMs": 191.29999999701977
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.20000000298023224,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 8.900000005960464,
+          "durationMs": 0.19999999552965164
+        },
+        {
+          "startMs": 289.1000000014901,
+          "durationMs": 0.30000000447034836
+        },
+        {
+          "startMs": 4155.20000000298,
+          "durationMs": 19
+        },
+        {
+          "startMs": 4447,
+          "durationMs": 0.7000000029802322
+        }
+      ],
+      "stages": [],
+      "longTasks": [
+        {
+          "startMs": 230.5,
+          "durationMs": 62
+        },
+        {
+          "startMs": 584.8000000044703,
+          "durationMs": 221
+        },
+        {
+          "startMs": 2579.5,
+          "durationMs": 122
+        },
+        {
+          "startMs": 3638.10000000149,
+          "durationMs": 55
+        },
+        {
+          "startMs": 3696.60000000149,
+          "durationMs": 552
+        },
+        {
+          "startMs": 4281.80000000447,
+          "durationMs": 92
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Estimated · Makes top 2",
+        "itemTotal": "~155",
+        "benchmark": "80",
+        "progress": "Reading · attempt 2 · keep this artifact open",
+        "logRows": 1001
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "name": "Invading Guerrilla Hitpoints",
+            "value": -11,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Damage",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Tactical Helicopter Healing",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Ranged Siege Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Armor"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9647058823529412,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Row 1: OCR field evidence is weak. Verify the name and percentage."
+        ]
+      },
+      "lastParsedCalls": 18,
+      "repetition": 0,
+      "seed": {
+        "seededItems": 1000,
+        "seededScans": 1000,
+        "owned": 500,
+        "logBytes": 17357325
+      }
+    },
+    {
+      "fixture": "video161",
+      "temperature": "cold",
+      "logs": 1000,
+      "owned": 500,
+      "firstStatsPaintedMs": 4946.70000000298,
+      "fullCapturePaintedMs": 4946.70000000298,
+      "elapsedMs": 5126.80000000447,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 302.5,
+          "durationMs": 3930.10000000149,
+          "ocrCalls": 18,
+          "recognitionPath": "calibrated-fields+standard-fallback"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 4236.10000000149,
+          "durationMs": 329.79999999701977
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 4566.10000000149,
+          "durationMs": 255.20000000298023
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.20000000298023224,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 9.300000004470348,
+          "durationMs": 0.19999999552965164
+        },
+        {
+          "startMs": 302.1000000014901,
+          "durationMs": 0.20000000298023224
+        },
+        {
+          "startMs": 4825.20000000298,
+          "durationMs": 23.5
+        }
+      ],
+      "stages": [],
+      "longTasks": [
+        {
+          "startMs": 244.60000000149012,
+          "durationMs": 62
+        },
+        {
+          "startMs": 537.8000000044703,
+          "durationMs": 251
+        },
+        {
+          "startMs": 2866.60000000149,
+          "durationMs": 143
+        },
+        {
+          "startMs": 4140.89999999851,
+          "durationMs": 84
+        },
+        {
+          "startMs": 4232.5,
+          "durationMs": 697
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Estimated · Makes top 2",
+        "itemTotal": "~155",
+        "benchmark": "80",
+        "progress": "Improving the read · keeping these rows visible",
+        "logRows": 1001
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "name": "Invading Guerrilla Hitpoints",
+            "value": -11,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Damage",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Tactical Helicopter Healing",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Ranged Siege Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Armor"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9647058823529412,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Row 1: OCR field evidence is weak. Verify the name and percentage."
+        ]
+      },
+      "lastParsedCalls": 18,
+      "repetition": 1,
+      "seed": {
+        "seededItems": 1000,
+        "seededScans": 1000,
+        "owned": 500,
+        "logBytes": 17357325
+      }
+    },
+    {
+      "fixture": "video161",
+      "temperature": "cold",
+      "logs": 1000,
+      "owned": 500,
+      "firstStatsPaintedMs": 4794.89999999851,
+      "fullCapturePaintedMs": 4794.89999999851,
+      "elapsedMs": 4932,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 296.59999999403954,
+          "durationMs": 3888.9000000059605,
+          "ocrCalls": 18,
+          "recognitionPath": "calibrated-fields+standard-fallback"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 4188.0999999940395,
+          "durationMs": 257.30000000447035
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 4445.5999999940395,
+          "durationMs": 217.20000000298023
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.29999999701976776,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 8.799999997019768,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 296.09999999403954,
+          "durationMs": 0.30000000447034836
+        },
+        {
+          "startMs": 4666.29999999702,
+          "durationMs": 20.399999998509884
+        }
+      ],
+      "stages": [],
+      "longTasks": [
+        {
+          "startMs": 237.09999999403954,
+          "durationMs": 63
+        },
+        {
+          "startMs": 550.2999999970198,
+          "durationMs": 269
+        },
+        {
+          "startMs": 2971.2999999970198,
+          "durationMs": 139
+        },
+        {
+          "startMs": 4127.5,
+          "durationMs": 55
+        },
+        {
+          "startMs": 4185.5,
+          "durationMs": 583
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Estimated · Makes top 2",
+        "itemTotal": "~155",
+        "benchmark": "80",
+        "progress": "Improving the read · keeping these rows visible",
+        "logRows": 1001
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "name": "Invading Guerrilla Hitpoints",
+            "value": -11,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Damage",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Tactical Helicopter Healing",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Ranged Siege Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Armor"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9647058823529412,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Row 1: OCR field evidence is weak. Verify the name and percentage."
+        ]
+      },
+      "lastParsedCalls": 18,
+      "repetition": 2,
+      "seed": {
+        "seededItems": 1000,
+        "seededScans": 1000,
+        "owned": 500,
+        "logBytes": 17357325
+      }
+    },
+    {
+      "fixture": "pic1",
+      "temperature": "cold",
+      "logs": 1000,
+      "owned": 500,
+      "firstStatsPaintedMs": 1291.2000000029802,
+      "fullCapturePaintedMs": 1291.2000000029802,
+      "elapsedMs": 1311.7000000029802,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 287.6000000014901,
+          "durationMs": 669.2000000029802,
+          "ocrCalls": 3,
+          "recognitionPath": "calibrated-fields"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 958.8000000044703,
+          "durationMs": 132.39999999850988
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 1091.3999999985099,
+          "durationMs": 118.5
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.20000000298023224,
+          "durationMs": 0.3999999985098839
+        },
+        {
+          "startMs": 9.899999998509884,
+          "durationMs": 0.4000000059604645
+        },
+        {
+          "startMs": 287,
+          "durationMs": 0.3999999985098839
+        },
+        {
+          "startMs": 1212.2000000029802,
+          "durationMs": 11.899999998509884
+        }
+      ],
+      "stages": [],
+      "longTasks": [
+        {
+          "startMs": 558.1000000014901,
+          "durationMs": 276
+        },
+        {
+          "startMs": 956.8000000044703,
+          "durationMs": 324
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Makes top 2",
+        "itemTotal": "180",
+        "benchmark": "160",
+        "progress": "Finished · 5/5 · ready to move on",
+        "logRows": 1001
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "name": "Air Defense Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Sniper Tower Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Pottery"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9692307692307692,
+            0,
+            0.02564102564102564,
+            0.03333333333333333,
+            0.05128205128205128
+          ]
+        },
+        "warnings": []
+      },
+      "lastParsedCalls": 3,
+      "repetition": 0,
+      "seed": {
+        "seededItems": 1000,
+        "seededScans": 1000,
+        "owned": 500,
+        "logBytes": 16499325
+      }
+    },
+    {
+      "fixture": "pic1",
+      "temperature": "cold",
+      "logs": 1000,
+      "owned": 500,
+      "firstStatsPaintedMs": 1275.8999999985099,
+      "fullCapturePaintedMs": 1275.8999999985099,
+      "elapsedMs": 1304.1000000014901,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 267.8999999985099,
+          "durationMs": 665.8000000044703,
+          "ocrCalls": 3,
+          "recognitionPath": "calibrated-fields"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 935.5,
+          "durationMs": 140.70000000298023
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 1076.3999999985099,
+          "durationMs": 119.60000000149012
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.30000000447034836,
+          "durationMs": 0.3999999985098839
+        },
+        {
+          "startMs": 8.899999998509884,
+          "durationMs": 0.30000000447034836
+        },
+        {
+          "startMs": 267.30000000447035,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 1198.2000000029802,
+          "durationMs": 10.600000001490116
+        }
+      ],
+      "stages": [],
+      "longTasks": [
+        {
+          "startMs": 517.5,
+          "durationMs": 291
+        },
+        {
+          "startMs": 933.7000000029802,
+          "durationMs": 331
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Makes top 2",
+        "itemTotal": "180",
+        "benchmark": "160",
+        "progress": "Finished · 5/5 · ready to move on",
+        "logRows": 1001
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "name": "Air Defense Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Sniper Tower Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Pottery"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9692307692307692,
+            0,
+            0.02564102564102564,
+            0.03333333333333333,
+            0.05128205128205128
+          ]
+        },
+        "warnings": []
+      },
+      "lastParsedCalls": 3,
+      "repetition": 1,
+      "seed": {
+        "seededItems": 1000,
+        "seededScans": 1000,
+        "owned": 500,
+        "logBytes": 16499325
+      }
+    },
+    {
+      "fixture": "pic1",
+      "temperature": "cold",
+      "logs": 1000,
+      "owned": 500,
+      "firstStatsPaintedMs": 1218.1000000014901,
+      "fullCapturePaintedMs": 1218.1000000014901,
+      "elapsedMs": 1284.7000000029802,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 276.6000000014901,
+          "durationMs": 636.5,
+          "ocrCalls": 3,
+          "recognitionPath": "calibrated-fields"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 914.8999999985099,
+          "durationMs": 121.10000000149012
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 1036.2000000029802,
+          "durationMs": 110.09999999403954
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.29999999701976776,
+          "durationMs": 0.30000000447034836
+        },
+        {
+          "startMs": 9.100000001490116,
+          "durationMs": 0.19999999552965164
+        },
+        {
+          "startMs": 276,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 1148.5,
+          "durationMs": 9.600000001490116
+        }
+      ],
+      "stages": [],
+      "longTasks": [
+        {
+          "startMs": 526.2000000029802,
+          "durationMs": 274
+        },
+        {
+          "startMs": 913.1000000014901,
+          "durationMs": 295
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Makes top 2",
+        "itemTotal": "180",
+        "benchmark": "160",
+        "progress": "Finished · 5/5 · ready to move on",
+        "logRows": 1001
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "name": "Air Defense Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Sniper Tower Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Pottery"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9692307692307692,
+            0,
+            0.02564102564102564,
+            0.03333333333333333,
+            0.05128205128205128
+          ]
+        },
+        "warnings": []
+      },
+      "lastParsedCalls": 3,
+      "repetition": 2,
+      "seed": {
+        "seededItems": 1000,
+        "seededScans": 1000,
+        "owned": 500,
+        "logBytes": 16499325
+      }
+    },
+    {
+      "fixture": "video161",
+      "temperature": "warm",
+      "logs": 1000,
+      "owned": 500,
+      "firstStatsPaintedMs": 3753.10000000149,
+      "fullCapturePaintedMs": 3753.10000000149,
+      "elapsedMs": 4067.60000000149,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 293.30000000447035,
+          "durationMs": 2747.6999999955297,
+          "ocrCalls": 18,
+          "recognitionPath": "calibrated-fields+standard-fallback"
+        },
+        {
+          "startMs": 4044.60000000149
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 3044.39999999851,
+          "durationMs": 282.80000000447035
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 3327.3000000044703,
+          "durationMs": 299.79999999701977
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.20000000298023224,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 7.899999998509884,
+          "durationMs": 0.20000000298023224
+        },
+        {
+          "startMs": 292.80000000447035,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 3630.7000000029802,
+          "durationMs": 23.299999997019768
+        },
+        {
+          "startMs": 4042.10000000149,
+          "durationMs": 0.7999999970197678
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm-fast",
+          "durationMs": 279.8999999985099
+        },
+        {
+          "stage": "prewarm-standard",
+          "durationMs": 1041.3999999985099
+        }
+      ],
+      "longTasks": [
+        {
+          "startMs": 243.89999999850988,
+          "durationMs": 65
+        },
+        {
+          "startMs": 1157.3000000044703,
+          "durationMs": 60
+        },
+        {
+          "startMs": 1925.3999999985099,
+          "durationMs": 118
+        },
+        {
+          "startMs": 2954.60000000149,
+          "durationMs": 78
+        },
+        {
+          "startMs": 3040.89999999851,
+          "durationMs": 690
+        },
+        {
+          "startMs": 3778,
+          "durationMs": 149
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Estimated · Makes top 2",
+        "itemTotal": "~155",
+        "benchmark": "80",
+        "progress": "Reading · attempt 2 · keep this artifact open",
+        "logRows": 1001
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "name": "Invading Guerrilla Hitpoints",
+            "value": -11,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Damage",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Tactical Helicopter Healing",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Ranged Siege Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Armor"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9647058823529412,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Row 1: OCR field evidence is weak. Verify the name and percentage."
+        ]
+      },
+      "lastParsedCalls": 18,
+      "repetition": 0,
+      "seed": {
+        "seededItems": 1000,
+        "seededScans": 1000,
+        "owned": 500,
+        "logBytes": 17357325
+      }
+    },
+    {
+      "fixture": "video161",
+      "temperature": "warm",
+      "logs": 1000,
+      "owned": 500,
+      "firstStatsPaintedMs": 3292.3000000044703,
+      "fullCapturePaintedMs": 3292.3000000044703,
+      "elapsedMs": 3457,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 335.6000000014901,
+          "durationMs": 2529.39999999851,
+          "ocrCalls": 18,
+          "recognitionPath": "calibrated-fields+standard-fallback"
+        },
+        {
+          "startMs": 3447.7000000029802
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 2867.10000000149,
+          "durationMs": 165.89999999850988
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 3033.2000000029802,
+          "durationMs": 150.79999999701977
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.30000000447034836,
+          "durationMs": 0.5
+        },
+        {
+          "startMs": 10.700000002980232,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 334.6000000014901,
+          "durationMs": 0.5
+        },
+        {
+          "startMs": 3186.2000000029802,
+          "durationMs": 16.69999999552965
+        },
+        {
+          "startMs": 3446.5,
+          "durationMs": 0.3999999985098839
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm-fast",
+          "durationMs": 337
+        },
+        {
+          "stage": "prewarm-standard",
+          "durationMs": 1225.7999999970198
+        }
+      ],
+      "longTasks": [
+        {
+          "startMs": 234.60000000149012,
+          "durationMs": 134
+        },
+        {
+          "startMs": 872.6000000014901,
+          "durationMs": 66
+        },
+        {
+          "startMs": 1567.1000000014901,
+          "durationMs": 55
+        },
+        {
+          "startMs": 2153.8000000044703,
+          "durationMs": 74
+        },
+        {
+          "startMs": 2864.89999999851,
+          "durationMs": 409
+        },
+        {
+          "startMs": 3304.5,
+          "durationMs": 92
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Estimated · Makes top 2",
+        "itemTotal": "~155",
+        "benchmark": "80",
+        "progress": "Reading · attempt 2 · keep this artifact open",
+        "logRows": 1001
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "name": "Invading Guerrilla Hitpoints",
+            "value": -11,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Damage",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Tactical Helicopter Healing",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Ranged Siege Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Armor"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9647058823529412,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Row 1: OCR field evidence is weak. Verify the name and percentage."
+        ]
+      },
+      "lastParsedCalls": 18,
+      "repetition": 1,
+      "seed": {
+        "seededItems": 1000,
+        "seededScans": 1000,
+        "owned": 500,
+        "logBytes": 17357325
+      }
+    },
+    {
+      "fixture": "video161",
+      "temperature": "warm",
+      "logs": 1000,
+      "owned": 500,
+      "firstStatsPaintedMs": 3633.5999999940395,
+      "fullCapturePaintedMs": 3633.5999999940395,
+      "elapsedMs": 3656.5,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 275.59999999403954,
+          "durationMs": 2710.8000000044703,
+          "ocrCalls": 18,
+          "recognitionPath": "calibrated-fields+standard-fallback"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 2988.2999999970198,
+          "durationMs": 271.6000000014901
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 3260.0999999940395,
+          "durationMs": 256.5
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.3999999985098839,
+          "durationMs": 0.19999999552965164
+        },
+        {
+          "startMs": 6.5999999940395355,
+          "durationMs": 0.20000000298023224
+        },
+        {
+          "startMs": 275.09999999403954,
+          "durationMs": 0.20000000298023224
+        },
+        {
+          "startMs": 3531.89999999851,
+          "durationMs": 17.600000001490116
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm-fast",
+          "durationMs": 286.5
+        },
+        {
+          "stage": "prewarm-standard",
+          "durationMs": 765.3000000044703
+        }
+      ],
+      "longTasks": [
+        {
+          "startMs": 227.29999999701977,
+          "durationMs": 65
+        },
+        {
+          "startMs": 1112.5,
+          "durationMs": 55
+        },
+        {
+          "startMs": 1896.3999999985099,
+          "durationMs": 128
+        },
+        {
+          "startMs": 2926,
+          "durationMs": 56
+        },
+        {
+          "startMs": 2986.1999999955297,
+          "durationMs": 623
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Estimated · Makes top 2",
+        "itemTotal": "~155",
+        "benchmark": "80",
+        "progress": "Improving the read · keeping these rows visible",
+        "logRows": 1001
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "name": "Invading Guerrilla Hitpoints",
+            "value": -11,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Attack Helicopter Damage",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Tactical Helicopter Healing",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Ranged Siege Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Armor"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9647058823529412,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Row 1: OCR field evidence is weak. Verify the name and percentage."
+        ]
+      },
+      "lastParsedCalls": 18,
+      "repetition": 2,
+      "seed": {
+        "seededItems": 1000,
+        "seededScans": 1000,
+        "owned": 500,
+        "logBytes": 17357325
+      }
+    },
+    {
+      "fixture": "pic1",
+      "temperature": "warm",
+      "logs": 1000,
+      "owned": 500,
+      "firstStatsPaintedMs": 1012.4000000059605,
+      "fullCapturePaintedMs": 1012.4000000059605,
+      "elapsedMs": 1042.6000000014901,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 270.30000000447035,
+          "durationMs": 363.1000000014901,
+          "ocrCalls": 3,
+          "recognitionPath": "calibrated-fields"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 635.4000000059605,
+          "durationMs": 150.79999999701977
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 786.3000000044703,
+          "durationMs": 133
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.30000000447034836,
+          "durationMs": 0.19999999552965164
+        },
+        {
+          "startMs": 7.600000001490116,
+          "durationMs": 0.30000000447034836
+        },
+        {
+          "startMs": 269.70000000298023,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 921.9000000059605,
+          "durationMs": 12.699999995529652
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm-fast",
+          "durationMs": 310.20000000298023
+        },
+        {
+          "stage": "prewarm-standard",
+          "durationMs": 962.2000000029802
+        }
+      ],
+      "longTasks": [
+        {
+          "startMs": 229.90000000596046,
+          "durationMs": 55
+        },
+        {
+          "startMs": 633.4000000059605,
+          "durationMs": 368
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Makes top 2",
+        "itemTotal": "180",
+        "benchmark": "160",
+        "progress": "Finished · 5/5 · ready to move on",
+        "logRows": 1001
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "name": "Air Defense Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Sniper Tower Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Pottery"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9692307692307692,
+            0,
+            0.02564102564102564,
+            0.03333333333333333,
+            0.05128205128205128
+          ]
+        },
+        "warnings": []
+      },
+      "lastParsedCalls": 3,
+      "repetition": 0,
+      "seed": {
+        "seededItems": 1000,
+        "seededScans": 1000,
+        "owned": 500,
+        "logBytes": 16499325
+      }
+    },
+    {
+      "fixture": "pic1",
+      "temperature": "warm",
+      "logs": 1000,
+      "owned": 500,
+      "firstStatsPaintedMs": 851.2999999970198,
+      "fullCapturePaintedMs": 851.2999999970198,
+      "elapsedMs": 913,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 255.39999999850988,
+          "durationMs": 268.8999999985099,
+          "ocrCalls": 3,
+          "recognitionPath": "calibrated-fields"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 525.6999999955297,
+          "durationMs": 126.60000000149012
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 652.3999999985099,
+          "durationMs": 121.5
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.19999999552965164,
+          "durationMs": 0.20000000298023224
+        },
+        {
+          "startMs": 5.299999997019768,
+          "durationMs": 0.20000000298023224
+        },
+        {
+          "startMs": 254.89999999850988,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 776,
+          "durationMs": 9.299999997019768
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm-fast",
+          "durationMs": 288.69999999552965
+        },
+        {
+          "stage": "prewarm-standard",
+          "durationMs": 782.7000000029802
+        }
+      ],
+      "longTasks": [
+        {
+          "startMs": 524.2999999970198,
+          "durationMs": 318
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Makes top 2",
+        "itemTotal": "180",
+        "benchmark": "160",
+        "progress": "Finished · 5/5 · ready to move on",
+        "logRows": 1001
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "name": "Air Defense Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Sniper Tower Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Pottery"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9692307692307692,
+            0,
+            0.02564102564102564,
+            0.03333333333333333,
+            0.05128205128205128
+          ]
+        },
+        "warnings": []
+      },
+      "lastParsedCalls": 3,
+      "repetition": 1,
+      "seed": {
+        "seededItems": 1000,
+        "seededScans": 1000,
+        "owned": 500,
+        "logBytes": 16499325
+      }
+    },
+    {
+      "fixture": "pic1",
+      "temperature": "warm",
+      "logs": 1000,
+      "owned": 500,
+      "firstStatsPaintedMs": 868,
+      "fullCapturePaintedMs": 868,
+      "elapsedMs": 923.3999999985099,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 257.5,
+          "durationMs": 310.1000000014901,
+          "ocrCalls": 3,
+          "recognitionPath": "calibrated-fields"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 569.1000000014901,
+          "durationMs": 121.5
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 690.6000000014901,
+          "durationMs": 105.5
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.10000000149011612,
+          "durationMs": 0.29999999701976776
+        },
+        {
+          "startMs": 5,
+          "durationMs": 0.19999999552965164
+        },
+        {
+          "startMs": 257.1000000014901,
+          "durationMs": 0.19999999552965164
+        },
+        {
+          "startMs": 798.1999999955297,
+          "durationMs": 9.900000005960464
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm-fast",
+          "durationMs": 288.79999999701977
+        },
+        {
+          "stage": "prewarm-standard",
+          "durationMs": 702
+        }
+      ],
+      "longTasks": [
+        {
+          "startMs": 567.6000000014901,
+          "durationMs": 291
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Makes top 2",
+        "itemTotal": "180",
+        "benchmark": "160",
+        "progress": "Finished · 5/5 · ready to move on",
+        "logRows": 1001
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "name": "Air Defense Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Sniper Tower Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Pottery"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9692307692307692,
+            0,
+            0.02564102564102564,
+            0.03333333333333333,
+            0.05128205128205128
+          ]
+        },
+        "warnings": []
+      },
+      "lastParsedCalls": 3,
+      "repetition": 2,
+      "seed": {
+        "seededItems": 1000,
+        "seededScans": 1000,
+        "owned": 500,
+        "logBytes": 16499325
+      }
+    }
+  ],
+  "limitations": "Static repository screenshots and original labelled video stills; production auto controller receives first readable sample then samples every 100ms. Fresh Chrome profile per sample; cold includes local worker/model startup after first sample. Warm starts with both fast and standard fallback workers initialized; each warmup is recorded outside timing, without a recognition pre-read. Exact names and signed values required. Complete latency requires labelled category, detected Hall, labelled five star states, 100% production capture meter, a rendered comparison and two requestAnimationFrame callbacks. Fixtures without category/Hall/star truth report partial stats only. Fresh-craft dice eligibility is production inference, not independently pixel labelled. Screenshot loading, seed setup, navigation, screen-share permission, game animation and persistence completion are outside timing. Log synchronous serialization/render costs remain inside timing. Small sample p95 is descriptive, not representative field performance. Compare matched fixture groups; aggregate complete latency excludes failed cases and must not compare different sets of completed fixtures."
+}

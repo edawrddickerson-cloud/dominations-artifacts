@@ -365,17 +365,25 @@
   }
   function retainCraftRead(first,retry,expectedRows=5) {
     if(!first || first.hall && retry.hall && first.hall!==retry.hall || first.artifact?.type && retry.artifact?.type && first.artifact.type!==retry.artifact.type)return retry;
-    const usable=row=>row?.known && row.name && Number.isFinite(row.value) && row.hasPercent!==false && !row.conflict && !row.tierConflict && !row.scoreExcluded && !row.estimated;
+    const usable=row=>row?.known && row.name && Number.isFinite(row.value) && row.hasPercent!==false && !row.conflict && !row.tierConflict && !row.outOfRange && !row.scoreExcluded && !row.estimated;
+    // A suggested or disputed reading still supplies a display candidate. Its
+    // uncertainty stays attached; weaker retries must not erase it or flicker
+    // between names while the scorer waits for reliable evidence.
+    const displayable=row=>row?.known && row.name && !row.scoreExcluded && !row.estimated;
     const strength=row=>[
+      row.conflict || row.tierConflict || row.outOfRange?0:1,
       row.valueSource==='manual' || row.tierSource==='manual'?3:row.assumed?0:row.inferred || Number.isFinite(row.confidence) && row.confidence<80?1:2,
-      Number.isFinite(row.confidence)?row.confidence:0
+      Number.isFinite(row.value) && row.hasPercent!==false?1:0,
+      Number.isFinite(row.confidence)?row.confidence:0,
+      row.nameMatch?.confidence || 0
     ];
-    const stronger=(next,prior)=>{const a=strength(next),b=strength(prior);return a[0]>b[0] || a[0]===b[0] && a[1]>b[1];};
+    const stronger=(next,prior)=>{const a=strength(next),b=strength(prior),index=a.findIndex((value,i)=>value!==b[i]);return index>=0 && a[index]>b[index];};
     let retained=false;
     const rows=Array.from({length:expectedRows},(_,index)=>{
       const prior=first.rows[index],next=retry.rows[index];
-      if(!usable(prior))return next || prior || {name:'',value:null,known:false,hasPercent:false};
-      if(usable(next) && stronger(next,prior))return next;
+      if(!displayable(prior))return next || prior || {name:'',value:null,known:false,hasPercent:false};
+      const lostPercentage=next?.name===prior.name && Number.isFinite(prior.value) && !Number.isFinite(next?.value);
+      if(displayable(next) && !lostPercentage && stronger(next,prior))return next;
       if(!usable(next) || next.name!==prior.name || next.value!==prior.value)retained=true;
       return prior;
     });
@@ -520,7 +528,7 @@
     return {hall:selected==='war'?'war':'main',source:'selected-hall'};
   }
   function create({names, canonPerk}) {
-    const workers=new Map(),initializing=new Map();let closed=false;
+    const workers=new Map(),initializing=new Map();let closed=false,fieldEvidence=null;
     async function getWorker(kind='standard') {
       if(closed) throw new Error("Recognition stopped");
       if(!initializing.has(kind)) initializing.set(kind,(async () => {
@@ -536,21 +544,38 @@
       })());
       return initializing.get(kind);
     }
-    async function recognize(source, {expectedRows=5, layout="panel",hall='main',inferColours=false,categorySource=null,fields=null,colourHall=null,knownTiers=[],isCurrent=()=>true}={}) {
+    async function recognize(source, {expectedRows=5, layout="panel",hall='main',inferColours=false,categorySource=null,fields=null,colourHall=null,knownTiers=[],isCurrent=()=>true,fieldReuse=null}={},fallbackEncounter=null) {
       const stopped=()=>closed || !isCurrent();
       const check=()=>{if(stopped())throw new Error('Recognition superseded or stopped');};
+      if(stopped())fieldEvidence=null;
       check();
       expectedRows=Number(expectedRows)===6?6:5;
       // Freeze small field crops synchronously, before worker initialization yields.
-      const fieldViews=layout==='panel' && fields?window.DNScannerFieldRecognition?.snapshot(fields):null;
+      let fieldViews;
+      try{fieldViews=layout==='panel' && fields?window.DNScannerFieldRecognition?.snapshot(fields):null;}
+      catch(error){fieldEvidence=null;throw error;}
+      const scoped=value=>typeof value==='string' || typeof value==='number' && Number.isFinite(value);
+      const reuseKey=fieldViews?.valid && fieldViews.reuseGeometry && scoped(fieldReuse?.epoch) && scoped(fieldReuse?.profile)?
+        JSON.stringify([fieldReuse.epoch,fieldReuse.profile,fieldViews.reuseGeometry]):null;
+      // No context means an isolated read. Keep just one bounded encounter,
+      // including the complete crop geometry and OCR profile in its identity.
+      if(!fallbackEncounter && (!reuseKey || fieldEvidence?.key!==reuseKey))fieldEvidence=reuseKey?{key:reuseKey,entries:new Map()}:null;
+      const encounter=reuseKey?fieldEvidence:null;
+      const reuse=encounter?{entries:encounter.entries,byteLimit:8*1024*1024}:null;
+      let completedEvidenceResult=null;
+      const commitEvidence=result=>{
+        check();
+        completedEvidenceResult=result;
+        return result;
+      };
       let activeWorker;
-      try {activeWorker=await getWorker(fieldViews?.valid?'fast':'standard');check();}catch(error){fieldViews?.release?.();throw error;}
+      try {activeWorker=await getWorker(fieldViews?.valid?'fast':'standard');check();}catch(error){if(fieldEvidence===encounter)fieldEvidence=null;fieldViews?.release?.();throw error;}
       let ocrCalls=0;
       const readView=async(...args)=>{check();ocrCalls++;const output=await activeWorker.recognize(...args);check();return output;};
       if(layout==='storage' || layout==='storage-rows' || layout==='storage-rows-dice')return window.DNStorageRecognition.recognize(source,{worker:activeWorker,names,canonPerk,expectedRows,layout,hall,knownTiers,fields,isClosed:stopped});
       if(fieldViews?.valid) {
         try {
-          let calibrated=await window.DNScannerFieldRecognition.recognize(fieldViews,{worker:activeWorker,readView,names,canonPerk,hall,inferColours,categorySource,isClosed:stopped,ocrCalls:()=>ocrCalls});
+          let calibrated=await window.DNScannerFieldRecognition.recognize(fieldViews,{worker:activeWorker,readView,names,canonPerk,hall,inferColours,categorySource,isClosed:stopped,ocrCalls:()=>ocrCalls,reuse});
           // Metadata uses its own pixels. Repeating every text row cannot repair
           // an unread category or star, and used to multiply complete read time.
           if(calibrated.valid) {
@@ -558,13 +583,13 @@
               const stars=readStars(source,layout);
               if(stars.count!==null)calibrated={...calibrated,unlocked:stars,rows:calibrated.rows.map((row,i)=>({...row,unlocked:stars.states[i]}))};
             }
-            return calibrated;
+            return commitEvidence(calibrated);
           }
           // A bounded standard pass protects established successful reads.
           // Contradictory field evidence still goes through the conflict rules.
           await activeWorker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});
           const fallback=await recognize(source,{expectedRows,layout,hall:calibrated.hall || hall,inferColours,categorySource,
-            colourHall:calibrated.hallSource==='hall-colour'?calibrated.hall:null,isCurrent});
+            colourHall:calibrated.hallSource==='hall-colour'?calibrated.hall:null,isCurrent},encounter);
           let selected=combineReads(calibrated,fallback,expectedRows);
           // Standard crafting supplies the fresh-craft rule, not independent
           // dice pixels. Explicit calibrated controls, including unreadable ones,
@@ -580,14 +605,28 @@
           const categoryConflict=calibrated.artifact?.type && fallback.artifact?.type && calibrated.artifact.type!==fallback.artifact.type;
           const starConflict=calibrated.unlocked.count!==null && fallback.unlocked.count!==null && calibrated.unlocked.count!==fallback.unlocked.count;
           const artifact=calibrated.artifact?.type?calibrated.artifact:selected.artifact || fallback.artifact;
-          return {...selected,hall:fallback.hall,hallSource:fallback.hallSource,...(artifact?{artifact:{...artifact,hall:fallback.hall,...(categoryConflict?{type:''}:{})}}:{}),
+          return commitEvidence({...selected,hall:fallback.hall,hallSource:fallback.hallSource,...(artifact?{artifact:{...artifact,hall:fallback.hall,...(categoryConflict?{type:''}:{})}}:{}),
             valid:selected.valid && !fieldConflict && !calibrated.metadataConflict && !categoryConflict && !starConflict,
             warnings:[...selected.warnings,...(fieldConflict?['Calibrated field evidence conflicts. Verify the conflicting rows.']:[]),...(calibrated.metadataConflict || categoryConflict?['Calibrated hall or category evidence conflicts. Verify the labels.']:[]),...(starConflict?['Calibrated stars and standard read disagree. Check the star boxes.']:[])],
             ...(starConflict?{unlocked:{count:null,states:Array(5).fill(null),method:'conflict'},rows:selected.rows.map(row=>({...row,unlocked:null}))}:{}),
-            recognitionPath:'calibrated-fields+standard-fallback',ocrCalls:ocrCalls+fallback.ocrCalls,
-            observations:[...calibrated.observations,...fallback.observations],calibrationWarnings:calibrated.warnings};
+            recognitionPath:'calibrated-fields+standard-fallback',ocrCalls:ocrCalls+fallback.ocrCalls,...(reuse?{reusedFields:calibrated.reusedFields}:{}),
+            observations:[...calibrated.observations,...fallback.observations],calibrationWarnings:calibrated.warnings});
         }
-        finally {fieldViews.release();if(!closed)await activeWorker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});}
+        catch(error){if(fieldEvidence===encounter)fieldEvidence=null;throw error;}
+        finally {
+          fieldViews.release();
+          try {
+            if(!closed)await activeWorker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});
+            check();
+            if(completedEvidenceResult && reuse && fieldEvidence===encounter) {
+              encounter.entries=new Map([...(reuse.verified || [])].filter(([,entry])=>{
+                const row=completedEvidenceResult.rows[entry.index];
+                return row?.known && !row.assumed && !row.inferred && !row.conflict && !row.tierConflict &&
+                  row.confidence>=80 && row.name===entry.name && row.value===entry.value;
+              }));
+            }
+          }catch(error){if(fieldEvidence===encounter)fieldEvidence=null;throw error;}
+        }
       }
       let artifact=null;
       const selectedHall=hall;
@@ -753,7 +792,7 @@
         }
       } finally { canvas.width=canvas.height=0;if(calibrated)calibrated.width=calibrated.height=0; }
     }
-    async function close() { closed=true;const previous=[...workers.values()];workers.clear();await Promise.all(previous.map(worker=>worker.terminate())); }
+    async function close() { closed=true;fieldEvidence=null;const previous=[...workers.values()];workers.clear();await Promise.all(previous.map(worker=>worker.terminate())); }
     return {recognize,close,warm:({fast=false}={})=>getWorker(fast?'fast':'standard')};
   }
   window.DNScannerRecognition={matchName,NAME_MATCH_THRESHOLD,parseText,parseFieldRow,positionRows,signIssues,reconcileReads,combineReads,retainCraftRead,classifyBrightness,classifyStars,rowColours,inferColourValues,usefulRow,coverage,textContrast,detectPanel,parseCraftCategory,craftCategoryEvidence,classifyHallColour,hallColour,craftHall,categoryRect,categoryLine,create};

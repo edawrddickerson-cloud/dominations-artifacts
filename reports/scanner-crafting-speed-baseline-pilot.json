@@ -1,0 +1,931 @@
+{
+  "mode": "baseline",
+  "snapshot": "C:\\Projects\\Dominations Artifacts\\data\\temp\\crafting-speed-baseline-2026-10-17",
+  "sourceHashes": {
+    "scanner-reading.js": "3e601d88bc985ffbf5be4828e03e3def5063dc54e7018bba91fb236cb4ef9464",
+    "scanner-recognition.js": "5407ed586f838ba1a3154428fa1796339e1b11e1d6c6e523bbcb03eb7ccd7499",
+    "scanner-field-recognition.js": "5fcf032e7176f45345c135c93e3460ca24d3a3c6ff205469609e4e68b24bf122",
+    "scanner-collection.js": "68677f98934442bb8c343ebb1b736a6f8010be7b167c4b8ac9af914468cd54ce",
+    "scanner-comparison.js": "b5c09c0bb42b5bbdb2fd35cdd206ca8d8fd153eb58f1a2adcc000d186b424c7c",
+    "scanner-frames.js": "725008be86f61b5ca9f0f2cc48adef4d6007f6ff2de1777c2398baf10ead7711",
+    "shared.js": "0970349209b98c3b53affda700bf0e808211794bd848653151cf250213f15f24"
+  },
+  "createdAt": "2026-10-17T13:19:44.066Z",
+  "config": {
+    "fixtureNames": [
+      "video174",
+      "pic1"
+    ],
+    "logs": [
+      10,
+      1000
+    ],
+    "temperatures": [
+      "warm"
+    ],
+    "repeat": 1,
+    "owned": 500,
+    "timeoutMs": 12000
+  },
+  "groups": [
+    {
+      "logs": 10,
+      "temperature": "warm",
+      "samples": 2,
+      "exactStats": 2,
+      "fullAssessable": 1,
+      "complete": 0,
+      "statsPaintedMs": {
+        "p50": 1042.7999999970198,
+        "p95": 5899.60000000149
+      },
+      "completeCapturePaintedMs": {
+        "p50": null,
+        "p95": null
+      }
+    },
+    {
+      "logs": 1000,
+      "temperature": "warm",
+      "samples": 2,
+      "exactStats": 2,
+      "fullAssessable": 1,
+      "complete": 0,
+      "statsPaintedMs": {
+        "p50": 1062.3000000044703,
+        "p95": 6924.60000000149
+      },
+      "completeCapturePaintedMs": {
+        "p50": null,
+        "p95": null
+      }
+    }
+  ],
+  "runs": [
+    {
+      "fixture": "video174",
+      "temperature": "warm",
+      "logs": 10,
+      "owned": 500,
+      "firstStatsPaintedMs": 5899.60000000149,
+      "fullCapturePaintedMs": null,
+      "elapsedMs": 12018.60000000149,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": false,
+      "coverage": {
+        "captured": 13,
+        "expected": 17,
+        "percent": 76,
+        "names": 3,
+        "values": 3,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 304.70000000298023,
+          "durationMs": 5474,
+          "ocrCalls": 34,
+          "recognitionPath": "calibrated-fields+standard-fallback"
+        },
+        {
+          "startMs": 6236,
+          "durationMs": 3656.10000000149,
+          "ocrCalls": 34,
+          "recognitionPath": "calibrated-fields+standard-fallback"
+        },
+        {
+          "startMs": 10477.10000000149
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 5784.5,
+          "durationMs": 11.100000001490116
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 5795.79999999702,
+          "durationMs": 5.600000001490116
+        },
+        {
+          "kind": "record",
+          "startMs": 9893.29999999702,
+          "durationMs": 3.600000001490116
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 9897,
+          "durationMs": 3.2000000029802322
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.29999999701976776,
+          "durationMs": 0.30000000447034836
+        },
+        {
+          "startMs": 6.700000002980232,
+          "durationMs": 0.19999999552965164
+        },
+        {
+          "startMs": 304.20000000298023,
+          "durationMs": 0.19999999552965164
+        },
+        {
+          "startMs": 5805.79999999702,
+          "durationMs": 36.400000005960464
+        },
+        {
+          "startMs": 6232.10000000149,
+          "durationMs": 1.5
+        },
+        {
+          "startMs": 9901.60000000149,
+          "durationMs": 0.6000000014901161
+        },
+        {
+          "startMs": 10475.79999999702,
+          "durationMs": 0.5
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm",
+          "durationMs": 291.1000000014901
+        }
+      ],
+      "longTasks": [
+        {
+          "startMs": 240.89999999850988,
+          "durationMs": 82
+        },
+        {
+          "startMs": 629.2000000029802,
+          "durationMs": 62
+        },
+        {
+          "startMs": 2998.60000000149,
+          "durationMs": 108
+        },
+        {
+          "startMs": 3975.2000000029802,
+          "durationMs": 78
+        },
+        {
+          "startMs": 5778.5,
+          "durationMs": 85
+        },
+        {
+          "startMs": 6006.70000000298,
+          "durationMs": 263
+        },
+        {
+          "startMs": 6891.10000000149,
+          "durationMs": 154
+        },
+        {
+          "startMs": 8650,
+          "durationMs": 76
+        },
+        {
+          "startMs": 10413.29999999702,
+          "durationMs": 72
+        },
+        {
+          "startMs": 10768.10000000149,
+          "durationMs": 76
+        }
+      ],
+      "rendered": {
+        "capture": "13 / 17 fields captured",
+        "comparison": "Estimated · Makes top 2",
+        "itemTotal": "~130",
+        "benchmark": "95",
+        "progress": "Reading · attempt 3 · keep this artifact open",
+        "logRows": 11
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "name": "Invading Paratrooper Damage",
+            "value": -1,
+            "known": true,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Assault Vehicle Hitpoints",
+            "value": -6,
+            "known": true,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading MRL Hitpoints",
+            "value": -6,
+            "known": true,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Generals' Damage",
+            "value": -6,
+            "known": true,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Bomber Hitpoints",
+            "value": -6,
+            "known": true,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Armor"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9529411764705882,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Unreadable signed percentage: ",
+          "Row 1: OCR field evidence is weak. Verify the name and percentage.",
+          "Row 1: percentage inferred from neutral text and the known perk sign. Verify it.",
+          "Unreadable signed percentage: Invading Assault Venice Hitpoints -6%             oo     l",
+          "Unreadable signed percentage: invading Generals’ Damage -B%",
+          "Unreadable signed percentage: Invading Bomber Hitpomnis -50",
+          "Expected 5 visible rows; read 4. Check the complete panel.",
+          "OCR evidence is weak on 4 line(s). Verify the names and percentages.",
+          "Row 2: percentage inferred from green text and the known perk sign. Verify it.",
+          "Row 4: percentage inferred from green text and the known perk sign. Verify it.",
+          "Row 5: percentage inferred from green text and the known perk sign. Verify it.",
+          "Percentage outside -40% to +40%: Invading MRL Hitpoints -69%. Retry or correct this row.",
+          "Unreadable signed percentage: Invading Bomber Hitpoints -§%:",
+          "Some individual rows are still unclear. Verify their names and percentages.",
+          "Colour and OCR disagree on row 2. Check the artifact type and original percentage.",
+          "Row 3: percentage inferred from green text and the known perk sign. Verify it.",
+          "Colour and OCR disagree on row 4. Check the artifact type and original percentage.",
+          "Row 2: colour and starting percentage conflict. Verify the tier.",
+          "Row 4: colour and starting percentage conflict. Verify the tier.",
+          "OCR reads disagree about perk names or values. Verify the conflicting rows."
+        ]
+      },
+      "lastParsedCalls": 34,
+      "repetition": 0,
+      "seed": {
+        "seededItems": 10,
+        "seededScans": 10,
+        "owned": 500,
+        "logBytes": 147537
+      }
+    },
+    {
+      "fixture": "pic1",
+      "temperature": "warm",
+      "logs": 10,
+      "owned": 500,
+      "firstStatsPaintedMs": 1042.7999999970198,
+      "fullCapturePaintedMs": null,
+      "elapsedMs": 1072.7999999970198,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": null,
+        "stars": null,
+        "dice": null
+      },
+      "fullArtifactAssessable": false,
+      "complete": false,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 309.59999999403954,
+          "durationMs": 675,
+          "ocrCalls": 3,
+          "recognitionPath": "calibrated-fields"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 987.3999999985099,
+          "durationMs": 5.299999997019768
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 992.8999999985099,
+          "durationMs": 3.5
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.5,
+          "durationMs": 0.5999999940395355
+        },
+        {
+          "startMs": 13.699999995529652,
+          "durationMs": 0.3999999985098839
+        },
+        {
+          "startMs": 308.5,
+          "durationMs": 0.5999999940395355
+        },
+        {
+          "startMs": 1000.3999999985099,
+          "durationMs": 20.5
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm",
+          "durationMs": 482.30000000447035
+        }
+      ],
+      "longTasks": [
+        {
+          "startMs": 242.39999999850988,
+          "durationMs": 94
+        },
+        {
+          "startMs": 800.1999999955297,
+          "durationMs": 52
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Makes top 2",
+        "itemTotal": "180",
+        "benchmark": "160",
+        "progress": "Finished · 5/5 · ready to move on",
+        "logRows": 11
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "name": "Air Defense Damage",
+            "value": 1,
+            "known": true,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Sniper Tower Hitpoints",
+            "value": 1,
+            "known": true,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Hitpoints",
+            "value": 1,
+            "known": true,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Pottery"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9692307692307692,
+            0,
+            0.02564102564102564,
+            0.03333333333333333,
+            0.05128205128205128
+          ]
+        },
+        "warnings": []
+      },
+      "lastParsedCalls": 3,
+      "repetition": 0,
+      "seed": {
+        "seededItems": 10,
+        "seededScans": 10,
+        "owned": 500,
+        "logBytes": 164997
+      }
+    },
+    {
+      "fixture": "video174",
+      "temperature": "warm",
+      "logs": 1000,
+      "owned": 500,
+      "firstStatsPaintedMs": 6924.60000000149,
+      "fullCapturePaintedMs": null,
+      "elapsedMs": 12025.10000000149,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": false,
+      "coverage": {
+        "captured": 13,
+        "expected": 17,
+        "percent": 76,
+        "names": 3,
+        "values": 3,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 279.8999999985099,
+          "durationMs": 5524.89999999851,
+          "ocrCalls": 34,
+          "recognitionPath": "calibrated-fields+standard-fallback"
+        },
+        {
+          "startMs": 7079.10000000149,
+          "durationMs": 3234.6999999955297,
+          "ocrCalls": 34,
+          "recognitionPath": "calibrated-fields+standard-fallback"
+        },
+        {
+          "startMs": 11357.39999999851
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 5808.5,
+          "durationMs": 468
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 6276.69999999553,
+          "durationMs": 323.6000000014901
+        },
+        {
+          "kind": "record",
+          "startMs": 10314.39999999851,
+          "durationMs": 204
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 10518.5,
+          "durationMs": 251.29999999701977
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.8999999985098839,
+          "durationMs": 0.3999999985098839
+        },
+        {
+          "startMs": 7.299999997019768,
+          "durationMs": 0.20000000298023224
+        },
+        {
+          "startMs": 279.5,
+          "durationMs": 0.19999999552965164
+        },
+        {
+          "startMs": 6604.29999999702,
+          "durationMs": 19.200000002980232
+        },
+        {
+          "startMs": 7076.19999999553,
+          "durationMs": 0.9000000059604645
+        },
+        {
+          "startMs": 10771.5,
+          "durationMs": 1.3999999985098839
+        },
+        {
+          "startMs": 11356.10000000149,
+          "durationMs": 0.3999999985098839
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm",
+          "durationMs": 272.5
+        }
+      ],
+      "longTasks": [
+        {
+          "startMs": 230.29999999701977,
+          "durationMs": 63
+        },
+        {
+          "startMs": 354.6000000014901,
+          "durationMs": 290
+        },
+        {
+          "startMs": 654.7999999970198,
+          "durationMs": 63
+        },
+        {
+          "startMs": 4129.29999999702,
+          "durationMs": 111
+        },
+        {
+          "startMs": 5804.79999999702,
+          "durationMs": 1100
+        },
+        {
+          "startMs": 6946.60000000149,
+          "durationMs": 152
+        },
+        {
+          "startMs": 7109.79999999702,
+          "durationMs": 201
+        },
+        {
+          "startMs": 7348.69999999553,
+          "durationMs": 153
+        },
+        {
+          "startMs": 7797.10000000149,
+          "durationMs": 67
+        },
+        {
+          "startMs": 8474.29999999702,
+          "durationMs": 54
+        },
+        {
+          "startMs": 9297.5,
+          "durationMs": 54
+        },
+        {
+          "startMs": 10313.79999999702,
+          "durationMs": 691
+        },
+        {
+          "startMs": 11041.79999999702,
+          "durationMs": 126
+        },
+        {
+          "startMs": 11190.19999999553,
+          "durationMs": 109
+        },
+        {
+          "startMs": 11303.29999999702,
+          "durationMs": 64
+        }
+      ],
+      "rendered": {
+        "capture": "13 / 17 fields captured",
+        "comparison": "Estimated · Makes top 2",
+        "itemTotal": "~130",
+        "benchmark": "95",
+        "progress": "Reading · attempt 3 · keep this artifact open",
+        "logRows": 1001
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "name": "Invading Paratrooper Damage",
+            "value": -1,
+            "known": true,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Assault Vehicle Hitpoints",
+            "value": -6,
+            "known": true,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading MRL Hitpoints",
+            "value": -6,
+            "known": true,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Generals' Damage",
+            "value": -6,
+            "known": true,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Bomber Hitpoints",
+            "value": -6,
+            "known": true,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Armor"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9529411764705882,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Unreadable signed percentage: ",
+          "Row 1: OCR field evidence is weak. Verify the name and percentage.",
+          "Row 1: percentage inferred from neutral text and the known perk sign. Verify it.",
+          "Unreadable signed percentage: Invading Assault Venice Hitpoints -6%             oo     l",
+          "Unreadable signed percentage: invading Generals’ Damage -B%",
+          "Unreadable signed percentage: Invading Bomber Hitpomnis -50",
+          "Expected 5 visible rows; read 4. Check the complete panel.",
+          "OCR evidence is weak on 4 line(s). Verify the names and percentages.",
+          "Row 2: percentage inferred from green text and the known perk sign. Verify it.",
+          "Row 4: percentage inferred from green text and the known perk sign. Verify it.",
+          "Row 5: percentage inferred from green text and the known perk sign. Verify it.",
+          "Percentage outside -40% to +40%: Invading MRL Hitpoints -69%. Retry or correct this row.",
+          "Unreadable signed percentage: Invading Bomber Hitpoints -§%:",
+          "Some individual rows are still unclear. Verify their names and percentages.",
+          "Colour and OCR disagree on row 2. Check the artifact type and original percentage.",
+          "Row 3: percentage inferred from green text and the known perk sign. Verify it.",
+          "Colour and OCR disagree on row 4. Check the artifact type and original percentage.",
+          "Row 2: colour and starting percentage conflict. Verify the tier.",
+          "Row 4: colour and starting percentage conflict. Verify the tier.",
+          "OCR reads disagree about perk names or values. Verify the conflicting rows."
+        ]
+      },
+      "lastParsedCalls": 34,
+      "repetition": 0,
+      "seed": {
+        "seededItems": 1000,
+        "seededScans": 1000,
+        "owned": 500,
+        "logBytes": 14753325
+      }
+    },
+    {
+      "fixture": "pic1",
+      "temperature": "warm",
+      "logs": 1000,
+      "owned": 500,
+      "firstStatsPaintedMs": 1062.3000000044703,
+      "fullCapturePaintedMs": null,
+      "elapsedMs": 1130.7000000029802,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": null,
+        "stars": null,
+        "dice": null
+      },
+      "fullArtifactAssessable": false,
+      "complete": false,
+      "coverage": {
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 272.70000000298023,
+          "durationMs": 433.5,
+          "ocrCalls": 3,
+          "recognitionPath": "calibrated-fields"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "record",
+          "startMs": 708,
+          "durationMs": 133.30000000447035
+        },
+        {
+          "kind": "recordItem",
+          "startMs": 841.4000000059605,
+          "durationMs": 128.59999999403954
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 0.5,
+          "durationMs": 1.2000000029802322
+        },
+        {
+          "startMs": 6.600000001490116,
+          "durationMs": 0.20000000298023224
+        },
+        {
+          "startMs": 272.20000000298023,
+          "durationMs": 0.20000000298023224
+        },
+        {
+          "startMs": 972.4000000059605,
+          "durationMs": 13
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm",
+          "durationMs": 273.5
+        }
+      ],
+      "longTasks": [
+        {
+          "startMs": 299.1000000014901,
+          "durationMs": 261
+        },
+        {
+          "startMs": 706.2000000029802,
+          "durationMs": 340
+        }
+      ],
+      "rendered": {
+        "capture": "17 / 17 fields captured",
+        "comparison": "Makes top 2",
+        "itemTotal": "180",
+        "benchmark": "160",
+        "progress": "Finished · 5/5 · ready to move on",
+        "logRows": 1001
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "name": "Air Defense Damage",
+            "value": 1,
+            "known": true,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Sniper Tower Hitpoints",
+            "value": 1,
+            "known": true,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Hitpoints",
+            "value": 1,
+            "known": true,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Pottery"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9692307692307692,
+            0,
+            0.02564102564102564,
+            0.03333333333333333,
+            0.05128205128205128
+          ]
+        },
+        "warnings": []
+      },
+      "lastParsedCalls": 3,
+      "repetition": 0,
+      "seed": {
+        "seededItems": 1000,
+        "seededScans": 1000,
+        "owned": 500,
+        "logBytes": 16499325
+      }
+    }
+  ],
+  "limitations": "Static repository screenshots and original labelled video stills; production auto controller receives first readable sample then samples every 100ms. Fresh Chrome profile per sample; cold includes local worker/model startup after first sample, warm excludes explicit prewarm. Exact names and signed values required. Complete latency requires labelled category, detected Hall, labelled five star states, 100% production capture meter, a rendered comparison and two requestAnimationFrame callbacks. Fixtures without category/Hall/star truth report partial stats only. Fresh-craft dice eligibility is production inference, not independently pixel labelled. Screenshot loading, seed setup, navigation, screen-share permission, game animation and persistence completion are outside timing. Log synchronous serialization/render costs remain inside timing. Small sample p95 is descriptive, not representative field performance."
+}

@@ -38,7 +38,7 @@ const mixed=scorer.comparisonScore({perk_1_name:'Offense perk',perk_1_base:10,pe
 },{hall:'main',grade:'Weapon',eligible:[true,false]});
 assert.equal(mixed.basePreference,130,'choose the higher axis independently for each perk');
 assert.equal(mixed.lines[0].preference,50);assert.equal(mixed.lines[1].preference,80);
-assert.equal(mixed.potentialPreference,180,'reroll gain uses the same score without double counting');
+assert.equal(mixed.potentialPreference,160,'reroll gain uses the legal category pool and selected ratings without double counting');
 DN.saveGlobalPerkRatings({...global,"Generals' Hitpoints":{offensive:4,defensive:1}});
 assert.equal(DN.loadStoredGlobalPerkRatings()["Generals' Hitpoints"].offensive,4,'migration does not overwrite subsequent edits');
 DN.saveGlobalPerkRatings({});
