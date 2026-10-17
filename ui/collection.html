@@ -5,7 +5,7 @@
   <script src="navigation.js?v=5"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts · Collection</title>
-  <link rel="stylesheet" href="styles.css?v=74" />
+  <link rel="stylesheet" href="styles.css?v=75" />
 </head>
 <body class="page-collection">
   <nav class="site-nav" aria-label="Pages">
@@ -58,15 +58,6 @@
           <button type="button" class="seg-btn is-active" id="compare-all" aria-pressed="true">All rows</button>
         </div>
       </fieldset>
-      <a class="btn btn-accent collection-scanner-link" href="storage-scanner.html?v=2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M21 16v5h-5M8 21H3v-5M7 12h10" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" /></svg><span>Storage Scanner</span></a>
-    </div>
-  </section>
-
-  <p id="error" class="error" hidden></p>
-
-  <div class="collection-layout">
-    <section class="collection-list-panel" aria-label="Owned artifacts">
-      <h2 class="panel-title">Owned</h2>
       <div class="collection-list-toolbar" id="collection-list-toolbar" hidden>
         <details class="collection-slot-filter" id="collection-slot-filter">
           <summary>Slot types · <span id="collection-slot-filter-label">All</span></summary>
@@ -76,8 +67,16 @@
             <p class="collection-filter-note">Includes unused and Showcase items of each selected type.</p>
           </div>
         </details>
-        <span id="collection-list-count" role="status"></span>
       </div>
+      <a class="btn btn-accent collection-scanner-link" href="storage-scanner.html?v=2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M21 16v5h-5M8 21H3v-5M7 12h10" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" /></svg><span>Storage Scanner</span></a>
+    </div>
+  </section>
+
+  <p id="error" class="error" hidden></p>
+
+  <div class="collection-layout">
+    <section class="collection-list-panel" aria-label="Owned artifacts">
+      <h2 class="panel-title">Owned</h2>
       <div id="collection-list" class="collection-list"></div>
       <div id="museum-workspace" class="museum-workspace" hidden>
         <div id="museum-board" class="museum-board" hidden></div>
@@ -109,11 +108,11 @@
 
   </div>
   <script src="data/army_catalog.js?v=8"></script>
-  <script src="shared.js?v=40"></script>
+  <script src="shared.js?v=43"></script>
   <script src="profiles-ui.js?v=13"></script>
-  <script src="stored-artifacts.js?v=15"></script>
-  <script src="artifact-scoring.js?v=2"></script>
-  <script src="collection.js?v=61"></script>
+  <script src="stored-artifacts.js?v=19"></script>
+  <script src="artifact-scoring.js?v=3"></script>
+  <script src="collection.js?v=64"></script>
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9c4fcfc024144c4aa34a78ae6332dc9f"}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>

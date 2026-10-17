@@ -105,11 +105,29 @@ assert.ok(conflicting.rows.every(row=>row.conflict),'a complete retry retains ea
 assert.equal(core.estimate(conflicting),null,'conflicting readings cannot be promoted to a provisional total');
 const tierConflict=craft(1);tierConflict.rows[2].tierConflict=true;
 assert.equal(core.estimate(tierConflict).scoredCount,4,'a percentage/colour tier conflict contributes no score');
-for(const kind of ['assumed','inferred']){
+const ranged={name:'Ranged Infantry Hitpoints',known:true,value:11,hasPercent:true,colour:'neutral',unlocked:false};
+const rangedTier=store.craftingTier(ranged,{hall:'main',type:'Weapon'});
+assert.equal(rangedTier.tierConflict,false,'a direct legal signed percentage is not discarded because glyph colour was misclassified');
+assert.equal(rangedTier.tier,'blue');assert.equal(rangedTier.max,20);assert.equal(rangedTier.colourTierMismatch,true);
+assert.equal(rangedTier.tierSource,'starting-percentage');assert.equal(rangedTier.value,11);
+const rangedRead={valid:false,hall:'main',artifact:{type:'Weapon'},rows:[...craft(1).rows.slice(0,2),rangedTier,...craft(1).rows.slice(3)]};
+const rangedOptions={...options,prefSortAxes:{offensive:true,defensive:true},ratingOf:(name,axis)=>name===ranged.name && axis==='offensive'?1:0};
+assert.equal(core.craftScore(core.estimate(rangedRead),rangedOptions),20,'Ranged Infantry Hitpoints +11% at Off 1 / Def 0 scores 20 with both axes selected');
+for(const unsafe of [{conflict:true},{assumed:true},{known:false},{hasPercent:false},{value:-11},{value:5}]) {
+  const row=store.craftingTier({...ranged,...unsafe},{hall:'main',type:'Weapon'});
+  assert.equal(core.estimate({...rangedRead,rows:[...craft(1).rows.slice(0,2),row,...craft(1).rows.slice(3)]}).scoredCount,4,'colour mismatch cannot promote uncertain, conflicting or illegal values: '+JSON.stringify(unsafe));
+}
+for(const kind of ['assumed']){
   const uncertain=craft(1);uncertain.rows[2][kind]=true;
   assert.equal(core.estimate(uncertain).scoredCount,4,kind+' evidence is excluded until verified');
   assert.equal(core.craftScore(uncertain,options),null,'uncertain names/values cannot make a complete keep/sell comparison');
 }
+const displayedInference={...rangedRead,rows:rangedRead.rows.map((row,index)=>index===2?{...row,inferred:true,colour:'blue'}:row)};
+const inferenceSnapshot=JSON.stringify(displayedInference),inferenceScore=core.estimate(displayedInference);
+assert.equal(core.craftScore(inferenceScore,rangedOptions),20,'the displayed inferred +11% contributes 20 points at rating 1');
+assert.equal(inferenceScore.provisional,true,'inferred scoring does not claim a direct OCR read');
+assert.equal(core.captureCompleteness(displayedInference).values,4,'inferred scoring does not inflate capture completeness');
+assert.equal(JSON.stringify(displayedInference),inferenceSnapshot,'scoring preserves the original inference provenance');
 
 const cached=core.createComparator();let ratingCalls=0;
 const counted={...options,ratingOf:(...args)=>{ratingCalls++;return options.ratingOf(...args);}};
@@ -163,7 +181,18 @@ async function browserChecks() {
   assert.doesNotMatch(elements['scanner-benchmark'].className,/is-top-two/,'unconfirmed reads clear the green benchmark state');
   assert.match(elements['scanner-benchmark'].className,/is-unknown/,'unconfirmed reads are amber');
   browser.window.DNScannerComparison.update({...complete,rows:craft(10).rows},true,options);
-  assert.equal(elements['scanner-comparison'].textContent,'Ties benchmark');assert.doesNotMatch(elements['scanner-benchmark'].className,/is-top-two/);
+  assert.match(elements['scanner-benchmark'].className,/is-top-two/,'a score equal to the benchmark is green');
+  const partialAbove=core.estimate({...complete,valid:false,rows:[...craft(20).rows.slice(0,4),{name:'',known:false,value:null}]});
+  browser.window.DNScannerComparison.update(partialAbove,true,options);
+  assert.equal(elements['scanner-item-total'].textContent,'~116');
+  assert.match(elements['scanner-benchmark'].className,/is-top-two/,'readable subtotal above the benchmark is green');
+  const partialTie=core.estimate({...complete,valid:false,rows:[...craft(10).rows.slice(0,3),{...craft(10).rows[0],value:29},{name:'',known:false,value:null}]});
+  browser.window.DNScannerComparison.update(partialTie,true,options);
+  assert.equal(elements['scanner-item-total'].textContent,'~95');
+  assert.match(elements['scanner-benchmark'].className,/is-top-two/,'readable subtotal equal to the benchmark is green');
+  const partialBelow=core.estimate({...complete,valid:false,rows:[...craft(1).rows.slice(0,4),{name:'',known:false,value:null}]});
+  browser.window.DNScannerComparison.update(partialBelow,true,options);
+  assert.match(elements['scanner-benchmark'].className,/is-below-cutoff/,'readable subtotal below the benchmark is red');
   browser.window.DNScannerComparison.update(complete,true,options,{captureResult:unknownName});
   assert.equal(elements['scanner-capture-percent'].textContent,'94%','capture meter uses raw OCR rather than a completed scoring scenario');
   profile='b';events.focus();assert.match(elements['scanner-comparison'].textContent,/Loading/);

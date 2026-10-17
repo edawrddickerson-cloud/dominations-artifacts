@@ -1,0 +1,6226 @@
+{
+  "version": 1,
+  "createdAt": "2026-10-16T19:27:17.814Z",
+  "source": {
+    "filename": "2026-10-16 12-32-06.mkv",
+    "bytes": 138691069,
+    "sha256": "4613b9518b97bca227e5ce63970659d6c8c8a6b137257b7301d3bad76e88cf9a",
+    "duration": 297.8,
+    "width": 3440,
+    "height": 1440
+  },
+  "roi": {
+    "x": 188,
+    "y": 312,
+    "width": 1796,
+    "height": 1024
+  },
+  "timing": {
+    "start": 156,
+    "end": 258,
+    "intervalMs": 350,
+    "wallMs": 104674,
+    "ticks": 255,
+    "maxSchedulingLagMs": 362
+  },
+  "scope": "Recorded source frames delivered on a wall-clock schedule to the production reading controller, local worker, comparison UI and item logger. Auto read, colour inference and item logging enabled; default seeded crafting fields. Game viewport is manually selected. Capture chooser/stream and interactive field calibration are bypassed. Nearest manually labelled timestamp within two seconds proposes encounter identity; exact names/values are checked independently. Unknown 250s artifact is not labelled. No precise first-readable boundaries: do not interpret read duration as end-to-end latency, or unmatched reads as proven stale/mixed artifacts. No held-out sessions or personalized collection/profile.",
+  "summary": {
+    "labelledEncounters": 24,
+    "withCompletedRead": 11,
+    "withExactStats": 10,
+    "withExactLabelledFields": 10,
+    "withAcceptedRead": 6,
+    "withAcceptedWrongStats": 0,
+    "completedReads": 12,
+    "unassociatedReads": 0,
+    "withDirectStats": 10
+  },
+  "encountered": [
+    {
+      "time": 161,
+      "title": "An-Nasir Muhammad's Helmet",
+      "reads": 1,
+      "statsExact": true,
+      "visibleExact": true,
+      "accepted": false,
+      "acceptedWrongStats": false,
+      "directStats": true
+    },
+    {
+      "time": 165,
+      "title": "Kusarigama",
+      "reads": 1,
+      "statsExact": true,
+      "visibleExact": true,
+      "accepted": true,
+      "acceptedWrongStats": false,
+      "directStats": true
+    },
+    {
+      "time": 171,
+      "title": "Monile Necklace",
+      "reads": 0,
+      "statsExact": false,
+      "visibleExact": false,
+      "accepted": false,
+      "acceptedWrongStats": false,
+      "directStats": false
+    },
+    {
+      "time": 174,
+      "title": "Herodotus' Tunic",
+      "reads": 0,
+      "statsExact": false,
+      "visibleExact": false,
+      "accepted": false,
+      "acceptedWrongStats": false,
+      "directStats": false
+    },
+    {
+      "time": 177,
+      "title": "Fulani Necklace",
+      "reads": 1,
+      "statsExact": true,
+      "visibleExact": true,
+      "accepted": true,
+      "acceptedWrongStats": false,
+      "directStats": true
+    },
+    {
+      "time": 183,
+      "title": "Claymore Sword",
+      "reads": 0,
+      "statsExact": false,
+      "visibleExact": false,
+      "accepted": false,
+      "acceptedWrongStats": false,
+      "directStats": false
+    },
+    {
+      "time": 185,
+      "title": "Nupe Gourd",
+      "reads": 1,
+      "statsExact": true,
+      "visibleExact": true,
+      "accepted": true,
+      "acceptedWrongStats": false,
+      "directStats": true
+    },
+    {
+      "time": 188,
+      "title": "Idris Alooma's Armor",
+      "reads": 1,
+      "statsExact": true,
+      "visibleExact": true,
+      "accepted": true,
+      "acceptedWrongStats": false,
+      "directStats": true
+    },
+    {
+      "time": 191,
+      "title": "Itzcoatl's Tlaloc Vessel",
+      "reads": 0,
+      "statsExact": false,
+      "visibleExact": false,
+      "accepted": false,
+      "acceptedWrongStats": false,
+      "directStats": false
+    },
+    {
+      "time": 195,
+      "title": "Bronze Helmet",
+      "reads": 1,
+      "statsExact": false,
+      "visibleExact": false,
+      "accepted": false,
+      "acceptedWrongStats": false,
+      "directStats": false
+    },
+    {
+      "time": 200,
+      "title": "Mangbetu Knife",
+      "reads": 0,
+      "statsExact": false,
+      "visibleExact": false,
+      "accepted": false,
+      "acceptedWrongStats": false,
+      "directStats": false
+    },
+    {
+      "time": 204,
+      "title": "Spartacus' Gladius",
+      "reads": 0,
+      "statsExact": false,
+      "visibleExact": false,
+      "accepted": false,
+      "acceptedWrongStats": false,
+      "directStats": false
+    },
+    {
+      "time": 208,
+      "title": "Scottish Agate Brooch",
+      "reads": 1,
+      "statsExact": true,
+      "visibleExact": true,
+      "accepted": false,
+      "acceptedWrongStats": false,
+      "directStats": true
+    },
+    {
+      "time": 213,
+      "title": "Scutum Shield",
+      "reads": 0,
+      "statsExact": false,
+      "visibleExact": false,
+      "accepted": false,
+      "acceptedWrongStats": false,
+      "directStats": false
+    },
+    {
+      "time": 217,
+      "title": "Inca Jewelry",
+      "reads": 0,
+      "statsExact": false,
+      "visibleExact": false,
+      "accepted": false,
+      "acceptedWrongStats": false,
+      "directStats": false
+    },
+    {
+      "time": 224,
+      "title": "Napoleonic Cuirass",
+      "reads": 0,
+      "statsExact": false,
+      "visibleExact": false,
+      "accepted": false,
+      "acceptedWrongStats": false,
+      "directStats": false
+    },
+    {
+      "time": 227,
+      "title": "Acamapichtli's Dancing Dog",
+      "reads": 2,
+      "statsExact": true,
+      "visibleExact": true,
+      "accepted": false,
+      "acceptedWrongStats": false,
+      "directStats": true
+    },
+    {
+      "time": 231,
+      "title": "Pachacuti's Incan Jewelry",
+      "reads": 0,
+      "statsExact": false,
+      "visibleExact": false,
+      "accepted": false,
+      "acceptedWrongStats": false,
+      "directStats": false
+    },
+    {
+      "time": 236,
+      "title": "Acamapichtli's Dancing Dog",
+      "reads": 1,
+      "statsExact": true,
+      "visibleExact": true,
+      "accepted": false,
+      "acceptedWrongStats": false,
+      "directStats": true
+    },
+    {
+      "time": 239,
+      "title": "Gladius",
+      "reads": 0,
+      "statsExact": false,
+      "visibleExact": false,
+      "accepted": false,
+      "acceptedWrongStats": false,
+      "directStats": false
+    },
+    {
+      "time": 245,
+      "title": "Tlingit Armor",
+      "reads": 0,
+      "statsExact": false,
+      "visibleExact": false,
+      "accepted": false,
+      "acceptedWrongStats": false,
+      "directStats": false
+    },
+    {
+      "time": 248,
+      "title": "Kongolo's Shield",
+      "reads": 1,
+      "statsExact": true,
+      "visibleExact": true,
+      "accepted": true,
+      "acceptedWrongStats": false,
+      "directStats": true
+    },
+    {
+      "time": 253,
+      "title": "Inca Jewelry",
+      "reads": 1,
+      "statsExact": true,
+      "visibleExact": true,
+      "accepted": true,
+      "acceptedWrongStats": false,
+      "directStats": true
+    },
+    {
+      "time": 255,
+      "title": "Kuba Mask",
+      "reads": 0,
+      "statsExact": false,
+      "visibleExact": false,
+      "accepted": false,
+      "acceptedWrongStats": false,
+      "directStats": false
+    }
+  ],
+  "records": [
+    {
+      "inputTime": 161.25,
+      "finishVideoTime": 163.35,
+      "readMs": 2002,
+      "nearestLabelTime": 161,
+      "withinTwoSeconds": true,
+      "accuracy": {
+        "statsExact": true,
+        "visibleExact": true,
+        "directStats": true,
+        "category": true,
+        "hall": true,
+        "title": null,
+        "fields": [
+          {
+            "row": 1,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 2,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 3,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 4,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 5,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          }
+        ],
+        "accepted": false,
+        "acceptedWrongStats": false
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "raw": "Invading Guerrilla Hitpoints -11%",
+            "rawName": "Invading Guerrilla Hitpoints -11%",
+            "rawPercentage": "-11%",
+            "name": "Invading Guerrilla Hitpoints",
+            "value": -11,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Invading Guerrilla Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 66,
+            "colour": "blue",
+            "unlocked": true,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "blue",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -11,
+            "max": -20,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "approved",
+              "scope": "ordinary-crafting",
+              "tier": "blue",
+              "level": 1,
+              "legalValues": [
+                -11
+              ],
+              "expectedValue": -11,
+              "issues": [],
+              "status": "compatible",
+              "candidateResolution": {
+                "status": "resolved",
+                "value": -11,
+                "expectedValue": -11,
+                "source": "stat-context",
+                "direct": false,
+                "candidates": [
+                  {
+                    "value": -11,
+                    "source": "focused-fields",
+                    "confidence": 66,
+                    "status": "compatible",
+                    "issues": []
+                  },
+                  {
+                    "value": -11,
+                    "source": "colour-fields",
+                    "confidence": 66,
+                    "status": "compatible",
+                    "issues": []
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "raw": "Invading Attack Helicopter Hitpoints -1%",
+            "rawName": "Invading Attack Helicopter Hitpoints -1%",
+            "rawPercentage": "-1%",
+            "name": "Invading Attack Helicopter Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Invading Attack Helicopter Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 94,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -1,
+            "max": -10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "confirmed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                -1
+              ],
+              "expectedValue": -1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Invading Attack Helicopter Damage -1%",
+            "rawName": "Invading Attack Helicopter Damage -1%",
+            "rawPercentage": "-1%",
+            "name": "Invading Attack Helicopter Damage",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Invading Attack Helicopter Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 94,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -1,
+            "max": -10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                -1
+              ],
+              "expectedValue": -1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Invading Tactical Helicopter Healing -1%",
+            "rawName": "Invading Tactical Helicopter Healing -1%",
+            "rawPercentage": "-1%",
+            "name": "Invading Tactical Helicopter Healing",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Invading Tactical Helicopter Healing",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 94,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -1,
+            "max": -10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "confirmed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                -1
+              ],
+              "expectedValue": -1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Invading Ranged Siege Hitpoints -6%",
+            "rawName": "Invading Ranged Siege Hitpoints",
+            "rawPercentage": "-6%",
+            "name": "Invading Ranged Siege Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Invading Ranged Siege Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 76,
+            "colour": "green",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "green",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -6,
+            "max": -15,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "approved",
+              "scope": "ordinary-crafting",
+              "tier": "green",
+              "level": 1,
+              "legalValues": [
+                -6
+              ],
+              "expectedValue": -6,
+              "issues": [],
+              "status": "compatible",
+              "candidateResolution": {
+                "status": "resolved",
+                "value": -6,
+                "expectedValue": -6,
+                "source": "stat-context",
+                "direct": false,
+                "candidates": [
+                  {
+                    "value": -6,
+                    "source": "focused-fields",
+                    "confidence": 76,
+                    "status": "compatible",
+                    "issues": []
+                  },
+                  {
+                    "value": -6,
+                    "source": "colour-fields",
+                    "confidence": 76,
+                    "status": "compatible",
+                    "issues": []
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "artifact": {
+          "type": "Armor",
+          "rawType": "Armor",
+          "categoryConfidence": 96,
+          "source": "crafting-label",
+          "hall": "main"
+        },
+        "hall": "main",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9647058823529412,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Row 1: OCR field evidence is weak. Verify the name and percentage.",
+          "Row 5: OCR field evidence is weak. Verify the name and percentage."
+        ],
+        "recognitionPath": "calibrated-fields+standard-fallback"
+      }
+    },
+    {
+      "inputTime": 165.1,
+      "finishVideoTime": 165.8,
+      "readMs": 691,
+      "nearestLabelTime": 165,
+      "withinTwoSeconds": true,
+      "accuracy": {
+        "statsExact": true,
+        "visibleExact": true,
+        "directStats": true,
+        "category": true,
+        "hall": true,
+        "title": null,
+        "fields": [
+          {
+            "row": 1,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 2,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 3,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 4,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 5,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          }
+        ],
+        "accepted": true,
+        "acceptedWrongStats": false
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "raw": "Wall Sapper Damage +11%",
+            "rawName": "Wall Sapper Damage",
+            "rawPercentage": "+11%",
+            "name": "Wall Sapper Damage",
+            "value": 11,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Wall Sapper Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 92,
+            "colour": "blue",
+            "unlocked": true,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "blue",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 11,
+            "max": 20,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "blue",
+              "level": 1,
+              "legalValues": [
+                11
+              ],
+              "expectedValue": 11,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Enemy Defender Spawn Time +11%",
+            "rawName": "Enemy Defender Spawn Time",
+            "rawPercentage": "+11%",
+            "name": "Enemy Defender Spawn Time",
+            "value": 11,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Enemy Defender Spawn Time",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 91,
+            "colour": "blue",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "blue",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 11,
+            "max": 20,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "blue",
+              "level": 1,
+              "legalValues": [
+                11
+              ],
+              "expectedValue": 11,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "MRL Damage +11%",
+            "rawName": "MRL Damage +11%",
+            "rawPercentage": "+11%",
+            "name": "MRL Damage",
+            "value": 11,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "MRL Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 81,
+            "colour": "blue",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "blue",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 11,
+            "max": 20,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "blue",
+              "level": 1,
+              "legalValues": [
+                11
+              ],
+              "expectedValue": 11,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Generals’ Damage +6%",
+            "rawName": "Generals’ Damage",
+            "rawPercentage": "+6%",
+            "name": "Generals' Damage",
+            "value": 6,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Generals' Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 86,
+            "colour": "green",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "green",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 6,
+            "max": 15,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "green",
+              "level": 1,
+              "legalValues": [
+                6
+              ],
+              "expectedValue": 6,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Ranged Infantry Damage +1%",
+            "rawName": "Ranged Infantry Damage +1%",
+            "rawPercentage": "+1%",
+            "name": "Ranged Infantry Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Ranged Infantry Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 94,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 1,
+            "max": 10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                1
+              ],
+              "expectedValue": 1,
+              "issues": [],
+              "status": "compatible"
+            }
+          }
+        ],
+        "artifact": {
+          "type": "Weapon",
+          "rawType": "Weapon",
+          "categoryConfidence": 96,
+          "source": "crafting-label",
+          "hall": "main"
+        },
+        "hall": "main",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9558823529411765,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [],
+        "recognitionPath": "calibrated-fields"
+      }
+    },
+    {
+      "inputTime": 177.7,
+      "finishVideoTime": 178.75,
+      "readMs": 1115,
+      "nearestLabelTime": 177,
+      "withinTwoSeconds": true,
+      "accuracy": {
+        "statsExact": true,
+        "visibleExact": true,
+        "directStats": true,
+        "category": true,
+        "hall": true,
+        "title": null,
+        "fields": [
+          {
+            "row": 1,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 2,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 3,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 4,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 5,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          }
+        ],
+        "accepted": true,
+        "acceptedWrongStats": false
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "raw": "Enemy Redoubt Hitpoints -1%",
+            "rawName": "Enemy Redoubt Hitpoints",
+            "name": "Enemy Redoubt Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Enemy Redoubt Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "colour": "neutral",
+            "unlocked": true,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -1,
+            "max": -10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "approved",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                -1
+              ],
+              "expectedValue": -1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "National Trade Good Loot Chance +1%",
+            "rawName": "National Trade Good Loot Chance",
+            "name": "National Trade Good Loot Chance",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "National Trade Good Loot Chance",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 1,
+            "max": 10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                1
+              ],
+              "expectedValue": 1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "National Trade Good Loot Chance +11%",
+            "rawName": "National Trade Good Loot Chance",
+            "name": "National Trade Good Loot Chance",
+            "value": 11,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "National Trade Good Loot Chance",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "colour": "blue",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "blue",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 11,
+            "max": 20,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "blue",
+              "level": 1,
+              "legalValues": [
+                11
+              ],
+              "expectedValue": 11,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Enemy Air Defense Hitpoints -1%",
+            "rawName": "Enemy Air Defense Hitpoints",
+            "name": "Enemy Air Defense Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Enemy Air Defense Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -1,
+            "max": -10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "confirmed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                -1
+              ],
+              "expectedValue": -1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Enemy Catapult Damage -11%",
+            "rawName": "Enemy Catapult Damage",
+            "name": "Enemy Catapult Damage",
+            "value": -11,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Enemy Catapult Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "colour": "blue",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "blue",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -11,
+            "max": -20,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "blue",
+              "level": 1,
+              "legalValues": [
+                -11
+              ],
+              "expectedValue": -11,
+              "issues": [],
+              "status": "compatible"
+            }
+          }
+        ],
+        "artifact": {
+          "type": "Jewelry",
+          "rawType": "Jewelry",
+          "categoryConfidence": 96,
+          "source": "crafting-label",
+          "hall": "main"
+        },
+        "hall": "main",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9470588235294117,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [],
+        "recognitionPath": "calibrated-fields+standard-fallback"
+      }
+    },
+    {
+      "inputTime": 185.4,
+      "finishVideoTime": 185.75,
+      "readMs": 450,
+      "nearestLabelTime": 185,
+      "withinTwoSeconds": true,
+      "accuracy": {
+        "statsExact": true,
+        "visibleExact": true,
+        "directStats": true,
+        "category": true,
+        "hall": true,
+        "title": null,
+        "fields": [
+          {
+            "row": 1,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 2,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 3,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 4,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 5,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          }
+        ],
+        "accepted": true,
+        "acceptedWrongStats": false
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "raw": "Food from Fruit Trees +11%",
+            "rawName": "Food from Fruit Trees",
+            "rawPercentage": "+11%",
+            "name": "Food from Fruit Trees",
+            "value": 11,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Food from Fruit Trees",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 92,
+            "colour": "blue",
+            "unlocked": true,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "blue",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 11,
+            "max": 20,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "confirmed",
+              "scope": "ordinary-crafting",
+              "tier": "blue",
+              "level": 1,
+              "legalValues": [
+                11
+              ],
+              "expectedValue": 11,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Anti-Tank Gun Hitpoints +1%",
+            "rawName": "Anti-Tank Gun Hitpoints +1%",
+            "rawPercentage": "+1%",
+            "name": "Anti-Tank Gun Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Anti-Tank Gun Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 92,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 1,
+            "max": 10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "confirmed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                1
+              ],
+              "expectedValue": 1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Library Tech Food Cost -1%",
+            "rawName": "Library Tech Food Cost -1%",
+            "rawPercentage": "-1%",
+            "name": "Library Tech Food Cost",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Library Tech Food Cost",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 95,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -1,
+            "max": -10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                -1
+              ],
+              "expectedValue": -1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Vault Capacity +6%",
+            "rawName": "Vault Capacity",
+            "rawPercentage": "+6%",
+            "name": "Vault Capacity",
+            "value": 6,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Vault Capacity",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 90,
+            "colour": "green",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "green",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 6,
+            "max": 15,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "green",
+              "level": 1,
+              "legalValues": [
+                6
+              ],
+              "expectedValue": 6,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Redoubt Damage +6%",
+            "rawName": "Redoubt Damage",
+            "rawPercentage": "+6%",
+            "name": "Redoubt Damage",
+            "value": 6,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Redoubt Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 87,
+            "colour": "green",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "green",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 6,
+            "max": 15,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "green",
+              "level": 1,
+              "legalValues": [
+                6
+              ],
+              "expectedValue": 6,
+              "issues": [],
+              "status": "compatible"
+            }
+          }
+        ],
+        "artifact": {
+          "type": "Pottery",
+          "rawType": "Pottery",
+          "categoryConfidence": 96,
+          "source": "crafting-label",
+          "hall": "main"
+        },
+        "hall": "main",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9470588235294117,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [],
+        "recognitionPath": "calibrated-fields"
+      }
+    },
+    {
+      "inputTime": 188.55,
+      "finishVideoTime": 189.95,
+      "readMs": 1214,
+      "nearestLabelTime": 188,
+      "withinTwoSeconds": true,
+      "accuracy": {
+        "statsExact": true,
+        "visibleExact": true,
+        "directStats": true,
+        "category": true,
+        "hall": true,
+        "title": null,
+        "fields": [
+          {
+            "row": 1,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 2,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 3,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 4,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 5,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          }
+        ],
+        "accepted": true,
+        "acceptedWrongStats": false
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "raw": "Invading MRL Damage -6%",
+            "rawName": "Invading MRL Damage",
+            "name": "Invading MRL Damage",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Invading MRL Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "colour": "green",
+            "unlocked": true,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "green",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -6,
+            "max": -15,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "confirmed",
+              "scope": "ordinary-crafting",
+              "tier": "green",
+              "level": 1,
+              "legalValues": [
+                -6
+              ],
+              "expectedValue": -6,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Invading MRL Hitpoints -1%",
+            "rawName": "Invading MRL Hitpoints",
+            "name": "Invading MRL Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Invading MRL Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -1,
+            "max": -10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "confirmed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                -1
+              ],
+              "expectedValue": -1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Invading Tactical Helicopter Hitpoints -11%",
+            "rawName": "Invading Tactical Helicopter Hitpoints",
+            "name": "Invading Tactical Helicopter Hitpoints",
+            "value": -11,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Invading Tactical Helicopter Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "colour": "blue",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "blue",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -11,
+            "max": -20,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "approved",
+              "scope": "ordinary-crafting",
+              "tier": "blue",
+              "level": 1,
+              "legalValues": [
+                -11
+              ],
+              "expectedValue": -11,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Invading Fighter Damage -11%",
+            "rawName": "Invading Fighter Damage",
+            "name": "Invading Fighter Damage",
+            "value": -11,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Invading Fighter Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "colour": "blue",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "blue",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -11,
+            "max": -20,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "blue",
+              "level": 1,
+              "legalValues": [
+                -11
+              ],
+              "expectedValue": -11,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Invading MRL Damage -6%",
+            "rawName": "Invading MRL Damage",
+            "name": "Invading MRL Damage",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Invading MRL Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "colour": "green",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "green",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -6,
+            "max": -15,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "confirmed",
+              "scope": "ordinary-crafting",
+              "tier": "green",
+              "level": 1,
+              "legalValues": [
+                -6
+              ],
+              "expectedValue": -6,
+              "issues": [],
+              "status": "compatible"
+            }
+          }
+        ],
+        "artifact": {
+          "type": "Armor",
+          "rawType": "Armor",
+          "categoryConfidence": 96,
+          "source": "crafting-label",
+          "hall": "main"
+        },
+        "hall": "main",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9529411764705882,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [],
+        "recognitionPath": "calibrated-fields+standard-fallback"
+      }
+    },
+    {
+      "inputTime": 194.85,
+      "finishVideoTime": 196.25,
+      "readMs": 1494,
+      "nearestLabelTime": 195,
+      "withinTwoSeconds": true,
+      "accuracy": {
+        "statsExact": false,
+        "visibleExact": false,
+        "directStats": false,
+        "category": true,
+        "hall": true,
+        "title": null,
+        "fields": [
+          {
+            "row": 1,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 2,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 3,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 4,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 5,
+            "name": true,
+            "value": false,
+            "directName": true,
+            "directValue": false,
+            "star": true
+          }
+        ],
+        "accepted": false,
+        "acceptedWrongStats": false
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "raw": "Invading Machine Gun Infantry Damage -1%",
+            "rawName": "Invading Machine Gun Infantry Damage",
+            "name": "Invading Machine Gun Infantry Damage",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Invading Machine Gun Infantry Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 95,
+            "colour": "neutral",
+            "unlocked": true,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -1,
+            "max": -10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                -1
+              ],
+              "expectedValue": -1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Invading Heavy Infantry Damage -1%",
+            "rawName": "Invading Heavy Infantry Damage -1%",
+            "rawPercentage": "-1%",
+            "name": "Invading Heavy Infantry Damage",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Invading Heavy Infantry Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 91,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -1,
+            "max": -10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "confirmed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                -1
+              ],
+              "expectedValue": -1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Invading Supply Vehicle Healing -11%",
+            "rawName": "Invading Supply Vehicle Healing -11%",
+            "rawPercentage": "-11%",
+            "name": "Invading Supply Vehicle Healing",
+            "value": -11,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Invading Supply Vehicle Healing",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 92,
+            "colour": "blue",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "blue",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -11,
+            "max": -20,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "confirmed",
+              "scope": "ordinary-crafting",
+              "tier": "blue",
+              "level": 1,
+              "legalValues": [
+                -11
+              ],
+              "expectedValue": -11,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Invading Tactical Helicopter Hitpoints -1%",
+            "rawName": "Invading Tactical Helicopter Hitpoints -1%",
+            "rawPercentage": "-1%",
+            "name": "Invading Tactical Helicopter Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Invading Tactical Helicopter Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 94,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -1,
+            "max": -10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "approved",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                -1
+              ],
+              "expectedValue": -1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Invading Heavy Infantry Hitpoints -3%",
+            "rawName": "Invading Heavy Infantry Hitpoints",
+            "rawPercentage": "-3%",
+            "name": "Invading Heavy Infantry Hitpoints",
+            "value": -3,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Invading Heavy Infantry Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 18,
+            "colour": "green",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": null,
+            "tierSource": null,
+            "tierConflict": true,
+            "base": null,
+            "max": null,
+            "rangeSource": null,
+            "rangeReview": "Text colour and starting percentage conflict. Verify this stat.",
+            "conflict": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "confirmed",
+              "scope": "ordinary-crafting",
+              "tier": "green",
+              "level": 1,
+              "legalValues": [
+                -6
+              ],
+              "expectedValue": -6,
+              "issues": [
+                "tier-level"
+              ],
+              "status": "conflict",
+              "candidateResolution": {
+                "status": "unresolved",
+                "value": null,
+                "expectedValue": -6,
+                "source": "stat-context",
+                "direct": false,
+                "candidates": [
+                  {
+                    "value": -3,
+                    "source": "batch-contrast",
+                    "confidence": 18,
+                    "status": "conflict",
+                    "issues": [
+                      "tier-level"
+                    ]
+                  }
+                ]
+              }
+            }
+          }
+        ],
+        "artifact": {
+          "type": "Armor",
+          "rawType": "Armor",
+          "categoryConfidence": 96,
+          "source": "crafting-label",
+          "hall": "main"
+        },
+        "hall": "main",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9529411764705882,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Unreadable signed percentage: ",
+          "Row 1: OCR field evidence is weak. Verify the name and percentage.",
+          "Row 5: OCR field evidence is weak. Verify the name and percentage.",
+          "Row 1: percentage inferred from neutral text and the known perk sign. Verify it.",
+          "Colour and OCR disagree on row 5. Check the artifact type and original percentage.",
+          "Row 5: colour and starting percentage conflict. Verify the tier.",
+          "Unreadable signed percentage: Invading Heavy Infantry Damage 19%",
+          "Unknown or ambiguous perk: | nvading Supply Vehicle Healing",
+          "Expected 5 visible rows; read 4. Check the complete panel.",
+          "OCR evidence is weak on 2 line(s). Verify the names and percentages.",
+          "Row 2: percentage inferred from neutral text and the known perk sign. Verify it.",
+          "Unreadable signed percentage: invading Heavy Infantry Hitpomigs -oos",
+          "Some individual rows are still unclear. Verify their names and percentages.",
+          "Row 5: percentage inferred from green text and the known perk sign. Verify it.",
+          "Combined the clearest compatible rows from separate reads. Verify these rows.",
+          "OCR reads disagree about perk names or values. Verify the conflicting rows.",
+          "Calibrated field evidence conflicts. Verify the conflicting rows."
+        ],
+        "recognitionPath": "calibrated-fields+standard-fallback"
+      }
+    },
+    {
+      "inputTime": 207.8,
+      "finishVideoTime": 209.2,
+      "readMs": 1395,
+      "nearestLabelTime": 208,
+      "withinTwoSeconds": true,
+      "accuracy": {
+        "statsExact": true,
+        "visibleExact": true,
+        "directStats": true,
+        "category": true,
+        "hall": true,
+        "title": null,
+        "fields": [
+          {
+            "row": 1,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 2,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 3,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 4,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 5,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          }
+        ],
+        "accepted": false,
+        "acceptedWrongStats": false
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "raw": "Enemy Tower Hitpoints -1%",
+            "rawName": "Enemy Tower Hitpoints",
+            "name": "Enemy Tower Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Enemy Tower Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 94,
+            "colour": "neutral",
+            "unlocked": true,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -1,
+            "max": -10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                -1
+              ],
+              "expectedValue": -1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Enemy Air Defense Damage -6%",
+            "rawName": "Enemy Air Defense Damage",
+            "rawPercentage": "-6%",
+            "name": "Enemy Air Defense Damage",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Enemy Air Defense Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 83,
+            "colour": "green",
+            "unlocked": true,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "green",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -6,
+            "max": -15,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "green",
+              "level": 1,
+              "legalValues": [
+                -6
+              ],
+              "expectedValue": -6,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Enemy Missile Silo Hitpoints -1%",
+            "rawName": "Enemy Missile Silo Hitpoints -1%",
+            "rawPercentage": "-1%",
+            "name": "Enemy Missile Silo Hitpoints",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Enemy Missile Silo Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 95,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -1,
+            "max": -10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "confirmed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                -1
+              ],
+              "expectedValue": -1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Enemy Sniper Tower Hitpoints -6%",
+            "rawName": "Enemy Sniper Tower Hitpoints",
+            "rawPercentage": "-6%",
+            "name": "Enemy Sniper Tower Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Enemy Sniper Tower Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 78,
+            "colour": "green",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "green",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -6,
+            "max": -15,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "confirmed",
+              "scope": "ordinary-crafting",
+              "tier": "green",
+              "level": 1,
+              "legalValues": [
+                -6
+              ],
+              "expectedValue": -6,
+              "issues": [],
+              "status": "compatible",
+              "candidateResolution": {
+                "status": "resolved",
+                "value": -6,
+                "expectedValue": -6,
+                "source": "stat-context",
+                "direct": false,
+                "candidates": [
+                  {
+                    "value": -6,
+                    "source": "focused-fields",
+                    "confidence": 78,
+                    "status": "compatible",
+                    "issues": []
+                  },
+                  {
+                    "value": -6,
+                    "source": "colour-fields",
+                    "confidence": 76,
+                    "status": "compatible",
+                    "issues": []
+                  }
+                ]
+              }
+            }
+          },
+          {
+            "raw": "Enemy Sniper Tower Damage -1%",
+            "rawName": "Enemy Sniper Tower Damage -1%",
+            "rawPercentage": "-1%",
+            "name": "Enemy Sniper Tower Damage",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Enemy Sniper Tower Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 94,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -1,
+            "max": -10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                -1
+              ],
+              "expectedValue": -1,
+              "issues": [],
+              "status": "compatible"
+            }
+          }
+        ],
+        "artifact": {
+          "type": "Jewelry",
+          "rawType": "Jewelry",
+          "categoryConfidence": 94,
+          "source": "crafting-label",
+          "hall": "main"
+        },
+        "hall": "main",
+        "unlocked": {
+          "count": 2,
+          "states": [
+            true,
+            true,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9529411764705882,
+            0.9911764705882353,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Unreadable signed percentage: ",
+          "Row 1: OCR field evidence is weak. Verify the name and percentage.",
+          "Row 4: OCR field evidence is weak. Verify the name and percentage.",
+          "Row 1: percentage inferred from neutral text and the known perk sign. Verify it.",
+          "Unknown or ambiguous perk: Enemy Air Defense Damage o%          a",
+          "Unreadable signed percentage: Enemy Air Defense Damage o%          a",
+          "OCR evidence is weak on 2 line(s). Verify the names and percentages.",
+          "Some individual rows are still unclear. Verify their names and percentages.",
+          "Combined the clearest compatible rows from separate reads. Verify these rows.",
+          "Combined the clearest compatible rows from separate reads. Verify these rows."
+        ],
+        "recognitionPath": "calibrated-fields+standard-fallback"
+      }
+    },
+    {
+      "inputTime": 227.05,
+      "finishVideoTime": 227.75,
+      "readMs": 807,
+      "nearestLabelTime": 227,
+      "withinTwoSeconds": true,
+      "accuracy": {
+        "statsExact": true,
+        "visibleExact": true,
+        "directStats": true,
+        "category": true,
+        "hall": true,
+        "title": null,
+        "fields": [
+          {
+            "row": 1,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 2,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 3,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 4,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 5,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          }
+        ],
+        "accepted": false,
+        "acceptedWrongStats": false
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "raw": "Gold from Gold Mines +11%",
+            "rawName": "Gold from Gold Mines",
+            "name": "Gold from Gold Mines",
+            "value": 11,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Gold from Gold Mines",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 93,
+            "colour": "blue",
+            "unlocked": true,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "blue",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 11,
+            "max": 20,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "blue",
+              "level": 1,
+              "legalValues": [
+                11
+              ],
+              "expectedValue": 11,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Catapult Hitpoints +1%",
+            "rawName": "Catapult Hitpoints +1%",
+            "rawPercentage": "+1%",
+            "name": "Catapult Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Catapult Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 87,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 1,
+            "max": 10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                1
+              ],
+              "expectedValue": 1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Tower Damage +1%",
+            "rawName": "Tower Damage +1%",
+            "rawPercentage": "+1%",
+            "name": "Tower Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Tower Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 94,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 1,
+            "max": 10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                1
+              ],
+              "expectedValue": 1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Library Tech Oil Cost -1%",
+            "rawName": "Library Tech Oil Cost -1%",
+            "rawPercentage": "-1%",
+            "name": "Library Tech Oil Cost",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Library Tech Oil Cost",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 95,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -1,
+            "max": -10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                -1
+              ],
+              "expectedValue": -1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Food from Farms +6%",
+            "rawName": "Food from Farms",
+            "rawPercentage": "+6%",
+            "name": "Food from Farms",
+            "value": 6,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Food from Farms",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 92,
+            "colour": "green",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "green",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 6,
+            "max": 15,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "green",
+              "level": 1,
+              "legalValues": [
+                6
+              ],
+              "expectedValue": 6,
+              "issues": [],
+              "status": "compatible"
+            }
+          }
+        ],
+        "artifact": {
+          "type": "Pottery",
+          "rawType": "Pottery",
+          "categoryConfidence": 96,
+          "source": "crafting-label",
+          "hall": "main"
+        },
+        "hall": "main",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.95,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Unknown or ambiguous perk: Gold from Gold",
+          "Row 1: OCR field evidence is weak. Verify the name and percentage.",
+          "Unreadable signed percentage: Food from Farms +&%",
+          "Expected 5 visible rows; read 4. Check the complete panel.",
+          "OCR evidence is weak on 1 line(s). Verify the names and percentages.",
+          "Row 5: percentage inferred from green text and the known perk sign. Verify it.",
+          "Some individual rows are still unclear. Verify their names and percentages.",
+          "Combined the clearest compatible rows from separate reads. Verify these rows.",
+          "Combined the clearest compatible rows from separate reads. Verify these rows."
+        ],
+        "recognitionPath": "calibrated-fields+standard-fallback"
+      }
+    },
+    {
+      "inputTime": 228.1,
+      "finishVideoTime": 229.15,
+      "readMs": 875,
+      "nearestLabelTime": 227,
+      "withinTwoSeconds": true,
+      "accuracy": {
+        "statsExact": true,
+        "visibleExact": true,
+        "directStats": true,
+        "category": true,
+        "hall": true,
+        "title": null,
+        "fields": [
+          {
+            "row": 1,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 2,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 3,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 4,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 5,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          }
+        ],
+        "accepted": false,
+        "acceptedWrongStats": false
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "raw": "Gold from Gold Mines +11%",
+            "rawName": "Gold from Gold Mines",
+            "name": "Gold from Gold Mines",
+            "value": 11,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Gold from Gold Mines",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 93,
+            "colour": "blue",
+            "unlocked": true,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "blue",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 11,
+            "max": 20,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "blue",
+              "level": 1,
+              "legalValues": [
+                11
+              ],
+              "expectedValue": 11,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Catapult Hitpoints +1%",
+            "rawName": "Catapult Hitpoints +1%",
+            "rawPercentage": "+1%",
+            "name": "Catapult Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Catapult Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 87,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 1,
+            "max": 10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                1
+              ],
+              "expectedValue": 1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Tower Damage +1%",
+            "rawName": "Tower Damage +1%",
+            "rawPercentage": "+1%",
+            "name": "Tower Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Tower Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 94,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 1,
+            "max": 10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                1
+              ],
+              "expectedValue": 1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Library Tech Oil Cost -1%",
+            "rawName": "Library Tech Oil Cost -1%",
+            "rawPercentage": "-1%",
+            "name": "Library Tech Oil Cost",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Library Tech Oil Cost",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 95,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -1,
+            "max": -10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                -1
+              ],
+              "expectedValue": -1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Food from Farms +6%",
+            "rawName": "Food from Farms",
+            "rawPercentage": "+6%",
+            "name": "Food from Farms",
+            "value": 6,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Food from Farms",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 92,
+            "colour": "green",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "green",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 6,
+            "max": 15,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "green",
+              "level": 1,
+              "legalValues": [
+                6
+              ],
+              "expectedValue": 6,
+              "issues": [],
+              "status": "compatible"
+            }
+          }
+        ],
+        "artifact": {
+          "type": "Pottery",
+          "rawType": "Pottery",
+          "categoryConfidence": 96,
+          "source": "crafting-label",
+          "hall": "main"
+        },
+        "hall": "main",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.95,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Unknown or ambiguous perk: Gold from Gold",
+          "Row 1: OCR field evidence is weak. Verify the name and percentage.",
+          "Unreadable signed percentage: Food from Farms +&%",
+          "Expected 5 visible rows; read 4. Check the complete panel.",
+          "OCR evidence is weak on 1 line(s). Verify the names and percentages.",
+          "Row 5: percentage inferred from green text and the known perk sign. Verify it.",
+          "Some individual rows are still unclear. Verify their names and percentages.",
+          "Combined the clearest compatible rows from separate reads. Verify these rows.",
+          "Combined the clearest compatible rows from separate reads. Verify these rows."
+        ],
+        "recognitionPath": "calibrated-fields+standard-fallback"
+      }
+    },
+    {
+      "inputTime": 236.5,
+      "finishVideoTime": 237.55,
+      "readMs": 1119,
+      "nearestLabelTime": 236,
+      "withinTwoSeconds": true,
+      "accuracy": {
+        "statsExact": true,
+        "visibleExact": true,
+        "directStats": true,
+        "category": true,
+        "hall": true,
+        "title": null,
+        "fields": [
+          {
+            "row": 1,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 2,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 3,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 4,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 5,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          }
+        ],
+        "accepted": false,
+        "acceptedWrongStats": false
+      },
+      "result": {
+        "valid": false,
+        "rows": [
+          {
+            "raw": "All Resources from Hunting +1%",
+            "rawName": "All Resources from Hunting",
+            "name": "All Resources from Hunting",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "All Resources from Hunting",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 95,
+            "colour": "neutral",
+            "unlocked": true,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 1,
+            "max": 10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "approved",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                1
+              ],
+              "expectedValue": 1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Food from Farms +11%",
+            "rawName": "Food from Farms +11%",
+            "rawPercentage": "+11%",
+            "name": "Food from Farms",
+            "value": 11,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Food from Farms",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 88,
+            "colour": "blue",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "blue",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 11,
+            "max": 20,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "blue",
+              "level": 1,
+              "legalValues": [
+                11
+              ],
+              "expectedValue": 11,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Missile Silo Hitpoints +1%",
+            "rawName": "Missile Silo Hitpoints +1%",
+            "rawPercentage": "+1%",
+            "name": "Missile Silo Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Missile Silo Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 94,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 1,
+            "max": 10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "confirmed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                1
+              ],
+              "expectedValue": 1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Air Defense Damage +1%",
+            "rawName": "Air Defense Damage +1%",
+            "rawPercentage": "+1%",
+            "name": "Air Defense Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Air Defense Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 93,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 1,
+            "max": 10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                1
+              ],
+              "expectedValue": 1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Air Defense Hitpoints +11%",
+            "rawName": "Air Defense Hitpoints",
+            "rawPercentage": "+11%",
+            "name": "Air Defense Hitpoints",
+            "value": 11,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Air Defense Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 91,
+            "colour": "blue",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "blue",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 11,
+            "max": 20,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "blue",
+              "level": 1,
+              "legalValues": [
+                11
+              ],
+              "expectedValue": 11,
+              "issues": [],
+              "status": "compatible"
+            }
+          }
+        ],
+        "artifact": {
+          "type": "Pottery",
+          "rawType": "Pottery",
+          "categoryConfidence": 96,
+          "source": "crafting-label",
+          "hall": "main"
+        },
+        "hall": "main",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9470588235294117,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [
+          "Unreadable signed percentage: ",
+          "Row 1: OCR field evidence is weak. Verify the name and percentage.",
+          "Row 1: percentage inferred from neutral text and the known perk sign. Verify it.",
+          "Ignored background text after the percentage for Food from Farms. Verify this row.",
+          "Unreadable signed percentage: Air Defense Hitpoints +1 14%",
+          "OCR evidence is weak on 2 line(s). Verify the names and percentages.",
+          "Row 5: percentage inferred from blue text and the known perk sign. Verify it.",
+          "Some individual rows are still unclear. Verify their names and percentages.",
+          "Combined the clearest compatible rows from separate reads. Verify these rows.",
+          "Combined the clearest compatible rows from separate reads. Verify these rows."
+        ],
+        "recognitionPath": "calibrated-fields+standard-fallback"
+      }
+    },
+    {
+      "inputTime": 247.7,
+      "finishVideoTime": 248.75,
+      "readMs": 1130,
+      "nearestLabelTime": 248,
+      "withinTwoSeconds": true,
+      "accuracy": {
+        "statsExact": true,
+        "visibleExact": true,
+        "directStats": true,
+        "category": true,
+        "hall": true,
+        "title": null,
+        "fields": [
+          {
+            "row": 1,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 2,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 3,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 4,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 5,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          }
+        ],
+        "accepted": true,
+        "acceptedWrongStats": false
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "raw": "MRL Damage +6%",
+            "rawName": "MRL Damage",
+            "name": "MRL Damage",
+            "value": 6,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "MRL Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "colour": "green",
+            "unlocked": true,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "green",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 6,
+            "max": 15,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "green",
+              "level": 1,
+              "legalValues": [
+                6
+              ],
+              "expectedValue": 6,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Attack Helicopter Damage +1%",
+            "rawName": "Attack Helicopter Damage",
+            "name": "Attack Helicopter Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Attack Helicopter Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 1,
+            "max": 10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                1
+              ],
+              "expectedValue": 1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Guerrilla Damage +1%",
+            "rawName": "Guerrilla Damage",
+            "name": "Guerrilla Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Guerrilla Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 1,
+            "max": 10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                1
+              ],
+              "expectedValue": 1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Ranged Siege Hitpoints +1%",
+            "rawName": "Ranged Siege Hitpoints",
+            "name": "Ranged Siege Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Ranged Siege Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 1,
+            "max": 10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                1
+              ],
+              "expectedValue": 1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Heavy Tank Damage +1%",
+            "rawName": "Heavy Tank Damage",
+            "name": "Heavy Tank Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Heavy Tank Damage",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": "high",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 1,
+            "max": 10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                1
+              ],
+              "expectedValue": 1,
+              "issues": [],
+              "status": "compatible"
+            }
+          }
+        ],
+        "artifact": {
+          "type": "Weapon",
+          "rawType": "Weapon",
+          "categoryConfidence": 96,
+          "source": "crafting-label",
+          "hall": "main"
+        },
+        "hall": "main",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9470588235294117,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [],
+        "recognitionPath": "calibrated-fields+standard-fallback"
+      }
+    },
+    {
+      "inputTime": 252.25,
+      "finishVideoTime": 252.6,
+      "readMs": 391,
+      "nearestLabelTime": 253,
+      "withinTwoSeconds": true,
+      "accuracy": {
+        "statsExact": true,
+        "visibleExact": true,
+        "directStats": true,
+        "category": true,
+        "hall": true,
+        "title": null,
+        "fields": [
+          {
+            "row": 1,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 2,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 3,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 4,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          },
+          {
+            "row": 5,
+            "name": true,
+            "value": true,
+            "directName": true,
+            "directValue": true,
+            "star": true
+          }
+        ],
+        "accepted": true,
+        "acceptedWrongStats": false
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "raw": "Enemy Anti-Tank Gun Hitpoints -6%",
+            "rawName": "Enemy Anti-Tank Gun Hitpoints",
+            "rawPercentage": "-6%",
+            "name": "Enemy Anti-Tank Gun Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Enemy Anti-Tank Gun Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 90,
+            "colour": "green",
+            "unlocked": true,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "green",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -6,
+            "max": -15,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "green",
+              "level": 1,
+              "legalValues": [
+                -6
+              ],
+              "expectedValue": -6,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Enemy Soper Tower Damage -6%",
+            "rawName": "Enemy Soper Tower Damage -6%",
+            "rawPercentage": "-6%",
+            "name": "Enemy Sniper Tower Damage",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": true,
+            "nameMatch": {
+              "name": "Enemy Sniper Tower Damage",
+              "confidence": 0.9090909090909091,
+              "rawSimilarity": 0.9090909090909091,
+              "corrections": [],
+              "margin": 3,
+              "automatic": true,
+              "method": "ocr-glyphs"
+            },
+            "hasPercent": true,
+            "confidence": 80,
+            "colour": "green",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "green",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -6,
+            "max": -15,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "green",
+              "level": 1,
+              "legalValues": [
+                -6
+              ],
+              "expectedValue": -6,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Enemy Tower Hitpoints -11%",
+            "rawName": "Enemy Tower Hitpoints -11%%",
+            "rawPercentage": "-11%",
+            "name": "Enemy Tower Hitpoints",
+            "value": -11,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Enemy Tower Hitpoints",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 89,
+            "colour": "blue",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "blue",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": -11,
+            "max": -20,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": -1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "blue",
+              "level": 1,
+              "legalValues": [
+                -11
+              ],
+              "expectedValue": -11,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "All Resources Looted +1%",
+            "rawName": "All Resources Looted +1%",
+            "rawPercentage": "+1%",
+            "name": "All Resources Looted",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "All Resources Looted",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 94,
+            "colour": "neutral",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "white",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 1,
+            "max": 10,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "white",
+              "level": 1,
+              "legalValues": [
+                1
+              ],
+              "expectedValue": 1,
+              "issues": [],
+              "status": "compatible"
+            }
+          },
+          {
+            "raw": "Looted Resource Refund +11%",
+            "rawName": "Looted Resource Refund +11%",
+            "rawPercentage": "+11%",
+            "name": "Looted Resource Refund",
+            "value": 11,
+            "known": true,
+            "assumed": false,
+            "nameCorrected": false,
+            "nameMatch": {
+              "name": "Looted Resource Refund",
+              "confidence": 1,
+              "automatic": true,
+              "method": "exact"
+            },
+            "hasPercent": true,
+            "confidence": 90,
+            "colour": "blue",
+            "unlocked": false,
+            "level": 1,
+            "levelSource": "crafting",
+            "tier": "blue",
+            "tierSource": "colour",
+            "tierConflict": false,
+            "base": 11,
+            "max": 20,
+            "rangeSource": "colour",
+            "rangeReview": null,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft",
+            "rerollConfidence": null,
+            "statContext": {
+              "version": 1,
+              "knownStat": true,
+              "expectedSign": 1,
+              "ordinaryAvailability": "observed-reviewed",
+              "scope": "ordinary-crafting",
+              "tier": "blue",
+              "level": 1,
+              "legalValues": [
+                11
+              ],
+              "expectedValue": 11,
+              "issues": [],
+              "status": "compatible"
+            }
+          }
+        ],
+        "artifact": {
+          "type": "Jewelry",
+          "rawType": "Jewelry",
+          "categoryConfidence": 96,
+          "source": "crafting-label",
+          "hall": "main"
+        },
+        "hall": "main",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9529411764705882,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": [],
+        "recognitionPath": "calibrated-fields"
+      }
+    }
+  ],
+  "recordItemCalls": [
+    {
+      "time": 163.35,
+      "id": 2,
+      "options": {
+        "expectedRows": 5,
+        "continuous": true,
+        "newEncounter": true
+      }
+    },
+    {
+      "time": 165.8,
+      "id": 5,
+      "options": {
+        "expectedRows": 5,
+        "continuous": true,
+        "newEncounter": true
+      }
+    },
+    {
+      "time": 178.75,
+      "id": 11,
+      "options": {
+        "expectedRows": 5,
+        "continuous": true,
+        "newEncounter": true
+      }
+    },
+    {
+      "time": 185.75,
+      "id": 16,
+      "options": {
+        "expectedRows": 5,
+        "continuous": true,
+        "newEncounter": true
+      }
+    },
+    {
+      "time": 189.95,
+      "id": 19,
+      "options": {
+        "expectedRows": 5,
+        "continuous": true,
+        "newEncounter": true
+      }
+    },
+    {
+      "time": 196.25,
+      "id": 23,
+      "options": {
+        "expectedRows": 5,
+        "continuous": true,
+        "newEncounter": true
+      }
+    },
+    {
+      "time": 209.2,
+      "id": 30,
+      "options": {
+        "expectedRows": 5,
+        "continuous": true,
+        "newEncounter": true
+      }
+    },
+    {
+      "time": 227.75,
+      "id": 39,
+      "options": {
+        "expectedRows": 5,
+        "continuous": true,
+        "newEncounter": true
+      }
+    },
+    {
+      "time": 229.15,
+      "id": 39,
+      "options": {
+        "expectedRows": 5,
+        "continuous": true,
+        "newEncounter": false
+      }
+    },
+    {
+      "time": 237.55,
+      "id": 44,
+      "options": {
+        "expectedRows": 5,
+        "continuous": true,
+        "newEncounter": true
+      }
+    },
+    {
+      "time": 248.75,
+      "id": 50,
+      "options": {
+        "expectedRows": 5,
+        "continuous": true,
+        "newEncounter": true
+      }
+    },
+    {
+      "time": 252.6,
+      "id": 55,
+      "options": {
+        "expectedRows": 5,
+        "continuous": true,
+        "newEncounter": true
+      }
+    }
+  ],
+  "renderedTotal": "—",
+  "renderedFreshness": "LAST READ · Capture paused",
+  "ticks": [
+    {
+      "time": 156,
+      "panel": false,
+      "records": 0,
+      "status": "Waiting for an artifact",
+      "lagMs": 4
+    },
+    {
+      "time": 156.35,
+      "panel": false,
+      "records": 0,
+      "status": "Waiting for an artifact",
+      "lagMs": 13
+    },
+    {
+      "time": 156.7,
+      "panel": false,
+      "records": 0,
+      "status": "Waiting for an artifact",
+      "lagMs": 5
+    },
+    {
+      "time": 157.05,
+      "panel": false,
+      "records": 0,
+      "status": "Waiting for an artifact",
+      "lagMs": 12
+    },
+    {
+      "time": 157.4,
+      "panel": false,
+      "records": 0,
+      "status": "Waiting for an artifact",
+      "lagMs": 84
+    },
+    {
+      "time": 157.75,
+      "panel": false,
+      "records": 0,
+      "status": "Waiting for an artifact",
+      "lagMs": 242
+    },
+    {
+      "time": 158.1,
+      "panel": false,
+      "records": 0,
+      "status": "Waiting for an artifact",
+      "lagMs": 343
+    },
+    {
+      "time": 158.8,
+      "panel": false,
+      "records": 0,
+      "status": "Waiting for an artifact",
+      "lagMs": 94
+    },
+    {
+      "time": 159.15,
+      "panel": false,
+      "records": 0,
+      "status": "Waiting for an artifact",
+      "lagMs": 9
+    },
+    {
+      "time": 159.5,
+      "panel": false,
+      "records": 0,
+      "status": "Waiting for an artifact",
+      "lagMs": 14
+    },
+    {
+      "time": 159.85,
+      "panel": false,
+      "records": 0,
+      "status": "Waiting for an artifact",
+      "lagMs": 3
+    },
+    {
+      "time": 160.2,
+      "panel": true,
+      "records": 0,
+      "status": "Waiting for a steady image",
+      "lagMs": 16
+    },
+    {
+      "time": 160.55,
+      "panel": true,
+      "records": 0,
+      "status": "Waiting for a steady image",
+      "lagMs": 3
+    },
+    {
+      "time": 160.9,
+      "panel": true,
+      "records": 0,
+      "status": "Waiting for a steady image",
+      "lagMs": 11
+    },
+    {
+      "time": 161.25,
+      "panel": true,
+      "records": 0,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 5
+    },
+    {
+      "time": 161.6,
+      "panel": true,
+      "records": 0,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 12
+    },
+    {
+      "time": 161.95,
+      "panel": true,
+      "records": 0,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 3
+    },
+    {
+      "time": 162.3,
+      "panel": true,
+      "records": 0,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 12
+    },
+    {
+      "time": 162.65,
+      "panel": true,
+      "records": 0,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 5
+    },
+    {
+      "time": 163,
+      "panel": true,
+      "records": 0,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 1
+    },
+    {
+      "time": 163.35,
+      "panel": true,
+      "records": 1,
+      "status": "Waiting for a steady image",
+      "lagMs": 8
+    },
+    {
+      "time": 163.7,
+      "panel": true,
+      "records": 1,
+      "status": "Waiting for a steady image",
+      "lagMs": 0
+    },
+    {
+      "time": 164.05,
+      "panel": false,
+      "records": 1,
+      "status": "Paused · showing the last capture",
+      "lagMs": 7
+    },
+    {
+      "time": 164.4,
+      "panel": true,
+      "records": 1,
+      "status": "Waiting for a steady image",
+      "lagMs": 15
+    },
+    {
+      "time": 164.75,
+      "panel": true,
+      "records": 1,
+      "status": "Waiting for a steady image",
+      "lagMs": 5
+    },
+    {
+      "time": 165.1,
+      "panel": true,
+      "records": 1,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 11
+    },
+    {
+      "time": 165.45,
+      "panel": true,
+      "records": 1,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 5
+    },
+    {
+      "time": 165.8,
+      "panel": true,
+      "records": 2,
+      "status": "Finished · 5/5 · ready to move on",
+      "lagMs": 44
+    },
+    {
+      "time": 166.15,
+      "panel": true,
+      "records": 2,
+      "status": "Finished · 5/5 · ready to move on",
+      "lagMs": 115
+    },
+    {
+      "time": 166.5,
+      "panel": true,
+      "records": 2,
+      "status": "Finished · 5/5 · ready to move on",
+      "lagMs": 138
+    },
+    {
+      "time": 166.85,
+      "panel": true,
+      "records": 2,
+      "status": "Finished · 5/5 · ready to move on",
+      "lagMs": 175
+    },
+    {
+      "time": 167.2,
+      "panel": true,
+      "records": 2,
+      "status": "Finished · 5/5 · ready to move on",
+      "lagMs": 36
+    },
+    {
+      "time": 167.55,
+      "panel": true,
+      "records": 2,
+      "status": "Finished · 5/5 · ready to move on",
+      "lagMs": 1
+    },
+    {
+      "time": 167.9,
+      "panel": true,
+      "records": 2,
+      "status": "Finished · 5/5 · ready to move on",
+      "lagMs": 4
+    },
+    {
+      "time": 168.25,
+      "panel": true,
+      "records": 2,
+      "status": "Finished · 5/5 · ready to move on",
+      "lagMs": 8
+    },
+    {
+      "time": 168.6,
+      "panel": true,
+      "records": 2,
+      "status": "Finished · 5/5 · ready to move on",
+      "lagMs": 12
+    },
+    {
+      "time": 168.95,
+      "panel": true,
+      "records": 2,
+      "status": "Finished · 5/5 · ready to move on",
+      "lagMs": 1
+    },
+    {
+      "time": 169.3,
+      "panel": true,
+      "records": 2,
+      "status": "Finished · 5/5 · ready to move on",
+      "lagMs": 7
+    },
+    {
+      "time": 169.65,
+      "panel": true,
+      "records": 2,
+      "status": "Finished · 5/5 · ready to move on",
+      "lagMs": 13
+    },
+    {
+      "time": 170,
+      "panel": false,
+      "records": 2,
+      "status": "Paused · showing the last capture",
+      "lagMs": 2
+    },
+    {
+      "time": 170.35,
+      "panel": true,
+      "records": 2,
+      "status": "Waiting for a steady image",
+      "lagMs": 11
+    },
+    {
+      "time": 170.7,
+      "panel": true,
+      "records": 2,
+      "status": "Waiting for a steady image",
+      "lagMs": 4
+    },
+    {
+      "time": 171.05,
+      "panel": true,
+      "records": 2,
+      "status": "Waiting for a steady image",
+      "lagMs": 11
+    },
+    {
+      "time": 171.4,
+      "panel": true,
+      "records": 2,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 6
+    },
+    {
+      "time": 171.75,
+      "panel": true,
+      "records": 2,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 0
+    },
+    {
+      "time": 173.15,
+      "panel": true,
+      "records": 2,
+      "status": "Waiting for a steady image",
+      "lagMs": 360
+    },
+    {
+      "time": 175.6,
+      "panel": true,
+      "records": 2,
+      "status": "Waiting for a steady image",
+      "lagMs": 119
+    },
+    {
+      "time": 175.95,
+      "panel": false,
+      "records": 2,
+      "status": "Paused · showing the last capture",
+      "lagMs": 2
+    },
+    {
+      "time": 176.3,
+      "panel": true,
+      "records": 2,
+      "status": "Waiting for a steady image",
+      "lagMs": 13
+    },
+    {
+      "time": 176.65,
+      "panel": false,
+      "records": 2,
+      "status": "Paused · showing the last capture",
+      "lagMs": 3
+    },
+    {
+      "time": 177,
+      "panel": true,
+      "records": 2,
+      "status": "Waiting for a steady image",
+      "lagMs": 12
+    },
+    {
+      "time": 177.35,
+      "panel": true,
+      "records": 2,
+      "status": "Waiting for a steady image",
+      "lagMs": 2
+    },
+    {
+      "time": 177.7,
+      "panel": true,
+      "records": 2,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 11
+    },
+    {
+      "time": 178.05,
+      "panel": true,
+      "records": 2,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 2
+    },
+    {
+      "time": 178.4,
+      "panel": true,
+      "records": 2,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 12
+    },
+    {
+      "time": 178.75,
+      "panel": true,
+      "records": 2,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 2
+    },
+    {
+      "time": 179.1,
+      "panel": false,
+      "records": 3,
+      "status": "Paused · showing the last capture",
+      "lagMs": 11
+    },
+    {
+      "time": 179.45,
+      "panel": false,
+      "records": 3,
+      "status": "Paused · showing the last capture",
+      "lagMs": 1
+    },
+    {
+      "time": 179.8,
+      "panel": true,
+      "records": 3,
+      "status": "Waiting for a steady image · keeping the last capture visible",
+      "lagMs": 8
+    },
+    {
+      "time": 180.15,
+      "panel": false,
+      "records": 3,
+      "status": "Paused · showing the last capture",
+      "lagMs": 0
+    },
+    {
+      "time": 180.5,
+      "panel": false,
+      "records": 3,
+      "status": "Paused · showing the last capture",
+      "lagMs": 8
+    },
+    {
+      "time": 180.85,
+      "panel": false,
+      "records": 3,
+      "status": "Paused · showing the last capture",
+      "lagMs": 14
+    },
+    {
+      "time": 181.2,
+      "panel": false,
+      "records": 3,
+      "status": "Paused · showing the last capture",
+      "lagMs": 7
+    },
+    {
+      "time": 181.55,
+      "panel": true,
+      "records": 3,
+      "status": "Waiting for a steady image · keeping the last capture visible",
+      "lagMs": 0
+    },
+    {
+      "time": 181.9,
+      "panel": true,
+      "records": 3,
+      "status": "Waiting for a steady image · keeping the last capture visible",
+      "lagMs": 9
+    },
+    {
+      "time": 182.25,
+      "panel": true,
+      "records": 3,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 2
+    },
+    {
+      "time": 182.6,
+      "panel": true,
+      "records": 3,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 9
+    },
+    {
+      "time": 182.95,
+      "panel": true,
+      "records": 3,
+      "status": "Waiting for a steady image",
+      "lagMs": 50
+    },
+    {
+      "time": 183.3,
+      "panel": true,
+      "records": 3,
+      "status": "Waiting for a steady image",
+      "lagMs": 74
+    },
+    {
+      "time": 183.65,
+      "panel": false,
+      "records": 3,
+      "status": "Paused · showing the last capture",
+      "lagMs": 94
+    },
+    {
+      "time": 184,
+      "panel": true,
+      "records": 3,
+      "status": "Waiting for a steady image",
+      "lagMs": 8
+    },
+    {
+      "time": 184.35,
+      "panel": false,
+      "records": 3,
+      "status": "Paused · showing the last capture",
+      "lagMs": 1
+    },
+    {
+      "time": 184.7,
+      "panel": true,
+      "records": 3,
+      "status": "Waiting for a steady image",
+      "lagMs": 9
+    },
+    {
+      "time": 185.05,
+      "panel": true,
+      "records": 3,
+      "status": "Waiting for a steady image",
+      "lagMs": 2
+    },
+    {
+      "time": 185.4,
+      "panel": true,
+      "records": 3,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 10
+    },
+    {
+      "time": 185.75,
+      "panel": true,
+      "records": 3,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 1
+    },
+    {
+      "time": 186.1,
+      "panel": true,
+      "records": 4,
+      "status": "Finished · 5/5 · ready to move on",
+      "lagMs": 10
+    },
+    {
+      "time": 186.45,
+      "panel": true,
+      "records": 4,
+      "status": "Waiting for a steady image",
+      "lagMs": 2
+    },
+    {
+      "time": 186.8,
+      "panel": false,
+      "records": 4,
+      "status": "Paused · showing the last capture",
+      "lagMs": -1
+    },
+    {
+      "time": 187.15,
+      "panel": true,
+      "records": 4,
+      "status": "Waiting for a steady image",
+      "lagMs": 8
+    },
+    {
+      "time": 187.5,
+      "panel": false,
+      "records": 4,
+      "status": "Paused · showing the last capture",
+      "lagMs": 3
+    },
+    {
+      "time": 187.85,
+      "panel": true,
+      "records": 4,
+      "status": "Waiting for a steady image",
+      "lagMs": 9
+    },
+    {
+      "time": 188.2,
+      "panel": true,
+      "records": 4,
+      "status": "Waiting for a steady image",
+      "lagMs": 3
+    },
+    {
+      "time": 188.55,
+      "panel": true,
+      "records": 4,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 10
+    },
+    {
+      "time": 188.9,
+      "panel": true,
+      "records": 4,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 0
+    },
+    {
+      "time": 189.25,
+      "panel": true,
+      "records": 4,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 8
+    },
+    {
+      "time": 189.6,
+      "panel": true,
+      "records": 4,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": -1
+    },
+    {
+      "time": 189.95,
+      "panel": false,
+      "records": 5,
+      "status": "Paused · showing the last capture",
+      "lagMs": 8
+    },
+    {
+      "time": 190.3,
+      "panel": false,
+      "records": 5,
+      "status": "Paused · showing the last capture",
+      "lagMs": 3
+    },
+    {
+      "time": 190.65,
+      "panel": true,
+      "records": 5,
+      "status": "Waiting for a steady image · keeping the last capture visible",
+      "lagMs": 12
+    },
+    {
+      "time": 191,
+      "panel": true,
+      "records": 5,
+      "status": "Waiting for a steady image · keeping the last capture visible",
+      "lagMs": 3
+    },
+    {
+      "time": 191.35,
+      "panel": true,
+      "records": 5,
+      "status": "Waiting for a steady image · keeping the last capture visible",
+      "lagMs": 10
+    },
+    {
+      "time": 191.7,
+      "panel": true,
+      "records": 5,
+      "status": "Waiting for a steady image · keeping the last capture visible",
+      "lagMs": 3
+    },
+    {
+      "time": 192.05,
+      "panel": true,
+      "records": 5,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 10
+    },
+    {
+      "time": 192.4,
+      "panel": true,
+      "records": 5,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 1
+    },
+    {
+      "time": 192.75,
+      "panel": true,
+      "records": 5,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 9
+    },
+    {
+      "time": 193.1,
+      "panel": false,
+      "records": 5,
+      "status": "Paused · showing the last capture",
+      "lagMs": 0
+    },
+    {
+      "time": 193.45,
+      "panel": false,
+      "records": 5,
+      "status": "Paused · showing the last capture",
+      "lagMs": 4
+    },
+    {
+      "time": 193.8,
+      "panel": true,
+      "records": 5,
+      "status": "Waiting for a steady image · keeping the last capture visible",
+      "lagMs": 7
+    },
+    {
+      "time": 194.15,
+      "panel": true,
+      "records": 5,
+      "status": "Waiting for a steady image · keeping the last capture visible",
+      "lagMs": 13
+    },
+    {
+      "time": 194.5,
+      "panel": true,
+      "records": 5,
+      "status": "Waiting for a steady image · keeping the last capture visible",
+      "lagMs": 4
+    },
+    {
+      "time": 194.85,
+      "panel": true,
+      "records": 5,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 11
+    },
+    {
+      "time": 195.2,
+      "panel": true,
+      "records": 5,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 4
+    },
+    {
+      "time": 195.55,
+      "panel": true,
+      "records": 5,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 12
+    },
+    {
+      "time": 195.9,
+      "panel": true,
+      "records": 5,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 4
+    },
+    {
+      "time": 196.25,
+      "panel": true,
+      "records": 5,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 9
+    },
+    {
+      "time": 196.6,
+      "panel": false,
+      "records": 6,
+      "status": "Paused · showing the last capture",
+      "lagMs": 0
+    },
+    {
+      "time": 196.95,
+      "panel": false,
+      "records": 6,
+      "status": "Paused · showing the last capture",
+      "lagMs": 9
+    },
+    {
+      "time": 197.3,
+      "panel": false,
+      "records": 6,
+      "status": "Paused · showing the last capture",
+      "lagMs": 0
+    },
+    {
+      "time": 197.65,
+      "panel": false,
+      "records": 6,
+      "status": "Paused · showing the last capture",
+      "lagMs": 6
+    },
+    {
+      "time": 198,
+      "panel": false,
+      "records": 6,
+      "status": "Paused · showing the last capture",
+      "lagMs": 12
+    },
+    {
+      "time": 198.35,
+      "panel": false,
+      "records": 6,
+      "status": "Paused · showing the last capture",
+      "lagMs": 4
+    },
+    {
+      "time": 198.7,
+      "panel": false,
+      "records": 6,
+      "status": "Paused · showing the last capture",
+      "lagMs": 8
+    },
+    {
+      "time": 199.05,
+      "panel": false,
+      "records": 6,
+      "status": "Paused · showing the last capture",
+      "lagMs": 2
+    },
+    {
+      "time": 199.4,
+      "panel": true,
+      "records": 6,
+      "status": "Waiting for a steady image",
+      "lagMs": 8
+    },
+    {
+      "time": 199.75,
+      "panel": true,
+      "records": 6,
+      "status": "Waiting for a steady image",
+      "lagMs": 18
+    },
+    {
+      "time": 200.1,
+      "panel": true,
+      "records": 6,
+      "status": "Waiting for a steady image",
+      "lagMs": 42
+    },
+    {
+      "time": 200.45,
+      "panel": true,
+      "records": 6,
+      "status": "Waiting for a steady image",
+      "lagMs": 4
+    },
+    {
+      "time": 200.8,
+      "panel": true,
+      "records": 6,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 10
+    },
+    {
+      "time": 201.15,
+      "panel": true,
+      "records": 6,
+      "status": "Waiting for a steady image",
+      "lagMs": 6
+    },
+    {
+      "time": 201.5,
+      "panel": true,
+      "records": 6,
+      "status": "Waiting for a steady image",
+      "lagMs": 15
+    },
+    {
+      "time": 201.85,
+      "panel": true,
+      "records": 6,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 2
+    },
+    {
+      "time": 202.2,
+      "panel": false,
+      "records": 6,
+      "status": "Paused · showing the last capture",
+      "lagMs": 10
+    },
+    {
+      "time": 202.55,
+      "panel": false,
+      "records": 6,
+      "status": "Paused · showing the last capture",
+      "lagMs": 14
+    },
+    {
+      "time": 202.9,
+      "panel": true,
+      "records": 6,
+      "status": "Waiting for a steady image",
+      "lagMs": 2
+    },
+    {
+      "time": 203.25,
+      "panel": false,
+      "records": 6,
+      "status": "Paused · showing the last capture",
+      "lagMs": 13
+    },
+    {
+      "time": 203.6,
+      "panel": true,
+      "records": 6,
+      "status": "Waiting for a steady image",
+      "lagMs": 5
+    },
+    {
+      "time": 203.95,
+      "panel": true,
+      "records": 6,
+      "status": "Waiting for a steady image",
+      "lagMs": 13
+    },
+    {
+      "time": 204.3,
+      "panel": true,
+      "records": 6,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 7
+    },
+    {
+      "time": 204.65,
+      "panel": true,
+      "records": 6,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 13
+    },
+    {
+      "time": 205,
+      "panel": true,
+      "records": 6,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 6
+    },
+    {
+      "time": 205.35,
+      "panel": true,
+      "records": 6,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 14
+    },
+    {
+      "time": 205.7,
+      "panel": true,
+      "records": 6,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 5
+    },
+    {
+      "time": 206.05,
+      "panel": false,
+      "records": 6,
+      "status": "Paused · showing the last capture",
+      "lagMs": 12
+    },
+    {
+      "time": 206.4,
+      "panel": true,
+      "records": 6,
+      "status": "Waiting for a steady image",
+      "lagMs": 4
+    },
+    {
+      "time": 206.75,
+      "panel": false,
+      "records": 6,
+      "status": "Paused · showing the last capture",
+      "lagMs": 12
+    },
+    {
+      "time": 207.1,
+      "panel": true,
+      "records": 6,
+      "status": "Waiting for a steady image",
+      "lagMs": 4
+    },
+    {
+      "time": 207.45,
+      "panel": true,
+      "records": 6,
+      "status": "Waiting for a steady image",
+      "lagMs": 11
+    },
+    {
+      "time": 207.8,
+      "panel": true,
+      "records": 6,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 7
+    },
+    {
+      "time": 208.15,
+      "panel": true,
+      "records": 6,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 61
+    },
+    {
+      "time": 208.5,
+      "panel": true,
+      "records": 6,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 118
+    },
+    {
+      "time": 208.85,
+      "panel": true,
+      "records": 6,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 1
+    },
+    {
+      "time": 209.2,
+      "panel": true,
+      "records": 6,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 8
+    },
+    {
+      "time": 209.55,
+      "panel": true,
+      "records": 7,
+      "status": "Improving the read · keeping these rows visible",
+      "lagMs": -1
+    },
+    {
+      "time": 209.9,
+      "panel": false,
+      "records": 7,
+      "status": "Paused · showing the last capture",
+      "lagMs": 7
+    },
+    {
+      "time": 210.25,
+      "panel": false,
+      "records": 7,
+      "status": "Paused · showing the last capture",
+      "lagMs": 14
+    },
+    {
+      "time": 210.6,
+      "panel": false,
+      "records": 7,
+      "status": "Paused · showing the last capture",
+      "lagMs": 7
+    },
+    {
+      "time": 210.95,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 2
+    },
+    {
+      "time": 211.3,
+      "panel": false,
+      "records": 7,
+      "status": "Paused · showing the last capture",
+      "lagMs": 8
+    },
+    {
+      "time": 211.65,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 3
+    },
+    {
+      "time": 212,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 8
+    },
+    {
+      "time": 212.35,
+      "panel": true,
+      "records": 7,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 1
+    },
+    {
+      "time": 212.7,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 11
+    },
+    {
+      "time": 213.05,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 3
+    },
+    {
+      "time": 213.4,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 13
+    },
+    {
+      "time": 213.75,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 6
+    },
+    {
+      "time": 214.1,
+      "panel": true,
+      "records": 7,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 14
+    },
+    {
+      "time": 214.45,
+      "panel": true,
+      "records": 7,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 11
+    },
+    {
+      "time": 214.8,
+      "panel": true,
+      "records": 7,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 18
+    },
+    {
+      "time": 216.9,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 357
+    },
+    {
+      "time": 217.6,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 313
+    },
+    {
+      "time": 218.65,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 81
+    },
+    {
+      "time": 219,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 10
+    },
+    {
+      "time": 219.35,
+      "panel": true,
+      "records": 7,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 3
+    },
+    {
+      "time": 219.7,
+      "panel": false,
+      "records": 7,
+      "status": "Paused · showing the last capture",
+      "lagMs": 13
+    },
+    {
+      "time": 220.05,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 2
+    },
+    {
+      "time": 220.4,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 11
+    },
+    {
+      "time": 220.75,
+      "panel": false,
+      "records": 7,
+      "status": "Paused · showing the last capture",
+      "lagMs": 5
+    },
+    {
+      "time": 221.1,
+      "panel": false,
+      "records": 7,
+      "status": "Paused · showing the last capture",
+      "lagMs": 10
+    },
+    {
+      "time": 221.45,
+      "panel": false,
+      "records": 7,
+      "status": "Paused · showing the last capture",
+      "lagMs": 3
+    },
+    {
+      "time": 221.8,
+      "panel": false,
+      "records": 7,
+      "status": "Paused · showing the last capture",
+      "lagMs": 6
+    },
+    {
+      "time": 222.15,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 15
+    },
+    {
+      "time": 222.5,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 7
+    },
+    {
+      "time": 222.85,
+      "panel": true,
+      "records": 7,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 1
+    },
+    {
+      "time": 223.2,
+      "panel": true,
+      "records": 7,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 10
+    },
+    {
+      "time": 223.55,
+      "panel": true,
+      "records": 7,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 3
+    },
+    {
+      "time": 223.9,
+      "panel": true,
+      "records": 7,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 43
+    },
+    {
+      "time": 224.25,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 51
+    },
+    {
+      "time": 224.6,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 103
+    },
+    {
+      "time": 224.95,
+      "panel": false,
+      "records": 7,
+      "status": "Paused · showing the last capture",
+      "lagMs": 114
+    },
+    {
+      "time": 225.3,
+      "panel": false,
+      "records": 7,
+      "status": "Paused · showing the last capture",
+      "lagMs": 187
+    },
+    {
+      "time": 225.65,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 8
+    },
+    {
+      "time": 226,
+      "panel": false,
+      "records": 7,
+      "status": "Paused · showing the last capture",
+      "lagMs": 3
+    },
+    {
+      "time": 226.35,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 10
+    },
+    {
+      "time": 226.7,
+      "panel": true,
+      "records": 7,
+      "status": "Waiting for a steady image",
+      "lagMs": 2
+    },
+    {
+      "time": 227.05,
+      "panel": true,
+      "records": 7,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 10
+    },
+    {
+      "time": 227.4,
+      "panel": true,
+      "records": 7,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 2
+    },
+    {
+      "time": 227.75,
+      "panel": true,
+      "records": 7,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 11
+    },
+    {
+      "time": 228.1,
+      "panel": true,
+      "records": 8,
+      "status": "Improving the read · keeping these rows visible",
+      "lagMs": 3
+    },
+    {
+      "time": 228.45,
+      "panel": true,
+      "records": 8,
+      "status": "Reading · attempt 2 of 2 · keep this artifact open",
+      "lagMs": 12
+    },
+    {
+      "time": 228.8,
+      "panel": true,
+      "records": 8,
+      "status": "Reading · attempt 2 of 2 · keep this artifact open",
+      "lagMs": 7
+    },
+    {
+      "time": 229.15,
+      "panel": true,
+      "records": 9,
+      "status": "Finished · 5/5 · best read · review or move on",
+      "lagMs": 14
+    },
+    {
+      "time": 229.5,
+      "panel": true,
+      "records": 9,
+      "status": "Finished · 5/5 · best read · review or move on",
+      "lagMs": 10
+    },
+    {
+      "time": 229.85,
+      "panel": false,
+      "records": 9,
+      "status": "Paused · showing the last capture",
+      "lagMs": 2
+    },
+    {
+      "time": 230.2,
+      "panel": true,
+      "records": 9,
+      "status": "Waiting for a steady image · keeping the last capture visible",
+      "lagMs": 13
+    },
+    {
+      "time": 231.25,
+      "panel": true,
+      "records": 9,
+      "status": "Waiting for a steady image · keeping the last capture visible",
+      "lagMs": 87
+    },
+    {
+      "time": 233.7,
+      "panel": false,
+      "records": 9,
+      "status": "Paused · showing the last capture",
+      "lagMs": 58
+    },
+    {
+      "time": 234.05,
+      "panel": true,
+      "records": 9,
+      "status": "Waiting for a steady image",
+      "lagMs": 196
+    },
+    {
+      "time": 234.4,
+      "panel": true,
+      "records": 9,
+      "status": "Waiting for a steady image",
+      "lagMs": 1
+    },
+    {
+      "time": 234.75,
+      "panel": false,
+      "records": 9,
+      "status": "Paused · showing the last capture",
+      "lagMs": 13
+    },
+    {
+      "time": 235.1,
+      "panel": false,
+      "records": 9,
+      "status": "Paused · showing the last capture",
+      "lagMs": 5
+    },
+    {
+      "time": 235.45,
+      "panel": false,
+      "records": 9,
+      "status": "Paused · showing the last capture",
+      "lagMs": 11
+    },
+    {
+      "time": 235.8,
+      "panel": true,
+      "records": 9,
+      "status": "Waiting for a steady image",
+      "lagMs": 2
+    },
+    {
+      "time": 236.15,
+      "panel": true,
+      "records": 9,
+      "status": "Waiting for a steady image",
+      "lagMs": 13
+    },
+    {
+      "time": 236.5,
+      "panel": true,
+      "records": 9,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 3
+    },
+    {
+      "time": 236.85,
+      "panel": true,
+      "records": 9,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 9
+    },
+    {
+      "time": 237.2,
+      "panel": true,
+      "records": 9,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 5
+    },
+    {
+      "time": 237.55,
+      "panel": true,
+      "records": 9,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 10
+    },
+    {
+      "time": 237.9,
+      "panel": false,
+      "records": 10,
+      "status": "Paused · showing the last capture",
+      "lagMs": 3
+    },
+    {
+      "time": 238.25,
+      "panel": false,
+      "records": 10,
+      "status": "Paused · showing the last capture",
+      "lagMs": 11
+    },
+    {
+      "time": 238.6,
+      "panel": false,
+      "records": 10,
+      "status": "Paused · showing the last capture",
+      "lagMs": 8
+    },
+    {
+      "time": 238.95,
+      "panel": true,
+      "records": 10,
+      "status": "Waiting for a steady image",
+      "lagMs": -1
+    },
+    {
+      "time": 239.3,
+      "panel": true,
+      "records": 10,
+      "status": "Waiting for a steady image",
+      "lagMs": 7
+    },
+    {
+      "time": 239.65,
+      "panel": true,
+      "records": 10,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 14
+    },
+    {
+      "time": 240,
+      "panel": true,
+      "records": 10,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 5
+    },
+    {
+      "time": 240.35,
+      "panel": true,
+      "records": 10,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 14
+    },
+    {
+      "time": 240.7,
+      "panel": true,
+      "records": 10,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 98
+    },
+    {
+      "time": 241.05,
+      "panel": true,
+      "records": 10,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 154
+    },
+    {
+      "time": 241.4,
+      "panel": true,
+      "records": 10,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 223
+    },
+    {
+      "time": 241.75,
+      "panel": true,
+      "records": 10,
+      "status": "Waiting for a steady image",
+      "lagMs": 263
+    },
+    {
+      "time": 242.1,
+      "panel": false,
+      "records": 10,
+      "status": "Paused · showing the last capture",
+      "lagMs": 6
+    },
+    {
+      "time": 242.45,
+      "panel": false,
+      "records": 10,
+      "status": "Paused · showing the last capture",
+      "lagMs": 12
+    },
+    {
+      "time": 242.8,
+      "panel": false,
+      "records": 10,
+      "status": "Paused · showing the last capture",
+      "lagMs": 3
+    },
+    {
+      "time": 243.15,
+      "panel": false,
+      "records": 10,
+      "status": "Paused · showing the last capture",
+      "lagMs": 13
+    },
+    {
+      "time": 243.5,
+      "panel": false,
+      "records": 10,
+      "status": "Paused · showing the last capture",
+      "lagMs": 4
+    },
+    {
+      "time": 243.85,
+      "panel": false,
+      "records": 10,
+      "status": "Paused · showing the last capture",
+      "lagMs": 13
+    },
+    {
+      "time": 244.2,
+      "panel": true,
+      "records": 10,
+      "status": "Waiting for a steady image",
+      "lagMs": 4
+    },
+    {
+      "time": 244.55,
+      "panel": true,
+      "records": 10,
+      "status": "Waiting for a steady image",
+      "lagMs": 11
+    },
+    {
+      "time": 244.9,
+      "panel": true,
+      "records": 10,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 3
+    },
+    {
+      "time": 245.25,
+      "panel": true,
+      "records": 10,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 13
+    },
+    {
+      "time": 245.6,
+      "panel": true,
+      "records": 10,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 4
+    },
+    {
+      "time": 245.95,
+      "panel": true,
+      "records": 10,
+      "status": "Waiting for a steady image",
+      "lagMs": 14
+    },
+    {
+      "time": 246.3,
+      "panel": false,
+      "records": 10,
+      "status": "Paused · showing the last capture",
+      "lagMs": 9
+    },
+    {
+      "time": 246.65,
+      "panel": true,
+      "records": 10,
+      "status": "Waiting for a steady image",
+      "lagMs": 2
+    },
+    {
+      "time": 247,
+      "panel": true,
+      "records": 10,
+      "status": "Waiting for a steady image",
+      "lagMs": 10
+    },
+    {
+      "time": 247.35,
+      "panel": true,
+      "records": 10,
+      "status": "Waiting for a steady image",
+      "lagMs": 2
+    },
+    {
+      "time": 247.7,
+      "panel": true,
+      "records": 10,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 11
+    },
+    {
+      "time": 248.05,
+      "panel": true,
+      "records": 10,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 2
+    },
+    {
+      "time": 248.4,
+      "panel": true,
+      "records": 10,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 13
+    },
+    {
+      "time": 248.75,
+      "panel": false,
+      "records": 11,
+      "status": "Paused · showing the last capture",
+      "lagMs": 79
+    },
+    {
+      "time": 249.1,
+      "panel": true,
+      "records": 11,
+      "status": "Waiting for a steady image · keeping the last capture visible",
+      "lagMs": 211
+    },
+    {
+      "time": 249.45,
+      "panel": false,
+      "records": 11,
+      "status": "Paused · showing the last capture",
+      "lagMs": 362
+    },
+    {
+      "time": 250.15,
+      "panel": true,
+      "records": 11,
+      "status": "Waiting for a steady image · keeping the last capture visible",
+      "lagMs": 82
+    },
+    {
+      "time": 250.5,
+      "panel": true,
+      "records": 11,
+      "status": "Waiting for a steady image · keeping the last capture visible",
+      "lagMs": 14
+    },
+    {
+      "time": 250.85,
+      "panel": true,
+      "records": 11,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 3
+    },
+    {
+      "time": 251.2,
+      "panel": true,
+      "records": 11,
+      "status": "Waiting for a steady image",
+      "lagMs": 10
+    },
+    {
+      "time": 251.55,
+      "panel": true,
+      "records": 11,
+      "status": "Waiting for a steady image",
+      "lagMs": 5
+    },
+    {
+      "time": 251.9,
+      "panel": true,
+      "records": 11,
+      "status": "Waiting for a steady image",
+      "lagMs": 12
+    },
+    {
+      "time": 252.25,
+      "panel": true,
+      "records": 11,
+      "status": "Waiting for a steady image",
+      "lagMs": 4
+    },
+    {
+      "time": 252.6,
+      "panel": true,
+      "records": 11,
+      "status": "Reading · attempt 1 of 2 · keep this artifact open",
+      "lagMs": 12
+    },
+    {
+      "time": 252.95,
+      "panel": true,
+      "records": 12,
+      "status": "Finished · 5/5 · ready to move on",
+      "lagMs": 4
+    },
+    {
+      "time": 253.3,
+      "panel": true,
+      "records": 12,
+      "status": "Finished · 5/5 · ready to move on",
+      "lagMs": 13
+    },
+    {
+      "time": 253.65,
+      "panel": false,
+      "records": 12,
+      "status": "Paused · showing the last capture",
+      "lagMs": 6
+    },
+    {
+      "time": 255.05,
+      "panel": true,
+      "records": 12,
+      "status": "Waiting for a steady image · keeping the last capture visible",
+      "lagMs": 266
+    },
+    {
+      "time": 257.15,
+      "panel": false,
+      "records": 12,
+      "status": "Paused · showing the last capture",
+      "lagMs": 290
+    }
+  ]
+}

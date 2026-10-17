@@ -3,7 +3,9 @@
  * Invariants: Original signs required; no missing value fabrication; duplicates keep
  * row indices; conflicting/weak reads need review; worker parameters always restored.
  * Constraints: Box calibration does not recover clipped or unreadable pixels.
- * History: Red ribbon means Main; blue means War. Category crops isolate green ink. */
+ * History: Red ribbon means Main; blue means War. Category crops isolate green ink.
+ * Coloured overlapping rows split name/number imagery before focused OCR;
+ * background-normalised and stronger numeric views retain original signed glyphs. */
 (() => {
   'use strict';
   const R=()=>window.DNScannerRecognition;
@@ -40,17 +42,50 @@
       return {valid:true,crops,release,sharedPercentages,diceRequested:fields.template.rows.map(row=>!!row.dice),unavailable:resolved.unavailable || {}};
     }catch(error){release();throw error;}
   }
-  function view(source,mode='contrast',compact=false) {
-    const canvas=document.createElement('canvas'),scale=compact?Math.min(2,Math.max(1,48/source.height)):Math.min(4,Math.max(2,64/source.height));
+  function percentageRect(data,width,height) {
+    // Locate the last coloured word in this physical row. This supplies only
+    // geometry; the sign, digits and percent glyph still have to pass OCR.
+    const ink=(x,y)=>{const p=(y*width+x)*4,r=data[p],g=data[p+1],b=data[p+2];return data[p+3]>=128 && g>25 && (g>r*1.8 && g>b*1.2 || Math.min(g,b)>r*1.8);};
+    const bands=[];let band=null,gap=0;
+    for(let y=0;y<height;y++) {
+      let count=0;for(let x=0;x<width;x++)if(ink(x,y))count++;
+      if(count>=2){if(!band){band={y,bottom:y+1,count:0};bands.push(band);}band.bottom=y+1;band.count+=count;gap=0;}
+      else if(++gap>2)band=null;
+    }
+    const lines=bands.filter(b=>b.bottom-b.y>=5 && b.bottom-b.y<height*.8).sort((a,b)=>b.count-a.count);
+    if(!lines.length || lines[1]?.count>lines[0].count*.2)return null;
+    const line=lines[0],textHeight=line.bottom-line.y,groups=[];let group=null,blank=0;
+    for(let x=0;x<width;x++) {
+      let count=0;for(let y=line.y;y<line.bottom;y++)if(ink(x,y))count++;
+      if(count){if(!group){group={x,right:x+1};groups.push(group);}group.right=x+1;blank=0;}
+      else if(++blank>Math.max(1,Math.round(textHeight*.2)))group=null;
+    }
+    if(groups.length<2)return null;
+    const tail=groups.at(-1);let start=groups.length-1;
+    // A faint or spaced sign may form a smaller separate ink group. Retain
+    // nearby glyph-sized groups; the reader must still recognise the sign.
+    while(start>0){const before=groups[start-1],current=groups[start];if(before.right-before.x>textHeight*1.5 || current.x-before.right>textHeight*.7 || tail.right-before.x>textHeight*5.5)break;start--;}
+    const first=groups[start],prior=groups[start-1],span=tail.right-first.x;
+    if(span<textHeight*.7 || span>textHeight*5.5)return null;
+    const pad=Math.max(2,Math.round(textHeight*.25)),leftPad=prior?Math.min(Math.round(textHeight*.9),Math.max(1,first.x-prior.right-Math.round(textHeight*.15))):pad,x=Math.max(0,first.x-leftPad),y=Math.max(0,line.y-pad);
+    return {x,y,width:Math.min(width,tail.right+pad)-x,height:Math.min(height,line.bottom+pad)-y};
+  }
+  function view(source,mode='contrast',compact=false,minimumScale=2) {
+    const canvas=document.createElement('canvas'),scale=compact?Math.min(2,Math.max(1,48/source.height)):Math.min(minimumScale>2?6:4,Math.max(minimumScale,64/source.height));
     canvas.width=Math.ceil(source.width*scale)+32;canvas.height=Math.ceil(source.height*scale)+24;
     const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);
     const raw=document.createElement('canvas');raw.width=Math.ceil(source.width*scale);raw.height=Math.ceil(source.height*scale);
     const rawCtx=raw.getContext('2d',{willReadFrequently:true});rawCtx.drawImage(source,0,0,raw.width,raw.height);
-    const pixels=rawCtx.getImageData(0,0,raw.width,raw.height);let ink=0;
+    const pixels=rawCtx.getImageData(0,0,raw.width,raw.height);let ink=0,background=0;
+    const numeric=minimumScale>2;
+    if(mode==='chroma' && numeric){
+      const histogram=new Uint32Array(256);for(let i=0;i<pixels.data.length;i+=4)histogram[Math.max(0,Math.max(pixels.data[i+1],pixels.data[i+2])-pixels.data[i])]++;
+      let total=0;for(let value=0;value<256;value++){total+=histogram[value];if(total>=pixels.data.length/8){background=value;break;}}
+    }
     for(let i=0;i<pixels.data.length;i+=4) {
       const r=pixels.data[i],g=pixels.data[i+1],b=pixels.data[i+2];
       const saturated=mode==='category'?g>60 && g>r*1.25 && g>b*1.05:Math.max(g,b)>r*1.8 && Math.max(g,b)>25;
-      const value=mode==='colour' || mode==='category'?saturated?0:255:R().textContrast(r,g,b);
+      const value=mode==='chroma' || mode==='colour' && !compact?255-Math.min(255,Math.max(0,(numeric?Math.max(g,b):g)-r-background)*(numeric?6:mode==='chroma'?8:12)):mode==='colour' || mode==='category'?saturated?0:255:R().textContrast(r,g,b);
       if(saturated)ink++;
       pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=value;pixels.data[i+3]=255;
     }
@@ -95,12 +130,18 @@
       const lines=(output.data.blocks || []).flatMap(b=>(b.paragraphs || []).flatMap(p=>p.lines || []));
       return {text:String(output.data.text || '').trim(),confidence:lines.length?Math.min(...lines.map(line=>line.confidence)):0,words:lines.flatMap(line=>line.words || [])};
     };
-    async function read(source,kind,mode='contrast',segmentation='7') {
-      check();const prepared=view(source,mode);
-      if((mode==='colour' || mode==='category') && prepared.ink<30){prepared.canvas.width=prepared.canvas.height=0;return null;}
+    async function read(source,kind,mode='contrast',segmentation='7',shared=false) {
+      check();let focused=null;
+      if((kind==='percentage' || kind==='name' && shared) && source.width/source.height>5) {
+        const pixels=source.getContext('2d',{willReadFrequently:true}).getImageData(0,0,source.width,source.height).data;
+        const rect=percentageRect(pixels,source.width,source.height);
+        if(rect){const area=kind==='percentage'?rect:{x:0,y:rect.y,width:rect.x,height:rect.height};if(area.width>2){focused=document.createElement('canvas');focused.width=area.width;focused.height=area.height;focused.getContext('2d').drawImage(source,area.x,area.y,area.width,area.height,0,0,area.width,area.height);}}
+      }
+      const prepared=view(focused || source,focused && mode==='contrast'?'chroma':mode,false,focused && kind==='percentage'?(mode==='colour'?5:4):2);
+      if((mode==='colour' || mode==='category') && prepared.ink<30){prepared.canvas.width=prepared.canvas.height=0;if(focused)focused.width=focused.height=0;return null;}
       try {
         let rectangle=null,guide=null,guideConfidence=0;
-        if(kind==='percentage' && source.width/source.height>5) {
+        if(kind==='percentage' && !focused && source.width/source.height>5) {
           // Percentages follow variable-length names. For a deliberately wide
           // percentage box, locate its numeric suffix within that same crop.
           // This independent layout pass never borrows the name crop's text.
@@ -130,7 +171,7 @@
           }
         }
         return result;
-      }finally {prepared.canvas.width=prepared.canvas.height=0;}
+      }finally {prepared.canvas.width=prepared.canvas.height=0;if(focused)focused.width=focused.height=0;}
     }
     async function batch(kind,mode='contrast') {
       check();
@@ -184,11 +225,16 @@
       const wide=!snapshot.sharedPercentages?.[i] && snapshot.crops[i+'-percentage'].width/snapshot.crops[i+'-percentage'].height>5;
       let initial=R().parseFieldRow(name.text,percentage.text,names,canonPerk);
       const priorName=name,priorPercentage=percentage;
-      if(!initial.row.known || initial.row.assumed || name.confidence<80)name=await read(snapshot.crops[i+'-name'],'name');
+      if(!initial.row.known || initial.row.assumed || name.confidence<80)name=await read(snapshot.crops[i+'-name'],'name','contrast','7',snapshot.sharedPercentages?.[i]);
       if(wide || initial.row.value===null || percentage.confidence<80)percentage=await read(snapshot.crops[i+'-percentage'],'percentage');
       if(name!==priorName || percentage!==priorPercentage)recordFields(i,'focused-fields',name,percentage);
+      const attempted=R().parseFieldRow(name.text,percentage.text,names,canonPerk);
+      // A retry supplies additional evidence. Missing glyphs must not erase an
+      // earlier signed value or known name, nor promote its original confidence.
+      if(initial.row.known && !initial.row.assumed && (!attempted.row.known || attempted.row.assumed))name=priorName;
+      if(initial.row.value!==null && attempted.row.value===null)percentage=priorPercentage;
       const parsed=R().parseFieldRow(name.text,percentage.text,names,canonPerk);
-      fieldConflict=fieldConflict || percentage.conflict || initial.row.conflict ||
+      fieldConflict=fieldConflict || percentage.conflict || attempted.row.conflict || initial.row.conflict ||
         initial.row.known && parsed.row.known && initial.row.name!==parsed.row.name ||
         initial.row.value!==null && parsed.row.value!==null && initial.row.value!==parsed.row.value;
       if(fieldConflict){parsed.row.conflict=true;parsed.warnings.push('Independent field views disagree. Verify this row.');parsed.valid=false;}
@@ -228,7 +274,7 @@
       if(fields[i].conflict){first.row.conflict=true;first.warnings.push('Independent field views disagree. Verify this row.');first.valid=false;}
       let selected=first;
       if(!first.valid || rows[i].confidence<80) {
-        const alternativeName=await read(snapshot.crops[i+'-name'],'name','colour');
+        const alternativeName=await read(snapshot.crops[i+'-name'],'name','colour','7',snapshot.sharedPercentages?.[i]);
         const alternativePercentage=await read(snapshot.crops[i+'-percentage'],'percentage','colour');
         recordFields(i,'colour-fields',alternativeName,alternativePercentage);
         if(alternativeName || alternativePercentage) {
@@ -264,5 +310,5 @@
     const conflicts=tieredRows.flatMap((row,i)=>row.tierConflict?['Row '+(i+1)+': colour and starting percentage conflict. Verify the tier.']:[]);
     return {...annotated,valid:annotated.valid && !conflicts.length,warnings:[...annotated.warnings,...conflicts],artifact,hall,hallSource,colours,unlocked,inferColours,metadataConflict,recognitionPath:'calibrated-fields',ocrCalls:ocrCalls(),observations,rows:tieredRows};
   }
-  window.DNScannerFieldRecognition={snapshot,recognize,atlasEvidence};
+  window.DNScannerFieldRecognition={snapshot,recognize,atlasEvidence,percentageRect};
 })();

@@ -66,12 +66,13 @@ async function main() {
     const collectionComparison=process.argv.includes('--collection-comparison');
     const inventory=process.argv.includes('--inventory') || process.argv.includes('--inventory-tiers') || collectionComparison;
     const storageLayout=process.argv.includes('--storage-layout');
+    const storagePassive=process.argv.includes('--storage-passive');
     const glance=process.argv.includes('--glance');
     const viewport=process.argv.find(arg=>arg.startsWith('--viewport='))?.slice(11) || '1440x900';
-    if(glance || process.argv.includes('--regions-ui')){if(!/^\d{3,4}x\d{3,4}$/.test(viewport))throw new Error('Invalid viewport');const [width,height]=viewport.split('x').map(Number);await client.send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:false});}
+    if(glance || process.argv.includes('--crafting-keep') || process.argv.includes('--regions-ui')){if(!/^\d{3,4}x\d{3,4}$/.test(viewport))throw new Error('Invalid viewport');const [width,height]=viewport.split('x').map(Number);await client.send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:false});}
     if(inventory)await client.send('Emulation.setDeviceMetricsOverride',{width:1800,height:1100,deviceScaleFactor:1,mobile:false});
     if(storageLayout)await client.send('Emulation.setDeviceMetricsOverride',{width:1440,height:900,deviceScaleFactor:1,mobile:false});
-    const storage=process.argv.includes('--storage') || inventory || storageLayout || process.argv.includes('--storage-fields');
+    const storage=process.argv.includes('--storage') || inventory || storageLayout || storagePassive || process.argv.includes('--storage-fields');
     await client.send('Page.navigate',{url:origin+'/ui/'+(storage?'storage-scanner.html':'scanner.html')});
     await delay(500);
     const uiSmoke=process.argv.includes('--ui');
@@ -79,6 +80,7 @@ async function main() {
     const coverage=process.argv.includes('--storage-coverage') || percent;
     let expression = fs.readFileSync(path.join(root,collectionComparison?'tests/scanner/collection-comparison-browser.js':process.argv.includes('--primary-filters')?'tests/scanner/filters-browser.js':glance?'tests/scanner/glance-browser.js':storageLayout?'tests/scanner/storage-layout-browser.js':process.argv.includes('--navigation')?'tests/scanner/navigation-browser.js':inventory?'tests/scanner/inventory-browser.js':coverage?'tests/scanner/storage-coverage-browser.js':storage?'tests/scanner/storage-browser.js':uiSmoke?'tests/scanner/ui-browser.js':'tests/scanner/fixture-browser.js'),'utf8');
     if(process.argv.includes('--inventory-tiers'))expression='window.DNInventoryTierOnly=true;\n'+expression;
+    if(storagePassive)expression=fs.readFileSync(path.join(root,'tests/scanner/storage-passive-browser.js'),'utf8');
     if(process.argv.includes('--regions-benchmark'))expression='window.DNRegionsBaseline='+process.argv.includes('--baseline')+'; window.DNRegionsTight='+process.argv.includes('--regions-tight')+';\n'+fs.readFileSync(path.join(root,'tests/scanner/regions-benchmark-browser.js'),'utf8');
     if(process.argv.includes('--crafting-audit')) {
       const fixtures=fs.readdirSync(path.join(root,'tests/scanner')).filter(file=>file.endsWith('.labels.json') && !file.startsWith('storage')).map(file=>file.replace('.labels.json','')).sort();
@@ -88,6 +90,9 @@ async function main() {
     if(process.argv.includes('--storage-fields'))expression=fs.readFileSync(path.join(root,'tests/scanner/storage-fields-browser.js'),'utf8');
     if(process.argv.includes('--crafting-metadata'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-metadata-browser.js'),'utf8');
     if(process.argv.includes('--crafting-edits'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-edits-browser.js'),'utf8');
+    if(process.argv.includes('--stat-context'))expression=fs.readFileSync(path.join(root,'tests/scanner/stat-context-browser.js'),'utf8');
+    if(process.argv.includes('--crafting-latency'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-latency-browser.js'),'utf8');
+    if(process.argv.includes('--crafting-keep'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-keep-browser.js'),'utf8');
     if(process.argv.includes('--reroll-ui'))expression=fs.readFileSync(path.join(root,'tests/scanner/reroll-browser.js'),'utf8');
     if(percent)expression="window.DNStorageFixtureVariants=['native','video','muted'];\n"+expression.replace('storage-coverage.labels.json','storage-percent.labels.json');
     const green=process.argv.includes('--green');
@@ -132,7 +137,7 @@ async function main() {
     if(process.argv.includes('--report') && !process.argv.includes('--crafting-audit')) fs.writeFileSync(path.join(root,process.argv.includes('--crafting-metadata')?'tests/scanner/crafting-metadata-result.json':process.argv.includes('--regions-benchmark')?'tests/scanner/regions-'+(process.argv.includes('--baseline')?'baseline':process.argv.includes('--regions-tight')?'tight':'calibrated')+'.json':process.argv.includes('--regions-ui')?'tests/scanner/regions-ui-'+viewport+'.json':glance?'tests/scanner/glance-'+viewport+'.json':percent?'tests/scanner/storage-percent.ocr-result.json':coverage?'tests/scanner/storage-coverage.ocr-result.json':storage?'tests/scanner/storage.ocr-result.json':fixture?'tests/scanner/'+fixture+'.ocr-result.json':green?'tests/scanner/greenissue.ocr-result.json':uiSmoke?'tests/scanner/pic1.ui-result.json':'tests/scanner/pic1.ocr-result.json'),JSON.stringify(value,null,2)+'\n');
     const summary={passed:value.passed,ui:value.ui,network:{external:value.network.externalRequests.length,errors:value.network.browserErrors}};
     if(process.argv.includes('--crafting-audit'))summary.audit={cases:value.runs.length,complete:value.runs.filter(r=>r.complete).length,direct:value.runs.filter(r=>r.complete && r.accuracy.directPercentages===5).length,confirmed:value.runs.filter(r=>r.valid).length,confidentlyIncorrect:value.runs.filter(r=>r.confidentlyIncorrect).length,review:value.runs.filter(r=>!r.valid).map(r=>({fixture:r.fixture,scale:r.scale,directPercentages:r.accuracy.directPercentages}))};
-    else summary.runs=value.runs?.map(r=>({fixture:r.fixture,scale:r.scale,kind:r.kind,stamp:r.stamp,variant:r.variant,passed:r.passed ?? r.complete,exact:r.exact,...(!(r.passed ?? r.complete)?{warnings:r.warnings}: {})}));
+    else summary.runs=value.runs?.map(r=>({fixture:r.fixture,scale:r.scale,kind:r.kind,stamp:r.stamp,variant:r.variant,elapsedMs:r.elapsedMs,passed:r.passed ?? r.complete,exact:r.exact,...(!(r.passed ?? r.complete)?{warnings:r.warnings}: {})}));
     console.log(JSON.stringify(process.argv.includes('--summary')?summary:value,null,2));
     if(!value?.passed) process.exitCode=1;
   } finally {

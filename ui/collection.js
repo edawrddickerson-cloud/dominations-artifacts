@@ -474,12 +474,10 @@
     const valid=(row,mode=ui.compareRows)=>!comparisonPerks(row,mode).some(perk=>!Number.isFinite(comparisonValue(row,perk,mode)));
     const leftScore=itemScore(selected),rightScore=other?itemScore(other):null;
     const signed=value=>(value>0?'+':'')+formatNum(value);
-    const off=document.getElementById('header-off').getAttribute('aria-pressed')==='true';
-    const def=document.getElementById('header-def').getAttribute('aria-pressed')==='true';
     const statCells=(row,score,index,side)=>{
       const line=score?.lines[index];
       const perk=line?comparisonPerks(row,'all')[index]:null,value=perk?comparisonValue(row,perk):null;
-      const points=line?(off?line.offensive:0)+(def?line.defensive:0):null;
+      const points=line?line.preference:null;
       const locked=perk && row.scanned && row.scanned.rows[perk.index-1]?.unlocked!==true;
       const star=perk?perkStar(DN.artifactKey(row),perk):'';
       const name='<td class="comparison-stat '+side+'">'+(line?'<span class="comparison-stat-content">'+(side==='left'?diceIcon(row,perk)+star:'')+'<span class="comparison-stat-name'+(locked?' is-locked':'')+'">'+DN.esc(line.name)+'</span>'+(side==='right'?star+diceIcon(row,perk):'')+'</span>':DN.BLANK)+'</td>';
@@ -698,8 +696,6 @@
     const heading=(label,key)=>'<th scope="col" aria-sort="'+(listSort.key===key?listSort.direction:'none')+'"><button type="button" data-action="list-sort" data-sort="'+key+'"'+(key.startsWith('stat-')?' title="Sort by this stat’s score at maximum upgrade"':'')+'>'+label+(listSort.key===key?listSort.direction==='ascending'?' ↑':' ↓':'')+'</button></th>';
     const columns='<th scope="col" class="collection-table-stats-heading" aria-sort="'+(listSort.key.startsWith('stat-')?listSort.direction:'none')+'"><div class="collection-table-stats-header"><span>Stats</span><details class="collection-stat-sort-menu"><summary>'+(listSort.key.startsWith('stat-')?'Stat '+(Number(listSort.key.slice(5))+1)+(listSort.direction==='ascending'?' ↑':' ↓'):'Sort stat')+'</summary><div>'+Array.from({length:count},(_,index)=>'<button type="button" data-action="list-sort" data-sort="stat-'+index+'" title="Sort by stat '+(index+1)+' score">Stat '+(index+1)+(listSort.key==='stat-'+index?listSort.direction==='ascending'?' ↑':' ↓':'')+'</button>').join('')+'</div></details><span class="collection-table-value-headings"><span>Current</span><span>Score</span></span></div></th>';
     const complete=(row,mode)=>comparisonPerks(row,mode).every(perk=>Number.isFinite(comparisonValue(row,perk,mode)));
-    const off=document.getElementById('header-off').getAttribute('aria-pressed')==='true';
-    const def=document.getElementById('header-def').getAttribute('aria-pressed')==='true';
     const metrics=new Map(owned.map(row=>[row,{full:itemScore(row,'all'),unlocked:itemScore(row,'unlocked')}]));
     const sortValue=row=>{
       const score=metrics.get(row),key=listSort.key;
@@ -709,7 +705,7 @@
       if(key==='unlocked')return complete(row,'unlocked')?score.unlocked.basePreference:null;
       if(key==='potential')return complete(row,'all')?score.full.potentialPreference:null;
       const index=Number(key.slice(5)),line=score.full.lines[index],perk=DN.perksOf(row,canonPerk)[index];
-      return line && Number.isFinite(comparisonMaxValue(row,perk))?(off?line.offensive:0)+(def?line.defensive:0):null;
+      return line && Number.isFinite(comparisonMaxValue(row,perk))?line.preference:null;
     };
     const sorted=owned.slice().sort((a,b)=>{
       const types=listTypeOrder(),leftType=DN.text(a.grade),rightType=DN.text(b.grade);
@@ -726,7 +722,7 @@
       const stats=Array.from({length:count},(_,index)=>{
         const perk=perks[index];if(!perk)return '<div class="collection-table-stat">'+DN.BLANK+'</div>';
         const value=actualPerkValue(id,perk),line=full.lines[index];
-        const points=line?(off?line.offensive:0)+(def?line.defensive:0):null;
+        const points=line?line.preference:null;
         const locked=row.scanned && row.scanned.rows[perk.index-1]?.unlocked!==true;
         return '<div class="collection-table-stat"><div class="collection-table-stat-title">'+diceIcon(row,perk)+perkStar(id,perk)+'<span class="comparison-stat-name'+(locked?' is-locked':'')+'">'+DN.esc(perk.name)+'</span></div><div class="collection-table-stat-values"><span>'+(Number.isFinite(value)?(value>=0?'+':'')+formatNum(value)+'%':DN.BLANK)+'</span><span title="Score at maximum upgrade">'+(Number.isFinite(comparisonMaxValue(row,perk))?formatNum(points):DN.BLANK)+'</span></div></div>';
       }).join('');
@@ -1023,7 +1019,6 @@
       document.getElementById('collection-slot-filter-options').innerHTML=types.map(type=>'<label><input type="checkbox" value="'+DN.esc(type)+'"'+(listSlotTypes===null || listSlotTypes.includes(type)?' checked':'')+' />'+DN.esc(type)+'</label>').join('');
       document.getElementById('collection-slot-filter-label').textContent=listSlotTypes===null?'All':types.filter(type=>listSlotTypes.includes(type)).length+' selected';
       const filtered=owned.filter(row=>listSlotTypes===null || listSlotTypes.includes(DN.text(row.grade)));
-      document.getElementById('collection-list-count').textContent=filtered.length+' of '+owned.length+' artifacts';
       if (!collected.size) {
         el.list.innerHTML =
           `<p class="collection-empty">No owned artifacts yet. Add verified inventory from <a href="storage-scanner.html">Storage Scanner</a>, or mark artifacts on the <a href="artifacts.html">Artifacts Priority</a> page.</p>`;
@@ -1248,6 +1243,7 @@
 
   async function load() {
     try {
+      await DN.scannerLog.ready;
       const [artRes, mapRes, imgRes,ratingsRes] = await Promise.all([
         fetch(DATA_URL, { cache: "no-store" }),
         fetch(MAPPING_URL, { cache: "no-store" }),

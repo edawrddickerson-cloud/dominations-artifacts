@@ -30,6 +30,20 @@ assert.equal(merge([item()],[renamed]).added,1,'different artifact names are dis
 const repeats=item('repeats');repeats.rows[2]={...repeats.rows[3]};
 assert.equal(merge([item()],[repeats]).added,1,'repeated stat tier multiplicity is significant');
 console.log('Import duplicates, tier/level replacement, negative effects, row alignment and ambiguous levels passed.');
+const {passivePlan,passiveMerge}=context.window.DNStoredArtifacts;
+assert.equal(passivePlan([item() ],item('same')).action,'duplicate');
+assert.equal(passivePlan([item()],improved).action,'updated');
+assert.equal(passivePlan([item()],weaker).action,'unchanged','passive scans never lower saved stats');
+assert.equal(passivePlan([item()],mixed).action,'unchanged','a larger positive value cannot hide a weaker negative stat');
+assert.equal(passivePlan([item('copy-1'),item('copy-2')],improved).action,'blocked','ambiguous copies are never selected for automatic replacement');
+assert.equal(passivePlan([item()],different).action,'added','a different base tier remains a distinct item');
+const automatic=passiveMerge([item()],[improved]);
+assert.equal(automatic.updated,1);assert.equal(automatic.collection[0].id,'a');
+assert.equal(automatic.collection[0].revisions[0].rows[0].value,13,'automatic revisions preserve the previous stats');
+const captureCorrection={...different,id:'a',manualCorrection:true};
+assert.equal(passiveMerge([item()],[captureCorrection],{allowCorrection:true}).collection[0].rows[0].value,6,'editing a newly staged capture corrects that capture without creating a copy');
+assert.equal(passiveMerge([item()],[captureCorrection]).updated,0,'capture corrections cannot bypass the owned upgrade gate');
+console.log('Passive duplicates, monotonic positive/negative upgrades, ambiguity, capture corrections and revision history passed.');
 const legacy={id:'legacy',rows:[{value:11,unlocked:true},{value:-5,unlocked:true,level:null},{value:6,unlocked:false},{value:8,level:3},{value:7,level:1,base:7,max:22}]};
 const filled=context.window.DNStoredArtifacts.backfillItem(legacy);
 assert.equal(filled.rows[0].level,undefined,'unlock state alone cannot establish an upgrade level');
@@ -112,5 +126,12 @@ assert.equal(JSON.stringify(store.backfillItem(logged)),JSON.stringify(logged),'
 const imported=merge([],[{...item(),rows:item().rows.map(row=>({...row,tier:null}))}]).collection[0];
 assert.equal(imported.rows[0].tier,'blue');assert.equal(imported.rows[0].tierSource,'percentage-level','collection imports keep tier provenance');
 assert.equal(JSON.stringify(store.backfillItem({hall:'main',type:'Weapon',rows:tiers})),JSON.stringify({hall:'main',type:'Weapon',rows:tiers}),'storage tier migration is idempotent');
-assert.equal(merge([],[{...item(),rows:[{name:'Damage',value:10,level:1,levelSource:'ocr'}]}]).blocked,1,'collection import cannot reintroduce a conflicting ordinary starting tier');
+for(const sign of [1,-1]) {
+  const numeric=correct([{name:'Damage',value:sign*10,level:3,levelSource:'ocr',tierConflict:true}])[0];
+  assert.equal(numeric.base,sign*8);assert.equal(numeric.max,sign*17);
+  assert.equal(numeric.tier,null);assert.equal(numeric.tierConflict,false,'known value and level resolve a range without an ordinary tier');
+  assert.equal(JSON.stringify(correct([numeric])[0]),JSON.stringify(numeric),'tierless ranges survive reload');
+  assert.equal(passivePlan([],{...item(),rows:[numeric]}).action,'added');
+}
+assert.equal(merge([],[{...item(),rows:[{name:'Damage',value:10,level:1,levelSource:'ocr'}]}]).added,1,'numeric storage ranges do not require an ordinary starting tier');
 console.log('Main/War colour tiers, numeric storage tiers, provenance, ambiguity, conflicts, manual correction, special items and persisted backfill passed.');

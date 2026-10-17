@@ -1,7 +1,8 @@
 /*
  * Authority: User-requested extraction of already crafted artifacts in storage.
  * Ownership: Reviewed item metadata, artwork and a local browser inventory/export.
- * Invariants: Explicit keep action; current, validated rows only; duplicates rejected;
+ * Invariants: Complete current reads/edits save automatically; duplicates skipped;
+ * only unique non-regressing upgrades replace owned records, preserving their IDs;
  * only the requested artwork crop persists, with no uploads or catalogue edits.
  * Constraints: Browser storage is local to this device/origin; export backs it up.
  */
@@ -10,47 +11,72 @@
   const get=id=>document.getElementById('storage-'+id);
   const items=[];let current=null,canKeep=false,signature='',edited=false,artifact=null,reviewable=false,pending=false,expectedRows=5,correctionError='';
   let loaded=false,adding=false,collection=[],collectionProfile=null,unknownEditable=false;
+  let observationProfile=null,encounter=null,candidateId=null,manualCorrection=false,saveTimer=null,saveKey='',saving=false,failedKey='',dismissedKey='',lastSave=null;
   const store=window.DNStoredArtifacts;
   const esc=window.DN.esc;
+  function savedStatus(text,error=false){get('saved').textContent=text;get('saved').hidden=!error;}
   const reviewedItem=()=>store.backfillItem({id:'scan-preview',reviewed:true,name:get('name').value.trim(),type:get('type').value,hall:document.getElementById('scanner-hall').value,rows:current.rows});
   function matches() {
     const item=reviewedItem();
-    return [store.merge(items,[item]),store.merge(collection,[item])];
+    return [store.passivePlan(items,{...item,id:candidateId,manualCorrection},{allowCorrection:true}),store.passivePlan(collection,item)];
   }
   async function refreshCollection() {
     const key=store.collectionKey();
     collectionProfile=null;
     try {const saved=await store.read(key);if(key===store.collectionKey()){collection=saved;collectionProfile=key;}}
-    catch {get('saved').textContent='Could not check your collection for duplicates. Try reloading this page.';}
+    catch {savedStatus('Could not load Collection. Reload to retry.',true);}
     render();
+  }
+  function renderOwnership() {
+    const show=(state,title,detail)=>{
+      get('ownership').dataset.state=state;
+      get('ownership-title').textContent=title;
+      get('ownership-detail').textContent=detail;
+    };
+    if(!current) {show('unknown','Ownership not checked','Scan an artifact to check your collection and scanned inventory.');return null;}
+    if(!loaded || collectionProfile!==store.collectionKey()) {show('unknown','Checking saved artifacts…','Waiting for your active profile\'s collection and scanned inventory.');return null;}
+    if(observationProfile!==store.collectionKey()){show('uncertain','Profile changed','Read the current artifact again before saving it to this profile.');return null;}
+    if(!reviewable || pending) {show('uncertain','Ownership check pending',pending?'Complete the remaining fields. Valid edits apply automatically.':'Waiting for a current artifact read; the displayed stats may be from the last scan.');return null;}
+    const preview=reviewedItem();
+    if(!get('name').value.trim() || !get('type').value || current.metadataConflict || current.warnings?.some(w=>/OCR reads disagree|conflict/i.test(w)) ||
+      preview.rows?.length!==expectedRows || window.DNScannerRecognition.signIssues(preview.rows).length ||
+      preview.rows.some(row=>!row.known || row.assumed || !Number.isFinite(row.value) || !row.hasPercent || row.conflict || row.tierConflict)) {
+      show('uncertain','More scan details needed','Read the artifact name, category and all stats before checking for a saved match.');return null;
+    }
+    const checked=matches(),[inventoryMatch,collectionMatch]=checked;
+    if(collectionMatch.action!=='added')show(collectionMatch.action==='blocked'?'uncertain':'collection',collectionMatch.action==='updated'?'Collection match · improved stats':collectionMatch.action==='blocked'?'Saved match not resolved':'Already in your collection',
+      collectionMatch.reason || 'The improved stats will update the matching item automatically, preserving its Collection spot.');
+    else if(inventoryMatch.action!=='added')show(inventoryMatch.action==='blocked'?'uncertain':'inventory',inventoryMatch.action==='updated'?'Scanned inventory match · improved stats':inventoryMatch.action==='blocked'?'Saved match not resolved':'Added',
+      inventoryMatch.action==='duplicate'?'Saved to scanned inventory, awaiting import to Collection.':inventoryMatch.reason || 'The improved stats will update your scanned inventory automatically.');
+    else show('unmatched','No saved match found','Complete scans are saved to scanned inventory. Add Inventory to Collection transfers them into your active profile.');
+    return checked;
   }
   function keepReason() {
     if(adding)return 'Finishing the inventory import.';
     if(!loaded)return 'Loading your saved inventory.';
     if(collectionProfile!==store.collectionKey())return 'Checking your collection for duplicates.';
-    if(!current)return 'Read an artifact before keeping it.';
-    if(pending)return correctionError || 'Apply your edits with Use Corrected Values before keeping this artifact.';
-    if(!reviewable)return 'Read the current artifact again before keeping it.';
-    if(current.rows?.length!==expectedRows)return 'Capture all '+expectedRows+' stats before keeping this artifact.';
+    if(!current)return 'Read an artifact to save it automatically.';
+    if(observationProfile!==store.collectionKey())return 'Profile changed. Read this artifact again for the current profile.';
+    if(pending)return correctionError || 'Complete the remaining fields. Edits apply automatically.';
+    if(!reviewable)return 'Waiting for a current artifact read.';
+    if(current.metadataConflict)return 'Verify the conflicting artifact name, category or Hall.';
+    if(current.rows?.length!==expectedRows)return 'Read all '+expectedRows+' stats.';
     for(const [index,row] of reviewedItem().rows.entries()) {
-      if(!row.known)return 'Row '+(index+1)+': choose a known perk in Correct Recognition.';
-      if(!Number.isFinite(row.value) || !row.hasPercent)return 'Row '+(index+1)+': enter a percentage in Correct Recognition.';
-      if(row.conflict)return 'Row '+(index+1)+': check the conflicting reads in Correct Recognition.';
-      if(row.tierConflict)return 'Row '+(index+1)+': percentage and level conflict with this tier. Correct or clear the unclear level.';
-      if(!Number.isInteger(row.level) || row.level<1 || row.level>10)return 'Row '+(index+1)+': confirm the upgrade level.';
-      if(store.tierBases(reviewedItem()) && !row.tier)return 'Row '+(index+1)+': confirm the tier.';
-      if(!Number.isFinite(row.base) || !Number.isFinite(row.max))return 'Row '+(index+1)+': confirm the base and maximum percentages.';
-      if(typeof row.unlocked!=='boolean')return 'Row '+(index+1)+': confirm whether the star is unlocked.';
-      if(typeof row.rerollEligible!=='boolean')return 'Row '+(index+1)+': confirm whether reroll is available.';
+      if(!row.known || row.assumed)return 'Row '+(index+1)+': perk name needed.';
+      if(!Number.isFinite(row.value) || !row.hasPercent)return 'Row '+(index+1)+': percentage needed.';
+      if(row.conflict)return 'Row '+(index+1)+': conflicting readings.';
+      if(row.tierConflict)return 'Row '+(index+1)+': value and level conflict.';
+      if(!Number.isInteger(row.level) || row.level<1 || row.level>10)return 'Row '+(index+1)+': upgrade level needed.';
+      if(!Number.isFinite(row.base) || !Number.isFinite(row.max))return 'Row '+(index+1)+': range needed.';
+      if(typeof row.unlocked!=='boolean')return 'Row '+(index+1)+': star state needed.';
+      if(typeof row.rerollEligible!=='boolean')return 'Row '+(index+1)+': reroll state needed.';
     }
-    if(current.warnings?.some(w=>/OCR reads disagree|conflict/i.test(w)))return 'Check the conflicting reads in Correct Recognition.';
-    if(unknownEditable)return 'Fill in every unknown editable field in Correct Recognition before keeping this artifact.';
-    if(window.DNScannerRecognition.signIssues(current.rows).length)return 'Check the percentage signs in Correct Recognition.';
+    if(current.warnings?.some(w=>/OCR reads disagree|conflict/i.test(w)))return 'Conflicting readings.';
+    if(unknownEditable)return 'Complete the highlighted fields.';
+    if(window.DNScannerRecognition.signIssues(current.rows).length)return 'Check percentage signs.';
     if(!get('name').value.trim())return 'Enter the artifact name.';
     if(!get('type').value)return 'Choose the artifact category.';
-    const checked=matches();
-    if(checked.some(result=>result.duplicates))return 'Exact duplicate already in your scanned inventory or collection. This scan will not be added.';
-    if(checked.some(result=>result.blocked))return checked.flatMap(result=>result.issues).join(' ');
+    if(current.rows.some(row=>Math.abs(row.value)>40))return 'Percentages must be between -40% and +40%.';
     return '';
   }
   function render() {
@@ -58,14 +84,21 @@
     for(const select of document.querySelectorAll('#scanner-correct .scanner-perk-tier')) {
       select.disabled=special;
       select.options[0].textContent=special?'Not applicable':'Unknown';
-      select.classList.toggle('is-unknown',!special && !select.value);
+      select.classList.toggle('is-unknown',false);
     }
     for(const id of ['name','type'])get(id).classList?.toggle('is-unknown',!get(id).value.trim());
-    const reason=keepReason();canKeep=!reason;get('keep').disabled=!canKeep;
-    get('keep-status').textContent=reason || (matches().some(result=>result.updated)?'Matching name, stats and tiers found. Keep this scan to replace the previous levels; its Collection spot will be preserved.':current.valid?'Ready to keep. Check the name, category and stats first.':'All stats are present. Check the OCR warnings; Keep Artifact confirms the values shown.');
-    get('add-collection').disabled=!loaded || !items.length || adding;
+    const checked=renderOwnership(),reason=keepReason();canKeep=!reason;
+    const plan=checked && (checked[1].action==='added'?checked[0]:checked[1]);
+    const nextKey=canKeep?JSON.stringify([observationProfile,encounter,reviewedItem()]):'';
+    if(nextKey!==saveKey){clearTimeout(saveTimer);saveTimer=null;saveKey=nextKey;failedKey='';lastSave=null;}
+    get('keep').hidden=failedKey!==saveKey || !saveKey;get('keep').disabled=!canKeep || saving || failedKey!==saveKey;
+    get('keep-status').textContent=failedKey===saveKey && saveKey?'Save failed. Retry Save.':current && loaded && (reviewable || pending)?reason:'';
+    if(canKeep && !saving && !adding && !saveTimer && failedKey!==saveKey && dismissedKey!==saveKey && lastSave?.key!==saveKey && ['added','updated'].includes(plan?.action)) {
+      const scheduledKey=saveKey;saveTimer=setTimeout(()=>{saveTimer=null;saveAutomatically(scheduledKey);},manualCorrection || edited?650:0);
+    }
+    get('add-collection').disabled=!loaded || !items.length || adding || saving;
     get('count').textContent=items.length+' artifacts in your scanned inventory';
-    get('items').innerHTML=items.map((item,index)=>'<li>'+(item.image?'<img class="storage-artwork" src="'+esc(item.image)+'" alt="'+esc(item.name)+'" loading="lazy" />':'')+'<div><strong>'+esc(item.name)+'</strong> · '+esc(item.type)+' · '+esc(item.hall)+' · '+item.rows.length+' stats'+
+    get('items').innerHTML=items.map((item,index)=>({item,index})).reverse().map(({item,index})=>'<li>'+(item.image?'<img class="storage-artwork" src="'+esc(item.image)+'" alt="'+esc(item.name)+'" loading="lazy" />':'')+'<div><strong>'+esc(item.name)+'</strong> · '+esc(item.type)+' · '+esc(item.hall)+' · '+item.rows.length+' stats'+
       item.rows.map((row,i)=>row.rangeReview?'<p>Stat '+(i+1)+' ('+esc(row.name)+'): '+esc(row.rangeReview)+' '+esc((row.rangeCandidates || []).map(candidate=>'Base '+candidate.base+'% at level '+candidate.level).join(' or '))+'</p>':'').join('')+
       '<button type="button" class="btn" data-remove="'+index+'" aria-label="Remove '+esc(item.name)+'">Remove</button><ul class="storage-inventory-stats" style="--stat-count:'+item.rows.length+'">'+item.rows.map(inventoryStat).join('')+'</ul></div></li>').join('');
   }
@@ -77,13 +110,12 @@
       ['Reroll',row.rerollEligible===true?'Available':row.rerollEligible===false?'Unavailable':'Unknown']];
     return '<li><strong>'+esc(row.name)+'</strong><dl>'+fields.map(([label,value])=>'<div><dt>'+label+'</dt><dd>'+esc(value)+'</dd></div>').join('')+'</dl></li>';
   }
-  function persist() {
-    store.write('items',items).then(()=>{get('saved').textContent='Saved on this device, including artwork. Export a backup to keep a separate copy.';})
-      .catch(()=>{get('saved').textContent='Could not save this change in the browser. Keep this tab open and retry saving before making a backup in Profiles.';});
-  }
   window.DNStorageScanner={update(result,confirmed,state={}) {
     unknownEditable=!!state.unknownEditable;
     if(collectionProfile!==store.collectionKey())refreshCollection();
+    const nextEncounter=state.encounterId ?? (result?.artifact===artifact?encounter:store.newId());
+    if(nextEncounter!==encounter || !candidateId){encounter=nextEncounter;candidateId=store.newId();}
+    observationProfile=state.profileKey ?? (result===current?observationProfile:store.collectionKey());
     current=result;reviewable=state.reviewable ?? confirmed;pending=!!state.pending;correctionError=state.correctionError || '';expectedRows=state.expectedRows || result?.expectedRows || 5;
     const next=JSON.stringify([result?.artifact,result?.rows?.map(r=>[r.name,r.value,r.level])]);
     if(!result || result.artifact!==artifact || (next!==signature && !edited)) {
@@ -104,10 +136,10 @@
       const row=/^Row (\d+): upgrade level/.exec(w);return !row || result.rows[Number(row[1])-1]?.level==null;
     });
     get('metadata').textContent=result?(edited?'Using your checked name and category.':notices.join(' ')):'Read a stored artifact, then verify its name, category and every perk.';
-    render();
+    manualCorrection=!!state.manualCorrection || edited;render();
   }};
   for(const id of ['name','type'])get(id).addEventListener('input',()=>{
-    edited=true;
+    edited=true;manualCorrection=true;
     if(id==='type' && get('type').value) {
       const hall=/^War /i.test(get('type').value)?'war':'main';
       document.getElementById('scanner-hall').value=hall;window.DNPrimaryFilters?.setHall(hall);
@@ -115,32 +147,47 @@
     }
     get('metadata').textContent='Using your checked name and category.';render();
   });
-  get('keep').addEventListener('click',()=>{
-    if(keepReason())return;
-    const item={id:store.newId(),name:get('name').value.trim(),type:get('type').value,hall:document.getElementById('scanner-hall').value,
+  async function saveAutomatically(key) {
+    if(key!==saveKey || saving || keepReason())return;
+    const item={id:candidateId,manualCorrection,name:get('name').value.trim(),type:get('type').value,hall:document.getElementById('scanner-hall').value,
       image:current.artifact?.image || null,capturedAt:new Date().toISOString(),reviewed:true,rows:reviewedItem().rows.map(({name,value,level,levelSource,unlocked,base,max,rangeSource,tier,tierSource,tierEvidence,tierConflict,inferredFields,valueSource,observedValue,observedLevel,rerollEligible,rerollSource,rerollConfidence,rerollEvidence,rerollConflict,rangeCandidates,rangeReview})=>({name,value,level:level??null,levelSource:levelSource??null,unlocked:unlocked??null,base:base??null,max:max??null,rangeSource:rangeSource??null,tier:tier??null,tierSource:tierSource??null,tierEvidence:tierEvidence??null,tierConflict:!!tierConflict,inferredFields:inferredFields || [],valueSource:valueSource??null,observedValue:observedValue??null,observedLevel:observedLevel??null,rerollEligible:typeof rerollEligible==='boolean'?rerollEligible:null,rerollSource:rerollSource??null,rerollConfidence:rerollConfidence??null,rerollEvidence:rerollEvidence??null,rerollConflict:!!rerollConflict,rangeCandidates:rangeCandidates || [],rangeReview:rangeReview || null}))};
-    const merged=store.merge(items,[item]);
-    items.splice(0,items.length,...merged.collection);
-    render();persist();
+    saving=true;render();
+    try {
+      const result=await store.saveScan(item,{profileKey:observationProfile,isCurrent:()=>key===saveKey && !keepReason()});
+      if(result.profileKey===store.collectionKey()) {
+        collection=result.collection;collectionProfile=result.profileKey;items.splice(0,items.length,...result.items);
+        if(key===saveKey && result.action!=='cancelled') {
+          const message=result.action==='added'?'Saved automatically to scanned inventory.':result.action==='updated'?(result.target==='collection'?'Improved stats saved to Collection; the existing ID and slot were preserved.':'Improved stats saved to scanned inventory.'):result.reason;
+          lastSave={key,message};savedStatus(message);
+        }
+      }
+    } catch(error) {if(key===saveKey){failedKey=key;savedStatus('Save failed. Retry Save.');}}
+    finally {saving=false;render();}
+  }
+  get('keep').addEventListener('click',()=>{failedKey='';dismissedKey='';clearTimeout(saveTimer);saveTimer=null;saveAutomatically(saveKey);});
+  get('items').addEventListener('click',async event=>{
+    if(adding || saving)return;const button=event.target.closest('[data-remove]');if(!button)return;
+    const item=items[Number(button.dataset.remove)];dismissedKey=saveKey;clearTimeout(saveTimer);saveTimer=null;
+    try {await store.remove(item.id,{inventory:true});items.splice(0,items.length,...await store.read('items'));render();}
+    catch {savedStatus('Could not remove this scan. Try again.',true);}
   });
-  get('items').addEventListener('click',event=>{if(adding)return;const button=event.target.closest('[data-remove]');if(button){items.splice(Number(button.dataset.remove),1);render();persist();}});
   get('add-collection').addEventListener('click',async()=>{
-    if(!loaded || !items.length || adding)return;
+    if(!loaded || !items.length || adding || saving)return;
     adding=true;render();get('collection-status').textContent='Adding to your collection…';
     try {
       const importingProfile=store.collectionKey();
       const result=await store.accept(items.slice());
       if(importingProfile===store.collectionKey()){collection=result.collection;collectionProfile=importingProfile;}
       items.splice(0,items.length,...result.remainingInventory);
-      get('saved').textContent='Imported items and duplicates were removed from scanned inventory. Changes saved on this device.';
-      get('collection-status').textContent=result.added+' added, '+result.updated+' updated, '+result.duplicates+' duplicates skipped; '+result.blocked+' left for review in '+window.DN.activeProfile().name+' collection. '+result.issues.join(' ');
-    } catch {get('collection-status').textContent='Could not save to your collection. Try again; use Export Backup in Profiles to keep a backup.';}
+      savedStatus('Import complete.');
+      get('collection-status').textContent=[result.added?result.added+' added':'',result.updated?result.updated+' updated':'',result.blocked?result.blocked+' need review':''].filter(Boolean).join(' · ');
+    } catch {get('collection-status').textContent='Import failed. Try again.';}
     finally {adding=false;render();}
   });
   render();
   window.addEventListener('focus',refreshCollection);
   window.addEventListener('storage',refreshCollection);
-  Promise.all([store.read('items'),refreshCollection()]).then(([saved])=>{items.push(...saved);get('saved').textContent='Inventory is saved on this device, including artwork.';})
-    .catch(()=>{get('saved').textContent='Browser storage is unavailable. Keep this tab open and retry saving before closing.';})
+  Promise.all([store.read('items'),refreshCollection()]).then(([saved])=>{items.push(...saved);savedStatus('Inventory loaded.');})
+    .catch(()=>{savedStatus('Browser storage is unavailable.',true);})
     .finally(()=>{loaded=true;render();});
 })();

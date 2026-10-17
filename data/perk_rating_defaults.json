@@ -264,20 +264,20 @@
     "defensive": 5
   },
   "Generals' Damage": {
-    "offensive": 5,
-    "defensive": 5
-  },
-  "Generals' Hitpoints": {
     "offensive": 3,
     "defensive": 3
+  },
+  "Generals' Hitpoints": {
+    "offensive": 2,
+    "defensive": 2
   },
   "Generals' Hitpoints & Damage": {
     "offensive": 5,
     "defensive": 5
   },
   "Generals' Movement Speed": {
-    "offensive": 3,
-    "defensive": 3
+    "offensive": 2,
+    "defensive": 2
   },
   "Gold Looted": {
     "offensive": 0,

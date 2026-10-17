@@ -1,0 +1,1155 @@
+{
+  "version": 1,
+  "source": {
+    "filename": "2026-10-16 12-32-06.mkv",
+    "sha256": "4613b9518b97bca227e5ce63970659d6c8c8a6b137257b7301d3bad76e88cf9a",
+    "duration": 297.8,
+    "width": 3440,
+    "height": 1440
+  },
+  "roi": {
+    "x": 188,
+    "y": 312,
+    "width": 1796,
+    "height": 1024
+  },
+  "provenance": "Manually transcribed from native game-only frames before running video OCR. Development recording, no independent second annotator or holdout. Rows preserve physical order and duplicates. Row arrays are [name, signed percentage, visible level (storage only)]. unlocked is the visible prefix count; dice is the common visible state for every storage row. Unknown level is null. Crafting titles identify encounters and are not an OCR requirement. Fresh-craft level and dice eligibility are not pixel labels.",
+  "cases": [
+    {
+      "time": 56,
+      "mode": "storage",
+      "title": "Alexander's Sword",
+      "category": "Weapon",
+      "hall": "main",
+      "unlocked": 2,
+      "dice": true,
+      "rows": [
+        [
+          "Ranged Siege Hitpoints",
+          12,
+          2
+        ],
+        [
+          "Ranged Siege Hitpoints",
+          2,
+          2
+        ],
+        [
+          "Machine Gun Infantry Damage",
+          11,
+          1
+        ],
+        [
+          "Defender Spawn Time",
+          -6,
+          1
+        ],
+        [
+          "Enemy Defender Spawn Time",
+          6,
+          1
+        ]
+      ]
+    },
+    {
+      "time": 60,
+      "mode": "storage",
+      "title": "Ching Shih's Sword",
+      "category": "Weapon",
+      "hall": "main",
+      "unlocked": 2,
+      "dice": true,
+      "rows": [
+        [
+          "Ranged Infantry Damage",
+          7,
+          2
+        ],
+        [
+          "Supply Vehicle Hitpoints",
+          1,
+          1
+        ],
+        [
+          "Generals' Damage",
+          1,
+          1
+        ],
+        [
+          "Attack Helicopter Damage",
+          1,
+          1
+        ],
+        [
+          "APC Hitpoints",
+          1,
+          null
+        ]
+      ]
+    },
+    {
+      "time": 78,
+      "mode": "storage",
+      "title": "The Yongle Emperor's Vase",
+      "category": "Pottery",
+      "hall": "main",
+      "unlocked": 1,
+      "dice": true,
+      "rows": [
+        [
+          "Library Tech Food Cost",
+          -12,
+          2
+        ],
+        [
+          "Air Defense Hitpoints",
+          6,
+          1
+        ],
+        [
+          "Air Defense Hitpoints",
+          1,
+          1
+        ],
+        [
+          "Catapult Hitpoints",
+          1,
+          1
+        ],
+        [
+          "Redoubt Damage",
+          11,
+          1
+        ]
+      ]
+    },
+    {
+      "time": 90,
+      "mode": "storage",
+      "title": "Helg\u00f6 Buddha",
+      "category": "Legendary",
+      "hall": "main",
+      "unlocked": 5,
+      "dice": false,
+      "rows": [
+        [
+          "Quick Victory Time",
+          12,
+          2
+        ],
+        [
+          "University Research Time",
+          -9,
+          4
+        ],
+        [
+          "Library Research Time",
+          -9,
+          4
+        ],
+        [
+          "Defender Hitpoints",
+          11,
+          1
+        ],
+        [
+          "Invading Bazooka Damage",
+          -11,
+          1
+        ]
+      ]
+    },
+    {
+      "time": 98,
+      "mode": "storage",
+      "title": "A.E.F.'s Trench Knife",
+      "category": "War Weapon",
+      "hall": "war",
+      "unlocked": 1,
+      "dice": true,
+      "rows": [
+        [
+          "Invading Mortar Troop Hitpoints",
+          -1,
+          1
+        ],
+        [
+          "Heavy Tank Damage",
+          3,
+          1
+        ],
+        [
+          "Mortar Troop Damage",
+          1,
+          1
+        ],
+        [
+          "Attack Helicopter Damage",
+          6,
+          1
+        ],
+        [
+          "Invading Supply Vehicle Hitpoints",
+          -1,
+          1
+        ]
+      ]
+    },
+    {
+      "time": 105,
+      "mode": "storage",
+      "title": "Casimir Zeglen's Brewster Body Shield",
+      "category": "War Armor",
+      "hall": "war",
+      "unlocked": 2,
+      "dice": true,
+      "rows": [
+        [
+          "Ranged Infantry Hitpoints",
+          3,
+          1
+        ],
+        [
+          "Heavy Tank Hitpoints",
+          6,
+          1
+        ],
+        [
+          "Invading Paratrooper Damage",
+          -1,
+          1
+        ],
+        [
+          "Ranged Infantry Hitpoints",
+          3,
+          1
+        ],
+        [
+          "Ranged Siege Hitpoints",
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "time": 133,
+      "mode": "storage",
+      "title": "Gemini 8 Gloves",
+      "category": "War Legendary",
+      "hall": "war",
+      "unlocked": 5,
+      "dice": false,
+      "rows": [
+        [
+          "Defender Hitpoints",
+          8,
+          2
+        ],
+        [
+          "Enemy Defender Spawn Time",
+          8,
+          2
+        ],
+        [
+          "All Defensive Towers Hitpoints",
+          8,
+          2
+        ],
+        [
+          "All Defensive Towers Damage",
+          8,
+          2
+        ],
+        [
+          "Enemy Missile Silo Damage",
+          -8,
+          2
+        ]
+      ],
+      "stars": [
+        null,
+        null,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "time": 136,
+      "mode": "storage",
+      "title": "Vespa 150 TAP",
+      "category": "War Mythical",
+      "hall": "war",
+      "unlocked": 6,
+      "dice": false,
+      "rows": [
+        [
+          "Factory Troop Hitpoints",
+          9,
+          1
+        ],
+        [
+          "Machine Gun Infantry Damage",
+          11,
+          1
+        ],
+        [
+          "Machine Gun Infantry Hitpoints",
+          11,
+          1
+        ],
+        [
+          "Ranged Siege Damage",
+          11,
+          1
+        ],
+        [
+          "Ranged Siege Hitpoints",
+          11,
+          1
+        ],
+        [
+          "Factory Troop Damage",
+          6,
+          1
+        ]
+      ],
+      "stars": [
+        true,
+        true,
+        true,
+        true,
+        null,
+        true
+      ]
+    },
+    {
+      "time": 140,
+      "mode": "storage",
+      "title": "Gemini 8 Gloves",
+      "category": "War Mythical",
+      "hall": "war",
+      "unlocked": 6,
+      "dice": false,
+      "rows": [
+        [
+          "Defender Movement Speed",
+          10,
+          2
+        ],
+        [
+          "Defender Hitpoints",
+          13,
+          2
+        ],
+        [
+          "Enemy Defender Spawn Time",
+          13,
+          2
+        ],
+        [
+          "All Defensive Towers Hitpoints",
+          13,
+          2
+        ],
+        [
+          "All Defensive Towers Damage",
+          13,
+          2
+        ],
+        [
+          "Enemy Missile Silo Damage",
+          -13,
+          2
+        ]
+      ],
+      "stars": [
+        true,
+        null,
+        true,
+        true,
+        true,
+        true
+      ]
+    },
+    {
+      "time": 290,
+      "mode": "storage",
+      "title": "Field Surgery Kit",
+      "category": "War Equipment",
+      "hall": "war",
+      "unlocked": 1,
+      "dice": true,
+      "rows": [
+        [
+          "Air Defense Hitpoints",
+          1,
+          1
+        ],
+        [
+          "Air Defense Hitpoints",
+          1,
+          1
+        ],
+        [
+          "Enemy Tower Hitpoints",
+          -1,
+          1
+        ],
+        [
+          "All Defensive Towers Hitpoints",
+          6,
+          1
+        ],
+        [
+          "All Defensive Towers Damage",
+          1,
+          1
+        ]
+      ]
+    },
+    {
+      "time": 161,
+      "mode": "crafting",
+      "title": "An-Nasir Muhammad's Helmet",
+      "category": "Armor",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Invading Guerrilla Hitpoints",
+          -11
+        ],
+        [
+          "Invading Attack Helicopter Hitpoints",
+          -1
+        ],
+        [
+          "Invading Attack Helicopter Damage",
+          -1
+        ],
+        [
+          "Invading Tactical Helicopter Healing",
+          -1
+        ],
+        [
+          "Invading Ranged Siege Hitpoints",
+          -6
+        ]
+      ]
+    },
+    {
+      "time": 165,
+      "mode": "crafting",
+      "title": "Kusarigama",
+      "category": "Weapon",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Wall Sapper Damage",
+          11
+        ],
+        [
+          "Enemy Defender Spawn Time",
+          11
+        ],
+        [
+          "MRL Damage",
+          11
+        ],
+        [
+          "Generals' Damage",
+          6
+        ],
+        [
+          "Ranged Infantry Damage",
+          1
+        ]
+      ]
+    },
+    {
+      "time": 171,
+      "mode": "crafting",
+      "title": "Monile Necklace",
+      "category": "Jewelry",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Enemy Missile Silo Hitpoints",
+          -6
+        ],
+        [
+          "Enemy Sniper Tower Damage",
+          -1
+        ],
+        [
+          "Library Tech Gold Cost",
+          -6
+        ],
+        [
+          "Gold Looted",
+          1
+        ],
+        [
+          "Enemy Anti-Tank Gun Hitpoints",
+          -11
+        ]
+      ]
+    },
+    {
+      "time": 174,
+      "mode": "crafting",
+      "title": "Herodotus' Tunic",
+      "category": "Armor",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Invading Paratrooper Damage",
+          -1
+        ],
+        [
+          "Invading Assault Vehicle Hitpoints",
+          -6
+        ],
+        [
+          "Invading MRL Hitpoints",
+          -6
+        ],
+        [
+          "Invading Generals' Damage",
+          -6
+        ],
+        [
+          "Invading Bomber Hitpoints",
+          -6
+        ]
+      ]
+    },
+    {
+      "time": 177,
+      "mode": "crafting",
+      "title": "Fulani Necklace",
+      "category": "Jewelry",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Enemy Redoubt Hitpoints",
+          -1
+        ],
+        [
+          "National Trade Good Loot Chance",
+          1
+        ],
+        [
+          "National Trade Good Loot Chance",
+          11
+        ],
+        [
+          "Enemy Air Defense Hitpoints",
+          -1
+        ],
+        [
+          "Enemy Catapult Damage",
+          -11
+        ]
+      ]
+    },
+    {
+      "time": 183,
+      "mode": "crafting",
+      "title": "Claymore Sword",
+      "category": "Weapon",
+      "hall": "main",
+      "unlocked": 2,
+      "rows": [
+        [
+          "Armored Car Hitpoints",
+          1
+        ],
+        [
+          "Attack Helicopter Hitpoints",
+          1
+        ],
+        [
+          "Fighter Hitpoints",
+          11
+        ],
+        [
+          "Mortar Troop Damage",
+          11
+        ],
+        [
+          "Raider Hitpoints",
+          1
+        ]
+      ]
+    },
+    {
+      "time": 185,
+      "mode": "crafting",
+      "title": "Nupe Gourd",
+      "category": "Pottery",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Food from Fruit Trees",
+          11
+        ],
+        [
+          "Anti-Tank Gun Hitpoints",
+          1
+        ],
+        [
+          "Library Tech Food Cost",
+          -1
+        ],
+        [
+          "Vault Capacity",
+          6
+        ],
+        [
+          "Redoubt Damage",
+          6
+        ]
+      ]
+    },
+    {
+      "time": 188,
+      "mode": "crafting",
+      "title": "Idris Alooma's Armor",
+      "category": "Armor",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Invading MRL Damage",
+          -6
+        ],
+        [
+          "Invading MRL Hitpoints",
+          -1
+        ],
+        [
+          "Invading Tactical Helicopter Hitpoints",
+          -11
+        ],
+        [
+          "Invading Fighter Damage",
+          -11
+        ],
+        [
+          "Invading MRL Damage",
+          -6
+        ]
+      ]
+    },
+    {
+      "time": 191,
+      "mode": "crafting",
+      "title": "Itzcoatl's Tlaloc Vessel",
+      "category": "Pottery",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Tower Damage",
+          1
+        ],
+        [
+          "Tower Hitpoints",
+          6
+        ],
+        [
+          "Air Defense Hitpoints",
+          6
+        ],
+        [
+          "Tower Hitpoints",
+          1
+        ],
+        [
+          "Gold from Gold Mines",
+          11
+        ]
+      ]
+    },
+    {
+      "time": 195,
+      "mode": "crafting",
+      "title": "Bronze Helmet",
+      "category": "Armor",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Invading Machine Gun Infantry Damage",
+          -1
+        ],
+        [
+          "Invading Heavy Infantry Damage",
+          -1
+        ],
+        [
+          "Invading Supply Vehicle Healing",
+          -11
+        ],
+        [
+          "Invading Tactical Helicopter Hitpoints",
+          -1
+        ],
+        [
+          "Invading Heavy Infantry Hitpoints",
+          -6
+        ]
+      ]
+    },
+    {
+      "time": 200,
+      "mode": "crafting",
+      "title": "Mangbetu Knife",
+      "category": "Weapon",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Armored Car Damage",
+          6
+        ],
+        [
+          "Attack Helicopter Damage",
+          6
+        ],
+        [
+          "Enemy Defender Spawn Time",
+          1
+        ],
+        [
+          "Bomber Hitpoints",
+          11
+        ],
+        [
+          "Mortar Troop Damage",
+          6
+        ]
+      ]
+    },
+    {
+      "time": 204,
+      "mode": "crafting",
+      "title": "Spartacus' Gladius",
+      "category": "Weapon",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Attack Helicopter Damage",
+          1
+        ],
+        [
+          "Bazooka Hitpoints",
+          6
+        ],
+        [
+          "Heavy Tank Hitpoints",
+          6
+        ],
+        [
+          "Bazooka Hitpoints",
+          11
+        ],
+        [
+          "Ranged Infantry Damage",
+          11
+        ]
+      ]
+    },
+    {
+      "time": 208,
+      "mode": "crafting",
+      "title": "Scottish Agate Brooch",
+      "category": "Jewelry",
+      "hall": "main",
+      "unlocked": 2,
+      "rows": [
+        [
+          "Enemy Tower Hitpoints",
+          -1
+        ],
+        [
+          "Enemy Air Defense Damage",
+          -6
+        ],
+        [
+          "Enemy Missile Silo Hitpoints",
+          -1
+        ],
+        [
+          "Enemy Sniper Tower Hitpoints",
+          -6
+        ],
+        [
+          "Enemy Sniper Tower Damage",
+          -1
+        ]
+      ]
+    },
+    {
+      "time": 213,
+      "mode": "crafting",
+      "title": "Scutum Shield",
+      "category": "Weapon",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Heavy Infantry Hitpoints",
+          1
+        ],
+        [
+          "Ranged Infantry Hitpoints",
+          1
+        ],
+        [
+          "Ranged Siege Hitpoints",
+          6
+        ],
+        [
+          "Tactical Helicopter Hitpoints",
+          6
+        ],
+        [
+          "Heavy Infantry Damage",
+          1
+        ]
+      ]
+    },
+    {
+      "time": 217,
+      "mode": "crafting",
+      "title": "Inca Jewelry",
+      "category": "Jewelry",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Library Tech Gold Cost",
+          -6
+        ],
+        [
+          "Enemy Catapult Damage",
+          -1
+        ],
+        [
+          "Enemy Sniper Tower Hitpoints",
+          -11
+        ],
+        [
+          "Enemy Catapult Hitpoints",
+          -6
+        ],
+        [
+          "Food Looted",
+          1
+        ]
+      ]
+    },
+    {
+      "time": 224,
+      "mode": "crafting",
+      "title": "Napoleonic Cuirass",
+      "category": "Armor",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Invading Bazooka Damage",
+          -11
+        ],
+        [
+          "Invading MRL Hitpoints",
+          -1
+        ],
+        [
+          "Invading Bomber Hitpoints",
+          -11
+        ],
+        [
+          "Invading Heavy Infantry Damage",
+          -1
+        ],
+        [
+          "Invading Paratrooper Hitpoints",
+          -6
+        ]
+      ]
+    },
+    {
+      "time": 227,
+      "mode": "crafting",
+      "title": "Acamapichtli's Dancing Dog",
+      "category": "Pottery",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Gold from Gold Mines",
+          11
+        ],
+        [
+          "Catapult Hitpoints",
+          1
+        ],
+        [
+          "Tower Damage",
+          1
+        ],
+        [
+          "Library Tech Oil Cost",
+          -1
+        ],
+        [
+          "Food from Farms",
+          6
+        ]
+      ]
+    },
+    {
+      "time": 231,
+      "mode": "crafting",
+      "title": "Pachacuti's Incan Jewelry",
+      "category": "Jewelry",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Enemy Redoubt Hitpoints",
+          -1
+        ],
+        [
+          "Looted Resource Refund",
+          1
+        ],
+        [
+          "Enemy Anti-Tank Gun Hitpoints",
+          -1
+        ],
+        [
+          "Oil Looted",
+          6
+        ],
+        [
+          "Looted Resource Refund",
+          1
+        ]
+      ]
+    },
+    {
+      "time": 236,
+      "mode": "crafting",
+      "title": "Acamapichtli's Dancing Dog",
+      "category": "Pottery",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "All Resources from Hunting",
+          1
+        ],
+        [
+          "Food from Farms",
+          11
+        ],
+        [
+          "Missile Silo Hitpoints",
+          1
+        ],
+        [
+          "Air Defense Damage",
+          1
+        ],
+        [
+          "Air Defense Hitpoints",
+          11
+        ]
+      ]
+    },
+    {
+      "time": 239,
+      "mode": "crafting",
+      "title": "Gladius",
+      "category": "Weapon",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Attack Helicopter Hitpoints",
+          6
+        ],
+        [
+          "Ranged Infantry Damage",
+          6
+        ],
+        [
+          "Ranged Siege Damage",
+          6
+        ],
+        [
+          "Bazooka Hitpoints",
+          11
+        ],
+        [
+          "Attack Helicopter Hitpoints",
+          11
+        ]
+      ]
+    },
+    {
+      "time": 245,
+      "mode": "crafting",
+      "title": "Tlingit Armor",
+      "category": "Armor",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Invading Bazooka Damage",
+          -1
+        ],
+        [
+          "Invading Tactical Helicopter Healing",
+          -1
+        ],
+        [
+          "Invading Attack Helicopter Damage",
+          -11
+        ],
+        [
+          "Invading Mortar Troop Hitpoints",
+          -1
+        ],
+        [
+          "Invading Attack Helicopter Damage",
+          -11
+        ]
+      ]
+    },
+    {
+      "time": 248,
+      "mode": "crafting",
+      "title": "Kongolo's Shield",
+      "category": "Weapon",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "MRL Damage",
+          6
+        ],
+        [
+          "Attack Helicopter Damage",
+          1
+        ],
+        [
+          "Guerrilla Damage",
+          1
+        ],
+        [
+          "Ranged Siege Hitpoints",
+          1
+        ],
+        [
+          "Heavy Tank Damage",
+          1
+        ]
+      ]
+    },
+    {
+      "time": 253,
+      "mode": "crafting",
+      "title": "Inca Jewelry",
+      "category": "Jewelry",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "Enemy Anti-Tank Gun Hitpoints",
+          -6
+        ],
+        [
+          "Enemy Sniper Tower Damage",
+          -6
+        ],
+        [
+          "Enemy Tower Hitpoints",
+          -11
+        ],
+        [
+          "All Resources Looted",
+          1
+        ],
+        [
+          "Looted Resource Refund",
+          11
+        ]
+      ]
+    },
+    {
+      "time": 255,
+      "mode": "crafting",
+      "title": "Kuba Mask",
+      "category": "Jewelry",
+      "hall": "main",
+      "unlocked": 1,
+      "rows": [
+        [
+          "National Trade Good Loot Chance",
+          6
+        ],
+        [
+          "Food Looted",
+          11
+        ],
+        [
+          "Enemy Anti-Tank Gun Damage",
+          -11
+        ],
+        [
+          "Enemy Sniper Tower Hitpoints",
+          -1
+        ],
+        [
+          "Enemy Anti-Tank Gun Damage",
+          -6
+        ]
+      ]
+    }
+  ],
+  "negatives": [
+    {
+      "time": 30,
+      "kind": "hall gallery"
+    },
+    {
+      "time": 145,
+      "kind": "active benefits"
+    },
+    {
+      "time": 180,
+      "kind": "crafting menu"
+    },
+    {
+      "time": 251,
+      "kind": "sell confirmation obscuring artifact"
+    },
+    {
+      "time": 270,
+      "kind": "storage gallery"
+    }
+  ],
+  "visualReview": "Second pixel review corrected the literal War-prefixed category labels. At 133s the first two row stars, at 136s row five, and at 140s row two disappear during animation: these individual star pixels are unlabelled (null), even though the separate artwork star summary shows all rows unlocked. The fifth level at 60s is too faint to label. These corrections came from native-frame inspection, not OCR predictions."
+}

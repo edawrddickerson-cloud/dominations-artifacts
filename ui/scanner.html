@@ -12,7 +12,7 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts - Crafting Scanner</title>
   <link rel="stylesheet" href="styles.css?v=41" />
-  <link rel="stylesheet" href="scanner.css?v=28" />
+  <link rel="stylesheet" href="scanner.css?v=34" />
 </head>
 <body class="page-scanner">
   <nav class="site-nav" aria-label="Pages">
@@ -140,23 +140,26 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
       <p id="scanner-result-status" hidden>Loading perk settings…</p>
       <div class="scanner-analysis-grid">
         <div id="scanner-result"></div>
-        <section class="scanner-benchmark-categories" aria-labelledby="scanner-benchmarks-label">
-          <span id="scanner-benchmarks-label" class="scanner-summary-label">Top 2 cutoffs</span>
-          <dl id="scanner-benchmarks" class="scanner-benchmarks" aria-labelledby="scanner-benchmarks-label"></dl>
-          <p class="scanner-benchmarks-hint">Beat the cutoff; ties stay outside the top 2.</p>
-          <p class="scanner-benchmarks-hint">Total includes the best single reroll gain.</p>
-        </section>
+        <div class="scanner-artwork"><img id="scanner-artwork" alt="Captured artifact" hidden /></div>
         <section id="scanner-benchmark" class="scanner-summary-card scanner-benchmark" aria-label="Item total versus top two benchmark">
           <div class="scanner-item-score">
             <span id="scanner-item-type" class="scanner-summary-label">Item total</span>
             <strong id="scanner-item-total" class="scanner-summary-number" role="status" aria-live="polite">—</strong>
             <div class="scanner-benchmark-cutoff"><span>Top 2 benchmark</span><strong id="scanner-benchmark-value">—</strong></div>
           </div>
-          <p id="scanner-comparison" role="status" aria-live="polite">Waiting for an item</p>
-          <p id="scanner-comparison-detail"></p>
-          <p id="scanner-score-freshness" role="status"></p>
-          <p id="scanner-score-assumption"></p>
+          <p id="scanner-comparison" hidden></p>
+          <p id="scanner-comparison-detail" hidden></p>
+          <p id="scanner-keeper-reason" role="status" hidden></p>
+          <p id="scanner-score-assumption" hidden></p>
         </section>
+        <section class="scanner-benchmark-categories" aria-labelledby="scanner-benchmarks-label">
+          <span id="scanner-benchmarks-label" class="scanner-summary-label">Benchmarks</span>
+          <dl id="scanner-benchmarks" class="scanner-benchmarks" aria-labelledby="scanner-benchmarks-label"></dl>
+        </section>
+        <div class="scanner-keep">
+          <button type="button" id="scanner-keep" class="btn" disabled>Keep</button>
+          <p id="scanner-keep-status" class="scanner-warning" role="status" hidden></p>
+        </div>
       </div>
       <details><summary>How the comparison works</summary><p>Sums all five stats at maximum percentages, including reroll potential, and compares against your second-best owned item of the same type and hall in this profile, including Unused. Main Weapons follow the page's Off/Def toggles; Jewelry uses Off, Armor and Pottery use Def, and War items use Off. Each category's cutoff uses the same ratings as its item score. An unread Main type shows the highest possible total across these rating choices. Ties do not count as better.</p></details>
       <details><summary>Correct Recognition</summary>
@@ -169,36 +172,43 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
         <button type="button" class="btn" id="scanner-accept" disabled>Use Corrected Values</button>
       </details>
     </section>
-    <section class="scanner-reading scanner-panel" aria-label="Crafted item log">
-      <h3>Crafted item log</h3>
+    <details class="scanner-reading scanner-panel" aria-label="Crafted item log">
+      <summary>Crafted item log</summary>
       <label><input type="checkbox" id="scanner-collect" checked /> Log items and stats while I cycle through artifacts</label>
       <label><input type="checkbox" id="scanner-save-logs" checked /> Save logs in this browser</label>
       <p id="scanner-log-storage-status" role="status"></p>
       <p id="scanner-item-count" role="status"></p>
       <details open><summary>Logged items and stats</summary><ol id="scanner-item-log" class="scanner-item-log"></ol></details>
       <p id="scanner-collection-count" role="status"></p>
-      <button type="button" class="btn" id="scanner-collection-clear">Clear Item Log and Names</button>
-      <details><summary>Labels needing review</summary><pre id="scanner-collected-labels" style="white-space:pre-wrap"></pre></details>
-    </section>
+      <div class="scanner-controls">
+        <button type="button" class="btn" id="scanner-collection-export">Export Full Item Log</button>
+        <button type="button" class="btn" id="scanner-collection-clear">Clear Item Log and Names</button>
+      </div>
+      <p id="scanner-collection-export-status" role="status" aria-live="polite"></p>
+      <details><summary>Labels needing review</summary><pre id="scanner-collected-labels" style="white-space:pre-wrap"></pre><button type="button" class="btn" id="scanner-stat-evidence-export">Export Stat Evidence</button><p id="scanner-stat-evidence-status" role="status"></p></details>
+    </details>
     <video id="scanner-video" class="scanner-video" muted playsinline aria-hidden="true"></video>
   </div>
   <script src="scanner-core.js?v=1"></script>
   <script src="scanner-regions.js?v=3"></script>
   <script src="scanner-frames.js?v=2"></script>
   <script src="data/army_catalog.js?v=8"></script>
-  <script src="shared.js?v=40"></script>
+  <script src="shared.js?v=43"></script>
+  <script src="data/artifact_stat_context.js?v=1"></script>
+  <script src="artifact-stat-context.js?v=3"></script>
   <script src="profiles-ui.js?v=13"></script>
-  <script src="artifact-scoring.js?v=2"></script>
-  <script src="stored-artifacts.js?v=15"></script>
-  <script src="scanner-comparison.js?v=17"></script>
+  <script src="artifact-scoring.js?v=3"></script>
+  <script src="stored-artifacts.js?v=19"></script>
+  <script src="scanner-comparison.js?v=25"></script>
+  <script src="scanner-keep.js?v=2"></script>
   <script src="vendor/tesseract/tesseract.min.js"></script>
   <script src="scanner-reroll-recognition.js?v=1"></script>
   <script src="scanner-name-catalog.js?v=1"></script>
-  <script src="scanner-recognition.js?v=30"></script>
-  <script src="scanner-field-recognition.js?v=5"></script>
+  <script src="scanner-recognition.js?v=35"></script>
+  <script src="scanner-field-recognition.js?v=6"></script>
   <script src="scanner-calibration.js?v=4"></script>
-  <script src="scanner-collection.js?v=49"></script>
-  <script src="scanner-reading.js?v=52"></script>
-  <script src="scanner.js?v=8"></script>
+  <script src="scanner-collection.js?v=55"></script>
+  <script src="scanner-reading.js?v=69"></script>
+  <script src="scanner.js?v=11"></script>
 </body>
 </html>

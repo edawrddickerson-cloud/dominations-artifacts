@@ -16,8 +16,8 @@
   check('real IndexedDB abort preserves inventory',JSON.stringify(await store.readBackupRecords())===before);
   await store.write('items',[]);localStorage.setItem('dn-backup-fixture','changed');
   await core.restore(JSON.parse(JSON.stringify(data)),localStorage,store);
-  check('real IndexedDB restores inventory and every collection',JSON.stringify(await store.readBackupRecords())===before);
-  check('settings and crafting log restored',localStorage.getItem('dn-backup-fixture')==='saved' && localStorage.getItem('dn-crafting-scanner-log-v2')===data.settings['dn-crafting-scanner-log-v2']);
+  check('real IndexedDB restores inventory and every collection',JSON.stringify((await store.readBackupRecords()).filter(record=>record.id!=='crafting-log'))===before);
+  check('settings and crafting log restored',localStorage.getItem('dn-backup-fixture')==='saved' && await window.DN.scannerLog.read()===data.settings['dn-crafting-scanner-log-v2']);
   check('unrelated settings preserved',localStorage.getItem('unrelated')==='keep');
   let blob,downloadName;
   const createURL=URL.createObjectURL,click=HTMLAnchorElement.prototype.click;
@@ -26,7 +26,7 @@
   document.querySelector('[data-backup-export]').click();
   await wait(()=>blob);
   const downloaded=JSON.parse(await blob.text());core.validate(downloaded);
-  check('export button downloads complete backup',downloadName.startsWith('dominations-backup-') && downloaded.records.length===2 && downloaded.settings['dn-backup-fixture']==='saved');
+  check('export button downloads complete backup',downloadName.startsWith('dominations-backup-') && downloaded.records.length===3 && downloaded.settings['dn-backup-fixture']==='saved');
   URL.createObjectURL=createURL;HTMLAnchorElement.prototype.click=click;
   for(const page of ['collection.html','storage-scanner.html','scanner.html']) {
     const frame=document.createElement('iframe');frame.src=page;document.body.appendChild(frame);

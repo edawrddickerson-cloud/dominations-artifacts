@@ -1,8 +1,8 @@
 /*
  * Authority: Untitled-1.md, approved Phase 3 recognition/rating integration.
  * Ownership: Shared artifact scorer; callers own canonical names and rating inheritance.
- * Invariants: Existing Hall/Showcase calculations preserved; absolute strongest base/max,
- * one selected Showcase line, enabled-axis selection, earliest-line tie handling.
+ * Invariants: Absolute strongest base/max, higher enabled axis per perk,
+ * one selected Showcase line, earliest-line tie handling.
  * Constraints: No DOM, storage, capture, recognition, or alternative rating algorithm.
  * History: Extracted from app.js without changing established calculation behavior.
  */
@@ -74,10 +74,8 @@
 
   /** Active-axis line score for Best-line selection. */
   function lineActiveScore(line, prefSortAxes) {
-    let sum = 0;
-    if (prefSortAxes.offensive) sum += line.offensive;
-    if (prefSortAxes.defensive) sum += line.defensive;
-    return sum;
+    if (prefSortAxes.offensive && prefSortAxes.defensive) return Math.max(line.offensive, line.defensive);
+    return prefSortAxes.offensive ? line.offensive : prefSortAxes.defensive ? line.defensive : 0;
   }
 
   /**
@@ -119,9 +117,7 @@
       offensive += line.offensive;
       defensive += line.defensive;
     }
-    let preference = 0;
-    if (prefSortAxes.offensive) preference += offensive;
-    if (prefSortAxes.defensive) preference += defensive;
+    const preference = lines.reduce((total, line) => total + lineActiveScore(line, prefSortAxes), 0);
     return { lines, bestIndex: -1, offensive, defensive, preference };
   }
 
@@ -129,7 +125,7 @@
   function withRerollPotential(base,{hall,grade,eligible=[]}={}) {
     const target=String(hall).toLowerCase()==='war'?75:100;
     const special=/legendary|mythical/i.test(String(grade || '')) || (base.axes && !base.axes.offensive && !base.axes.defensive);
-    const active=line=>(base.axes?.offensive?line.offensive:0)+(base.axes?.defensive?line.defensive:0);
+    const active=line=>lineActiveScore(line,base.axes || {});
     // Callers provide their selected axes; older score objects can use an explicit
     // line preference assigned by the comparison adapter.
     const points=line=>Number.isFinite(line.preference)?line.preference:active(line);
@@ -150,5 +146,5 @@
     return withRerollPotential({...base,axes:options.prefSortAxes,
       lines:base.lines.map(line=>({...line,preference:lineActiveScore(line,options.prefSortAxes)}))},{hall,grade,eligible});
   }
-  window.DNArtifactScoring = { score, perkLines, withRerollPotential, comparisonScore };
+  window.DNArtifactScoring = { score, perkLines, lineActiveScore, withRerollPotential, comparisonScore };
 })();

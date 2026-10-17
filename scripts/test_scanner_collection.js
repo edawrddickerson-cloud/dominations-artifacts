@@ -56,6 +56,39 @@ collector.recordItem(null,3);collector.recordItem({rows:[]},3);
 assert.equal(collector.summary().itemCount,2,'empty reads create no phantom item');
 collector.clear();assert.equal(collector.summary().itemCount,0);
 console.log('Item retry updates, best-read retention, corrections, identical crafts, and export isolation passed.');
+const steady=context.window.DNScannerCollectionCore.createCollector();
+const stable={valid:true,hall:'main',artifact:{type:'Weapon'},rows:Array.from({length:5},()=>({name:'Ranged Infantry Hitpoints',known:true,value:11,hasPercent:true,confidence:85}))};
+const steadyOptions={steadyState:true,continuous:true,profileKey:'collection:a',encounterId:'[1,1]'};
+steady.recordItem(stable,1,steadyOptions);
+const improved={...stable,valid:false,rows:stable.rows.map((row,index)=>index===2?{...row,value:6,confidence:97}:row)};
+steady.recordItem(improved,1,steadyOptions);
+assert.equal(steady.summary().itemCount,1);
+assert.equal(steady.summary().items[0].rows[2].value,6,'log follows the accepted higher-confidence snapshot even if another field leaves the item unconfirmed');
+assert.equal(context.window.DNScannerCollectionCore.isComplete(steady.summary().items[0]),true,'five accepted stats are complete without requiring raw OCR validation');
+const keepId=steady.summary().items[0].keepId;
+steady.updateItem(steady.summary().items[0].id,{keptId:keepId});
+steady.recordItem(improved,1,steadyOptions);
+assert.equal(steady.itemForEncounter('[1,1]','collection:a').keptId,keepId,'retry retains the ownership link');
+steady.recordItem(improved,2,{...steadyOptions,encounterId:'[1,2]',newEncounter:true});
+assert.equal(steady.summary().itemCount,2,'separate identical completed crafts get separate log entries');
+assert.notEqual(steady.summary().items[0].keepId,steady.summary().items[1].keepId);
+const restoredSteady=context.window.DNScannerCollectionCore.createCollector({initialData:steady.exportData()});
+assert.equal(restoredSteady.summary().items[0].keptId,keepId,'kept status survives restoring the log');
+
+// October 16 export, item 49: a later -5% read displaced an earlier -6%
+// despite its Main green tier conflict. Keep the better read and both raw passes.
+const retryLog=context.window.DNScannerCollectionCore.createCollector();
+const supported={valid:false,hall:'main',freshCraft:true,artifact:{type:'Armor'},rows:Array.from({length:5},(_,index)=>({
+  name:index===1?'Invading Fighter Damage':'Defender Hitpoints',value:index===1?-6:1,known:true,
+  raw:index===1?'Invading Fighter Damage -6%':'Defender Hitpoints +1%',colour:index===1?'green':'neutral',hasPercent:true}))};
+retryLog.record(supported);retryLog.recordItem(supported,49);
+const contradicted={...supported,rows:supported.rows.map((row,index)=>index===1?{...row,value:-5,raw:'Invading Fighter Damage -5%',tierConflict:true}:row)};
+retryLog.record(contradicted);retryLog.recordItem(contradicted,49);
+assert.equal(retryLog.exportData().items[0].rows[1].value,-6,'A conflicting retry cannot displace an earlier compatible signed value');
+assert.equal(retryLog.exportData().items[0].validated,false,'Retaining the earlier value does not confirm the item');
+assert.equal(retryLog.exportData().scans[1].observations[0].rows[1].value,-5,'The contradicting read stays in the raw evidence');
+retryLog.recordItem(contradicted,50,{newEncounter:true});
+assert.equal(retryLog.exportData().items.length,2,'A separate encounter still gets its own record');
 
 collector.clear();
 const firstNames=['Bomber Hitpoints','Attack Helicopter Hitpoints','Ranged Infantry Hitpoints','Armored Car Damage','Attack Helicopter Hitpoints'];
@@ -75,32 +108,34 @@ collector.recordItem(secondItem,300,{continuous:true,newEncounter:true});
 assert.equal(collector.summary().itemCount,3,'explicit encounter boundary still permits a genuinely separate identical craft');
 console.log('Two-artifact live OCR retry regression passed: 22 reads produce two log entries.');
 
+(async()=>{
 const saved=new Map(),logKey='dn-crafting-scanner-log-v2';
-function browser(storage=saved) {
+async function browser(storage=saved) {
   const elements={};
   for(const id of ['scanner-collect','scanner-save-logs','scanner-log-storage-status','scanner-collection-count','scanner-collected-labels','scanner-export','scanner-collection-clear','scanner-read'])elements[id]={checked:true,textContent:'',listeners:{},addEventListener(event,fn){this.listeners[event]=fn;}};
-  const app={window:{},document:{getElementById:id=>elements[id] || null},localStorage:{getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},Date,confirm:()=>true};
+  const app={window:{DN:{scannerLog:{async read(){return storage.get(logKey)??null;},async write(value){storage.set(logKey,value);},async remove(){storage.delete(logKey);}}}},document:{getElementById:id=>elements[id] || null},localStorage:{getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},Date,confirm:()=>true};
   vm.createContext(app);vm.runInContext(fs.readFileSync(path.join(__dirname,'../ui/stored-artifacts.js'),'utf8'),app);
-  vm.runInContext(fs.readFileSync(path.join(__dirname,'../ui/scanner-collection.js'),'utf8'),app);
+  await vm.runInContext(fs.readFileSync(path.join(__dirname,'../ui/scanner-collection.js'),'utf8'),app);
   return {elements,collection:app.window.DNScannerCollection};
 }
-let app=browser();assert.equal(app.elements['scanner-save-logs'].checked,true,'saving defaults to on');
+let app=await browser();assert.equal(app.elements['scanner-save-logs'].checked,true,'saving defaults to on');
 app.collection.recordItem(duplicate,1);app.collection.recordItem(duplicate,1);
 assert.equal(JSON.parse(saved.get(logKey)).items.length,1,'each read saves automatically and retries deduplicate');
 const oldId=JSON.parse(saved.get(logKey)).items[0].id;
-app=browser();app.collection.recordItem(duplicate,1);
+app=await browser();app.collection.recordItem(duplicate,1);
 let persisted=JSON.parse(saved.get(logKey));
 assert.equal(persisted.items.length,2,'reopening restores previous sessions before accumulating new items');
 assert.equal(persisted.items[0].id,oldId);assert.notEqual(persisted.items[1].id,oldId,'session item IDs never collide');
-app.elements['scanner-save-logs'].checked=false;app.elements['scanner-save-logs'].listeners.change();
+app.elements['scanner-save-logs'].checked=false;await app.elements['scanner-save-logs'].listeners.change();
 assert.equal(saved.has(logKey),false,'turning saving off removes the persisted copy');
-assert.equal(browser().elements['scanner-save-logs'].checked,false,'saving preference survives reopening');
-app.elements['scanner-save-logs'].checked=true;app.elements['scanner-save-logs'].listeners.change();
+assert.equal((await browser()).elements['scanner-save-logs'].checked,false,'saving preference survives reopening');
+app.elements['scanner-save-logs'].checked=true;await app.elements['scanner-save-logs'].listeners.change();
 assert.equal(JSON.parse(saved.get(logKey)).items.length,2,'turning saving back on preserves this tab history');
 app.elements['scanner-collection-clear'].listeners.click();
 assert.equal(JSON.parse(saved.get(logKey)).items.length,0,'clear also clears the persistent log');
 const unavailable={get:()=>null,set(){throw new Error('quota exceeded');},delete(){}};
-app=browser(unavailable);app.collection.recordItem(duplicate,1);
+app=await browser(unavailable);app.collection.recordItem(duplicate,1);
+await Promise.resolve();
 assert.match(app.elements['scanner-log-storage-status'].textContent,/Could not save/,'failed storage is visible and does not crash scanning');
 console.log('Automatic saving, session restoration, unique IDs, opt-out preference, clearing, and storage failures passed.');
 collector.clear();
@@ -125,7 +160,7 @@ assert.equal(legacy.exportData().labels.length,2,'legacy mixed values stay uncla
 console.log('Hall-specific stat records, values, encounters, restoration, and legacy isolation passed.');
 saved.set('dn-crafting-scanner-save-logs','true');
 saved.set(logKey,JSON.stringify({version:2,items:[{id:'old-craft',hall:'war',rows:[{name:'Damage',value:6,unlocked:true,level:1,levelSource:'crafting'},{name:'Invading Damage',value:-3,unlocked:true,level:1,levelSource:'crafting'}]}]}));
-browser();
+await browser();
 const restoredCraft=JSON.parse(saved.get(logKey)).items[0];
 assert.equal(restoredCraft.rows[0].level,1);assert.equal(restoredCraft.rows[0].base,6);assert.equal(restoredCraft.rows[0].max,15);
 assert.equal(restoredCraft.rows[1].base,-3);assert.equal(restoredCraft.rows[1].max,-12);
@@ -141,3 +176,5 @@ assert.equal(tieredExport.items[0].rows[0].tierSource,'colour');
 const reloadedTiers=tieredContext.window.DNScannerCollectionCore.createCollector({initialData:JSON.parse(JSON.stringify(tieredExport))}).exportData();
 assert.equal(reloadedTiers.items[0].rows[0].tier,'green');assert.equal(reloadedTiers.items[0].rows[0].tierSource,'colour');
 console.log('Restored crafting levels and ranges are backfilled and saved.');
+
+})().catch(error=>{console.error(error);process.exitCode=1;});

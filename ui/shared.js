@@ -3,6 +3,48 @@
 
   const COLLECTED_KEY = "dn-artifact-collected";
   const LOADOUT_KEY = "dn-artifact-loadout";
+  // Diagnostic logs grow much larger than settings. Keep them in the same
+  // IndexedDB as scanned artifacts, freeing localStorage only after commit.
+  const SCANNER_LOG_KEY = 'dn-crafting-scanner-log-v2';
+  const SCANNER_LOG_RECORD = 'crafting-log';
+  let logDatabase;
+  function scannerLogTransaction(mode, operation) {
+    if (!logDatabase) logDatabase = new Promise((resolve, reject) => {
+      const request = indexedDB.open('dn-stored-artifacts', 1);
+      request.onupgradeneeded = () => request.result.createObjectStore('inventory', {keyPath:'id'});
+      request.onsuccess = () => resolve(request.result);
+      request.onerror = () => reject(request.error);
+    });
+    return logDatabase.then(db => new Promise((resolve, reject) => {
+      const transaction = db.transaction('inventory', mode);
+      const request = operation(transaction.objectStore('inventory'));
+      transaction.oncomplete = () => resolve(request.result);
+      transaction.onabort = transaction.onerror = () => reject(transaction.error);
+    }));
+  }
+  const scannerLogReady = (async () => {
+    const legacy = localStorage.getItem(SCANNER_LOG_KEY);
+    if (legacy == null) return;
+    await scannerLogTransaction('readwrite', store => store.put({id:SCANNER_LOG_RECORD, value:legacy}));
+    // Another tab may have updated the legacy log while the transaction ran.
+    if (localStorage.getItem(SCANNER_LOG_KEY) === legacy) localStorage.removeItem(SCANNER_LOG_KEY);
+  })();
+  scannerLogReady.catch(() => {}); // Callers report migration failures; retain the original log.
+  const scannerLog = {
+    ready: scannerLogReady,
+    async read() {
+      await scannerLogReady;
+      return (await scannerLogTransaction('readonly', store => store.get(SCANNER_LOG_RECORD)))?.value ?? null;
+    },
+    async write(value) {
+      await scannerLogReady;
+      await scannerLogTransaction('readwrite', store => store.put({id:SCANNER_LOG_RECORD, value}));
+    },
+    async remove() {
+      await scannerLogReady;
+      await scannerLogTransaction('readwrite', store => store.delete(SCANNER_LOG_RECORD));
+    },
+  };
   const LEVELS_KEY = "dn-artifact-perk-levels";
   const COLLECTION_UI_KEY = "dn-artifact-collection-ui";
   const ARTIFACT_TYPE_EXHIBITS = {
@@ -662,7 +704,18 @@
   }
   function loadStoredGlobalPerkRatings() {
     ensurePerkRatingsMigrated();
-    return parsePerkRatingsPayload(lsGetRaw(PERK_RATINGS_GLOBAL_KEY));
+    const stored = parsePerkRatingsPayload(lsGetRaw(PERK_RATINGS_GLOBAL_KEY));
+    // Apply the requested global General ratings once; later user edits and
+    // resets remain authoritative, and profile overrides stay separate.
+    const updateKey = 'dn-general-ratings-2026-10-16';
+    if (lsGetRaw(updateKey) !== '1') {
+      for (const [name, value] of [["Generals' Damage", 3], ["Generals' Hitpoints", 2], ["Generals' Movement Speed", 2]]) {
+        stored[name] = { offensive: value, defensive: value };
+      }
+      lsSetRaw(PERK_RATINGS_GLOBAL_KEY, serializePerkRatingsPayload(stored));
+      lsSetRaw(updateKey, '1');
+    }
+    return stored;
   }
   function loadGlobalPerkRatings() {
     const stored = loadStoredGlobalPerkRatings();
@@ -1081,7 +1134,7 @@
   }
 
   function saveLoadout(loadout) {
-    lsSet(LOADOUT_KEY, JSON.stringify(loadout));
+    lsSet(LOADOUT_KEY, JSON.stringify(normalizeLoadout(loadout)));
   }
 
   function artifactSlots(id) {
@@ -1521,6 +1574,7 @@
     loadActivePerkRatingLayers,
   };
 
+  window.DN.scannerLog = scannerLog;
   ensureProfiles();
   ensurePerkRatingsMigrated();
 })();

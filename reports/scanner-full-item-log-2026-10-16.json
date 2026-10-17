@@ -1,0 +1,7011 @@
+{
+  "version": 1,
+  "source": {
+    "filename": "artifact-perk-observations-2026-10-16.json",
+    "bytes": 8937131,
+    "sha256": "63c0110dd8b867d49b9f4f889c9d8f2299417d6c2edbd864fad647f6af3f32c6",
+    "exportedAt": "2026-10-16T19:13:11.367Z"
+  },
+  "scope": "Text-only historical export. Counts describe recorded evidence, not verified OCR accuracy or unique physical artifacts. No user data or stat rules changed.",
+  "capturedItems": {
+    "first": "2026-10-14T22:30:13.454Z",
+    "last": "2026-10-15T21:57:06.126Z"
+  },
+  "capturedReads": {
+    "first": "2026-10-14T22:30:13.454Z",
+    "last": "2026-10-15T22:06:18.224Z"
+  },
+  "summary": {
+    "items": 176,
+    "scans": 489,
+    "labelSummaries": 566,
+    "sessions": 13,
+    "rows": 880,
+    "halls": {
+      "main": 176
+    },
+    "categories": {
+      "Armor": 31,
+      "Weapon": 38,
+      "unknown": 79,
+      "Jewelry": 15,
+      "Pottery": 13
+    },
+    "readerValid": 6,
+    "manuallyCorrected": 0,
+    "freshCraftExplicit": 165,
+    "missingCategory": 79,
+    "allNamesRecognised": 114,
+    "allValuesNumeric": 149,
+    "allNamesAndValuesPresentIncludingInference": 114,
+    "allNamesAndValuesDirect": 38,
+    "allNamesAndValuesDirectWithoutConflict": 37,
+    "recognisedNames": 755,
+    "unclearNames": 125,
+    "numericValues": 804,
+    "directNumericValues": 599,
+    "inferredValues": 205,
+    "missingValues": 76,
+    "inferredValuesWithAssumedName": 31,
+    "missingValuesWithRecognisedName": 1,
+    "conflictRows": 18,
+    "weakConfidenceRows": 250,
+    "missingConfidenceRows": 215,
+    "itemsMissingStarCount": 21,
+    "itemsWithRepeatedStats": 60,
+    "repeatedCompleteSignatureGroups": 13,
+    "nearbyIdentityReviewPairs": 25,
+    "contextConflictRows": 6,
+    "invalidFreshStartingValues": 1,
+    "uniqueConditionalExpectedValues": 708,
+    "recordedContextRows": 0,
+    "scansWithFieldReads": 0
+  },
+  "contextConflicts": [
+    {
+      "item": 49,
+      "row": 2,
+      "name": "Invading Fighter Damage",
+      "value": -5,
+      "raw": "Invading Fighter Damage -5%",
+      "colour": "green",
+      "inferred": false,
+      "issues": [
+        "tier-level"
+      ],
+      "conditionalExpectedValue": -6
+    },
+    {
+      "item": 156,
+      "row": 1,
+      "name": "Heavy Cavalry Hitpoints",
+      "value": 6,
+      "raw": "Heavy Cavalry Hitpoints                                       +6%",
+      "colour": "neutral",
+      "inferred": false,
+      "issues": [
+        "tier-level"
+      ],
+      "conditionalExpectedValue": 1
+    },
+    {
+      "item": 167,
+      "row": 1,
+      "name": "Anti-Tank Gun Hitpoints",
+      "value": 6,
+      "raw": "Anti-Tank Gun Hitpoints                                        +6%",
+      "colour": "neutral",
+      "inferred": false,
+      "issues": [
+        "tier-level"
+      ],
+      "conditionalExpectedValue": 1
+    },
+    {
+      "item": 168,
+      "row": 1,
+      "name": "Library Tech Food Cost",
+      "value": -11,
+      "raw": "Library Tech Food Cost                    =-11%",
+      "colour": "neutral",
+      "inferred": false,
+      "issues": [
+        "tier-level"
+      ],
+      "conditionalExpectedValue": -1
+    },
+    {
+      "item": 173,
+      "row": 1,
+      "name": "Ranged Infantry Hitpoints",
+      "value": 11,
+      "raw": "Ranged Infantry Hitpoints                  +11%",
+      "colour": "neutral",
+      "inferred": false,
+      "issues": [
+        "tier-level"
+      ],
+      "conditionalExpectedValue": 1
+    },
+    {
+      "item": 173,
+      "row": 2,
+      "name": "Fighter Hitpoints",
+      "value": 6,
+      "raw": "Fighter Hitpoints   i       -             +6%",
+      "colour": "neutral",
+      "inferred": false,
+      "issues": [
+        "tier-level"
+      ],
+      "conditionalExpectedValue": 1
+    }
+  ],
+  "invalidStartingValues": [
+    {
+      "item": 49,
+      "row": 2,
+      "name": "Invading Fighter Damage",
+      "value": -5
+    }
+  ],
+  "repeatedCompleteSignatures": [
+    {
+      "items": [
+        1,
+        3
+      ],
+      "unlockedCounts": [
+        1
+      ],
+      "rows": [
+        {
+          "name": "Invading Bazooka Damage",
+          "value": -6
+        },
+        {
+          "name": "Invading Attack Helicopter Damage",
+          "value": -1
+        },
+        {
+          "name": "Invading Attack Helicopter Hitpoints",
+          "value": -6
+        },
+        {
+          "name": "Invading Tactical Helicopter Healing",
+          "value": -11
+        },
+        {
+          "name": "Invading Bomber Hitpoints",
+          "value": -1
+        }
+      ]
+    },
+    {
+      "items": [
+        18,
+        19
+      ],
+      "unlockedCounts": [
+        1
+      ],
+      "rows": [
+        {
+          "name": "Invading MRL Hitpoints",
+          "value": -6
+        },
+        {
+          "name": "Invading MRL Damage",
+          "value": -1
+        },
+        {
+          "name": "Invading Guerrilla Hitpoints",
+          "value": -11
+        },
+        {
+          "name": "Invading Assault Vehicle Hitpoints",
+          "value": -1
+        },
+        {
+          "name": "Invading Fighter Damage",
+          "value": -6
+        }
+      ]
+    },
+    {
+      "items": [
+        21,
+        22,
+        23,
+        24,
+        25,
+        26
+      ],
+      "unlockedCounts": [
+        1
+      ],
+      "rows": [
+        {
+          "name": "Defender Spawn Time",
+          "value": -6
+        },
+        {
+          "name": "Fighter Hitpoints",
+          "value": 11
+        },
+        {
+          "name": "Ranged Siege Damage",
+          "value": 6
+        },
+        {
+          "name": "Assault Vehicle Damage",
+          "value": 6
+        },
+        {
+          "name": "Mortar Troop Hitpoints",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "items": [
+        31,
+        32,
+        33,
+        34
+      ],
+      "unlockedCounts": [
+        2
+      ],
+      "rows": [
+        {
+          "name": "Enemy Anti-Tank Gun Damage",
+          "value": -11
+        },
+        {
+          "name": "Enemy Tower Hitpoints",
+          "value": -1
+        },
+        {
+          "name": "Enemy Anti-Tank Gun Damage",
+          "value": -6
+        },
+        {
+          "name": "Enemy Catapult Damage",
+          "value": -6
+        },
+        {
+          "name": "Enemy Air Defense Hitpoints",
+          "value": -11
+        }
+      ]
+    },
+    {
+      "items": [
+        37,
+        38
+      ],
+      "unlockedCounts": [
+        1
+      ],
+      "rows": [
+        {
+          "name": "Catapult Damage",
+          "value": 6
+        },
+        {
+          "name": "Vault Interest",
+          "value": 1
+        },
+        {
+          "name": "Tower Damage",
+          "value": 1
+        },
+        {
+          "name": "Missile Silo Hitpoints",
+          "value": 1
+        },
+        {
+          "name": "Air Defense Hitpoints",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "items": [
+        50,
+        52,
+        53,
+        59,
+        61,
+        63
+      ],
+      "unlockedCounts": [
+        1
+      ],
+      "rows": [
+        {
+          "name": "Invading Ranged Siege Hitpoints",
+          "value": -1
+        },
+        {
+          "name": "Invading Fighter Damage",
+          "value": -6
+        },
+        {
+          "name": "Invading Ranged Siege Hitpoints",
+          "value": -1
+        },
+        {
+          "name": "Defender Hitpoints",
+          "value": 1
+        },
+        {
+          "name": "Invading MRL Hitpoints",
+          "value": -1
+        }
+      ]
+    },
+    {
+      "items": [
+        51,
+        57,
+        62
+      ],
+      "unlockedCounts": [
+        1
+      ],
+      "rows": [
+        {
+          "name": "Invading Ranged Siege Hitpoints",
+          "value": -1
+        },
+        {
+          "name": "Invading Fighter Damage",
+          "value": -6
+        },
+        {
+          "name": "Invading Ranged Siege Hitpoints",
+          "value": -1
+        },
+        {
+          "name": "Defender Hitpoints",
+          "value": 1
+        },
+        {
+          "name": "Invading MRL Hitpoints",
+          "value": -1
+        }
+      ]
+    },
+    {
+      "items": [
+        76,
+        77
+      ],
+      "unlockedCounts": [
+        1
+      ],
+      "rows": [
+        {
+          "name": "Guerrilla Hitpoints",
+          "value": 11
+        },
+        {
+          "name": "Defender Spawn Time",
+          "value": -6
+        },
+        {
+          "name": "Defender Spawn Time",
+          "value": -1
+        },
+        {
+          "name": "Bomber Hitpoints",
+          "value": 1
+        },
+        {
+          "name": "Generals' Hitpoints",
+          "value": 6
+        }
+      ]
+    },
+    {
+      "items": [
+        101,
+        102
+      ],
+      "unlockedCounts": [
+        1
+      ],
+      "rows": [
+        {
+          "name": "Enemy Missile Silo Hitpoints",
+          "value": -11
+        },
+        {
+          "name": "Enemy Missile Silo Damage",
+          "value": -11
+        },
+        {
+          "name": "National Trade Good Loot Chance",
+          "value": 1
+        },
+        {
+          "name": "Enemy Catapult Damage",
+          "value": -1
+        },
+        {
+          "name": "Enemy Catapult Hitpoints",
+          "value": -1
+        }
+      ]
+    },
+    {
+      "items": [
+        112,
+        113
+      ],
+      "unlockedCounts": [
+        1
+      ],
+      "rows": [
+        {
+          "name": "Tactical Helicopter Healing",
+          "value": 11
+        },
+        {
+          "name": "Tactical Helicopter Hitpoints",
+          "value": 6
+        },
+        {
+          "name": "Tactical Helicopter Hitpoints",
+          "value": 1
+        },
+        {
+          "name": "Supply Vehicle Healing",
+          "value": 1
+        },
+        {
+          "name": "Guerrilla Hitpoints",
+          "value": 1
+        }
+      ]
+    },
+    {
+      "items": [
+        114,
+        115
+      ],
+      "unlockedCounts": [
+        2
+      ],
+      "rows": [
+        {
+          "name": "Invading Attack Helicopter Hitpoints",
+          "value": -11
+        },
+        {
+          "name": "Invading Bomber Hitpoints",
+          "value": -11
+        },
+        {
+          "name": "Invading Assault Vehicle Hitpoints",
+          "value": -1
+        },
+        {
+          "name": "Invading Guerrilla Hitpoints",
+          "value": -1
+        },
+        {
+          "name": "Invading Mortar Troop Hitpoints",
+          "value": -1
+        }
+      ]
+    },
+    {
+      "items": [
+        116,
+        117
+      ],
+      "unlockedCounts": [
+        1
+      ],
+      "rows": [
+        {
+          "name": "Paratrooper Hitpoints",
+          "value": 6
+        },
+        {
+          "name": "Enemy Defender Spawn Time",
+          "value": 11
+        },
+        {
+          "name": "Supply Vehicle Healing",
+          "value": 6
+        },
+        {
+          "name": "Ranged Siege Hitpoints",
+          "value": 1
+        },
+        {
+          "name": "Attack Helicopter Damage",
+          "value": 6
+        }
+      ]
+    },
+    {
+      "items": [
+        124,
+        125,
+        126,
+        127
+      ],
+      "unlockedCounts": [
+        1
+      ],
+      "rows": [
+        {
+          "name": "Enemy Air Defense Hitpoints",
+          "value": -11
+        },
+        {
+          "name": "Enemy Anti-Tank Gun Damage",
+          "value": -11
+        },
+        {
+          "name": "Food Looted",
+          "value": 1
+        },
+        {
+          "name": "Enemy Missile Silo Damage",
+          "value": -6
+        },
+        {
+          "name": "Enemy Air Defense Hitpoints",
+          "value": -6
+        }
+      ]
+    }
+  ],
+  "nearbyIdentityReviewPairs": [
+    {
+      "items": [
+        29,
+        30
+      ],
+      "gapMs": 4082,
+      "matchingRows": 4
+    },
+    {
+      "items": [
+        31,
+        32
+      ],
+      "gapMs": 3098,
+      "matchingRows": 5
+    },
+    {
+      "items": [
+        32,
+        33
+      ],
+      "gapMs": 3612,
+      "matchingRows": 5
+    },
+    {
+      "items": [
+        33,
+        34
+      ],
+      "gapMs": 3507,
+      "matchingRows": 5
+    },
+    {
+      "items": [
+        35,
+        36
+      ],
+      "gapMs": 7738,
+      "matchingRows": 4
+    },
+    {
+      "items": [
+        37,
+        38
+      ],
+      "gapMs": 9127,
+      "matchingRows": 5
+    },
+    {
+      "items": [
+        48,
+        49
+      ],
+      "gapMs": 4935,
+      "matchingRows": 4
+    },
+    {
+      "items": [
+        51,
+        52
+      ],
+      "gapMs": 5245,
+      "matchingRows": 5
+    },
+    {
+      "items": [
+        53,
+        54
+      ],
+      "gapMs": 2743,
+      "matchingRows": 4
+    },
+    {
+      "items": [
+        54,
+        55
+      ],
+      "gapMs": 5540,
+      "matchingRows": 4
+    },
+    {
+      "items": [
+        55,
+        56
+      ],
+      "gapMs": 7860,
+      "matchingRows": 4
+    },
+    {
+      "items": [
+        56,
+        57
+      ],
+      "gapMs": 5840,
+      "matchingRows": 4
+    },
+    {
+      "items": [
+        58,
+        59
+      ],
+      "gapMs": 6686,
+      "matchingRows": 4
+    },
+    {
+      "items": [
+        59,
+        60
+      ],
+      "gapMs": 4281,
+      "matchingRows": 4
+    },
+    {
+      "items": [
+        60,
+        61
+      ],
+      "gapMs": 6038,
+      "matchingRows": 4
+    },
+    {
+      "items": [
+        62,
+        63
+      ],
+      "gapMs": 9565,
+      "matchingRows": 5
+    },
+    {
+      "items": [
+        69,
+        70
+      ],
+      "gapMs": 4490,
+      "matchingRows": 4
+    },
+    {
+      "items": [
+        76,
+        77
+      ],
+      "gapMs": 9102,
+      "matchingRows": 5
+    },
+    {
+      "items": [
+        85,
+        86
+      ],
+      "gapMs": 4169,
+      "matchingRows": 5
+    },
+    {
+      "items": [
+        101,
+        102
+      ],
+      "gapMs": 2392,
+      "matchingRows": 5
+    },
+    {
+      "items": [
+        114,
+        115
+      ],
+      "gapMs": 5495,
+      "matchingRows": 5
+    },
+    {
+      "items": [
+        116,
+        117
+      ],
+      "gapMs": 9132,
+      "matchingRows": 5
+    },
+    {
+      "items": [
+        126,
+        127
+      ],
+      "gapMs": 9419,
+      "matchingRows": 5
+    },
+    {
+      "items": [
+        138,
+        139
+      ],
+      "gapMs": 3806,
+      "matchingRows": 4
+    },
+    {
+      "items": [
+        140,
+        141
+      ],
+      "gapMs": 4771,
+      "matchingRows": 4
+    }
+  ],
+  "itemsWithRepeatedStats": [
+    {
+      "item": 7,
+      "repeated": [
+        [
+          "Invading Raider Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 8,
+      "repeated": [
+        [
+          "Library Tech Gold Cost",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 16,
+      "repeated": [
+        [
+          "Redoubt Hitpoints",
+          2
+        ],
+        [
+          "Food from Fruit Trees",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 28,
+      "repeated": [
+        [
+          "Invading Bomber Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 29,
+      "repeated": [
+        [
+          "Invading Bomber Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 30,
+      "repeated": [
+        [
+          "Invading Bomber Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 31,
+      "repeated": [
+        [
+          "Enemy Anti-Tank Gun Damage",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 32,
+      "repeated": [
+        [
+          "Enemy Anti-Tank Gun Damage",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 33,
+      "repeated": [
+        [
+          "Enemy Anti-Tank Gun Damage",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 34,
+      "repeated": [
+        [
+          "Enemy Anti-Tank Gun Damage",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 43,
+      "repeated": [
+        [
+          "Redoubt Damage",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 44,
+      "repeated": [
+        [
+          "Food Looted",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 46,
+      "repeated": [
+        [
+          "Tower Damage",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 47,
+      "repeated": [
+        [
+          "Invading Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 48,
+      "repeated": [
+        [
+          "Invading Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 49,
+      "repeated": [
+        [
+          "Invading Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 50,
+      "repeated": [
+        [
+          "Invading Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 51,
+      "repeated": [
+        [
+          "Invading Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 52,
+      "repeated": [
+        [
+          "Invading Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 53,
+      "repeated": [
+        [
+          "Invading Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 54,
+      "repeated": [
+        [
+          "Invading Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 55,
+      "repeated": [
+        [
+          "Invading Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 56,
+      "repeated": [
+        [
+          "Invading Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 57,
+      "repeated": [
+        [
+          "Invading Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 58,
+      "repeated": [
+        [
+          "Invading Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 59,
+      "repeated": [
+        [
+          "Invading Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 60,
+      "repeated": [
+        [
+          "Invading Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 61,
+      "repeated": [
+        [
+          "Invading Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 62,
+      "repeated": [
+        [
+          "Invading Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 63,
+      "repeated": [
+        [
+          "Invading Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 64,
+      "repeated": [
+        [
+          "Invading Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 67,
+      "repeated": [
+        [
+          "Enemy Sniper Tower Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 76,
+      "repeated": [
+        [
+          "Defender Spawn Time",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 77,
+      "repeated": [
+        [
+          "Defender Spawn Time",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 79,
+      "repeated": [
+        [
+          "Invading Supply Vehicle Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 82,
+      "repeated": [
+        [
+          "Invading Machine Gun Infantry Hitpoints",
+          2
+        ],
+        [
+          "Invading Heavy Cavalry Damage",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 83,
+      "repeated": [
+        [
+          "Invading Generals' Damage",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 88,
+      "repeated": [
+        [
+          "Heavy Cavalry Damage",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 90,
+      "repeated": [
+        [
+          "Gold from Gold Mines",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 96,
+      "repeated": [
+        [
+          "Heavy Infantry Damage",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 98,
+      "repeated": [
+        [
+          "Enemy Missile Silo Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 99,
+      "repeated": [
+        [
+          "Ranged Siege Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 106,
+      "repeated": [
+        [
+          "Enemy Anti-Tank Gun Damage",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 112,
+      "repeated": [
+        [
+          "Tactical Helicopter Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 113,
+      "repeated": [
+        [
+          "Tactical Helicopter Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 120,
+      "repeated": [
+        [
+          "Library Tech Food Cost",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 121,
+      "repeated": [
+        [
+          "Oil Looted",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 124,
+      "repeated": [
+        [
+          "Enemy Air Defense Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 125,
+      "repeated": [
+        [
+          "Enemy Air Defense Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 126,
+      "repeated": [
+        [
+          "Enemy Air Defense Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 127,
+      "repeated": [
+        [
+          "Enemy Air Defense Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 128,
+      "repeated": [
+        [
+          "APC Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 129,
+      "repeated": [
+        [
+          "Enemy Missile Silo Hitpoints",
+          2
+        ],
+        [
+          "Enemy Redoubt Hitpoints",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 137,
+      "repeated": [
+        [
+          "Invading Assault Vehicle Damage",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 144,
+      "repeated": [
+        [
+          "Invading Machine Gun Infantry Damage",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 146,
+      "repeated": [
+        [
+          "Library Tech Food Cost",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 153,
+      "repeated": [
+        [
+          "Enemy Anti-Tank Gun Damage",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 154,
+      "repeated": [
+        [
+          "Library Tech Food Cost",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 168,
+      "repeated": [
+        [
+          "Library Tech Food Cost",
+          2
+        ]
+      ]
+    },
+    {
+      "item": 170,
+      "repeated": [
+        [
+          "Library Tech Food Cost",
+          2
+        ]
+      ]
+    }
+  ],
+  "sessions": [
+    {
+      "session": 1,
+      "items": 1,
+      "firstItem": 1,
+      "firstSeen": "2026-10-14T22:30:13.454Z",
+      "lastSeen": "2026-10-14T22:30:13.454Z",
+      "readerValid": 0,
+      "missingCategory": 0
+    },
+    {
+      "session": 2,
+      "items": 10,
+      "firstItem": 2,
+      "firstSeen": "2026-10-14T22:33:01.548Z",
+      "lastSeen": "2026-10-14T22:42:57.968Z",
+      "readerValid": 0,
+      "missingCategory": 4
+    },
+    {
+      "session": 3,
+      "items": 2,
+      "firstItem": 12,
+      "firstSeen": "2026-10-15T20:08:23.824Z",
+      "lastSeen": "2026-10-15T20:10:20.578Z",
+      "readerValid": 1,
+      "missingCategory": 1
+    },
+    {
+      "session": 4,
+      "items": 5,
+      "firstItem": 14,
+      "firstSeen": "2026-10-15T20:14:13.075Z",
+      "lastSeen": "2026-10-15T20:15:56.095Z",
+      "readerValid": 1,
+      "missingCategory": 4
+    },
+    {
+      "session": 5,
+      "items": 3,
+      "firstItem": 19,
+      "firstSeen": "2026-10-15T20:16:46.892Z",
+      "lastSeen": "2026-10-15T20:17:04.872Z",
+      "readerValid": 0,
+      "missingCategory": 1
+    },
+    {
+      "session": 6,
+      "items": 4,
+      "firstItem": 22,
+      "firstSeen": "2026-10-15T20:18:25.255Z",
+      "lastSeen": "2026-10-15T20:26:03.789Z",
+      "readerValid": 0,
+      "missingCategory": 0
+    },
+    {
+      "session": 7,
+      "items": 21,
+      "firstItem": 26,
+      "firstSeen": "2026-10-15T20:26:35.943Z",
+      "lastSeen": "2026-10-15T20:35:07.690Z",
+      "readerValid": 0,
+      "missingCategory": 9
+    },
+    {
+      "session": 8,
+      "items": 11,
+      "firstItem": 47,
+      "firstSeen": "2026-10-15T20:38:14.074Z",
+      "lastSeen": "2026-10-15T20:40:43.299Z",
+      "readerValid": 1,
+      "missingCategory": 4
+    },
+    {
+      "session": 9,
+      "items": 15,
+      "firstItem": 58,
+      "firstSeen": "2026-10-15T20:41:05.610Z",
+      "lastSeen": "2026-10-15T20:43:40.539Z",
+      "readerValid": 0,
+      "missingCategory": 7
+    },
+    {
+      "session": 10,
+      "items": 7,
+      "firstItem": 73,
+      "firstSeen": "2026-10-15T20:48:12.888Z",
+      "lastSeen": "2026-10-15T20:52:14.294Z",
+      "readerValid": 0,
+      "missingCategory": 2
+    },
+    {
+      "session": 11,
+      "items": 2,
+      "firstItem": 80,
+      "firstSeen": "2026-10-15T20:53:19.345Z",
+      "lastSeen": "2026-10-15T20:54:11.515Z",
+      "readerValid": 0,
+      "missingCategory": 1
+    },
+    {
+      "session": 12,
+      "items": 31,
+      "firstItem": 82,
+      "firstSeen": "2026-10-15T21:26:47.232Z",
+      "lastSeen": "2026-10-15T21:33:53.769Z",
+      "readerValid": 3,
+      "missingCategory": 12
+    },
+    {
+      "session": 13,
+      "items": 64,
+      "firstItem": 113,
+      "firstSeen": "2026-10-15T21:34:13.481Z",
+      "lastSeen": "2026-10-15T21:57:06.126Z",
+      "readerValid": 0,
+      "missingCategory": 34
+    }
+  ],
+  "statEvidence": [
+    {
+      "name": "Air Defense Damage",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 5,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Air Defense Hitpoints",
+      "hall": "main",
+      "rows": 7,
+      "directValues": 7,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "All Resources from Hunting",
+      "hall": "main",
+      "rows": 6,
+      "directValues": 5,
+      "inferredValues": 1,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "approved"
+    },
+    {
+      "name": "All Resources Looted",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 5,
+      "inferredValues": 0,
+      "values": [
+        6,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Anti-Tank Gun Damage",
+      "hall": "main",
+      "rows": 7,
+      "directValues": 7,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Anti-Tank Gun Hitpoints",
+      "hall": "main",
+      "rows": 4,
+      "directValues": 4,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "APC Damage",
+      "hall": "main",
+      "rows": 3,
+      "directValues": 3,
+      "inferredValues": 0,
+      "values": [
+        6,
+        11
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "APC Hitpoints",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 5,
+      "inferredValues": 0,
+      "values": [
+        1,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Armored Car Damage",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 2,
+      "inferredValues": 0,
+      "values": [
+        1,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Armored Car Hitpoints",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 1,
+      "inferredValues": 1,
+      "values": [
+        1,
+        6
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Assault Vehicle Damage",
+      "hall": "main",
+      "rows": 8,
+      "directValues": 2,
+      "inferredValues": 6,
+      "values": [
+        1,
+        6
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Assault Vehicle Hitpoints",
+      "hall": "main",
+      "rows": 1,
+      "directValues": 1,
+      "inferredValues": 0,
+      "values": [
+        1
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Attack Helicopter Damage",
+      "hall": "main",
+      "rows": 8,
+      "directValues": 6,
+      "inferredValues": 2,
+      "values": [
+        1,
+        6
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Attack Helicopter Hitpoints",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 1,
+      "inferredValues": 4,
+      "values": [
+        6,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Bazooka Damage",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 1,
+      "inferredValues": 1,
+      "values": [
+        1,
+        6
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Bazooka Hitpoints",
+      "hall": "main",
+      "rows": 3,
+      "directValues": 3,
+      "inferredValues": 0,
+      "values": [
+        1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Bomber Damage",
+      "hall": "main",
+      "rows": 1,
+      "directValues": 1,
+      "inferredValues": 0,
+      "values": [
+        1
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Bomber Hitpoints",
+      "hall": "main",
+      "rows": 3,
+      "directValues": 3,
+      "inferredValues": 0,
+      "values": [
+        1,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Catapult Damage",
+      "hall": "main",
+      "rows": 3,
+      "directValues": 3,
+      "inferredValues": 0,
+      "values": [
+        6,
+        11
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Catapult Hitpoints",
+      "hall": "main",
+      "rows": 3,
+      "directValues": 3,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Defender Damage",
+      "hall": "main",
+      "rows": 4,
+      "directValues": 4,
+      "inferredValues": 0,
+      "values": [
+        1
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Defender Hitpoints",
+      "hall": "main",
+      "rows": 23,
+      "directValues": 23,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Defender Spawn Time",
+      "hall": "main",
+      "rows": 14,
+      "directValues": 12,
+      "inferredValues": 2,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Enemy Air Defense Damage",
+      "hall": "main",
+      "rows": 8,
+      "directValues": 3,
+      "inferredValues": 5,
+      "values": [
+        -11,
+        -6
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Enemy Air Defense Hitpoints",
+      "hall": "main",
+      "rows": 14,
+      "directValues": 1,
+      "inferredValues": 13,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Enemy Anti-Tank Gun Damage",
+      "hall": "main",
+      "rows": 20,
+      "directValues": 18,
+      "inferredValues": 2,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Enemy Anti-Tank Gun Hitpoints",
+      "hall": "main",
+      "rows": 3,
+      "directValues": 2,
+      "inferredValues": 1,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Enemy Catapult Damage",
+      "hall": "main",
+      "rows": 7,
+      "directValues": 3,
+      "inferredValues": 4,
+      "values": [
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Enemy Catapult Hitpoints",
+      "hall": "main",
+      "rows": 8,
+      "directValues": 6,
+      "inferredValues": 2,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Enemy Defender Spawn Time",
+      "hall": "main",
+      "rows": 8,
+      "directValues": 4,
+      "inferredValues": 4,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Enemy Missile Silo Damage",
+      "hall": "main",
+      "rows": 12,
+      "directValues": 5,
+      "inferredValues": 7,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Enemy Missile Silo Hitpoints",
+      "hall": "main",
+      "rows": 9,
+      "directValues": 9,
+      "inferredValues": 0,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Enemy Redoubt Damage",
+      "hall": "main",
+      "rows": 9,
+      "directValues": 5,
+      "inferredValues": 4,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Enemy Redoubt Hitpoints",
+      "hall": "main",
+      "rows": 11,
+      "directValues": 8,
+      "inferredValues": 3,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "approved"
+    },
+    {
+      "name": "Enemy Sniper Tower Damage",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 4,
+      "inferredValues": 1,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Enemy Sniper Tower Hitpoints",
+      "hall": "main",
+      "rows": 9,
+      "directValues": 5,
+      "inferredValues": 4,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Enemy Tower Damage",
+      "hall": "main",
+      "rows": 9,
+      "directValues": 5,
+      "inferredValues": 4,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Enemy Tower Hitpoints",
+      "hall": "main",
+      "rows": 11,
+      "directValues": 10,
+      "inferredValues": 1,
+      "values": [
+        -11,
+        -1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Fighter Damage",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 2,
+      "inferredValues": 0,
+      "values": [
+        1,
+        11
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Fighter Hitpoints",
+      "hall": "main",
+      "rows": 10,
+      "directValues": 8,
+      "inferredValues": 2,
+      "values": [
+        6,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Food from Farms",
+      "hall": "main",
+      "rows": 4,
+      "directValues": 4,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Food from Fruit Trees",
+      "hall": "main",
+      "rows": 8,
+      "directValues": 8,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Food Looted",
+      "hall": "main",
+      "rows": 9,
+      "directValues": 8,
+      "inferredValues": 1,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Forest Expansion Cost Refund",
+      "hall": "main",
+      "rows": 4,
+      "directValues": 4,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Generals' Damage",
+      "hall": "main",
+      "rows": 1,
+      "directValues": 1,
+      "inferredValues": 0,
+      "values": [
+        1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Generals' Hitpoints",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 1,
+      "inferredValues": 4,
+      "values": [
+        6,
+        11
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Gold from Caravans",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 1,
+      "inferredValues": 1,
+      "values": [
+        1,
+        6
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Gold from Gold Mines",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 3,
+      "inferredValues": 2,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Gold Looted",
+      "hall": "main",
+      "rows": 7,
+      "directValues": 7,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Guerrilla Damage",
+      "hall": "main",
+      "rows": 4,
+      "directValues": 3,
+      "inferredValues": 1,
+      "values": [
+        1,
+        6
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Guerrilla Hitpoints",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 5,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Heavy Cavalry Damage",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 4,
+      "inferredValues": 1,
+      "values": [
+        1,
+        11
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Heavy Cavalry Hitpoints",
+      "hall": "main",
+      "rows": 3,
+      "directValues": 3,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Heavy Infantry Damage",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 5,
+      "inferredValues": 0,
+      "values": [
+        1,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Heavy Infantry Hitpoints",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 1,
+      "inferredValues": 1,
+      "values": [
+        6
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Heavy Tank Hitpoints",
+      "hall": "main",
+      "rows": 3,
+      "directValues": 2,
+      "inferredValues": 1,
+      "values": [
+        1,
+        6
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Invading APC Damage",
+      "hall": "main",
+      "rows": 8,
+      "directValues": 5,
+      "inferredValues": 3,
+      "values": [
+        -11,
+        -1
+      ],
+      "reviewedAvailability": "approved"
+    },
+    {
+      "name": "Invading APC Hitpoints",
+      "hall": "main",
+      "rows": 1,
+      "directValues": 0,
+      "inferredValues": 1,
+      "values": [
+        -6
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Invading Armored Car Damage",
+      "hall": "main",
+      "rows": 1,
+      "directValues": 0,
+      "inferredValues": 1,
+      "values": [
+        -11
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Invading Assault Vehicle Damage",
+      "hall": "main",
+      "rows": 6,
+      "directValues": 5,
+      "inferredValues": 1,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "approved"
+    },
+    {
+      "name": "Invading Assault Vehicle Hitpoints",
+      "hall": "main",
+      "rows": 8,
+      "directValues": 8,
+      "inferredValues": 0,
+      "values": [
+        -11,
+        -1
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Invading Attack Helicopter Damage",
+      "hall": "main",
+      "rows": 6,
+      "directValues": 6,
+      "inferredValues": 0,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Invading Attack Helicopter Hitpoints",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 3,
+      "inferredValues": 2,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Invading Bazooka Damage",
+      "hall": "main",
+      "rows": 4,
+      "directValues": 4,
+      "inferredValues": 0,
+      "values": [
+        -6
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Invading Bazooka Hitpoints",
+      "hall": "main",
+      "rows": 1,
+      "directValues": 1,
+      "inferredValues": 0,
+      "values": [
+        -1
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Invading Bomber Damage",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 1,
+      "inferredValues": 1,
+      "values": [
+        -6
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Invading Bomber Hitpoints",
+      "hall": "main",
+      "rows": 15,
+      "directValues": 8,
+      "inferredValues": 7,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Invading Fighter Damage",
+      "hall": "main",
+      "rows": 13,
+      "directValues": 10,
+      "inferredValues": 3,
+      "values": [
+        -6,
+        -5,
+        -1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Invading Fighter Hitpoints",
+      "hall": "main",
+      "rows": 9,
+      "directValues": 2,
+      "inferredValues": 7,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Invading Generals' Damage",
+      "hall": "main",
+      "rows": 7,
+      "directValues": 5,
+      "inferredValues": 2,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Invading Generals' Hitpoints",
+      "hall": "main",
+      "rows": 3,
+      "directValues": 2,
+      "inferredValues": 1,
+      "values": [
+        -11,
+        -1
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Invading Guerrilla Damage",
+      "hall": "main",
+      "rows": 3,
+      "directValues": 3,
+      "inferredValues": 0,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Invading Guerrilla Hitpoints",
+      "hall": "main",
+      "rows": 10,
+      "directValues": 10,
+      "inferredValues": 0,
+      "values": [
+        -11,
+        -1
+      ],
+      "reviewedAvailability": "approved"
+    },
+    {
+      "name": "Invading Heavy Cavalry Damage",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 2,
+      "inferredValues": 0,
+      "values": [
+        -1
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Invading Heavy Cavalry Hitpoints",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 4,
+      "inferredValues": 1,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Invading Heavy Infantry Damage",
+      "hall": "main",
+      "rows": 1,
+      "directValues": 0,
+      "inferredValues": 1,
+      "values": [
+        -11
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Invading Heavy Infantry Hitpoints",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 2,
+      "inferredValues": 0,
+      "values": [
+        -1
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Invading Heavy Tank Damage",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 1,
+      "inferredValues": 1,
+      "values": [
+        -11,
+        -1
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Invading Heavy Tank Hitpoints",
+      "hall": "main",
+      "rows": 1,
+      "directValues": 0,
+      "inferredValues": 1,
+      "values": [
+        -6
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Invading Machine Gun Infantry Damage",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 5,
+      "inferredValues": 0,
+      "values": [
+        -11,
+        -1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Invading Machine Gun Infantry Hitpoints",
+      "hall": "main",
+      "rows": 3,
+      "directValues": 3,
+      "inferredValues": 0,
+      "values": [
+        -11,
+        -1
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Invading Mortar Troop Damage",
+      "hall": "main",
+      "rows": 1,
+      "directValues": 1,
+      "inferredValues": 0,
+      "values": [
+        -11
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Invading Mortar Troop Hitpoints",
+      "hall": "main",
+      "rows": 3,
+      "directValues": 3,
+      "inferredValues": 0,
+      "values": [
+        -1
+      ],
+      "reviewedAvailability": "approved"
+    },
+    {
+      "name": "Invading MRL Damage",
+      "hall": "main",
+      "rows": 7,
+      "directValues": 6,
+      "inferredValues": 1,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Invading MRL Hitpoints",
+      "hall": "main",
+      "rows": 21,
+      "directValues": 20,
+      "inferredValues": 1,
+      "values": [
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Invading Paratrooper Damage",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 2,
+      "inferredValues": 0,
+      "values": [
+        -1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Invading Paratrooper Hitpoints",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 1,
+      "inferredValues": 1,
+      "values": [
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Invading Raider Damage",
+      "hall": "main",
+      "rows": 4,
+      "directValues": 0,
+      "inferredValues": 4,
+      "values": [
+        -11
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Invading Raider Hitpoints",
+      "hall": "main",
+      "rows": 3,
+      "directValues": 3,
+      "inferredValues": 0,
+      "values": [
+        -11,
+        -1
+      ],
+      "reviewedAvailability": "approved"
+    },
+    {
+      "name": "Invading Ranged Infantry Damage",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 5,
+      "inferredValues": 0,
+      "values": [
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "approved"
+    },
+    {
+      "name": "Invading Ranged Siege Damage",
+      "hall": "main",
+      "rows": 7,
+      "directValues": 3,
+      "inferredValues": 4,
+      "values": [
+        -11,
+        -1
+      ],
+      "reviewedAvailability": "approved"
+    },
+    {
+      "name": "Invading Ranged Siege Hitpoints",
+      "hall": "main",
+      "rows": 39,
+      "directValues": 38,
+      "inferredValues": 1,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "approved"
+    },
+    {
+      "name": "Invading Supply Vehicle Hitpoints",
+      "hall": "main",
+      "rows": 6,
+      "directValues": 5,
+      "inferredValues": 1,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Invading Tactical Helicopter Healing",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 4,
+      "inferredValues": 1,
+      "values": [
+        -11,
+        -6
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Invading Tactical Helicopter Hitpoints",
+      "hall": "main",
+      "rows": 1,
+      "directValues": 0,
+      "inferredValues": 1,
+      "values": [
+        -11
+      ],
+      "reviewedAvailability": "approved"
+    },
+    {
+      "name": "Library Research Time",
+      "hall": "main",
+      "rows": 1,
+      "directValues": 0,
+      "inferredValues": 1,
+      "values": [
+        -1
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Library Tech Food Cost",
+      "hall": "main",
+      "rows": 11,
+      "directValues": 4,
+      "inferredValues": 6,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Library Tech Gold Cost",
+      "hall": "main",
+      "rows": 6,
+      "directValues": 6,
+      "inferredValues": 0,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Library Tech Oil Cost",
+      "hall": "main",
+      "rows": 8,
+      "directValues": 6,
+      "inferredValues": 2,
+      "values": [
+        -11,
+        -6,
+        -1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Looted Resource Refund",
+      "hall": "main",
+      "rows": 4,
+      "directValues": 1,
+      "inferredValues": 3,
+      "values": [
+        1,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Machine Gun Infantry Damage",
+      "hall": "main",
+      "rows": 3,
+      "directValues": 3,
+      "inferredValues": 0,
+      "values": [
+        1,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Machine Gun Infantry Hitpoints",
+      "hall": "main",
+      "rows": 3,
+      "directValues": 2,
+      "inferredValues": 1,
+      "values": [
+        1,
+        11
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Missile Silo Hitpoints",
+      "hall": "main",
+      "rows": 6,
+      "directValues": 6,
+      "inferredValues": 0,
+      "values": [
+        1
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Mortar Troop Damage",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 2,
+      "inferredValues": 0,
+      "values": [
+        1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Mortar Troop Hitpoints",
+      "hall": "main",
+      "rows": 8,
+      "directValues": 8,
+      "inferredValues": 0,
+      "values": [
+        1,
+        11
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "MRL Damage",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 1,
+      "inferredValues": 1,
+      "values": [
+        1,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "MRL Hitpoints",
+      "hall": "main",
+      "rows": 4,
+      "directValues": 4,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "National Trade Good Loot Chance",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 3,
+      "inferredValues": 2,
+      "values": [
+        1,
+        6
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Oil From Oil Wells",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 2,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Oil Looted",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 4,
+      "inferredValues": 1,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Paratrooper Damage",
+      "hall": "main",
+      "rows": 1,
+      "directValues": 0,
+      "inferredValues": 1,
+      "values": [
+        6
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Paratrooper Hitpoints",
+      "hall": "main",
+      "rows": 6,
+      "directValues": 6,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Raider Damage",
+      "hall": "main",
+      "rows": 1,
+      "directValues": 1,
+      "inferredValues": 0,
+      "values": [
+        6
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Raider Hitpoints",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 2,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Ranged Infantry Damage",
+      "hall": "main",
+      "rows": 4,
+      "directValues": 3,
+      "inferredValues": 1,
+      "values": [
+        1,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Ranged Infantry Hitpoints",
+      "hall": "main",
+      "rows": 6,
+      "directValues": 4,
+      "inferredValues": 2,
+      "values": [
+        1,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Ranged Siege Damage",
+      "hall": "main",
+      "rows": 8,
+      "directValues": 8,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Ranged Siege Hitpoints",
+      "hall": "main",
+      "rows": 8,
+      "directValues": 6,
+      "inferredValues": 2,
+      "values": [
+        1,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Redoubt Damage",
+      "hall": "main",
+      "rows": 10,
+      "directValues": 10,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Redoubt Hitpoints",
+      "hall": "main",
+      "rows": 8,
+      "directValues": 5,
+      "inferredValues": 3,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "approved"
+    },
+    {
+      "name": "Sniper Tower Damage",
+      "hall": "main",
+      "rows": 4,
+      "directValues": 1,
+      "inferredValues": 3,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Sniper Tower Hitpoints",
+      "hall": "main",
+      "rows": 6,
+      "directValues": 5,
+      "inferredValues": 1,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Supply Vehicle Healing",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 4,
+      "inferredValues": 1,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Supply Vehicle Hitpoints",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 2,
+      "inferredValues": 0,
+      "values": [
+        1,
+        11
+      ],
+      "reviewedAvailability": "confirmed"
+    },
+    {
+      "name": "Tactical Helicopter Healing",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 3,
+      "inferredValues": 2,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Tactical Helicopter Hitpoints",
+      "hall": "main",
+      "rows": 9,
+      "directValues": 5,
+      "inferredValues": 4,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "approved"
+    },
+    {
+      "name": "Tower Damage",
+      "hall": "main",
+      "rows": 5,
+      "directValues": 3,
+      "inferredValues": 2,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Tower Hitpoints",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 2,
+      "inferredValues": 0,
+      "values": [
+        1,
+        11
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Vault Capacity",
+      "hall": "main",
+      "rows": 2,
+      "directValues": 2,
+      "inferredValues": 0,
+      "values": [
+        1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Vault Interest",
+      "hall": "main",
+      "rows": 6,
+      "directValues": 6,
+      "inferredValues": 0,
+      "values": [
+        1,
+        6
+      ],
+      "reviewedAvailability": "unknown"
+    },
+    {
+      "name": "Wall Sapper Damage",
+      "hall": "main",
+      "rows": 1,
+      "directValues": 1,
+      "inferredValues": 0,
+      "values": [
+        1
+      ],
+      "reviewedAvailability": "observed-reviewed"
+    },
+    {
+      "name": "Wall Sapper Hitpoints",
+      "hall": "main",
+      "rows": 4,
+      "directValues": 3,
+      "inferredValues": 1,
+      "values": [
+        1,
+        6,
+        11
+      ],
+      "reviewedAvailability": "unknown"
+    }
+  ],
+  "evidenceSummary": {
+    "authority": "Unverified local observations; repetition is not a confirmed stat rule.",
+    "scope": "ocr-passes-and-reviewed-item-records",
+    "counts": {
+      "scans": 489,
+      "items": 176,
+      "rowObservations": 6934,
+      "knownNameHallPairs": 133,
+      "unknownNames": 433,
+      "inferred": 0,
+      "corrected": 0,
+      "signConflicts": 0,
+      "tierConflicts": 0,
+      "numericRowsWithTierContext": 2828,
+      "numericRowsWithoutTierContext": 1638
+    },
+    "stats": [
+      {
+        "name": "Air Defense Damage",
+        "hall": "main",
+        "rows": 26,
+        "values": [
+          1,
+          6,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Air Defense Hitpoints",
+        "hall": "main",
+        "rows": 58,
+        "values": [
+          1,
+          6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "All Resources from Hunting",
+        "hall": "main",
+        "rows": 27,
+        "values": [
+          1,
+          6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "All Resources Looted",
+        "hall": "main",
+        "rows": 22,
+        "values": [
+          6,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Anti-Tank Gun Damage",
+        "hall": "main",
+        "rows": 24,
+        "values": [
+          1,
+          6,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Anti-Tank Gun Hitpoints",
+        "hall": "main",
+        "rows": 14,
+        "values": [
+          1,
+          6,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "APC Damage",
+        "hall": "main",
+        "rows": 22,
+        "values": [
+          6,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "APC Hitpoints",
+        "hall": "main",
+        "rows": 64,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Armored Car Damage",
+        "hall": "main",
+        "rows": 12,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Armored Car Hitpoints",
+        "hall": "main",
+        "rows": 12,
+        "values": [
+          1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Assault Vehicle Damage",
+        "hall": "main",
+        "rows": 56,
+        "values": [
+          1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Assault Vehicle Hitpoints",
+        "hall": "main",
+        "rows": 52,
+        "values": [
+          1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Attack Helicopter Damage",
+        "hall": "main",
+        "rows": 48,
+        "values": [
+          1,
+          6,
+          8
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Attack Helicopter Hitpoints",
+        "hall": "main",
+        "rows": 14,
+        "values": [
+          6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Bazooka Damage",
+        "hall": "main",
+        "rows": 12,
+        "values": [
+          1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Bazooka Hitpoints",
+        "hall": "main",
+        "rows": 32,
+        "values": [
+          1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Bomber Damage",
+        "hall": "main",
+        "rows": 40,
+        "values": [
+          1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Bomber Hitpoints",
+        "hall": "main",
+        "rows": 32,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Catapult Damage",
+        "hall": "main",
+        "rows": 28,
+        "values": [
+          6,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Catapult Hitpoints",
+        "hall": "main",
+        "rows": 16,
+        "values": [
+          1,
+          6,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Defender Damage",
+        "hall": "main",
+        "rows": 20,
+        "values": [
+          1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Defender Hitpoints",
+        "hall": "main",
+        "rows": 245,
+        "values": [
+          1,
+          6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Defender Spawn Time",
+        "hall": "main",
+        "rows": 151,
+        "values": [
+          -11,
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Enemy Air Defense Damage",
+        "hall": "main",
+        "rows": 31,
+        "values": [
+          -11,
+          -6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Enemy Air Defense Hitpoints",
+        "hall": "main",
+        "rows": 82,
+        "values": [
+          -11,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Enemy Anti-Tank Gun Damage",
+        "hall": "main",
+        "rows": 135,
+        "values": [
+          -11,
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Enemy Anti-Tank Gun Hitpoints",
+        "hall": "main",
+        "rows": 19,
+        "values": [
+          -11,
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Enemy Catapult Damage",
+        "hall": "main",
+        "rows": 37,
+        "values": [
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Enemy Catapult Hitpoints",
+        "hall": "main",
+        "rows": 46,
+        "values": [
+          -11,
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Enemy Defender Spawn Time",
+        "hall": "main",
+        "rows": 81,
+        "values": [
+          1,
+          6,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Enemy Missile Silo Damage",
+        "hall": "main",
+        "rows": 82,
+        "values": [
+          -11,
+          -6,
+          -5,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Enemy Missile Silo Hitpoints",
+        "hall": "main",
+        "rows": 50,
+        "values": [
+          -11,
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Enemy Redoubt Damage",
+        "hall": "main",
+        "rows": 46,
+        "values": [
+          -11,
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Enemy Redoubt Hitpoints",
+        "hall": "main",
+        "rows": 61,
+        "values": [
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Enemy Sniper Tower Damage",
+        "hall": "main",
+        "rows": 26,
+        "values": [
+          -11,
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Enemy Sniper Tower Hitpoints",
+        "hall": "main",
+        "rows": 59,
+        "values": [
+          -11,
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Enemy Tower Damage",
+        "hall": "main",
+        "rows": 46,
+        "values": [
+          -11,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Enemy Tower Hitpoints",
+        "hall": "main",
+        "rows": 49,
+        "values": [
+          -11,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Fighter Damage",
+        "hall": "main",
+        "rows": 12,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Fighter Hitpoints",
+        "hall": "main",
+        "rows": 85,
+        "values": [
+          6,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Food from Farms",
+        "hall": "main",
+        "rows": 18,
+        "values": [
+          1,
+          6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Food from Fruit Trees",
+        "hall": "main",
+        "rows": 36,
+        "values": [
+          1,
+          6,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Food Looted",
+        "hall": "main",
+        "rows": 74,
+        "values": [
+          1,
+          6,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Forest Expansion Cost Refund",
+        "hall": "main",
+        "rows": 14,
+        "values": [
+          1,
+          6,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Generals' Damage",
+        "hall": "main",
+        "rows": 52,
+        "values": [
+          1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Generals' Hitpoints",
+        "hall": "main",
+        "rows": 32,
+        "values": [
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Gold from Caravans",
+        "hall": "main",
+        "rows": 8,
+        "values": [
+          1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Gold from Gold Mines",
+        "hall": "main",
+        "rows": 18,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Gold Looted",
+        "hall": "main",
+        "rows": 48,
+        "values": [
+          1,
+          6,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Guerrilla Damage",
+        "hall": "main",
+        "rows": 26,
+        "values": [
+          1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Guerrilla Hitpoints",
+        "hall": "main",
+        "rows": 36,
+        "values": [
+          1,
+          6,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Heavy Cavalry Damage",
+        "hall": "main",
+        "rows": 85,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Heavy Cavalry Hitpoints",
+        "hall": "main",
+        "rows": 44,
+        "values": [
+          1,
+          6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Heavy Infantry Damage",
+        "hall": "main",
+        "rows": 122,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Heavy Infantry Hitpoints",
+        "hall": "main",
+        "rows": 19,
+        "values": [
+          6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Heavy Tank Hitpoints",
+        "hall": "main",
+        "rows": 27,
+        "values": [
+          1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading APC Damage",
+        "hall": "main",
+        "rows": 56,
+        "values": [
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading APC Hitpoints",
+        "hall": "main",
+        "rows": 10,
+        "values": [
+          -6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Armored Car Damage",
+        "hall": "main",
+        "rows": 4,
+        "values": [],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Armored Car Hitpoints",
+        "hall": "main",
+        "rows": 4,
+        "values": [],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Assault Vehicle Damage",
+        "hall": "main",
+        "rows": 36,
+        "values": [
+          -11,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Assault Vehicle Hitpoints",
+        "hall": "main",
+        "rows": 80,
+        "values": [
+          -11,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Attack Helicopter Damage",
+        "hall": "main",
+        "rows": 168,
+        "values": [
+          -11,
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Attack Helicopter Hitpoints",
+        "hall": "main",
+        "rows": 50,
+        "values": [
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Bazooka Damage",
+        "hall": "main",
+        "rows": 147,
+        "values": [
+          -8,
+          -6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Bazooka Hitpoints",
+        "hall": "main",
+        "rows": 4,
+        "values": [
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Bomber Damage",
+        "hall": "main",
+        "rows": 5,
+        "values": [
+          -6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Bomber Hitpoints",
+        "hall": "main",
+        "rows": 236,
+        "values": [
+          -11,
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Fighter Damage",
+        "hall": "main",
+        "rows": 101,
+        "values": [
+          -6,
+          -5,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Fighter Hitpoints",
+        "hall": "main",
+        "rows": 30,
+        "values": [
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Generals' Damage",
+        "hall": "main",
+        "rows": 37,
+        "values": [
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Generals' Hitpoints",
+        "hall": "main",
+        "rows": 8,
+        "values": [
+          -11,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Guerrilla Damage",
+        "hall": "main",
+        "rows": 14,
+        "values": [
+          -11,
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Guerrilla Hitpoints",
+        "hall": "main",
+        "rows": 79,
+        "values": [
+          -11,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Heavy Cavalry Damage",
+        "hall": "main",
+        "rows": 26,
+        "values": [
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Heavy Cavalry Hitpoints",
+        "hall": "main",
+        "rows": 40,
+        "values": [
+          -11,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Heavy Infantry Damage",
+        "hall": "main",
+        "rows": 6,
+        "values": [],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Heavy Infantry Hitpoints",
+        "hall": "main",
+        "rows": 12,
+        "values": [
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Heavy Tank Damage",
+        "hall": "main",
+        "rows": 8,
+        "values": [
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Heavy Tank Hitpoints",
+        "hall": "main",
+        "rows": 2,
+        "values": [],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Machine Gun Infantry Damage",
+        "hall": "main",
+        "rows": 24,
+        "values": [
+          -11,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Machine Gun Infantry Hitpoints",
+        "hall": "main",
+        "rows": 30,
+        "values": [
+          -12,
+          -11,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Mortar Troop Damage",
+        "hall": "main",
+        "rows": 1,
+        "values": [
+          -11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Mortar Troop Hitpoints",
+        "hall": "main",
+        "rows": 16,
+        "values": [
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading MRL Damage",
+        "hall": "main",
+        "rows": 51,
+        "values": [
+          -11,
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading MRL Hitpoints",
+        "hall": "main",
+        "rows": 247,
+        "values": [
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Paratrooper Damage",
+        "hall": "main",
+        "rows": 8,
+        "values": [
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Paratrooper Hitpoints",
+        "hall": "main",
+        "rows": 14,
+        "values": [
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Raider Damage",
+        "hall": "main",
+        "rows": 20,
+        "values": [],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Raider Hitpoints",
+        "hall": "main",
+        "rows": 12,
+        "values": [
+          -11,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Ranged Infantry Damage",
+        "hall": "main",
+        "rows": 18,
+        "values": [
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Ranged Siege Damage",
+        "hall": "main",
+        "rows": 47,
+        "values": [
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Ranged Siege Hitpoints",
+        "hall": "main",
+        "rows": 452,
+        "values": [
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Supply Vehicle Hitpoints",
+        "hall": "main",
+        "rows": 28,
+        "values": [
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Tactical Helicopter Healing",
+        "hall": "main",
+        "rows": 83,
+        "values": [
+          -11,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Invading Tactical Helicopter Hitpoints",
+        "hall": "main",
+        "rows": 2,
+        "values": [],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Library Research Time",
+        "hall": "main",
+        "rows": 1,
+        "values": [],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Library Tech Food Cost",
+        "hall": "main",
+        "rows": 39,
+        "values": [
+          -11,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Library Tech Gold Cost",
+        "hall": "main",
+        "rows": 38,
+        "values": [
+          -11,
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Library Tech Oil Cost",
+        "hall": "main",
+        "rows": 32,
+        "values": [
+          -11,
+          -6,
+          -1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Looted Resource Refund",
+        "hall": "main",
+        "rows": 18,
+        "values": [
+          1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Machine Gun Infantry Damage",
+        "hall": "main",
+        "rows": 59,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Machine Gun Infantry Hitpoints",
+        "hall": "main",
+        "rows": 14,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Missile Silo Hitpoints",
+        "hall": "main",
+        "rows": 48,
+        "values": [
+          1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Mortar Troop Damage",
+        "hall": "main",
+        "rows": 16,
+        "values": [
+          1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Mortar Troop Hitpoints",
+        "hall": "main",
+        "rows": 84,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "MRL Damage",
+        "hall": "main",
+        "rows": 6,
+        "values": [
+          1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "MRL Hitpoints",
+        "hall": "main",
+        "rows": 34,
+        "values": [
+          1,
+          6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "National Trade Good Loot Chance",
+        "hall": "main",
+        "rows": 23,
+        "values": [
+          1,
+          6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Oil From Oil Wells",
+        "hall": "main",
+        "rows": 13,
+        "values": [
+          1,
+          6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Oil Looted",
+        "hall": "main",
+        "rows": 37,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Paratrooper Damage",
+        "hall": "main",
+        "rows": 1,
+        "values": [],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Paratrooper Hitpoints",
+        "hall": "main",
+        "rows": 52,
+        "values": [
+          1,
+          6,
+          8,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Raider Damage",
+        "hall": "main",
+        "rows": 2,
+        "values": [
+          6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Raider Hitpoints",
+        "hall": "main",
+        "rows": 46,
+        "values": [
+          1,
+          6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Ranged Infantry Damage",
+        "hall": "main",
+        "rows": 42,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Ranged Infantry Hitpoints",
+        "hall": "main",
+        "rows": 25,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Ranged Siege Damage",
+        "hall": "main",
+        "rows": 52,
+        "values": [
+          1,
+          6,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Ranged Siege Hitpoints",
+        "hall": "main",
+        "rows": 50,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Redoubt Damage",
+        "hall": "main",
+        "rows": 46,
+        "values": [
+          1,
+          6,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Redoubt Hitpoints",
+        "hall": "main",
+        "rows": 30,
+        "values": [
+          1,
+          6,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Sniper Tower Damage",
+        "hall": "main",
+        "rows": 18,
+        "values": [
+          1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Sniper Tower Hitpoints",
+        "hall": "main",
+        "rows": 30,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Supply Vehicle Healing",
+        "hall": "main",
+        "rows": 26,
+        "values": [
+          1,
+          6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Supply Vehicle Hitpoints",
+        "hall": "main",
+        "rows": 7,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Tactical Helicopter Healing",
+        "hall": "main",
+        "rows": 21,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Tactical Helicopter Hitpoints",
+        "hall": "main",
+        "rows": 79,
+        "values": [
+          1,
+          6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Tower Damage",
+        "hall": "main",
+        "rows": 32,
+        "values": [
+          1,
+          5
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Tower Hitpoints",
+        "hall": "main",
+        "rows": 10,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Vault Capacity",
+        "hall": "main",
+        "rows": 12,
+        "values": [
+          1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Vault Interest",
+        "hall": "main",
+        "rows": 40,
+        "values": [
+          1,
+          6
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Wall Sapper Damage",
+        "hall": "main",
+        "rows": 8,
+        "values": [
+          1
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      },
+      {
+        "name": "Wall Sapper Hitpoints",
+        "hall": "main",
+        "rows": 18,
+        "values": [
+          1,
+          11
+        ],
+        "inferred": 0,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 0
+      }
+    ],
+    "unknownNames": [
+      "!          al Hebhcopter He aking -1",
+      "(= Fiery A Defense Dan Age",
+      "(Pr BEG He ay Cavalry Hitpromits 6%",
+      "+1%",
+      "+11%",
+      "+14%",
+      ",     B  7   | APPOINTED   ) a : “% [APPOINTED 7 al",
+      "-9%",
+      "4                :         3 Se         % 7     Ob A",
+      "523950010 ¥,",
+      "AAT k HEU oper Damage «6",
+      "ALLA Vemic ie Damage «6%",
+      "APC Hitpownits «11%",
+      "ASEAN eri i Damage «6%",
+      "Air Defense Damage «11%",
+      "AlT Cetense HIpoirts",
+      "All Resaurces Loated « 11%",
+      "All Resources Looted «11%",
+      "All Resources tram Huning",
+      "Altack Helicopter Hitpoints « 1",
+      "An-Tank Gun Hitgants",
+      "Ant-Tark Gun Higgants",
+      "Anti-Tank Gun Damage + L",
+      "Ar-Tank Gun Damage",
+      "Ari Tark Gum Damage 6%",
+      "Armored Car Hitpoints «65,",
+      "Art-Tank Gun Darrage «11%",
+      "Attack Hehcopter Hitpoints «1 1%",
+      "Attack Helicopter Damage «6%",
+      "Attack Helicopter Damage «8%",
+      "Attack Helicopter Hitpoints « 1 1%,",
+      "Attack Helicopter Hitpoints « 11%",
+      "BAER Hitpoints «©",
+      "BAEZ L IIttpinits",
+      "BAIRL Etteanintts",
+      "BARD BpOifes «6%,",
+      "BE I=",
+      "Banged Intanry Darmsge",
+      "Cold from Gold Mines «11%",
+      "Deetercler Spd Time 6%",
+      "Defences Spawi Tire",
+      "Defender Sgavfi Tire 6%",
+      "Defender Spams Tirfe 6%",
+      "Defender Sparsm Time",
+      "Defender Spawn Tiere (6%    oo",
+      "Defender Spawn Time 6%    oo",
+      "Defender Spawn Time 69%",
+      "Defender Spawsn Time 69%",
+      "Deferred Spawn Time",
+      "Detender Spas Time 6%:",
+      "Deterder Span Time 6%",
+      "Deternder Spawn Time 6%",
+      "Dietiedicler Sparest Tirte 6%,",
+      "Dreterider Spas Tirte 69%",
+      "E Tier Detender Spawn Tire «6/4",
+      "E feiivy Bedoul Damage",
+      "E figrry Catapult Hipomts",
+      "E iediny Redoulst Dafage 6%",
+      "E ivermy Ant Tank Gun Damage",
+      "E meson Sipser Toren Batons 11",
+      "E mverivy Redoubt Hitpomts",
+      "E nedry Catapult Highorts",
+      "E neirty Redoulit Damage",
+      "E nermy Misside Silo Damage 6%      Co",
+      "E nerny Missile Silo Hapoinis 6%",
+      "E nieiiny Bedouin Darrage",
+      "E nieriy Missile Sila Hitpoints",
+      "E peiing Redoubt Damage",
+      "E remy Aur Defense kitoonis 6%",
+      "E ried Catapult Hitpoints",
+      "EL remy Regoubt Damage ©",
+      "Eagle bgpomits",
+      "Emery Redoubt Higomts",
+      "Emery Smet Tower Hitpoints 11%",
+      "Emery Tower H pants",
+      "Eneidry &iti- Tank Gun Damage",
+      "Eneiiy Towed Damage 11%",
+      "Enemy Air Defense Camage 11%",
+      "Enemy Air Defense Damage 11%",
+      "Enemy Air Defense Hitpoints 119%",
+      "Enemy Air Defense bitpouwis 11%",
+      "Enemy Ant Tank Gun Damage -1",
+      "Enemy Ant Tans Gun Hitpoints -1 1%",
+      "Enemy Ar Defense Damage &%",
+      "Enemy Ar Defense Damage 6%",
+      "Enemy Ar Defense Hitpois 11%",
+      "Enemy Ar Defense Hoponis LL",
+      "Enemy Ar Defense Htpomiks -1",
+      "Enemy Catapult Diarnage 6%",
+      "Enemy Catapult Higgomrts",
+      "Enemy Defender Spam Tine «6",
+      "Enemy Defender Spas Tine",
+      "Enemy Detencer Spawn Time «11%",
+      "Enemy Missile Sa Hitpoints",
+      "Enemy Missile Sia Damage 6%",
+      "Enemy Missile Sila Hitpowrs 11%",
+      "Enemy Missile Silo Damage -1 1%",
+      "Enemy Missile Silo Damage 11%",
+      "Enemy Missile Silo Hitpoints 11%",
+      "Enemy Missile Slo Damage 11%",
+      "Enemy Redoubt Hitpoints 11%",
+      "Enemy Sniper Tower Hipoinis 6% B        B",
+      "Enemy Srpet Tower Hitpoints",
+      "Enemy Tower Damage &%",
+      "Enemy Tower Damage 6%",
+      "Enemy Tower Htpomnts 11%",
+      "Enemy Tower! Hitpoints 11%,",
+      "Enermy Missile Silo Damiage 6%",
+      "Erediny Towed Damage L",
+      "Eremy Ant Tank Gu Hitpoints &%",
+      "Eremy Defender Spawn Time «11%",
+      "Eremy Defender Spawn Tine «11%,",
+      "Erenry Towet Hitpoints",
+      "Eriemy Tower Hepomts 11%",
+      "Eriemy Tower Hitpoints 11%",
+      "Erieomy Tower Hitpoints 11%,",
+      "Ermey Ant-Tark Gun Oumage 6%",
+      "Erneimry Redoubt Damage",
+      "F rieeny Aur Defense Damage 69%",
+      "FAR IHltpoiiits",
+      "FARL IHItDOIRLS",
+      "FARR LM tpoimits «6%,",
+      "FE rieimy Sniper Tower Hitpoinis",
+      "FMEA Bmponits «16%,",
+      "Fighter Damage «11%,",
+      "Fighter HH tpaints",
+      "Fighter Hfmomis »§%           oo      BN",
+      "Fighter Hitpomis «6%",
+      "Fighter Htpomnis «6%         oo       BN     oo             i",
+      "Fk LFA fpaniies «161%",
+      "Flac tune Gun Infantry Hipomis",
+      "Food Looted «11%",
+      "Food | nated",
+      "Forest Expansion Cost Refund +&%",
+      "Fr ading Attack Helicopters Hipomts",
+      "Frghten BH tpamits «6%",
+      "Fuge muons «6%:",
+      "Fugkiten Fitpoimnts",
+      "Fuglitet Bapanine",
+      "Generals Hitpaints «11%",
+      "Generals Hitpanes » [",
+      "Geredals Hitpoints",
+      "Geredals Mommy «11%",
+      "Goel from Gold Mines «5%",
+      "Goeneials HNpOintg",
+      "Golgl from Gog Mines «60.",
+      "Goll Looted",
+      "Goltl Looted",
+      "Guerra Damage «6%",
+      "Hanged Infantry Hifgpoants + 119",
+      "Hanged Infantry Hifpomis",
+      "Hea wy Ir tamtry Hs = 8%,",
+      "Heanwy Infantry Fitgomts =",
+      "Heauwy [rtantry Hitparts",
+      "Heavy Cavalky Damage «11%      oo          oo",
+      "Heavy Cavalry Damage «11%",
+      "Heavy InTantfy Highormts",
+      "Heavy Infantry Higpairsts = 6%",
+      "Heavy Tank Bilpoines « 6%",
+      "Heawy Infantry Hipomis",
+      "Heawy Intantry Higpomis",
+      "Heawy [rtamtry Hitpoints",
+      "Heed Inlay Higiorts = 8%,",
+      "Hieawy Intantry Hifports",
+      "Higa Infantry Hlgents «6%",
+      "Ho aa No ~d          o% ll Pre",
+      "IF alin Faghi@r Hitpoints 6%",
+      "IFrreading Tactical Hebcopter Healing",
+      "IFrwading Assauli Wetichs Hifjporks 6%        B",
+      "IFvsyacdirgg Bonen Hikparts 6%",
+      "IFwadinyg APT Hitpoints 6%          oo",
+      "IPvading Tactical Helcopted Healing -1",
+      "Ieading Fighter Damage 64%",
+      "Ieiwadling Tactical Helicopter He ahng",
+      "Iesseading Attack Helcopiei Hipoints",
+      "Ife dching Avioied Car Fidos",
+      "Ii adr 2  gitterr Dariage",
+      "Iimvwading Bazoaka Darmage 59%",
+      "Ime amding Fighter Damage 6%    oo",
+      "Imeading Attack Helcopted Hlpoms",
+      "Imeading Fighter Damage 6% BN",
+      "Imvading Aflack Hebcopter Hitpoints",
+      "In achng Atiack Hehcopred Hfpors",
+      "In adding #agniter Hitpoints",
+      "Inv adifg Bomber Hitsomnts 6%",
+      "Invachig Tacthcal Helcoprer Healing",
+      "Invadicg Tacucal Helcaopred Healing",
+      "Invading APC Darrage 11%",
+      "Invading APC Hons",
+      "Invading ARC Damage",
+      "Invading Atack Hehcopter Hfpoms",
+      "Invading Atlack Helicopters Hipomns",
+      "Invading Attack Hebcopter Hifpomts",
+      "Invading Attack Hehcaprer Damage",
+      "Invading Attack Hehcopres Damage",
+      "Invading Attack Helicopters Hiipomis",
+      "Invading Fardtrooper Hipomis",
+      "Invading Fgriter Hitpoints",
+      "Invading Fighter Htpoinks 115%",
+      "Invading Fughter Damage 6%",
+      "Invading Fughter Damage 6%      .",
+      "Invading Fughter Damage 6%:",
+      "Invading Gererals Hipomrs",
+      "Invading Gerneiads Damage 69%",
+      "Invading Guemlla Hitpowrts",
+      "Invading Guerilla Damage 11%",
+      "Invading Guerilla Hitpourrs -1",
+      "Invading Heawy Cavalry Hitpoiiks 6%",
+      "Invading Machine Gun infantry Hitpoints 119%",
+      "Invading Mona: Troop Damage",
+      "Invading Mortar Troan Damage -L1%",
+      "Invading Raider Damage 11%",
+      "Invading Ranged Siege Damage 1% oo",
+      "Invading Ranged Siege Hapoints 11%",
+      "Invading SARL Hitgowits",
+      "Invading Tackcal Helcopted Healing -1",
+      "Invading Tacscal Helicapred Healing",
+      "Invading Tactcal Helcaprer Healing",
+      "Invading Tactcal Helcaprers Healing",
+      "Invading Tactical He lope: Healing -1",
+      "Invading Tactical Hebcopter Fe ahing -1",
+      "Invading Tactical Hebcopter ke ahing",
+      "Invading Tactical Helcopte: He akng",
+      "Invading Tactical Helcopted Healing -1",
+      "Invading Tactical Helzopted Feabing",
+      "Inve aching Atlack Helcopter Mifpomts",
+      "Invwachirg Fegiier Damage",
+      "Ire ache   ter Damage",
+      "Ire achrg Fughier Damage 6%",
+      "Ire anclimg Attack Hehcopter Hifpowits",
+      "Ire ancling [Figiter Damage",
+      "Ire mdm Fighter Darage",
+      "Ire sulin Fagiftier Damage 6%",
+      "Ire zchirg) Fugiifier Damage 6%      i",
+      "Iremching Tactical Helicopret Healing",
+      "Irie acing Fighter Damage &%",
+      "Irie audigy APC Hitpoants 0%",
+      "Irieaching Attack Helcapter Hitpoints",
+      "Irieaching Fughrier Damage 6%         oo",
+      "Irieancliog Fuge Dartage",
+      "Iriesndling SPC Hitpoints",
+      "Irmeadhing Fughtier Damage 6%        BN",
+      "Irreacing Atiack Helicopter Hifports",
+      "Irreamcling Atack Helcopted Hpomts",
+      "Irrgadlirg SPC HIpoints",
+      "Irrieaadling Fugen Damage",
+      "Irsaching Attack Helcopter Himpomis",
+      "Irsseadlmg Fuge Damage 6%",
+      "Irv acing Afack Helcopter Hitpomis",
+      "Irv adding Atack Helcopted Hifgomis",
+      "Irv adding Attack Helcopres Hifpowits",
+      "Irv adding Fuge Diamiage 69%",
+      "Irv adding Fugees Damage 6%     B       Co",
+      "Irv ading Attack Hehcopred Hiipombs",
+      "Irv ading Attack Helcoptes Hitpomis",
+      "Irv adling Fagghiber Damage",
+      "Irv adn Attack Helicopter Miipomis",
+      "Irvadirg Fighter Hpoinis 6%",
+      "Irveaching Fuglfries Diamiage 6%",
+      "Irveading Fagiier Damage 69%",
+      "Irveanchirig Fighter Damage",
+      "Irving Attack Helicopter Milpomts",
+      "Irving Bamber Hipomts",
+      "Irving Bomber Hts 6%",
+      "Irving Figrier Damage",
+      "Irving Foghber Damage",
+      "Irvwading Figen Damage",
+      "Irw aiding Fugen Damisge 60",
+      "Ivadiing Tactcal Helicopter Fe ahng",
+      "Ive scien Fuge Damage 6%     .",
+      "Iveancling Fighter Damage 6",
+      "Iveco Feghier Damage",
+      "Iw acing Atack Helcopter Damage",
+      "Iw adimg MRL Hitpoints §%",
+      "Iwan Fughter Damage 64%       .     B",
+      "Libary Tech Gold Cast 6%",
+      "Library Tech Food Cast 11%",
+      "Library Tech Galg Cost",
+      "Library Tech Gog Cost 11%",
+      "Library Tech OHl Cost 6%",
+      "Library Tech Oil Cost1%     oo",
+      "Library Tech Qi Cast",
+      "Looted Resource Refund « 11",
+      "MIL Hltpoints",
+      "MRL Damage «11%",
+      "MRL Hiigpomits",
+      "MRL Hitpoints «5%,",
+      "MRL Hitpoints «6%,",
+      "MRL Hitpomits #6",
+      "Machine Gun Infantry Hifgomis o%  |    oo",
+      "Machine Gun Infantry Hifgpomis",
+      "Of from OF Wells",
+      "Oil Looted «Hi",
+      "Ol from OF Wells",
+      "PAL HpOINES ©",
+      "RABEL HOPING ¢",
+      "RAL Htpaiiits",
+      "RAR Hrtpainits",
+      "REL Hitgonts",
+      "REL tps",
+      "RRL Ices 160%",
+      "RRL Iitpuoiilis «16%",
+      "Rader Damage +b",
+      "Rader Damage «6%",
+      "Range [mfantry Dams)      |",
+      "Ranged Infantry Damage «LL",
+      "Ranged Infantry Damage ‘1%         a          .",
+      "Ranged Infantry Danas",
+      "Ranged Infantry Dara",
+      "Ranged Intaiitry Darmag",
+      "Ranged Intaitry Daag",
+      "Ranged Intantry Hitpo rts «11%",
+      "Ranged Intantry Hitpoints » 11%",
+      "Ranged Sege Damage «5%",
+      "Ranged Siege Damage » 11%",
+      "Ranged Siege Hitpoirs + L",
+      "Ranged Swege Darage »6Y%",
+      "Ranged [ntantry Hitpoints «11%",
+      "Rariged Intanwry Damage",
+      "Rariged Irfanitry Darnage",
+      "Redan gpa nts « E%,",
+      "Reday bt Hipaints",
+      "Redo! HItpo mts «11%",
+      "Redou ot DarrRge",
+      "RedouD! Hitpoints",
+      "Redoul! Darcage",
+      "Supply Vehicle kotpaimts",
+      "Supply Venice Hirpoims «0",
+      "Supply Verne Heading = 64%",
+      "Supply Weknd le Fealing",
+      "Supply vehic ie Healing + L",
+      "Tacha Helcopted Higomts",
+      "Tachcal Helicopter Hitpomts = 11%",
+      "Tachical Hele opter Bigot » 6%",
+      "Tacoeal Helicopter Higomts",
+      "Tower Damage «11%",
+      "Tre achinig Fugen Daniage 6%        -",
+      "V       Tactical Helicopited Healing",
+      "VE  HDOINTES *",
+      "Va            al He hc opted Healing",
+      "Va     1    cal Hehe opie   1 abing   L",
+      "Vv é      1      ul Hele opted Healing -1",
+      "Wall SADDEST FEDOINLE «15%.",
+      "[re achimg Faghier Damage 6%",
+      "[reading Atack Helcopte Hfpomis",
+      "[reading Fighter Damage",
+      "[wading Atlack Helcopted Hifpomis",
+      "aching Attack Helcapter Hipors",
+      "acing Fughiter Damage",
+      "aeldsl-%1 17 Jd",
+      "bac ture Gun Infantry Higpomts",
+      "caching Tactical Hehcopted Healing - 2",
+      "caching Tactical Helicopter Healing -1",
+      "cadig Fighter Damage",
+      "cading Fighter Damage",
+      "cadmy Guernlla Hitpoirts",
+      "dating between 75-80       3",
+      "er Hifprowits",
+      "evading Attack Helcopted Hifpowits",
+      "eve dcling Guernila Hitponris",
+      "fading Tactical Helicopters Healing",
+      "fiw achiig Adnoied Car Hitpoints",
+      "fiw adding Attack Helicopter FHipomts",
+      "frivading Attack Hehcopier Hitpoints",
+      "frre adie Fighter Damage 60",
+      "gE _2                  -11%",
+      "hry adding Fughiter Damage",
+      "ies",
+      "invading Armored Car Hifgpomnts LL",
+      "invading Generals Damage 11%",
+      "invading Generals Hilgers 11%",
+      "invading Guerilla Damage 6M",
+      "invading Guerlla Hitpomirs",
+      "invading Heavy Cavaliy Hitpoints 11%,",
+      "invading MRL Damage 11%",
+      "invading MRL Damage 11%    A",
+      "invading Raider Darnage 11%",
+      "invading Ranged Siege [ainage 11",
+      "invading Tactical Helcopted He adi",
+      "irveadhing Fighter Danmage 6%         oo",
+      "irvseaching Fughier Damage 6%",
+      "irvyaiing Faghter Damage 6%      oo",
+      "irwadiing Fughter Damage 64%     oo",
+      "irwading Tactcal Hehcopter Fe alin",
+      "ivadng MRL Damage 11%        oo",
+      "lFrcadling Tactical Helizopred Healing",
+      "leaching Tactical Helizopret Healing",
+      "lereadling Fughter Damage",
+      "levator Fighter Darrage",
+      "leveadhing Tactical Helcopted Healing",
+      "leveading Fighter Damage &%       oo",
+      "leveling IF uglier Damage",
+      "levwaching Tactical Helcopret Healing",
+      "lirwacing Tacucal Helcoprer Healing",
+      "liteandiing Figker Darrage Give",
+      "liv amching Stack Helicopters Hipowis",
+      "live ating Attack Helicopters Hiponts",
+      "liveading Tactcal Hehtopted He abi",
+      "livescling Atiack Helcopter Hifpomis",
+      "livvaching Tactcal Helcopter Healing",
+      "liwwaching Atiack Hebcopter Hitpoints",
+      "lrg adlivig Fighier Damage",
+      "mading Attack Helcopter Hlpairts",
+      "rARL HOtpOINES",
+      "racing Fugiter Damage 6%       h          B",
+      "reaching Fighiier Damage",
+      "reaching Fughiter Damage 6%    oo",
+      "reading Attack Hehbcopter Hitpoints",
+      "reading Attack Helcopter Hipomnts",
+      "reading Faghiber Damage",
+      "reading Fighter Damage",
+      "rv adlicwg Fighter Damage 6%        oo",
+      "rvadding Fighter Damage",
+      "rw adding Tactical Helcopret Healing",
+      "t remy Air Defense Hitpoaits",
+      "tev ading Atack Helicopte: Hipomis",
+      "treading Attack Helcopier Hifpomis",
+      "treading Faghtes Damage",
+      "vaching F   ter Damage",
+      "vaching Tactical Helcopted Healing - 1",
+      "vachingg Tactical Helcoprer Healing",
+      "vading Atlack Hehcopted Htparns",
+      "vading Attack Helcapter Hips",
+      "vading Attack Helcopter Hiipairts",
+      "vahing Tactical Hebcopter He ahig -1",
+      "wading Fighter Damage",
+      "wading Tactical Hehcopter Fealng",
+      "wading Tactical Helcopte: Healing",
+      "wading Tactical Helcoptes ke abng -1",
+      "{aching Bomiier Dagmage",
+      "|S",
+      "£ neany Fedo Hitpoints",
+      "€   ier Spawn Time"
+    ],
+    "itemRecords": {
+      "authority": "Unverified local observations; repetition is not a confirmed stat rule.",
+      "scope": "item-records",
+      "counts": {
+        "scans": 0,
+        "items": 176,
+        "rowObservations": 880,
+        "knownNameHallPairs": 133,
+        "unknownNames": 16,
+        "inferred": 205,
+        "corrected": 0,
+        "signConflicts": 0,
+        "tierConflicts": 6,
+        "numericRowsWithTierContext": 740,
+        "numericRowsWithoutTierContext": 52
+      },
+      "stats": [
+        {
+          "name": "Air Defense Damage",
+          "hall": "main",
+          "rows": 5,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Air Defense Hitpoints",
+          "hall": "main",
+          "rows": 8,
+          "values": [
+            1,
+            6
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "All Resources from Hunting",
+          "hall": "main",
+          "rows": 6,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "All Resources Looted",
+          "hall": "main",
+          "rows": 5,
+          "values": [
+            6,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Anti-Tank Gun Damage",
+          "hall": "main",
+          "rows": 7,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Anti-Tank Gun Hitpoints",
+          "hall": "main",
+          "rows": 4,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 1
+        },
+        {
+          "name": "APC Damage",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            6,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "APC Hitpoints",
+          "hall": "main",
+          "rows": 5,
+          "values": [
+            1,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Armored Car Damage",
+          "hall": "main",
+          "rows": 2,
+          "values": [
+            1,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Armored Car Hitpoints",
+          "hall": "main",
+          "rows": 2,
+          "values": [
+            1,
+            6
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Assault Vehicle Damage",
+          "hall": "main",
+          "rows": 8,
+          "values": [
+            1,
+            6
+          ],
+          "inferred": 6,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Assault Vehicle Hitpoints",
+          "hall": "main",
+          "rows": 1,
+          "values": [
+            1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Attack Helicopter Damage",
+          "hall": "main",
+          "rows": 8,
+          "values": [
+            1,
+            6
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Attack Helicopter Hitpoints",
+          "hall": "main",
+          "rows": 5,
+          "values": [
+            6,
+            11
+          ],
+          "inferred": 4,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Bazooka Damage",
+          "hall": "main",
+          "rows": 2,
+          "values": [
+            1,
+            6
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Bazooka Hitpoints",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Bomber Damage",
+          "hall": "main",
+          "rows": 1,
+          "values": [
+            1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Bomber Hitpoints",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            1,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Catapult Damage",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            6,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Catapult Hitpoints",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Defender Damage",
+          "hall": "main",
+          "rows": 4,
+          "values": [
+            1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Defender Hitpoints",
+          "hall": "main",
+          "rows": 23,
+          "values": [
+            1,
+            6
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Defender Spawn Time",
+          "hall": "main",
+          "rows": 14,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Enemy Air Defense Damage",
+          "hall": "main",
+          "rows": 8,
+          "values": [
+            -11,
+            -6
+          ],
+          "inferred": 5,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Enemy Air Defense Hitpoints",
+          "hall": "main",
+          "rows": 15,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 14,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Enemy Anti-Tank Gun Damage",
+          "hall": "main",
+          "rows": 23,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 5,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Enemy Anti-Tank Gun Hitpoints",
+          "hall": "main",
+          "rows": 4,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Enemy Catapult Damage",
+          "hall": "main",
+          "rows": 7,
+          "values": [
+            -6,
+            -1
+          ],
+          "inferred": 4,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Enemy Catapult Hitpoints",
+          "hall": "main",
+          "rows": 8,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Enemy Defender Spawn Time",
+          "hall": "main",
+          "rows": 8,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 4,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Enemy Missile Silo Damage",
+          "hall": "main",
+          "rows": 13,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 8,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Enemy Missile Silo Hitpoints",
+          "hall": "main",
+          "rows": 9,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Enemy Redoubt Damage",
+          "hall": "main",
+          "rows": 10,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 5,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Enemy Redoubt Hitpoints",
+          "hall": "main",
+          "rows": 11,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 3,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Enemy Sniper Tower Damage",
+          "hall": "main",
+          "rows": 5,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Enemy Sniper Tower Hitpoints",
+          "hall": "main",
+          "rows": 10,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 4,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Enemy Tower Damage",
+          "hall": "main",
+          "rows": 9,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 4,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Enemy Tower Hitpoints",
+          "hall": "main",
+          "rows": 11,
+          "values": [
+            -11,
+            -1
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Fighter Damage",
+          "hall": "main",
+          "rows": 2,
+          "values": [
+            1,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Fighter Hitpoints",
+          "hall": "main",
+          "rows": 10,
+          "values": [
+            6,
+            11
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 1
+        },
+        {
+          "name": "Food from Farms",
+          "hall": "main",
+          "rows": 4,
+          "values": [
+            1,
+            6
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Food from Fruit Trees",
+          "hall": "main",
+          "rows": 8,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Food Looted",
+          "hall": "main",
+          "rows": 9,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Forest Expansion Cost Refund",
+          "hall": "main",
+          "rows": 4,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Generals' Damage",
+          "hall": "main",
+          "rows": 1,
+          "values": [
+            1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Generals' Hitpoints",
+          "hall": "main",
+          "rows": 5,
+          "values": [
+            6,
+            11
+          ],
+          "inferred": 4,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Gold from Caravans",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            1,
+            6
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Gold from Gold Mines",
+          "hall": "main",
+          "rows": 5,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Gold Looted",
+          "hall": "main",
+          "rows": 7,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Guerrilla Damage",
+          "hall": "main",
+          "rows": 4,
+          "values": [
+            1,
+            6
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Guerrilla Hitpoints",
+          "hall": "main",
+          "rows": 5,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Heavy Cavalry Damage",
+          "hall": "main",
+          "rows": 5,
+          "values": [
+            1,
+            11
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Heavy Cavalry Hitpoints",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            1,
+            6
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 1
+        },
+        {
+          "name": "Heavy Infantry Damage",
+          "hall": "main",
+          "rows": 5,
+          "values": [
+            1,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Heavy Infantry Hitpoints",
+          "hall": "main",
+          "rows": 4,
+          "values": [
+            6
+          ],
+          "inferred": 3,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Heavy Tank Hitpoints",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            1,
+            6
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading APC Damage",
+          "hall": "main",
+          "rows": 8,
+          "values": [
+            -11,
+            -1
+          ],
+          "inferred": 3,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading APC Hitpoints",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            -6
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Armored Car Damage",
+          "hall": "main",
+          "rows": 1,
+          "values": [
+            -11
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Armored Car Hitpoints",
+          "hall": "main",
+          "rows": 1,
+          "values": [
+            -11
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Assault Vehicle Damage",
+          "hall": "main",
+          "rows": 6,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Assault Vehicle Hitpoints",
+          "hall": "main",
+          "rows": 9,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Attack Helicopter Damage",
+          "hall": "main",
+          "rows": 8,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Attack Helicopter Hitpoints",
+          "hall": "main",
+          "rows": 6,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Bazooka Damage",
+          "hall": "main",
+          "rows": 4,
+          "values": [
+            -6
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Bazooka Hitpoints",
+          "hall": "main",
+          "rows": 1,
+          "values": [
+            -1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Bomber Damage",
+          "hall": "main",
+          "rows": 2,
+          "values": [
+            -6
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Bomber Hitpoints",
+          "hall": "main",
+          "rows": 16,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 8,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Fighter Damage",
+          "hall": "main",
+          "rows": 21,
+          "values": [
+            -6,
+            -5,
+            -1
+          ],
+          "inferred": 9,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 1
+        },
+        {
+          "name": "Invading Fighter Hitpoints",
+          "hall": "main",
+          "rows": 9,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 7,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Generals' Damage",
+          "hall": "main",
+          "rows": 7,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Generals' Hitpoints",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            -11,
+            -1
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Guerrilla Damage",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Guerrilla Hitpoints",
+          "hall": "main",
+          "rows": 10,
+          "values": [
+            -11,
+            -1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Heavy Cavalry Damage",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            -6,
+            -1
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Heavy Cavalry Hitpoints",
+          "hall": "main",
+          "rows": 7,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 3,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Heavy Infantry Damage",
+          "hall": "main",
+          "rows": 2,
+          "values": [
+            -11
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Heavy Infantry Hitpoints",
+          "hall": "main",
+          "rows": 2,
+          "values": [
+            -1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Heavy Tank Damage",
+          "hall": "main",
+          "rows": 2,
+          "values": [
+            -11,
+            -1
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Heavy Tank Hitpoints",
+          "hall": "main",
+          "rows": 1,
+          "values": [
+            -6
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Machine Gun Infantry Damage",
+          "hall": "main",
+          "rows": 6,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Machine Gun Infantry Hitpoints",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            -11,
+            -1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Mortar Troop Damage",
+          "hall": "main",
+          "rows": 1,
+          "values": [
+            -11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Mortar Troop Hitpoints",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            -1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading MRL Damage",
+          "hall": "main",
+          "rows": 7,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading MRL Hitpoints",
+          "hall": "main",
+          "rows": 21,
+          "values": [
+            -6,
+            -1
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Paratrooper Damage",
+          "hall": "main",
+          "rows": 2,
+          "values": [
+            -1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Paratrooper Hitpoints",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            -6,
+            -1
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Raider Damage",
+          "hall": "main",
+          "rows": 4,
+          "values": [
+            -11
+          ],
+          "inferred": 4,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Raider Hitpoints",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            -11,
+            -1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Ranged Infantry Damage",
+          "hall": "main",
+          "rows": 5,
+          "values": [
+            -6,
+            -1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Ranged Siege Damage",
+          "hall": "main",
+          "rows": 8,
+          "values": [
+            -11,
+            -1
+          ],
+          "inferred": 5,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Ranged Siege Hitpoints",
+          "hall": "main",
+          "rows": 39,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Supply Vehicle Hitpoints",
+          "hall": "main",
+          "rows": 6,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Tactical Helicopter Healing",
+          "hall": "main",
+          "rows": 5,
+          "values": [
+            -11,
+            -6
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Invading Tactical Helicopter Hitpoints",
+          "hall": "main",
+          "rows": 1,
+          "values": [
+            -11
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Library Research Time",
+          "hall": "main",
+          "rows": 1,
+          "values": [
+            -1
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Library Tech Food Cost",
+          "hall": "main",
+          "rows": 11,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 6,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 1
+        },
+        {
+          "name": "Library Tech Gold Cost",
+          "hall": "main",
+          "rows": 6,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Library Tech Oil Cost",
+          "hall": "main",
+          "rows": 8,
+          "values": [
+            -11,
+            -6,
+            -1
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Looted Resource Refund",
+          "hall": "main",
+          "rows": 4,
+          "values": [
+            1,
+            11
+          ],
+          "inferred": 3,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Machine Gun Infantry Damage",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            1,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Machine Gun Infantry Hitpoints",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            1,
+            11
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Missile Silo Hitpoints",
+          "hall": "main",
+          "rows": 6,
+          "values": [
+            1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Mortar Troop Damage",
+          "hall": "main",
+          "rows": 2,
+          "values": [
+            1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Mortar Troop Hitpoints",
+          "hall": "main",
+          "rows": 8,
+          "values": [
+            1,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "MRL Damage",
+          "hall": "main",
+          "rows": 2,
+          "values": [
+            1,
+            11
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "MRL Hitpoints",
+          "hall": "main",
+          "rows": 4,
+          "values": [
+            1,
+            6
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "National Trade Good Loot Chance",
+          "hall": "main",
+          "rows": 5,
+          "values": [
+            1,
+            6
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Oil From Oil Wells",
+          "hall": "main",
+          "rows": 3,
+          "values": [
+            1,
+            6
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Oil Looted",
+          "hall": "main",
+          "rows": 6,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Paratrooper Damage",
+          "hall": "main",
+          "rows": 1,
+          "values": [
+            6
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Paratrooper Hitpoints",
+          "hall": "main",
+          "rows": 6,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Raider Damage",
+          "hall": "main",
+          "rows": 1,
+          "values": [
+            6
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Raider Hitpoints",
+          "hall": "main",
+          "rows": 2,
+          "values": [
+            1,
+            6
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Ranged Infantry Damage",
+          "hall": "main",
+          "rows": 4,
+          "values": [
+            1,
+            11
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Ranged Infantry Hitpoints",
+          "hall": "main",
+          "rows": 6,
+          "values": [
+            1,
+            11
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 1
+        },
+        {
+          "name": "Ranged Siege Damage",
+          "hall": "main",
+          "rows": 8,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Ranged Siege Hitpoints",
+          "hall": "main",
+          "rows": 8,
+          "values": [
+            1,
+            11
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Redoubt Damage",
+          "hall": "main",
+          "rows": 10,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Redoubt Hitpoints",
+          "hall": "main",
+          "rows": 8,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 3,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Sniper Tower Damage",
+          "hall": "main",
+          "rows": 5,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 4,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Sniper Tower Hitpoints",
+          "hall": "main",
+          "rows": 6,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Supply Vehicle Healing",
+          "hall": "main",
+          "rows": 5,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Supply Vehicle Hitpoints",
+          "hall": "main",
+          "rows": 2,
+          "values": [
+            1,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Tactical Helicopter Healing",
+          "hall": "main",
+          "rows": 5,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Tactical Helicopter Hitpoints",
+          "hall": "main",
+          "rows": 9,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 4,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Tower Damage",
+          "hall": "main",
+          "rows": 5,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 2,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Tower Hitpoints",
+          "hall": "main",
+          "rows": 2,
+          "values": [
+            1,
+            11
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Vault Capacity",
+          "hall": "main",
+          "rows": 2,
+          "values": [
+            1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Vault Interest",
+          "hall": "main",
+          "rows": 6,
+          "values": [
+            1,
+            6
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Wall Sapper Damage",
+          "hall": "main",
+          "rows": 1,
+          "values": [
+            1
+          ],
+          "inferred": 0,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        },
+        {
+          "name": "Wall Sapper Hitpoints",
+          "hall": "main",
+          "rows": 4,
+          "values": [
+            1,
+            6,
+            11
+          ],
+          "inferred": 1,
+          "corrected": 0,
+          "signConflicts": 0,
+          "tierConflicts": 0
+        }
+      ],
+      "unknownNames": [
+        "+1%",
+        "+11%",
+        "+14%",
+        "-9%",
+        "An-Tank Gun Hitgants",
+        "Fighter HH tpaints",
+        "Generals Hitpaints » 1°",
+        "Goltl Looted",
+        "Heawy Infantry Hipomis",
+        "Invading SARL Hitgowits",
+        "Ivy ATG ASSAM VER Fionls",
+        "Ivy TITVG AS SEGR WBE he Hitpoints ©",
+        "Machine Gun Infantry Hifgpomis",
+        "Supply Venice Hirpoims «0",
+        "fiw achiig Adnoied Car Hitpoints",
+        "gE _2                  -11%"
+      ]
+    }
+  },
+  "limits": [
+    "No screenshots are present, so an apparently complete item is not a verified correct item.",
+    "Counts of direct values reflect stored provenance, not an independent pixel review.",
+    "Matching signatures and nearby compatible entries do not prove the same physical copy.",
+    "Colour-based expectations are conditional; conflicting valid numbers may indicate a colour classification failure.",
+    "This Main crafting history cannot establish War tiers, owned-item upgrades or equipped slots."
+  ]
+}

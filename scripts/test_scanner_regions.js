@@ -55,6 +55,23 @@ const sparse=F.atlasEvidence(output([
 assert.deepEqual(plain(sparse.map(row=>row.text)),['first','','third','','fifth'],'OCR omissions and output order never shift physical rows');
 assert.equal(F.atlasEvidence(output([{text:'a',bbox:{y0:5,y1:20}},{text:'b',bbox:{y0:30,y1:50}}]),cells)[0].text,'','wrapped or duplicate lines require retry');
 assert.equal(F.atlasEvidence(output([{text:'crossed',bbox:{y0:70,y1:120}}]),cells)[0].text,'','cross-cell lines cannot supply field evidence');
+const suffixPixels=new Uint8ClampedArray(300*60*4);
+const suffixInk=(x,y,width,height,colour=[10,60,16])=>{for(let row=y;row<y+height;row++)for(let column=x;column<x+width;column++)suffixPixels.set([...colour,255],(row*300+column)*4);};
+suffixInk(0,0,300,60,[35,40,75]);suffixInk(10,20,100,18);suffixInk(155,25,9,9);suffixInk(170,20,11,18);suffixInk(190,20,15,18);
+let suffix=F.percentageRect(suffixPixels,300,60);
+assert(suffix && suffix.x>110 && suffix.x<=155 && suffix.x+suffix.width>=205,'numeric crop retains a spaced plus, digits and percent glyph without the name');
+suffixPixels.fill(0);suffixInk(10,20,100,18);suffixInk(155,28,9,2);suffixInk(170,20,11,18);suffixInk(190,20,15,18);
+suffix=F.percentageRect(suffixPixels,300,60);
+assert(suffix && suffix.x<=155,'a short minus sign remains inside the source crop');
+suffixPixels.fill(0);suffixInk(10,20,100,18);suffixInk(155,20,23,18);suffixInk(185,20,22,18);
+suffix=F.percentageRect(suffixPixels,300,60);
+assert(suffix && suffix.x>110 && suffix.x<=155 && suffix.x+suffix.width>=207,'a joined plus and first digit are retained before a separated final digit and percent glyph');
+suffixPixels.fill(0);suffixInk(0,0,300,60,[20,80,100]);
+assert.equal(F.percentageRect(suffixPixels,300,60),null,'uniform coloured backing is not a numeric text line');
+suffixPixels.fill(0);suffixInk(10,10,100,12);suffixInk(150,10,40,12);suffixInk(10,35,100,12);suffixInk(150,35,40,12);
+assert.equal(F.percentageRect(suffixPixels,300,60),null,'multiple physical text lines cannot be merged into a suffix');
+suffixPixels.fill(0);suffixInk(10,20,100,18,[100,100,100]);suffixInk(150,20,40,18,[100,100,100]);
+assert.equal(F.percentageRect(suffixPixels,300,60),null,'uncoloured fields keep the existing OCR guide path');
 async function run(percentages) {
   const narrow=G.copy(template);narrow.rows.forEach(row=>{row.percentage.x=.78;row.percentage.width=.15;});
   const snapshot=F.snapshot({template:narrow,panel,source});assert.equal(snapshot.valid,true);
@@ -75,6 +92,23 @@ async function run(percentages) {
 (async()=>{
   let result=await run(['+1%','-11%','+1%','+6%','+1%']);assert.equal(result.valid,true);assert.equal(result.rows[1].value,-11);
   result=await run(['1%','-11%','+1%','+6%','+1%']);assert.equal(result.valid,false);assert.equal(result.rows[0].value,null,'missing plus is never fabricated');
+  for(const retryValue of ['1%','+6%']) {
+    const retryTemplate=G.copy(template);retryTemplate.rows.forEach(row=>{row.percentage.x=.78;row.percentage.width=.15;});
+    const retry=F.snapshot({template:retryTemplate,panel,source});let retryCalls=0;
+    const retained=await F.recognize(retry,{names,canonPerk:v=>v,hall:'main',inferColours:false,isClosed:()=>false,ocrCalls:()=>retryCalls,
+      worker:{async setParameters(){}},readView:async input=>{
+        retryCalls++;
+        if(retryCalls<=2){const value=atlasOutput(input,Array(5).fill(retryCalls===1?'Catapult Damage':'+1%'));value.data.blocks[0].paragraphs[0].lines[0].confidence=50;return value;}
+        return output([{text:retryCalls===3?'unreadable symbols':retryValue,confidence:95}]);
+      }});
+    assert.equal(retained.rows[0].name,'Catapult Damage','an unreadable retry retains the observed known name');
+    assert.equal(retained.valid,false,'retaining earlier evidence never suppresses review');
+    if(retryValue==='1%'){
+      assert.equal(retained.rows[0].value,1,'a retry missing its sign cannot erase the earlier signed percentage');
+      assert.equal(retained.rows[0].confidence,50,'the earlier value retains its weak confidence');
+    }else assert.equal(retained.rows[0].conflict,true,'disagreeing signed values remain a conflict even when the retry name is unreadable');
+    retry.release();
+  }
   const metadataTemplate=G.copy(template);metadataTemplate.rows.forEach(row=>{row.percentage.x=.78;row.percentage.width=.15;});
   const metadata=F.snapshot({template:metadataTemplate,panel,source});
   metadata.crops.category=canvas();metadata.crops.category.width=120;metadata.crops.category.height=30;metadata.crops.category.pixel=[40,210,50];
@@ -120,7 +154,15 @@ async function run(percentages) {
     await warm.close();assert.equal(terminated.length,workerModels.length);
     const stopped=R.create({names,canonPerk:v=>v});await stopped.close();
     await assert.rejects(stopped.recognize(source,{fields:{}}),/stopped/i);
-    assert.equal(released,3,'field snapshots released after initialization cancellation');
+    assert.equal(released,2,'already stopped recognition never allocates field snapshots');
+    let finishInitialization;
+    context.window.Tesseract.createWorker=()=>new Promise(resolve=>{finishInitialization=resolve;});
+    const initializing=R.create({names,canonPerk:v=>v});
+    const interrupted=initializing.recognize(source,{fields:{}});
+    await initializing.close();
+    finishInitialization({async terminate(){}});
+    await assert.rejects(interrupted,/stopped/i);
+    assert.equal(released,3,'field snapshots released when recognition stops during initialization');
   }finally {F.snapshot=originalSnapshot;F.recognize=originalRecognize;}
   console.log('Scanner field geometry, persistence, independent row association, signs, conflicts, frozen crops and temporal input passed.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

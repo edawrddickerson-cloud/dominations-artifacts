@@ -24,7 +24,10 @@ const data={kind:'dominations-planner-backup',version:1,settings:{'dn-crafting-s
   await restore(JSON.parse(JSON.stringify(data)),storage,store);
   assert.equal(storage.getItem('unrelated'),'keep');assert.equal(storage.getItem('dn-old'),null);
   assert.equal(storage.getItem('dn-profiles'),data.settings['dn-profiles']);
-  assert.deepEqual(store.records,data.records,'artwork, signs, range and reroll metadata survive a JSON round trip');
+  assert.deepEqual(store.records,[...data.records,{id:'crafting-log',value:data.settings['dn-crafting-scanner-log-v2']}],'artwork, stats and legacy logs survive a JSON round trip');
+  assert.equal(storage.getItem('dn-crafting-scanner-log-v2'),null,'legacy logs no longer consume settings quota');
+  validate({...data,settings:{},records:store.records});
+  assert.throws(()=>validate({...data,records:[{id:'crafting-log',value:42}]}));
   const previous={...settingsSnapshot(storage)},previousRecords=structuredClone(store.records);
   await assert.rejects(()=>restore({...data,settings:{'dn-test':'quota-error'}},storage,store),/Quota/);
   assert.deepEqual({...settingsSnapshot(storage)},previous,'partial localStorage writes are rolled back');

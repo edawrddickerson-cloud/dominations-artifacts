@@ -90,7 +90,7 @@
   check('swap leaves only the new selected artifact visible', select.value === '' && doc.querySelectorAll('.comparison-portrait').length === 1);
   select.value='Best now'; select.dispatchEvent(new win.Event('change'));
   doc.getElementById('header-def').click();
-  check('both rating axes contribute to current scores', JSON.stringify(scores()) === '[3,18,15]');
+  check('both rating axes use the higher rating without double counting', JSON.stringify(scores()) === '[2,12,10]');
   doc.getElementById('header-off').click();
   check('defensive-only scores use current values', JSON.stringify(scores()) === '[2,12,10]');
   check('per-stat scores track enabled axis and current value', doc.querySelector('.comparison-line-score b').textContent === '2');

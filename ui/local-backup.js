@@ -17,6 +17,10 @@
     for(const [key,value] of Object.entries(data.settings))if(!key.startsWith('dn-') || typeof value!=='string')fail();
     const ids=new Set();
     for(const record of data.records) {
+      if(record?.id==='crafting-log') {
+        if(ids.has(record.id) || typeof record.value!=='string')fail();
+        ids.add(record.id);continue;
+      }
       if(!record || typeof record.id!=='string' || (record.id!=='items' && !record.id.startsWith('collection:')) || ids.has(record.id) || !Array.isArray(record.items))fail();
       ids.add(record.id);
       for(const item of record.items) {
@@ -34,8 +38,17 @@
   }
   async function restore(data,storage,store) {
     validate(data);
+    await window.DN?.scannerLog?.ready;
     const previous=settingsSnapshot(storage);
-    try {await store.restoreBackupRecords(data.records,()=>replaceSettings(storage,data.settings));}
+    const settings={...data.settings},records=data.records.slice();
+    // Backups from before log migration remain supported without filling the
+    // settings quota again. Restore both the log and artifacts atomically.
+    const logKey='dn-crafting-scanner-log-v2';
+    if(settings[logKey]!=null) {
+      if(!records.some(record=>record.id==='crafting-log'))records.push({id:'crafting-log',value:settings[logKey]});
+      delete settings[logKey];
+    }
+    try {await store.restoreBackupRecords(records,()=>replaceSettings(storage,settings));}
     catch(error) {
       try {replaceSettings(storage,previous);}
       catch {throw new Error('Restore failed and browser settings could not be rolled back. Keep your safety backup and restore it after freeing browser storage.');}
@@ -48,7 +61,10 @@
   root.innerHTML='<summary>Back up / restore saved data</summary><p>Browser storage survives normal restarts, but clearing site data removes it. Export a file to keep a separate copy of crafting logs, scanned stats and artwork, every profile\'s Collection, and planner settings.</p><button type="button" class="btn" data-backup-export>Export Backup</button> <button type="button" class="btn" data-backup-import>Import Backup</button><input type="file" accept=".json,application/json" data-backup-file hidden /><p role="status" aria-live="polite" data-backup-status></p>';
   const exportButton=root.querySelector('[data-backup-export]'),importButton=root.querySelector('[data-backup-import]'),fileInput=root.querySelector('[data-backup-file]'),status=root.querySelector('[data-backup-status]');
   const store=window.DNStoredArtifacts;
-  const snapshot=async()=>({kind:'dominations-planner-backup',version:1,exportedAt:new Date().toISOString(),settings:settingsSnapshot(localStorage),records:await store.readBackupRecords()});
+  const snapshot=async()=>{
+    await window.DN.scannerLog.ready;
+    return {kind:'dominations-planner-backup',version:1,exportedAt:new Date().toISOString(),settings:settingsSnapshot(localStorage),records:await store.readBackupRecords()};
+  };
   function download(data,prefix='dominations-backup') {
     const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)],{type:'application/json'}));
     const link=document.createElement('a');link.href=url;link.download=prefix+'-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json';link.click();
@@ -67,7 +83,7 @@
     busy(true);
     try {
       const data=validate(JSON.parse(await file.text()));
-      const total=data.records.reduce((sum,record)=>sum+record.items.length,0);
+      const total=data.records.reduce((sum,record)=>sum+(record.items?.length || 0),0);
       if(!confirm('Restore this backup ('+total+' scanned artifacts)? This replaces ALL saved planner data in this browser, including every profile and crafting log. Close other planner tabs and stop scanning first. A safety backup of your current data will download before restore.'))return;
       download(await snapshot(),'dominations-before-restore');
       await restore(data,localStorage,store);

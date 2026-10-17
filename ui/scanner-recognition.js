@@ -7,6 +7,8 @@
  * History: Gold-frame layout evidence comes from one screenshot, not all game UIs.
  * Saved crafting field boxes use independent OCR with a bounded standard fallback;
  * conflicting field, hall and star evidence remains unconfirmed across that fallback.
+ * Gameplay category crops follow the lowest green text line above the panel,
+ * separate word-shaped ink from icons, and reject title-sized/header-only evidence.
  */
 (() => {
   "use strict";
@@ -269,10 +271,11 @@
   }
   function inferColourValues(parsed,colours,hall='main') {
     if(parsed.rows.length!==5)return parsed;
-    const amounts=hall==='war'?{neutral:1,green:3,blue:6}:{neutral:1,green:6,blue:11};
+    const bases=window.DNArtifactStatContext?.tierBases({hall,crafting:true}) || (hall==='war'?[1,3,6]:[1,6,11]);
+    const amounts={neutral:bases[0],green:bases[1],blue:bases[2]};
     const warnings=[...parsed.warnings];
     const rows=parsed.rows.map((row,index)=>{
-      const amount=amounts[colours[index]],sign=row.known?expectedSign(row.name):null;
+      const amount=amounts[colours[index]],sign=row.known && !row.assumed?expectedSign(row.name):null;
       if(!amount || sign===null)return {...row,colour:colours[index]};
       if(row.value!==null) {
         if(Math.abs(row.value)!==amount)warnings.push('Colour and OCR disagree on row '+(index+1)+'. Check the artifact type and original percentage.');
@@ -360,6 +363,26 @@
     if(!changed && !conflicts)return first;
     return {...retry,rows,valid:false,warnings:[...new Set([...first.warnings,...retry.warnings]),conflicts?'OCR reads disagree about perk names or values. Verify the conflicting rows.':'Combined the clearest compatible rows from separate reads. Verify these rows.']};
   }
+  function retainCraftRead(first,retry,expectedRows=5) {
+    if(!first || first.hall && retry.hall && first.hall!==retry.hall || first.artifact?.type && retry.artifact?.type && first.artifact.type!==retry.artifact.type)return retry;
+    const usable=row=>row?.known && row.name && Number.isFinite(row.value) && row.hasPercent!==false && !row.conflict && !row.tierConflict && !row.scoreExcluded && !row.estimated;
+    const strength=row=>[
+      row.valueSource==='manual' || row.tierSource==='manual'?3:row.assumed?0:row.inferred || Number.isFinite(row.confidence) && row.confidence<80?1:2,
+      Number.isFinite(row.confidence)?row.confidence:0
+    ];
+    const stronger=(next,prior)=>{const a=strength(next),b=strength(prior);return a[0]>b[0] || a[0]===b[0] && a[1]>b[1];};
+    let retained=false;
+    const rows=Array.from({length:expectedRows},(_,index)=>{
+      const prior=first.rows[index],next=retry.rows[index];
+      if(!usable(prior))return next || prior || {name:'',value:null,known:false,hasPercent:false};
+      if(usable(next) && stronger(next,prior))return next;
+      if(!usable(next) || next.name!==prior.name || next.value!==prior.value)retained=true;
+      return prior;
+    });
+    return {...retry,artifact:retry.artifact?.type?retry.artifact:first.artifact || retry.artifact,hall:retry.hall || first.hall,rows,
+      valid:!!retry.valid && !retained && rows.every(row=>usable(row) && !row.assumed && !row.inferred),
+      warnings:[...new Set([...(retry.warnings || []),...(retained?['Retained the stronger previous row readings.']:[])])]};
+  }
   function detectPanel(source,{storage=false}={}) {
     // Gold horizontal borders produce candidates only, not artifact confirmation.
     const canvas = document.createElement("canvas");
@@ -406,11 +429,62 @@
     const types=new Set([parseCraftCategory(text,confidence),...words.map(word=>parseCraftCategory(word.text,Number.isFinite(word.confidence)?word.confidence:0))].filter(Boolean));
     return types.size===1?[...types][0]:null;
   }
+  function categoryLine(data,width,height) {
+    // The category is the lowest green text line above the benefits panel.
+    // Titles can wrap or use the same green, so find the line before OCR rather
+    // than interpreting a category word in the artifact's title as metadata.
+    const bands=[];let band=null,gap=0;
+    for(let y=0;y<height;y++) {
+      let count=0,left=width,right=0;
+      for(let x=0;x<width;x++) {
+        const p=(y*width+x)*4,r=data[p],g=data[p+1],b=data[p+2];
+        if(data[p+3]>=128 && g>60 && g>r*1.25 && g>b*1.05){count++;left=Math.min(left,x);right=x+1;}
+      }
+      if(count>=Math.max(3,width*.005)) {
+        if(!band){band={x:left,y,right,bottom:y+1,ink:0};bands.push(band);}
+        band.x=Math.min(band.x,left);band.right=Math.max(band.right,right);band.bottom=y+1;band.ink+=count;gap=0;
+      }else if(++gap>2)band=null;
+    }
+    const line=bands.findLast(band=>band.bottom-band.y>=4 && band.right-band.x>=(band.bottom-band.y)*1.5 && band.ink>=30);
+    if(!line)return null;
+    // A category icon is taller and narrower than a word. Separate horizontal
+    // ink groups so the helmet/jewel/blades do not become low-confidence OCR
+    // letters. Keep multiple word-shaped groups, including a visible "War".
+    const groups=[];let group=null,blank=0;
+    const wordGap=Math.max(3,Math.round((line.bottom-line.y)*.3));
+    for(let x=line.x;x<line.right;x++) {
+      let count=0,top=height,bottom=0;
+      for(let y=line.y;y<line.bottom;y++) {
+        const p=(y*width+x)*4,r=data[p],g=data[p+1],b=data[p+2];
+        if(data[p+3]>=128 && g>60 && g>r*1.25 && g>b*1.05){count++;top=Math.min(top,y);bottom=y+1;}
+      }
+      if(count){if(!group){group={x,right:x+1,y:top,bottom};groups.push(group);}group.right=x+1;group.y=Math.min(group.y,top);group.bottom=Math.max(group.bottom,bottom);blank=0;}
+      else if(++blank>wordGap)group=null;
+    }
+    const words=groups.filter(group=>group.bottom-group.y>=4 && group.right-group.x>=(group.bottom-group.y)*1.5);
+    if(!words.length)return null;
+    const text={x:words[0].x,right:words.at(-1).right,y:Math.min(...words.map(word=>word.y)),bottom:Math.max(...words.map(word=>word.bottom))};
+    const padding=Math.max(3,Math.round((text.bottom-text.y)*.25)),x=Math.max(0,text.x-padding),y=Math.max(0,text.y-padding);
+    return {x,y,width:Math.min(width,text.right+padding)-x,height:Math.min(height,text.bottom+padding)-y};
+  }
   function categoryRect(source,region) {
     if(!source?.width || !source?.height || !region)return null;
     const x=Math.max(0,(region.x-region.width*.3)*source.width),y=Math.max(0,(region.y-region.height*.34)*source.height);
     const right=Math.min(source.width,(region.x+region.width)*source.width),bottom=Math.min(source.height,(region.y-region.height*.1)*source.height);
-    return bottom>y && right>x?{x:Math.floor(x),y:Math.floor(y),width:Math.ceil(right-x),height:Math.ceil(bottom-y)}:null;
+    const fallback=bottom>y && right>x?{x:Math.floor(x),y:Math.floor(y),width:Math.ceil(right-x),height:Math.ceil(bottom-y)}:null;
+    if(!fallback || typeof source.getContext!=='function')return fallback;
+    // Include the full category even below a two-line title, stopping before
+    // the gold border. Search farther left to follow centred short/long titles.
+    const left=Math.max(0,Math.floor((region.x-region.width*.65)*source.width)),top=Math.max(0,Math.floor((region.y-region.height*.65)*source.height));
+    const end=Math.min(source.height,Math.floor((region.y-region.height*.015)*source.height));
+    if(end<=top || right<=left)return fallback;
+    const context=source.getContext('2d',{willReadFrequently:true}),width=Math.floor(right)-left,height=end-top;
+    const line=categoryLine(context.getImageData(left,top,width,height).data,width,height);
+    if(!line)return fallback;
+    // A large title higher in the header is not a category when the actual
+    // category is absent or clipped. Leave metadata unknown in that case.
+    if(line.y+top+line.height<(region.y-region.height*.2)*source.height || line.height>region.height*source.height*.23)return null;
+    return {...line,x:line.x+left,y:line.y+top};
   }
   function classifyHallColour(data) {
     let red=0,blue=0,total=0;
@@ -462,18 +536,21 @@
       })());
       return initializing.get(kind);
     }
-    async function recognize(source, {expectedRows=5, layout="panel",hall='main',inferColours=false,categorySource=null,fields=null,colourHall=null,knownTiers=[]}={}) {
+    async function recognize(source, {expectedRows=5, layout="panel",hall='main',inferColours=false,categorySource=null,fields=null,colourHall=null,knownTiers=[],isCurrent=()=>true}={}) {
+      const stopped=()=>closed || !isCurrent();
+      const check=()=>{if(stopped())throw new Error('Recognition superseded or stopped');};
+      check();
       expectedRows=Number(expectedRows)===6?6:5;
       // Freeze small field crops synchronously, before worker initialization yields.
       const fieldViews=layout==='panel' && fields?window.DNScannerFieldRecognition?.snapshot(fields):null;
       let activeWorker;
-      try {activeWorker=await getWorker(fieldViews?.valid?'fast':'standard');}catch(error){fieldViews?.release?.();throw error;}
+      try {activeWorker=await getWorker(fieldViews?.valid?'fast':'standard');check();}catch(error){fieldViews?.release?.();throw error;}
       let ocrCalls=0;
-      const readView=(...args)=>{ocrCalls++;return activeWorker.recognize(...args);};
-      if(layout==='storage' || layout==='storage-rows' || layout==='storage-rows-dice')return window.DNStorageRecognition.recognize(source,{worker:activeWorker,names,canonPerk,expectedRows,layout,hall,knownTiers,fields,isClosed:()=>closed});
+      const readView=async(...args)=>{check();ocrCalls++;const output=await activeWorker.recognize(...args);check();return output;};
+      if(layout==='storage' || layout==='storage-rows' || layout==='storage-rows-dice')return window.DNStorageRecognition.recognize(source,{worker:activeWorker,names,canonPerk,expectedRows,layout,hall,knownTiers,fields,isClosed:stopped});
       if(fieldViews?.valid) {
         try {
-          let calibrated=await window.DNScannerFieldRecognition.recognize(fieldViews,{worker:activeWorker,readView,names,canonPerk,hall,inferColours,categorySource,isClosed:()=>closed,ocrCalls:()=>ocrCalls});
+          let calibrated=await window.DNScannerFieldRecognition.recognize(fieldViews,{worker:activeWorker,readView,names,canonPerk,hall,inferColours,categorySource,isClosed:stopped,ocrCalls:()=>ocrCalls});
           // Metadata uses its own pixels. Repeating every text row cannot repair
           // an unread category or star, and used to multiply complete read time.
           if(calibrated.valid) {
@@ -487,7 +564,7 @@
           // Contradictory field evidence still goes through the conflict rules.
           await activeWorker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});
           const fallback=await recognize(source,{expectedRows,layout,hall:calibrated.hall || hall,inferColours,categorySource,
-            colourHall:calibrated.hallSource==='hall-colour'?calibrated.hall:null});
+            colourHall:calibrated.hallSource==='hall-colour'?calibrated.hall:null,isCurrent});
           let selected=combineReads(calibrated,fallback,expectedRows);
           // Standard crafting supplies the fresh-craft rule, not independent
           // dice pixels. Explicit calibrated controls, including unreadable ones,
@@ -679,5 +756,5 @@
     async function close() { closed=true;const previous=[...workers.values()];workers.clear();await Promise.all(previous.map(worker=>worker.terminate())); }
     return {recognize,close,warm:({fast=false}={})=>getWorker(fast?'fast':'standard')};
   }
-  window.DNScannerRecognition={matchName,NAME_MATCH_THRESHOLD,parseText,parseFieldRow,positionRows,signIssues,reconcileReads,combineReads,classifyBrightness,classifyStars,rowColours,inferColourValues,usefulRow,coverage,textContrast,detectPanel,parseCraftCategory,craftCategoryEvidence,classifyHallColour,hallColour,craftHall,categoryRect,create};
+  window.DNScannerRecognition={matchName,NAME_MATCH_THRESHOLD,parseText,parseFieldRow,positionRows,signIssues,reconcileReads,combineReads,retainCraftRead,classifyBrightness,classifyStars,rowColours,inferColourValues,usefulRow,coverage,textContrast,detectPanel,parseCraftCategory,craftCategoryEvidence,classifyHallColour,hallColour,craftHall,categoryRect,categoryLine,create};
 })();

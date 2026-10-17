@@ -2,7 +2,7 @@
 (async()=>{
   const checks={};
   function check(name,condition){checks[name]=!!condition;if(!condition)throw new Error(name);}
-  async function wait(fn){const until=performance.now()+15000;while(!fn()){if(performance.now()>until)throw new Error('Timed out');await new Promise(resolve=>setTimeout(resolve,25));}}
+  async function wait(fn){const until=performance.now()+15000;while(!await fn()){if(performance.now()>until)throw new Error('Timed out');await new Promise(resolve=>setTimeout(resolve,25));}}
   const get=id=>document.getElementById('storage-'+id),store=window.DNStoredArtifacts;
   await wait(()=>!get('saved').textContent.startsWith('Loading'));
   const legacyKey='collection:backfill-fixture';
@@ -24,9 +24,10 @@
   const image=canvas.toDataURL('image/jpeg');
   const result={valid:true,warnings:[],rows,artifact:{name:'Transfer fixture',type:'Weapon',hall:'main',image}};
   window.DNStorageScanner.update(result,true,{reviewable:true,expectedRows:5});
-  check('review enables keep',!get('keep').disabled);
-  get('keep').click();get('keep').click();
-  check('duplicate rejected while scanning',get('items').children.length===1 && get('keep').disabled && get('keep-status').textContent.includes('Exact duplicate'));
+  check('new complete scan schedules automatic saving',get('ownership-title').textContent==='No saved match found');
+  await wait(async()=>(await store.read('items')).length===1);
+  check('duplicate skipped while scanning',get('items').children.length===1 && get('keep').hidden && get('ownership-title').textContent==='Added');
+  check('added scan is awaiting import',get('ownership-title').textContent==='Added' && get('ownership-detail').textContent.includes('awaiting import to Collection'));
   const saved=await store.read('items');
   check('saved detail',saved.length===1 && saved[0].rows[0].base===11 && saved[0].rows[1].max===-15 && saved[0].image===image);
   check('saved tiers include inference source',saved[0].rows.every((row,i)=>row.tier===['blue','green','white','green','white'][i] && row.tierSource===(i===2?'unique-percentage':'percentage-level')));
@@ -34,7 +35,17 @@
   await wait(()=>get('collection-status').textContent.includes('1 added'));
   check('identical copies import once',(await store.read(store.collectionKey())).length===1);
   check('import clears scanned inventory',get('items').children.length===0 && (await store.read('items')).length===0);
-  check('collection duplicate disables keeping',get('keep').disabled && get('keep-status').textContent.includes('Exact duplicate'));
+  check('collection duplicate requires no keeping',get('keep').hidden && get('ownership-title').textContent==='Already in your collection');
+  check('imported scan is clearly already owned',get('ownership-title').textContent==='Already in your collection' && get('ownership').dataset.state==='collection');
+  window.DNStorageScanner.update({...result,rows:rows.map((row,index)=>index===0?{...row,known:false}:row)},false,{reviewable:true,expectedRows:5});
+  check('unclear scan cannot claim a saved match',get('ownership-title').textContent==='More scan details needed');
+  window.DNStorageScanner.update({...result,metadataConflict:true},false,{reviewable:true,expectedRows:5});
+  check('conflicting metadata cannot claim a saved match',get('ownership-title').textContent==='More scan details needed');
+  window.DNStorageScanner.update(result,true,{reviewable:false,expectedRows:5});
+  check('stale scan cannot retain an owned result',get('ownership-title').textContent==='Ownership check pending');
+  window.DNStorageScanner.update(result,true,{reviewable:true,pending:true,expectedRows:5});
+  check('pending edits cannot retain an owned result',get('ownership-title').textContent==='Ownership check pending');
+  window.DNStorageScanner.update(result,true,{reviewable:true,expectedRows:5});
   const duplicateImport=await store.accept([{...saved[0],id:'duplicate-import'}]);
   check('import rejects exact duplicates',duplicateImport.duplicates===1 && duplicateImport.added===0);
   check('rescanned duplicate clears without importing',(await store.read(store.collectionKey())).length===1 && get('items').children.length===0);
@@ -45,29 +56,31 @@
   const inferredRows=rows.map((row,index)=>index===0?{...row,value:null,tier:'blue',tierSource:'manual'}:
     index===1?{...row,level:null,tier:'green',tierSource:'manual'}:row);
   window.DNStorageScanner.update({...result,artifact:{...result.artifact,name:'Inference fixture'},valid:false,rows:inferredRows},false,{reviewable:true,expectedRows:5});
-  check('known tier fills missing value and level before keeping',!get('keep').disabled);
-  get('keep').click();
+  await wait(async()=>(await store.read('items')).some(item=>item.name==='Inference fixture'));
+  check('known tier fills missing value and level automatically',get('keep').hidden);
   const inferredSaved=(await store.read('items'))[0];
   check('inferred values and provenance survive inventory saving',inferredSaved.rows[0].value===13 && inferredSaved.rows[0].valueSource==='tier-level' && inferredSaved.rows[0].inferredFields.includes('value') && inferredSaved.rows[1].level===1 && inferredSaved.rows[1].levelSource==='locked-star' && inferredSaved.rows[1].inferredFields.includes('level'));
   get('add-collection').click();await wait(()=>get('items').children.length===0);
   await store.remove(inferredSaved.id);
   const replacementName='Replacement fixture';
   const scanLevels=level=>window.DNStorageScanner.update({...result,artifact:{...result.artifact,name:replacementName},rows:rows.map((row,index)=>index===0?{...row,value:11+level-1,level}:row)},true,{reviewable:true,expectedRows:5});
-  scanLevels(3);get('keep').click();
+  scanLevels(3);await wait(async()=>(await store.read('items')).some(item=>item.name===replacementName));
   const stagedId=(await store.read('items'))[0].id;
-  scanLevels(4);get('keep').click();
+  scanLevels(4);await wait(async()=>(await store.read('items')).some(item=>item.name===replacementName && item.rows[0].level===4));
   let staged=await store.read('items');
   check('new levels replace staged inventory in place',staged.length===1 && staged[0].id===stagedId && staged[0].rows[0].level===4);
   get('add-collection').click();await wait(()=>get('items').children.length===0);
   const previousLoadout=window.DN.loadLoadout(),assigned=window.DN.loadLoadout();
   assigned.Main.mains.push(stagedId);assigned.Main.scannedPlaced.push(stagedId);window.DN.saveLoadout(assigned);
-  scanLevels(5);get('keep').click();get('add-collection').click();await wait(()=>get('items').children.length===0);
+  scanLevels(5);
+  check('changed levels show an automatic collection update',get('ownership-title').textContent==='Collection match · improved stats');
+  await wait(async()=>(await store.read(store.collectionKey())).find(item=>item.id===stagedId)?.rows[0].level===5);
   let replacement=(await store.read(store.collectionKey())).find(item=>item.id===stagedId);
   check('updated scan inherits assigned exhibit',replacement?.rows[0].level===5 && JSON.stringify(window.DN.loadLoadout())===JSON.stringify(assigned));
-  scanLevels(2);get('keep').click();get('add-collection').click();await wait(()=>get('items').children.length===0);
+  scanLevels(2);await new Promise(resolve=>setTimeout(resolve,750));
   replacement=(await store.read(store.collectionKey())).find(item=>item.id===stagedId);
-  check('latest lower levels also replace old scan',replacement?.rows[0].level===2 && window.DN.loadLoadout().Main.mains.includes(stagedId));
-  check('replacement cannot be kept again',get('keep').disabled && get('keep-status').textContent.includes('Exact duplicate'));
+  check('lower scan leaves improved owned stats unchanged',replacement?.rows[0].level===5 && window.DN.loadLoadout().Main.mains.includes(stagedId));
+  check('weaker replacement requires no keep action',get('keep').hidden && get('ownership-title').textContent==='Already in your collection' && !get('keep-status').textContent);
   await store.remove(stagedId);window.DN.saveLoadout(previousLoadout);
   if(window.DNInventoryTierOnly) {
     const accepted=await store.read(store.collectionKey());

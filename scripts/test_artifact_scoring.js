@@ -1,6 +1,6 @@
 /*
- * Authority: Phase 3 must preserve the existing rating algorithm exactly.
- * Ownership: Standalone parity test; frozen pre-extraction app.js functions below.
+ * Authority: Shared scoring, with the requested higher-axis rating per perk.
+ * Ownership: Catalogue coverage against the reference scorer below.
  * Invariants: Compare complete score objects for every catalogue row and mode/axis.
  * History: Snapshot taken before replacing app.js functions with shared delegates.
  */
@@ -70,10 +70,10 @@
 
   /** Active-axis line score for Best-line selection. */
   function lineActiveScore(line) {
-    let sum = 0;
-    if (prefSortAxes.offensive) sum += line.offensive;
-    if (prefSortAxes.defensive) sum += line.defensive;
-    return sum;
+    const selected=[];
+    if(prefSortAxes.offensive)selected.push(line.offensive);
+    if(prefSortAxes.defensive)selected.push(line.defensive);
+    return selected.length?Math.max(...selected):0;
   }
 
   /**
@@ -115,9 +115,7 @@
       offensive += line.offensive;
       defensive += line.defensive;
     }
-    let preference = 0;
-    if (prefSortAxes.offensive) preference += offensive;
-    if (prefSortAxes.defensive) preference += defensive;
+    const preference = lines.reduce((total,line)=>total+lineActiveScore(line),0);
     return { lines, bestIndex: -1, offensive, defensive, preference };
   }
 

@@ -75,8 +75,8 @@
       } catch(error) {failure=error;transaction.abort();}
     });
   }
-  async function remove(id) {
-    const key=collectionKey(), db=await open();
+  async function remove(id,{inventory=false}={}) {
+    const key=inventory?'items':collectionKey(), db=await open();
     return new Promise((resolve,reject)=>{
       const transaction=db.transaction('inventory','readwrite'),store=transaction.objectStore('inventory'),request=store.get(key);
       request.onsuccess=()=>store.put({id:key,items:(request.result?.items || []).filter(item=>item.id!==id)});
@@ -102,6 +102,8 @@
   const collectionKey = () => 'collection:' + window.DN.activeProfileId();
   const normalize = value => String(value || '').trim().toLowerCase().replace(/[’‘]/g,"'").replace(/\s+/g,' ');
   const identity = item => JSON.stringify([normalize(item.name),normalize(item.hall),normalize(item.type).replace(/^war /,'')]);
+  const matchingIdentity=(other,item)=>identity(other)===identity(item) &&
+    !(other.keptFromCraft && item.keptFromCraft && other.id!==item.id);
   function impliedRange(row) {
     if(!Number.isFinite(row.value) || !Number.isInteger(row.level) || row.level<1 || row.level>10)return null;
     const magnitude=Math.abs(row.value)-(row.level-1), sign=Math.sign(row.value);
@@ -110,6 +112,7 @@
   }
   const tierNames=['white','green','blue'];
   function tierBases({hall,type,crafting=false}={}) {
+    if(window.DNArtifactStatContext)return window.DNArtifactStatContext.tierBases({hall,type,crafting});
     const category=normalize(type).replace(/^war /,'');
     if(!['main','war'].includes(normalize(hall)) || /legendary|mythical/.test(category))return null;
     const war=/^war /i.test(normalize(type)) || normalize(hall)==='war',allowed=war?['weapon','armor','equipment']:['weapon','armor','jewelry','jewellery','pottery'];
@@ -139,13 +142,18 @@
     const numeric=(!row.inferred || row.tierSource==='manual') && Number.isFinite(row.value)?Math.abs(row.value):null;
     const numericTier=numeric!==null?tierNames[bases.indexOf(numeric)] || null:null;
     const manual=row.tierSource==='manual';
-    const conflict=!!row.conflict || !manual && colourTier!==null && numeric!==null && colourTier!==numericTier;
-    const tier=conflict?null:manual?numericTier:colourTier || numericTier;
+    const directNumeric=!!numericTier && row.known===true && row.hasPercent===true && !row.assumed && !row.inferred && !row.conflict && Math.sign(row.value)===window.DN?.expectedPerkSign?.(row.name);
+    const colourTierMismatch=colourTier!==null && numeric!==null && colourTier!==numericTier;
+    // Legal signed OCR is stronger evidence than a dimmed/grey glyph swatch.
+    // Keep actual OCR disagreements and inferred values excluded from scoring.
+    const conflict=!!row.conflict || !manual && colourTierMismatch && !directNumeric;
+    const useNumeric=directNumeric && colourTierMismatch;
+    const tier=conflict?null:manual || useNumeric?numericTier:colourTier || numericTier;
     const sign=Number.isFinite(row.value) && row.value!==0?Math.sign(row.value):row.known?window.DN?.expectedPerkSign?.(row.name) ?? (/^invading\b/i.test(row.name)?-1:null):null;
     const magnitude=tier?bases[tierNames.indexOf(tier)]:null;
-    return {...row,level:1,levelSource:'crafting',tier,tierSource:tier?manual?'manual':colourTier?'colour':'starting-percentage':null,tierConflict:conflict,
+    return {...row,level:1,levelSource:'crafting',tier,tierSource:tier?manual?'manual':useNumeric?'starting-percentage':colourTier?'colour':'starting-percentage':null,tierConflict:conflict,colourTierMismatch,
       base:magnitude!==null && sign?sign*magnitude:null,max:magnitude!==null && sign?sign*(magnitude+9):null,
-      rangeSource:tier && sign?manual?'manual':colourTier?'colour':'starting-percentage':null,
+      rangeSource:tier && sign?manual?'manual':useNumeric?'starting-percentage':colourTier?'colour':'starting-percentage':null,
       rangeReview:conflict?'Text colour and starting percentage conflict. Verify this stat.':null};
   }
   function inferStorageRow(row,context) {
@@ -194,6 +202,8 @@
         const matched=(trusted?candidates.find(candidate=>candidate.level===row.level):null) ||
           (row.rangeSource==='manual'?candidates.find(candidate=>candidate.base===row.base):null);
         const observed=trusted && Number.isInteger(row.level) && row.level>=1 && row.level<=10;
+        const numericRange=observed?impliedRange(row):null;
+        if(numericRange && !matched)return {...row,...numericRange,rangeSource:'inferred-level',rangeCandidates:[],rangeReview:null,tierConflict:false};
         const resolved=matched || (!observed && candidates.length===1?candidates[0]:null);
         if(resolved)return {...row,...resolved,levelSource:matched?row.levelSource || 'recorded':'base-tier',rangeSource:'inferred-tier',rangeCandidates:[],rangeReview:null,tierConflict:false};
         return {...row,level:observed?row.level:null,base:null,max:null,rangeSource:null,rangeCandidates:candidates,tierConflict:observed,
@@ -252,7 +262,7 @@
     const collection=existing.map(backfillItem), result={added:0,updated:0,duplicates:0,blocked:0,consumedIds:[],issues:[]};
     for(const raw of identify(incoming)) {
       if(!raw.reviewed){result.blocked++;result.issues.push(raw.name+': verify this artifact first.');continue;}
-      const item=withRanges(raw), candidates=collection.filter(other=>identity(other)===identity(item));
+      const item=withRanges(raw), candidates=collection.filter(other=>matchingIdentity(other,item));
       if(item.rows.some(row=>row.tierConflict)){result.blocked++;result.issues.push(item.name+': percentage and level or colour evidence conflict. Verify the tier.');continue;}
       const range=signature(item,true), sameRange=range && candidates.find(other=>signature(other,true)===range);
       const exact=candidates.find(other=>signature(other)===signature(item));
@@ -295,6 +305,98 @@
     }
     return {...result,collection};
   }
+  // Passive capture may improve a uniquely matched record, never lower it or
+  // choose between indistinguishable copies. Explicit legacy merge stays separate.
+  function passivePlan(existing, raw,{allowCorrection=false}={}) {
+    const item=withRanges(raw),candidates=existing.map(backfillItem).filter(other=>matchingIdentity(other,item));
+    if(!item.reviewed || item.rows.some(row=>row.tierConflict))return {action:'blocked',reason:'Verify the conflicting or incomplete scan.'};
+    const range=signature(item,true),matching=range?candidates.filter(other=>signature(other,true)===range):[];
+    const captured=existing.find(other=>other.id===item.id);
+    const captureSignature=scan=>JSON.stringify([identity(scan),scan.rows.map(row=>[normalize(row.name),row.value,row.level,row.tier,row.base,row.max,row.unlocked,row.rerollEligible])]);
+    if(allowCorrection && raw.manualCorrection && captured && captureSignature(backfillItem(captured))!==captureSignature(item))return {action:'updated',id:captured.id,correction:true};
+    const changes=other=>{
+      const rows=alignRows(other,item);
+      return {rows,improved:rows.some((row,i)=>Math.abs(row.value)>Math.abs(other.rows[i].value) || row.level>other.rows[i].level || row.unlocked===true && other.rows[i].unlocked===false),
+        worse:rows.some((row,i)=>Math.abs(row.value)<Math.abs(other.rows[i].value) || row.level<other.rows[i].level || row.unlocked===false && other.rows[i].unlocked===true)};
+    };
+    if(matching.some(other=>{const change=changes(other);return !change.improved && !change.worse;}))return {action:'duplicate',reason:'Identical stat values are already saved.'};
+    if(matching.length>1)return {action:'blocked',reason:'Several saved copies match. No existing copy was replaced.'};
+    if(matching.length===1) {
+      const change=changes(matching[0]);
+      if(change.worse || !change.improved)return {action:'unchanged',reason:'The saved version has equal or better stats. It was left unchanged.'};
+      return {action:'updated',id:matching[0].id};
+    }
+    if(captured)return {action:'blocked',reason:'This capture is already saved with different stat tiers. Verify the edited fields.'};
+    const shape=JSON.stringify(item.rows.map(row=>normalize(row.name)).sort());
+    if(candidates.some(other=>signature(other)===signature(item)))return {action:'duplicate',reason:'Identical stat values are already saved.'};
+    if(candidates.some(other=>JSON.stringify(other.rows.map(row=>normalize(row.name)).sort())===shape && (!range || !signature(other,true))))return {action:'blocked',reason:'Verify the upgrade levels to resolve the saved match.'};
+    return {action:'added'};
+  }
+  function passiveMerge(existing, incoming,options={}) {
+    let collection=existing.map(backfillItem);
+    const result={added:0,updated:0,duplicates:0,blocked:0,consumedIds:[],issues:[]};
+    for(const item of identify(incoming)) {
+      const plan=passivePlan(collection,item,options);
+      if(plan.action==='blocked'){result.blocked++;result.issues.push(item.name+': '+plan.reason);continue;}
+      if(plan.action==='duplicate' || plan.action==='unchanged')result.duplicates++;
+      else {
+        const before=collection.find(other=>other.id===plan.id);
+        if(plan.correction){collection=collection.map(other=>other.id===plan.id?{...other,...item,id:other.id,acceptedAt:other.acceptedAt,updatedAt:new Date().toISOString()}:other);result.updated++;}
+        else {const merged=merge(collection,[item]);collection=merged.collection;result.added+=merged.added;result.updated+=merged.updated;}
+        if(before)collection=collection.map(other=>other.id===before.id?{...other,revisions:[...(before.revisions || []),{at:new Date().toISOString(),reason:plan.correction?'manual-correction':'stat-improvement',rows:before.rows}]}:other);
+      }
+      result.consumedIds.push(item.id);
+    }
+    return {...result,collection};
+  }
+  async function saveScan(item,{profileKey=collectionKey(),isCurrent=()=>true}={}) {
+    const db=await open();
+    return new Promise((resolve,reject)=>{
+      const transaction=db.transaction('inventory','readwrite'),records=transaction.objectStore('inventory');
+      const owned=records.get(profileKey),inventory=records.get('items');let pending=2,result;
+      function finish() {
+        if(--pending)return;
+        const collection=identify(owned.result?.items || []),items=identify(inventory.result?.items || []);
+        result={action:'cancelled',collection,items,profileKey};
+        if(profileKey!==collectionKey() || !isCurrent())return;
+        const ownedPlan=passivePlan(collection,item),target=ownedPlan.action==='added'?'inventory':'collection';
+        const plan=target==='collection'?ownedPlan:passivePlan(items,item,{allowCorrection:true});
+        result={...result,...plan,target};
+        if(plan.action!=='added' && plan.action!=='updated')return;
+        const merged=passiveMerge(target==='collection'?collection:items,[item],{allowCorrection:target==='inventory'});
+        if(target==='collection')result.collection=merged.collection;else result.items=merged.collection;
+        const write=records.put({id:target==='collection'?profileKey:'items',items:merged.collection});
+        write.onsuccess=()=>{if(profileKey!==collectionKey() || !isCurrent())transaction.abort();};
+      }
+      owned.onsuccess=inventory.onsuccess=finish;
+      transaction.oncomplete=()=>resolve(result);
+      transaction.onabort=transaction.onerror=()=>reject(transaction.error || new Error('The scan changed before it could be saved.'));
+    });
+  }
+  // An explicit Keep represents a physical craft. Its encounter ID prevents a
+  // double click from saving twice; separate identical crafts remain distinct.
+  async function keepCraft(item,{profileKey=collectionKey()}={}) {
+    const db=await open();
+    return new Promise((resolve,reject)=>{
+      const transaction=db.transaction('inventory','readwrite'),records=transaction.objectStore('inventory');
+      const owned=records.get(profileKey),inventory=records.get('items');let pending=2,result;
+      function finish(){
+        if(--pending)return;
+        const items=identify(inventory.result?.items || []);
+        result={action:'cancelled',items};
+        if(profileKey!==collectionKey())return;
+        if(items.some(other=>other.id===item.id) || owned.result?.items?.some(other=>other.id===item.id)){
+          result.action='duplicate';return;
+        }
+        items.push(backfillItem(item));result={action:'added',items};
+        const write=records.put({id:'items',items});
+        write.onsuccess=()=>{if(profileKey!==collectionKey())transaction.abort();};
+      }
+      owned.onsuccess=inventory.onsuccess=finish;
+      transaction.oncomplete=()=>resolve(result);
+      transaction.onabort=transaction.onerror=()=>reject(transaction.error || new Error('Profile changed before this craft could be kept.'));
+    });
+  }
   async function accept(items) {
     const key = collectionKey(), db = await open();
     return new Promise((resolve, reject) => {
@@ -303,7 +405,7 @@
       const collection=store.get(key), inventory=store.get('items');
       function finish() {
         if(--pending)return;
-        result=merge(collection.result?.items || [],items);
+        result=passiveMerge(collection.result?.items || [],items);
         const consumed=new Set(result.consumedIds);
         result.remainingInventory=identify(inventory.result?.items || []).filter(item=>!consumed.has(item.id));
         store.put({id:key,items:result.collection});
@@ -325,6 +427,6 @@
     });
     return row;
   }
-  window.DNStoredArtifacts = {read, write, readBackupRecords, restoreBackupRecords, accept, remove, update, identify, toRow, collectionKey, impliedRange, tierBases, tierMetadata, craftingTier, inferStorageRow, backfillItem, merge,
+  window.DNStoredArtifacts = {read, write, readBackupRecords, restoreBackupRecords, accept, saveScan, keepCraft, passivePlan, passiveMerge, remove, update, identify, toRow, collectionKey, impliedRange, tierBases, tierMetadata, craftingTier, inferStorageRow, backfillItem, merge,
     newId:() => 'scan-' + crypto.randomUUID()};
 })();

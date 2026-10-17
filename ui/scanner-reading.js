@@ -26,31 +26,38 @@
   let latestCategorySource=null,categoryRegion=null;
   let latestFields=null,fieldGeometry=null;
   let ratingContext=null;
+  let resultProfile=null;
+  let itemArtwork=null;
+  let focusAnchor=null,focusAbsent=null,focusCleared=false;
+  const storageEdits=new Map();
   const preview=document.createElement("canvas");
   preview.width=256;preview.height=128;
   const previewContext=preview.getContext("2d",{willReadFrequently:true});
   const storage=!!window.DNStorageRecognition;
   const rowCount=()=>Number(el.rows.value)===6?6:5;
   function say(text){el["result-status"].textContent=text;}
-  function progress(next,text){phase=next;el.progress.className='scanner-progress is-'+next;el.progress.textContent=text;}
-  function schedule(delay=700) {
-    // Small live shimmer must not postpone storage OCR indefinitely. Material
-    // item changes clear this timer below and start a new settling period.
-    if(storage && stableTimer!==null)return;
+  function progress(next,text){phase=next;el.progress.className='scanner-progress is-'+next;el.progress.textContent=storage?next==='finished'?/failed/i.test(text)?'Finished · read failed':'Finished':({reading:'Reading…',waiting:'Waiting…',paused:'Paused',idle:'Waiting for an artifact'}[next] || text):text;}
+  const settleDelay=storage?700:220;
+  function schedule(delay=settleDelay) {
+    // Small live shimmer must not postpone OCR indefinitely. Material item
+    // changes clear this timer below and start a new settling period.
+    if(stableTimer!==null)return;
     clearTimeout(stableTimer);
-    stableTimer=setTimeout(()=>{stableTimer=null;if(ready && latestCanvas && (el.auto.checked || window.DNScannerCollection?.isEnabled()) && !editing && !busy && !settled)startRead();},delay);
+    stableTimer=setTimeout(()=>{stableTimer=null;if(!document.hidden && ready && latestCanvas && (el.auto.checked || window.DNScannerCollection?.isEnabled()) && !editing && !busy && !settled)startRead();},delay);
   }
   function invalidate(message="Previous result is no longer current.",{preserveDisplay=false}={}) {
+    itemArtwork=null;
     if(!preserveDisplay || storage){displayedScore=null;displayedKeeper=null;displayedCapture=null;}
     frames.clear();signatures=[];hash=null;readHash=null;
     clearTimeout(stableTimer);stableTimer=null;
     token++; confirmed=false; resultCurrent=false; result=null; score(); el.warnings.textContent="";
     el.correct.textContent="";
-    say(message); el.accept.disabled=true;
+    say(message); if(el.accept)el.accept.disabled=true;
     window.DNStorageScanner?.update(null,false);
     attempts=0;settled=false;best=null;anchor=null;progress('idle','Waiting for an artifact');
   }
   function reset() {
+    focusAnchor=null;focusAbsent=null;focusCleared=false;
     latestCategorySource=null;categoryRegion=null;
     latestFields=null;fieldGeometry=null;
     itemAnchor=null;itemBoundary=true;
@@ -115,10 +122,29 @@
     }
     if(Object.prototype.hasOwnProperty.call(state,'categorySource'))latestCategorySource=state.categorySource || null;
     if(Object.prototype.hasOwnProperty.call(state,'panelRegion'))categoryRegion=state.panelRegion || null;
+    if(!storage) {
+      if(state.itemPresent===true) {
+        focusAnchor=signature(canvas);focusAbsent=null;focusCleared=false;
+      } else if(state.itemPresent===false && focusAnchor && !document.hidden) {
+        const now=performance.now();
+        // A missed gold border alone is not an empty scene: require a broad
+        // change from the last visible panel, several fresh frames and time.
+        if(changed(focusAnchor,signature(canvas),.2)) {
+          if(!focusAbsent || now-focusAbsent.last>750)focusAbsent={since:now,last:now,frames:0};
+          focusAbsent.last=now;focusAbsent.frames++;
+          if(!focusCleared && focusAbsent.frames>=5 && now-focusAbsent.since>=2000) {
+            editing=false;itemAnchor=null;itemBoundary=true;
+            invalidate('No artifact in focus.');latestCanvas=null;el.read.disabled=true;focusCleared=true;
+          }
+        } else focusAbsent=null;
+        state={...state,current:false};
+      } else focusAbsent=null;
+      if(focusCleared)return;
+    }
     if(!state.current){
       resultCurrent=false;
       frames.clear();signatures=[];
-      if(latestCanvas){token++;confirmed=false;clearTimeout(stableTimer);progress('paused','Paused · showing the last capture');score();say('Preview unavailable or delayed; displayed rows are the last capture.');}
+      if(latestCanvas){token++;confirmed=false;clearTimeout(stableTimer);progress(!storage && state.itemPresent===false && focusAnchor?'waiting':'paused','Checking the view · showing the last capture');score();say('Preview unavailable or delayed; displayed rows are the last capture.');}
       latestCanvas=null;el.read.disabled=true;return;
     }
     const resuming=!latestCanvas;latestCanvas=canvas; el.read.disabled=!ready || busy;
@@ -132,25 +158,35 @@
     // A broad scene transition is immediate; small overlays get the temporal gate.
     if(anchor && changed(anchor,current,.08))signatures=[current];
     const next=signatures.length===3?window.DNScannerFrames.median(signatures):signatures[0];
-    if(changed(itemAnchor,next,.003)){
+    frames.push(canvas);
+    // Hold a complete crafting read through local shimmer and overlays. Keep
+    // the original anchor so small changes cannot accumulate into anchor drift.
+    const holdConfirmed=!storage && confirmed && resultCurrent && result?.rows?.length===5 &&
+      result.rows.every(row=>row.known && !row.assumed && !row.inferred && !row.conflict && !row.tierConflict && Number.isFinite(row.value));
+    // Inferred and partial reads also contain useful held stats. Keep their
+    // best rows through minor motion while retries improve the missing fields.
+    const holdKnown=!storage && (best || result)?.rows?.some(row=>row.known && !row.assumed && Number.isFinite(row.value));
+    const changeThreshold=(holdConfirmed || holdKnown) ? .02 : .003;
+    const differentArtifact=changed(anchor,next,changeThreshold);
+    if(holdConfirmed && !differentArtifact)return;
+    if(changed(itemAnchor,next,changeThreshold)){
       if(changed(itemAnchor,next,.08))itemBoundary=true;
       itemId++;itemAnchor=next;
     }
-    frames.push(canvas);
-    // Storage import keeps its immediate invalidation contract. Crafting uses
-    // the median below, so a transient star cannot continually cancel OCR.
-    if(storage && busy && changed(anchor,current,.003)){token++;confirmed=false;score();}
-    if(resuming){settled=false;attempts=0;best=null;readHash=null;schedule();}
-    const differentArtifact=changed(anchor,next,.003);
+    // Cancel on changes in the filtered fields below. A noisy individual
+    // frame must not repeatedly supersede storage OCR or its ownership check.
+    // Broad scene changes already bypass the median above.
+    if(resuming){settled=false;attempts=0;best=!storage && !differentArtifact?best || result:null;readHash=null;schedule();}
     if(settled && !differentArtifact)return;
     if(changed(hash,next)) {
-      hash=next;stableSince=now;readHash=null;
-      if(differentArtifact){clearTimeout(stableTimer);stableTimer=null;token++;attempts=0;settled=false;best=null;anchor=next;frames.clear();frames.push(canvas);editing=false;confirmed=false;resultCurrent=false;el.correct.textContent='';el.accept.disabled=true;}
+      if(storage || differentArtifact || hash===null)stableSince=now;
+      hash=next;readHash=null;
+      if(differentArtifact){clearTimeout(stableTimer);stableTimer=null;token++;attempts=0;settled=false;best=null;itemArtwork=null;anchor=next;frames.clear();frames.push(canvas);editing=false;confirmed=false;resultCurrent=false;el.correct.textContent='';if(el.accept)el.accept.disabled=true;}
       if(!busy || differentArtifact){progress('waiting','Waiting for a steady image'+(result?' · keeping the last capture visible':''));say('Checking the artifact region. Displayed rows will update when the read finishes.');}
       score();schedule();
     }
     // Small bounded change/stability gate; no overlapping worker jobs or queue.
-    if(ready && (el.auto.checked || window.DNScannerCollection?.isEnabled()) && !editing && !busy && !settled && now-stableSince>=650 && readHash!==hash) startRead();
+    if(!document.hidden && ready && (el.auto.checked || window.DNScannerCollection?.isEnabled()) && !editing && !busy && !settled && now-stableSince>=settleDelay && readHash!==hash) startRead();
   }
   function options() {
     if(!ratingContext || ratingContext.profile!==DN.activeProfileId()) {
@@ -198,25 +234,23 @@
     const rerollTotal=!storage && scoreResult && opts?window.DNScannerComparisonCore?.craftPotential?.(scoreResult,opts):null;
     const retainDecision=holding && !editing && ['waiting','reading'].includes(phase);
     const keeperResult=starCurrent?result:!editing && ['waiting','reading'].includes(phase)?displayedKeeper:null;
-    const keeperHolding=!starCurrent && keeperResult?.unlocked?.count===3;
     window.DNScannerComparison?.update(scoreResult || result,(current && !!candidate) || retainDecision,opts,{keeperResult,categoryResult:starCurrent?result:null,captureResult:visibleResult,captureRetained:captureHolding});
+    window.DNScannerKeep?.update(result,{current,confirmed,profileKey:resultProfile,encounterId:JSON.stringify([session,itemId])});
     const live=get('live-score'),assumption=get('score-assumption');
     if(live) {
       const visible=totals;
       live.innerHTML=[['Off','offensive',opts?.prefSortAxes.offensive],['Def','defensive',opts?.prefSortAxes.defensive],['Total','preference',opts && (opts.prefSortAxes.offensive || opts.prefSortAxes.defensive)]].map(([label,key,selected])=>'<div><span>'+label+'</span><strong>'+(!selected?'Off':visible?String(totals[key]):'—')+'</strong></div>').join('');
     }
     if(assumption)assumption.textContent=scoreResult?.provisional?(scoreResult.assumption || 'Provisional score · verify OCR values')+' · Review before deciding.':'';
-    const freshness=get('score-freshness');
-    if(freshness)freshness.textContent=holding || keeperHolding || captureHolding?'LAST READ · '+(phase==='paused'?'Capture paused':editing?'Corrections pending':retainDecision || keeperHolding || captureHolding?'Updating…':'Current item needs review'):'';
     const count=visibleResult?.unlocked?.count;
     const progress=recognition.coverage(visibleResult?.rows || [],rowCount());
     const lightText=progress.light==='green'?rowCount()+' stats captured':progress.light==='orange'?'Incomplete / check rows':'Nothing useful in view';
-    const correctionError=storage && editing && !confirmed?corrections().error:'';
+    const correctionError=storage && editing && !confirmed?corrections(true).error:'';
     const correctionStatus=get('correction-status');
-    if(correctionStatus)correctionStatus.textContent=correctionError || (editing && !confirmed?'Changes are valid. Use Corrected Values, then Keep Artifact.':'');
-    const unknownEditable=storage && [...el.correct.querySelectorAll('input,select,.scanner-perk-unlocked,.scanner-perk-reroll')].some(input=>!input.disabled &&
+    if(correctionStatus)correctionStatus.textContent=correctionError || (editing && !confirmed?(storage?'Complete the remaining fields; valid edits apply automatically.':'Changes are valid. Use Corrected Values, then Keep Artifact.'):'');
+    const unknownEditable=storage && [...el.correct.querySelectorAll('input,select,.scanner-perk-unlocked,.scanner-perk-reroll')].some(input=>!input.disabled && !input.classList?.contains('scanner-perk-tier') &&
       (String(input.value ?? '').trim()==='' || input.classList.contains('is-unknown') || input.validity?.valid===false));
-    window.DNStorageScanner?.update(result,confirmed && !!latestCanvas,{reviewable:resultCurrent && !!latestCanvas && (!editing || confirmed),pending:editing && !confirmed,correctionError,expectedRows:rowCount(),unknownEditable});
+    window.DNStorageScanner?.update(result,confirmed && !!latestCanvas,{reviewable:resultCurrent && !!latestCanvas && (!editing || confirmed),pending:editing && !confirmed,correctionError,expectedRows:rowCount(),unknownEditable,profileKey:resultProfile,encounterId:JSON.stringify([session,itemId]),manualCorrection:editing && confirmed});
     const resultHtml='<div class="scanner-glance"><div class="scanner-traffic is-'+progress.light+'" role="status"><span class="scanner-light" aria-hidden="true"></span><strong>'+progress.total+'/'+rowCount()+' · '+lightText+'</strong><small>'+progress.known+' known · '+progress.assumed+' assumed · '+progress.collected+' new names</small></div>'+
       '<div class="scanner-enabled"><strong>'+(count ?? '?')+'</strong><span>ENABLED STATS<small>'+(count!=null?'Filled yellow stars':storage?'Include row stars in the full item crop':'Include all five stars in the panel crop')+'</small></span></div></div>'+
       '<div class="scanner-score">'+(!holding && totals?
@@ -236,11 +270,12 @@
         // Crafting rows are level 1; nine upgrades add nine percentage points.
         const maxMagnitude=scored && Number.isFinite(scored.value)?Math.abs(scored.value)+9:null;
         const rowScore=matches && line && opts && maxMagnitude!=null?maxMagnitude*((opts.prefSortAxes.offensive?line.offRating:0)+(opts.prefSortAxes.defensive?line.defRating:0)):null;
+        const scoreTitle=rowScore===null?(window.DNScannerComparisonCore?.scoreExclusion(perk) || (!opts?'Perk ratings are still loading':editing?'Apply the corrected values to score this row':'Waiting for a scoring result matching this row')):perk?.inferred?'Score uses the displayed percentage, inferred from text colour':scored?.estimated?'Estimated maximum percentage times perk rating':'';
         const gain=rowScore!==null && rerollTotal && rerollEligible===true?Math.max(0,rerollTotal.rerollTarget-rowScore):null;
         const best=rerollTotal?.rerollIndex===index && gain>0;
         const colourClass=['neutral','green','blue'].includes(colour)?' is-'+colour:'';
         return '<div class="scanner-perk'+colourClass+(state===true?' is-unlocked':'')+'"><span class="scanner-stat-title">'+starMarkup(state,index)+(index+1)+'. '+DN.esc(perk?.name || 'Waiting for stat')+'</span><span class="scanner-stat-value">'+
-          (perk?.value!=null?(perk.value>=0?'+':'')+perk.value+'%':'?%')+'</span><span class="scanner-stat-score"'+(scored?.estimated?' title="Estimated maximum percentage times perk rating"':'')+'>'+(rowScore!=null?(scored?.estimated?'~':'')+rowScore:'&mdash;')+'</span><span class="scanner-stat-reroll'+(best?' is-best-reroll':'')+'" title="'+(best?'Best single reroll gain, included in the item total':'Gain is shown only for the lowest-scoring rerollable row')+'"><span class="scanner-reroll-gain">'+(best?'+'+gain:'')+'</span>'+rerollMarkup(rerollEligible,index)+'</span></div>';
+          (perk?.value!=null?(perk.value>=0?'+':'')+perk.value+'%':'?%')+'</span><span class="scanner-stat-score"'+(scoreTitle?' title="'+DN.esc(scoreTitle)+'" tabindex="0"':'')+'>'+(rowScore!=null?(scored?.estimated?'~':'')+rowScore:'&mdash;')+'</span><span class="scanner-stat-reroll'+(best?' is-best-reroll':'')+'" title="'+(best?'Best single reroll gain, included in the item total':'Gain is shown only for the lowest-scoring rerollable row')+'"><span class="scanner-reroll-gain">'+(best?'+'+gain:'')+'</span>'+rerollMarkup(rerollEligible,index)+'</span></div>';
       }).join('')+'</div>');
     if(storage || resultHtml!==renderedResultHtml){el.result.innerHTML=resultHtml;renderedResultHtml=resultHtml;}
     const rerollStatus=get('reroll-status');
@@ -297,7 +332,7 @@
         const input=field.querySelector('.scanner-perk-'+key);
         if(!input)continue;
         const empty=!String(input.value || '').trim();
-        const unknown=!input.disabled && (empty || key==='name' && !names.includes(canonPerk(input.value.trim())) || input.validity?.valid===false);
+        const unknown=!(storage && key==='tier') && !input.disabled && (empty || key==='name' && !names.includes(canonPerk(input.value.trim())) || input.validity?.valid===false);
         input.classList?.toggle('is-unknown',!!unknown);
       }
       const base=field.querySelector('.scanner-perk-base'),max=field.querySelector('.scanner-perk-max');
@@ -334,6 +369,7 @@
     return '<small title="'+DN.esc(title)+'">'+(perk.nameMatch?.automatic?'Matched automatically':'Suggested match')+' · '+Math.floor((perk.nameMatch?.confidence || 0)*100)+'% match score</small>';
   }
   function showCorrection() {
+    storageEdits.clear();
     const rows=Array.from({length:rowCount()},(_,index)=>result?.rows[index] || {name:'',value:null});
     const specialTier=storage && /legendary|mythical/i.test(result?.artifact?.type || document.getElementById('storage-type')?.value || '');
     el.correct.innerHTML=rows.map((perk,index)=>'<div class="scanner-edit-row">'+(storage?'<div class="storage-read-stat">'+starMarkup(perk.unlocked,index)+'<span class="storage-read-name">'+DN.esc(perk.name || 'Waiting for stat')+'</span><strong>'+(perk.value!=null?(perk.value>=0?'+':'')+perk.value+'%':'?%')+'</strong>'+(perk.inferredFields?.length?'<small class="storage-inference-note">Inferred '+DN.esc(perk.inferredFields.join(' and '))+'. Verify before keeping.</small>':'')+'</div>':'')+'<label>'+(storage?'Edit perk':'Perk')+(!storage?'<div class="crafting-perk-name-field">'+starMarkup(perk.unlocked,index):'')+'<input class="scanner-perk-name" list="scanner-names" aria-label="Perk '+(index+1)+' name" value="'+DN.esc(perk.name)+'" />'+(!storage?'</div>':'')+nameMatchNote(perk)+'</label>'+
@@ -341,18 +377,30 @@
       '<label>Tier<select class="scanner-perk-tier"'+(specialTier?' disabled':'')+(perk.tier && perk.tierSource!=='manual'?' data-auto-inferred="true"':'')+'><option value="">'+(specialTier?'Not applicable':'Unknown')+'</option>'+['white','green','blue'].map(tier=>'<option value="'+tier+'"'+((perk.tier || perk.tierEvidence)===tier?' selected':'')+'>'+tier[0].toUpperCase()+tier.slice(1)+'</option>').join('')+'</select></label>'+ 
       (storage?'<label>Level /10<input class="scanner-perk-level"'+(perk.inferredFields?.includes('level')?' data-auto-inferred="true"':'')+' type="number" min="1" max="10" step="1" value="'+(perk.level??'')+'" /></label>'+ 
       '<details class="storage-range-edit"><summary>Range'+(perk.tier?' · '+DN.esc(perk.tier[0].toUpperCase()+perk.tier.slice(1))+' tier':'')+(perk.base!=null && perk.max!=null?' · '+perk.base+'% → '+perk.max+'%'+(['inferred-level','inferred-tier'].includes(perk.rangeSource)?' (inferred)':''):' · level needed')+'</summary><label>Base %<input class="scanner-perk-base" type="number" step="any" value="'+(perk.base??'')+'" /></label><label>Max %<input class="scanner-perk-max" type="number" step="any" value="'+(perk.max??'')+'" /></label></details>':'')+'<label>Reroll'+rerollMarkup(perk.rerollEligible,index)+'</label></div>').join('');
-    el.accept.disabled=false;
+    if(el.accept)el.accept.disabled=false;
     autofillLockedLevels();
     highlightUnknownFields();
   }
   async function read() {
     if(!ready || busy || !latestCanvas)return;
-    const request=token, source=latestCanvas;
+    const request=token, source=latestCanvas,readingProfile=window.DNStoredArtifacts?.collectionKey();
     const snapshot=document.createElement("canvas"),temporal=frames.snapshot(snapshot,source);
     let rerollObservations=null;
     let categorySource=null;
     const metadataPanel=!storage && el.layout.value==='text' && latestCategorySource?recognition.detectPanel(latestCategorySource) || categoryRegion:categoryRegion;
     const categoryRect=!storage?recognition.categoryRect(latestCategorySource,metadataPanel):null;
+    // The crafting artwork sits immediately left of the gold benefits panel.
+    // Keep only this small crop in memory, attached to the completed read.
+    let artwork=itemArtwork;
+    if(!storage && !artwork && latestCategorySource && metadataPanel) {
+      const source=latestCategorySource,panel=metadataPanel;
+      const box={x:(panel.x-panel.width*.48)*source.width,y:(panel.y+panel.height*.065)*source.height,width:panel.width*.45*source.width,height:panel.height*.85*source.height};
+      if(box.x>=0 && box.y>=0 && box.x+box.width<=source.width && box.y+box.height<=source.height) {
+        const picture=document.createElement('canvas');picture.width=240;picture.height=Math.max(1,Math.round(240*box.height/box.width));
+        picture.getContext('2d').drawImage(source,box.x,box.y,box.width,box.height,0,0,picture.width,picture.height);
+        artwork=picture.toDataURL('image/jpeg',.88);
+      }
+    }
     if(categoryRect) {
       categorySource=document.createElement('canvas');const scale=Math.min(2,1800/categoryRect.width);
       categorySource.width=Math.round(categoryRect.width*scale);categorySource.height=Math.round(categoryRect.height*scale);
@@ -386,13 +434,14 @@
     }
     const previous=resultCurrent?result:best;
     const knownTiers=(previous?.rows || []).map(row=>({...row,hall:previous?.artifact?.hall || previous?.hall || el.hall.value}));
-    const job={snapshot,categorySource};busy=job;attempts++;el.read.disabled=true;progress('reading','Reading · attempt '+attempts+' of 2 · keep this artifact open');say("Reading artifact locally…");
+    const job={snapshot,categorySource};busy=job;attempts++;el.read.disabled=true;progress('reading','Reading · attempt '+attempts+(storage?' of 2':'')+' · keep this artifact open');say("Reading artifact locally…");
     resultCurrent=false;score();
     readHash=hash;
     const owner=engine || (engine=recognition.create({names,canonPerk}));
     try {
-      const parsed=await owner.recognize(snapshot,{expectedRows:Number(el.rows.value),layout:el.layout.value,hall:el.hall.value,inferColours:el.infer.checked,categorySource,fields:latestFields?{...latestFields,panelSource:snapshot}:null,knownTiers});
-      if(request!==token || owner!==engine){if(storage && latestCanvas && !editing)say('Read cancelled because the watched fields changed. Check Field calibration and try Read Artifact again.');return;}
+      const parsed=await owner.recognize(snapshot,{expectedRows:Number(el.rows.value),layout:el.layout.value,hall:el.hall.value,inferColours:el.infer.checked,categorySource,fields:latestFields?{...latestFields,panelSource:snapshot}:null,knownTiers,
+        isCurrent:()=>request===token && owner===engine && !!latestCanvas});
+      if(request!==token || owner!==engine || storage && readingProfile!==window.DNStoredArtifacts?.collectionKey()){if(storage && latestCanvas && !editing)say(readingProfile!==window.DNStoredArtifacts?.collectionKey()?'Profile changed while reading. Read the current artifact again.':'Read cancelled because the watched fields changed. Check Field calibration and try Read Artifact again.');return;}
       if(rerollObservations)parsed.rows=parsed.rows.map((row,i)=>({...row,...rerollObservations[i]}));
       parsed.rows=parsed.rows.map((row,i)=>{
         const prior=previous?.rows[i];
@@ -400,37 +449,42 @@
           ...row,rerollEligible:prior.rerollEligible,rerollSource:'manual',rerollConfidence:prior.rerollConfidence}:row;
       });
       if(window.DNStoredArtifacts)parsed.rows=window.DNStoredArtifacts.backfillItem({hall:parsed.hall || el.hall.value,type:parsed.artifact?.type,freshCraft:!storage,rows:parsed.rows}).rows;
+      if(window.DNArtifactStatContext)parsed.rows=window.DNArtifactStatContext.annotate(parsed,{freshCraft:!storage}).rows;
       window.DNScannerCalibration?.report(parsed.recognitionPath,parsed.calibrationReason);
       if(!storage && parsed.hall && parsed.hall!==el.hall.value){el.hall.value=parsed.hall;window.DNPrimaryFilters?.setHall(parsed.hall);}
       parsed.temporal=temporal;
       const useful=recognition.coverage(parsed.rows,rowCount()).total;
-      if(!best)best=parsed;
+      if(!storage)best=recognition.retainCraftRead(previous,parsed,rowCount());
+      else if(!best)best=parsed;
       else if(best.hall && parsed.hall && best.hall!==parsed.hall)best=parsed;
       else if(!best.valid)best=recognition.combineReads(best,parsed,rowCount());
       if(best!==parsed)best={...best,rows:best.rows.map((row,i)=>row.name===parsed.rows[i]?.name?{
         ...row,rerollEligible:parsed.rows[i].rerollEligible,rerollSource:parsed.rows[i].rerollSource,
         rerollConfidence:parsed.rows[i].rerollConfidence,rerollEvidence:parsed.rows[i].rerollEvidence,
         rerollConflict:parsed.rows[i].rerollConflict}:row)};
-      if(useful===0 && !parsed.rows.some(row=>row.known))best=null;
+      if(useful===0 && !parsed.rows.some(row=>row.known) && !best?.rows.some(row=>row.known))best=null;
       if(parsed.unlocked?.count===3)best={...(best || parsed),unlocked:parsed.unlocked};
-      result=best;confirmed=!!result?.valid;resultCurrent=true;editing=false;
+      result=best;resultProfile=readingProfile;confirmed=!!result?.valid;resultCurrent=true;editing=false;
+      if(!storage && result){itemArtwork=artwork;result.artifact={...result.artifact,image:artwork};}
       el.warnings.textContent=(result?.warnings || parsed.warnings).join(" ");
       if(!confirmed && result)el.warnings.textContent+=' Verify inferred values and unclear names in Correct Recognition.';
-      settled=confirmed || attempts>=2 || useful===0 || (!el.auto.checked && !window.DNScannerCollection?.isEnabled());
+      const recognized=result?.rows?.some(row=>row.known && !row.assumed);
+      settled=confirmed || (storage?attempts>=2 || useful===0:!recognized) || (!el.auto.checked && !window.DNScannerCollection?.isEnabled());
       parsed.presentation={attempt:attempts,finished:settled,coverage:recognition.coverage(result?.rows || [],rowCount()),rows:result?.rows || [],temporal:result?.temporal || temporal};
       window.DNScannerCollection?.record(parsed);
-      window.DNScannerCollection?.recordItem(result,itemId,{expectedRows:rowCount(),continuous:true,newEncounter:itemBoundary});
+      window.DNScannerCollection?.recordItem(result,itemId,{expectedRows:rowCount(),continuous:true,newEncounter:itemBoundary,steadyState:!storage,profileKey:readingProfile,encounterId:JSON.stringify([session,itemId])});
       if(result?.rows?.length)itemBoundary=false;
       progress(settled?'finished':'reading',settled?'Finished · '+recognition.coverage(result?.rows || [],rowCount()).total+'/'+rowCount()+' · '+(confirmed?'ready to move on':result?'best read · review or move on':'nothing useful in view'):'Improving the read · keeping these rows visible');
       say(confirmed?"Visible perks read. Check the values before making a game decision.":"Recognition needs correction; no rating confirmed.");
       showCorrection();score();
     } catch (error) {
+      if(request!==token || owner!==engine)return;
       if(request===token && owner===engine){confirmed=false;resultCurrent=false;settled=true;progress('finished','Finished · read failed · retained last capture');say('Could not read this artifact: '+(error?.message || 'unknown recognition error')+'. Check the crop or Field calibration and retry.');score();showCorrection();}
       if(owner===engine){engine=null;owner.close().catch(()=>{});}
     } finally {
       if(categorySource)categorySource.width=categorySource.height=0;
       snapshot.width=snapshot.height=0;
-      if(busy===job){busy=null;el.read.disabled=!ready || !latestCanvas;if(!settled && !editing && latestCanvas)schedule(350);}
+      if(busy===job){busy=null;el.read.disabled=!ready || !latestCanvas;if(!settled && !editing && latestCanvas)schedule(storage?350:request!==token?Math.max(0,settleDelay-(performance.now()-stableSince)):attempts<2?150:500);}
     }
   }
   function startRead() {
@@ -469,8 +523,7 @@
     const inputs=Object.fromEntries(['tier','value','level','name','base','max'].map(key=>[key,field.querySelector('.scanner-perk-'+key)]));
     if(!inputs.tier || !inputs.value || !inputs.level)return;
     const context={hall:el.hall.value,type:document.getElementById('storage-type')?.value || result?.artifact?.type};
-    const bases=window.DNStoredArtifacts.tierBases(context);
-    if(!bases)return;
+    const bases=window.DNStoredArtifacts.tierBases(context) || [];
     const tiers=['white','green','blue'];
     const number=input=>input.value.trim()===''?null:Number(input.value);
     const name=canonPerk(inputs.name.value.trim()),sign=names.includes(name)?DN.expectedPerkSign(name):null;
@@ -491,7 +544,7 @@
       if(inferred!=null) {
         inputs[key].value=String(inferred);
         if(inputs[key].dataset)inputs[key].dataset.autoInferred='true';
-        inputs[key].title='Inferred from the other two fields. Verify before keeping.';
+        inputs[key].title='Inferred from the other two fields.';
         break;
       }
     }
@@ -503,7 +556,7 @@
       number(inputs.base)===prior.base && number(inputs.max)===prior.max);
     if(automatic) {
       for(const key of ['base','max']) {
-        inputs[key].value=range && bases.includes(Math.abs(range.base))?String(range[key]):'';
+        inputs[key].value=range?String(range[key]):'';
         if(inputs[key].dataset)inputs[key].dataset.autoInferred='true';
       }
     }
@@ -513,6 +566,16 @@
     autofillEditedRow(event?.target);
     autofillLockedLevels();
     highlightUnknownFields();
+    if(storage) {
+      if(!latestCanvas || !ready || !resultCurrent)return;
+      const field=event?.target?.closest?.('.scanner-edit-row'),index=[...el.correct.querySelectorAll('.scanner-edit-row')].indexOf(field);
+      if(index>=0) {
+        if(!storageEdits.has(index))storageEdits.set(index,new Set());
+        const key=['name','value','level','tier','base','max','unlocked','reroll'].find(key=>event.target.classList?.contains('scanner-perk-'+key));
+        storageEdits.get(index).add(key);
+      } else if(!event?.target || event.target===el.correct)for(let i=0;i<rowCount();i++)storageEdits.set(i,new Set(['name','value','level','tier','base','max','unlocked','reroll']));
+      applyCorrections(true);return;
+    }
     token++;editing=true;confirmed=false;progress('finished','Finished · your corrections are pending');score();say("Corrections pending; rating is unconfirmed.");
   });
   el.correct.addEventListener('click',event=>{
@@ -539,7 +602,7 @@
     edit.dispatchEvent(new Event('input',{bubbles:true}));
     el.result.querySelector?.('.scanner-perk-unlocked[data-row-index="'+button.dataset.rowIndex+'"]')?.focus();
   });
-  function corrections() {
+  function corrections(automatic=false) {
     let rows=[...el.correct.querySelectorAll(".scanner-edit-row")].map((row,rowsIndex)=>{
       const name=canonPerk(row.querySelector(".scanner-perk-name").value.trim());
       const raw=row.querySelector(".scanner-perk-value").value.trim();
@@ -551,6 +614,12 @@
       const next={...result?.rows[rowsIndex],name,value:raw===''?null:Number(raw),known:names.includes(name),
         ...(storage?{level:level===''?null:Number(level),unlocked:star===''?null:star==='true',base:base===''?null:Number(base),max:max===''?null:Number(max)}:{unlocked:starInput?.tagName==='BUTTON'?star===''?null:star==='true':result?.rows[rowsIndex]?.unlocked}),
         raw:name+' '+raw+'%',hasPercent:true,assumed:false,inferred:false,conflict:false};
+      if(storage && automatic) {
+        const touched=storageEdits.get(rowsIndex),prior=result?.rows[rowsIndex];
+        if(!touched)return {...prior};
+        next.assumed=!!prior?.assumed && !touched.has('name');
+        next.conflict=!!prior?.conflict && !touched.has('name') && !touched.has('value');
+      }
       const dice=row.querySelector('.scanner-perk-reroll');
       if(dice?.tagName==='BUTTON') {
         next.rerollEligible=dice.value===''?null:dice.value==='true';
@@ -601,11 +670,12 @@
     const fields=[...el.correct.querySelectorAll('.scanner-edit-row')];
     if(storage && window.DNStoredArtifacts)rows=window.DNStoredArtifacts.backfillItem({hall:el.hall.value,type:document.getElementById('storage-type')?.value || result?.artifact?.type,rows}).rows;
     fields.forEach((field,index)=>field.querySelector('.scanner-perk-name')?.setAttribute?.('aria-invalid',String(!rows[index].known)));
-    const unknown=rows.findIndex(row=>!row.known),missing=rows.findIndex(row=>row.value===null || !Number.isFinite(row.value));
+    const unknown=rows.findIndex(row=>!row.known || automatic && row.assumed),missing=rows.findIndex(row=>row.value===null || !Number.isFinite(row.value));
     const outOfRange=rows.findIndex(row=>Number.isFinite(row.value) && Math.abs(row.value)>40);
     if(outOfRange>=0)return {rows,error:'Row '+(outOfRange+1)+': percentage must be between -40% and +40%.'};
     if(storage && unknown>=0)return {rows,error:'Row '+(unknown+1)+': "'+rows[unknown].name+'" is not a known perk. Choose a name from the suggestions.'};
     if(storage && missing>=0)return {rows,error:'Row '+(missing+1)+': enter a numeric percentage.'};
+    if(storage && rows.some(row=>row.conflict))return {rows,error:'Resolve the conflicting stat readings before saving.'};
     if(rows.length!==Number(el.rows.value) || unknown>=0 || missing>=0)return {rows,error:"Each visible row needs a known perk and a numeric value. Expected row count must match."};
     if(storage && rows.some(row=>row.level!=null && (!Number.isInteger(row.level) || row.level<1 || row.level>10)))return {rows,error:'Levels must be whole numbers from 1 to 10, or blank if unclear.'};
     if(storage && rows.some(row=>[row.base,row.max].some(value=>value!=null && !Number.isFinite(value)) ||
@@ -618,16 +688,21 @@
     if(!storage && rows.some(row=>row.tierConflict))return {rows,error:'Tier and starting percentage conflict. Check the tier or percentage.'};
     return {rows,error:signWarnings.join(' ')};
   }
-  el.accept.addEventListener("click",()=>{
-    if(!latestCanvas || !ready)return;
-    const {rows,error}=corrections();
-    if(error){el.warnings.textContent=error;const status=get('correction-status');if(status)status.textContent=error;return;}
-    token++;result={...result,rows,warnings:[],valid:true,colours:result?.colours,hall:result?.hall,unlocked:result?.unlocked};confirmed=true;resultCurrent=true;editing=true;
-    const states=rows.map(r=>r.unlocked);result.unlocked={states,count:states.every(s=>s!==null)?states.filter(Boolean).length:null,method:'verified'};showCorrection();
+  function applyCorrections(automatic=false) {
+    if(!latestCanvas || !ready || automatic && !resultCurrent)return;
+    const {rows,error}=corrections(automatic);
+    if(error){
+      if(automatic){token++;result={...result,rows,valid:false};editing=true;confirmed=false;progress('finished','Finished · complete the remaining fields');score();}
+      el.warnings.textContent=error;const status=get('correction-status');if(status)status.textContent=error;return;
+    }
+    const warnings=automatic?(result?.warnings || []).filter(w=>{const row=/^Row (\d+):/.exec(w);return row?!storageEdits.has(Number(row[1])-1):/conflict|disagree/i.test(w) && storageEdits.size<rowCount();}):[];
+    token++;result={...result,rows,warnings,valid:true,colours:result?.colours,hall:result?.hall,unlocked:result?.unlocked};confirmed=true;resultCurrent=true;editing=true;
+    const states=rows.map(r=>r.unlocked);result.unlocked={states,count:states.every(s=>s!==null)?states.filter(Boolean).length:null,method:'verified'};if(!automatic)showCorrection();
     settled=true;progress('finished','Finished · using your verified corrections');
-    window.DNScannerCollection?.recordItem({...result,hall:result.hall || el.hall.value},itemId,{corrected:true,expectedRows:rowCount(),continuous:true});
-    el.warnings.textContent="";say(storage?"Using your verified values. Corrections apply only to this view.":"Using your verified values. The current item log is updated when logging is enabled.");score();
-  });
+    window.DNScannerCollection?.recordItem({...result,hall:result.hall || el.hall.value},itemId,{corrected:true,expectedRows:rowCount(),continuous:true,steadyState:!storage,profileKey:resultProfile,encounterId:JSON.stringify([session,itemId])});
+    el.warnings.textContent=warnings.join(' ');say(storage?"Edits applied. Complete items save automatically.":"Using your verified values. The current item log is updated when logging is enabled.");highlightUnknownFields();score();
+  }
+  el.accept?.addEventListener("click",()=>applyCorrections());
   for(const input of [el.layout,el.rows,el.hall,el.infer])input.addEventListener("change",()=>{editing=false;readHash=null;invalidate("Recognition settings changed. Read the artifact again.");showCorrection();});
   for(const input of [el.off,el.def])input.addEventListener("change",score);
   get('compare-type')?.addEventListener('change',highlightUnknownFields);
@@ -641,6 +716,7 @@
       canonPerk=DN.makeCanonPerk(DN.parseMappingCsv(await mapping.text()));factory=await defaults.json();names=Object.keys(factory);
       el.names.innerHTML=names.map(name=>'<option value="'+DN.esc(name)+'"></option>').join('');
       options();ready=true;el.read.disabled=!latestCanvas;showCorrection();say("Select a region to read all visible perks.");
+      score();
       if(latestCanvas)update(latestCanvas,{session,current:true});
     } catch {say("Could not load perk ratings. Reload this page through the local server.");}
   })();

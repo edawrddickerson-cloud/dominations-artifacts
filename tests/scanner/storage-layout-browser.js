@@ -1,8 +1,9 @@
 (async()=>{
   const checks={},get=id=>document.getElementById('scanner-'+id);
   const check=(name,value)=>{checks[name]=!!value;if(!value)throw new Error(name);};
-  async function wait(fn){const deadline=performance.now()+10000;while(!fn()){if(performance.now()>deadline)throw new Error('Layout timeout');await new Promise(resolve=>setTimeout(resolve,25));}}
+  async function wait(fn){const deadline=performance.now()+10000;while(!await fn()){if(performance.now()>deadline)throw new Error('Layout timeout');await new Promise(resolve=>setTimeout(resolve,25));}}
   await wait(()=>get('correct').children.length===5 && !document.getElementById('storage-saved').textContent.startsWith('Loading'));
+  check('storage edits do not require a confirmation button',!get('accept'));
   check('setup begins collapsed',!get('setup').open);
   const setup=get('setup'),summary=setup.querySelector('summary');
   check('capture buttons visible in collapsed setup banner',['connect','stop','read','find'].every(id=>{const button=get(id),box=button.getBoundingClientRect();return summary.contains(button) && box.width>0 && box.height>0 && Math.abs(box.top-summary.querySelector('.scanner-setup-title').getBoundingClientRect().top)<20;}));
@@ -13,8 +14,6 @@
   setup.querySelector('.scanner-setup-title').click();
   check('setup title collapses setup',!setup.open);
   get('auto').checked=false;
-  const actionTop=()=>document.getElementById('storage-keep').getBoundingClientRect().top;
-  const emptyActionTop=actionTop();
   window.DNStorageRecognition.inspect=()=>({expectedRows:6,hall:'main'});
   const names=['Heavy Tank Damage','Heavy Tank Hitpoints','Fighter Damage','Fighter Hitpoints','Defender Damage','Defender Hitpoints'];
   const rows=names.map((name,index)=>({name,value:index+1,known:true,hasPercent:true,level:1,unlocked:index===1?null:true}));
@@ -23,7 +22,6 @@
   window.DNScannerReading.update(canvas,{session:1,current:true});get('read').click();
   await wait(()=>get('progress').textContent.startsWith('Finished'));
   check('six scanned stats beside six edit rows',get('correct').querySelectorAll('.storage-read-stat').length===6 && get('correct').querySelectorAll('.scanner-perk-name').length===6);
-  check('action buttons stay fixed when a scan appears',Math.abs(actionTop()-emptyActionTop)<1);
   check('unknown star blocks keeping',document.getElementById('storage-keep').disabled);
   check('special tier is not editable',Array.from(get('correct').querySelectorAll('.scanner-perk-tier')).every(select=>select.disabled));
   check('Mythical dice are unavailable and disabled',Array.from(get('correct').querySelectorAll('.scanner-perk-reroll')).every(button=>button.value==='false' && button.disabled));
@@ -37,13 +35,18 @@
   check('unknown star is hollow with an amber border',unknownStar.value==='' && unknownStar.classList.contains('is-unknown') && !unknownStar.classList.contains('is-unlocked') && getComputedStyle(unknownStar).borderTopColor==='rgb(231, 183, 109)');
   unknownStar.click();
   check('unknown star can be confirmed unlocked',unknownStar.value==='true' && unknownStar.classList.contains('is-unlocked') && !unknownStar.classList.contains('is-unknown'));
-  get('accept').click();
-  check('corrected star state survives applying edits',get('correct').querySelector('.scanner-perk-unlocked').value==='false');
-  const buttons=['scanner-accept','storage-keep','storage-add-collection'].map(id=>document.getElementById(id));
-  check('all primary actions visible without scrolling',buttons.every(button=>{const box=button.getBoundingClientRect();return box.top>=0 && box.bottom<=innerHeight;}));
-  check('review has no internal scrollbar',document.querySelector('.storage-review').scrollHeight<=document.querySelector('.storage-review').clientHeight+1);
+  check('corrected star state applies immediately',get('correct').querySelector('.scanner-perk-unlocked').value==='false');
+  const buttons=[document.getElementById('storage-add-collection'),document.querySelector('.storage-review-actions a')];
+  const reviewContent=document.querySelector('.storage-review-content'),collapsedHeight=reviewContent.getBoundingClientRect().height;
+  const ranges=Array.from(reviewContent.querySelectorAll('.storage-range-edit'));
+  ranges.forEach(range=>{range.open=true;});
+  check('review expands when range editors open',ranges.length===6 && reviewContent.getBoundingClientRect().height>collapsedHeight);
+  check('expanded review has no internal scrollbar',getComputedStyle(reviewContent).overflowY==='visible' && reviewContent.scrollHeight<=reviewContent.clientHeight+1);
+  check('primary actions follow all expanded stats',buttons.every(button=>button.getBoundingClientRect().top>=reviewContent.getBoundingClientRect().bottom));
+  ranges.forEach(range=>{range.open=false;});
   check('no horizontal overflow',document.documentElement.scrollWidth<=innerWidth);
-  document.getElementById('storage-keep').click();document.getElementById('storage-add-collection').click();
+  await wait(async()=>(await window.DNStoredArtifacts.read('items')).length===1);
+  document.getElementById('storage-add-collection').click();
   await wait(()=>document.getElementById('storage-collection-status').textContent.startsWith('1 added'));
   check('keep and import work in consolidated view',document.getElementById('storage-items').children.length===0);
   window.DNStorageRecognition.inspect=()=>({expectedRows:5,hall:'war'});
@@ -68,8 +71,7 @@
   check('stat titles are larger and bold',parseFloat(titleStyle.fontSize)>=15 && Number(titleStyle.fontWeight)>=700);
   check('green tier colours the scanned stat title',statTitle.classList.contains('is-green') && titleStyle.color==='rgb(105, 212, 73)');
   tier.value='';delete tier.dataset.autoInferred;level.value='4';value.value='';edit(tier,'green');
-  get('accept').click();
-  check('live inferred values pass correction validation: '+document.getElementById('storage-keep-status').textContent,!document.getElementById('storage-keep').disabled && get('correct').querySelector('.scanner-perk-value').value==='6');
+  check('live inferred values apply without confirmation: '+document.getElementById('storage-keep-status').textContent,!get('correction-status').textContent && get('correct').querySelector('.scanner-perk-value').value==='6');
   const current=get('correct').querySelector('.scanner-edit-row');
   const unknownValue=current.querySelector('.scanner-perk-value'),unknownLevel=current.querySelector('.scanner-perk-level'),unknownTier=current.querySelector('.scanner-perk-tier');
   unknownLevel.value='';unknownTier.value='';edit(unknownValue,'');
@@ -100,7 +102,6 @@
   check('unreadable storage dice stay amber unknown',diceButtons.length===5 && diceButtons.every(button=>button.value==='' && button.classList.contains('is-unknown')));
   check('unknown reroll blocks keeping',document.getElementById('storage-keep').disabled);
   diceButtons.forEach((button,i)=>{button.click();if(i!==4)button.click();});
-  get('accept').click();document.getElementById('storage-keep').click();
   await wait(()=>document.getElementById('storage-count').textContent.startsWith('1 artifacts'));
   await new Promise(resolve=>setTimeout(resolve,50));
   const kept=(await window.DNStoredArtifacts.read('items')).find(item=>item.name==='Dice persistence');
@@ -108,7 +109,7 @@
   check('inventory shows per-row reroll availability',document.getElementById('storage-items').textContent.includes('Available') && document.getElementById('storage-items').textContent.includes('Unavailable'));
   const columns=Array.from(document.querySelectorAll('.storage-inventory-stats > li'));
   check('inventory stats occupy separate columns',columns.length===5 && columns.every(column=>Math.abs(column.getBoundingClientRect().top-columns[0].getBoundingClientRect().top)<1) && columns[1].getBoundingClientRect().left>columns[0].getBoundingClientRect().left);
-  check('exact inventory duplicate blocks keeping',document.getElementById('storage-keep').disabled && document.getElementById('storage-keep-status').textContent.includes('Exact duplicate'));
+  check('exact inventory duplicate is skipped',document.getElementById('storage-keep').hidden && document.getElementById('storage-ownership-title').textContent==='Added');
   let automaticReads=0;
   window.DNScannerReading.reset();get('layout').value='storage';get('auto').checked=true;
   window.DNStorageRecognition.inspect=()=>({expectedRows:5,hall:'war'});
@@ -122,7 +123,7 @@
   check('storage reads automatically while artwork animates',automaticReads===1 && get('progress').textContent.startsWith('Finished'));
   get('auto').checked=false;
   window.DNScannerReading.reset();
-  check('action buttons stay fixed when a scan clears',Math.abs(actionTop()-emptyActionTop)<1);
+  check('clearing a scan clears the ownership result',document.getElementById('storage-ownership-title').textContent==='Ownership not checked');
   for(let sample=0;sample<3;sample++)window.DNScannerReading.update(canvas,{session:5,current:true});
   get('read').click();
   for(let sample=0;sample<8;sample++){window.DNScannerReading.update(canvas,{session:5,current:true});await new Promise(resolve=>setTimeout(resolve,80));}

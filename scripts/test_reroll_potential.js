@@ -19,7 +19,7 @@ assert.equal(potential([10,20],[true,true],{grade:'Legendary'}).potentialPrefere
 assert.equal(potential([10,20],[true,true],{grade:'Mythical'}).potentialPreference,30);
 assert.equal(potential([-10,-20],[true,true]).potentialPreference,120,'percentage signs follow shared magnitude scoring');
 const both=scoring.comparisonScore(row([10,20]),{...options,prefSortAxes:{offensive:true,defensive:true}},{hall:'main',eligible:[true,true]});
-assert.equal(both.basePreference,60);assert.equal(both.potentialPreference,140,'cap is 100 total across selected axes');
+assert.equal(both.basePreference,30);assert.equal(both.potentialPreference,120,'higher axis counts once and reroll cap remains 100');
 assert.equal(scoring.comparisonScore(row([10]),{...options,prefSortAxes:{offensive:false,defensive:false}},{eligible:[true]}).potentialPreference,0);
 const negative=scoring.comparisonScore(row([10,20]),{...options,ratingOf:()=>-1},{eligible:[true,false]});assert.equal(negative.potentialPreference,80);
 const craft={valid:true,rows:[10,20,30,40,50].map(value=>({name:'Damage',value,known:true,rerollEligible:true}))};

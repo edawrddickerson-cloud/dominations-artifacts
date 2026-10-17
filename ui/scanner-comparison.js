@@ -7,7 +7,19 @@
   const DN=window.DN;
   const hallName=value=>String(value || '').toLowerCase()==='war'?'War':'Main';
   const typeName=value=>String(value || '').trim().replace(/^war[ -]/i,'').toLowerCase();
-  const scoreable=row=>!!row?.name && row.known!==false && Number.isFinite(row.value) && row.hasPercent!==false && !row.assumed && !row.inferred && !row.conflict && !row.tierConflict && !row.estimated && !row.scoreExcluded;
+  const scoreable=row=>!!row?.name && row.known!==false && Number.isFinite(row.value) && row.hasPercent!==false && !row.assumed && !row.conflict && !row.tierConflict && !row.estimated && !row.scoreExcluded;
+  function scoreExclusion(row) {
+    if(!row?.name)return 'Waiting for a perk name';
+    const reasons=[];
+    if(!row.known)reasons.push('Perk name is not confirmed');
+    if(row.assumed)reasons.push('Perk name is an uncertain match');
+    if(!Number.isFinite(row.value) || row.hasPercent===false)reasons.push('Signed percentage was not read completely');
+    if(row.conflict)reasons.push('OCR readings disagree about this row');
+    if(row.tierConflict)reasons.push('Percentage conflicts with the detected tier or hall');
+    if(row.estimated)reasons.push('Value is estimated');
+    if(row.scoreExcluded)reasons.push('Row was excluded from scoring');
+    return reasons.join('; ');
+  }
   function craftOptions(options,{hall,type,rows}={}) {
     if(!options || !options.prefSortAxes.offensive && !options.prefSortAxes.defensive)return options;
     const category=typeName(type);
@@ -37,7 +49,7 @@
     const usable=row=>row?.known && scoreable(row);
     const scoredCount=rows.filter(usable).length;
     if(!scoredCount)return null;
-    if(scoredCount===5)return result.valid?result:{...result,valid:true,provisional:true,assumption:'All five stats are readable; OCR needs review.'};
+    if(scoredCount===5)return result.valid && !rows.some(row=>row.inferred)?result:{...result,valid:true,provisional:true,assumption:'Scoring displayed percentages; OCR needs review.'};
     // This is a separate scoring view. Keep raw OCR and saved observations intact.
     // Empty slots preserve row positions but have no score or reroll eligibility.
     return {...result,rows:rows.map(row=>usable(row)?{...row}:{name:'',value:null,known:false,scoreExcluded:true,rerollEligible:false}),
@@ -134,7 +146,7 @@
       capacity,score,rank,threshold,count:candidates.length,top:candidates.slice(0,capacity)};
   }
   const isUnlockedKeeper=result=>result?.unlocked?.count===3;
-  window.DNScannerComparisonCore={compare,createComparator,currentRows,maxRows,statRow,estimate,isUnlockedKeeper,captureCompleteness,craftScore,craftPotential,craftOptions};
+  window.DNScannerComparisonCore={compare,createComparator,currentRows,maxRows,statRow,estimate,isUnlockedKeeper,captureCompleteness,craftScore,craftPotential,craftOptions,scoreExclusion};
   const type=document.getElementById('scanner-compare-type');if(!type)return;
   const compareOwned=createComparator();
   const flag=document.getElementById('scanner-comparison'),detail=document.getElementById('scanner-comparison-detail'),hall=document.getElementById('scanner-hall');
@@ -143,7 +155,6 @@
   let categoryOrigin='remembered',categoryRead=null;
   let typeHall=null;
   let captureResult=null;
-  let captureRetained=false;
   let keeperResult=null;
   function showCategory() {
     const label=document.getElementById('scanner-category-label');
@@ -163,14 +174,14 @@
   function renderBenchmarks() {
     const list=document.getElementById('scanner-benchmarks');
     if(!list)return;
-    document.getElementById('scanner-benchmarks-label').textContent=hallName(hall.value)+' · Top 2 cutoffs';
+    document.getElementById('scanner-benchmarks-label').textContent='Benchmarks';
     const available=options && (options.prefSortAxes.offensive || options.prefSortAxes.defensive) && !error && loadedProfile===DN.activeProfileId();
     list.innerHTML=(DN.ARTIFACT_TYPE_EXHIBITS[hallName(hall.value)] || []).map(ex=>{
       const category=ex.key.replace(/^war-/,''),role=hallName(hall.value)==='War'?'Off':category==='weapon'?[options?.prefSortAxes.offensive?'Off':'',options?.prefSortAxes.defensive?'Def':''].filter(Boolean).join('+') || 'Off/Def':['armor','pottery'].includes(category)?'Def':'Off',label=ex.label.replace(/ Exhibit$/,'').replace(/^War /,'')+' · '+role;
       const result=available?compareOwned(null,{type:category,hall:hall.value,owned,options,limit:2}):null;
       const uncertain=result?.top?.some(item=>item.uncertain);
       const value=!result || result.status==='incomplete'?'—':result.threshold===null?'Open':(uncertain?'~':'')+result.threshold;
-      const note=!available?'Benchmark unavailable':result.status==='incomplete'?'Owned stats need review':result.threshold===null?result.count+' / 2 owned':'Must score above '+value+(uncertain?' · Reroll availability needs review':'');
+      const note=!available?'Benchmark unavailable':result.status==='incomplete'?'Owned stats need review':result.threshold===null?result.count+' / 2 owned':'Must score at least '+value+(uncertain?' · Reroll availability needs review':'');
       return '<div data-category="'+DN.esc(category)+'"'+(type.value===category?' class="is-current"':'')+' title="'+DN.esc(note)+'"><dt>'+DN.esc(label)+'</dt><dd>'+DN.esc(value)+'</dd></div>';
     }).join('');
   }
@@ -180,12 +191,16 @@
     renderBenchmarks();
     const get=id=>document.getElementById('scanner-'+id),capture=captureCompleteness(captureResult);
     const board=get('glance-board');
+    const artwork=get('artwork'),image=latest?.artifact?.image;
+    if(artwork){artwork.hidden=!image;if(image && artwork.getAttribute('src')!==image)artwork.src=image;if(!image)artwork.removeAttribute('src');}
     board.style.setProperty('--capture-hue',String(capture.percent*1.2));
     get('capture-percent').textContent=capture.percent+'%';
     get('capture-meter').value=capture.percent;
-    get('capture-detail').textContent=capture.captured+' / '+capture.expected+' fields captured'+(captureRetained?' · Last read':'');
+    get('capture-detail').textContent=capture.captured+' / '+capture.expected+' fields captured';
     board.title=capture.names+'/5 names · '+capture.values+'/5 percentages · '+capture.stars+'/5 stars · Type '+(capture.type?'read':'unread')+' · Hall '+(capture.hall?'read':'unread')+(capture.diceExpected?' · '+capture.dice+'/'+capture.diceExpected+' dice':'');
     const keeper=isUnlockedKeeper(keeperResult);
+    const keeperReason=get('keeper-reason');
+    if(keeperReason){keeperReason.hidden=!keeper;keeperReason.textContent=keeper?'Keep — 3 stats unlocked':'';}
     benchmark.className='scanner-summary-card scanner-benchmark is-unknown'+(keeper?' is-unlocked-keeper':'');
     const label=type.value?type.value.charAt(0).toUpperCase()+type.value.slice(1):'Item';
     const scoreLabel=label+(latest?.partial?' subtotal':' total');
@@ -207,7 +222,7 @@
         const categories=DN.ARTIFACT_TYPE_EXHIBITS[hallName(hall.value)] || [];
         const belowAll=categories.length>0 && categories.every(ex=>{
           const result=compareOwned(latest,{type:ex.key.replace(/^war-/,''),hall:hall.value,owned,options,limit:2});
-          return ['below','tie'].includes(result.status);
+          return result.status==='below';
         });
         if(belowAll){
           benchmark.classList.remove('is-unknown');
@@ -223,13 +238,8 @@
     if(comparison.status==='incomplete'){flag.textContent='Benchmark unavailable · owned stats incomplete';return;}
     if(comparison.status==='type'){flag.textContent='Item type needs review';return;}
     get('benchmark-value').textContent=comparison.threshold===null?'Open slot':String(comparison.threshold);
-    if(comparison.status==='partial') {
-      flag.textContent='Incomplete · '+latest.scoredCount+'/5 stats scored';
-      detail.textContent='Readable stats '+comparison.baseScore+' · Reroll gain +'+comparison.rerollGain+(keeper?' · 3 open stats · Keep for review':'');
-      return;
-    }
     if(comparison.status==='unconfirmed'){flag.textContent=latest?'Stats need review':'Waiting for an item';return;}
-    const qualifies=comparison.status==='better' || comparison.status==='vacancy';
+    const qualifies=comparison.threshold===null || comparison.score>=comparison.threshold;
     const provisional=latest.provisional || comparison.provisional;
     benchmark.classList.remove('is-unknown');
     benchmark.classList.add(qualifies?'is-top-two':'is-below-cutoff');
@@ -244,11 +254,14 @@
     const ticket=++request,profile=DN.activeProfileId();loading=true;error='';render();
     try {
       if(!cataloguePromise)cataloguePromise=fetch('./data/artifacts.json',{cache:'no-store'}).then(async response=>{if(!response.ok)throw new Error('catalogue unavailable');const data=await response.json();if(!Array.isArray(data))throw new Error('invalid catalogue');return data;}).catch(reason=>{cataloguePromise=null;throw reason;});
-      const [catalogue,scans]=await Promise.all([cataloguePromise,window.DNStoredArtifacts.read('collection:'+profile)]);
+      const [catalogue,scans,inventory]=await Promise.all([cataloguePromise,window.DNStoredArtifacts.read('collection:'+profile),window.DNStoredArtifacts.read('items')]);
       if(ticket!==request || profile!==DN.activeProfileId())return;
       const collected=DN.loadCollected(),rows=new Map();
       for(const row of catalogue)if(collected.has(DN.artifactKey(row)))rows.set(DN.artifactKey(row),row);
       for(const item of scans){const row=window.DNStoredArtifacts.toRow(item);rows.set(DN.artifactKey(row),row);}
+      for(const item of inventory)if(item.keptFromCraft && item.profileId===profile && !rows.has(item.id)){
+        rows.set(item.id,window.DNStoredArtifacts.toRow(item));
+      }
       owned=[...rows.values()];
       loadedProfile=profile;
     } catch {if(ticket===request)error='Could not load your collection. Refocus this window to retry.';}
@@ -258,7 +271,6 @@
     latest=result;confirmed=isConfirmed;options=opts;
     keeperResult=Object.prototype.hasOwnProperty.call(state,'keeperResult')?state.keeperResult:result;
     captureResult=Object.prototype.hasOwnProperty.call(state,'captureResult')?state.captureResult:result;
-    captureRetained=!!state.captureRetained;
     const detectedResult=Object.prototype.hasOwnProperty.call(state,'categoryResult')?state.categoryResult:result;
     if(typeHall!==hallName(hall.value))types();
     if(detectedResult && detectedResult!==categoryRead) {
@@ -274,6 +286,7 @@
   hall.addEventListener('change',()=>{types();render();});
   window.addEventListener('focus',refresh);
   window.addEventListener('storage',refresh);
+  window.addEventListener('dn-craft-kept',refresh);
   for(const event of ['focus','storage'])window.addEventListener(event,()=>{types();render();});
   types();refresh();
 })();

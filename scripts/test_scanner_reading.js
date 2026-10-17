@@ -34,7 +34,7 @@ async function harness({storage=false}={}) {
     setTimeout(fn,delay=0){const id=++nextTimer;timers.set(id,{fn,due:now+delay});return id;},clearTimeout(id){timers.delete(id);},
     fetch:async url=>({ok:true,text:async()=>read('data/perk_name_mapping.csv'),json:async()=>JSON.parse(read('data/perk_rating_defaults.json'))})};
   vm.createContext(context);
-  for(const file of ['data/army_catalog.js','shared.js','artifact-scoring.js','stored-artifacts.js','scanner-frames.js','scanner-name-catalog.js','scanner-recognition.js'])vm.runInContext(read(file),context);
+  for(const file of ['data/army_catalog.js','shared.js','data/artifact_stat_context.js','artifact-stat-context.js','artifact-scoring.js','stored-artifacts.js','scanner-frames.js','scanner-name-catalog.js','scanner-recognition.js'])vm.runInContext(read(file),context);
   vm.runInContext(read('scanner-collection.js'),context);
   const collector=window.DNScannerCollectionCore.createCollector();
   window.DNScannerCollection={isEnabled:()=>false,record:result=>collector.record(result),recordItem:(result,id,options)=>collector.recordItem(result,id,options)};
@@ -42,7 +42,7 @@ async function harness({storage=false}={}) {
   window.DNScannerComparison={update:(result,confirmed,options,state)=>comparisons.push({result,confirmed,options,state})};
   window.DNScannerRecognition.create=function(){const engine={closed:0,async close(){this.closed++;},recognize(snapshot,options){const job=deferred();jobs.push({...job,snapshot,options,engine});return job.promise;}};engines.push(engine);return engine;};
   vm.runInContext(read('scanner-reading.js'),context);await flush();
-  return {comparisons,collector,window,e:elements,jobs,engines,canvas,keepStates,DN:window.DN,reader:window.DNScannerReading,runTimers(){const pending=[...timers.values()];timers.clear();pending.forEach(timer=>timer.fn());},advance(ms){now+=ms;for(const [id,timer] of [...timers])if(timer.due<=now){timers.delete(id);timer.fn();}}};
+  return {comparisons,collector,window,e:elements,jobs,engines,canvas,keepStates,DN:window.DN,reader:window.DNScannerReading,setVisible(visible){context.document.hidden=!visible;},runTimers(){const pending=[...timers.values()];timers.clear();pending.forEach(timer=>timer.fn());},advance(ms){now+=ms;for(const [id,timer] of [...timers])if(timer.due<=now){timers.delete(id);timer.fn();}}};
 }
 function parsed(name='Heavy Tank Damage',value=10){return {valid:true,warnings:[],unlocked:{count:2},rows:Array.from({length:5},(_,i)=>({name,value,known:true,unlocked:i<2}))};}
 function edits(e,rows){e.correct.editRows=rows.map(({name,value,base,max,level,unlocked,tier})=>({querySelector(selector){return {value:selector.includes('name')?name:selector.endsWith('-base')?String(base??''):selector.endsWith('-max')?String(max??''):selector.endsWith('-level')?String(level??''):selector.endsWith('-tier')?String(tier??''):selector.endsWith('-unlocked')?String(unlocked??''):String(value??'')};}}));}
@@ -53,6 +53,7 @@ async function main(){
   h.jobs[0].resolve(parsed());await flush();
   assert.equal(h.comparisons.at(-1).confirmed,true,'current confirmed stats are eligible for the comparison flag');
   assert.equal(h.collector.summary().itemCount,1);
+  assert.equal(h.collector.summary().items[0].rows[0].statContext.expectedSign,1,'Recorded scanner rows include shared stat context');
   e.read.fire('click');assert.equal(h.comparisons.at(-1).confirmed,true,'retry retains the last comparison while reading');h.jobs.at(-1).resolve(parsed());await flush();
   assert.equal(h.collector.summary().itemCount,1,'manual retry keeps the current item identity');
   assert.match(e.result.innerHTML,/is-green/);assert.match(e.result.innerHTML,/5\/5/);
@@ -129,18 +130,69 @@ async function main(){
     jittered.e.read.fire('click');jittered.jobs.at(-1).resolve({...parsed(),valid:false});await flush();
   }
   assert.equal(jittered.collector.summary().itemCount,1,'small live image changes and OCR retries do not multiply logged items');
+  const pinned=await harness(),pinnedFrame=pinned.canvas();pinned.e.auto.checked=true;
+  pinned.reader.update(pinnedFrame,{session:1,current:true});pinned.advance(220);
+  pinned.jobs[0].resolve(parsed());await flush();
+  const pinnedHtml=pinned.e.result.innerHTML,pinnedCorrection=pinned.e.correct.innerHTML;
+  for(const offset of [0,120,240,360]) {
+    pinnedFrame.jitter=100;pinnedFrame.jitterOffset=offset;
+    for(let sample=0;sample<3;sample++){pinned.reader.update(pinnedFrame,{session:1,current:true});pinned.advance(100);}
+  }
+  assert.equal(pinned.jobs.length,1,'five confirmed known stats ignore minor persistent visual changes');
+  assert.equal(pinned.comparisons.at(-1).confirmed,true,'minor differences do not unconfirm the score');
+  assert.equal(pinned.e.result.innerHTML,pinnedHtml,'confirmed results do not jitter');
+  assert.equal(pinned.e.correct.innerHTML,pinnedCorrection,'minor differences preserve the correction form');
+  pinned.e.read.fire('click');pinned.jobs[1].resolve(parsed());await flush();
+  assert.equal(pinned.collector.summary().itemCount,1,'explicit refresh still works without creating a false encounter');
+  pinnedFrame.jitter=0;pinnedFrame.pixel=255;pinned.reader.update(pinnedFrame,{session:1,current:true});pinned.advance(220);
+  assert.equal(pinned.jobs.length,3,'a material artifact change still starts a new read');
+  pinned.jobs[2].resolve(parsed('Bomber Damage'));await flush();
+  assert.equal(pinned.collector.summary().itemCount,2,'a genuinely new artifact has a distinct encounter');
   const live=await harness(),frame=live.canvas();live.e.auto.checked=true;
+  const inferredHeld=await harness(),inferredFrame=inferredHeld.canvas();inferredHeld.e.auto.checked=true;
+  inferredHeld.reader.update(inferredFrame,{session:1,current:true});inferredHeld.advance(220);
+  const inferredRead={...parsed(),valid:false,warnings:['Percentage inferred'],hall:'main'};
+  inferredRead.rows[2]={...inferredRead.rows[2],name:'Ranged Infantry Hitpoints',value:11,inferred:true,colour:'blue',hasPercent:true};
+  inferredHeld.jobs[0].resolve(inferredRead);await flush();
+  const heldHtml=inferredHeld.e.result.innerHTML;
+  for(const offset of [0,120,240]) {
+    inferredFrame.jitter=100;inferredFrame.jitterOffset=offset;
+    for(let sample=0;sample<3;sample++){inferredHeld.reader.update(inferredFrame,{session:1,current:true});inferredHeld.advance(100);}
+  }
+  assert.equal(inferredHeld.e.result.innerHTML,heldHtml,'small motion preserves inferred stats during automatic retries');
+  const weakerInference={...inferredRead,rows:inferredRead.rows.map((row,index)=>index===2?{name:'',known:false,value:null,hasPercent:false}:row)};
+  inferredHeld.jobs.at(-1).resolve(weakerInference);await flush();
+  assert.equal(inferredHeld.comparisons.at(-1).state.captureResult.rows[2].name,'Ranged Infantry Hitpoints','a weaker retry after minor motion cannot erase the held name');
+  assert.equal(inferredHeld.comparisons.at(-1).state.captureResult.rows[2].value,11,'held inferred percentage survives the weaker retry');
+  assert.equal(inferredHeld.collector.summary().itemCount,1,'minor changes do not create a new inferred-item encounter');
+  inferredFrame.jitter=0;inferredFrame.pixel=255;
+  inferredHeld.reader.update(inferredFrame,{session:1,current:true});
+  inferredHeld.jobs.at(-1).resolve(weakerInference);await flush();
+  inferredHeld.advance(220);
+  inferredHeld.jobs.at(-1).resolve(parsed('Bomber Damage'));await flush();
+  assert.equal(inferredHeld.comparisons.at(-1).state.captureResult.rows[2].name,'Bomber Damage','a material item change replaces the inferred read');
   live.reader.update(frame,{session:1,current:true});live.e.read.fire('click');
   const partial={valid:false,warnings:['partial'],hall:'main',colours:['neutral','green','blue','neutral',null],rows:parsed().rows.slice(0,4)};
   live.jobs[0].resolve(partial);await flush();assert.match(live.e.result.innerHTML,/4\/5/);assert.match(live.e.progress.textContent,/Improving/);
   assert.match(live.e.result.innerHTML,/scanner-perk is-green/);assert.match(live.e.result.innerHTML,/scanner-perk is-blue/);assert.doesNotMatch(live.e.result.innerHTML,/scanner-colour|% tier/);
   live.runTimers();assert.equal(live.jobs.length,2);assert.match(live.e.result.innerHTML,/4\/5/,'rows stay visible while retrying');
   live.jobs[1].resolve({...partial,rows:partial.rows.slice(0,2)});await flush();
-  assert.match(live.e.result.innerHTML,/4\/5/,'weaker retry cannot replace best read');assert.match(live.e.progress.textContent,/Finished/);
-  frame.jitter=10;live.reader.update(frame,{session:1,current:true});live.runTimers();assert.equal(live.jobs.length,2,'minor animation cannot restart a finished artifact');
-  frame.pixel=255;live.reader.update(frame,{session:1,current:true});assert.match(live.e.result.innerHTML,/4\/5/,'last capture stays visible on changed source');assert.match(live.e.progress.textContent,/keeping the last capture/);
-  live.runTimers();assert.equal(live.jobs.length,3);live.jobs[2].resolve({valid:false,warnings:[],rows:[]});await flush();
+  assert.match(live.e.result.innerHTML,/4\/5/,'weaker retry cannot replace best read');assert.match(live.e.progress.textContent,/Improving/);
+  live.advance(499);assert.equal(live.jobs.length,2,'continued retries leave a bounded pause between attempts');
+  live.advance(1);assert.equal(live.jobs.length,3,'partially recognized crafting retries beyond two attempts on unchanged pixels');
+  live.jobs[2].resolve({valid:false,warnings:[],rows:[]});await flush();
+  assert.match(live.e.result.innerHTML,/4\/5/,'an empty retry cannot erase previously recognized stats');
+  live.setVisible(false);live.runTimers();assert.equal(live.jobs.length,3,'no automatic retry starts while the page is hidden');
+  live.reader.update(frame,{session:1,current:false});
+  live.setVisible(true);live.reader.update(frame,{session:1,current:true});live.runTimers();
+  assert.equal(live.jobs.length,4,'returning to the active page resumes scanning');
+  live.jobs[3].resolve(parsed());await flush();
+  live.runTimers();assert.equal(live.jobs.length,4,'confirmation stops repeated scanning');
+  frame.jitter=10;live.reader.update(frame,{session:1,current:true});live.runTimers();assert.equal(live.jobs.length,4,'minor animation cannot restart a confirmed artifact');
+  frame.pixel=255;live.reader.update(frame,{session:1,current:true});assert.match(live.e.result.innerHTML,/5\/5/,'last capture stays visible on changed source');assert.match(live.e.progress.textContent,/keeping the last capture/);
+  live.runTimers();assert.equal(live.jobs.length,5);live.jobs[4].resolve({valid:false,warnings:[],rows:[]});await flush();
   assert.match(live.e.result.innerHTML,/0\/5/,'completed empty-view read clears prior capture');assert.match(live.e.progress.textContent,/Finished/);
+  live.runTimers();assert.equal(live.jobs.length,5,'no recognized stats means no continuous retries');
   const moving=await harness(),animated=moving.canvas();
   moving.reader.update(animated,{session:1,current:true});moving.e.read.fire('click');
   for(const offset of [0,70,140]) {animated.jitter=30;animated.jitterOffset=offset;moving.reader.update(animated,{session:1,current:true});}
@@ -169,6 +221,21 @@ async function main(){
   assert.match(stationary.e.progress.textContent,/Finished/);
   assert.doesNotMatch(stationary.e['result-status'].textContent,/cancelled/);
   const shimmer=await harness({storage:true}),shimmerFrame=shimmer.canvas();shimmer.e.auto.checked=true;
+  const fast=await harness(),fastFrame=fast.canvas();fast.e.auto.checked=true;
+  fast.reader.update(fastFrame,{session:1,current:true});
+  fast.advance(100);fastFrame.jitter=10;fast.reader.update(fastFrame,{session:1,current:true});
+  fast.advance(100);fastFrame.jitterOffset=20;fast.reader.update(fastFrame,{session:1,current:true});
+  fast.advance(20);
+  assert.equal(fast.jobs.length,1,'crafting begins within 220 ms despite continuous small animation');
+  const obsolete=fast.jobs[0];assert.equal(obsolete.options.isCurrent(),true);
+  fastFrame.pixel=255;fast.reader.update(fastFrame,{session:1,current:true});
+  assert.equal(obsolete.options.isCurrent(),false,'new artifact cancels obsolete recognition recovery');
+  fast.advance(500);assert.equal(fast.jobs.length,1,'worker jobs never overlap');
+  obsolete.reject(new Error('Recognition superseded or stopped'));await flush();fast.advance(0);
+  assert.equal(fast.jobs.length,2,'a steady replacement starts as soon as obsolete OCR releases the worker');
+  assert.equal(fast.engines[0].closed,0,'superseded work reuses the warm recognition engine');
+  fast.jobs[1].resolve(parsed('Bomber Damage'));await flush();
+  assert.equal(fast.collector.summary().itemCount,1,'only the current replacement is recorded');
   for(let frame=0;frame<12;frame++) {
     shimmerFrame.jitter=10;shimmerFrame.jitterOffset=frame*2;
     shimmer.reader.update(shimmerFrame,{session:1,current:true});shimmer.advance(100);
@@ -176,6 +243,22 @@ async function main(){
   assert.equal(shimmer.jobs.length,1,'small continuous storage shimmer cannot starve the auto-read timer');
   shimmer.jobs[0].resolve(parsed());await flush();
   assert.equal(shimmer.keepStates.at(-1).confirmed,true,'a stable storage item completes despite minor shimmer');
+  const noisyStorage=await harness({storage:true}),noisyFrame=noisyStorage.canvas();noisyStorage.e.auto.checked=true;
+  for(let frame=0;frame<18;frame++) {
+    noisyFrame.jitter=60;noisyFrame.jitterOffset=frame*80;
+    noisyStorage.reader.update(noisyFrame,{session:1,current:true});noisyStorage.advance(100);
+  }
+  assert.equal(noisyStorage.jobs.length,1,'live storage shimmer starts one non-overlapping OCR read');
+  assert.equal(noisyStorage.jobs[0].options.isCurrent(),true,'individual noisy frames cannot cancel storage OCR when their median is unchanged');
+  noisyStorage.jobs[0].resolve(parsed());await flush();
+  assert.equal(noisyStorage.keepStates.at(-1).reviewable,true,'completed storage OCR leaves the ownership-pending state after transient frame noise');
+  noisyStorage.e.read.fire('click');const oldStorageJob=noisyStorage.jobs.at(-1);
+  for(let sample=0;sample<3;sample++) {
+    noisyFrame.jitterOffset=0;noisyStorage.reader.update(noisyFrame,{session:1,current:true});
+  }
+  assert.equal(oldStorageJob.options.isCurrent(),false,'a persistent change to a small watched field still cancels stale storage OCR');
+  oldStorageJob.resolve(parsed());await flush();
+  assert.equal(noisyStorage.keepStates.at(-1).reviewable,false,'stale storage results cannot finish an ownership check for a changed item');
   const artwork=await harness({storage:true}),artFrame=artwork.canvas();artwork.e.layout.value='storage';artwork.e.auto.checked=true;
   for(let frame=0;frame<12;frame++) {
     artFrame.artworkPixel=frame%2?255:64;artwork.reader.update(artFrame,{session:1,current:true});artwork.advance(100);
@@ -299,6 +382,32 @@ async function main(){
   calibrated.e.read.fire('click');const changed=calibrated.jobs.at(-1);
   calibrated.reader.update(calibratedFrame,{session:1,current:false,fields:null});changed.resolve(parsed());await flush();
   assert.doesNotMatch(calibrated.e.result.innerHTML,/95/,'lost panel anchor cancels field reads');
-  console.log('Scanner reading duplicates, five/six rows, validation, inheritance, stale work, field geometry, reconnect, and detected hall logging tests passed.');
+  const focus=await harness(),focusedFrame=focus.canvas();
+  const updateFocus=(frame,present,current=true)=>focus.reader.update(frame,{session:1,current,itemPresent:present});
+  updateFocus(focusedFrame,true);focus.e.read.fire('click');
+  const focusedResult={...parsed(),artifact:{type:'Weapon',image:'data:image/jpeg;base64,test'}};
+  focus.jobs.at(-1).resolve(focusedResult);await flush();
+  const focusCapture=focus.comparisons.at(-1).state.captureResult;
+  const shiftedFrame=focus.canvas();shiftedFrame.jitter=100;
+  for(let i=0;i<7;i++){focus.advance(400);updateFocus(shiftedFrame,false);}
+  assert.equal(focus.comparisons.at(-1).state.captureResult,focusCapture,'small changes and border misses never clear the last capture');
+  const emptyFrame=focus.canvas();emptyFrame.pixel=255;
+  for(let i=0;i<4;i++){focus.advance(400);updateFocus(emptyFrame,false);}
+  assert.equal(focus.comparisons.at(-1).state.captureResult,focusCapture,'a brief scene transition preserves the capture');
+  updateFocus(focusedFrame,true);
+  for(let i=0;i<2;i++){focus.advance(400);updateFocus(emptyFrame,false);}
+  focus.advance(3000);updateFocus(emptyFrame,undefined,false);
+  assert.equal(focus.comparisons.at(-1).state.captureResult,focusCapture,'paused capture is not evidence of an empty view');
+  for(let i=0;i<6;i++){focus.advance(400);updateFocus(emptyFrame,false);}
+  assert.equal(focus.comparisons.at(-1).state.captureResult,null,'sustained panel absence with a changed scene clears the stats');
+  assert.equal(focus.comparisons.at(-1).result,null,'clearing removes the artifact and its image');
+  assert.equal(focus.e.read.disabled,true,'empty scenes cannot start OCR');
+  updateFocus(emptyFrame,false);assert.equal(focus.e.read.disabled,true);
+  updateFocus(focusedFrame,true);assert.ok(!focus.e.read.disabled,'the scanner resumes when a panel returns');
+  focus.e.read.fire('click');
+  for(let i=0;i<6;i++){focus.advance(400);updateFocus(emptyFrame,false);}
+  focus.jobs.at(-1).resolve(parsed());await flush();
+  assert.equal(focus.comparisons.at(-1).result,null,'OCR started before confirmed absence cannot restore stale stats');
+  console.log('Scanner reading duplicates, five/six rows, validation, inheritance, stale work, field geometry, reconnect, detected hall logging, and sustained empty-scene detection tests passed.');
 }
 main().catch(error=>{console.error(error);process.exitCode=1;});

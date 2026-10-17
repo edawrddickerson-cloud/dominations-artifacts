@@ -24,10 +24,11 @@
   function status(title, message) {
     if(el.status.classList?.contains?.('scanner-connection-label')) {
       const connected=!!stream || !!image;
-      el.status.textContent=stream?'Connected':image?'Local screenshot':'Disconnected';
+      const routine=['Region preview active','Local screenshot preview'].includes(title);
+      el.status.textContent=window.DNStorageRecognition && !routine?title:stream?'Connected':image?'Local screenshot':'Disconnected';
       el.status.classList.toggle('is-connected',connected);
       el.status.classList.toggle('is-disconnected',!connected);
-      el.status.title=title+'. '+message;
+      if(!window.DNStorageRecognition)el.status.title=title+'. '+message;
     } else el.status.textContent=title;
     el.message.textContent=message;
   }
@@ -91,13 +92,14 @@
     if (el.frame.width !== width || el.frame.height !== height) { el.frame.width = width; el.frame.height = height; }
     frameContext.drawImage(source, 0, 0, width, height);
     if(locatePending){locatePending=false;if(findPanel())return true;}
-    let fieldState=null;
+    let fieldState=null,focusPanel;
+    const storage=!!window.DNStorageRecognition;
     if(calibration) {
       if(nativeFrame.width!==size.width || nativeFrame.height!==size.height){nativeFrame.width=size.width;nativeFrame.height=size.height;}
       nativeFrame.getContext('2d').drawImage(source,0,0,size.width,size.height);
       const layout=document.getElementById('scanner-layout')?.value || 'panel';
-      const storage=!!window.DNStorageRecognition;
-      const candidate=storage && layout==='storage'?region:layout==='panel'?window.DNScannerRecognition?.detectPanel(nativeFrame):null;
+      if(!storage)focusPanel=window.DNScannerRecognition?.detectPanel(nativeFrame);
+      const candidate=storage && layout==='storage'?region:layout==='panel'?(storage?window.DNScannerRecognition?.detectPanel(nativeFrame):focusPanel):null;
       if(calibration.hasTemplate && candidate && !selecting && !calibration.editing) {
         const moved=!region || ['x','y','width','height'].some(key=>Math.abs(region[key]-candidate[key])>.002);
         if(moved){region=candidate;window.DNScannerReading?.invalidate('Panel moved or resized. Checking its saved field boxes.',{preserveDisplay:true});}
@@ -116,7 +118,9 @@
       cropContext.drawImage(source, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
       el.freshness.textContent = image ? "Local screenshot crop; not a live capture." : "Preview sampled at " + new Date().toLocaleTimeString() + ". Source freshness is not independently verified.";
       el.meta.textContent = "Source " + nextDimensions + " · crop " + crop.width + "×" + crop.height + " pixels";
-      window.DNScannerReading?.update(el.crop, {session:generation,current:!selecting && !fieldState?.paused && !document.hidden && (image || !track?.muted),categorySource:el.frame,panelRegion:region,fields:fieldState?.fields || null});
+      if(!storage && !calibration)focusPanel=window.DNScannerRecognition?.detectPanel(el.frame);
+      const focusObserved=!storage && !selecting && !calibration?.editing && !document.hidden && (image || !track?.muted && el.video.currentTime!==lastMediaTime);
+      window.DNScannerReading?.update(el.crop, {session:generation,current:!selecting && !fieldState?.paused && !document.hidden && (image || !track?.muted),itemPresent:focusObserved && focusPanel!==undefined?!!focusPanel:undefined,categorySource:el.frame,panelRegion:region,fields:fieldState?.fields || null});
     } else el.meta.textContent = "Source " + nextDimensions + " pixels · select the complete artifact panel";
     return true;
   }
@@ -154,7 +158,7 @@
       status("Capture interrupted", "Could not read the shared frame. Check the source, then retry or reconnect.");
       el.freshness.textContent = "Preview unconfirmed; frame read failed.";
     }
-    timer = setTimeout(() => sample(session), 350);
+    timer = setTimeout(() => sample(session), window.DNStorageRecognition?350:100);
   }
   async function connect() {
     if (!supported || pending || stream) return;
