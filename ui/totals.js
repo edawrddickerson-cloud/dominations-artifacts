@@ -15,7 +15,7 @@
     const owned = DN.loadCollected(), levels = DN.loadLevels();
     for (const item of scans) {
       const row = window.DNStoredArtifacts.toRow(item), id = DN.artifactKey(row);
-      byId.set(id, row); owned.add(id);
+      byId.set(id, row); if(!item.catalogId)owned.add(id);
     }
     const loadout = DN.loadLoadout(DN.activeStrategyId())[hall], map = new Map();
     const assigned = new Set([...loadout.mains, loadout.hermitage].filter(Boolean));
@@ -50,7 +50,7 @@
     // Owned catalogue artifacts default to their first Showcase perk in Collection.
     for (const id of owned) {
       const row = byId.get(id);
-      if (!row || row.scanned || !['Mythical','Legendary'].includes(row.grade)
+      if (!row || row.scanned && !row.scanned.catalogId || !['Mythical','Legendary'].includes(row.grade)
         || assigned.has(id) || Object.hasOwn(loadout.singles, id)) continue;
       const first = DN.perksOf(row, canonPerk)[0];
       if (first) addArtifact(id, 'Showcase · perk ' + first.index, first.index);
@@ -94,6 +94,7 @@
       const [data, mapping] = await Promise.all([fetch('./data/artifacts.json', {cache:'no-store'}), fetch('./data/perk_name_mapping.csv', {cache:'no-store'})]);
       if (!data.ok || !mapping.ok) throw new Error('Could not load artifact data.');
       rows = (await data.json()).filter(row => row.artifact_id !== 'leftwich-trophy-legendary');
+      await window.DNStoredArtifacts.reconcileCatalog(rows);
       canonPerk = DN.makeCanonPerk(DN.parseMappingCsv(await mapping.text()));
       el.search.addEventListener('input', render);
       for (const [button, value] of [[el.main,'Main'], [el.war,'War']]) button.addEventListener('click', () => {
@@ -106,6 +107,7 @@
       window.addEventListener('storage', refresh);
       window.addEventListener('pageshow', refresh);
       window.addEventListener('dn-strategies-changed', refresh);
+      window.addEventListener('dn-artifacts-changed', refresh);
       await refresh();
     } catch {
       el.sub.textContent = '';

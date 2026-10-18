@@ -6,7 +6,7 @@
 
   const strategyStyles = document.createElement('link');
   strategyStyles.rel = 'stylesheet';
-  strategyStyles.href = 'strategies.css?v=20261017-strategies';
+  strategyStyles.href = 'strategies.css?v=20261018-loadouts';
   document.head.appendChild(strategyStyles);
 
   const NAV_COLLAPSED_KEY = "dn-nav-collapsed";
@@ -179,10 +179,13 @@
     const select = /** @type {HTMLSelectElement} */ (head.querySelector("#profile-select"));
     fillSelect(select, state);
 
-    select.addEventListener("change", () => {
+    select.addEventListener("change", async () => {
       const id = select.value;
       if (!id || id === DN.activeProfileId()) return;
-      if (window.DNStrategyEditor && !window.DNStrategyEditor.canLeave()) { select.value = DN.activeProfileId(); return; }
+      if (window.DNStrategyEditor) {
+        select.value = DN.activeProfileId();
+        if (!await window.DNStrategyEditor.canLeave()) return;
+      }
       try { if (DN.setActiveProfile(id)) location.reload(); }
       catch (err) { showStrategyError(err); select.value = DN.activeProfileId(); }
     });
@@ -209,7 +212,7 @@
   function mountStrategies() {
     if (!DN.loadStrategies) return;
     const file = fileForHref(location.pathname).replace(/^(army|artifacts|collection|totals|ratings|scanner|storage-scanner)$/, '$1.html');
-    if (!['army.html', 'artifacts.html', 'collection.html', 'totals.html', 'ratings.html', 'scanner.html', 'storage-scanner.html'].includes(file)) return;
+    if (!['artifacts.html', 'collection.html', 'totals.html', 'ratings.html', 'scanner.html', 'storage-scanner.html'].includes(file)) return;
     const scanner = file === 'scanner.html' || file === 'storage-scanner.html';
     const parent = document.getElementById('header-profile') || document.querySelector('.header-controls');
     if (!parent) return;

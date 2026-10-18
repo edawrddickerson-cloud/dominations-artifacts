@@ -1,0 +1,315 @@
+{
+  "kind": "crafting-ocr-latency-review",
+  "createdAt": "2026-10-18T09:26:54.283Z",
+  "sources": {
+    "baseline": {
+      "snapshot": "C:\\Projects\\Dominations Artifacts\\data\\temp\\crafting-ocr-pass-baseline-2026-10-17",
+      "hashes": {
+        "scanner-reading.js": "c6a9d40ce5bb7bc53bb11d61d5c5ac0d28e2aa4e9e1c6fd95c0d8f79d448f316",
+        "scanner-recognition.js": "29264af074d8e19a0e10be675706e97ddbfda69974557f932982a5c5683d7721",
+        "scanner-field-recognition.js": "975772d51ce030167adf78615f08e8f69bb2b252b7ff1e8ebd9d439755373d9f",
+        "scanner-collection.js": "fcac6e031051bb53de1ed906fabf6c4d08a9c8897374d84f5efaa9a347944a2c",
+        "scanner-comparison.js": "89aa62e7715951724a795c37422b021b2994dff89efe6ab31c2e04f6c65a87f4",
+        "scanner-frames.js": "2411a3a9165e8161e5ff05f60e29df77f3f4174b0f4164657233ae825ded5a69",
+        "shared.js": "12031175f35bc2c535eec58af9303791d4af9c1686cdcb32b446c32af697bc3c"
+      }
+    },
+    "comparison": {
+      "snapshot": "C:\\Projects\\Dominations Artifacts\\data\\temp\\crafting-ocr-pass-candidate-memo-2026-10-17",
+      "hashes": {
+        "scanner-reading.js": "c6a9d40ce5bb7bc53bb11d61d5c5ac0d28e2aa4e9e1c6fd95c0d8f79d448f316",
+        "scanner-recognition.js": "29264af074d8e19a0e10be675706e97ddbfda69974557f932982a5c5683d7721",
+        "scanner-field-recognition.js": "59ac48347569e51a014ba40e6bf7ffb59b9ddc15ee45eebd9e76e35516cfd0d6",
+        "scanner-collection.js": "fcac6e031051bb53de1ed906fabf6c4d08a9c8897374d84f5efaa9a347944a2c",
+        "scanner-comparison.js": "89aa62e7715951724a795c37422b021b2994dff89efe6ab31c2e04f6c65a87f4",
+        "scanner-frames.js": "2411a3a9165e8161e5ff05f60e29df77f3f4174b0f4164657233ae825ded5a69",
+        "shared.js": "12031175f35bc2c535eec58af9303791d4af9c1686cdcb32b446c32af697bc3c"
+      }
+    }
+  },
+  "paired": {
+    "before": {
+      "samples": 36,
+      "exactStats": 36,
+      "complete": 30,
+      "confirmed": 18,
+      "confidentlyIncorrect": 0
+    },
+    "after": {
+      "samples": 36,
+      "exactStats": 36,
+      "complete": 36,
+      "confirmed": 30,
+      "confidentlyIncorrect": 0
+    },
+    "captureRegressions": [],
+    "confirmationRegressions": [],
+    "sameCompletedPairs": {
+      "samples": 30,
+      "beforeMs": {
+        "p50": 983.4000000059605,
+        "p95": 2566.0999999940395
+      },
+      "afterMs": {
+        "p50": 901.8000000119209,
+        "p95": 2452.2000000029802
+      }
+    },
+    "groups": [
+      {
+        "fixture": "pic1",
+        "temperature": "warm",
+        "logs": 10,
+        "samplesPerSide": 3,
+        "beforeComplete": 3,
+        "afterComplete": 3,
+        "beforeMs": {
+          "p50": 582.2000000029802,
+          "p95": 662.7000000029802
+        },
+        "afterMs": {
+          "p50": 534,
+          "p95": 575.5
+        },
+        "reductionP50Percent": 8.27894194481853
+      },
+      {
+        "fixture": "video161",
+        "temperature": "warm",
+        "logs": 10,
+        "samplesPerSide": 3,
+        "beforeComplete": 3,
+        "afterComplete": 3,
+        "beforeMs": {
+          "p50": 2117.4000000059605,
+          "p95": 2566.0999999940395
+        },
+        "afterMs": {
+          "p50": 858.8999999910593,
+          "p95": 864.5
+        },
+        "reductionP50Percent": 59.436100878972255
+      },
+      {
+        "fixture": "video174",
+        "temperature": "warm",
+        "logs": 10,
+        "samplesPerSide": 3,
+        "beforeComplete": 0,
+        "afterComplete": 3,
+        "beforeMs": {
+          "p50": null,
+          "p95": null
+        },
+        "afterMs": {
+          "p50": 1170.7000000029802,
+          "p95": 1250.2000000029802
+        },
+        "reductionP50Percent": null
+      },
+      {
+        "fixture": "video200",
+        "temperature": "warm",
+        "logs": 10,
+        "samplesPerSide": 3,
+        "beforeComplete": 3,
+        "afterComplete": 3,
+        "beforeMs": {
+          "p50": 934.4000000059605,
+          "p95": 1008.5999999940395
+        },
+        "afterMs": {
+          "p50": 901.8000000119209,
+          "p95": 996.9000000059605
+        },
+        "reductionP50Percent": 3.4888698623535497
+      },
+      {
+        "fixture": "video253",
+        "temperature": "warm",
+        "logs": 10,
+        "samplesPerSide": 3,
+        "beforeComplete": 3,
+        "afterComplete": 3,
+        "beforeMs": {
+          "p50": 871,
+          "p95": 920.8999999910593
+        },
+        "afterMs": {
+          "p50": 913.8999999910593,
+          "p95": 938.6000000089407
+        },
+        "reductionP50Percent": -4.92537313330188
+      },
+      {
+        "fixture": "video255",
+        "temperature": "warm",
+        "logs": 10,
+        "samplesPerSide": 3,
+        "beforeComplete": 3,
+        "afterComplete": 3,
+        "beforeMs": {
+          "p50": 1747.5,
+          "p95": 1909.7000000029802
+        },
+        "afterMs": {
+          "p50": 1871.4000000059605,
+          "p95": 2452.2000000029802
+        },
+        "reductionP50Percent": -7.090128755705893
+      },
+      {
+        "fixture": "pic1",
+        "temperature": "cold",
+        "logs": 10,
+        "samplesPerSide": 3,
+        "beforeComplete": 3,
+        "afterComplete": 3,
+        "beforeMs": {
+          "p50": 568,
+          "p95": 576.5
+        },
+        "afterMs": {
+          "p50": 542.7999999970198,
+          "p95": 554.8000000119209
+        },
+        "reductionP50Percent": 4.436619718834544
+      },
+      {
+        "fixture": "video161",
+        "temperature": "cold",
+        "logs": 10,
+        "samplesPerSide": 3,
+        "beforeComplete": 3,
+        "afterComplete": 3,
+        "beforeMs": {
+          "p50": 2399.5,
+          "p95": 2600.6000000089407
+        },
+        "afterMs": {
+          "p50": 864,
+          "p95": 871.6999999880791
+        },
+        "reductionP50Percent": 63.992498437174405
+      },
+      {
+        "fixture": "video174",
+        "temperature": "cold",
+        "logs": 10,
+        "samplesPerSide": 3,
+        "beforeComplete": 0,
+        "afterComplete": 3,
+        "beforeMs": {
+          "p50": null,
+          "p95": null
+        },
+        "afterMs": {
+          "p50": 1237,
+          "p95": 1383
+        },
+        "reductionP50Percent": null
+      },
+      {
+        "fixture": "video200",
+        "temperature": "cold",
+        "logs": 10,
+        "samplesPerSide": 3,
+        "beforeComplete": 3,
+        "afterComplete": 3,
+        "beforeMs": {
+          "p50": 983.4000000059605,
+          "p95": 1004.3000000119209
+        },
+        "afterMs": {
+          "p50": 951.2000000029802,
+          "p95": 1053.5999999940395
+        },
+        "reductionP50Percent": 3.2743542813489013
+      },
+      {
+        "fixture": "video253",
+        "temperature": "cold",
+        "logs": 10,
+        "samplesPerSide": 3,
+        "beforeComplete": 3,
+        "afterComplete": 3,
+        "beforeMs": {
+          "p50": 922.2999999970198,
+          "p95": 1152
+        },
+        "afterMs": {
+          "p50": 918.7000000029802,
+          "p95": 950
+        },
+        "reductionP50Percent": 0.3903285258648137
+      },
+      {
+        "fixture": "video255",
+        "temperature": "cold",
+        "logs": 10,
+        "samplesPerSide": 3,
+        "beforeComplete": 3,
+        "afterComplete": 3,
+        "beforeMs": {
+          "p50": 2197.5,
+          "p95": 2202.5
+        },
+        "afterMs": {
+          "p50": 2161.2999999970198,
+          "p95": 3173.2999999970198
+        },
+        "reductionP50Percent": 1.647326507530389
+      }
+    ]
+  },
+  "wideScreen": {
+    "before": {
+      "samples": 24,
+      "exactStats": 24,
+      "complete": 21,
+      "confirmed": 11,
+      "confidentlyIncorrect": 0
+    },
+    "after": {
+      "samples": 24,
+      "exactStats": 24,
+      "complete": 23,
+      "confirmed": 17,
+      "confidentlyIncorrect": 0
+    },
+    "variant": "Wide screen precedes the final snapshot-local parse memo. The paired experiment and final accuracy audit use the memoized version.",
+    "sameCompletedPairs": {
+      "samples": 21,
+      "beforeMs": {
+        "p50": 3242.0999999940395,
+        "p95": 4866
+      },
+      "afterMs": {
+        "p50": 1320.5,
+        "p95": 3826.7000000029802
+      }
+    },
+    "remainingPartial": [
+      {
+        "fixture": "video171",
+        "coverage": 88
+      }
+    ]
+  },
+  "limits": [
+    "Static original recording frames, not a new wall-clock video replay; original October 16 recording is no longer at its previous path.",
+    "Six paired fixtures deliberately include the initial hard example, an incomplete baseline, an easy screenshot and three apparent regressions from the wide screen. This is not a representative population mix.",
+    "Three repetitions per fixture/temperature; p95 is the slowest observed run. Small latency changes may be noise.",
+    "Timing is first readable sample through full capture and comparison paint, excluding game animation, screen-share setup and IndexedDB completion.",
+    "Known tradeoffs: warm video253 median is 43 ms slower and warm video255 median is 124 ms slower. video255 p95 is worse in both temperature groups.",
+    "Category priority changes only the unmodified generated seed box; explicit user calibration retains priority."
+  ],
+  "accuracyAudit": {
+    "cases": 66,
+    "complete": 66,
+    "direct": 66,
+    "confirmed": 65,
+    "confidentlyIncorrect": 0,
+    "passed": true
+  }
+}

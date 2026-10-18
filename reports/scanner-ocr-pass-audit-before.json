@@ -1,0 +1,1476 @@
+{
+  "passed": true,
+  "snapshot": "C:\\Projects\\Dominations Artifacts\\data\\temp\\crafting-ocr-pass-baseline-2026-10-17",
+  "runs": [
+    {
+      "fixture": "greenissue",
+      "scale": 1,
+      "elapsedMs": 450.09999999403954,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "greenissue",
+      "scale": 0.75,
+      "elapsedMs": 432,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 4,
+        "directPercentages": 4
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 2,
+      "recognitionPath": "calibrated-fields+standard-fallback",
+      "valid": false,
+      "warnings": [
+        "OCR reads disagree about perk names or values. Verify the conflicting rows.",
+        "Calibrated field evidence conflicts. Verify the conflicting rows."
+      ]
+    },
+    {
+      "fixture": "greenissue",
+      "scale": 1.5,
+      "elapsedMs": 315.59999999403954,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "invaders-cyan",
+      "scale": 1,
+      "elapsedMs": 353.20000000298023,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "invaders-cyan",
+      "scale": 0.75,
+      "elapsedMs": 326.90000000596046,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "invaders-cyan",
+      "scale": 1.5,
+      "elapsedMs": 380.8999999910593,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "invaders-green",
+      "scale": 1,
+      "elapsedMs": 528.0999999940395,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 4,
+        "directPercentages": 4
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 2,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "invaders-green",
+      "scale": 0.75,
+      "elapsedMs": 467.09999999403954,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 4,
+        "directPercentages": 4
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 4,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "invaders-green",
+      "scale": 1.5,
+      "elapsedMs": 361.5,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 4,
+        "directPercentages": 4
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 2,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "pic1",
+      "scale": 1,
+      "elapsedMs": 262,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": true,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 3,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "pic1",
+      "scale": 0.75,
+      "elapsedMs": 168.6000000089407,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": true,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 2,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "pic1",
+      "scale": 1.5,
+      "elapsedMs": 260.29999999701977,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": true,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 2,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-214948",
+      "scale": 1,
+      "elapsedMs": 177.29999999701977,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-214948",
+      "scale": 0.75,
+      "elapsedMs": 187.6000000089407,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-214948",
+      "scale": 1.5,
+      "elapsedMs": 214.79999999701977,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215059",
+      "scale": 1,
+      "elapsedMs": 136.90000000596046,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215059",
+      "scale": 0.75,
+      "elapsedMs": 329.90000000596046,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 4,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 3,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215059",
+      "scale": 1.5,
+      "elapsedMs": 191.40000000596046,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215118",
+      "scale": 1,
+      "elapsedMs": 147,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215118",
+      "scale": 0.75,
+      "elapsedMs": 127,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215118",
+      "scale": 1.5,
+      "elapsedMs": 175.79999999701977,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215133",
+      "scale": 1,
+      "elapsedMs": 280.90000000596046,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 3,
+        "directPercentages": 3
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 2,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215133",
+      "scale": 0.75,
+      "elapsedMs": 470.5,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 3,
+        "directPercentages": 3
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 9,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215133",
+      "scale": 1.5,
+      "elapsedMs": 352.59999999403954,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 3,
+        "directPercentages": 3
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 2,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215216",
+      "scale": 1,
+      "elapsedMs": 350.8999999910593,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 4,
+        "percentages": 4,
+        "directPercentages": 4
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 4,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215216",
+      "scale": 0.75,
+      "elapsedMs": 293.09999999403954,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 4,
+        "percentages": 4,
+        "directPercentages": 4
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 4,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215216",
+      "scale": 1.5,
+      "elapsedMs": 368.8999999910593,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 4,
+        "percentages": 4,
+        "directPercentages": 4
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 4,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215233",
+      "scale": 1,
+      "elapsedMs": 154.09999999403954,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215233",
+      "scale": 0.75,
+      "elapsedMs": 178.90000000596046,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215233",
+      "scale": 1.5,
+      "elapsedMs": 231.6000000089407,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215325",
+      "scale": 1,
+      "elapsedMs": 188.70000000298023,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215325",
+      "scale": 0.75,
+      "elapsedMs": 248.29999999701977,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215325",
+      "scale": 1.5,
+      "elapsedMs": 366.19999998807907,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215439",
+      "scale": 1,
+      "elapsedMs": 187,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215439",
+      "scale": 0.75,
+      "elapsedMs": 157.59999999403954,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215439",
+      "scale": 1.5,
+      "elapsedMs": 290.40000000596046,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215628",
+      "scale": 1,
+      "elapsedMs": 295.5,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215628",
+      "scale": 0.75,
+      "elapsedMs": 259.40000000596046,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215628",
+      "scale": 1.5,
+      "elapsedMs": 342.8999999910593,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215714",
+      "scale": 1,
+      "elapsedMs": 170.29999999701977,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215714",
+      "scale": 0.75,
+      "elapsedMs": 380.3999999910593,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 4,
+        "percentages": 4,
+        "directPercentages": 4
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 2,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-215714",
+      "scale": 1.5,
+      "elapsedMs": 670.2999999970198,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 4,
+        "percentages": 4,
+        "directPercentages": 4
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 2,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-222336",
+      "scale": 1,
+      "elapsedMs": 494,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 2,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-222336",
+      "scale": 0.75,
+      "elapsedMs": 251.09999999403954,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-222336",
+      "scale": 1.5,
+      "elapsedMs": 514.1999999880791,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 2,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-222422",
+      "scale": 1,
+      "elapsedMs": 234.70000000298023,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-222422",
+      "scale": 0.75,
+      "elapsedMs": 217.59999999403954,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-222422",
+      "scale": 1.5,
+      "elapsedMs": 293.59999999403954,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-222443",
+      "scale": 1,
+      "elapsedMs": 222.30000001192093,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-222443",
+      "scale": 0.75,
+      "elapsedMs": 219.59999999403954,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-222443",
+      "scale": 1.5,
+      "elapsedMs": 296.70000000298023,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-225400",
+      "scale": 1,
+      "elapsedMs": 186.6000000089407,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-225400",
+      "scale": 0.75,
+      "elapsedMs": 200.09999999403954,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-225400",
+      "scale": 1.5,
+      "elapsedMs": 254,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-225540",
+      "scale": 1,
+      "elapsedMs": 218.79999999701977,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-225540",
+      "scale": 0.75,
+      "elapsedMs": 460,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 4,
+        "directPercentages": 4
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 2,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-225540",
+      "scale": 1.5,
+      "elapsedMs": 593.4000000059605,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 4,
+        "directPercentages": 4
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 2,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-225607",
+      "scale": 1,
+      "elapsedMs": 430.90000000596046,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 4,
+        "percentages": 4,
+        "directPercentages": 4
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 2,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-225607",
+      "scale": 0.75,
+      "elapsedMs": 361.59999999403954,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 4,
+        "percentages": 4,
+        "directPercentages": 4
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 2,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-225607",
+      "scale": 1.5,
+      "elapsedMs": 246.40000000596046,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-225627",
+      "scale": 1,
+      "elapsedMs": 223,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-225627",
+      "scale": 0.75,
+      "elapsedMs": 212.70000000298023,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-225627",
+      "scale": 1.5,
+      "elapsedMs": 309,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-225703",
+      "scale": 1,
+      "elapsedMs": 194.90000000596046,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-225703",
+      "scale": 0.75,
+      "elapsedMs": 220.80000001192093,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    },
+    {
+      "fixture": "review-225703",
+      "scale": 1.5,
+      "elapsedMs": 295.40000000596046,
+      "accuracy": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "first": {
+        "names": 5,
+        "percentages": 5,
+        "directPercentages": 5
+      },
+      "starsCorrect": 5,
+      "categoryCorrect": null,
+      "complete": true,
+      "confidentlyIncorrect": false,
+      "ocrCalls": 1,
+      "recognitionPath": "calibrated-fields",
+      "valid": true
+    }
+  ],
+  "limitations": "Repository screenshots and Canvas-derived scale probes, not a representative live-capture dataset. Most images omit category/hall pixels. Seeded overlapping name/value regions test one broad template; the separate tight run uses hand-selected pixel boxes on pic1 only. Timings exclude model startup.",
+  "network": {
+    "external": 0,
+    "errors": []
+  },
+  "sourceHashes": {
+    "scanner-reading.js": "c6a9d40ce5bb7bc53bb11d61d5c5ac0d28e2aa4e9e1c6fd95c0d8f79d448f316",
+    "scanner-recognition.js": "29264af074d8e19a0e10be675706e97ddbfda69974557f932982a5c5683d7721",
+    "scanner-field-recognition.js": "975772d51ce030167adf78615f08e8f69bb2b252b7ff1e8ebd9d439755373d9f",
+    "scanner-collection.js": "fcac6e031051bb53de1ed906fabf6c4d08a9c8897374d84f5efaa9a347944a2c",
+    "scanner-comparison.js": "89aa62e7715951724a795c37422b021b2994dff89efe6ab31c2e04f6c65a87f4",
+    "scanner-frames.js": "2411a3a9165e8161e5ff05f60e29df77f3f4174b0f4164657233ae825ded5a69",
+    "shared.js": "12031175f35bc2c535eec58af9303791d4af9c1686cdcb32b446c32af697bc3c"
+  }
+}

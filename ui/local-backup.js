@@ -2,11 +2,15 @@
  * No uploads. Restore validates before writing and rolls back on storage errors. */
 (() => {
   'use strict';
+  // Historical scoring settings do not all use the dn- prefix. Keep this
+  // explicit so backups never sweep in authentication or integration storage.
+  const additionalSettings=new Set(['dn_perk_group_defaults_v1']);
+  const isSettingKey=key=>typeof key==='string' && (key.startsWith('dn-') || additionalSettings.has(key));
   function settingsSnapshot(storage) {
     const settings={};
     for(let i=0;i<storage.length;i++) {
       const key=storage.key(i);
-      if(key.startsWith('dn-'))settings[key]=storage.getItem(key);
+      if(isSettingKey(key))settings[key]=storage.getItem(key);
     }
     return settings;
   }
@@ -14,7 +18,7 @@
     const fail=()=>{throw new Error('Choose a full planner backup made with Export Backup.');};
     if(data?.kind!=='dominations-planner-backup' || data.version!==1 ||
       !data.settings || typeof data.settings!=='object' || Array.isArray(data.settings) || !Array.isArray(data.records))fail();
-    for(const [key,value] of Object.entries(data.settings))if(!key.startsWith('dn-') || typeof value!=='string')fail();
+    for(const [key,value] of Object.entries(data.settings))if(!isSettingKey(key) || typeof value!=='string')fail();
     const ids=new Set();
     for(const record of data.records) {
       if(record?.id==='crafting-log') {

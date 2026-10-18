@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
+  <script src="scanner-session-entry.js?v=1"></script>
   <script src="navigation.js?v=5"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts - Storage Scanner</title>
@@ -42,12 +43,11 @@
         <div id="header-profile" class="header-profile"></div></div></header>
     </div>
     <section class="scanner-status" aria-label="Capture status">
-      <strong id="scanner-status" class="scanner-connection-label is-disconnected" role="status" aria-live="polite">Disconnected</strong>
       <p id="scanner-message" hidden></p>
       <p id="scanner-freshness" hidden></p>
     </section>
     <details id="scanner-setup" class="scanner-setup">
-      <summary><span class="scanner-setup-title">Scanner setup</span><span class="scanner-setup-actions" role="group" aria-label="Scanning controls"><button type="button" class="btn" id="scanner-connect">Connect Game</button><button type="button" class="btn" id="scanner-stop" disabled>Stop Scanning</button><button type="button" class="btn" id="scanner-read" disabled>Read Artifact</button><button type="button" class="btn" id="scanner-find">Find Panel</button></span></summary>
+      <summary><span class="scanner-setup-title">Scanner setup</span><strong id="scanner-status" class="scanner-connection-label is-disconnected" role="status" aria-live="polite">Disconnected</strong><span class="scanner-setup-actions" role="group" aria-label="Scanning controls"><button type="button" class="btn" id="scanner-connect">Connect Game</button><button type="button" class="btn" id="scanner-stop" disabled>Stop Scanning</button><button type="button" class="btn" id="scanner-read" disabled>Read Artifact</button><button type="button" class="btn" id="scanner-find">Find Panel</button></span></summary>
       <section class="scanner-controls" aria-label="Capture setup">
         <label>Prefer sharing <select id="scanner-source"><option value="window">Window</option><option value="browser">Browser tab</option><option value="monitor">Screen</option></select></label>
         <button type="button" class="btn" id="scanner-select" aria-pressed="false" disabled>Select Region</button>
@@ -171,7 +171,7 @@
   <script src="scanner-calibration.js?v=4"></script>
   <script src="scanner-frames.js?v=3"></script>
   <script src="data/army_catalog.js?v=8"></script>
-  <script src="shared.js?v=20261017-strategies"></script>
+  <script src="shared.js?v=20261018-services"></script>
   <script src="data/artifact_stat_context.js?v=1"></script>
   <script src="artifact-stat-context.js?v=3"></script>
   <script src="profiles-ui.js?v=20261017-strategies"></script>
@@ -179,12 +179,14 @@
   <script src="vendor/tesseract/tesseract.min.js"></script>
   <script src="scanner-reroll-recognition.js?v=1"></script>
   <script src="scanner-name-catalog.js?v=1"></script>
-  <script src="scanner-recognition.js?v=37"></script>
+  <script src="scanner-recognition.js?v=38"></script>
   <script src="scanner-collection.js?v=20261018-strategies"></script>
   <script src="storage-recognition.js?v=11"></script>
-  <script src="stored-artifacts.js?v=20"></script>
-  <script src="storage-scanner.js?v=23"></script>
-  <script src="scanner-reading.js?v=20261018-strategies-reroll-stat-preview"></script>
-  <script src="scanner.js?v=11"></script>
+  <script src="stored-artifacts.js?v=20261018-services"></script>
+  <script src="storage-scanner.js?v=25"></script>
+  <script src="scanner-reading.js?v=20261018-services"></script>
+  <script src="scanner-profile.js?v=1"></script>
+  <script src="scanner.js?v=20261018-services"></script>
+  <script src="services.js?v=2"></script>
 </body>
 </html>

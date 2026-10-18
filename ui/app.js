@@ -58,6 +58,7 @@
 
   /** @type {object[]} */
   let rows = [];
+  let catalogRows=[],inventoryRefresh=0;
 
   /** @type {string[]} canonical perk names shown in filters / ratings */
   let allPerkNames = [];
@@ -1172,15 +1173,18 @@
       const id = input.getAttribute("data-artifact-id");
       if (!id) return;
       const on = input.checked;
+      const profileId=window.DN.activeProfileId();
       if (!on) {
         const slots = window.DN.artifactSlots(id);
         if (slots.length) {
           input.checked = true;
           const row = rows.find((item) => artifactKey(item) === id);
           if (!await window.DN.confirmUncollect(show(row && row.name), slots)) return;
+          if(profileId!==window.DN.activeProfileId())return;
           window.DN.removeArtifactSlots(id);
         }
       }
+      collected=loadCollected();
       if (on) collected.add(id);
       else collected.delete(id);
       saveCollected();
@@ -1266,7 +1270,9 @@
       if (!artRes.ok) throw new Error(`HTTP ${artRes.status} loading ${DATA_URL}`);
       const data = await artRes.json();
       if (!Array.isArray(data)) throw new Error("artifacts.json is not an array");
-      rows = data.filter((row) => row.artifact_id !== "leftwich-trophy-legendary");
+      catalogRows = data.filter((row) => row.artifact_id !== "leftwich-trophy-legendary");
+      const linked=await window.DNStoredArtifacts.reconcileCatalog(catalogRows);
+      rows=window.DNStoredArtifacts.catalogRows(catalogRows,linked.collection);
 
       if (mapRes.ok) {
         perkCanon = parseMappingCsv(await mapRes.text());
@@ -1330,13 +1336,20 @@
   }
 
   bind();
-  const refreshStrategies=()=>{
+  const refreshStrategies=async()=>{
     if(!rows.length)return;
+    const sequence=++inventoryRefresh,key=window.DNStoredArtifacts.collectionKey();
+    try {
+      const scans=await window.DNStoredArtifacts.read(key);
+      if(sequence!==inventoryRefresh || key!==window.DNStoredArtifacts.collectionKey())return;
+      rows=window.DNStoredArtifacts.catalogRows(catalogRows,scans);
+    } catch {return;}
     strategyContexts=new Map();collected=loadCollected();ratings=loadEffectiveRatings();
     renderPerkFilterList();render();
   };
   window.addEventListener('focus',refreshStrategies);
   window.addEventListener('storage',refreshStrategies);
   window.addEventListener('dn-strategies-changed',refreshStrategies);
+  window.addEventListener('dn-artifacts-changed',refreshStrategies);
   load();
 })();

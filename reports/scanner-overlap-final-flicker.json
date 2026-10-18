@@ -1,0 +1,1575 @@
+{
+  "mode": "baseline",
+  "snapshot": "C:\\Projects\\Dominations Artifacts\\data\\temp\\crafting-overlap-baseline-2026-10-18",
+  "sourceHashes": {
+    "scanner.js": "604637140eca6fb83345c77d36c36c93237c7a446ad39f268ee85077e0916621",
+    "scanner-reading.js": "c6a9d40ce5bb7bc53bb11d61d5c5ac0d28e2aa4e9e1c6fd95c0d8f79d448f316",
+    "scanner-recognition.js": "29264af074d8e19a0e10be675706e97ddbfda69974557f932982a5c5683d7721",
+    "scanner-field-recognition.js": "59ac48347569e51a014ba40e6bf7ffb59b9ddc15ee45eebd9e76e35516cfd0d6",
+    "scanner-collection.js": "fcac6e031051bb53de1ed906fabf6c4d08a9c8897374d84f5efaa9a347944a2c",
+    "scanner-comparison.js": "89aa62e7715951724a795c37422b021b2994dff89efe6ab31c2e04f6c65a87f4",
+    "scanner-frames.js": "2411a3a9165e8161e5ff05f60e29df77f3f4174b0f4164657233ae825ded5a69",
+    "shared.js": "12031175f35bc2c535eec58af9303791d4af9c1686cdcb32b446c32af697bc3c"
+  },
+  "variantSources": {
+    "baseline": {
+      "snapshot": "C:\\Projects\\Dominations Artifacts\\data\\temp\\crafting-overlap-baseline-2026-10-18",
+      "hashes": {
+        "scanner.js": "604637140eca6fb83345c77d36c36c93237c7a446ad39f268ee85077e0916621",
+        "scanner-reading.js": "c6a9d40ce5bb7bc53bb11d61d5c5ac0d28e2aa4e9e1c6fd95c0d8f79d448f316",
+        "scanner-recognition.js": "29264af074d8e19a0e10be675706e97ddbfda69974557f932982a5c5683d7721",
+        "scanner-field-recognition.js": "59ac48347569e51a014ba40e6bf7ffb59b9ddc15ee45eebd9e76e35516cfd0d6",
+        "scanner-collection.js": "fcac6e031051bb53de1ed906fabf6c4d08a9c8897374d84f5efaa9a347944a2c",
+        "scanner-comparison.js": "89aa62e7715951724a795c37422b021b2994dff89efe6ab31c2e04f6c65a87f4",
+        "scanner-frames.js": "2411a3a9165e8161e5ff05f60e29df77f3f4174b0f4164657233ae825ded5a69",
+        "shared.js": "12031175f35bc2c535eec58af9303791d4af9c1686cdcb32b446c32af697bc3c"
+      }
+    },
+    "comparison": {
+      "snapshot": "C:\\Projects\\Dominations Artifacts\\data\\temp\\crafting-overlap-final-2026-10-18",
+      "hashes": {
+        "scanner.js": "c6937abcea5b1320b34cf4395f8087da09b7e69bf6aea15854b029cf322ab465",
+        "scanner-reading.js": "ecc7496d946ac785f9e1bb9011f89168c2b574d9a766f7c558aad955688f45cc",
+        "scanner-recognition.js": "a898c40ad7a2ac36b25d32e3aaba0fd310bd3320a676a7f9306fc3e0f6ccb5f6",
+        "scanner-field-recognition.js": "ece882c5a04f4d778fa56913f02c55dda6d7c88137700554b70236d21eae948e",
+        "scanner-collection.js": "fcac6e031051bb53de1ed906fabf6c4d08a9c8897374d84f5efaa9a347944a2c",
+        "scanner-comparison.js": "89aa62e7715951724a795c37422b021b2994dff89efe6ab31c2e04f6c65a87f4",
+        "scanner-frames.js": "2411a3a9165e8161e5ff05f60e29df77f3f4174b0f4164657233ae825ded5a69",
+        "shared.js": "12031175f35bc2c535eec58af9303791d4af9c1686cdcb32b446c32af697bc3c"
+      }
+    }
+  },
+  "pairedOrder": "Adjacent variants per case; order reversed on odd repetitions.",
+  "createdAt": "2026-10-18T10:42:17.884Z",
+  "config": {
+    "fixtureNames": [
+      "pic1",
+      "video174"
+    ],
+    "logs": [
+      10
+    ],
+    "temperatures": [
+      "warm"
+    ],
+    "repeat": 1,
+    "owned": 500,
+    "timeoutMs": 12000,
+    "motion": "flicker"
+  },
+  "groups": [
+    {
+      "variant": "baseline",
+      "logs": 10,
+      "temperature": "warm",
+      "samples": 2,
+      "exactStats": 2,
+      "fullAssessable": 2,
+      "complete": 2,
+      "statsPaintedMs": {
+        "p50": 603.5999999940395,
+        "p95": 2249.0999999940395
+      },
+      "scorePaintedMs": {
+        "p50": 603.5999999940395,
+        "p95": 2249.0999999940395
+      },
+      "completeCapturePaintedMs": {
+        "p50": 603.5999999940395,
+        "p95": 2249.0999999940395
+      }
+    },
+    {
+      "variant": "comparison",
+      "logs": 10,
+      "temperature": "warm",
+      "samples": 2,
+      "exactStats": 2,
+      "fullAssessable": 2,
+      "complete": 2,
+      "statsPaintedMs": {
+        "p50": 418.90000000596046,
+        "p95": 1986.0999999940395
+      },
+      "scorePaintedMs": {
+        "p50": 418.90000000596046,
+        "p95": 1986.0999999940395
+      },
+      "completeCapturePaintedMs": {
+        "p50": 418.90000000596046,
+        "p95": 1986.0999999940395
+      }
+    }
+  ],
+  "fixtureGroups": [
+    {
+      "fixture": "pic1",
+      "variant": "baseline",
+      "logs": 10,
+      "temperature": "warm",
+      "samples": 1,
+      "exactStats": 1,
+      "fullAssessable": 1,
+      "complete": 1,
+      "statsPaintedMs": {
+        "p50": 603.5999999940395,
+        "p95": 603.5999999940395
+      },
+      "scorePaintedMs": {
+        "p50": 603.5999999940395,
+        "p95": 603.5999999940395
+      },
+      "completeCapturePaintedMs": {
+        "p50": 603.5999999940395,
+        "p95": 603.5999999940395
+      }
+    },
+    {
+      "fixture": "video174",
+      "variant": "baseline",
+      "logs": 10,
+      "temperature": "warm",
+      "samples": 1,
+      "exactStats": 1,
+      "fullAssessable": 1,
+      "complete": 1,
+      "statsPaintedMs": {
+        "p50": 2249.0999999940395,
+        "p95": 2249.0999999940395
+      },
+      "scorePaintedMs": {
+        "p50": 2249.0999999940395,
+        "p95": 2249.0999999940395
+      },
+      "completeCapturePaintedMs": {
+        "p50": 2249.0999999940395,
+        "p95": 2249.0999999940395
+      }
+    },
+    {
+      "fixture": "pic1",
+      "variant": "comparison",
+      "logs": 10,
+      "temperature": "warm",
+      "samples": 1,
+      "exactStats": 1,
+      "fullAssessable": 1,
+      "complete": 1,
+      "statsPaintedMs": {
+        "p50": 418.90000000596046,
+        "p95": 418.90000000596046
+      },
+      "scorePaintedMs": {
+        "p50": 418.90000000596046,
+        "p95": 418.90000000596046
+      },
+      "completeCapturePaintedMs": {
+        "p50": 418.90000000596046,
+        "p95": 418.90000000596046
+      }
+    },
+    {
+      "fixture": "video174",
+      "variant": "comparison",
+      "logs": 10,
+      "temperature": "warm",
+      "samples": 1,
+      "exactStats": 1,
+      "fullAssessable": 1,
+      "complete": 1,
+      "statsPaintedMs": {
+        "p50": 1986.0999999940395,
+        "p95": 1986.0999999940395
+      },
+      "scorePaintedMs": {
+        "p50": 1986.0999999940395,
+        "p95": 1986.0999999940395
+      },
+      "completeCapturePaintedMs": {
+        "p50": 1986.0999999940395,
+        "p95": 1986.0999999940395
+      }
+    }
+  ],
+  "runs": [
+    {
+      "fixture": "pic1",
+      "temperature": "warm",
+      "logs": 10,
+      "owned": 500,
+      "firstStatsPaintedMs": 603.5999999940395,
+      "firstScorePaintedMs": 603.5999999940395,
+      "expectedScore": 120,
+      "motion": "flicker",
+      "fullCapturePaintedMs": 603.5999999940395,
+      "elapsedMs": 638.9000000059605,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "identified": 17,
+        "read": 17,
+        "inferred": 0,
+        "typed": 0,
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "missing": [],
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 270.59999999403954,
+          "durationMs": 253,
+          "ocrCalls": 2,
+          "recognitionPath": "calibrated-fields"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "recordResult",
+          "startMs": 525.0999999940395,
+          "durationMs": 68.40000000596046
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 1486.2000000178814,
+          "durationMs": 0.5
+        },
+        {
+          "startMs": 0.29999998211860657,
+          "durationMs": 0.30000001192092896
+        },
+        {
+          "startMs": 5.299999982118607,
+          "durationMs": 0.4000000059604645
+        },
+        {
+          "startMs": 269.90000000596046,
+          "durationMs": 0.3999999761581421
+        },
+        {
+          "startMs": 527.0999999940395,
+          "durationMs": 64.59999999403954
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm-fast",
+          "durationMs": 287.5
+        },
+        {
+          "stage": "prewarm-standard",
+          "durationMs": 781.8999999761581
+        },
+        {
+          "stage": "read-start",
+          "time": 1727,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 238.7999999821186
+        },
+        {
+          "stage": "ocr-start",
+          "time": 1758.6000000238419,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 270.40000000596046
+        },
+        {
+          "stage": "ocr-end",
+          "time": 2011.800000011921,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 523.6999999880791
+        },
+        {
+          "stage": "published",
+          "time": 2081.100000023842,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 592.9000000059605
+        }
+      ],
+      "longTasks": [
+        {
+          "startMs": 523.5999999940395,
+          "durationMs": 71
+        }
+      ],
+      "ocrJobs": [
+        {
+          "startMs": 286.40000000596046,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "6",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": ""
+          },
+          "width": 626,
+          "height": 440,
+          "text": "Air Defense Damage +1%\nSniper Tower Hitpoints +1%\nCatapult Hitpoints +1%\nCatapult Damage +1%\nCatapult Damage +1%\n",
+          "confidence": 92,
+          "durationMs": 198
+        },
+        {
+          "startMs": 503.40000000596046,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "
+          },
+          "width": 320,
+          "height": 108,
+          "text": "Pottery\n",
+          "confidence": 96,
+          "durationMs": 18.399999976158142
+        }
+      ],
+      "rendered": {
+        "capture": "17 read · 0 inferred · 0 typed",
+        "comparison": "Below top 2 in all 1 selected strategies",
+        "itemTotal": "120",
+        "benchmark": "160",
+        "progress": "Finished · 5/5 · ready to move on",
+        "logRows": 11
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "name": "Air Defense Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Sniper Tower Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Pottery"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9692307692307692,
+            0,
+            0.02564102564102564,
+            0.03333333333333333,
+            0.05128205128205128
+          ]
+        },
+        "warnings": []
+      },
+      "lastParsedCalls": 2,
+      "variant": "baseline",
+      "repetition": 0,
+      "seed": {
+        "seededItems": 10,
+        "seededScans": 10,
+        "owned": 500,
+        "logBytes": 164997
+      }
+    },
+    {
+      "fixture": "pic1",
+      "temperature": "warm",
+      "logs": 10,
+      "owned": 500,
+      "firstStatsPaintedMs": 418.90000000596046,
+      "firstScorePaintedMs": 418.90000000596046,
+      "expectedScore": 120,
+      "motion": "flicker",
+      "fullCapturePaintedMs": 418.90000000596046,
+      "elapsedMs": 437.40000000596046,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "identified": 17,
+        "read": 17,
+        "inferred": 0,
+        "typed": 0,
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "missing": [],
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 21.5,
+          "durationMs": 301.5,
+          "ocrCalls": 2,
+          "recognitionPath": "calibrated-fields"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "recordResult",
+          "startMs": 325,
+          "durationMs": 76
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 1536.300000011921,
+          "durationMs": 0.4000000059604645
+        },
+        {
+          "startMs": 0.20000001788139343,
+          "durationMs": 0.29999998211860657
+        },
+        {
+          "startMs": 4.700000017881393,
+          "durationMs": 0.4000000059604645
+        },
+        {
+          "startMs": 20.900000005960464,
+          "durationMs": 0.4000000059604645
+        },
+        {
+          "startMs": 326.90000000596046,
+          "durationMs": 72
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm-fast",
+          "durationMs": 297.2999999821186
+        },
+        {
+          "stage": "prewarm-standard",
+          "durationMs": 805.5999999940395
+        },
+        {
+          "stage": "speculation-start",
+          "time": 1543.9000000059605,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 5.800000011920929
+        },
+        {
+          "stage": "ocr-start",
+          "time": 1559.5,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 21.400000005960464
+        },
+        {
+          "stage": "speculation-validated",
+          "time": 1817.9000000059605,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 279.80000001192093
+        },
+        {
+          "stage": "ocr-end",
+          "time": 1861.2000000178814,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 323.10000002384186
+        },
+        {
+          "stage": "published",
+          "time": 1938.5,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 400.40000000596046
+        },
+        {
+          "stage": "details-published",
+          "time": 1957.800000011921,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 419.7000000178814
+        }
+      ],
+      "longTasks": [
+        {
+          "startMs": 322.90000000596046,
+          "durationMs": 80
+        }
+      ],
+      "ocrJobs": [
+        {
+          "startMs": 36.60000002384186,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "6",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": ""
+          },
+          "width": 626,
+          "height": 440,
+          "text": "Air Defense Damage +1%\nSniper Tower Hitpoints +1%\nCatapult Hitpoints +1%\nCatapult Damage +1%\nCatapult Damage +1%\n",
+          "confidence": 92,
+          "durationMs": 243.69999998807907
+        },
+        {
+          "startMs": 301.30000001192093,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "
+          },
+          "width": 320,
+          "height": 108,
+          "text": "Pottery\n",
+          "confidence": 96,
+          "durationMs": 19.80000001192093
+        }
+      ],
+      "rendered": {
+        "capture": "17 read · 0 inferred · 0 typed",
+        "comparison": "Below top 2 in all 1 selected strategies",
+        "itemTotal": "120",
+        "benchmark": "160",
+        "progress": "Finished · 5/5 · ready to move on",
+        "logRows": 11
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "name": "Air Defense Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Sniper Tower Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Hitpoints",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Catapult Damage",
+            "value": 1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Pottery"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9692307692307692,
+            0,
+            0.02564102564102564,
+            0.03333333333333333,
+            0.05128205128205128
+          ]
+        },
+        "warnings": []
+      },
+      "lastParsedCalls": 2,
+      "variant": "comparison",
+      "repetition": 0,
+      "seed": {
+        "seededItems": 10,
+        "seededScans": 10,
+        "owned": 500,
+        "logBytes": 164997
+      }
+    },
+    {
+      "fixture": "video174",
+      "temperature": "warm",
+      "logs": 10,
+      "owned": 500,
+      "firstStatsPaintedMs": 2249.0999999940395,
+      "firstScorePaintedMs": 2249.0999999940395,
+      "expectedScore": 135,
+      "motion": "flicker",
+      "fullCapturePaintedMs": 2249.0999999940395,
+      "elapsedMs": 2282.0999999940395,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "identified": 17,
+        "read": 17,
+        "inferred": 0,
+        "typed": 0,
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "missing": [],
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 292.09999999403954,
+          "durationMs": 1755.9000000059605,
+          "ocrCalls": 12,
+          "recognitionPath": "calibrated-fields"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "recordResult",
+          "startMs": 2051.5,
+          "durationMs": 166.7999999821186
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 1593.300000011921,
+          "durationMs": 0.5
+        },
+        {
+          "startMs": 0.29999998211860657,
+          "durationMs": 0.30000001192092896
+        },
+        {
+          "startMs": 6.399999976158142,
+          "durationMs": 0.30000001192092896
+        },
+        {
+          "startMs": 291.5,
+          "durationMs": 0.3999999761581421
+        },
+        {
+          "startMs": 2056.699999988079,
+          "durationMs": 157
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm-fast",
+          "durationMs": 307.09999999403954
+        },
+        {
+          "stage": "prewarm-standard",
+          "durationMs": 828.5999999940395
+        },
+        {
+          "stage": "read-start",
+          "time": 1837.800000011921,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 242.09999999403954
+        },
+        {
+          "stage": "ocr-start",
+          "time": 1887.7000000178814,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 292
+        },
+        {
+          "stage": "ocr-end",
+          "time": 3643.7000000178814,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 2048
+        },
+        {
+          "stage": "published",
+          "time": 3812,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 2216.2999999821186
+        }
+      ],
+      "longTasks": [
+        {
+          "startMs": 241.39999997615814,
+          "durationMs": 67
+        },
+        {
+          "startMs": 608,
+          "durationMs": 69
+        },
+        {
+          "startMs": 1794,
+          "durationMs": 56
+        },
+        {
+          "startMs": 2047.8999999761581,
+          "durationMs": 175
+        }
+      ],
+      "ocrJobs": [
+        {
+          "startMs": 313,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "6",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": ""
+          },
+          "width": 748,
+          "height": 493,
+          "text": "Invading Paratrooper Damage -1%  bei             7\nJnwading Assault Vehile Hitpoints 3%\n\nInvading MRL Hitpoints -6%\n\nInvading Generais Damage -6%\n\nInvading Bomber Hiqnaints -0%\"\n",
+          "confidence": 62,
+          "durationMs": 295.5
+        },
+        {
+          "startMs": 678.0999999940395,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "6",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": ""
+          },
+          "width": 1218,
+          "height": 680,
+          "text": "Invading Paratrooper Damage -1%\nInvading Assault Vehicle Hitpoints -6%¢\nInvading MRL Hitpoints -649\n\nInvading Generals Damage -6%\nInvading Bomber Hitpoints -5¢7\n",
+          "confidence": 76,
+          "durationMs": 377.69999998807907
+        },
+        {
+          "startMs": 1091.7999999821186,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "6",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": ""
+          },
+          "width": 748,
+          "height": 493,
+          "text": "Invading Assault Vehicle Hitpoints 694             7\nInvading MRL Hitpoints -895\n\nInvading Generais’ Damage -6%\n\nInvading Bamber Hitpoints Be                a\n",
+          "confidence": 68,
+          "durationMs": 284.59999999403954
+        },
+        {
+          "startMs": 1389.0999999940395,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": ""
+          },
+          "width": 770,
+          "height": 94,
+          "text": "Invading Assault Vehicle Hitpoints\n",
+          "confidence": 92,
+          "durationMs": 96.7999999821186
+        },
+        {
+          "startMs": 1502.5,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": "+-0123456789.,%"
+          },
+          "width": 240,
+          "height": 164,
+          "text": "",
+          "confidence": 0,
+          "durationMs": 46.5
+        },
+        {
+          "startMs": 1557.7999999821186,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": ""
+          },
+          "width": 544,
+          "height": 94,
+          "text": "Invading MRL Hitpoints\n",
+          "confidence": 90,
+          "durationMs": 67.09999999403954
+        },
+        {
+          "startMs": 1635.8999999761581,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": "+-0123456789.,%"
+          },
+          "width": 244,
+          "height": 164,
+          "text": "-6%\n",
+          "confidence": 85,
+          "durationMs": 27
+        },
+        {
+          "startMs": 1681.8999999761581,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": ""
+          },
+          "width": 610,
+          "height": 94,
+          "text": "Invading Bomber Hitpoints\n",
+          "confidence": 95,
+          "durationMs": 80.40000000596046
+        },
+        {
+          "startMs": 1767.699999988079,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": "+-0123456789.,%"
+          },
+          "width": 240,
+          "height": 164,
+          "text": "-6%\n",
+          "confidence": 91,
+          "durationMs": 26.5
+        },
+        {
+          "startMs": 1856.699999988079,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "
+          },
+          "width": 378,
+          "height": 108,
+          "text": "Armor\n",
+          "confidence": 96,
+          "durationMs": 31.599999994039536
+        },
+        {
+          "startMs": 1894.8999999761581,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": ""
+          },
+          "width": 770,
+          "height": 94,
+          "text": "Invading Assault Vehicle Hitpoints\n",
+          "confidence": 94,
+          "durationMs": 92.90000000596046
+        },
+        {
+          "startMs": 1991.5999999940395,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": "+-0123456789.,%"
+          },
+          "width": 292,
+          "height": 199,
+          "text": "-6%\n",
+          "confidence": 86,
+          "durationMs": 52.900000005960464
+        }
+      ],
+      "rendered": {
+        "capture": "17 read · 0 inferred · 0 typed",
+        "comparison": "Improves top 2 for 1 of 1 strategies",
+        "itemTotal": "135",
+        "benchmark": "95",
+        "progress": "Finished · 5/5 · ready to move on",
+        "logRows": 11
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "name": "Invading Paratrooper Damage",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Assault Vehicle Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading MRL Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Generals' Damage",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Bomber Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Armor"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9529411764705882,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": []
+      },
+      "lastParsedCalls": 12,
+      "variant": "baseline",
+      "repetition": 0,
+      "seed": {
+        "seededItems": 10,
+        "seededScans": 10,
+        "owned": 500,
+        "logBytes": 147537
+      }
+    },
+    {
+      "fixture": "video174",
+      "temperature": "warm",
+      "logs": 10,
+      "owned": 500,
+      "firstStatsPaintedMs": 1986.0999999940395,
+      "firstScorePaintedMs": 1986.0999999940395,
+      "expectedScore": 135,
+      "motion": "flicker",
+      "fullCapturePaintedMs": 1986.0999999940395,
+      "elapsedMs": 2015.7999999821186,
+      "exactStats": true,
+      "metadata": {
+        "category": true,
+        "hall": true,
+        "stars": true,
+        "dice": null
+      },
+      "fullArtifactAssessable": true,
+      "complete": true,
+      "coverage": {
+        "identified": 17,
+        "read": 17,
+        "inferred": 0,
+        "typed": 0,
+        "captured": 17,
+        "expected": 17,
+        "percent": 100,
+        "missing": [],
+        "names": 5,
+        "values": 5,
+        "stars": 5,
+        "type": true,
+        "hall": true,
+        "dice": 0,
+        "diceExpected": 0
+      },
+      "reads": [
+        {
+          "startMs": 26,
+          "error": "Error: Recognition superseded or stopped"
+        },
+        {
+          "startMs": 360.2999999821186,
+          "durationMs": 1437.5,
+          "ocrCalls": 12,
+          "recognitionPath": "calibrated-fields"
+        }
+      ],
+      "collectionCalls": [
+        {
+          "kind": "recordResult",
+          "startMs": 1801.7999999821186,
+          "durationMs": 161.10000002384186
+        }
+      ],
+      "comparisonCalls": [
+        {
+          "startMs": 1450.0999999940395,
+          "durationMs": 0.4000000059604645
+        },
+        {
+          "startMs": 0.19999998807907104,
+          "durationMs": 0.30000001192092896
+        },
+        {
+          "startMs": 5.4000000059604645,
+          "durationMs": 0.29999998211860657
+        },
+        {
+          "startMs": 25.400000005960464,
+          "durationMs": 0.3999999761581421
+        },
+        {
+          "startMs": 359.69999998807907,
+          "durationMs": 0.4000000059604645
+        },
+        {
+          "startMs": 1803.7999999821186,
+          "durationMs": 156.10000002384186
+        }
+      ],
+      "stages": [
+        {
+          "stage": "prewarm-fast",
+          "durationMs": 290.90000000596046
+        },
+        {
+          "stage": "prewarm-standard",
+          "durationMs": 715
+        },
+        {
+          "stage": "speculation-start",
+          "time": 1458.7000000178814,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 6.5
+        },
+        {
+          "stage": "ocr-start",
+          "time": 1478.2000000178814,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 25.900000005960464
+        },
+        {
+          "stage": "speculation-discarded",
+          "time": 1708.300000011921,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 256
+        },
+        {
+          "stage": "speculation-discarded",
+          "time": 1768.9000000059605,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 316.59999999403954
+        },
+        {
+          "stage": "read-start",
+          "time": 1769.300000011921,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 317
+        },
+        {
+          "stage": "ocr-start",
+          "time": 1812.5999999940395,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 360.2999999821186
+        },
+        {
+          "stage": "ocr-end",
+          "time": 3250.2000000178814,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 1797.9000000059605
+        },
+        {
+          "stage": "published",
+          "time": 3414,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 1961.699999988079
+        },
+        {
+          "stage": "details-published",
+          "time": 3440.2000000178814,
+          "session": 1,
+          "itemId": 1,
+          "request": 4,
+          "atMs": 1987.9000000059605
+        }
+      ],
+      "longTasks": [
+        {
+          "startMs": 317,
+          "durationMs": 51
+        },
+        {
+          "startMs": 576.1999999880791,
+          "durationMs": 67
+        },
+        {
+          "startMs": 1537.5999999940395,
+          "durationMs": 59
+        },
+        {
+          "startMs": 1797.699999988079,
+          "durationMs": 168
+        }
+      ],
+      "ocrJobs": [
+        {
+          "startMs": 42.79999998211861,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "6",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": ""
+          },
+          "width": 748,
+          "height": 493,
+          "text": "Invading Paratrooper Damage -1%  bei             7\nJnwading Assault Vehile Hitpoints 3%\n\nInvading MRL Hitpoints -6%\n\nInvading Generais Damage -6%\n\nInvading Bomber Hiqnaints -0%\"\n",
+          "confidence": 62,
+          "durationMs": 272.7000000178814
+        },
+        {
+          "startMs": 372.69999998807907,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "6",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": ""
+          },
+          "width": 748,
+          "height": 493,
+          "text": "Invading Paratrooper Damage -1%  bei             7\nJnwading Assault Vehile Hitpoints 3%\n\nInvading MRL Hitpoints -6%\n\nInvading Generais Damage -6%\n\nInvading Bomber Hiqnaints -0%\"\n",
+          "confidence": 62,
+          "durationMs": 203.7000000178814
+        },
+        {
+          "startMs": 644.2999999821186,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "6",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": ""
+          },
+          "width": 1218,
+          "height": 680,
+          "text": "Invading Paratrooper Damage -1%\nInvading Assault Vehicle Hitpoints -6%¢\nInvading MRL Hitpoints -649\n\nInvading Generals Damage -6%\nInvading Bomber Hitpoints -5¢7\n",
+          "confidence": 76,
+          "durationMs": 247.40000000596046
+        },
+        {
+          "startMs": 915.5,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "6",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": ""
+          },
+          "width": 748,
+          "height": 493,
+          "text": "Invading Assault Vehicle Hitpoints 694             7\nInvading MRL Hitpoints -895\n\nInvading Generais’ Damage -6%\n\nInvading Bamber Hitpoints Be                a\n",
+          "confidence": 68,
+          "durationMs": 225.5
+        },
+        {
+          "startMs": 1151.9000000059605,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": ""
+          },
+          "width": 770,
+          "height": 94,
+          "text": "Invading Assault Vehicle Hitpoints\n",
+          "confidence": 92,
+          "durationMs": 86.69999998807907
+        },
+        {
+          "startMs": 1252.5999999940395,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": "+-0123456789.,%"
+          },
+          "width": 240,
+          "height": 164,
+          "text": "",
+          "confidence": 0,
+          "durationMs": 44.80000001192093
+        },
+        {
+          "startMs": 1305.9000000059605,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": ""
+          },
+          "width": 544,
+          "height": 94,
+          "text": "Invading MRL Hitpoints\n",
+          "confidence": 90,
+          "durationMs": 68.5
+        },
+        {
+          "startMs": 1383.5,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": "+-0123456789.,%"
+          },
+          "width": 244,
+          "height": 164,
+          "text": "-6%\n",
+          "confidence": 85,
+          "durationMs": 26.599999994039536
+        },
+        {
+          "startMs": 1426.4000000059605,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": ""
+          },
+          "width": 610,
+          "height": 94,
+          "text": "Invading Bomber Hitpoints\n",
+          "confidence": 95,
+          "durationMs": 83.59999999403954
+        },
+        {
+          "startMs": 1515.4000000059605,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": "+-0123456789.,%"
+          },
+          "width": 240,
+          "height": 164,
+          "text": "-6%\n",
+          "confidence": 91,
+          "durationMs": 22.299999982118607
+        },
+        {
+          "startMs": 1604,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz "
+          },
+          "width": 378,
+          "height": 108,
+          "text": "Armor\n",
+          "confidence": 96,
+          "durationMs": 35.79999998211861
+        },
+        {
+          "startMs": 1653.2999999821186,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": ""
+          },
+          "width": 770,
+          "height": 94,
+          "text": "Invading Assault Vehicle Hitpoints\n",
+          "confidence": 94,
+          "durationMs": 99.7000000178814
+        },
+        {
+          "startMs": 1758.5999999940395,
+          "model": "http://127.0.0.1:55102/ui/vendor/tesseract/lang-fast/",
+          "parameters": {
+            "tessedit_pageseg_mode": "7",
+            "preserve_interword_spaces": "1",
+            "tessedit_char_whitelist": "+-0123456789.,%"
+          },
+          "width": 292,
+          "height": 199,
+          "text": "-6%\n",
+          "confidence": 86,
+          "durationMs": 34.80000001192093
+        }
+      ],
+      "rendered": {
+        "capture": "17 read · 0 inferred · 0 typed",
+        "comparison": "Improves top 2 for 1 of 1 strategies",
+        "itemTotal": "135",
+        "benchmark": "95",
+        "progress": "Finished · 5/5 · ready to move on",
+        "logRows": 11
+      },
+      "result": {
+        "valid": true,
+        "rows": [
+          {
+            "name": "Invading Paratrooper Damage",
+            "value": -1,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": true,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Assault Vehicle Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading MRL Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Generals' Damage",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          },
+          {
+            "name": "Invading Bomber Hitpoints",
+            "value": -6,
+            "known": true,
+            "assumed": false,
+            "tierConflict": false,
+            "unlocked": false,
+            "rerollEligible": true,
+            "rerollSource": "fresh-craft"
+          }
+        ],
+        "artifact": {
+          "type": "Armor"
+        },
+        "hall": "main",
+        "hallSource": "hall-colour",
+        "unlocked": {
+          "count": 1,
+          "states": [
+            true,
+            false,
+            false,
+            false,
+            false
+          ],
+          "method": "stars",
+          "fills": [
+            0.9529411764705882,
+            0,
+            0,
+            0,
+            0
+          ]
+        },
+        "warnings": []
+      },
+      "lastParsedCalls": 12,
+      "variant": "comparison",
+      "repetition": 0,
+      "seed": {
+        "seededItems": 10,
+        "seededScans": 10,
+        "owned": 500,
+        "logBytes": 147537
+      }
+    }
+  ],
+  "limitations": "Static repository screenshots and original labelled video stills; production auto controller receives first readable sample then samples every 100ms. Fresh Chrome profile per sample; cold includes local worker/model startup after first sample. Warm starts with both fast and standard fallback workers initialized; each warmup is recorded outside timing, without a recognition pre-read. Exact names and signed values required. Complete latency requires labelled category, detected Hall, labelled five star states, 100% production capture meter, a rendered comparison and two requestAnimationFrame callbacks. Fixtures without category/Hall/star truth report partial stats only. Fresh-craft dice eligibility is production inference, not independently pixel labelled. Screenshot loading, seed setup, navigation, screen-share permission, game animation and persistence completion are outside timing. Log synchronous serialization/render costs remain inside timing. Small sample p95 is descriptive, not representative field performance. Compare matched fixture groups; aggregate complete latency excludes failed cases and must not compare different sets of completed fixtures."
+}

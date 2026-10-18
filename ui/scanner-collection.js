@@ -87,7 +87,8 @@
         encounterId:encounter || prior?.encounterId || null,profileKey:profileKey || prior?.profileKey || null,
         keepId:prior?.keepId || 'craft-log-'+id,keptId:prior?.keptId || null,
         hallSource:result.hallSource || prior?.hallSource || null,
-        name:result.artifact?.name || prior?.name || null,image:result.artifact?.image || prior?.image || null,
+        name:prior?.nameSource==='manual'?prior.name:result.artifact?.name || prior?.name || null,
+        nameSource:prior?.nameSource || null,image:result.artifact?.image || prior?.image || null,
         type:result.artifact?.type || prior?.type || null,freshCraft:result.freshCraft ?? prior?.freshCraft ?? rows.every(row=>row.rerollSource==='fresh-craft'),rows,unlocked:result.unlocked || prior?.unlocked || null};
       const next=clone(window.DNStoredArtifacts?.backfillItem(item) || item);
       if(prior) {
@@ -231,6 +232,7 @@
         const category=window.DNScannerKeep && !item.type?'<label>Category <select data-log-type="'+escape(item.id)+'"><option value="">Choose category</option>'+categories.map(ex=>{const type=ex.key.replace(/^war-/,'');return '<option value="'+escape(type)+'">'+escape(ex.label.replace(/ Exhibit$/,''))+'</option>';}).join('')+'</select></label>':'';
         const node=document.createElement('li');node.dataset.logItem=item.id;
         node.innerHTML='<strong>Item '+itemNumbers.get(item.id)+'</strong>'+(item.name?' · '+escape(item.name):'')+' · '+escape(hallLabel(item.hall))+(item.type?' · '+escape(item.type):'')+' · '+(item.corrected?'Corrected':isComplete(item)?'Stats complete':item.validated?'Read complete':'Needs review')+
+        '<label class="scanner-log-name">Item name <input type="text" data-log-name="'+escape(item.id)+'" value="'+escape(item.name || '')+'" placeholder="Name this artifact"'+(busy || item.keptId?' disabled':'')+' /></label>'+
         '<ol>'+Array.from({length:item.expectedRows || 5},(_,i)=>{const row=item.rows[i];return '<li>'+escape(row?.name || row?.raw || 'Unread stat')+' <strong>'+escape(Number.isFinite(row?.value)?(row.value>=0?'+':'')+row.value+'%':'?%')+'</strong>'+(row?.inferred?' (inferred)':row?.assumed?' (assumed)':'')+'</li>';}).join('')+'</ol>'+category+
         (window.DNScannerKeep?'<button type="button" class="btn" data-keep-log="'+escape(item.id)+'"'+(busy || item.keptId || reason?' disabled':'')+' title="'+escape(item.keptId?'Added to Collection':reason || 'Add this logged craft to Collection and benchmarks')+'">'+(busy?'Saving…':item.keptId?'Kept':'Keep')+'</button>':'')+
         (keepMessages.has(item.id)?'<p role="status">'+escape(keepMessages.get(item.id))+'</p>':'');
@@ -259,6 +261,12 @@
     try{await window.DNScannerKeep.keepLogged(item);}
     catch(error){keepMessages.set(id,error.message || 'Could not keep this craft. Try again.');}
     finally{keeping.delete(id);render({itemId:id});}
+  });
+  document.getElementById('scanner-item-log')?.addEventListener('input',event=>{
+    const id=event.target.dataset.logName,item=id && collector.getItem(id);
+    if(!item || item.keptId || keeping.has(id))return;
+    // Save without replacing the focused field or the Keep button being clicked.
+    if(collector.updateItem(id,{name:event.target.value.trim() || null,nameSource:'manual'}))persist();
   });
   document.getElementById('scanner-item-log')?.addEventListener('change',event=>{
     const id=event.target.dataset.logType;if(!id || !event.target.value)return;

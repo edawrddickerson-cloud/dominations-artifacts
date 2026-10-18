@@ -1,0 +1,35 @@
+/* Optional-service bootstrap. Local planner code never imports a cloud SDK.
+ * Failures here are isolated from capture, scoring and local persistence. */
+(() => {
+  'use strict';
+  if(window.DNServicesReady)return;
+  const base=new URL('.',document.currentScript.src);
+  const loads=new Map();
+  function script(path) {
+    const url=new URL(path,base).href;
+    if(!loads.has(url))loads.set(url,new Promise((resolve,reject)=>{
+      const node=document.createElement('script'),timer=setTimeout(()=>{node.remove();reject(Error('Optional service could not load.'));},15000);
+      node.src=url;node.async=true;
+      node.onload=()=>{clearTimeout(timer);resolve();};node.onerror=()=>{clearTimeout(timer);loads.delete(url);reject(Error('Optional service could not load.'));};
+      document.head.appendChild(node);
+    }));
+    return loads.get(url);
+  }
+  window.DNServiceLoader={script};
+  async function boot() {
+    if(!window.DN)return;
+    await script('service-config.js?v=2');
+    await script('integration-core.js?v=2');
+    await script('service-store.js?v=2');
+    await script('telemetry.js?v=2');
+    await Promise.all([script('cloud-sync.js?v=2'),script('research.js?v=2')]);
+    if(!window.DNStoredArtifacts)await script('stored-artifacts.js?v=23');
+    if(!window.DNLocalBackupCore)await script('local-backup.js?v=3');
+    await script('cloud.js?v=2');
+    await script('services-ui.js?v=2');
+  }
+  window.DNServicesReady=new Promise(resolve=>{
+    const run=()=>boot().catch(()=>{ /* Optional services cannot break the local application. */ }).finally(resolve);
+    if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',run,{once:true});else run();
+  });
+})();

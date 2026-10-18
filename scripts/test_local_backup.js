@@ -11,7 +11,7 @@ class Storage {
   setItem(k,v){if(v==='quota-error')throw new Error('Quota exceeded');this.values.set(k,v);}
   removeItem(k){this.values.delete(k);}
 }
-const data={kind:'dominations-planner-backup',version:1,settings:{'dn-crafting-scanner-log-v2':'{"items":[]}','dn-profiles':'{"profiles":[{"id":"main","name":"Main"}]}'},records:[
+const data={kind:'dominations-planner-backup',version:1,settings:{'dn_perk_group_defaults_v1':'{"Aircraft:damage":{"offensive":4}}','dn-crafting-scanner-log-v2':'{"items":[]}','dn-profiles':'{"profiles":[{"id":"main","name":"Main"}]}'},records:[
   {id:'items',items:[{id:'scan-a',name:'Example',hall:'main',type:'Weapon',image:'data:image/png;base64,YQ==',rows:[{name:'Damage',value:-6,base:-6,max:-15,rerollEligible:true}]}]},
   {id:'collection:main',items:[]}
 ]};
@@ -19,11 +19,17 @@ const data={kind:'dominations-planner-backup',version:1,settings:{'dn-crafting-s
   validate(data);
   for(const bad of [{}, {...data,version:2},{...data,settings:{unrelated:'x'}},{...data,records:[data.records[0],data.records[0]]},
     {...data,records:[{id:'items',items:[{...data.records[0].items[0],image:'https://example.com/image.png'}]}]}])assert.throws(()=>validate(bad));
-  const storage=new Storage([['unrelated','keep'],['dn-old','old']]);
+  const storage=new Storage([['unrelated','keep'],['sb-auth-token','private'],['dn_cloud_runtime','private'],['dn_perk_group_defaults_v1','old-groups'],['dn-old','old']]);
+  assert.equal(settingsSnapshot(storage).dn_perk_group_defaults_v1,'old-groups','group defaults are included despite their historical underscore prefix');
+  assert.equal(settingsSnapshot(storage)['sb-auth-token'],undefined,'authentication is never exported');
+  assert.equal(settingsSnapshot(storage).dn_cloud_runtime,undefined,'integration state is never exported');
   const store={records:[{id:'items',items:[]}],async restoreBackupRecords(records,write){write();this.records=structuredClone(records);}};
   await restore(JSON.parse(JSON.stringify(data)),storage,store);
   assert.equal(storage.getItem('unrelated'),'keep');assert.equal(storage.getItem('dn-old'),null);
   assert.equal(storage.getItem('dn-profiles'),data.settings['dn-profiles']);
+  assert.equal(storage.getItem('dn_perk_group_defaults_v1'),data.settings.dn_perk_group_defaults_v1,'global group defaults survive restore');
+  assert.equal(storage.getItem('sb-auth-token'),'private');
+  assert.equal(storage.getItem('dn_cloud_runtime'),'private');
   assert.deepEqual(store.records,[...data.records,{id:'crafting-log',value:data.settings['dn-crafting-scanner-log-v2']}],'artwork, stats and legacy logs survive a JSON round trip');
   assert.equal(storage.getItem('dn-crafting-scanner-log-v2'),null,'legacy logs no longer consume settings quota');
   validate({...data,settings:{},records:store.records});

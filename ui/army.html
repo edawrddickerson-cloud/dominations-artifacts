@@ -35,12 +35,11 @@
     <div class="header-controls" aria-label="Primary filters"><fieldset class="seg-field"><legend>Hall</legend><div class="seg" role="group" aria-label="Hall"><button type="button" class="seg-btn" id="header-main" aria-pressed="false">Main</button><button type="button" class="seg-btn" id="header-war" aria-pressed="false">War</button></div></fieldset><fieldset class="seg-field"><legend>Base Type</legend><div class="seg seg-mini" role="group" aria-label="Base Type"><button type="button" class="seg-btn" id="header-off" aria-pressed="false">Off</button><button type="button" class="seg-btn" id="header-def" aria-pressed="false">Def</button></div></fieldset><div id="header-profile" class="header-profile"></div></div>
   </header>
 
-  <section class="filters army-controls" aria-label="Strategies">
+  <section class="filters army-controls" aria-label="Army loadouts">
     <div class="filter-main">
       <div class="filter-control">
-        <span class="filter-label">Saved strategies</span>
-        <div class="seg army-preset-strip" id="preset-strip" role="group" aria-label="Strategies"></div>
-        <label class="strategy-archive-toggle"><input type="checkbox" id="strategy-archived" /> Show archived</label>
+        <span class="filter-label">Loadout</span>
+        <div class="seg army-preset-strip" id="preset-strip" role="group" aria-label="Loadouts"></div>
       </div>
       <label class="filter-control army-rename">
         Name
@@ -48,20 +47,16 @@
       </label>
     </div>
     <div class="filter-actions army-preset-actions">
-      <button type="button" class="btn" id="preset-add">New strategy</button>
-      <button type="button" class="btn" id="strategy-duplicate">Duplicate</button>
-      <button type="button" class="btn" id="strategy-favorite">☆ Favorite</button>
-      <button type="button" class="btn" id="strategy-earlier" aria-label="Move strategy earlier">Move earlier</button>
-      <button type="button" class="btn" id="strategy-later" aria-label="Move strategy later">Move later</button>
-      <button type="button" class="btn" id="strategy-archive">Archive</button>
+      <button type="button" class="btn" id="preset-add">Create new loadout</button>
       <button type="button" class="btn" id="preset-remove">Delete</button>
+      <button type="button" class="btn" id="army-discard" disabled>Revert changes</button>
+      <button type="button" class="btn btn-accent" id="army-save" disabled>Save loadout</button>
     </div>
   </section>
 
   <p id="error" class="error" hidden></p>
-  <div class="strategy-save-bar"><span id="strategy-status" role="status">Loading strategy…</span><button type="button" class="btn" id="army-discard" disabled>Discard changes</button><button type="button" class="btn btn-accent" id="army-save" disabled>Save strategy</button></div>
-  <p class="army-hint" id="army-hint">Choose the troops used by this strategy.</p>
-  <aside class="strategy-notice" id="strategy-legacy" hidden><strong>Migrated priorities preserved.</strong> This strategy keeps your previous rating snapshot, including previous zero ratings. Changing its troops adopts strategy army defaults. You can also start fresh now, or review shared preferences in <a href="ratings.html">Perk ratings</a>.<button type="button" class="btn" id="strategy-adopt-defaults">Adopt army defaults</button></aside>
+  <p class="army-hint" id="strategy-status" role="status">Loading loadout…</p>
+  <p class="army-hint" id="army-hint">Choose your troops to personalise your perk ratings. Adjust individual perks in Settings → Perk ratings.</p>
 
   <section class="army-units" aria-label="Troop families">
     <h2 class="panel-title">Troops</h2>
@@ -70,9 +65,10 @@
   </div>
 
   <script src="data/army_catalog.js?v=8"></script>
-  <script src="shared.js?v=20261017-strategies"></script>
-  <script src="profiles-ui.js?v=20261017-strategies"></script>
-  <script src="army.js?v=20261017-strategies"></script>
-<!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "9c4fcfc024144c4aa34a78ae6332dc9f"}'></script><!-- End Cloudflare Web Analytics -->
+  <script src="shared.js?v=20261018-services"></script>
+  <script src="profiles-ui.js?v=20261018-loadouts"></script>
+  <script src="army.js?v=20261018-presets"></script>
+
+  <script src="services.js?v=2"></script>
 </body>
 </html>

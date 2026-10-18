@@ -1160,6 +1160,7 @@
     if (!strategy) return false;
     strategy.loadout = normalizeLoadout(loadout);
     saveStrategies(state);
+    try{window.DNTelemetry?.event('museum_configuration_saved',{},true);}catch{}
     return true;
   }
 
@@ -1587,12 +1588,14 @@
     const selected = presetList.find(p => p.id === armyParsed?.activeId);
     const sameArmy = selected && JSON.stringify(normalizeArmyUnits(selected.units)) === JSON.stringify(oldApplied);
     const legacy = {
-      id: newStrategyId(), name: sameArmy ? `${ptext(selected.name) || "Current army"} (Legacy)` : "Legacy current army",
+      id: sameArmy ? ptext(selected.id) || newStrategyId() : newStrategyId(),
+      name: sameArmy ? ptext(selected.name) || "Current preset" : "Current preset",
       units: oldApplied, overrides: {}, archived: false, favorite: false,
       inheritRatings: false, configured: armyRaw != null, loadout: normalizeLoadout(initialLayout),
       legacy: { configured: armyRaw != null,
         ratings: mergePerkRatingLayers(layers.global, layers.profile), groupDefaults },
     };
+    if (sameArmy) strategies.splice(presetList.indexOf(selected), 1);
     strategies.unshift(legacy);
     return saveStrategies({ v: 1, activeId: legacy.id, comparisonIds: strategies.map(item => item.id), comparisonAll: true,
       defaultInheritRatings: false, strategies, revision: 0 });
@@ -1605,6 +1608,38 @@
       try { parsed = JSON.parse(raw); } catch { /* Back up corrupt input before recovering from legacy state. */ }
       if (parsed && Array.isArray(parsed.strategies) && parsed.strategies.some(item => item && typeof item === "object")) {
         const normalized = normalizeStrategies(parsed);
+        // Repair the extra snapshot created by the first strategy migration.
+        // Keep its exact ratings and only remove an untouched source preset.
+        for (const current of normalized.strategies.filter(s => s.legacy)) {
+          if (current.name === 'Legacy current army') current.name = 'Current preset';
+          let oldArmy, originalLayout;
+          try {
+            const backup = JSON.parse(localStorage.getItem(profileStorageKey(STRATEGY_MIGRATION_BACKUP_KEY, activeProfileId())) || 'null');
+            oldArmy = JSON.parse(backup?.raw?.army || 'null');
+            originalLayout = normalizeLoadout(JSON.parse(backup?.raw?.loadout || 'null'));
+          } catch { continue; }
+          const original = oldArmy?.presets?.find(p => p.id === oldArmy.activeId);
+          if (!original || ![ptext(original.name), `${ptext(original.name) || 'Current army'} (Legacy)`].includes(current.name) ||
+              JSON.stringify(current.units) !== JSON.stringify(normalizeArmyUnits(original.units))) continue;
+          const duplicate = normalized.strategies.find(s => s.id === original.id && s.id !== current.id);
+          if (duplicate && duplicate.name === ptext(original.name) && !duplicate.legacy &&
+              !duplicate.archived && !duplicate.favorite && !duplicate.inheritRatings &&
+              !Object.keys(duplicate.overrides).length &&
+              JSON.stringify(duplicate.units) === JSON.stringify(current.units) &&
+              JSON.stringify(duplicate.loadout) === JSON.stringify(originalLayout)) {
+            normalized.strategies = normalized.strategies.filter(s => s.id !== duplicate.id);
+            if (normalized.activeId === duplicate.id) normalized.activeId = current.id;
+            normalized.comparisonIds = normalized.comparisonIds.map(id => id === duplicate.id ? current.id : id);
+          } else if (duplicate && duplicate.name === ptext(original.name)) {
+            // An edited source preset is additional user data. Keep it with a
+            // distinct name instead of leaving two indistinguishable buttons.
+            const names = new Set(normalized.strategies.map(s => s.name));
+            let name = `${duplicate.name} (saved)`, index = 2;
+            while (names.has(name)) name = `${duplicate.name} (saved ${index++})`;
+            duplicate.name = name;
+          }
+          current.name = ptext(original.name) || 'Current preset';
+        }
         // Repair imported IDs and schema defaults once, so an imported
         // strategy without an ID does not receive a different ID per read.
         if (JSON.stringify(normalized) !== JSON.stringify(parsed)) return saveStrategies(normalized);

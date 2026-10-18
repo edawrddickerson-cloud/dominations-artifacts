@@ -229,7 +229,9 @@ function boot(seed = {}, {oldLayers = false} = {}) {
   assert.equal(DN.addStrategy('Over UI limit'),null);
   const presets = Array.from({length:12},(_,i)=>({id:`p-${i}`,name:`Preset ${i}`,units:['APC']}));
   const legacy = boot({[scoped('dn-army-presets')]:JSON.stringify({activeId:'p-0',lastApplied:['APC'],presets})});
-  assert.equal(legacy.DN.loadStrategies().strategies.length,13,'legacy import does not truncate extra saved presets');
+  assert.equal(legacy.DN.loadStrategies().strategies.length,12,'migration retains saved presets without duplicating the current preset');
+  assert.equal(legacy.DN.activeStrategyId(),'p-0');
+  assert.equal(legacy.DN.activeStrategy().name,'Preset 0');
 }
 
 {
@@ -238,6 +240,34 @@ function boot(seed = {}, {oldLayers = false} = {}) {
   assert.equal(DN.activeStrategyId(),id,'imported missing IDs are durably repaired');
   assert.equal(DN.strategyRevision(),revision,'normal reads do not rewrite strategy storage');
   assert.equal(JSON.parse(store.get(scoped(DN.STRATEGIES_KEY))).strategies[0].id,id);
+}
+
+{
+  for (const edited of [false, true]) {
+   for (const alreadyRenamed of [false, true]) {
+    const army = {activeId:'preset-1',lastApplied:['APC'],presets:[{id:'preset-1',name:'Preset 1',units:['APC']}]};
+    const {DN,store} = boot({[scoped('dn-army-presets')]:JSON.stringify(army)});
+    const state = plain(DN.loadStrategies());
+    const current = state.strategies[0];
+    const duplicate = {...plain(current), legacy:undefined, overrides:edited ? {'APC Damage':{offensive:4}} : {}};
+    current.id='migration-snapshot'; current.name=alreadyRenamed ? 'Preset 1' : 'Preset 1 (Legacy)';
+    current.loadout.Main.mains=['artifact-used-after-migration'];
+    state.activeId=current.id;
+    state.strategies.push(duplicate);
+    state.comparisonIds=[current.id,duplicate.id];
+    store.set(scoped(DN.STRATEGIES_KEY),JSON.stringify(state));
+    const repaired=DN.loadStrategies();
+    assert.equal(repaired.strategies.length,edited ? 2 : 1,'only untouched migration duplicates are consolidated');
+    assert.equal(DN.activeStrategy().name,'Preset 1','current preset has an ordinary name');
+    assert.equal(repaired.strategies.filter(s=>s.name==='Preset 1').length,1,'already renamed migration state has just one Preset 1');
+    assert.deepEqual(plain(DN.activeStrategy().loadout.Main.mains),['artifact-used-after-migration'],'cleanup preserves current artifact layout');
+    assert.deepEqual(plain(DN.activeStrategy().legacy),current.legacy,'current rating snapshot is preserved');
+    assert.equal(new Set(repaired.comparisonIds).size,repaired.comparisonIds.length,'comparison selection remains valid');
+    const durable=store.get(scoped(DN.STRATEGIES_KEY));
+    DN.loadStrategies();
+    assert.equal(store.get(scoped(DN.STRATEGIES_KEY)),durable,'repair is durable and runs once');
+   }
+  }
 }
 
 console.log('Strategies: independent ratings, relevance, linked units, exact migration, layouts, profiles, comparison selection, retries and import retention passed.');

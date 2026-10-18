@@ -1,0 +1,37 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const catalog=JSON.parse(fs.readFileSync('ui/data/artifacts.json','utf8'));
+let profile='first',writes=0;
+const saved=new Map(),DN={activeProfileId:()=>profile,COLLECTED_KEY:'dn-artifact-collected',
+  loadCollected:()=>new Set(JSON.parse(saved.get(profile) || '[]')),
+  lsSet:(key,value)=>{assert.equal(key,DN.COLLECTED_KEY);writes++;saved.set(profile,value);}};
+const context={window:{DN}};vm.createContext(context);
+vm.runInContext(fs.readFileSync('ui/stored-artifacts.js','utf8'),context);
+const store=context.window.DNStoredArtifacts;
+const scan=(name,count=5,hall='main')=>({name,hall,rows:Array.from({length:count},()=>({}))});
+const legendary=scan('Enigma Machine'),mythical=scan('Enigma Machine',6);
+assert.equal(store.matchCatalog(legendary,catalog)?.artifact_id,'enigma-machine-legendary');
+assert.equal(store.matchCatalog(mythical,catalog)?.artifact_id,'enigma-machine-mythical');
+assert.equal(store.matchCatalog({...mythical,type:'Legendary'},catalog)?.grade,'Mythical','attribute count takes precedence over banner OCR');
+assert.equal(store.matchCatalog(scan('  ENIGMA   MACHINE '),catalog)?.artifact_id,'enigma-machine-legendary');
+assert.equal(store.matchCatalog(scan("Admiral Yi's Helmet"),catalog)?.artifact_id,'admiral-yi-s-helmet-legendary');
+assert.equal(store.matchCatalog(scan('The Mask of Tutankhamun'),catalog)?.artifact_id,'mask-of-tutankhamun-legendary','reviewed alternate titles match');
+assert.equal(store.matchCatalog(scan('British Kettle Drum',6,'war'),catalog)?.artifact_id,'british-kettle-drum-mythical');
+const linked=store.linkCatalogItem({...legendary,id:'old-scan',type:'Weapon',reviewed:true},catalog,{legacy:true});
+assert.equal(linked.id,'enigma-machine-legendary');assert.equal(linked.catalogId,linked.id);assert.equal(linked.type,'Legendary');
+assert.equal(linked.legacyIds[0],'old-scan');
+const combined=store.catalogRows(catalog,[linked]);
+assert.equal(combined.length,catalog.length,'a linked scan enriches the existing catalog entry');
+assert.equal(combined.find(row=>row.artifact_id===linked.id).scanned,linked);
+assert.equal(combined.find(row=>row.artifact_id==='enigma-machine-mythical').scanned,undefined,'editions never share their snapshots');
+for(const item of [scan('Enigma Machine',4),scan('Enigma Machine',7),scan('Enigma Machine',5,'war'),scan('Enigma'),scan('Unlisted craft')])assert.equal(store.matchCatalog(item,catalog),null);
+assert.equal(store.matchCatalog(legendary,[...catalog,{...catalog.find(row=>row.artifact_id==='enigma-machine-legendary'),artifact_id:'ambiguous'}]),null,'ambiguous names stay unmarked');
+store.markCatalogOwned([legendary],catalog);
+assert.deepEqual([...DN.loadCollected()],['enigma-machine-legendary']);
+store.markCatalogOwned([legendary],catalog);assert.equal(writes,1,'repeated reads do not rewrite settings');
+store.markCatalogOwned([mythical],catalog);
+assert.deepEqual([...DN.loadCollected()],['enigma-machine-legendary','enigma-machine-mythical']);
+profile='second';store.markCatalogOwned([mythical],catalog,{profileKey:'collection:first'});
+assert.equal(DN.loadCollected().size,0,'stale profile scans cannot mark the newly active profile');
+store.markCatalogOwned([mythical],catalog,{isCurrent:()=>false});assert.equal(DN.loadCollected().size,0,'cancelled scans stay unmarked');
+store.markCatalogOwned([mythical],catalog);assert.deepEqual([...DN.loadCollected()],['enigma-machine-mythical']);
+console.log('Catalog names, aliases, five/six attribute editions, ambiguous matches, incomplete stats, repeat reads and profile isolation passed.');

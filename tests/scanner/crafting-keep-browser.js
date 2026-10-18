@@ -49,7 +49,9 @@
   await store.write('items',[unrelated('unreviewed-ownership'),{...unrelated('other-profile'),keptFromCraft:true,profileId:'different-profile'}, {...inventory[0],id:'legacy-kept',rows:rows(1)}]);
   window.dispatchEvent(new Event('focus'));await pause(100);
   check('ordinary pending scans and other profiles do not raise benchmarks',get('benchmarks').querySelector('[data-category="weapon"] dd').textContent==='200');
-  const reopened=document.createElement('iframe');reopened.hidden=true;reopened.src='scanner.html';document.body.append(reopened);
+  // The session host and scanner already share a URL. A distinct test query
+  // avoids Chromium's recursive-frame guard when simulating reopening.
+  const reopened=document.createElement('iframe');reopened.hidden=true;reopened.src='scanner.html?keep-reopen=inventory';document.body.append(reopened);
   await wait(()=>reopened.contentDocument?.querySelector('#scanner-benchmarks [data-category="weapon"] dd')?.textContent==='200');
   check('kept inventory benchmarks survive reopening',true);
   await wait(async()=>(await store.read(profileKey)).some(item=>item.id==='legacy-kept'));
@@ -79,10 +81,13 @@
   const beforeLogged=(await keptItems()).length;
   await read(1);const missed=(await logData()).items.at(-1);
   await read(6);const final=(await logData()).items.at(-1);
+  const setLogName=(id,name)=>{const input=[...get('item-log').querySelectorAll('[data-log-name]')].find(input=>input.dataset.logName===id);input.value=name;input.dispatchEvent(new Event('input',{bubbles:true}));};
+  setLogName(final.id,'Named craft <Weapon>');await DNScannerCollection.flush();
   check('each completed physical craft is logged separately',missed.id!==final.id && missed.rows.length===5 && final.rows.length===5 && missed.profileKey===profileKey);
   response=complete(6);response.valid=false;response.warnings=['Other OCR evidence needs review'];response.rows[2]={...response.rows[2],value:11,confidence:97};
   get('read').click();await wait(()=>!get('read').disabled);
   const finalSnapshot=(await logData()).items.find(item=>item.id===final.id);
+  check('manually entered log name survives OCR retries',finalSnapshot.name==='Named craft <Weapon>' && finalSnapshot.nameSource==='manual');
   check('log follows the last stronger held stats rather than an older validated read',finalSnapshot.rows[2].value===11 && !finalSnapshot.validated && logButton(final.id) && !logButton(final.id).disabled);
   document.querySelector('details[aria-label="Crafted item log"]').open=true;
   store.keepCraft=async()=>{throw Error('Log Keep write failure');};
@@ -96,14 +101,17 @@
   loggedInventory=await keptItems();
   check('log Keep retains the recognized name and artwork',loggedInventory.find(item=>item.id===missed.keepId)?.name==='Test crafted weapon' && loggedInventory.find(item=>item.id===missed.keepId)?.image?.startsWith('data:image/jpeg'));
   check('Keep from log saves the final held snapshot',loggedInventory.find(item=>item.id===final.keepId)?.rows[2].value===11 && loggedInventory.length===beforeLogged+2);
+  check('Keep from log retains the manually entered item name',loggedInventory.find(item=>item.id===final.keepId)?.name==='Named craft <Weapon>');
   check('keeping the current logged craft updates the current Keep button',get('keep').textContent==='Kept' && get('keep').disabled);
-  await read(11);const shared=(await logData()).items.at(-1);get('keep').click();
+  await read(11);const shared=(await logData()).items.at(-1);setLogName(shared.id,'Main Keep name');get('keep').click();
   await wait(()=>get('keep').textContent==='Kept' && logButton(shared.id).textContent==='Kept');
   logButton(shared.id).click();
   check('current and logged Keep share one physical item ID',(await keptItems()).filter(item=>item.id===shared.keepId).length===1);
-  const logReopened=document.createElement('iframe');logReopened.hidden=true;logReopened.src='scanner.html';document.body.append(logReopened);
+  check('main Keep retains the name entered in the crafting log',(await keptItems()).find(item=>item.id===shared.keepId)?.name==='Main Keep name');
+  const logReopened=document.createElement('iframe');logReopened.hidden=true;logReopened.src='scanner.html?keep-reopen=log';document.body.append(logReopened);
   await wait(()=>logReopened.contentWindow?.DNScannerCollection);
   check('logged stats and Kept status survive reopening',[...logReopened.contentDocument.querySelectorAll('[data-keep-log]')].some(button=>button.dataset.keepLog===missed.id && button.disabled && button.textContent==='Kept'));
+  check('entered item names survive reopening the crafting log',[...logReopened.contentDocument.querySelectorAll('[data-log-name]')].some(input=>input.dataset.logName===final.id && input.value==='Named craft <Weapon>'));
   logReopened.remove();
   await read(11,false,{valid:false,rows:rows(11).map((row,i)=>i===2?{...row,inferred:true,colour:'blue'}:row)});
   const inferredLog=(await logData()).items.at(-1);

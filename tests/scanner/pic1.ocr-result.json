@@ -1,1394 +1,1377 @@
 {
-  "fixture": "pic1.png",
-  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/153.0.0.0 Safari/537.36",
-  "panel": {
-    "x": 0.378125,
-    "y": 0.24175824175824176,
-    "width": 0.48020833333333335,
-    "height": 0.43223443223443225
-  },
-  "detectorMs": 18.5,
-  "runs": [
-    {
-      "kind": "detected",
-      "rect": {
-        "x": 497,
-        "y": 181,
-        "width": 633,
-        "height": 324
-      },
-      "elapsedMs": 759.5999999046326,
-      "exact": true,
-      "complete": true,
-      "starsCorrect": true,
-      "percentageRecovery": true,
-      "expectedKnown": true,
-      "scoringParity": true,
-      "passed": true,
-      "rows": [
-        {
-          "raw": "Air Defense Damage +1%",
-          "name": "Air Defense Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": true
-        },
-        {
-          "raw": "Sniper Tower Hitpoints +1%",
-          "name": "Sniper Tower Hitpoints",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        },
-        {
-          "raw": "Catapult Hitpoints +1%",
-          "name": "Catapult Hitpoints",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        },
-        {
-          "raw": "Catapult Damage +1%",
-          "name": "Catapult Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        },
-        {
-          "raw": "Catapult Damage +1%",
-          "name": "Catapult Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        }
-      ],
-      "warnings": [],
-      "valid": true,
-      "observations": [
-        {
-          "pass": "block",
-          "rows": [
-            {
-              "raw": "Air Defense Damage +1%",
-              "name": "Air Defense Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Sniper Tower Hitpoints +1%",
-              "name": "Sniper Tower Hitpoints",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Hitpoints +1%",
-              "name": "Catapult Hitpoints",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Damage +1%",
-              "name": "Catapult Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Damage +1%",
-              "name": "Catapult Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            }
-          ],
-          "warnings": []
-        }
-      ],
-      "hall": "main",
-      "inferColours": false,
-      "unlocked": {
-        "count": 1,
-        "states": [
-          true,
-          false,
-          false,
-          false,
-          false
-        ],
-        "method": "stars",
-        "fills": [
-          0.9444444444444444,
-          0.035897435897435895,
-          0.027777777777777776,
-          0.046153846153846156,
-          0.05
-        ]
-      }
-    },
-    {
-      "kind": "manual-text",
-      "rect": {
-        "x": 570,
-        "y": 270,
-        "width": 532,
-        "height": 213
-      },
-      "elapsedMs": 242.2999997138977,
-      "exact": true,
-      "complete": true,
-      "starsCorrect": true,
-      "percentageRecovery": true,
-      "expectedKnown": true,
-      "scoringParity": true,
-      "passed": true,
-      "rows": [
-        {
-          "raw": "Air Defense Damage +1%",
-          "name": "Air Defense Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": null
-        },
-        {
-          "raw": "Sniper Tower Hitpoints +1%",
-          "name": "Sniper Tower Hitpoints",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": null
-        },
-        {
-          "raw": "Catapult Hitpoints +1%",
-          "name": "Catapult Hitpoints",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": null
-        },
-        {
-          "raw": "Catapult Damage +1%",
-          "name": "Catapult Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": null
-        },
-        {
-          "raw": "Catapult Damage +1%",
-          "name": "Catapult Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": null
-        }
-      ],
-      "warnings": [],
-      "valid": true,
-      "observations": [
-        {
-          "pass": "block",
-          "rows": [
-            {
-              "raw": "Air Defense Damage +1%",
-              "name": "Air Defense Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Sniper Tower Hitpoints +1%",
-              "name": "Sniper Tower Hitpoints",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Hitpoints +1%",
-              "name": "Catapult Hitpoints",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Damage +1%",
-              "name": "Catapult Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Damage +1%",
-              "name": "Catapult Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            }
-          ],
-          "warnings": []
-        }
-      ],
-      "hall": "main",
-      "inferColours": false,
-      "unlocked": {
-        "count": null,
-        "states": [
-          null,
-          null,
-          null,
-          null,
-          null
-        ],
-        "method": "stars"
-      }
-    },
-    {
-      "kind": "detected-scale-0.75",
-      "rect": {
-        "x": 373,
-        "y": 136,
-        "width": 474,
-        "height": 245
-      },
-      "elapsedMs": 208,
-      "exact": true,
-      "complete": true,
-      "starsCorrect": true,
-      "percentageRecovery": true,
-      "expectedKnown": true,
-      "scoringParity": true,
-      "passed": true,
-      "rows": [
-        {
-          "raw": "Air Defense Damage +1%",
-          "name": "Air Defense Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": true
-        },
-        {
-          "raw": "Sniper Tower Hitpoints +1%",
-          "name": "Sniper Tower Hitpoints",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        },
-        {
-          "raw": "Catapult Hitpoints +1%",
-          "name": "Catapult Hitpoints",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        },
-        {
-          "raw": "Catapult Damage +1%",
-          "name": "Catapult Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        },
-        {
-          "raw": "Catapult Damage +1%",
-          "name": "Catapult Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        }
-      ],
-      "warnings": [],
-      "valid": true,
-      "observations": [
-        {
-          "pass": "block",
-          "rows": [
-            {
-              "raw": "Air Defense Damage +1%",
-              "name": "Air Defense Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Sniper Tower Hitpoints +1%",
-              "name": "Sniper Tower Hitpoints",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Hitpoints +1%",
-              "name": "Catapult Hitpoints",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Damage +1%",
-              "name": "Catapult Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Damage +1%",
-              "name": "Catapult Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            }
-          ],
-          "warnings": []
-        }
-      ],
-      "hall": "main",
-      "inferColours": false,
-      "unlocked": {
-        "count": 1,
-        "states": [
-          true,
-          false,
-          false,
-          false,
-          false
-        ],
-        "method": "stars",
-        "fills": [
-          0.9727272727272728,
-          0,
-          0.00909090909090909,
-          0,
-          0
-        ]
-      }
-    },
-    {
-      "kind": "detected-scale-1.5",
-      "rect": {
-        "x": 746,
-        "y": 271,
-        "width": 949,
-        "height": 488
-      },
-      "elapsedMs": 341.09999990463257,
-      "exact": true,
-      "complete": true,
-      "starsCorrect": true,
-      "percentageRecovery": true,
-      "expectedKnown": true,
-      "scoringParity": true,
-      "passed": true,
-      "rows": [
-        {
-          "raw": "Air Defense Damage +1%",
-          "name": "Air Defense Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": true
-        },
-        {
-          "raw": "Sniper Tower Hitpoints +1%",
-          "name": "Sniper Tower Hitpoints",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        },
-        {
-          "raw": "Catapult Hitpoints +1%",
-          "name": "Catapult Hitpoints",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        },
-        {
-          "raw": "Catapult Damage +1%",
-          "name": "Catapult Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        },
-        {
-          "raw": "Catapult Damage +1%",
-          "name": "Catapult Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        }
-      ],
-      "warnings": [],
-      "valid": true,
-      "observations": [
-        {
-          "pass": "block",
-          "rows": [
-            {
-              "raw": "Air Defense Damage +1%",
-              "name": "Air Defense Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Sniper Tower Hitpoints +1%",
-              "name": "Sniper Tower Hitpoints",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Hitpoints +1%",
-              "name": "Catapult Hitpoints",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Damage +1%",
-              "name": "Catapult Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Damage +1%",
-              "name": "Catapult Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            }
-          ],
-          "warnings": []
-        }
-      ],
-      "hall": "main",
-      "inferColours": false,
-      "unlocked": {
-        "count": 1,
-        "states": [
-          true,
-          false,
-          false,
-          false,
-          false
-        ],
-        "method": "stars",
-        "fills": [
-          0.9856459330143541,
-          0,
-          0.007177033492822967,
-          0.005050505050505051,
-          0.005050505050505051
-        ]
-      }
-    },
-    {
-      "kind": "forced-first-pass-failure",
-      "rect": {
-        "x": 497,
-        "y": 181,
-        "width": 633,
-        "height": 324
-      },
-      "elapsedMs": 1734.2000002861023,
-      "exact": true,
-      "complete": true,
-      "starsCorrect": true,
-      "percentageRecovery": true,
-      "expectedKnown": true,
-      "scoringParity": true,
-      "injection": {
-        "description": "Synthetic robustness test: real first-pass output replaced with blank text/no line evidence; bounded row, colour and percentage retries use real OCR pixels.",
-        "actualWorkerCalls": 6,
-        "fallbackExecuted": true
-      },
-      "passed": true,
-      "rows": [
-        {
-          "raw": "Air Defense Damage +1%",
-          "name": "Air Defense Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": true
-        },
-        {
-          "raw": "Sniper Tower Hitpoints +1%",
-          "name": "Sniper Tower Hitpoints",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        },
-        {
-          "raw": "Catapult Hitpoints +1%",
-          "name": "Catapult Hitpoints",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        },
-        {
-          "raw": "Catapult Damage +1%",
-          "name": "Catapult Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        },
-        {
-          "raw": "Catapult Damage +1%",
-          "name": "Catapult Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        }
-      ],
-      "warnings": [],
-      "valid": true,
-      "hall": "main",
-      "inferColours": false,
-      "unlocked": {
-        "count": 1,
-        "states": [
-          true,
-          false,
-          false,
-          false,
-          false
-        ],
-        "method": "stars",
-        "fills": [
-          0.9444444444444444,
-          0.035897435897435895,
-          0.027777777777777776,
-          0.046153846153846156,
-          0.05
-        ]
-      },
-      "colourReads": [],
-      "percentageReads": [],
-      "observations": [
-        {
-          "pass": "block",
-          "rows": [],
-          "warnings": [
-            "Expected 5 visible rows; read 0. Check the complete panel.",
-            "Missing OCR line evidence. Verify the recognised rows."
-          ]
-        },
-        {
-          "pass": "individual-rows",
-          "rows": [
-            {
-              "raw": "Air Defense Damage +1%",
-              "name": "Air Defense Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Sniper Tower Hitpoints +1%",
-              "name": "Sniper Tower Hitpoints",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Hitpoints +1%",
-              "name": "Catapult Hitpoints",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Damage +1%",
-              "name": "Catapult Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Damage +1%",
-              "name": "Catapult Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            }
-          ],
-          "warnings": []
-        }
-      ]
-    },
-    {
-      "kind": "forced-sign-failure",
-      "rect": {
-        "x": 497,
-        "y": 181,
-        "width": 633,
-        "height": 324
-      },
-      "elapsedMs": 1480.4000000953674,
-      "exact": true,
-      "complete": true,
-      "starsCorrect": true,
-      "percentageRecovery": true,
-      "expectedKnown": true,
-      "scoringParity": true,
-      "injection": {
-        "description": "Synthetic robustness test: real first-pass output replaced with blank text/no line evidence; bounded row, colour and percentage retries use real OCR pixels.",
-        "actualWorkerCalls": 18,
-        "fallbackExecuted": true
-      },
-      "passed": true,
-      "rows": [
-        {
-          "raw": "Air Defense Damage «1%",
-          "name": "Air Defense Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "colour": "neutral",
-          "inferred": true,
-          "unlocked": true
-        },
-        {
-          "raw": "Sniper Tower Hitpoints «1%",
-          "name": "Sniper Tower Hitpoints",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "colour": "neutral",
-          "inferred": true,
-          "unlocked": false
-        },
-        {
-          "raw": "Catapult Hitpoints «1%",
-          "name": "Catapult Hitpoints",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "colour": "neutral",
-          "inferred": true,
-          "unlocked": false
-        },
-        {
-          "raw": "Catapult Damage «1%",
-          "name": "Catapult Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "colour": "neutral",
-          "inferred": true,
-          "unlocked": false
-        },
-        {
-          "raw": "Catapult Damage «1%",
-          "name": "Catapult Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "colour": "neutral",
-          "inferred": true,
-          "unlocked": false
-        }
-      ],
-      "warnings": [
-        "Unreadable signed percentage: Air Defense Damage «1%",
-        "Unreadable signed percentage: Sniper Tower Hitpoints «1%",
-        "Unreadable signed percentage: Catapult Hitpoints «1%",
-        "Unreadable signed percentage: Catapult Damage «1%",
-        "Unreadable signed percentage: Catapult Damage «1%",
-        "Row 1: percentage inferred from neutral text and the known perk sign. Verify it.",
-        "Row 2: percentage inferred from neutral text and the known perk sign. Verify it.",
-        "Row 3: percentage inferred from neutral text and the known perk sign. Verify it.",
-        "Row 4: percentage inferred from neutral text and the known perk sign. Verify it.",
-        "Row 5: percentage inferred from neutral text and the known perk sign. Verify it."
-      ],
-      "valid": false,
-      "hall": "main",
-      "inferColours": true,
-      "unlocked": {
-        "count": 1,
-        "states": [
-          true,
-          false,
-          false,
-          false,
-          false
-        ],
-        "method": "stars",
-        "fills": [
-          0.9444444444444444,
-          0.035897435897435895,
-          0.027777777777777776,
-          0.046153846153846156,
-          0.05
-        ]
-      },
-      "colourReads": [
-        {
-          "index": 0,
-          "text": "Air Defense Damage «1%                                           I i",
-          "quality": 76
-        },
-        {
-          "index": 1,
-          "text": "",
-          "quality": 0
-        }
-      ],
-      "percentageReads": [
-        {
-          "index": 0,
-          "reads": [
-            {
-              "text": "+1%",
-              "confidence": 0
-            },
-            {
-              "text": "+1%",
-              "confidence": 0
-            }
-          ]
-        },
-        {
-          "index": 1,
-          "reads": [
-            {
-              "text": "1+1%",
-              "confidence": 0
-            },
-            {
-              "text": "",
-              "confidence": 0
-            }
-          ]
-        },
-        {
-          "index": 2,
-          "reads": [
-            {
-              "text": "+1%",
-              "confidence": 0
-            },
-            {
-              "text": "+1%",
-              "confidence": 0
-            }
-          ]
-        },
-        {
-          "index": 3,
-          "reads": [
-            {
-              "text": "6+1%",
-              "confidence": 0
-            },
-            {
-              "text": "6+1%",
-              "confidence": 0
-            }
-          ]
-        },
-        {
-          "index": 4,
-          "reads": [
-            {
-              "text": "+1%",
-              "confidence": 0
-            },
-            {
-              "text": "+1%",
-              "confidence": 0
-            }
-          ]
-        }
-      ],
-      "observations": [
-        {
-          "pass": "block",
-          "rows": [],
-          "warnings": [
-            "Expected 5 visible rows; read 0. Check the complete panel.",
-            "Missing OCR line evidence. Verify the recognised rows."
-          ]
-        },
-        {
-          "pass": "individual-rows",
-          "rows": [
-            {
-              "raw": "Air Defense Damage «1%",
-              "name": "Air Defense Damage",
-              "value": null,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Sniper Tower Hitpoints «1%",
-              "name": "Sniper Tower Hitpoints",
-              "value": null,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Hitpoints «1%",
-              "name": "Catapult Hitpoints",
-              "value": null,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Damage «1%",
-              "name": "Catapult Damage",
-              "value": null,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Damage «1%",
-              "name": "Catapult Damage",
-              "value": null,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            }
-          ],
-          "warnings": [
-            "Unreadable signed percentage: Air Defense Damage «1%",
-            "Unreadable signed percentage: Sniper Tower Hitpoints «1%",
-            "Unreadable signed percentage: Catapult Hitpoints «1%",
-            "Unreadable signed percentage: Catapult Damage «1%",
-            "Unreadable signed percentage: Catapult Damage «1%"
-          ]
-        }
-      ]
-    },
-    {
-      "kind": "synthetic-unlocked-2",
-      "rect": {
-        "x": 497,
-        "y": 181,
-        "width": 633,
-        "height": 324
-      },
-      "elapsedMs": 299.5,
-      "exact": true,
-      "complete": true,
-      "starsCorrect": true,
-      "percentageRecovery": true,
-      "expectedKnown": true,
-      "scoringParity": true,
-      "passed": true,
-      "rows": [
-        {
-          "raw": "Air Defense Damage +1%",
-          "name": "Air Defense Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": true
-        },
-        {
-          "raw": "Sniper Tower Hitpoints +1%",
-          "name": "Sniper Tower Hitpoints",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": true
-        },
-        {
-          "raw": "Catapult Hitpoints +1%",
-          "name": "Catapult Hitpoints",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        },
-        {
-          "raw": "Catapult Damage +1%",
-          "name": "Catapult Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        },
-        {
-          "raw": "Catapult Damage +1%",
-          "name": "Catapult Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        }
-      ],
-      "warnings": [],
-      "valid": true,
-      "observations": [
-        {
-          "pass": "block",
-          "rows": [
-            {
-              "raw": "Air Defense Damage +1%",
-              "name": "Air Defense Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Sniper Tower Hitpoints +1%",
-              "name": "Sniper Tower Hitpoints",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Hitpoints +1%",
-              "name": "Catapult Hitpoints",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Damage +1%",
-              "name": "Catapult Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Damage +1%",
-              "name": "Catapult Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            }
-          ],
-          "warnings": []
-        }
-      ],
-      "hall": "main",
-      "inferColours": false,
-      "unlocked": {
-        "count": 2,
-        "states": [
-          true,
-          true,
-          false,
-          false,
-          false
-        ],
-        "method": "stars",
-        "fills": [
-          0.9444444444444444,
-          0.9487179487179487,
-          0.027777777777777776,
-          0.046153846153846156,
-          0.05
-        ]
-      }
-    },
-    {
-      "kind": "synthetic-unlocked-3",
-      "rect": {
-        "x": 497,
-        "y": 181,
-        "width": 633,
-        "height": 324
-      },
-      "elapsedMs": 216.30000019073486,
-      "exact": true,
-      "complete": true,
-      "starsCorrect": true,
-      "percentageRecovery": true,
-      "expectedKnown": true,
-      "scoringParity": true,
-      "passed": true,
-      "rows": [
-        {
-          "raw": "Air Defense Damage +1%",
-          "name": "Air Defense Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": true
-        },
-        {
-          "raw": "Sniper Tower Hitpoints +1%",
-          "name": "Sniper Tower Hitpoints",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": true
-        },
-        {
-          "raw": "Catapult Hitpoints +1%",
-          "name": "Catapult Hitpoints",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": true
-        },
-        {
-          "raw": "Catapult Damage +1%",
-          "name": "Catapult Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        },
-        {
-          "raw": "Catapult Damage +1%",
-          "name": "Catapult Damage",
-          "value": 1,
-          "known": true,
-          "assumed": false,
-          "hasPercent": true,
-          "unlocked": false
-        }
-      ],
-      "warnings": [],
-      "valid": true,
-      "observations": [
-        {
-          "pass": "block",
-          "rows": [
-            {
-              "raw": "Air Defense Damage +1%",
-              "name": "Air Defense Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Sniper Tower Hitpoints +1%",
-              "name": "Sniper Tower Hitpoints",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Hitpoints +1%",
-              "name": "Catapult Hitpoints",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Damage +1%",
-              "name": "Catapult Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            },
-            {
-              "raw": "Catapult Damage +1%",
-              "name": "Catapult Damage",
-              "value": 1,
-              "known": true,
-              "assumed": false,
-              "hasPercent": true
-            }
-          ],
-          "warnings": []
-        }
-      ],
-      "hall": "main",
-      "inferColours": false,
-      "unlocked": {
-        "count": 3,
-        "states": [
-          true,
-          true,
-          true,
-          false,
-          false
-        ],
-        "method": "stars",
-        "fills": [
-          0.9444444444444444,
-          0.9487179487179487,
-          0.9444444444444444,
-          0.046153846153846156,
-          0.05
-        ]
-      }
-    }
-  ],
   "passed": true,
-  "limitations": "One screenshot plus Canvas-derived scale probes and a deliberately injected first-pass failure only. First native and forced-failure OCR include worker initialization; other runs are warm. Scoring parity uses repository rating defaults for all modes/axes. No representative accuracy or continuous capture claim.",
+  "ui": {
+    "optional services make no telemetry requests before consent": true,
+    "account and privacy controls mount on the existing Profiles page": true,
+    "cancelled Discord login removes provider errors from the URL and displays a generic retry": true,
+    "banner Save preferences confirms the saved choices in the permanent account panel": true,
+    "checkbox edits show unsaved changes and do not grant consent before Save": true,
+    "Account Save preferences applies both choices and gives visible confirmation": true,
+    "saved consent, checked controls and confirmation survive a real reload": true,
+    "Save preferences can enable analytics without diagnostics": true,
+    "Save preferences also confirms an all-off choice": true,
+    "failed preference storage shows an error and keeps prior consent with the draft available to retry": true,
+    "retrying Save after a storage failure succeeds": true,
+    "Reject optional sharing persists across reload and restores unchecked controls": true,
+    "an unsuccessful OAuth code exchange leaves local use available": true,
+    "Discord sign-in returns to this site through PKCE and removes the one-time code": true,
+    "account controls show the Discord display name": true,
+    "sign-in does not upload existing browser data": true,
+    "global group defaults survive cloud migration": true,
+    "cloud preserves all ordered perk rows and reroll metadata": true,
+    "screenshots and raw OCR do not enter cloud payloads": true,
+    "replacement commits an importable safety backup first": true,
+    "linking choices disappear once the browser is saved": true,
+    "a real page reload retains the linked workspace and saved status": true,
+    "account export runs through the actual button and RPC": true,
+    "planner backup runs through the actual Export Backup button": true,
+    "cloud outage leaves local edits and newly kept artifacts intact": true,
+    "cloud outage is actionable without blocking local saving": true,
+    "reconnection uploads both offline changes": true,
+    "a lost write response preserves local data and shows pending connection status": true,
+    "retry reconciles a committed write without creating a second cloud revision": true,
+    "analytics sends allowlisted fields with no cookies or referrer": true,
+    "analytics uses the same opaque account identity across devices": true,
+    "22 OCR retries submit one confirmed new craft": true,
+    "a separate identical craft counts while storage scans do not": true,
+    "corrected outcomes recover after outage without increasing frequency": true,
+    "durable research restoration retains each outcome and original evidence": true,
+    "diagnostics consent works independently of product analytics": true,
+    "research withdrawal clears the durable upload queue": true,
+    "analytics can be enabled while research remains unavailable": true,
+    "concurrent edits produce a visible conflict": true,
+    "conflict never silently replaces local data": true,
+    "failed safety backup prevents both local and remote replacement": true,
+    "choosing the cloud version restores its data through the UI and reloads cleanly": true,
+    "the overwritten local conflict remains in an importable safety backup": true,
+    "another account cannot inherit this device’s upload permission": true,
+    "account controls fit the current viewport": true
+  },
+  "limitations": "Disposable test data with mocked Supabase transport and PostHog ingestion. PostgreSQL RLS/CAS and live read-only cloud recovery are tested separately.",
   "network": {
     "requests": [
       {
-        "url": "http://127.0.0.1:56087/ui/scanner.html",
+        "requestId": "DA98DC916B1BACEE07B9A0628E163549",
+        "url": "http://127.0.0.1:50681/ui/scanner.html",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/navigation.js?v=2",
+        "requestId": "45320.2",
+        "url": "http://127.0.0.1:50681/ui/scanner-session-entry.js?v=1",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/styles.css?v=39",
+        "requestId": "45320.3",
+        "url": "http://127.0.0.1:50681/ui/navigation.js?v=5",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/scanner.css?v=5",
+        "requestId": "45320.4",
+        "url": "http://127.0.0.1:50681/ui/styles.css?v=41",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/scanner-core.js?v=1",
+        "requestId": "45320.5",
+        "url": "http://127.0.0.1:50681/ui/scanner.css?v=20261018-log-names",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/data/army_catalog.js?v=4",
+        "requestId": "45320.6",
+        "url": "http://127.0.0.1:50681/ui/scanner-core.js?v=1",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/shared.js?v=33",
+        "requestId": "45320.7",
+        "url": "http://127.0.0.1:50681/ui/scanner-regions.js?v=3",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/artifact-scoring.js?v=1",
+        "requestId": "45320.8",
+        "url": "http://127.0.0.1:50681/ui/scanner-frames.js?v=3",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/vendor/tesseract/tesseract.min.js",
+        "requestId": "45320.9",
+        "url": "http://127.0.0.1:50681/ui/data/army_catalog.js?v=8",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/scanner-recognition.js?v=11",
+        "requestId": "45320.10",
+        "url": "http://127.0.0.1:50681/ui/shared.js?v=20261018-services",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/scanner-collection.js?v=3",
+        "requestId": "45320.11",
+        "url": "http://127.0.0.1:50681/ui/data/artifact_stat_context.js?v=1",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/scanner-reading.js?v=10",
+        "requestId": "45320.12",
+        "url": "http://127.0.0.1:50681/ui/artifact-stat-context.js?v=3",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/scanner.js?v=2",
+        "requestId": "45320.13",
+        "url": "http://127.0.0.1:50681/ui/profiles-ui.js?v=20261017-strategies",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/data/perk_name_mapping.csv",
+        "requestId": "45320.14",
+        "url": "http://127.0.0.1:50681/ui/artifact-scoring.js?v=20261017-strategies-reroll",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/data/perk_rating_defaults.json",
+        "requestId": "45320.15",
+        "url": "http://127.0.0.1:50681/ui/stored-artifacts.js?v=20261018-services",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/favicon.ico",
+        "requestId": "45320.16",
+        "url": "http://127.0.0.1:50681/ui/scanner-comparison.js?v=20261018-linked-artifacts",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/data/army_catalog.js",
+        "requestId": "45320.17",
+        "url": "http://127.0.0.1:50681/ui/scanner-keep.js?v=20261018-quiet-keep",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/shared.js",
+        "requestId": "45320.18",
+        "url": "http://127.0.0.1:50681/ui/vendor/tesseract/tesseract.min.js",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/scanner-core.js",
+        "requestId": "45320.19",
+        "url": "http://127.0.0.1:50681/ui/scanner-reroll-recognition.js?v=1",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/artifact-scoring.js",
+        "requestId": "45320.20",
+        "url": "http://127.0.0.1:50681/ui/scanner-name-catalog.js?v=1",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/vendor/tesseract/tesseract.min.js",
+        "requestId": "45320.21",
+        "url": "http://127.0.0.1:50681/ui/scanner-recognition.js?v=38",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/scanner-recognition.js",
+        "requestId": "45320.22",
+        "url": "http://127.0.0.1:50681/ui/scanner-field-recognition.js?v=9",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/tests/scanner/pic1.labels.json",
+        "requestId": "45320.23",
+        "url": "http://127.0.0.1:50681/ui/scanner-calibration.js?v=4",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/tests/scanner/pic1.png",
+        "requestId": "45320.24",
+        "url": "http://127.0.0.1:50681/ui/scanner-collection.js?v=20261018-log-names",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/data/perk_rating_defaults.json",
+        "requestId": "45320.25",
+        "url": "http://127.0.0.1:50681/ui/scanner-reading.js?v=20261018-services",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/data/perk_name_mapping.csv",
+        "requestId": "45320.26",
+        "url": "http://127.0.0.1:50681/ui/scanner-profile.js?v=1",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/vendor/tesseract/worker.min.js",
+        "requestId": "45320.27",
+        "url": "http://127.0.0.1:50681/ui/scanner.js?v=20261018-services",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/vendor/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+        "requestId": "45320.28",
+        "url": "http://127.0.0.1:50681/ui/services.js?v=2",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/vendor/tesseract/lang/eng.traineddata.gz",
+        "requestId": "F2A5D607CF49FA7A25F144D5E9CAE07D",
+        "url": "http://127.0.0.1:50681/ui/scanner-session.html?page=%2Fui%2Fscanner.html",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/vendor/tesseract/worker.min.js",
+        "requestId": "45320.31",
+        "url": "http://127.0.0.1:50681/ui/scanner-session.js?v=1",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/vendor/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+        "requestId": "FA5B098F8141477F7403D944F8297F78",
+        "url": "http://127.0.0.1:50681/ui/scanner.html",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/vendor/tesseract/lang/eng.traineddata.gz",
+        "requestId": "45320.34",
+        "url": "http://127.0.0.1:50681/ui/scanner-session-entry.js?v=1",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/vendor/tesseract/worker.min.js",
+        "requestId": "45320.35",
+        "url": "http://127.0.0.1:50681/ui/navigation.js?v=5",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/vendor/tesseract/core/tesseract-core-relaxedsimd-lstm.wasm.js",
+        "requestId": "45320.36",
+        "url": "http://127.0.0.1:50681/ui/styles.css?v=41",
         "method": "GET",
         "hasPostData": false
       },
       {
-        "url": "http://127.0.0.1:56087/ui/vendor/tesseract/lang/eng.traineddata.gz",
+        "requestId": "45320.37",
+        "url": "http://127.0.0.1:50681/ui/scanner.css?v=20261018-log-names",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.38",
+        "url": "http://127.0.0.1:50681/ui/scanner-core.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.39",
+        "url": "http://127.0.0.1:50681/ui/scanner-regions.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.40",
+        "url": "http://127.0.0.1:50681/ui/scanner-frames.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.41",
+        "url": "http://127.0.0.1:50681/ui/data/army_catalog.js?v=8",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.42",
+        "url": "http://127.0.0.1:50681/ui/shared.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.43",
+        "url": "http://127.0.0.1:50681/ui/data/artifact_stat_context.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.44",
+        "url": "http://127.0.0.1:50681/ui/artifact-stat-context.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.45",
+        "url": "http://127.0.0.1:50681/ui/profiles-ui.js?v=20261017-strategies",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.46",
+        "url": "http://127.0.0.1:50681/ui/artifact-scoring.js?v=20261017-strategies-reroll",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.47",
+        "url": "http://127.0.0.1:50681/ui/stored-artifacts.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.48",
+        "url": "http://127.0.0.1:50681/ui/scanner-comparison.js?v=20261018-linked-artifacts",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.49",
+        "url": "http://127.0.0.1:50681/ui/scanner-keep.js?v=20261018-quiet-keep",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.50",
+        "url": "http://127.0.0.1:50681/ui/vendor/tesseract/tesseract.min.js",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.51",
+        "url": "http://127.0.0.1:50681/ui/scanner-reroll-recognition.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.52",
+        "url": "http://127.0.0.1:50681/ui/scanner-name-catalog.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.53",
+        "url": "http://127.0.0.1:50681/ui/scanner-recognition.js?v=38",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.54",
+        "url": "http://127.0.0.1:50681/ui/scanner-field-recognition.js?v=9",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.55",
+        "url": "http://127.0.0.1:50681/ui/scanner-calibration.js?v=4",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.56",
+        "url": "http://127.0.0.1:50681/ui/scanner-collection.js?v=20261018-log-names",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.57",
+        "url": "http://127.0.0.1:50681/ui/scanner-reading.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.58",
+        "url": "http://127.0.0.1:50681/ui/scanner-profile.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.59",
+        "url": "http://127.0.0.1:50681/ui/scanner.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.60",
+        "url": "http://127.0.0.1:50681/ui/services.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.73",
+        "url": "http://127.0.0.1:50681/ui/strategies.css?v=20261018-loadouts",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.77",
+        "url": "http://127.0.0.1:50681/ui/data/artifacts.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.87",
+        "url": "http://127.0.0.1:50681/ui/data/perk_name_mapping.csv",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.88",
+        "url": "http://127.0.0.1:50681/ui/data/perk_rating_defaults.json",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.92",
+        "url": "http://127.0.0.1:50681/ui/service-config.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.93",
+        "url": "http://127.0.0.1:50681/ui/integration-core.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.94",
+        "url": "http://127.0.0.1:50681/ui/service-store.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.95",
+        "url": "http://127.0.0.1:50681/ui/telemetry.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.96",
+        "url": "http://127.0.0.1:50681/ui/cloud-sync.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.97",
+        "url": "http://127.0.0.1:50681/ui/research.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.98",
+        "url": "http://127.0.0.1:50681/ui/local-backup.js?v=3",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.99",
+        "url": "http://127.0.0.1:50681/ui/cloud.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.100",
+        "url": "http://127.0.0.1:50681/ui/services-ui.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.101",
+        "url": "http://127.0.0.1:50681/ui/services.css?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.102",
+        "url": "http://127.0.0.1:50681/favicon.ico",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "CE9CDAA0931DAD2789C98140E8F4EFDE",
+        "url": "http://127.0.0.1:50681/ui/config.html?error=access_denied&error_description=Private-provider-error",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.104",
+        "url": "http://127.0.0.1:50681/ui/auth-return.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.105",
+        "url": "http://127.0.0.1:50681/ui/navigation.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.106",
+        "url": "http://127.0.0.1:50681/ui/styles.css?v=39",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.107",
+        "url": "http://127.0.0.1:50681/ui/data/army_catalog.js?v=8",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.108",
+        "url": "http://127.0.0.1:50681/ui/shared.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.109",
+        "url": "http://127.0.0.1:50681/ui/profiles-ui.js?v=20261017-strategies",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.110",
+        "url": "http://127.0.0.1:50681/ui/config.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.111",
+        "url": "http://127.0.0.1:50681/ui/stored-artifacts.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.112",
+        "url": "http://127.0.0.1:50681/ui/local-backup.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.113",
+        "url": "http://127.0.0.1:50681/ui/services.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.120",
+        "url": "http://127.0.0.1:50681/ui/strategies.css?v=20261018-loadouts",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.125",
+        "url": "http://127.0.0.1:50681/ui/service-config.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.126",
+        "url": "http://127.0.0.1:50681/ui/integration-core.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.127",
+        "url": "http://127.0.0.1:50681/ui/service-store.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.128",
+        "url": "http://127.0.0.1:50681/ui/telemetry.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.129",
+        "url": "http://127.0.0.1:50681/ui/cloud-sync.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.130",
+        "url": "http://127.0.0.1:50681/ui/research.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.131",
+        "url": "http://127.0.0.1:50681/ui/cloud.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.132",
+        "url": "http://127.0.0.1:50681/ui/services-ui.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.133",
+        "url": "http://127.0.0.1:50681/ui/services.css?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "66AD93B23E257423D340A7BCAEB86400",
+        "url": "http://127.0.0.1:50681/ui/config.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.135",
+        "url": "http://127.0.0.1:50681/ui/auth-return.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.136",
+        "url": "http://127.0.0.1:50681/ui/navigation.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.137",
+        "url": "http://127.0.0.1:50681/ui/styles.css?v=39",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.138",
+        "url": "http://127.0.0.1:50681/ui/data/army_catalog.js?v=8",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.139",
+        "url": "http://127.0.0.1:50681/ui/shared.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.140",
+        "url": "http://127.0.0.1:50681/ui/profiles-ui.js?v=20261017-strategies",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.141",
+        "url": "http://127.0.0.1:50681/ui/config.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.142",
+        "url": "http://127.0.0.1:50681/ui/stored-artifacts.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.143",
+        "url": "http://127.0.0.1:50681/ui/local-backup.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.144",
+        "url": "http://127.0.0.1:50681/ui/services.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.151",
+        "url": "http://127.0.0.1:50681/ui/strategies.css?v=20261018-loadouts",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.156",
+        "url": "http://127.0.0.1:50681/ui/service-config.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.157",
+        "url": "http://127.0.0.1:50681/ui/integration-core.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.158",
+        "url": "http://127.0.0.1:50681/ui/service-store.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.159",
+        "url": "http://127.0.0.1:50681/ui/telemetry.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.160",
+        "url": "http://127.0.0.1:50681/ui/cloud-sync.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.161",
+        "url": "http://127.0.0.1:50681/ui/research.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.162",
+        "url": "http://127.0.0.1:50681/ui/cloud.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.163",
+        "url": "http://127.0.0.1:50681/ui/services-ui.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.164",
+        "url": "http://127.0.0.1:50681/ui/services.css?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "62AB5AF82E07EEA75AAC4F916865ACA9",
+        "url": "http://127.0.0.1:50681/ui/config.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.166",
+        "url": "http://127.0.0.1:50681/ui/auth-return.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.167",
+        "url": "http://127.0.0.1:50681/ui/navigation.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.168",
+        "url": "http://127.0.0.1:50681/ui/styles.css?v=39",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.169",
+        "url": "http://127.0.0.1:50681/ui/data/army_catalog.js?v=8",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.170",
+        "url": "http://127.0.0.1:50681/ui/shared.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.171",
+        "url": "http://127.0.0.1:50681/ui/profiles-ui.js?v=20261017-strategies",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.172",
+        "url": "http://127.0.0.1:50681/ui/config.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.173",
+        "url": "http://127.0.0.1:50681/ui/stored-artifacts.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.174",
+        "url": "http://127.0.0.1:50681/ui/local-backup.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.175",
+        "url": "http://127.0.0.1:50681/ui/services.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.182",
+        "url": "http://127.0.0.1:50681/ui/strategies.css?v=20261018-loadouts",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.187",
+        "url": "http://127.0.0.1:50681/ui/service-config.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.188",
+        "url": "http://127.0.0.1:50681/ui/integration-core.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.189",
+        "url": "http://127.0.0.1:50681/ui/service-store.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.190",
+        "url": "http://127.0.0.1:50681/ui/telemetry.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.191",
+        "url": "http://127.0.0.1:50681/ui/cloud-sync.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.192",
+        "url": "http://127.0.0.1:50681/ui/research.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.193",
+        "url": "http://127.0.0.1:50681/ui/cloud.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.194",
+        "url": "http://127.0.0.1:50681/ui/services-ui.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.195",
+        "url": "http://127.0.0.1:50681/ui/services.css?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "FC537C261F95FEE27D20952DED20F908",
+        "url": "http://127.0.0.1:50681/ui/config.html?code=test-discord-code",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.197",
+        "url": "http://127.0.0.1:50681/ui/auth-return.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.198",
+        "url": "http://127.0.0.1:50681/ui/navigation.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.199",
+        "url": "http://127.0.0.1:50681/ui/styles.css?v=39",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.200",
+        "url": "http://127.0.0.1:50681/ui/data/army_catalog.js?v=8",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.201",
+        "url": "http://127.0.0.1:50681/ui/shared.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.202",
+        "url": "http://127.0.0.1:50681/ui/profiles-ui.js?v=20261017-strategies",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.203",
+        "url": "http://127.0.0.1:50681/ui/config.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.204",
+        "url": "http://127.0.0.1:50681/ui/stored-artifacts.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.205",
+        "url": "http://127.0.0.1:50681/ui/local-backup.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.206",
+        "url": "http://127.0.0.1:50681/ui/services.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.213",
+        "url": "http://127.0.0.1:50681/ui/strategies.css?v=20261018-loadouts",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.218",
+        "url": "http://127.0.0.1:50681/ui/service-config.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.219",
+        "url": "http://127.0.0.1:50681/ui/integration-core.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.220",
+        "url": "http://127.0.0.1:50681/ui/service-store.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.221",
+        "url": "http://127.0.0.1:50681/ui/telemetry.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.222",
+        "url": "http://127.0.0.1:50681/ui/cloud-sync.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.223",
+        "url": "http://127.0.0.1:50681/ui/research.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.224",
+        "url": "http://127.0.0.1:50681/ui/cloud.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.225",
+        "url": "http://127.0.0.1:50681/ui/services-ui.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.226",
+        "url": "http://127.0.0.1:50681/ui/services.css?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "741A6B8E0BEA070E6A69F64E5F5D8C89",
+        "url": "http://127.0.0.1:50681/ui/config.html?code=test-discord-code",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.228",
+        "url": "http://127.0.0.1:50681/ui/auth-return.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.229",
+        "url": "http://127.0.0.1:50681/ui/navigation.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.230",
+        "url": "http://127.0.0.1:50681/ui/styles.css?v=39",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.231",
+        "url": "http://127.0.0.1:50681/ui/data/army_catalog.js?v=8",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.232",
+        "url": "http://127.0.0.1:50681/ui/shared.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.233",
+        "url": "http://127.0.0.1:50681/ui/profiles-ui.js?v=20261017-strategies",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.234",
+        "url": "http://127.0.0.1:50681/ui/config.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.235",
+        "url": "http://127.0.0.1:50681/ui/stored-artifacts.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.236",
+        "url": "http://127.0.0.1:50681/ui/local-backup.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.237",
+        "url": "http://127.0.0.1:50681/ui/services.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.244",
+        "url": "http://127.0.0.1:50681/ui/strategies.css?v=20261018-loadouts",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.249",
+        "url": "http://127.0.0.1:50681/ui/service-config.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.250",
+        "url": "http://127.0.0.1:50681/ui/integration-core.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.251",
+        "url": "http://127.0.0.1:50681/ui/service-store.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.252",
+        "url": "http://127.0.0.1:50681/ui/telemetry.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.253",
+        "url": "http://127.0.0.1:50681/ui/cloud-sync.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.254",
+        "url": "http://127.0.0.1:50681/ui/research.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.255",
+        "url": "http://127.0.0.1:50681/ui/cloud.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.256",
+        "url": "http://127.0.0.1:50681/ui/services-ui.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.257",
+        "url": "http://127.0.0.1:50681/ui/services.css?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "3B8EF14CA9708B4F7FEF9AE05463FCBE",
+        "url": "http://127.0.0.1:50681/ui/config.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.259",
+        "url": "http://127.0.0.1:50681/ui/auth-return.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.260",
+        "url": "http://127.0.0.1:50681/ui/navigation.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.261",
+        "url": "http://127.0.0.1:50681/ui/styles.css?v=39",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.262",
+        "url": "http://127.0.0.1:50681/ui/data/army_catalog.js?v=8",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.263",
+        "url": "http://127.0.0.1:50681/ui/shared.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.264",
+        "url": "http://127.0.0.1:50681/ui/profiles-ui.js?v=20261017-strategies",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.265",
+        "url": "http://127.0.0.1:50681/ui/config.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.266",
+        "url": "http://127.0.0.1:50681/ui/stored-artifacts.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.267",
+        "url": "http://127.0.0.1:50681/ui/local-backup.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.268",
+        "url": "http://127.0.0.1:50681/ui/services.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.275",
+        "url": "http://127.0.0.1:50681/ui/strategies.css?v=20261018-loadouts",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.280",
+        "url": "http://127.0.0.1:50681/ui/service-config.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.281",
+        "url": "http://127.0.0.1:50681/ui/integration-core.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.282",
+        "url": "http://127.0.0.1:50681/ui/service-store.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.283",
+        "url": "http://127.0.0.1:50681/ui/telemetry.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.284",
+        "url": "http://127.0.0.1:50681/ui/cloud-sync.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.285",
+        "url": "http://127.0.0.1:50681/ui/research.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.286",
+        "url": "http://127.0.0.1:50681/ui/cloud.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.287",
+        "url": "http://127.0.0.1:50681/ui/services-ui.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.288",
+        "url": "http://127.0.0.1:50681/ui/services.css?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "75CCA624A96B0961E2F36627E613859D",
+        "url": "http://127.0.0.1:50681/ui/config.html",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.290",
+        "url": "http://127.0.0.1:50681/ui/auth-return.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.291",
+        "url": "http://127.0.0.1:50681/ui/navigation.js?v=5",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.292",
+        "url": "http://127.0.0.1:50681/ui/styles.css?v=39",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.293",
+        "url": "http://127.0.0.1:50681/ui/data/army_catalog.js?v=8",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.294",
+        "url": "http://127.0.0.1:50681/ui/shared.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.295",
+        "url": "http://127.0.0.1:50681/ui/profiles-ui.js?v=20261017-strategies",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.296",
+        "url": "http://127.0.0.1:50681/ui/config.js?v=1",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.297",
+        "url": "http://127.0.0.1:50681/ui/stored-artifacts.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.298",
+        "url": "http://127.0.0.1:50681/ui/local-backup.js?v=20261018-services",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.299",
+        "url": "http://127.0.0.1:50681/ui/services.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.306",
+        "url": "http://127.0.0.1:50681/ui/strategies.css?v=20261018-loadouts",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.311",
+        "url": "http://127.0.0.1:50681/ui/service-config.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.312",
+        "url": "http://127.0.0.1:50681/ui/integration-core.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.313",
+        "url": "http://127.0.0.1:50681/ui/service-store.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.314",
+        "url": "http://127.0.0.1:50681/ui/telemetry.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.315",
+        "url": "http://127.0.0.1:50681/ui/cloud-sync.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.316",
+        "url": "http://127.0.0.1:50681/ui/research.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.317",
+        "url": "http://127.0.0.1:50681/ui/cloud.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.318",
+        "url": "http://127.0.0.1:50681/ui/services-ui.js?v=2",
+        "method": "GET",
+        "hasPostData": false
+      },
+      {
+        "requestId": "45320.319",
+        "url": "http://127.0.0.1:50681/ui/services.css?v=2",
         "method": "GET",
         "hasPostData": false
       }
     ],
+    "blockedRequests": [],
     "externalRequests": [],
     "nonGetRequests": [],
     "browserErrors": []

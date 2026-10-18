@@ -15,8 +15,10 @@
   const frameContext = el.frame.getContext("2d");
   const cropContext = el.crop.getContext("2d");
   const calibration=window.DNScannerCalibration;
+  const captureSession=window.parent && window.parent!==window?window.parent.DNScannerSession:null;
   const nativeFrame=calibration?document.createElement('canvas'):null;
   let stream = null, track = null, image = null, region = null, drag = null;
+  let trackListeners = [];
   let generation = 0, timer = null, selecting = false, pending = false, locatePending = false;
   let dimensions = "", lastSample = 0, lastProgress = 0, lastMediaTime = -1;
   const supported = window.isSecureContext && !!navigator.mediaDevices?.getDisplayMedia;
@@ -53,13 +55,18 @@
     el.freshness.textContent = "No calibrated region.";
     window.DNScannerReading?.update(el.crop,{session:generation,current:false});
   }
-  function release() {
+  function release(preserveCapture = false) {
     window.DNScannerReading?.reset();
     calibration?.resetCapture();
     if(nativeFrame)nativeFrame.width=nativeFrame.height=0;
     generation++;
     clearTimeout(timer); timer = null;
-    if (stream) stream.getTracks().forEach(t => t.stop());
+    for (const [name, listener] of trackListeners) track?.removeEventListener?.(name, listener);
+    trackListeners = [];
+    if (!preserveCapture) {
+      if (captureSession) captureSession.stop();
+      else if (stream) stream.getTracks().forEach(t => t.stop());
+    }
     stream = null; track = null; pending = false;
     el.video.pause(); el.video.srcObject = null;
     if (image) image.close(); image = null;
@@ -120,7 +127,7 @@
       el.meta.textContent = "Source " + nextDimensions + " · crop " + crop.width + "×" + crop.height + " pixels";
       if(!storage && !calibration)focusPanel=window.DNScannerRecognition?.detectPanel(el.frame);
       const focusObserved=!storage && !selecting && !calibration?.editing && !document.hidden && (image || !track?.muted && el.video.currentTime!==lastMediaTime);
-      window.DNScannerReading?.update(el.crop, {session:generation,current:!selecting && !fieldState?.paused && !document.hidden && (image || !track?.muted),itemPresent:focusObserved && focusPanel!==undefined?!!focusPanel:undefined,categorySource:el.frame,panelRegion:region,fields:fieldState?.fields || null});
+      window.DNScannerReading?.update(el.crop, {session:generation,live:!!stream,current:!selecting && !fieldState?.paused && !document.hidden && (image || !track?.muted),itemPresent:focusObserved && focusPanel!==undefined?!!focusPanel:undefined,categorySource:el.frame,panelRegion:region,fields:fieldState?.fields || null});
     } else el.meta.textContent = "Source " + nextDimensions + " pixels · select the complete artifact panel";
     return true;
   }
@@ -160,35 +167,39 @@
     }
     timer = setTimeout(() => sample(session), window.DNStorageRecognition?350:100);
   }
-  async function connect() {
+  async function connect(existingCapture = null) {
     if (!supported || pending || stream) return;
-    release(); pending = true; controls();
+    release(!!existingCapture); pending = true; controls();
     const session = generation;
     status("Waiting for browser permission", "Choose the game window, tab, or screen in the browser dialog. Audio is disabled.");
     try {
-      const capture = await navigator.mediaDevices.getDisplayMedia({
+      const capture = existingCapture || await (captureSession ? captureSession.capture.bind(captureSession) : navigator.mediaDevices.getDisplayMedia.bind(navigator.mediaDevices))({
         video: { displaySurface: el.source.value }, audio: false, selfBrowserSurface: "exclude",
       });
       if (session !== generation) { capture.getTracks().forEach(t => t.stop()); return; }
       // Defensive cleanup if a browser nevertheless supplies an audio track.
       capture.getAudioTracks().forEach(t => { t.stop(); capture.removeTrack(t); });
       stream = capture; track = stream.getVideoTracks()[0];
+      captureSession?.retain(capture);
       if (!track || track.readyState === "ended") throw new Error("missing-video");
-      track.addEventListener("ended", () => {
+      function listen(name, listener) { track.addEventListener(name, listener); trackListeners.push([name, listener]); }
+      listen("ended", () => {
         if (session === generation) endCapture("Capture ended", "Sharing ended. Connect Game to start another session.");
       });
-      track.addEventListener("mute", () => {
+      listen("mute", () => {
         if (session === generation) { status("Capture interrupted", "The shared source is unavailable. Preview is no longer current."); el.freshness.textContent = "Preview unconfirmed while capture is interrupted."; }
       });
-      track.addEventListener("unmute", () => {
+      listen("unmute", () => {
         if (session === generation) { lastProgress = performance.now(); lastMediaTime = -1; }
       });
       el.video.srcObject = stream;
       await el.video.play();
       if (session !== generation) return;
       pending = false; selecting = true; locatePending=true; controls(); sample(session);
+      try{window.DNTelemetry?.event('scanner_session_started',{source:window.DNStorageRecognition?'storage':'crafting'},true);window.DNTelemetry?.milestone('first-capture-connected');}catch{}
     } catch (error) {
       if (session !== generation) return;
+      try{window.DNTelemetry?.event('capture_failed',{reason:['NotAllowedError','NotFoundError','InvalidStateError'].includes(error.name)?error.name:'other'});}catch{}
       const message = error.name === "NotAllowedError" ? "Screen sharing was declined or blocked. You can try Connect Game again." :
         error.name === "NotFoundError" ? "No screen-sharing source is available." :
         error.name === "InvalidStateError" ? "Return to this page and click Connect Game again." :
@@ -247,7 +258,11 @@
   });
   el.frame.addEventListener("pointercancel", () => { drag = null; renderFrame(); });
   el.frame.addEventListener("keydown", event => { if (event.key === "Escape") { drag = null; selecting = false; controls(); renderFrame(); } });
-  el.connect.addEventListener("click", connect);
+  el.connect.addEventListener("click", () => {
+    if (!supported || pending || stream) return;
+    if (window.DNScannerProfile) window.DNScannerProfile.confirm(() => connect());
+    else return connect();
+  });
   el.stop.addEventListener("click", () => endCapture("Disconnected", "Capture stopped and previews cleared."));
   el.select.addEventListener("click", () => { selecting = !selecting; drag = null; controls(); if (selecting) el.frame.focus(); });
   el.apply.addEventListener("click", () => setRegion(Object.fromEntries(["x", "y", "width", "height"].map(key => [key, el[key].value.trim() === "" ? NaN : Number(el[key].value) / 100]))));
@@ -276,10 +291,13 @@
   });
   document.addEventListener("freeze", () => { if (stream) { window.DNScannerReading?.update(el.crop,{session:generation,current:false}); status("Monitoring paused", "Browser suspended this page. Resume it to refresh the preview."); el.freshness.textContent = "Preview unconfirmed while suspended."; } });
   document.addEventListener("resume", () => { if (stream) { clearTimeout(timer); sample(generation); } });
-  window.addEventListener("pagehide", release);
+  window.addEventListener("pagehide", () => release(!!captureSession));
   window.addEventListener('dn-scanner-fields-change',()=>{if(image || stream)renderFrame();});
   document.getElementById('scanner-layout')?.addEventListener('change',()=>{if(calibration && (image || stream))renderFrame();});
   document.getElementById('scanner-rows')?.addEventListener('change',()=>{if(calibration && (image || stream))renderFrame();});
-  release();
+  const existingCapture=captureSession?.current();
+  release(!!existingCapture);
   status(supported ? "Disconnected" : "Unsupported browser", supported ? "Connect Game to share its window, or open a local screenshot to test calibration." : "Screen capture requires a supported desktop browser on HTTPS or localhost. Local screenshot calibration is still available.");
+  if(existingCapture)connect(existingCapture);
+  else if(window.DNScannerProfile?.resume)el.connect.click();
 })();

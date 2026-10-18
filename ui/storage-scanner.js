@@ -14,11 +14,34 @@
   let observationProfile=null,encounter=null,candidateId=null,manualCorrection=false,saveTimer=null,saveKey='',saving=false,failedKey='',dismissedKey='',lastSave=null;
   const store=window.DNStoredArtifacts;
   const esc=window.DN.esc;
+  let catalog=[],catalogMatch=null,ownershipTimer=null,ownershipKey='',markedOwnershipKey='';
+  function syncCatalogOwnership({commit=false}={}) {
+    catalogMatch=null;
+    const item=current && {name:get('name').value.trim(),hall:document.getElementById('scanner-hall').value,rows:current.rows};
+    const match=item && reviewable && !pending && !current.metadataConflict && observationProfile===store.collectionKey() &&
+      item.rows?.length===expectedRows && store.matchCatalog(item,catalog);
+    const key=match?JSON.stringify([observationProfile,encounter,item.name,match.artifact_id]):'';
+    if(key!==ownershipKey){clearTimeout(ownershipTimer);ownershipTimer=null;ownershipKey=key;}
+    if(!match)return;
+    get('type').value=(match.hall==='War'?'War ':'')+match.grade;
+    if(key===markedOwnershipKey) {
+      if(window.DN.loadCollected().has(match.artifact_id))catalogMatch=match;
+      return;
+    }
+    if((manualCorrection || edited) && !commit && !window.DN.loadCollected().has(match.artifact_id)) {
+      if(!ownershipTimer)ownershipTimer=setTimeout(()=>{ownershipTimer=null;syncCatalogOwnership({commit:true});render();},650);
+      return;
+    }
+    try {
+      store.markCatalogOwned([item],catalog,{profileKey:observationProfile});
+      catalogMatch=match;markedOwnershipKey=key;
+    } catch {savedStatus('Could not mark this artifact Collected on Priority. Retry the scan.',true);}
+  }
   function savedStatus(text,error=false){get('saved').textContent=text;get('saved').hidden=!error;}
-  const reviewedItem=()=>store.backfillItem({id:'scan-preview',reviewed:true,name:get('name').value.trim(),type:get('type').value,hall:document.getElementById('scanner-hall').value,rows:current.rows});
+  const reviewedItem=()=>store.backfillItem(store.linkCatalogItem({id:'scan-preview',reviewed:true,name:get('name').value.trim(),type:get('type').value,hall:document.getElementById('scanner-hall').value,rows:current.rows},catalog));
   function matches() {
     const item=reviewedItem();
-    return [store.passivePlan(items,{...item,id:candidateId,manualCorrection},{allowCorrection:true}),store.passivePlan(collection,item)];
+    return [store.passivePlan(items,{...item,id:candidateId,manualCorrection},{allowCorrection:true}),store.passivePlan(collection,item,{allowCorrection:!!item.catalogId && manualCorrection})];
   }
   async function refreshCollection() {
     const key=store.collectionKey();
@@ -37,6 +60,15 @@
     if(!loaded || collectionProfile!==store.collectionKey()) {show('unknown','Checking saved artifacts…','Waiting for your active profile\'s collection and scanned inventory.');return null;}
     if(observationProfile!==store.collectionKey()){show('uncertain','Profile changed','Read the current artifact again before saving it to this profile.');return null;}
     if(!reviewable || pending) {show('uncertain','Ownership check pending',pending?'Complete the remaining fields. Valid edits apply automatically.':'Waiting for a current artifact read; the displayed stats may be from the last scan.');return null;}
+    if(catalogMatch) {
+      show('collection','Collected · '+catalogMatch.grade,catalogMatch.name+' is marked Collected on Artifacts Priority.');
+      return matches();
+    }
+    const linked=store.matchCatalog({name:get('name').value,hall:document.getElementById('scanner-hall').value,rows:current.rows},catalog);
+    if(linked && !window.DN.loadCollected().has(linked.artifact_id)) {
+      show('unmatched','Not collected',linked.name+' is unchecked on Artifacts Priority. Tick Collected there or scan it again.');
+      return null;
+    }
     const preview=reviewedItem();
     if(!get('name').value.trim() || !get('type').value || current.metadataConflict || current.warnings?.some(w=>/OCR reads disagree|conflict/i.test(w)) ||
       preview.rows?.length!==expectedRows || window.DNScannerRecognition.signIssues(preview.rows).length ||
@@ -60,6 +92,8 @@
     if(pending)return correctionError || 'Complete the remaining fields. Edits apply automatically.';
     if(!reviewable)return 'Waiting for a current artifact read.';
     if(current.metadataConflict)return 'Verify the conflicting artifact name, category or Hall.';
+    const linked=store.matchCatalog({name:get('name').value,hall:document.getElementById('scanner-hall').value,rows:current.rows},catalog);
+    if(linked && !window.DN.loadCollected().has(linked.artifact_id))return 'Not collected. Tick Collected on Priority or scan the artifact again.';
     if(current.rows?.length!==expectedRows)return 'Read all '+expectedRows+' stats.';
     for(const [index,row] of reviewedItem().rows.entries()) {
       if(!row.known || row.assumed)return 'Row '+(index+1)+': perk name needed.';
@@ -75,12 +109,13 @@
     if(unknownEditable)return 'Complete the highlighted fields.';
     if(window.DNScannerRecognition.signIssues(current.rows).length)return 'Check percentage signs.';
     if(!get('name').value.trim())return 'Enter the artifact name.';
-    if(!get('type').value)return 'Choose the artifact category.';
+    if(!get('type').value && !linked)return 'Choose the artifact category.';
     if(current.rows.some(row=>Math.abs(row.value)>40))return 'Percentages must be between -40% and +40%.';
     return '';
   }
   function render() {
-    const special=/legendary|mythical/i.test(get('type').value);
+    syncCatalogOwnership();
+    const special=!!reviewable && !!current && !!store.matchCatalog({name:get('name').value,hall:document.getElementById('scanner-hall').value,rows:current.rows},catalog) || /legendary|mythical/i.test(get('type').value);
     for(const select of document.querySelectorAll('#scanner-correct .scanner-perk-tier')) {
       select.disabled=special;
       select.options[0].textContent=special?'Not applicable':'Unknown';
@@ -149,7 +184,8 @@
   });
   async function saveAutomatically(key) {
     if(key!==saveKey || saving || keepReason())return;
-    const item={id:candidateId,manualCorrection,name:get('name').value.trim(),type:get('type').value,hall:document.getElementById('scanner-hall').value,
+    const preview=reviewedItem();
+    const item={id:preview.catalogId || candidateId,catalogId:preview.catalogId,manualCorrection,name:preview.name,type:preview.type,hall:preview.hall,
       image:current.artifact?.image || null,capturedAt:new Date().toISOString(),reviewed:true,rows:reviewedItem().rows.map(({name,value,level,levelSource,unlocked,base,max,rangeSource,tier,tierSource,tierEvidence,tierConflict,inferredFields,valueSource,observedValue,observedLevel,rerollEligible,rerollSource,rerollConfidence,rerollEvidence,rerollConflict,rangeCandidates,rangeReview})=>({name,value,level:level??null,levelSource:levelSource??null,unlocked:unlocked??null,base:base??null,max:max??null,rangeSource:rangeSource??null,tier:tier??null,tierSource:tierSource??null,tierEvidence:tierEvidence??null,tierConflict:!!tierConflict,inferredFields:inferredFields || [],valueSource:valueSource??null,observedValue:observedValue??null,observedLevel:observedLevel??null,rerollEligible:typeof rerollEligible==='boolean'?rerollEligible:null,rerollSource:rerollSource??null,rerollConfidence:rerollConfidence??null,rerollEvidence:rerollEvidence??null,rerollConflict:!!rerollConflict,rangeCandidates:rangeCandidates || [],rangeReview:rangeReview || null}))};
     saving=true;render();
     try {
@@ -157,7 +193,7 @@
       if(result.profileKey===store.collectionKey()) {
         collection=result.collection;collectionProfile=result.profileKey;items.splice(0,items.length,...result.items);
         if(key===saveKey && result.action!=='cancelled') {
-          const message=result.action==='added'?'Saved automatically to scanned inventory.':result.action==='updated'?(result.target==='collection'?'Improved stats saved to Collection; the existing ID and slot were preserved.':'Improved stats saved to scanned inventory.'):result.reason;
+          const message=result.action==='added'?(item.catalogId?'Saved to the linked artifact in Collection and Priority.':'Saved automatically to scanned inventory.'):result.action==='updated'?(result.target==='collection'?'Improved stats saved to Collection; the existing ID and slot were preserved.':'Improved stats saved to scanned inventory.'):result.reason;
           lastSave={key,message};savedStatus(message);
         }
       }
@@ -187,7 +223,13 @@
   render();
   window.addEventListener('focus',refreshCollection);
   window.addEventListener('storage',refreshCollection);
-  Promise.all([store.read('items'),refreshCollection()]).then(([saved])=>{items.push(...saved);savedStatus('Inventory loaded.');})
+  window.addEventListener('dn-artifacts-changed',refreshCollection);
+  store.loadCatalog().then(async rows=>{
+    catalog=rows;
+    const linked=await store.reconcileCatalog(catalog);
+    if(linked.profileKey===store.collectionKey()){items.splice(0,items.length,...linked.items);collection=linked.collection;collectionProfile=linked.profileKey;}
+    savedStatus('Inventory loaded.');
+  })
     .catch(()=>{savedStatus('Browser storage is unavailable.',true);})
     .finally(()=>{loaded=true;render();});
 })();

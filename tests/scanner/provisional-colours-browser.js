@@ -15,8 +15,9 @@
   const strategies=['first','second'].map(id=>({id,name:id,options:{...base,strategyId:id}}));
   const options={...base,strategyId:'first',strategyName:'first',strategyOptions:strategies};
   const craft=value=>({valid:true,rows:rows(value),hall:'main',hallSource:'hall-colour',artifact:{type:'Weapon'},unlocked:{count:2,states:[true,true,false,false,false]},warnings:[]});
-  const publish=(raw,opts=options)=>DNScannerComparison.update(core.estimate(raw),true,opts,{captureResult:raw});
+  const publish=(raw,opts=options)=>DNScannerComparison.update(core.estimate(raw),true,opts,{captureResult:raw,keeperResult:raw});
   const red=()=>getComputedStyle(get('benchmark')).backgroundColor==='rgb(87, 29, 36)';
+  const green=()=>getComputedStyle(get('benchmark')).backgroundColor==='rgb(18, 78, 41)';
   const seed=await store.read(store.collectionKey());
   check('owned comparison fixture is persisted',seed.length===2);
   const expected=core.compare(core.estimate(craft(1)),{type:'Weapon',hall:'main',owned:seed.map(item=>store.toRow(item)),options:base,limit:2});
@@ -42,7 +43,20 @@
   check('uncertain reroll points do not suppress red',get('item-total').textContent==='~50' && red());
   const threeStars=craft(1);threeStars.unlocked={count:3,states:[true,true,true,false,false]};
   publish(threeStars);
-  check('three unlocked stats keep their reason without hiding a lower red score',red() && !get('keeper-reason').hidden);
+  check('three unlocked stats override a lower score with green across selected strategies',green() && !get('keeper-reason').hidden && get('benchmark').classList.contains('is-below-cutoff'));
+  check('three unlocked Keep reason is bold',Number(getComputedStyle(get('keeper-reason')).fontWeight)>=900);
+  window.dispatchEvent(new Event('dn-craft-kept'));
+  await wait(()=>get('benchmark-value').textContent==='100');
+  check('three unlocked Keep override survives strategy refresh',green());
+  const unreadKeeper={...threeStars,valid:false,rows:threeStars.rows.map(row=>({...row,value:null,known:false,hasPercent:false}))};
+  publish(unreadKeeper);
+  check('three unlocked stats stay green without readable percentages',green() && !get('keeper-reason').hidden);
+  publish({...threeStars,provisional:true});
+  check('three unlocked stats stay green with provisional scores',green());
+  publish({...craft(20),unlocked:threeStars.unlocked});
+  check('three unlocked stats stay green above benchmark',green());
+  publish(craft(1));
+  check('next item without three unlocked stats restores lower red score',red() && get('keeper-reason').hidden);
 
   const mixed={...options,strategyOptions:[strategies[0],{...strategies[1],options:{...strategies[1].options,ratingOf:name=>name==='Heavy Tank Damage'?5:1}}]};
   publish(inferred,mixed);

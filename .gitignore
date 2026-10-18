@@ -6,3 +6,6 @@ Thumbs.db
 # Local research mines / dumps — not required for Pages (site is ui/)
 data/temp/*
 !data/temp/.gitkeep
+
+# One-time local browser-test hand-off pages, removed after the test.
+ui/.__dn-browser-check-*.html

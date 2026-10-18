@@ -383,12 +383,27 @@
       const prior=first.rows[index],next=retry.rows[index];
       if(!displayable(prior))return next || prior || {name:'',value:null,known:false,hasPercent:false};
       const lostPercentage=next?.name===prior.name && Number.isFinite(prior.value) && !Number.isFinite(next?.value);
-      if(displayable(next) && !lostPercentage && stronger(next,prior))return next;
+      if(displayable(next) && !lostPercentage && (!usable(prior) || usable(next)) && stronger(next,prior))return next;
       if(!usable(next) || next.name!==prior.name || next.value!==prior.value)retained=true;
       return prior;
     });
-    return {...retry,artifact:retry.artifact?.type?retry.artifact:first.artifact || retry.artifact,hall:retry.hall || first.hall,rows,
-      valid:!!retry.valid && !retained && rows.every(row=>usable(row) && !row.assumed && !row.inferred),
+    // Stars and metadata are independent fields. An uncertain retry must not
+    // discard their identified evidence while retaining the stat text.
+    const states=rows.map((row,index)=>{
+      const prior=first.unlocked?.states?.[index] ?? first.rows[index]?.unlocked;
+      const next=retry.unlocked?.states?.[index] ?? retry.rows[index]?.unlocked;
+      const state=typeof next==='boolean'?next:prior;
+      if(typeof state==='boolean')rows[index]={...row,unlocked:state,
+        unlockedSource:typeof next==='boolean'?retry.rows[index]?.unlockedSource:first.rows[index]?.unlockedSource};
+      return state;
+    });
+    const identifiedHall=read=>['hall-colour','crafting-label','percentage-tier','manual'].includes(read.hallSource);
+    const hallRead=identifiedHall(first) && !identifiedHall(retry)?first:retry;
+    const artifact=retry.artifact?.type && !retry.metadataConflict?retry.artifact:first.artifact || retry.artifact;
+    const unlocked={...retry.unlocked,states,count:states.every(state=>typeof state==='boolean')?states.filter(Boolean).length:null};
+    return {...retry,artifact,metadataConflict:artifact===first.artifact?first.metadataConflict:retry.metadataConflict,
+      hall:hallRead.hall || first.hall,hallSource:hallRead.hallSource,unlocked,rows,
+      valid:(!!first.valid || !!retry.valid && !retained) && rows.every(row=>usable(row) && !row.assumed && !row.inferred),
       warnings:[...new Set([...(retry.warnings || []),...(retained?['Retained the stronger previous row readings.']:[])])]};
   }
   function detectPanel(source,{storage=false}={}) {
@@ -528,7 +543,7 @@
     return {hall:selected==='war'?'war':'main',source:'selected-hall'};
   }
   function create({names, canonPerk}) {
-    const workers=new Map(),initializing=new Map();let closed=false,fieldEvidence=null;
+    const workers=new Map(),initializing=new Map(),warmed=new Set();let closed=false,fieldEvidence=null;
     async function getWorker(kind='standard') {
       if(closed) throw new Error("Recognition stopped");
       if(!initializing.has(kind)) initializing.set(kind,(async () => {
@@ -540,6 +555,7 @@
         if(closed) { await created.terminate(); throw new Error("Recognition stopped"); }
         workers.set(kind,created);
         await created.setParameters({tessedit_pageseg_mode:"6", preserve_interword_spaces:"1"});
+        warmed.add(kind);
         return created;
       })());
       return initializing.get(kind);
@@ -792,8 +808,9 @@
         }
       } finally { canvas.width=canvas.height=0;if(calibrated)calibrated.width=calibrated.height=0; }
     }
-    async function close() { closed=true;fieldEvidence=null;const previous=[...workers.values()];workers.clear();await Promise.all(previous.map(worker=>worker.terminate())); }
-    return {recognize,close,warm:({fast=false}={})=>getWorker(fast?'fast':'standard')};
+    async function close() { closed=true;fieldEvidence=null;warmed.clear();const previous=[...workers.values()];workers.clear();await Promise.all(previous.map(worker=>worker.terminate())); }
+    return {recognize,close,warm:({fast=false}={})=>getWorker(fast?'fast':'standard'),
+      isWarm:({fast=false}={})=>!closed && warmed.has(fast?'fast':'standard')};
   }
   window.DNScannerRecognition={matchName,NAME_MATCH_THRESHOLD,parseText,parseFieldRow,positionRows,signIssues,reconcileReads,combineReads,retainCraftRead,classifyBrightness,classifyStars,rowColours,inferColourValues,usefulRow,coverage,textContrast,detectPanel,parseCraftCategory,craftCategoryEvidence,classifyHallColour,hallColour,craftHall,categoryRect,categoryLine,create};
 })();

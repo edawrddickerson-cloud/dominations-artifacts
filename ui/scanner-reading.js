@@ -29,11 +29,18 @@
   let resultProfile=null;
   let itemArtwork=null;
   let focusAnchor=null,focusAbsent=null,focusCleared=false;
+  let liveCapture=false,sampleRevision=0,speculatedToken=null;
   const storageEdits=new Map();
   const preview=document.createElement("canvas");
   preview.width=256;preview.height=128;
   const previewContext=preview.getContext("2d",{willReadFrequently:true});
   const storage=!!window.DNStorageRecognition;
+  const serviceSource=storage?'storage':'crafting';
+  function observeServices(value,options={}) {
+    const context={source:serviceSource,captureMethod:liveCapture?'live-capture':'local-image',encounterId:JSON.stringify([session,itemId]),expectedRows:rowCount(),...options};
+    try{window.DNTelemetry?.scannerResult(value,context);}catch{}
+    try{window.DNResearch?.observe(value,context);}catch{}
+  }
   const rowCount=()=>Number(el.rows.value)===6?6:5;
   function say(text){el["result-status"].textContent=text;}
   function progress(next,text){phase=next;el.progress.className='scanner-progress is-'+next;el.progress.textContent=storage?next==='finished'?/failed/i.test(text)?'Finished · read failed':'Finished':({reading:'Reading…',waiting:'Waiting…',paused:'Paused',idle:'Waiting for an artifact'}[next] || text):text;}
@@ -43,9 +50,40 @@
     // changes clear this timer below and start a new settling period.
     if(stableTimer!==null)return;
     clearTimeout(stableTimer);
-    stableTimer=setTimeout(()=>{stableTimer=null;if(!document.hidden && ready && latestCanvas && (el.auto.checked || window.DNScannerCollection?.isEnabled()) && !editing && !busy && !settled)startRead();},delay);
+    stableTimer=setTimeout(()=>{stableTimer=null;if(busy?.speculative && !busy.validationDone){validateSpeculation(busy);return;}if(!document.hidden && ready && latestCanvas && (el.auto.checked || window.DNScannerCollection?.isEnabled()) && !editing && !busy && !settled)startRead();},delay);
+  }
+  const readContext=()=>JSON.stringify([token,session,itemId,fieldGeometry,window.DNStoredArtifacts?.collectionKey(),el.layout.value,rowCount(),el.hall.value,el.infer.checked,categoryRegion]);
+  function discardSpeculation(reason) {
+    const job=busy;if(!job?.speculative)return;
+    job.discarded=true;job.validationDone=true;job.witness=null;
+    job.timing?.('speculation-discarded');job.resolveValidation?.(false);
+  }
+  function validateSpeculation(job) {
+    if(busy!==job || job.validationDone)return;
+    const eligible=!document.hidden && ready && latestCanvas && !editing && !settled && liveCapture &&
+      (el.auto.checked || window.DNScannerCollection?.isEnabled()) && job.context===readContext();
+    if(!eligible || sampleRevision<=job.sampleRevision){discardSpeculation('context or freshness');return;}
+    const remaining=settleDelay-(performance.now()-stableSince);
+    if(remaining>0){schedule(remaining);return;}
+    let current;
+    try {
+      current=captureInput();
+      const witness=window.DNScannerFieldRecognition.witness(current.snapshot,latestFields,current.categorySource,readContext());
+      if(!window.DNScannerFieldRecognition.sameWitness(job.witness,witness)){discardSpeculation('changed pixels');return;}
+      job.approvedTemporal=current.temporal;job.artwork=captureArtwork(current.metadataPanel);job.validationDone=true;job.approved=true;job.witness=null;
+      job.timing?.('speculation-validated');job.resolveValidation(true);
+    }catch{discardSpeculation('validation unavailable');}
+    finally{current?.release();}
+  }
+  function speculate() {
+    if(storage || !liveCapture || document.hidden || !ready || !latestCanvas || busy || settled || editing || attempts ||
+      !engine?.isWarm?.({fast:true}) ||
+      el.layout.value!=='panel' || rowCount()!==5 || !latestFields || !window.DNScannerFieldRecognition?.witness ||
+      !(el.auto.checked || window.DNScannerCollection?.isEnabled()) || speculatedToken===token || performance.now()-stableSince>=settleDelay)return false;
+    speculatedToken=token;startRead({speculative:true});return true;
   }
   function invalidate(message="Previous result is no longer current.",{preserveDisplay=false}={}) {
+    discardSpeculation('invalidated');
     itemArtwork=null;
     if(!preserveDisplay || storage){displayedScore=null;displayedKeeper=null;displayedCapture=null;}
     frames.clear();signatures=[];hash=null;readHash=null;
@@ -57,6 +95,7 @@
     attempts=0;settled=false;best=null;anchor=null;progress('idle','Waiting for an artifact');
   }
   function reset() {
+    liveCapture=false;sampleRevision=0;speculatedToken=null;
     focusAnchor=null;focusAbsent=null;focusCleared=false;
     latestCategorySource=null;categoryRegion=null;
     latestFields=null;fieldGeometry=null;
@@ -115,6 +154,7 @@
   }
   function update(canvas, state) {
     if(session!==state.session){reset();session=state.session;}
+    if(Object.prototype.hasOwnProperty.call(state,'live'))liveCapture=state.live===true;
     if(Object.prototype.hasOwnProperty.call(state,'fields')) {
       const next=state.fields || null,key=next?JSON.stringify([next.template,next.panel]):null;
       if(key!==fieldGeometry){invalidate('Field regions changed. Checking the current artifact.',{preserveDisplay:true});hash=null;readHash=null;latestCanvas=null;}
@@ -142,16 +182,17 @@
       if(focusCleared)return;
     }
     if(!state.current){
+      discardSpeculation('capture paused');
       resultCurrent=false;
       frames.clear();signatures=[];
-      if(latestCanvas){token++;confirmed=false;clearTimeout(stableTimer);progress(!storage && state.itemPresent===false && focusAnchor?'waiting':'paused','Checking the view · showing the last capture');score();say('Preview unavailable or delayed; displayed rows are the last capture.');}
+      if(latestCanvas){token++;confirmed=false;clearTimeout(stableTimer);stableTimer=null;progress(!storage && state.itemPresent===false && focusAnchor?'waiting':'paused','Checking the view · showing the last capture');score();say('Preview unavailable or delayed; displayed rows are the last capture.');}
       latestCanvas=null;el.read.disabled=true;return;
     }
     const resuming=!latestCanvas;latestCanvas=canvas; el.read.disabled=!ready || busy;
     // Load the local model while capture settles, rather than after Read starts.
     if(ready && !engine) {
       const owner=engine=recognition.create({names,canonPerk});
-      owner.warm?.({fast:!storage && !!latestFields && el.layout.value==='panel'}).catch(()=>{if(engine===owner)engine=null;owner.close().catch(()=>{});});
+      owner.warm?.({fast:!storage && !!latestFields && el.layout.value==='panel'}).then(()=>{if(engine===owner)speculate();}).catch(()=>{if(engine===owner)engine=null;owner.close().catch(()=>{});});
     }
     const current=signature(canvas),now=performance.now();
     signatures.push(current);if(signatures.length>3)signatures.shift();
@@ -159,6 +200,7 @@
     if(anchor && changed(anchor,current,.08))signatures=[current];
     const next=signatures.length===3?window.DNScannerFrames.median(signatures):signatures[0];
     frames.push(canvas);
+    sampleRevision++;
     // Hold a complete crafting read through local shimmer and overlays. Keep
     // the original anchor so small changes cannot accumulate into anchor drift.
     const holdConfirmed=!storage && confirmed && resultCurrent && result?.rows?.length===5 &&
@@ -181,10 +223,13 @@
     if(changed(hash,next)) {
       if(storage || differentArtifact || hash===null)stableSince=now;
       hash=next;readHash=null;
-      if(differentArtifact){clearTimeout(stableTimer);stableTimer=null;token++;attempts=0;settled=false;best=null;itemArtwork=null;anchor=next;frames.clear();frames.push(canvas);editing=false;confirmed=false;resultCurrent=false;el.correct.textContent='';if(el.accept)el.accept.disabled=true;}
+      if(differentArtifact){discardSpeculation('new artifact');clearTimeout(stableTimer);stableTimer=null;token++;attempts=0;settled=false;best=null;itemArtwork=null;anchor=next;frames.clear();frames.push(canvas);editing=false;confirmed=false;resultCurrent=false;el.correct.textContent='';if(el.accept)el.accept.disabled=true;}
       if(!busy || differentArtifact){progress('waiting','Waiting for a steady image'+(result?' · keeping the last capture visible':''));say('Checking the artifact region. Displayed rows will update when the read finishes.');}
       score();schedule();
     }
+    // One early job per context may overlap the settling window. It cannot
+    // publish until exact inputs match the ordinary settled snapshot.
+    speculate();
     // Small bounded change/stability gate; no overlapping worker jobs or queue.
     if(!document.hidden && ready && (el.auto.checked || window.DNScannerCollection?.isEnabled()) && !editing && !busy && !settled && now-stableSince>=settleDelay && readHash!==hash) startRead();
   }
@@ -395,29 +440,11 @@
     const hall=get('correct-hall');
     if(hall)hall.value=['hall-colour','crafting-label','percentage-tier','manual'].includes(result?.hallSource)?result.hall:'';
   }
-  async function read() {
-    if(!ready || busy || !latestCanvas)return;
-    const request=token, source=latestCanvas,readingProfile=window.DNStoredArtifacts?.collectionKey();
-    // Optional local benchmark observer; diagnostics cannot change read behavior.
-    const timing=stage=>{try{window.DNScannerPerformance?.({stage,time:performance.now(),session,itemId,request});}catch{}};
-    timing('read-start');
-    const snapshot=document.createElement("canvas"),temporal=frames.snapshot(snapshot,source);
-    let rerollObservations=null;
+  function captureInput() {
+    const source=latestCanvas,snapshot=document.createElement('canvas'),temporal=frames.snapshot(snapshot,source);
     let categorySource=null;
     const metadataPanel=!storage && el.layout.value==='text' && latestCategorySource?recognition.detectPanel(latestCategorySource) || categoryRegion:categoryRegion;
     const categoryRect=!storage?recognition.categoryRect(latestCategorySource,metadataPanel):null;
-    // The crafting artwork sits immediately left of the gold benefits panel.
-    // Keep only this small crop in memory, attached to the completed read.
-    let artwork=itemArtwork;
-    if(!storage && !artwork && latestCategorySource && metadataPanel) {
-      const source=latestCategorySource,panel=metadataPanel;
-      const box={x:(panel.x-panel.width*.48)*source.width,y:(panel.y+panel.height*.065)*source.height,width:panel.width*.45*source.width,height:panel.height*.85*source.height};
-      if(box.x>=0 && box.y>=0 && box.x+box.width<=source.width && box.y+box.height<=source.height) {
-        const picture=document.createElement('canvas');picture.width=240;picture.height=Math.max(1,Math.round(240*box.height/box.width));
-        picture.getContext('2d').drawImage(source,box.x,box.y,box.width,box.height,0,0,picture.width,picture.height);
-        artwork=picture.toDataURL('image/jpeg',.88);
-      }
-    }
     if(categoryRect) {
       categorySource=document.createElement('canvas');const scale=Math.min(2,1800/categoryRect.width);
       categorySource.width=Math.round(categoryRect.width*scale);categorySource.height=Math.round(categoryRect.height*scale);
@@ -430,6 +457,37 @@
         context.putImageData(pixels,0,0);
       }
     }
+    return {snapshot,temporal,categorySource,metadataPanel,release(){snapshot.width=snapshot.height=0;if(categorySource)categorySource.width=categorySource.height=0;}};
+  }
+  function captureArtwork(metadataPanel) {
+    // The crafting artwork sits immediately left of the gold benefits panel.
+    // Keep only this small crop in memory, attached to the completed read.
+    let artwork=itemArtwork;
+    if(!storage && !artwork && latestCategorySource && metadataPanel) {
+      const source=latestCategorySource,panel=metadataPanel;
+      const box={x:(panel.x-panel.width*.48)*source.width,y:(panel.y+panel.height*.065)*source.height,width:panel.width*.45*source.width,height:panel.height*.85*source.height};
+      if(box.x>=0 && box.y>=0 && box.x+box.width<=source.width && box.y+box.height<=source.height) {
+        const picture=document.createElement('canvas');picture.width=240;picture.height=Math.max(1,Math.round(240*box.height/box.width));
+        picture.getContext('2d').drawImage(source,box.x,box.y,box.width,box.height,0,0,picture.width,picture.height);
+        artwork=picture.toDataURL('image/jpeg',.88);
+      }
+    }
+    return artwork;
+  }
+  async function read({speculative=false}={}) {
+    if(!ready || busy || !latestCanvas)return;
+    const request=token,source=latestCanvas,readingProfile=window.DNStoredArtifacts?.collectionKey(),readingSession=session,readingItemId=itemId;
+    const timing=stage=>{
+      const point={stage,time:performance.now(),session:readingSession,itemId:readingItemId,request,source:serviceSource};
+      try{window.DNScannerPerformance?.(point);}catch{}
+      try{window.DNTelemetry?.scannerStage(point);}catch{}
+    };
+    timing(speculative?'speculation-start':'read-start');
+    const input=captureInput(),{snapshot,categorySource,metadataPanel}=input;
+    let temporal=input.temporal,rerollObservations=null;
+    const context=readContext(),witness=speculative?window.DNScannerFieldRecognition.witness(snapshot,latestFields,categorySource,context):null;
+    if(speculative && !witness){input.release();return;}
+    let artwork=speculative?null:captureArtwork(metadataPanel);
     if(storage && el.layout.value==='storage') {
       const info=window.DNStorageRecognition.inspect(snapshot);
       if(latestFields?.template?.kind==='storage')info.expectedRows=latestFields.template.rows.length;
@@ -451,16 +509,25 @@
     }
     const previous=resultCurrent?result:best;
     const knownTiers=(previous?.rows || []).map(row=>({...row,hall:previous?.artifact?.hall || previous?.hall || el.hall.value}));
-    const job={snapshot,categorySource};busy=job;attempts++;el.read.disabled=true;progress('reading','Reading · attempt '+attempts+(storage?' of 2':'')+' · keep this artifact open');say("Reading artifact locally…");
+    const job={snapshot,categorySource,speculative,witness,context,sampleRevision,timing};
+    if(speculative)job.validation=new Promise(resolve=>{job.resolveValidation=resolve;});
+    busy=job;attempts++;el.read.disabled=true;progress('reading','Reading · attempt '+attempts+(storage?' of 2':'')+' · keep this artifact open');say("Reading artifact locally…");
     resultCurrent=false;score();
     readHash=hash;
     const owner=engine || (engine=recognition.create({names,canonPerk}));
+    let serviceOutcome='cancelled',serviceCalls=0,serviceInferences=0;
     try {
       timing('ocr-start');
       const parsed=await owner.recognize(snapshot,{expectedRows:Number(el.rows.value),layout:el.layout.value,hall:el.hall.value,inferColours:el.infer.checked,categorySource,fields:latestFields?{...latestFields,panelSource:snapshot}:null,knownTiers,
-        fieldReuse:!storage?{epoch:JSON.stringify([session,itemId,fieldGeometry,request]),profile:readingProfile || DN.activeProfileId()}:null,
-        isCurrent:()=>request===token && owner===engine && !!latestCanvas});
+        fieldReuse:!storage && !speculative?{epoch:JSON.stringify([session,itemId,fieldGeometry,request]),profile:readingProfile || DN.activeProfileId()}:null,
+        isCurrent:()=>request===token && owner===engine && !!latestCanvas && !job.discarded && (!speculative || context===readContext())});
       timing('ocr-end');
+      serviceCalls=parsed.ocrCalls || 0;serviceInferences=(parsed.rows || []).filter(row=>row.inferred || row.assumed).length;
+      if(speculative){
+        if(!await job.validation)return;
+        if(context!==readContext() || !liveCapture || document.hidden || editing || !(el.auto.checked || window.DNScannerCollection?.isEnabled()))return;
+        temporal=job.approvedTemporal;artwork=job.artwork;
+      }
       if(request!==token || owner!==engine || storage && readingProfile!==window.DNStoredArtifacts?.collectionKey()){if(storage && latestCanvas && !editing)say(readingProfile!==window.DNStoredArtifacts?.collectionKey()?'Profile changed while reading. Read the current artifact again.':'Read cancelled because the watched fields changed. Check Field calibration and try Read Artifact again.');return;}
       if(rerollObservations)parsed.rows=parsed.rows.map((row,i)=>({...row,...rerollObservations[i]}));
       parsed.rows=parsed.rows.map((row,i)=>{
@@ -496,7 +563,17 @@
         if(result?.rows?.length)itemBoundary=false;
         progress(settled?'finished':'reading',settled?'Finished · '+recognition.coverage(result?.rows || [],rowCount()).total+'/'+rowCount()+' · '+(confirmed?'ready to move on':result?'best read · review or move on':'nothing useful in view'):'Improving the read · keeping these rows visible');
         say(confirmed?"Visible perks read. Check the values before making a game decision.":"Recognition needs correction; no rating confirmed.");
-        showCorrection();score();
+        // The score and comparison take the first paint. Building editable
+        // controls can follow, without delaying log persistence or Keep data.
+        score();
+        const publishedResult=result;
+        const details=()=>{
+          if(request!==token || owner!==engine || result!==publishedResult || !resultCurrent || editing)return;
+          showCorrection();timing('details-published');
+        };
+        const raf=!storage && window.requestAnimationFrame?.bind(window);
+        if(raf && !document.hidden){el.correct.textContent='';if(el.accept)el.accept.disabled=true;raf(()=>raf(details));}
+        else details();
         timing('published');
       };
       const collection=window.DNScannerCollection;
@@ -506,18 +583,33 @@
         collection?.recordItem(result,itemId,logOptions);
         publish();
       }
+      serviceOutcome=confirmed?'complete':'partial';
+      observeServices(result || {rows:[]},{original:parsed});
     } catch (error) {
       if(request!==token || owner!==engine)return;
+      if(speculative && !job.approved){
+        // An early failure is not a failed settled read. Preserve the warm
+        // worker on input rejection; actual worker errors get a clean retry.
+        if(!job.discarded && context===readContext()){engine=null;owner.close().catch(()=>{});}
+        discardSpeculation('early read failed');return;
+      }
+      serviceOutcome='failed';
+      try{window.DNTelemetry?.exception(error,'scanner-read-failed');}catch{}
       if(request===token && owner===engine){confirmed=false;resultCurrent=false;settled=true;progress('finished','Finished · read failed · retained last capture');say('Could not read this artifact: '+(error?.message || 'unknown recognition error')+'. Check the crop or Field calibration and retry.');score();showCorrection();}
       if(owner===engine){engine=null;owner.close().catch(()=>{});}
     } finally {
-      if(categorySource)categorySource.width=categorySource.height=0;
-      snapshot.width=snapshot.height=0;
-      if(busy===job){busy=null;el.read.disabled=!ready || !latestCanvas;if(!settled && !editing && latestCanvas)schedule(storage?350:request!==token?Math.max(0,settleDelay-(performance.now()-stableSince)):attempts<2?150:500);}
+      try{window.DNTelemetry?.scannerFinished({source:serviceSource,outcome:serviceOutcome,time:performance.now(),session:readingSession,itemId:readingItemId,request,workerCalls:serviceCalls,inferredCount:serviceInferences});}catch{}
+      input.release();job.witness=null;
+      if(busy===job){
+        if(speculative && !job.approved && request===token){attempts=0;readHash=null;settled=false;}
+        busy=null;el.read.disabled=!ready || !latestCanvas;
+        if(!settled && !editing && latestCanvas && !speculate())schedule(storage?350:request!==token || speculative && !job.approved?Math.max(0,settleDelay-(performance.now()-stableSince)):attempts<2?150:500);
+      }
     }
   }
-  function startRead() {
-    return read().catch(error=>{
+  function startRead(options) {
+    return read(options).catch(error=>{
+      try{window.DNTelemetry?.event('capture_failed',{reason:'read-setup-failed'});}catch{}
       confirmed=false;resultCurrent=false;settled=true;busy=null;el.read.disabled=!ready || !latestCanvas;
       progress('finished','Read failed · check the message below');
       say('Could not start reading: '+(error?.message || 'unknown capture error')+'. Check the selected dialog and Field calibration.');
@@ -740,11 +832,14 @@
       el.warnings.textContent=error;const status=get('correction-status');if(status)status.textContent=error;return;
     }
     const warnings=automatic?(result?.warnings || []).filter(w=>{const row=/^Row (\d+):/.exec(w);return row?!storageEdits.has(Number(row[1])-1):/conflict|disagree/i.test(w) && storageEdits.size<rowCount();}):[];
+    const correctedFields=rows.reduce((count,row,index)=>count+['name','value','tier','level','unlocked','rerollEligible'].filter(key=>row[key]!==result?.rows[index]?.[key]).length,0);
     token++;result={...result,rows,warnings,valid:true,colours:result?.colours,hall:result?.hall,unlocked:result?.unlocked};confirmed=true;resultCurrent=true;editing=true;
     const states=rows.map(r=>r.unlocked);result.unlocked={states,count:states.every(s=>s!==null)?states.filter(Boolean).length:null,method:'verified'};if(!automatic)showCorrection();
     settled=true;progress('finished','Finished · using your verified corrections');
     window.DNScannerCollection?.recordItem({...result,hall:result.hall || el.hall.value},itemId,{corrected:true,expectedRows:rowCount(),continuous:true,steadyState:!storage,profileKey:resultProfile,encounterId:JSON.stringify([session,itemId])});
     el.warnings.textContent=warnings.join(' ');say(storage?"Edits applied. Complete items save automatically.":"Using your verified values. The current item log is updated when logging is enabled.");highlightUnknownFields();score();
+    observeServices(result,{corrected:true});
+    if(correctedFields)try{window.DNTelemetry?.event('scanner_fields_corrected',{source:serviceSource,count:correctedFields},true);}catch{}
   }
   el.accept?.addEventListener("click",()=>applyCorrections());
   get('correct-hall')?.addEventListener('change',()=>{
@@ -753,6 +848,7 @@
     const selected=['main','war'].includes(hall);
     token++;result={...result,hall:selected?hall:result.hall,hallSource:selected?'manual':'selected-hall',artifact:{...result.artifact,...(selected?{hall}:{})}};
     if(selected){el.hall.value=hall;window.DNPrimaryFilters?.setHall(hall);}score();
+    observeServices(result);
   });
   get('capture-review')?.addEventListener('click',()=>{
     const details=get('corrections');if(!details)return;
@@ -765,7 +861,10 @@
   });
   for(const input of [el.layout,el.rows,el.hall,el.infer])input.addEventListener("change",()=>{editing=false;readHash=null;invalidate("Recognition settings changed. Read the artifact again.");showCorrection();});
   for(const input of [el.off,el.def])input.addEventListener("change",score);
-  get('compare-type')?.addEventListener('change',highlightUnknownFields);
+  get('compare-type')?.addEventListener('change',()=>{
+    highlightUnknownFields();
+    if(resultCurrent && result)observeServices({...result,artifact:{...result.artifact,type:get('compare-type').value || result.artifact?.type}});
+  });
   for(const event of ['focus','storage','dn-strategies-changed'])window.addEventListener(event,()=>{ratingContext=null;if(ready)score();});
   window.DNScannerReading={update,reset,invalidate};
   score();

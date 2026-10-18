@@ -292,7 +292,12 @@
 .scanner-benchmark.is-top-two { color:#caffd2; background:#124e29; border-color:#64c988; }
 .scanner-benchmark.is-below-cutoff { color:#ffd5d5; background:#571d24; border-color:#ff7b88; }
 .scanner-benchmark.is-unknown { color:#ffe4ad; background:#584018; border-color:#e9b657; }
-.scanner-benchmark.is-unlocked-keeper:not(.is-below-cutoff) { color:#caffd2; background:#124e29; border-color:#64c988; }
+/* Three unlocked stats always mean Keep, including a below-benchmark score. */
+.scanner-benchmark.is-unlocked-keeper { color:#caffd2; background:#124e29; border-color:#64c988; }
+#scanner-keeper-reason { font-size:1.2rem; font-weight:900; line-height:1.35; }
+.scanner-log-name { display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin:.75rem 0;color:var(--muted); }
+.scanner-log-name input { width:18rem;max-width:100%;min-width:0;padding:.5rem .65rem;border:1px solid var(--line);border-radius:5px;background:var(--bg);color:var(--text);font:inherit; }
+.scanner-log-name input:focus-visible { outline:2px solid var(--accent);outline-offset:2px; }
 .scanner-benchmark.is-provisional { border-style:dashed; }
 .scanner-benchmark #scanner-comparison { font-weight:700; }
 .scanner-benchmark #scanner-score-freshness { display:block; min-height:1.25em; }

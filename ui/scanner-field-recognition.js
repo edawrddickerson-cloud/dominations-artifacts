@@ -41,7 +41,9 @@
       });
       const reuseGeometry=JSON.stringify({boxes:resolved.boxes,template:fields.template,
         source:[fields.source.width,fields.source.height],panelSource:fields.panelSource?[fields.panelSource.width,fields.panelSource.height]:null});
-      return {valid:true,crops,release,sharedPercentages,reuseGeometry,diceRequested:fields.template.rows.map(row=>!!row.dice),unavailable:resolved.unavailable || {}};
+      const seedCategory={x:-.3,y:-.31,width:.5,height:.2};
+      const automaticCategory=fields.template.category && Object.keys(seedCategory).every(key=>fields.template.category[key]===seedCategory[key]);
+      return {valid:true,crops,release,sharedPercentages,reuseGeometry,automaticCategory,diceRequested:fields.template.rows.map(row=>!!row.dice),unavailable:resolved.unavailable || {}};
     }catch(error){release();throw error;}
   }
   function percentageRect(data,width,height) {
@@ -72,8 +74,8 @@
     const pad=Math.max(2,Math.round(textHeight*.25)),leftPad=prior?Math.min(Math.round(textHeight*.9),Math.max(1,first.x-prior.right-Math.round(textHeight*.15))):pad,x=Math.max(0,first.x-leftPad),y=Math.max(0,line.y-pad);
     return {x,y,width:Math.min(width,tail.right+pad)-x,height:Math.min(height,line.bottom+pad)-y};
   }
-  function view(source,mode='contrast',compact=false,minimumScale=2) {
-    const canvas=document.createElement('canvas'),scale=compact?Math.min(2,Math.max(1,48/source.height)):Math.min(minimumScale>2?6:4,Math.max(minimumScale,64/source.height));
+  function view(source,mode='contrast',compact=false,minimumScale=2,compactHeight=48) {
+    const canvas=document.createElement('canvas'),scale=compact?Math.min(2,Math.max(1,compactHeight/source.height)):Math.min(minimumScale>2?6:4,Math.max(minimumScale,64/source.height));
     canvas.width=Math.ceil(source.width*scale)+32;canvas.height=Math.ceil(source.height*scale)+24;
     const ctx=canvas.getContext('2d',{willReadFrequently:true});ctx.fillStyle='#fff';ctx.fillRect(0,0,canvas.width,canvas.height);
     const raw=document.createElement('canvas');raw.width=Math.ceil(source.width*scale);raw.height=Math.ceil(source.height*scale);
@@ -132,6 +134,16 @@
       const lines=(output.data.blocks || []).flatMap(b=>(b.paragraphs || []).flatMap(p=>p.lines || []));
       return {text:String(output.data.text || '').trim(),confidence:lines.length?Math.min(...lines.map(line=>line.confidence)):0,words:lines.flatMap(line=>line.words || [])};
     };
+    // A read repeatedly evaluates the same original OCR strings. Memoize only
+    // within this frozen snapshot, returning fresh rows/warnings so conflict and
+    // confidence annotations cannot leak between duplicate physical stats.
+    const parsedFields=new Map();
+    const parseField=(name,percentage)=>{
+      const key=JSON.stringify([name,percentage]);
+      if(!parsedFields.has(key))parsedFields.set(key,R().parseFieldRow(name,percentage,names,canonPerk));
+      const parsed=parsedFields.get(key);
+      return {...parsed,row:{...parsed.row},warnings:[...parsed.warnings]};
+    };
     async function read(source,kind,mode='contrast',segmentation='7',shared=false) {
       check();let focused=null;
       if((kind==='percentage' || kind==='name' && shared) && source.width/source.height>5) {
@@ -182,14 +194,14 @@
     const batchEvidence=new Map();let evidenceBytes=0,reusedFields=0;
     const samePixels=(first,second)=>{if(first.length!==second.length)return false;for(let i=0;i<first.length;i++)if(first[i]!==second[i])return false;return true;};
     const copyEvidence=value=>({...value,words:(value.words || []).map(word=>({...word,...(word.bbox?{bbox:{...word.bbox}}:{})}))});
-    async function batch(kind,mode='contrast') {
+    async function batch(kind,mode='contrast',indices=[0,1,2,3,4],compactHeight=48) {
       check();
       const results=Array(5),missing=[];
-      for(let i=0;i<5;i++) {
+      for(const i of indices) {
         const source=snapshot.crops[i+'-'+kind],key=kind+':'+mode+':'+i;
         // This operation has a fixed compact view, PSM 6 and kind-specific
         // whitelist. Other views/parameters cannot consume these entries.
-        if(reuse && mode==='contrast' && evidenceBytes+source.width*source.height*4<=reuse.byteLimit) {
+        if(reuse && mode==='contrast' && compactHeight===48 && evidenceBytes+source.width*source.height*4<=reuse.byteLimit) {
           const pixels=source.getContext('2d',{willReadFrequently:true}).getImageData(0,0,source.width,source.height).data;
           evidenceBytes+=pixels.byteLength;
           batchEvidence.set(key,{key,pixels,width:source.width,height:source.height});
@@ -201,7 +213,7 @@
         missing.push(i);
       }
       if(!missing.length)return results;
-      const prepared=missing.map(i=>view(snapshot.crops[i+'-'+kind],mode,true));
+      const prepared=missing.map(i=>view(snapshot.crops[i+'-'+kind],mode,true,2,compactHeight));
       if(mode==='colour' && prepared.every(item=>item.ink<30)){for(const item of prepared)item.canvas.width=item.canvas.height=0;return null;}
       const canvas=document.createElement('canvas'),cells=[];
       canvas.width=Math.max(...prepared.map(item=>item.canvas.width));
@@ -230,21 +242,37 @@
     const suffixOf=name=>({text:/([+-]\s*\d+(?:[.,]\d+)?)\s*%\s*$/.exec(name.text)?.[0]?.trim() || '',confidence:name.confidence,words:[],source:'shared-crop',...(name.reused?{reused:true}:{})});
     const batchRows=batchNames.map((name,i)=>{
       const percentage=batchPercentages?.[i] || suffixOf(name);
-      return {...R().parseFieldRow(name.text,percentage.text,names,canonPerk).row,confidence:Math.min(name.confidence,percentage.confidence)};
+      return {...parseField(name.text,percentage.text).row,confidence:Math.min(name.confidence,percentage.confidence)};
     });
-    const needsColour=!batchPercentages && batchNames.some(name=>!R().parseFieldRow(name.text,suffixOf(name).text,names,canonPerk).valid || name.confidence<80);
+    // Small atlases are quickest for clear text. Enlarge only unresolved shared
+    // rows before paying for individual name, guide and percentage retries.
+    // This is new OCR of the same glyphs, with the existing confidence threshold;
+    // contradictory signed values or identities remain a conflict.
+    const enlargedConflicts=Array(5).fill(false),initialBatchNames=batchNames.slice();
+    const unclear=!batchPercentages?batchNames.flatMap((name,i)=>!parseField(name.text,suffixOf(name).text).valid || name.confidence<80?[i]:[]):[];
+    const enlargedNames=unclear.length?await batch('name','contrast',unclear,96):null;
+    for(const i of unclear) {
+      const alternative=enlargedNames[i];
+      if(alternative.confidence<80)continue;
+      const first=parseField(batchNames[i].text,suffixOf(batchNames[i]).text),candidate=parseField(alternative.text,suffixOf(alternative).text);
+      enlargedConflicts[i]=first.row.known && candidate.row.known && first.row.name!==candidate.row.name ||
+        first.row.value!==null && candidate.row.value!==null && first.row.value!==candidate.row.value;
+      if(candidate.valid && !enlargedConflicts[i])batchNames[i]=alternative;
+    }
+    const needsColour=!batchPercentages && batchNames.some(name=>!parseField(name.text,suffixOf(name).text).valid || name.confidence<80);
     const colourNames=needsColour?await batch('name','colour'):null;
     for(let i=0;i<5;i++) {
       let name=batchNames[i],percentage;
       if(batchPercentages)percentage=batchPercentages[i];
       else percentage=suffixOf(name);
-      recordFields(i,'batch-contrast',name,percentage);
+      recordFields(i,'batch-contrast',initialBatchNames[i],batchPercentages?.[i] || suffixOf(initialBatchNames[i]));
+      if(enlargedNames?.[i])recordFields(i,'batch-enlarged',enlargedNames[i],suffixOf(enlargedNames[i]));
       if(colourNames?.[i]?.text)recordFields(i,'batch-colour',colourNames[i],suffixOf(colourNames[i]));
-      let fieldConflict=false;
+      let fieldConflict=enlargedConflicts[i];
       if(colourNames?.[i]?.confidence>=80) {
         const alternative=colourNames[i],amount=suffixOf(alternative);
-        const candidate=R().parseFieldRow(alternative.text,amount.text,names,canonPerk);
-        const first=R().parseFieldRow(name.text,percentage.text,names,canonPerk);
+        const candidate=parseField(alternative.text,amount.text);
+        const first=parseField(name.text,percentage.text);
         const conflict=first.row.known && candidate.row.known && first.row.name!==candidate.row.name ||
           first.row.value!==null && candidate.row.value!==null && first.row.value!==candidate.row.value;
         if(conflict)fieldConflict=true;
@@ -252,17 +280,17 @@
       }
       // A wide nonidentical percentage box needs its own numeric-suffix guide.
       const wide=!snapshot.sharedPercentages?.[i] && snapshot.crops[i+'-percentage'].width/snapshot.crops[i+'-percentage'].height>5;
-      let initial=R().parseFieldRow(name.text,percentage.text,names,canonPerk);
+      let initial=parseField(name.text,percentage.text);
       const priorName=name,priorPercentage=percentage;
       if(!initial.row.known || initial.row.assumed || name.confidence<80)name=await read(snapshot.crops[i+'-name'],'name','contrast','7',snapshot.sharedPercentages?.[i]);
       if(wide || initial.row.value===null || percentage.confidence<80)percentage=await read(snapshot.crops[i+'-percentage'],'percentage');
       if(name!==priorName || percentage!==priorPercentage)recordFields(i,'focused-fields',name,percentage);
-      const attempted=R().parseFieldRow(name.text,percentage.text,names,canonPerk);
+      const attempted=parseField(name.text,percentage.text);
       // A retry supplies additional evidence. Missing glyphs must not erase an
       // earlier signed value or known name, nor promote its original confidence.
       if(initial.row.known && !initial.row.assumed && (!attempted.row.known || attempted.row.assumed))name=priorName;
       if(initial.row.value!==null && attempted.row.value===null)percentage=priorPercentage;
-      const parsed=R().parseFieldRow(name.text,percentage.text,names,canonPerk);
+      const parsed=parseField(name.text,percentage.text);
       fieldConflict=fieldConflict || percentage.conflict || attempted.row.conflict || initial.row.conflict ||
         initial.row.known && parsed.row.known && initial.row.name!==parsed.row.name ||
         initial.row.value!==null && parsed.row.value!==null && initial.row.value!==parsed.row.value;
@@ -277,29 +305,34 @@
     let artifact=null;
     const colourHall=R().hallColour(snapshot.crops.hall || snapshot.crops['hall-banner']);
     const category=snapshot.crops.category;
-    if(category) {
+    const readCategorySource=async()=>{
+      await worker.setParameters({tessedit_pageseg_mode:'7',tessedit_char_whitelist:'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz '});
+      const output=evidence(await readView(categorySource,{}, {text:true,blocks:true}));check();
+      return {type:R().craftCategoryEvidence(output) || '',rawType:output.text,categoryConfidence:output.confidence,source:'crafting-label'};
+    };
+    // The generated seed box can include the title and icon. Prefer the existing
+    // detected text-line crop; explicit user calibration keeps its priority.
+    const sourceFirst=snapshot.automaticCategory && categorySource?.width;
+    if(sourceFirst)artifact=await readCategorySource();
+    if(category && !artifact?.type) {
       let output=await read(category,'category','category'),type=R().craftCategoryEvidence(output || {});
       if(!type){output=await read(category,'category');type=R().craftCategoryEvidence(output);}
       if(!type){output=await read(category,'category','category','11') || await read(category,'category','contrast','11');type=R().craftCategoryEvidence(output);}
       artifact={type:type || '',rawType:output?.text || '',categoryConfidence:output?.confidence || 0,source:'calibrated-label'};
-    }else if(categorySource?.width) {
+    }else if(!category && categorySource?.width) {
       // Keep existing metadata fallback if category calibration is disabled.
-      await worker.setParameters({tessedit_pageseg_mode:'7',tessedit_char_whitelist:'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz '});
-      const output=evidence(await readView(categorySource,{}, {text:true,blocks:true}));check();
-      artifact={type:R().craftCategoryEvidence(output) || '',rawType:output.text,categoryConfidence:output.confidence,source:'crafting-label'};
+      artifact=await readCategorySource();
     }
-    if(category && !artifact?.type && categorySource?.width) {
-      await worker.setParameters({tessedit_pageseg_mode:'7',tessedit_char_whitelist:'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz '});
-      const output=evidence(await readView(categorySource,{}, {text:true,blocks:true}));check();
-      const type=R().craftCategoryEvidence(output);
-      if(type)artifact={type,rawType:output.text,categoryConfidence:output.confidence,source:'crafting-label'};
+    if(category && !artifact?.type && categorySource?.width && !sourceFirst) {
+      const fallback=await readCategorySource();
+      if(fallback.type)artifact=fallback;
     }
     const observations=[{pass:'calibrated-fields',rows:firstRows.map(row=>({...row})),warnings:[...firstWarnings],artifact:artifact?{...artifact}:null,unlocked,...(reusedFields?{reusedFields}: {})}];
     if(batchRows.some((row,i)=>row.raw!==firstRows[i].raw || row.confidence!==firstRows[i].confidence))
       observations.unshift({pass:'calibrated-batch',rows:batchRows,warnings:[],artifact:artifact?{...artifact}:null,unlocked});
     const rows=firstRows.map(row=>({...row})),warnings=[];let retried=false;
     for(let i=0;i<5;i++) {
-      const first=R().parseFieldRow(fields[i].name.text,fields[i].percentage.text,names,canonPerk);
+      const first=parseField(fields[i].name.text,fields[i].percentage.text);
       if(fields[i].conflict){first.row.conflict=true;first.warnings.push('Independent field views disagree. Verify this row.');first.valid=false;}
       let selected=first;
       if(!first.valid || rows[i].confidence<80) {
@@ -309,7 +342,7 @@
         if(alternativeName || alternativePercentage) {
           retried=true;
           const name=alternativeName || fields[i].name,percentage=alternativePercentage || fields[i].percentage;
-          const candidate=R().parseFieldRow(name.text,percentage.text,names,canonPerk);
+          const candidate=parseField(name.text,percentage.text);
           const conflict=percentage.conflict || first.row.conflict || candidate.row.conflict || first.row.known && candidate.row.known && first.row.name!==candidate.row.name ||
             first.row.value!==null && candidate.row.value!==null && first.row.value!==candidate.row.value;
           if(conflict){selected=first;selected.row.conflict=true;selected.warnings.push('Row '+(i+1)+': independent field reads disagree. Verify it.');}
@@ -341,8 +374,8 @@
     if(reuse) {
       const verified=new Map();
       for(let i=0;i<5;i++) {
-        const name=batchNames[i],percentage=batchPercentages?.[i] || suffixOf(name),row=tieredRows[i];
-        const initial=R().parseFieldRow(name.text,percentage.text,names,canonPerk);
+        const name=initialBatchNames[i],percentage=batchPercentages?.[i] || suffixOf(name),row=tieredRows[i];
+        const initial=parseField(name.text,percentage.text);
         // Never cache recovered, inferred, weak, unknown or conflicting batch
         // evidence, even when later independent reads made the row valid.
         if(!initial.valid || initial.row.assumed || name.confidence<80 || percentage.confidence<80 ||
@@ -358,5 +391,38 @@
     }
     return {...annotated,valid,warnings:[...annotated.warnings,...conflicts],artifact,hall,hallSource,colours,unlocked,inferColours,metadataConflict,recognitionPath:'calibrated-fields',ocrCalls:ocrCalls(),...(reuse?{reusedFields}:{}),observations,rows:tieredRows};
   }
-  window.DNScannerFieldRecognition={snapshot,recognize,atlasEvidence,percentageRect};
+  // A speculative result may be used only when these exact OCR inputs match the
+  // image the ordinary settled read would consume. Pixels stay in memory, scoped
+  // to one job. The panel covers temporal stat/star crops and standard fallback;
+  // category/hall/dice also freeze from their original non-temporal source.
+  function witness(source,fields,categorySource,context,byteLimit=8*1024*1024) {
+    if(!fields || !source?.width || source.width*source.height*4>byteLimit)return null;
+    let frozen;
+    try {
+      frozen=snapshot({...fields,panelSource:source});
+      if(!frozen.valid)return null;
+      let bytes=0;const images=[];
+      const add=(id,canvas)=>{
+        if(!canvas?.width || !canvas.height)return true;
+        bytes+=canvas.width*canvas.height*4;
+        if(bytes>byteLimit)return false;
+        images.push({id,width:canvas.width,height:canvas.height,pixels:canvas.getContext('2d',{willReadFrequently:true}).getImageData(0,0,canvas.width,canvas.height).data});
+        return true;
+      };
+      if(!add('panel',source) || !add('category-source',categorySource))return null;
+      for(const [id,canvas] of Object.entries(frozen.crops))if(id==='category' || id==='hall' || id.endsWith('-dice'))if(!add(id,canvas))return null;
+      return {key:JSON.stringify([context,frozen.reuseGeometry]),images};
+    }catch{return null;}
+    finally{frozen?.release?.();}
+  }
+  function sameWitness(first,second) {
+    if(!first || !second || first.key!==second.key || first.images.length!==second.images.length)return false;
+    return first.images.every((image,index)=>{
+      const next=second.images[index];
+      if(image.id!==next.id || image.width!==next.width || image.height!==next.height || image.pixels.length!==next.pixels.length)return false;
+      for(let i=0;i<image.pixels.length;i++)if(image.pixels[i]!==next.pixels[i])return false;
+      return true;
+    });
+  }
+  window.DNScannerFieldRecognition={snapshot,recognize,atlasEvidence,percentageRect,witness,sameWitness};
 })();

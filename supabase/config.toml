@@ -1,0 +1,6 @@
+project_id = "dominations-artifacts"
+
+[functions.delete-account]
+# The handler verifies the user's bearer token through Supabase Auth and requires
+# a recent sign-in. This also supports projects using asymmetric signing keys.
+verify_jwt = false

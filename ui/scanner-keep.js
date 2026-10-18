@@ -21,7 +21,7 @@
       const outcome=await store.keepCraft(item,{profileKey});
       if(outcome.action==='cancelled')throw new Error('Profile changed before this craft could be kept.');
       if(encounter)saved.set(encounter,item.id);
-      if(logged)window.DNScannerCollection?.markKept(logged.id,item.id,{type:item.type,profileKey});
+      if(logged)window.DNScannerCollection?.markKept(logged.id,item.id,{name:item.name,type:item.type,profileKey});
       window.dispatchEvent(new CustomEvent('dn-craft-kept'));
       return outcome;
     })();
@@ -52,7 +52,7 @@
     button.disabled=busy || kept || !!blocked;
     button.title=kept?'Added to Collection':blocked || 'Add this craft to Collection and benchmarks';
     const status=get('keep-status');
-    status.textContent=(failureKey===key()?failure:'') || (kept?'Added to Collection.':blocked);status.hidden=!status.textContent;
+    status.textContent=(failureKey===key()?failure:'') || (kept?'Added to Collection.':state.current?blocked:'');status.hidden=!status.textContent;
   }
   window.DNScannerKeep={loggedReason,keepLogged,update(next,nextState){result=next;state=nextState;render();}};
   button.addEventListener('click',async()=>{
@@ -61,7 +61,7 @@
     const logged=currentLog();
     if(!ids.has(encounter))ids.set(encounter,logged?.keepId || store.newId());
     const type=get('compare-type').value.replace(/^./,letter=>letter.toUpperCase());
-    const item=store.backfillItem({id:ids.get(encounter),name:result.artifact?.name || 'Crafted '+type,
+    const item=store.backfillItem({id:ids.get(encounter),name:(logged?.nameSource==='manual'?logged.name:result.artifact?.name || logged?.name) || 'Crafted '+type,
       hall:result.hall || get('hall').value,hallSource:result.hallSource,unlocked:structuredClone(result.unlocked),type,reviewed:true,freshCraft:true,keptFromCraft:true,profileId,
       capturedAt:new Date().toISOString(),image:result.artifact?.image || null,rows:structuredClone(result.rows)});
     saving=true;failure='';render();

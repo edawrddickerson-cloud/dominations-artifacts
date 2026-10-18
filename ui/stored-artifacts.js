@@ -7,6 +7,27 @@
 (() => {
   'use strict';
   let opening;
+  let catalogPromise;
+  const changes=typeof window.BroadcastChannel==='function'?new window.BroadcastChannel('dn-stored-artifacts'):null;
+  function announce(profileKey=collectionKey()) {
+    changes?.postMessage({profileKey});
+    if(typeof window.CustomEvent==='function')window.dispatchEvent(new window.CustomEvent('dn-artifacts-changed',{detail:{profileKey}}));
+  }
+  if(changes)changes.onmessage=event=>{
+    if(typeof window.CustomEvent==='function')window.dispatchEvent(new window.CustomEvent('dn-artifacts-changed',{detail:event.data}));
+  };
+  function useCatalog(rows) {
+    if(!Array.isArray(rows))throw new Error('Artifact catalog is not an array.');
+    const catalog=rows.filter(row=>row.artifact_id!=='leftwich-trophy-legendary');
+    catalogPromise=Promise.resolve(catalog);
+    return catalog;
+  }
+  function loadCatalog() {
+    if(!catalogPromise)catalogPromise=fetch('./data/artifacts.json',{cache:'no-store'}).then(response=>{
+      if(!response.ok)throw new Error('Could not load artifact names.');return response.json();
+    }).then(useCatalog).catch(error=>{catalogPromise=null;throw error;});
+    return catalogPromise;
+  }
   function open() {
     if (!opening) opening = new Promise((resolve, reject) => {
       const request = indexedDB.open('dn-stored-artifacts', 1);
@@ -76,6 +97,17 @@
       transaction.onabort=transaction.onerror=()=>reject(transaction.error);
     });
   }
+  // Read only planner records for sync. Large diagnostic logs and artwork are
+  // excluded by the transport serializer; the local database remains unchanged.
+  async function readPlannerRecords(profileIds) {
+    const db=await open();
+    return new Promise((resolve,reject)=>{
+      const transaction=db.transaction('inventory','readonly'),store=transaction.objectStore('inventory');
+      const requests=['items',...profileIds.map(id=>'collection:'+id)].map(id=>({id,request:store.get(id)}));
+      transaction.oncomplete=()=>resolve(requests.map(({id,request})=>request.result || {id,items:[]}));
+      transaction.onabort=transaction.onerror=()=>reject(transaction.error);
+    });
+  }
   // The synchronous settings write runs before this transaction commits. An error
   // aborts the artifact restore; the caller restores the previous settings too.
   async function restoreBackupRecords(records,writeSettings) {
@@ -83,7 +115,7 @@
     return new Promise((resolve,reject)=>{
       const transaction=db.transaction('inventory','readwrite'),store=transaction.objectStore('inventory');
       let failure;
-      transaction.oncomplete=()=>resolve();
+      transaction.oncomplete=()=>{announce();resolve();};
       transaction.onabort=transaction.onerror=()=>reject(failure || transaction.error);
       try {
         store.clear();
@@ -95,9 +127,15 @@
   async function remove(id,{inventory=false}={}) {
     const key=inventory?'items':collectionKey(), db=await open();
     return new Promise((resolve,reject)=>{
-      const transaction=db.transaction('inventory','readwrite'),store=transaction.objectStore('inventory'),request=store.get(key);
-      request.onsuccess=()=>store.put({id:key,items:(request.result?.items || []).filter(item=>item.id!==id)});
-      transaction.oncomplete=()=>resolve();
+      const transaction=db.transaction('inventory','readwrite'),store=transaction.objectStore('inventory'),request=store.get(key);let removed;
+      request.onsuccess=()=>{removed=request.result?.items?.find(item=>item.id===id);store.put({id:key,items:(request.result?.items || []).filter(item=>item.id!==id)});};
+      transaction.oncomplete=()=>{
+        if(!inventory && removed?.catalogId && key===collectionKey()) {
+          const owned=window.DN.loadCollected();owned.delete(removed.catalogId);
+          try {window.DN.lsSet(window.DN.COLLECTED_KEY,JSON.stringify([...owned]));}catch(error){reject(error);return;}
+        }
+        announce(key);resolve();
+      };
       transaction.onabort=transaction.onerror=()=>reject(transaction.error);
     });
   }
@@ -112,14 +150,106 @@
         updated=backfillItem({...record.items[index],...changes,id,updatedAt:new Date().toISOString()});
         record.items[index]=updated;store.put(record);
       };
-      transaction.oncomplete=()=>resolve(updated);
+      transaction.oncomplete=()=>{announce(key);try{window.DNTelemetry?.event('artifact_updated',{source:'collection'},true);}catch{}resolve(updated);};
       transaction.onabort=transaction.onerror=()=>reject(transaction.error || new Error('Artifact no longer exists.'));
     });
   }
   const collectionKey = () => 'collection:' + window.DN.activeProfileId();
+  const catalogName = value => String(value || '').normalize('NFKD').toLowerCase().replace(/\p{M}/gu,'').replace(/[^\p{L}\p{N}]/gu,'');
+  // A special artifact's title identifies the item; its row count identifies
+  // the Legendary/Mythical edition, even when banner OCR is missing or wrong.
+  function matchCatalog(item, catalog) {
+    const grade=item.rows?.length===6?'Mythical':item.rows?.length===5?'Legendary':null;
+    const name=catalogName(item.name),hall=String(item.hall || '').toLowerCase();
+    if(!grade || !name)return null;
+    const matches=catalog.filter(row=>row.artifact_id!=='leftwich-trophy-legendary' && row.grade===grade &&
+      (!hall || String(row.hall).toLowerCase()===hall) &&
+      [row.name,row.alternate_name].some(title=>title && catalogName(title)===name));
+    return matches.length===1?matches[0]:null;
+  }
+  function markCatalogOwned(items,catalog,{profileKey=collectionKey(),isCurrent=()=>true}={}) {
+    if(profileKey!==collectionKey() || !isCurrent())return [];
+    const matches=items.map(item=>matchCatalog(item,catalog)).filter(Boolean),owned=window.DN.loadCollected();
+    let changed=false;
+    for(const row of matches)if(!owned.has(row.artifact_id)){owned.add(row.artifact_id);changed=true;}
+    if(changed)window.DN.lsSet(window.DN.COLLECTED_KEY,JSON.stringify([...owned]));
+    return matches;
+  }
+  function linkCatalogItem(item,catalog,{legacy=false}={}) {
+    const match=matchCatalog(item,catalog);
+    if(!match)return item;
+    return {...item,id:match.artifact_id,catalogId:match.artifact_id,name:match.name,hall:match.hall.toLowerCase(),
+      type:(match.hall==='War'?'War ':'')+match.grade,
+      ...(legacy && item.id!==match.artifact_id?{legacyIds:[...new Set([...(item.legacyIds || []),item.id])]}:{})};
+  }
+  function catalogRows(catalog,items,{includeOrdinary=false}={}) {
+    const rows=new Map(catalog.map(row=>[row.artifact_id,row]));
+    for(const item of items) {
+      if(!item.catalogId && !includeOrdinary)continue;
+      const row=toRow(item);rows.set(row.artifact_id,{...rows.get(row.artifact_id),...row});
+    }
+    return [...rows.values()];
+  }
+  function migrateReferences(items) {
+    const aliases=new Map(items.flatMap(item=>(item.legacyIds || []).map(id=>[id,item.id])));
+    if(!aliases.size)return;
+    const replace=id=>aliases.get(id) || id,state=window.DN.loadStrategies();let changed=false;
+    for(const strategy of state.strategies)for(const hall of ['Main','War']) {
+      const layout=strategy.loadout[hall],before=JSON.stringify(layout);
+      layout.mains=[...new Set(layout.mains.map(replace))];layout.hermitage=replace(layout.hermitage);
+      layout.scannedPlaced=[...new Set(layout.scannedPlaced.map(replace))];
+      layout.singles=Object.fromEntries(Object.entries(layout.singles).map(([id,value])=>[replace(id),value]));
+      changed ||= before!==JSON.stringify(layout);
+    }
+    if(changed)window.DN.saveStrategies(state);
+    const levels=window.DN.loadLevels();let levelsChanged=false;
+    for(const [id,target] of aliases)if(levels[id]){levels[target] ??= levels[id];delete levels[id];levelsChanged=true;}
+    if(levelsChanged)window.DN.saveLevels(levels);
+  }
+  // Convert old scan IDs and staged special items to one profile-owned catalog
+  // identity. Linked stats remain cached when the ownership checkbox is cleared.
+  async function reconcileCatalog(catalog,{profileKey=collectionKey()}={}) {
+    useCatalog(catalog);
+    const db=await open();
+    const result=await new Promise((resolve,reject)=>{
+      const transaction=db.transaction('inventory','readwrite'),store=transaction.objectStore('inventory');
+      const owned=store.get(profileKey),inbox=store.get('items');let pending=2,result;
+      const finish=()=>{
+        if(--pending)return;
+        const before=identify(owned.result?.items || []),inventory=identify(inbox.result?.items || []);
+        result={collection:before,items:inventory,profileKey,changed:false};
+        if(profileKey!==collectionKey())return;
+        const special=inventory.filter(item=>item.reviewed && (!item.profileId || 'collection:'+item.profileId===profileKey) && matchCatalog(item,catalog));
+        const collection=[],byId=new Map(),newlyLinked=[];
+        for(const original of [...before,...special]) {
+          const item=original.reviewed?linkCatalogItem(original,catalog,{legacy:true}):original;
+          if(item.catalogId && !original.catalogId)newlyLinked.push(item);
+          const previous=byId.get(item.id);
+          if(!previous){byId.set(item.id,item);collection.push(item);continue;}
+          const merged=passiveMerge([previous],[item]),next=merged.collection[0];
+          const combined={...next,legacyIds:[...new Set([...(previous.legacyIds || []),...(item.legacyIds || [])])],
+            revisions:[...(next.revisions || []),{at:new Date().toISOString(),reason:'catalog-link',id:original.id,rows:item.rows}]};
+          byId.set(item.id,combined);collection[collection.indexOf(previous)]=combined;
+        }
+        const moved=new Set(special.map(item=>item.id)),items=inventory.filter(item=>!moved.has(item.id));
+        result={collection,items,profileKey,changed:JSON.stringify(before)!==JSON.stringify(collection) || special.length>0};
+        try {
+          if(result.changed){store.put({id:profileKey,items:collection});if(special.length)store.put({id:'items',items});}
+          // Do not re-collect an already linked item the user has unchecked.
+          markCatalogOwned(newlyLinked,catalog,{profileKey});
+        } catch(error){transaction.abort();reject(error);}
+      };
+      owned.onsuccess=inbox.onsuccess=finish;
+      transaction.oncomplete=()=>resolve(result);
+      transaction.onabort=transaction.onerror=()=>reject(transaction.error || new Error('Artifact linking failed.'));
+    });
+    if(profileKey===collectionKey())migrateReferences(result.collection);
+    if(result.changed)announce(profileKey);
+    return result;
+  }
   const normalize = value => String(value || '').trim().toLowerCase().replace(/[’‘]/g,"'").replace(/\s+/g,' ');
   const identity = item => JSON.stringify([normalize(item.name),normalize(item.hall),normalize(item.type).replace(/^war /,'')]);
-  const matchingIdentity=(other,item)=>identity(other)===identity(item) &&
+  const matchingIdentity=(other,item)=>(other.catalogId && item.catalogId?other.catalogId===item.catalogId:identity(other)===identity(item)) &&
     !(other.keptFromCraft && item.keptFromCraft && other.id!==item.id);
   function impliedRange(row) {
     if(!Number.isFinite(row.value) || !Number.isInteger(row.level) || row.level<1 || row.level>10)return null;
@@ -367,6 +497,7 @@
     return {...result,collection};
   }
   async function saveScan(item,{profileKey=collectionKey(),isCurrent=()=>true}={}) {
+    item=linkCatalogItem(item,await loadCatalog());
     const db=await open();
     return new Promise((resolve,reject)=>{
       const transaction=db.transaction('inventory','readwrite'),records=transaction.objectStore('inventory');
@@ -375,18 +506,19 @@
         if(--pending)return;
         const collection=identify(owned.result?.items || []),items=identify(inventory.result?.items || []);
         result={action:'cancelled',collection,items,profileKey};
-        if(profileKey!==collectionKey() || !isCurrent())return;
-        const ownedPlan=passivePlan(collection,item),target=ownedPlan.action==='added'?'inventory':'collection';
+        if(profileKey!==collectionKey() || !isCurrent() || item.catalogId && !window.DN.loadCollected().has(item.catalogId))return;
+        const correction=!!item.catalogId && !!item.manualCorrection;
+        const ownedPlan=passivePlan(collection,item,{allowCorrection:correction}),target=item.catalogId || ownedPlan.action!=='added'?'collection':'inventory';
         const plan=target==='collection'?ownedPlan:passivePlan(items,item,{allowCorrection:true});
         result={...result,...plan,target};
         if(plan.action!=='added' && plan.action!=='updated')return;
-        const merged=passiveMerge(target==='collection'?collection:items,[item],{allowCorrection:target==='inventory'});
+        const merged=passiveMerge(target==='collection'?collection:items,[item],{allowCorrection:target==='inventory' || correction});
         if(target==='collection')result.collection=merged.collection;else result.items=merged.collection;
         const write=records.put({id:target==='collection'?profileKey:'items',items:merged.collection});
         write.onsuccess=()=>{if(profileKey!==collectionKey() || !isCurrent())transaction.abort();};
       }
       owned.onsuccess=inventory.onsuccess=finish;
-      transaction.oncomplete=()=>resolve(result);
+      transaction.oncomplete=()=>{if(['added','updated'].includes(result?.action)){announce(profileKey);try{window.DNTelemetry?.event('artifact_saved',{source:'storage',action:result.action,count:1},true);window.DNTelemetry?.milestone('first-artifact-saved');}catch{}}resolve(result);};
       transaction.onabort=transaction.onerror=()=>reject(transaction.error || new Error('The scan changed before it could be saved.'));
     });
   }
@@ -418,21 +550,35 @@
     });
   }
   async function accept(items) {
-    const key = collectionKey(), db = await open();
+    const key=collectionKey();
+    const catalog=await loadCatalog();
+    const sourceIds=new Map();
+    for(const item of items){const id=linkCatalogItem(item,catalog).id;sourceIds.set(id,[...(sourceIds.get(id) || []),item.id]);}
+    items=items.map(item=>linkCatalogItem(item,catalog));
+    const db = await open();
     return new Promise((resolve, reject) => {
       const transaction = db.transaction('inventory', 'readwrite'), store = transaction.objectStore('inventory');
       let result, pending=2;
       const collection=store.get(key), inventory=store.get('items');
       function finish() {
         if(--pending)return;
+        if(key!==collectionKey()) {
+          result={added:0,updated:0,duplicates:0,blocked:0,consumedIds:[],issues:[],cancelled:true,
+            collection:collection.result?.items || [],remainingInventory:identify(inventory.result?.items || [])};
+          return;
+        }
         result=passiveMerge(collection.result?.items || [],items);
-        const consumed=new Set(result.consumedIds);
+        const consumed=new Set(result.consumedIds.flatMap(id=>[id,...(sourceIds.get(id) || [])]));
         result.remainingInventory=identify(inventory.result?.items || []).filter(item=>!consumed.has(item.id));
-        store.put({id:key,items:result.collection});
-        store.put({id:'items',items:result.remainingInventory});
+        for(const record of [{id:key,items:result.collection},{id:'items',items:result.remainingInventory}]) {
+          const write=store.put(record);write.onsuccess=()=>{if(key!==collectionKey())transaction.abort();};
+        }
       }
       collection.onsuccess=inventory.onsuccess=finish;
-      transaction.oncomplete = () => resolve(result);
+      transaction.oncomplete = () => {
+        try {markCatalogOwned(items.filter(item=>item.catalogId && result.consumedIds.includes(item.id)),catalog,{profileKey:key});announce(key);resolve(result);}
+        catch(error){reject(error);}
+      };
       transaction.onabort = transaction.onerror = () => reject(transaction.error);
     });
   }
@@ -447,6 +593,6 @@
     });
     return row;
   }
-  window.DNStoredArtifacts = {read, write, readBackupRecords, restoreBackupRecords, accept, saveScan, keepCraft, passivePlan, passiveMerge, remove, update, identify, toRow, collectionKey, impliedRange, tierBases, tierMetadata, craftingTier, inferStorageRow, backfillItem, merge,
+  window.DNStoredArtifacts = {read, write, readBackupRecords, readPlannerRecords, restoreBackupRecords, accept, saveScan, keepCraft, passivePlan, passiveMerge, remove, update, identify, toRow, matchCatalog, markCatalogOwned, linkCatalogItem, catalogRows, reconcileCatalog, loadCatalog, useCatalog, collectionKey, impliedRange, tierBases, tierMetadata, craftingTier, inferStorageRow, backfillItem, merge,
     newId:() => 'scan-' + crypto.randomUUID()};
 })();

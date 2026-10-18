@@ -301,7 +301,7 @@
     get('capture-meter').value=capture.percent;
     get('capture-detail').textContent=capture.read+' read · '+capture.inferred+' inferred · '+capture.typed+' typed';
     const review=get('capture-review');
-    if(review){review.hidden=!captureResult || !capture.missing.length;review.textContent=review.hidden?'':'Manual entry required: '+capture.missing.join(', ');}
+    if(review){review.hidden=true;review.textContent='';}
     board.title=capture.names+'/5 names · '+capture.values+'/5 percentages · '+capture.stars+'/5 stars · Category '+(capture.type?'identified':'unknown')+' · Hall '+(capture.hall?'identified':'unknown')+(capture.diceExpected?' · '+capture.dice+'/'+capture.diceExpected+' dice':'');
     const keeper=isUnlockedKeeper(keeperResult);
     const keeperReason=get('keeper-reason');
@@ -364,7 +364,7 @@
       if(ticket!==request || profile!==DN.activeProfileId())return;
       const collected=DN.loadCollected(),rows=new Map();
       for(const row of catalogue)if(collected.has(DN.artifactKey(row)))rows.set(DN.artifactKey(row),row);
-      for(const item of scans){const row=window.DNStoredArtifacts.toRow(item);rows.set(DN.artifactKey(row),row);}
+      for(const item of scans){if(item.catalogId && !collected.has(item.catalogId))continue;const row=window.DNStoredArtifacts.toRow(item);rows.set(DN.artifactKey(row),row);}
       for(const item of inventory)if(item.keptFromCraft && item.profileId===profile && !rows.has(item.id)){
         rows.set(item.id,window.DNStoredArtifacts.toRow(item));
       }
@@ -399,6 +399,7 @@
   window.addEventListener('focus',refresh);
   window.addEventListener('storage',refresh);
   window.addEventListener('dn-craft-kept',refresh);
+  window.addEventListener('dn-artifacts-changed',refresh);
   for(const event of ['focus','storage'])window.addEventListener(event,()=>{types();render();});
   types();refresh();
 })();

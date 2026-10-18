@@ -42,6 +42,7 @@
 
   /** @type {object[]} */
   let rows = [];
+  let catalogRows=[],catalogImages={};
   /** @type {Record<string, object>} */
   let byId = {};
   /** @type {Set<string>} */
@@ -121,6 +122,15 @@
     return true;
   }
   const crafted=row=>row && !['Legendary','Mythical'].includes(DN.text(row.grade));
+  function applyScans(scans) {
+    rows=window.DNStoredArtifacts.catalogRows(catalogRows,scans,{includeOrdinary:true});
+    byId={};collected=DN.loadCollected();artifactImages={...catalogImages};
+    for(const row of rows) {
+      const id=DN.artifactKey(row);byId[id]=row;
+      if(row.scanned && !row.scanned.catalogId)collected.add(id);
+      if(row.scanned?.image)artifactImages[id]=row.scanned.image;
+    }
+  }
 
   function showError(msg) {
     if (!el.error) return;
@@ -137,7 +147,7 @@
     const h = hallState();
     if (h.hermitage === id) return "hermitage";
     if (h.mains.includes(id)) return "hall";
-    if(crafted(byId[id]) || (byId[id]?.scanned && !Object.prototype.hasOwnProperty.call(h.singles,id)))return "unused";
+    if(crafted(byId[id]) || (byId[id]?.scanned && !byId[id].scanned.catalogId && !Object.prototype.hasOwnProperty.call(h.singles,id)))return "unused";
     return "showcase";
   }
 
@@ -648,7 +658,9 @@
     const count=Math.min(6,Math.max(5,row.scanned?.rows.length || 0,...perks.map(perk=>perk.index)));
     const names=[...new Set([...Object.keys(factoryRatings),...rows.flatMap(item=>DN.perksOf(item,canonPerk).map(perk=>perk.name))])].filter(Boolean).sort();
     const number=(field,label,value,index,min,max)=>'<label>'+label+'<input type="number" name="'+field+'" step="1"'+(min!=null?' min="'+min+'" max="'+max+'"':'')+' value="'+(Number.isFinite(value)?value:'')+'" aria-label="'+label+' for perk '+index+'"></label>';
-    return '<form class="artifact-perk-editor" data-id="'+DN.esc(id)+'"><datalist id="collection-perk-names">'+names.map(name=>'<option value="'+DN.esc(name)+'">').join('')+'</datalist>'+Array.from({length:count},(_,offset)=>{
+    const types=row.hall==='War'?['Weapon','Armor','Equipment','Legendary','Mythical']:['Weapon','Armor','Jewelry','Pottery','Legendary','Mythical'];
+    const metadata=row.scanned?'<fieldset class="artifact-perk-edit-row"><legend>Artifact</legend><label class="artifact-perk-edit-name">Item name<input type="text" name="artifact-name" value="'+DN.esc(row.name)+'" required /></label><label>Type<select name="artifact-type">'+types.map(type=>'<option value="'+type+'"'+(type===row.grade?' selected':'')+'>'+type+'</option>').join('')+'</select></label></fieldset>':'';
+    return '<form class="artifact-perk-editor" data-id="'+DN.esc(id)+'">'+metadata+'<datalist id="collection-perk-names">'+names.map(name=>'<option value="'+DN.esc(name)+'">').join('')+'</datalist>'+Array.from({length:count},(_,offset)=>{
       const index=offset+1,perk=perks.find(perk=>perk.index===index),scanned=row.scanned?.rows[offset];
       const value=perk?actualPerkValue(id,perk):scanned?.value;
       const base=scanned?scanned.base:perk?.base,max=scanned?scanned.max:perk?.max;
@@ -666,7 +678,9 @@
   }
   async function savePerkEditor(form) {
     const id=form.dataset.id,row=byId[id];if(!row)return;
-    const fields=[...form.querySelectorAll('.artifact-perk-edit-row')];
+    const fields=[...form.querySelectorAll('.artifact-perk-edit-row[data-index]')];
+    const itemName=form.querySelector('[name="artifact-name"]'),itemType=form.querySelector('[name="artifact-type"]');
+    if(itemName){itemName.setCustomValidity(itemName.value.trim()?'':'Enter an item name.');}
     let invalid=false;
     const corrected=fields.map((field,offset)=>{
       const input=name=>field.querySelector('[name="'+name+'"]');
@@ -707,9 +721,11 @@
     const button=form.querySelector('[type="submit"]'),status=form.querySelector('[role="status"]');button.disabled=true;status.textContent='';
     try {
       if(row.scanned){
-        const updated=await window.DNStoredArtifacts.update(id,{rows:corrected,corrected:true});
+        const type=itemType.value;
+        const updated=await window.DNStoredArtifacts.update(id,{name:itemName.value.trim(),type:(row.hall==='War'?'War ':'')+type,rows:corrected,corrected:true});
         const replacement=window.DNStoredArtifacts.toRow(updated);
         rows[rows.indexOf(row)]=replacement;byId[id]=replacement;
+        if(type!==row.grade){DN.removeArtifactSlots(id);loadout=DN.loadLoadout();}
         levels[id]={_scanRevision:Date.parse(updated.updatedAt)};
       } else {
         DN.saveArtifactPerkEdits(id,corrected.map(perk=>({name:perk.name,base:perk.base,max:perk.max})));
@@ -721,18 +737,32 @@
   }
   async function deleteArtifact(id, button) {
     const row=byId[id];if(!row || !collected.has(id))return;
+    const deletionProfile=DN.activeProfileId();
+    const dialog=document.getElementById('collection-delete-dialog');
+    if(dialog.open)return;
+    document.getElementById('collection-delete-name').textContent=DN.show(row.name);
+    dialog.returnValue='cancel';
+    const confirmed=new Promise(resolve=>dialog.addEventListener('close',()=>resolve(dialog.returnValue==='delete'),{once:true}));
+    dialog.showModal();
+    if(!await confirmed)return;
+    if(deletionProfile!==DN.activeProfileId())return;
     button.disabled=true;
     try {
       if(row.scanned)await window.DNStoredArtifacts.remove(id);
+      if(deletionProfile!==DN.activeProfileId())return;
       DN.removeArtifactSlots(id);
       collected.delete(id);
-      DN.lsSet(DN.COLLECTED_KEY,JSON.stringify([...collected].filter(key=>!byId[key]?.scanned)));
+      DN.lsSet(DN.COLLECTED_KEY,JSON.stringify([...collected].filter(key=>!byId[key]?.scanned || byId[key].scanned.catalogId)));
       for(const hall of ['Main','War']) {
         clearFromLoadout(loadout[hall],id);
         loadout[hall].scannedPlaced=loadout[hall].scannedPlaced.filter(key=>key!==id);
       }
       delete levels[id];DN.saveLevels(levels);persistLoadout();
-      if(row.scanned){rows=rows.filter(item=>DN.artifactKey(item)!==id);delete byId[id];delete artifactImages[id];}
+      if(row.scanned){
+        rows=rows.filter(item=>DN.artifactKey(item)!==id);delete byId[id];delete artifactImages[id];
+        const original=catalogRows.find(item=>item.artifact_id===id);
+        if(original){rows.push(original);byId[id]=original;if(catalogImages[id])artifactImages[id]=catalogImages[id];}
+      }
       if(highlightedId===id)highlightedId=null;
       closePicker();showError('');render();
     } catch {button.disabled=false;showError('Could not delete this artifact. Please try again.');}
@@ -776,7 +806,7 @@
     return [...(ui.hall==='War'?WAR_TYPE_EXHIBITS:MAIN_TYPE_EXHIBITS).map(exhibitGrade),'Legendary','Mythical'];
   }
   function renderArtifactTable(owned) {
-    const strategies=comparisonStrategies();
+    const strategies=comparisonStrategies().filter(strategy=>strategy.name!=='Main strategy');
     const count=Math.max(5,...owned.map(row=>DN.perksOf(row,canonPerk).length));
     const heading=(label,key)=>'<th scope="col" aria-sort="'+(listSort.key===key?listSort.direction:'none')+'"><button type="button" data-action="list-sort" data-sort="'+key+'"'+(key.startsWith('stat-')?' title="Sort by this stat’s score at maximum upgrade"':'')+'>'+label+(listSort.key===key?listSort.direction==='ascending'?' ↑':' ↓':'')+'</button></th>';
     const columns='<th scope="col" class="collection-table-stats-heading" aria-sort="'+(listSort.key.startsWith('stat-')?listSort.direction:'none')+'"><div class="collection-table-stats-header"><span>Stats</span><details class="collection-stat-sort-menu"><summary>'+(listSort.key.startsWith('stat-')?'Stat '+(Number(listSort.key.slice(5))+1)+(listSort.direction==='ascending'?' ↑':' ↓'):'Sort stat')+'</summary><div>'+Array.from({length:count},(_,index)=>'<button type="button" data-action="list-sort" data-sort="stat-'+index+'" title="Sort by stat '+(index+1)+' score">Stat '+(index+1)+(listSort.key==='stat-'+index?listSort.direction==='ascending'?' ↑':' ↓':'')+'</button>').join('')+'</div></details><span class="collection-table-value-headings"><span>Current</span><span>Score</span></span></div></th>';
@@ -789,7 +819,6 @@
       if(key==='slot')return slotLabel(DN.artifactKey(row));
       if(key==='unlocked')return complete(row,'unlocked')?score.unlocked.basePreference:null;
       if(key==='potential')return complete(row,'all')?score.full.potentialPreference:null;
-      if(key==='top-two')return topTwoCount(row);
       if(key.startsWith('strategy-score:'))return strategyMetrics.get(key.slice(15))?.get(DN.artifactKey(row))?.value ?? null;
       if(key.startsWith('strategy-rank:'))return strategyRanks.get(key.slice(14))?.get(DN.artifactKey(row)) ?? null;
       const index=Number(key.slice(5)),line=score.full.lines[index],perk=DN.perksOf(row,canonPerk)[index];
@@ -806,7 +835,7 @@
       return order*(listSort.direction==='ascending'?1:-1) || DN.text(a.name).localeCompare(DN.text(b.name));
     });
     const renderRow=row=>{
-      const id=DN.artifactKey(row),perks=DN.perksOf(row,canonPerk),{full,unlocked}=metrics.get(row);
+      const id=DN.artifactKey(row),perks=DN.perksOf(row,canonPerk),{full}=metrics.get(row);
       const stats=Array.from({length:count},(_,index)=>{
         const perk=perks[index];if(!perk)return '<div class="collection-table-stat">'+DN.BLANK+'</div>';
         const value=actualPerkValue(id,perk),line=full.lines[index];
@@ -819,14 +848,14 @@
       const strategyCells=strategies.map(strategy=>{
         const metric=strategyMetrics.get(strategy.id)?.get(id),rank=strategyRanks.get(strategy.id)?.get(id);
         return '<td class="collection-strategy-score"><button type="button" data-action="strategy-inspect" data-strategy-id="'+DN.esc(strategy.id)+'" data-id="'+DN.esc(id)+'" title="Inspect using '+DN.esc(strategy.name)+'">'+(metric?.value!=null?(metric.uncertain?'~':'')+formatNum(metric.value):DN.BLANK)+'<small>'+(rank?(uncertainStrategyGroups.get(strategy.id)?.has(row.grade)?'Known rank ':'Rank ')+rank+(rank<=2?' · Top 2':''):metric?.value==null?'Incomplete':metric.uncertain?'Uncertain reroll':'Incomplete')+'</small></button></td>';
-      }).join('')+'<td class="collection-strategy-count">'+topTwoCount(row)+' / '+strategies.length+'</td>';
-      return '<tr class="artifact-card collection-table-row" data-artifact-id="'+DN.esc(id)+'"><th scope="row">'+identity+'</th><td class="collection-table-type">'+DN.esc(row.grade)+'</td><td class="collection-table-slot">'+DN.esc(slotLabel(id))+'</td><td class="collection-table-stats-cell"><div class="collection-table-stats" style="--stat-count:'+count+'">'+stats+'</div></td><td class="collection-table-score collection-table-unlocked">'+(complete(row,'unlocked')?formatNum(unlocked.basePreference):DN.BLANK)+'</td><td class="collection-table-score collection-table-potential"'+(full.rerollUncertain?' title="Reroll availability unknown"':'')+'>'+(complete(row,'all')?(full.rerollUncertain?'~':'')+formatNum(full.potentialPreference):DN.BLANK)+'</td>'+strategyCells+'<td class="collection-table-actions"><button type="button" class="btn" data-action="inspect" data-id="'+DN.esc(id)+'">Compare / Edit</button><button type="button" class="btn artifact-delete" data-action="delete" data-id="'+DN.esc(id)+'" aria-label="Delete '+DN.esc(row.name)+'">Delete</button></td></tr>';
+      }).join('');
+      return '<tr class="artifact-card collection-table-row" data-artifact-id="'+DN.esc(id)+'"><th scope="row">'+identity+'</th><td class="collection-table-type">'+DN.esc(row.grade)+'</td><td class="collection-table-slot">'+DN.esc(slotLabel(id))+'</td><td class="collection-table-stats-cell"><div class="collection-table-stats" style="--stat-count:'+count+'">'+stats+'</div></td>'+strategyCells+'<td class="collection-table-actions"><button type="button" class="btn" data-action="inspect" data-id="'+DN.esc(id)+'">Compare / Edit</button><button type="button" class="btn artifact-delete" data-action="delete" data-id="'+DN.esc(id)+'" aria-label="Delete '+DN.esc(row.name)+'">Delete</button></td></tr>';
     };
     const groups=new Map();
     for(const row of sorted){const type=DN.text(row.grade);if(!groups.has(type))groups.set(type,[]);groups.get(type).push(row);}
-    const strategyColumns=strategies.map(strategy=>'<th scope="col" class="collection-strategy-heading"><span>'+DN.esc(strategy.name)+'</span><div>'+heading('Score','strategy-score:'+strategy.id).replace(/^<th[^>]*>|<\/th>$/g,'')+heading('Rank','strategy-rank:'+strategy.id).replace(/^<th[^>]*>|<\/th>$/g,'')+'</div></th>').join('')+heading('Top 2 count','top-two');
-    const body=Array.from(groups,([type,items])=>'<tbody class="collection-type-section" data-slot-type="'+DN.esc(type)+'"><tr class="collection-section-heading"><th colspan="'+(8+strategies.length)+'" scope="rowgroup">'+DN.esc(type)+'<span>'+items.length+' artifact'+(items.length===1?'':'s')+'</span></th></tr>'+items.map(renderRow).join('')+'</tbody>').join('');
-    return '<table class="collection-owned-table" style="--strategy-columns:'+strategies.length+'"><caption class="visually-hidden">Owned artifacts, stats and scores. Strategy ranks use every owned artifact in the same hall and type.</caption><thead><tr>'+heading('Artifact','name')+heading('Type','type')+heading('Slot','slot')+columns+heading('Unlocked Score','unlocked')+heading('Full Potential','potential')+strategyColumns+'<th scope="col">Actions</th></tr></thead>'+body+'</table>';
+    const strategyColumns=strategies.map(strategy=>'<th scope="col" class="collection-strategy-heading"><span>'+DN.esc(strategy.name)+'</span><div>'+heading('Score','strategy-score:'+strategy.id).replace(/^<th[^>]*>|<\/th>$/g,'')+heading('Rank','strategy-rank:'+strategy.id).replace(/^<th[^>]*>|<\/th>$/g,'')+'</div></th>').join('');
+    const body=Array.from(groups,([type,items])=>'<tbody class="collection-type-section" data-slot-type="'+DN.esc(type)+'"><tr class="collection-section-heading"><th colspan="'+(5+strategies.length)+'" scope="rowgroup">'+DN.esc(type)+'<span>'+items.length+' artifact'+(items.length===1?'':'s')+'</span></th></tr>'+items.map(renderRow).join('')+'</tbody>').join('');
+    return '<table class="collection-owned-table" style="--strategy-columns:'+strategies.length+'"><caption class="visually-hidden">Owned artifacts, stats and scores. Strategy ranks use every owned artifact in the same hall and type.</caption><thead><tr>'+heading('Artifact','name')+heading('Type','type')+heading('Slot','slot')+columns+strategyColumns+'<th scope="col">Actions</th></tr></thead>'+body+'</table>';
   }
   function renderArtifactCard(row,{detail=false}={}) {
     const id = DN.artifactKey(row);
@@ -1139,11 +1168,9 @@
     const refresh=async()=>{
       const sequence=++refreshSequence;
       try {
-        const scans=await window.DNStoredArtifacts.read(window.DNStoredArtifacts.collectionKey());
-        if(sequence!==refreshSequence)return;
-        rows=rows.filter(row=>!row.scanned);byId={};collected=DN.loadCollected();
-        for(const item of scans){const row=window.DNStoredArtifacts.toRow(item);rows.push(row);collected.add(DN.artifactKey(row));if(item.image)artifactImages[DN.artifactKey(row)]=item.image;}
-        rows.forEach(row=>byId[DN.artifactKey(row)]=row);
+        const key=window.DNStoredArtifacts.collectionKey(),scans=await window.DNStoredArtifacts.read(key);
+        if(sequence!==refreshSequence || key!==window.DNStoredArtifacts.collectionKey())return;
+        applyScans(scans);
         loadout=DN.loadLoadout();levels=DN.loadLevels();
         render();
       } catch {showError('Could not refresh your shared inventory. Reload to try again.');}
@@ -1151,6 +1178,7 @@
     window.addEventListener('focus',refresh);
     window.addEventListener('storage',refresh);
     window.addEventListener('dn-strategies-changed',refresh);
+    window.addEventListener('dn-artifacts-changed',refresh);
     document.getElementById('collection-strategy-filter').addEventListener('change',event=>{strategyFilter=event.target.value;render();});
     document.getElementById('collection-strategy-metric').addEventListener('change',event=>{strategyMetric=event.target.value;render();});
     document.getElementById('collection-strategy-summary').addEventListener('click',event=>{
@@ -1361,7 +1389,7 @@
       if(event.target.closest('.artifact-card, .museum-tile, .collection-summary, .collection-list-toolbar, .collection-stat-sort-menu, #slot-picker, button, a, input, select, label'))return;
       clearHighlight();
     });
-    document.addEventListener('keydown',event=>{if(event.key==='Escape')clearHighlight();});
+    document.addEventListener('keydown',event=>{if(event.key==='Escape' && !document.getElementById('collection-delete-dialog').open)clearHighlight();});
   }
 
   async function load() {
@@ -1376,7 +1404,8 @@
       if (!artRes.ok) throw new Error(`HTTP ${artRes.status} loading ${DATA_URL}`);
       const data = await artRes.json();
       if (!Array.isArray(data)) throw new Error("artifacts.json is not an array");
-      rows = data.filter((row) => row.artifact_id !== "leftwich-trophy-legendary");
+      catalogRows = data.filter((row) => row.artifact_id !== "leftwich-trophy-legendary");
+      rows = [...catalogRows];
       byId = {};
       for (const row of rows) {
         byId[DN.artifactKey(row)] = row;
@@ -1386,16 +1415,13 @@
       if (mapRes.ok) perkCanon = DN.parseMappingCsv(await mapRes.text());
       canonPerk = DN.makeCanonPerk(perkCanon);
       artifactImages = imgRes.ok ? DN.imageUrlMap(await imgRes.json()) : {};
+      catalogImages={...artifactImages};
       factoryRatings=ratingsRes.ok?await ratingsRes.json():{};
 
       collected = DN.loadCollected();
       try {
-        const scans=await window.DNStoredArtifacts.read(window.DNStoredArtifacts.collectionKey());
-        for(const item of scans) {
-          const row=window.DNStoredArtifacts.toRow(item), id=DN.artifactKey(row);
-          rows.push(row);byId[id]=row;collected.add(id);
-          if(item.image)artifactImages[id]=item.image;
-        }
+        const linked=await window.DNStoredArtifacts.reconcileCatalog(catalogRows);
+        applyScans(linked.collection);
       } catch {showError('Could not load scanned artifacts from browser storage. Reload to try again.');}
       loadout = DN.loadLoadout();
       levels = DN.loadLevels();

@@ -122,7 +122,7 @@
   document.getElementById('header-def').click();
   const partial=complete(11);partial.valid=false;partial.rows[4]={name:'',value:null,known:false,unlocked:false};partial.warnings=['One stat unread'];
   await read(partial);
-  check('unread name and percentage require manual entry',get('capture-percent').textContent==='15/17 identified' && get('glance-board').classList.contains('is-incomplete') && !get('capture-review').hidden && get('capture-review').textContent.includes('Row 5 name') && get('capture-review').textContent.includes('Row 5 percentage'));
+  check('unread name and percentage show only the amber count',get('capture-percent').textContent==='15/17 identified' && get('glance-board').classList.contains('is-incomplete') && get('capture-review').hidden && get('capture-review').textContent==='');
   check('unread fifth stat shows only the four readable scores',get('item-total').textContent==='~160' && get('item-type').textContent.includes('subtotal'));
   check('decision blurb is hidden',[get('comparison'),get('comparison-detail'),get('score-assumption')].every(node=>node.hidden && getComputedStyle(node).display==='none'));
   check('keeper reason is hidden without three unlocked stats',get('keeper-reason').hidden);
@@ -133,9 +133,8 @@
   const unknownName=complete(1);unknownName.valid=false;unknownName.rows[4].known=false;unknownName.rows[4].name='Unknown stat';
   await read(unknownName);check('unrecognised name loses only its own field credit',get('capture-percent').textContent==='16/17 identified');
   check('one missing field remains amber and blocks Keep',getComputedStyle(get('glance-board')).backgroundColor==='rgb(88, 64, 24)' && get('keep').disabled);
-  get('capture-review').click();
-  check('manual-entry prompt opens and focuses the missing field',get('corrections').open && document.activeElement===get('correct').querySelectorAll('.scanner-perk-name')[4]);
-  const missingName=document.activeElement;missingName.value=perk;missingName.dispatchEvent(new Event('input',{bubbles:true}));
+  get('corrections').open=true;
+  const missingName=get('correct').querySelectorAll('.scanner-perk-name')[4];missingName.value=perk;missingName.dispatchEvent(new Event('input',{bubbles:true}));
   check('typed field updates the identified total immediately',get('capture-percent').textContent==='17/17 identified' && get('capture-detail').textContent==='16 read · 0 inferred · 1 typed' && get('capture-review').hidden);
   get('accept').click();
   check('applying one correction preserves the other read counts',get('capture-detail').textContent==='16 read · 0 inferred · 1 typed' && !get('keep').disabled);
@@ -162,7 +161,7 @@
   await read(weak);check('three readable stats show a marked subtotal alongside the benchmark',get('item-total').textContent==='~60' && get('benchmark-value').textContent==='150' && get('capture-percent').textContent==='13/17 identified');
   check('readable subtotal below the benchmark is red',getComputedStyle(get('benchmark')).backgroundColor==='rgb(87, 29, 36)');
   const threeStars={...complete(1),unlocked:{count:3,states:[true,true,true,false,false]}};
-  await read(threeStars);check('three open stats retain their keep reason while a lower score stays red',!get('benchmark').classList.contains('is-top-two') && getComputedStyle(get('benchmark')).backgroundColor==='rgb(87, 29, 36)' && get('comparison-detail').textContent.includes('3 open stats'));
+  await read(threeStars);check('three open stats override a lower score with green and retain their keep reason',!get('benchmark').classList.contains('is-top-two') && getComputedStyle(get('benchmark')).backgroundColor==='rgb(18, 78, 41)' && get('comparison-detail').textContent.includes('3 open stats'));
   check('three unlocked stats show a distinct keep reason',!get('keeper-reason').hidden && get('keeper-reason').textContent==='Keep — 3 stats unlocked' && getComputedStyle(get('keeper-reason')).display!=='none');
   const unreadType=complete(11);delete unreadType.artifact;
   await read(unreadType);
@@ -184,7 +183,7 @@
   await read(partialUnread);
   check('provisional unread total below all cutoffs is red',getComputedStyle(get('benchmark')).backgroundColor==='rgb(87, 29, 36)');
   await read({...lowUnread,unlocked:{count:3,states:[true,true,true,false,false]}});
-  check('three open stats retain their reason below every category without hiding red',getComputedStyle(get('benchmark')).backgroundColor==='rgb(87, 29, 36)' && !get('keeper-reason').hidden);
+  check('three open stats stay green below every category',getComputedStyle(get('benchmark')).backgroundColor==='rgb(18, 78, 41)' && !get('keeper-reason').hidden);
   await DNStoredArtifacts.write(DNStoredArtifacts.collectionKey(),benchmarks.filter(item=>item.type!=='Pottery'));
   window.dispatchEvent(new Event('focus'));
   await wait(()=>get('benchmarks').querySelector('[data-category="pottery"] dd').textContent==='Open');

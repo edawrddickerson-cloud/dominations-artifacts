@@ -21,27 +21,37 @@ function element() {
     querySelectorAll(){return this.editRows;},
   };
 }
-async function harness({storage=false}={}) {
+async function harness({storage=false,speculation=false,workerWarm=true}={}) {
   const store=new Map(),elements={},jobs=[],engines=[],timers=new Map();let nextTimer=0,now=1000;
   for(const id of ['read','auto','layout','rows','hall','infer','progress','result-status','warnings','result','correct','accept','names','mode','off','def','profile-label'])elements[id]=element();
   elements.hall.value='main';
   elements.auto.checked=false;elements.rows.value='5';elements.layout.value='gold';
   const window=element(),keepStates=[];
   if(storage){window.DNStorageRecognition={inspect:()=>({expectedRows:5,hall:'main'})};window.DNStorageScanner={update:(result,confirmed,state)=>keepStates.push({result,confirmed,...state})};}
-  const canvas=()=>({width:1920,height:1080,pixel:0,getContext(){let source,coords;return {clearRect(){},drawImage(value,...rect){source=value;coords=rect;},putImageData(){},getImageData(){const data=new Uint8ClampedArray(96*64*4).fill(source?.pixel||0);if(source?.rgb)for(let i=0;i<data.length;i+=4)data.set([...source.rgb,255],i);if(source?.jitter)data.fill(255,(source.jitterOffset || 0)*4,((source.jitterOffset || 0)+source.jitter)*4);if(source?.artworkPixel && coords?.[0]===0)data.fill(source.artworkPixel,0,data.length/4);return {data};}};}});
+  const canvas=()=>{
+    if(speculation){
+      const item={width:1920,height:1080,pixel:0,rgb:null,alpha:255};
+      const drawing={clearRect(){item.pixel=0;item.rgb=null;},drawImage(value){item.pixel=value.pixel;item.rgb=value.rgb?.slice() || null;item.alpha=value.alpha ?? 255;},
+        putImageData(image){item.rgb=Array.from(image.data.slice(0,3));item.alpha=image.data[3];},
+        getImageData(x=0,y=0,width=item.width,height=item.height){const data=new Uint8ClampedArray(width*height*4),rgb=item.rgb || [item.pixel,item.pixel,item.pixel];for(let i=0;i<data.length;i+=4)data.set([...rgb,item.alpha],i);return {data};}};
+      item.getContext=()=>drawing;return item;
+    }
+    return {width:1920,height:1080,pixel:0,getContext(){let source,coords;return {clearRect(){},drawImage(value,...rect){source=value;coords=rect;},putImageData(){},getImageData(){const data=new Uint8ClampedArray(96*64*4).fill(source?.pixel||0);if(source?.rgb)for(let i=0;i<data.length;i+=4)data.set([...source.rgb,255],i);if(source?.jitter)data.fill(255,(source.jitterOffset || 0)*4,((source.jitterOffset || 0)+source.jitter)*4);if(source?.artworkPixel && coords?.[0]===0)data.fill(source.artworkPixel,0,data.length/4);return {data};}};}};
+  };
   const context={window,localStorage:{getItem:key=>store.get(key)??null,setItem:(key,value)=>store.set(key,value),removeItem:key=>store.delete(key)},
     document:{getElementById:id=>elements[id.replace('scanner-','')],createElement:canvas},performance:{now:()=>now},
     setTimeout(fn,delay=0){const id=++nextTimer;timers.set(id,{fn,due:now+delay});return id;},clearTimeout(id){timers.delete(id);},
     fetch:async url=>({ok:true,text:async()=>read('data/perk_name_mapping.csv'),json:async()=>JSON.parse(read('data/perk_rating_defaults.json'))})};
   vm.createContext(context);
   for(const file of ['data/army_catalog.js','shared.js','data/artifact_stat_context.js','artifact-stat-context.js','artifact-scoring.js','stored-artifacts.js','scanner-frames.js','scanner-name-catalog.js','scanner-recognition.js'])vm.runInContext(read(file),context);
+  if(speculation){for(const file of ['scanner-core.js','scanner-regions.js','scanner-field-recognition.js'])vm.runInContext(read(file),context);elements.layout.value='panel';}
   vm.runInContext(read('scanner-collection.js'),context);
   const collector=window.DNScannerCollectionCore.createCollector(),batches=[];
   window.DNScannerCollection={isEnabled:()=>false,record:result=>collector.record(result),recordItem:(result,id,options)=>collector.recordItem(result,id,options),
     recordResult(observation,result,id,options,publish){collector.record(observation);collector.recordItem(result,id,options);batches.push({observation,result,options});publish();}};
   const comparisons=[];
   window.DNScannerComparison={update:(result,confirmed,options,state)=>comparisons.push({result,confirmed,options,state})};
-  window.DNScannerRecognition.create=function(){const engine={closed:0,async close(){this.closed++;},recognize(snapshot,options){const job=deferred();jobs.push({...job,snapshot,options,engine});return job.promise;}};engines.push(engine);return engine;};
+  window.DNScannerRecognition.create=function(){const warming=deferred(),engine={closed:0,warmReady:workerWarm,isWarm(){return this.warmReady;},warm(){return this.warmReady?Promise.resolve():warming.promise;},finishWarm(){this.warmReady=true;warming.resolve();},async close(){this.closed++;},recognize(snapshot,options){const job=deferred();jobs.push({...job,snapshot,options,engine});return job.promise;}};engines.push(engine);return engine;};
   vm.runInContext(read('scanner-reading.js'),context);await flush();
   return {comparisons,collector,batches,window,e:elements,jobs,engines,canvas,keepStates,DN:window.DN,reader:window.DNScannerReading,setVisible(visible){context.document.hidden=!visible;},runTimers(){const pending=[...timers.values()];timers.clear();pending.forEach(timer=>timer.fn());},advance(ms){now+=ms;for(const [id,timer] of [...timers])if(timer.due<=now){timers.delete(id);timer.fn();}}};
 }
@@ -152,6 +162,26 @@ async function main(){
   assert.equal(pinned.jobs.length,3,'a material artifact change still starts a new read');
   pinned.jobs[2].resolve(parsed('Bomber Damage'));await flush();
   assert.equal(pinned.collector.summary().itemCount,2,'a genuinely new artifact has a distinct encounter');
+  const stableCapture=await harness(),stableFrame=stableCapture.canvas();
+  stableCapture.reader.update(stableFrame,{session:1,current:true});
+  const fullCapture={...parsed('Heavy Tank Damage',11),hall:'main',hallSource:'hall-colour',artifact:{type:'Weapon'},
+    rows:parsed('Heavy Tank Damage',11).rows.map(row=>({...row,hasPercent:true,confidence:90}))};
+  stableCapture.e.read.fire('click');stableCapture.jobs.at(-1).resolve(fullCapture);await flush();
+  const weakCapture={...fullCapture,valid:false,hallSource:'selected-hall',artifact:{},unlocked:{count:null,states:[null,null,null,null,null]},
+    rows:fullCapture.rows.map((row,i)=>({...row,unlocked:null,...(i===2?{name:'',known:false,value:null}:{} )}))};
+  stableCapture.e.read.fire('click');stableCapture.jobs.at(-1).resolve(weakCapture);await flush();
+  let stableResult=stableCapture.comparisons.at(-1).state.captureResult;
+  assert.equal(stableResult.hallSource,'hall-colour','a retry retains identified hall provenance');
+  assert.equal(stableResult.artifact.type,'Weapon','a retry retains identified category');
+  assert.equal(stableResult.rows[2].value,11,'a retry retains the completed stat');
+  assert.deepEqual(Array.from(stableResult.unlocked.states),[true,true,false,false,false],'a retry retains every identified star state');
+  assert.equal(stableCapture.comparisons.at(-1).confirmed,true,'weaker retries do not unconfirm complete evidence');
+  const correctedCapture={...fullCapture,rows:fullCapture.rows.map((row,i)=>i===2?{...row,name:'Bomber Damage',confidence:97}:row)};
+  stableCapture.e.read.fire('click');stableCapture.jobs.at(-1).resolve(correctedCapture);await flush();
+  stableResult=stableCapture.comparisons.at(-1).state.captureResult;
+  assert.equal(stableResult.rows[2].name,'Bomber Damage','more confident evidence updates the completed stat');
+  assert.equal(stableResult.hallSource,'hall-colour');
+  assert.equal(stableResult.unlocked.states.length,5);
   const live=await harness(),frame=live.canvas();live.e.auto.checked=true;
   const inferredHeld=await harness(),inferredFrame=inferredHeld.canvas();inferredHeld.e.auto.checked=true;
   inferredHeld.reader.update(inferredFrame,{session:1,current:true});inferredHeld.advance(220);
@@ -414,4 +444,5 @@ async function main(){
   assert.equal(focus.comparisons.at(-1).result,null,'OCR started before confirmed absence cannot restore stale stats');
   console.log('Scanner reading duplicates, five/six rows, validation, inheritance, stale work, field geometry, reconnect, detected hall logging, and sustained empty-scene detection tests passed.');
 }
-main().catch(error=>{console.error(error);process.exitCode=1;});
+module.exports={harness,parsed,flush};
+if(require.main===module)main().catch(error=>{console.error(error);process.exitCode=1;});
