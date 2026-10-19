@@ -94,8 +94,8 @@ function boot(seed = {}, {oldLayers = false} = {}) {
     assert.equal(context.ratingOf(name,axis),oldRating(name,axis),`${name} ${axis}: migration is score-preserving`);
   }
   assert.equal(context.ratingOf('APC Damage','offensive'),0,'explicit zero precedes linked-unit factory ratings');
-  assert.equal(context.ratingOf('Heavy Infantry Damage','offensive'),5);
-  assert.equal(context.ratingOf('Barracks Troop Damage','offensive'),2);
+  assert.equal(context.ratingOf('Heavy Infantry Damage','offensive'),10);
+  assert.equal(context.ratingOf('Barracks Troop Damage','offensive'),4);
   assert.equal(context.ratingOf('Heavy Tank Hitpoints','defensive'),0,'legacy gating remains exact for both axes');
   const fighter = state.strategies.find(item=>item.id==='fighter');
   assert.equal(fighter.inheritRatings,false);
@@ -108,7 +108,7 @@ function boot(seed = {}, {oldLayers = false} = {}) {
   DN.saveGlobalPerkRatings({'APC Damage':{offensive:-5}});
   DN.savePerkGroupDefaults({'multi:damage':{offensive:-5}});
   assert.equal(DN.createStrategyRatingContext(defaults).ratingOf('APC Damage','offensive'),0,'legacy rating snapshot is durable');
-  assert.equal(DN.createStrategyRatingContext(defaults).ratingOf('Barracks Troop Damage','offensive'),2,'group defaults are snapshotted');
+  assert.equal(DN.createStrategyRatingContext(defaults).ratingOf('Barracks Troop Damage','offensive'),4,'group defaults are snapshotted');
   const backup = JSON.parse(store.get(scoped(DN.STRATEGY_MIGRATION_BACKUP_KEY)));
   assert.equal(backup.raw.army,originalArmy);
   assert.equal(backup.raw.profileRatings,originalProfile);
@@ -137,7 +137,7 @@ function boot(seed = {}, {oldLayers = false} = {}) {
   const {DN} = boot({'dn-artifact-perk-ratings-global':ratings({'APC HP':{offensive:0,defensive:4}})});
   const context = DN.createStrategyRatingContext(defaults,{canonPerk:canon});
   assert.equal(context.ratingOf('APC Hitpoints','offensive'),0,'legacy aliases honor explicit zero');
-  assert.equal(context.ratingOf('APC Hitpoints','defensive'),4);
+  assert.equal(context.ratingOf('APC Hitpoints','defensive'),8);
 }
 
 {
@@ -270,4 +270,71 @@ function boot(seed = {}, {oldLayers = false} = {}) {
   }
 }
 
-console.log('Strategies: independent ratings, relevance, linked units, exact migration, layouts, profiles, comparison selection, retries and import retention passed.');
+{
+  const {DN,store,controls} = boot();
+  const baseline = {'Heavy Tank Damage':{offensive:5,defensive:1},'Fighter Damage':{offensive:4,defensive:2},'All Resources Looted':{offensive:3,defensive:0}};
+  DN.savePerkGroupDefaults({'single:damage':{offensive:2,defensive:1}});
+  DN.saveGlobalPerkRatings({'Heavy Tank Damage':{offensive:0,defensive:-2}});
+  DN.saveProfilePerkOverrides(DN.activeProfileId(),{'Fighter Damage':{offensive:3,defensive:0}});
+  const sharedBefore=JSON.stringify(DN.loadActivePerkRatingLayers());
+  const fromDefaults=DN.addStrategy('Defaults',{units:['Heavy Tank'],baseline:'defaults',factoryDefaults:baseline});
+  const fromProfile=DN.addStrategy('Profile copy',{units:[],baseline:'profile',factoryDefaults:baseline});
+  const rating=(id,name,axis='offensive')=>DN.createStrategyRatingContext(baseline,{strategyId:id}).ratingOf(name,axis);
+  assert.equal(rating(fromDefaults,'Heavy Tank Damage'),2,'default baseline uses army/group defaults rather than old profile zeroes');
+  assert.equal(rating(fromProfile,'Heavy Tank Damage'),0,'profile baseline preserves explicit zero');
+  assert.equal(rating(fromProfile,'Heavy Tank Damage','defensive'),-2,'profile baseline preserves negative ratings');
+  assert.equal(rating(fromProfile,'Fighter Damage'),3);
+  assert.equal(rating(fromProfile,'Fighter Damage','defensive'),0);
+  DN.updateStrategy(fromDefaults,{units:['Heavy Tank'],overrides:{'Heavy Tank Damage':{offensive:-1,defensive:0}}});
+  const copied=DN.addStrategy('Strategy copy',{baseline:'strategy',sourceId:fromDefaults,units:[],factoryDefaults:baseline});
+  assert.deepEqual(plain(DN.loadStrategies().strategies.find(s=>s.id===copied).units),['Heavy Tank'],'existing strategy baseline copies troops');
+  assert.equal(rating(copied,'Heavy Tank Damage'),-1);
+  assert.equal(rating(copied,'Heavy Tank Damage','defensive'),0);
+  const copiedLayout=DN.loadLoadout(copied);
+  assert.equal(copiedLayout.Main.mains.length,0,'copied rating baseline starts with its own empty artifact layout');
+  assert.equal(JSON.stringify(DN.loadActivePerkRatingLayers()),sharedBefore,'creation never edits shared rating sources');
+  DN.saveGlobalPerkRatings({'Heavy Tank Damage':{offensive:5}});
+  DN.saveProfilePerkOverrides(DN.activeProfileId(),{'Fighter Damage':{offensive:-4}});
+  DN.savePerkGroupDefaults({'single:damage':{offensive:5,defensive:5}});
+  DN.saveStrategyOverrides(fromDefaults,{'Heavy Tank Damage':{offensive:4}});
+  assert.equal(rating(copied,'Heavy Tank Damage'),-1,'strategy baseline is independent of later source edits');
+  assert.equal(rating(fromProfile,'Fighter Damage'),3,'profile baseline is independent of later profile edits');
+  assert.equal(rating(fromDefaults,'Heavy Tank Damage','defensive'),1,'default baseline is independent of later group edits');
+  DN.saveStrategyOverrides(copied,{});
+  assert.equal(rating(copied,'Heavy Tank Damage'),2,'clearing a copied rating restores its army default, not the source value');
+  const beforeRoundtrip=JSON.stringify(DN.loadStrategies());
+  DN.saveStrategies(JSON.parse(beforeRoundtrip));
+  assert.equal(rating(copied,'Heavy Tank Damage'),2,'baseline survives backup normalization');
+  DN.removeStrategy(fromDefaults);
+  assert.equal(rating(copied,'Heavy Tank Damage'),2,'deleting the source does not change the copy');
+  const count=DN.loadStrategies().strategies.length;
+  controls.failKey=scoped(DN.STRATEGIES_KEY);
+  assert.throws(()=>DN.addStrategy('Failed copy',{baseline:'profile',factoryDefaults:baseline,activate:true}),/Storage write failed/);
+  controls.failKey=null;
+  assert.equal(DN.loadStrategies().strategies.length,count,'failed creation is atomic');
+  const firstProfile=DN.activeProfileId(), otherProfile=DN.addProfile('Other baseline profile');
+  DN.setActiveProfile(otherProfile);
+  assert.throws(()=>DN.addStrategy('Cross profile copy',{baseline:'strategy',sourceId:copied,factoryDefaults:baseline}),/no longer in this profile/);
+  DN.setActiveProfile(firstProfile);
+  DN.saveProfilePerkOverrides(firstProfile,{'Imported tank alias':{offensive:-4}});
+  const canonicalCopy=DN.addStrategy('Canonical profile copy',{baseline:'profile',factoryDefaults:baseline,canonPerk:name=>name==='Imported tank alias'?'Heavy Tank Damage':name});
+  assert.equal(rating(canonicalCopy,'Heavy Tank Damage'),-4,'profile baseline resolves imported aliases before copying');
+  assert.equal(DN.loadStrategies().strategies.find(s=>s.id===canonicalCopy).overrides['Imported tank alias'],undefined,'aliases do not leave hidden overrides that cannot be cleared');
+}
+
+{
+  const {DN,store} = boot({[scoped('dn-army-presets')]:JSON.stringify({activeId:'army',lastApplied:['Heavy Tank'],presets:[{id:'army',name:'Existing army',units:['Heavy Tank']}]})});
+  const initial=DN.activeStrategyId(), other=DN.addStrategy('Previously inheriting',{units:['Fighter']});
+  DN.updateStrategy(other,{inheritRatings:true});
+  DN.saveProfilePerkOverrides(DN.activeProfileId(),{'Fighter Damage':{offensive:0,defensive:-2}});
+  const values=Object.fromEntries([initial,other].map(id=>[id,Object.fromEntries(Object.keys(defaults).map(name=>[name,Object.fromEntries(DN.RATING_AXES.map(axis=>[axis,DN.createStrategyRatingContext(defaults,{strategyId:id}).ratingOf(name,axis)]))]))]));
+  DN.initializeStrategyBaselines(defaults);
+  for(const id of [initial,other])for(const name of Object.keys(defaults))for(const axis of DN.RATING_AXES)assert.equal(DN.createStrategyRatingContext(defaults,{strategyId:id}).ratingOf(name,axis),values[id][name][axis],'conversion preserves existing effective rating');
+  const durable=store.get(scoped(DN.STRATEGIES_KEY));
+  DN.initializeStrategyBaselines(defaults);
+  assert.equal(store.get(scoped(DN.STRATEGIES_KEY)),durable,'existing baselines freeze only once');
+  DN.saveProfilePerkOverrides(DN.activeProfileId(),{'Fighter Damage':{offensive:5,defensive:5}});
+  assert.equal(DN.createStrategyRatingContext(defaults,{strategyId:other}).ratingOf('Fighter Damage','defensive'),-2,'converted strategy is independent from its old profile source');
+}
+
+console.log('Strategies: independent ratings, relevance, linked units, exact migration, layouts, profiles, comparison selection, retries, import retention and creation baselines passed.');

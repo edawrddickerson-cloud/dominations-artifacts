@@ -4,14 +4,14 @@
   const BLANK = "—";
   const RARITIES = ["Common", "Uncommon", "Rare", "Epic", "Legendary"];
   const ACTIVE_CAP = 7;
-  const RATING_MIN = -5;
-  const RATING_MAX = 5;
+  const RATING_MIN = -10;
+  const RATING_MAX = 10;
   const AXES = /** @type {const} */ (["offensive", "defensive"]);
 
   const OWNED_KEY = "dn-council-owned";
   const ACTIVE_KEY = "dn-council-active";
   const RATINGS_KEY = "dn-council-stat-ratings";
-  const RATINGS_STORE_VERSION = 1;
+  const RATINGS_STORE_VERSION = 2;
   const UI_KEY = "dn-council-ui";
   const PREF_SORT_AXES_KEY = "dn-council-pref-sort-axes";
   const HIDE_OWNED_KEY = "dn-council-hide-owned";
@@ -314,11 +314,12 @@
 
   function migrateRatings(raw) {
     if (!raw) return {};
-    if (raw && typeof raw === "object" && raw.v === RATINGS_STORE_VERSION && raw.ratings) {
+    if (raw && typeof raw === "object" && raw.v >= RATINGS_STORE_VERSION && raw.ratings) {
       return raw.ratings;
     }
-    if (raw && typeof raw === "object" && !Array.isArray(raw) && !raw.v) {
-      return raw;
+    if (raw && typeof raw === "object" && !Array.isArray(raw) && (raw.v === 1 || !raw.v)) {
+      return Object.fromEntries(Object.entries(sanitizeOverrides(raw.ratings || raw)).map(([name, values]) =>
+        [name, Object.fromEntries(Object.entries(values).map(([axis, value]) => [axis, clampRating(value * 2)]))]));
     }
     return {};
   }

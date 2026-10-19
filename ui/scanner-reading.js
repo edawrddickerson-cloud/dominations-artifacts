@@ -873,6 +873,7 @@
       const [mapping,defaults]=await Promise.all([fetch("./data/perk_name_mapping.csv",{cache:"no-store"}),fetch("./data/perk_rating_defaults.json",{cache:"no-store"})]);
       if(!mapping.ok || !defaults.ok)throw new Error("ratings unavailable");
       canonPerk=DN.makeCanonPerk(DN.parseMappingCsv(await mapping.text()));factory=await defaults.json();names=Object.keys(factory);
+      window.DNCraftingPurposes?.setDefaults(factory, canonPerk);
       el.names.innerHTML=names.map(name=>'<option value="'+DN.esc(name)+'"></option>').join('');
       options();ready=true;el.read.disabled=!latestCanvas;showCorrection();say("Select a region to read all visible perks.");
       score();

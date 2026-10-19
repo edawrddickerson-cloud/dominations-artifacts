@@ -19,7 +19,12 @@
   document.getElementById('header-main').click();
   if(!get('off').checked)document.getElementById('header-off').click();
   if(get('def').checked)document.getElementById('header-def').click();
-  const perk='Heavy Tank Damage';DN.saveGlobalPerkRatings({[perk]:{offensive:2,defensive:2}});
+  // This scenario uses a fixed five-point rating fixture, independently of
+  // the production factory scale. Its ideal reroll is therefore 100 points.
+  const factory=await (await fetch('data/perk_rating_defaults.json')).json();
+  const fixtureRatings=Object.fromEntries(Object.entries(factory).map(([name,rating])=>[name,{offensive:Math.min(5,rating.offensive),defensive:Math.min(5,rating.defensive)}]));
+  const setRatings=overrides=>DN.saveGlobalPerkRatings({...fixtureRatings,...overrides});
+  const perk='Heavy Tank Damage';setRatings({[perk]:{offensive:2,defensive:2}});
   const rows=value=>Array.from({length:5},(_,i)=>({name:perk,value,base:value,max:value+9,level:1,levelSource:'crafting',known:true,hasPercent:true,raw:perk+' +'+value+'%',unlocked:i<2,rerollEligible:false,rerollSource:'manual'}));
   const complete=value=>({valid:true,rows:rows(value),artifact:{type:'Weapon',source:'calibrated-label'},hall:'main',hallSource:'hall-colour',unlocked:{count:2,states:[true,true,false,false,false]},warnings:[]});
   await DNStoredArtifacts.write(DNStoredArtifacts.collectionKey(),[11,6].map((value,index)=>({id:'baseline'+index,name:'Owned Weapon '+index,hall:'main',type:'Weapon',reviewed:true,rows:rows(value)})));
@@ -78,7 +83,7 @@
   const lowestLast=complete(11);lowestLast.rows.forEach(row=>row.rerollEligible=true);lowestLast.rows[4].value=1;
   await read(lowestLast);
   check('only the lowest-scoring rerollable row shows its gain',JSON.stringify(gains())==='["","","","","+80"]');
-  DN.saveGlobalPerkRatings({[perk]:{offensive:2,defensive:2},'Ranged Infantry Hitpoints':{offensive:1,defensive:0}});
+  setRatings({[perk]:{offensive:2,defensive:2},'Ranged Infantry Hitpoints':{offensive:1,defensive:0}});
   window.dispatchEvent(new Event('storage'));
   if(!get('def').checked)document.getElementById('header-def').click();
   const ranged=complete(11);ranged.valid=false;ranged.warnings=['Colour classification differs from signed OCR'];

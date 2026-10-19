@@ -6,7 +6,7 @@
 
   const strategyStyles = document.createElement('link');
   strategyStyles.rel = 'stylesheet';
-  strategyStyles.href = 'strategies.css?v=20261018-loadouts';
+  strategyStyles.href = 'strategies.css?v=20261020-page-controls';
   document.head.appendChild(strategyStyles);
 
   const NAV_COLLAPSED_KEY = "dn-nav-collapsed";
@@ -56,17 +56,17 @@
 
   function titleForHref(href, fallback) {
     const file = fileForHref(href);
-    if (file === "army.html") return "Army loadout";
-    if (file === "artifacts.html") return "Artifacts priority";
-    if (file === "collection.html") return "Artifacts collection";
-    if (file === "totals.html") return "Active artifact totals";
+    if (file === "army.html") return "Army Loadout";
+    if (file === "artifacts.html") return "Artifact Rankings";
+    if (file === "collection.html") return "Crafted Collection";
+    if (file === "totals.html") return "Active Artifact Totals";
     if (file === "scanner.html") return "Crafting Scanner";
     if (file === "storage-scanner.html") return "Storage Scanner";
-    if (file === "council.html") return "Council priority";
-    if (file === "council-collection.html") return "Council collection";
+    if (file === "council.html") return "Council Rankings";
+    if (file === "council-collection.html") return "Council Collection";
     if (file === "config.html") return "Profiles";
-    if (file === "ratings.html") return "Perk ratings";
-    if (file === "council-ratings.html") return "Council stat ratings";
+    if (file === "ratings.html") return "Collection Targets";
+    if (file === "council-ratings.html") return "Council Stat Ratings";
     return fallback || file;
   }
 
@@ -139,8 +139,26 @@
     }
 
     ensureLink("config.html", "Profiles");
-    ensureLink("ratings.html", "Perk ratings");
-    ensureLink("council-ratings.html", "Council ratings");
+    ensureLink("council-ratings.html", "Council Ratings");
+  }
+
+  function ensureTargetsNav(nav) {
+    let section = nav.querySelector("[data-nav-targets]");
+    if (!section) {
+      section = document.createElement("div");
+      section.className = "site-nav-section";
+      section.dataset.navTargets = "1";
+      section.innerHTML = '<h2 class="site-nav-label">Planning</h2>';
+    }
+    let link = nav.querySelector('a[href="ratings.html"]');
+    if (!link) {
+      link = document.createElement("a");
+      link.href = "ratings.html";
+      link.textContent = "Collection Targets";
+      if (fileForHref(location.pathname) === "ratings.html") link.setAttribute("aria-current", "page");
+    }
+    section.appendChild(link);
+    nav.insertBefore(section, nav.firstChild);
   }
 
   function mountNav() {
@@ -151,6 +169,7 @@
 
     const state = DN.ensureProfiles();
     ensureSettingsNav(nav);
+    ensureTargetsNav(nav);
 
     const toggleWrap = document.createElement("div");
     toggleWrap.className = "site-nav-toggle-wrap";
@@ -212,14 +231,13 @@
   function mountStrategies() {
     if (!DN.loadStrategies) return;
     const file = fileForHref(location.pathname).replace(/^(army|artifacts|collection|totals|ratings|scanner|storage-scanner)$/, '$1.html');
-    if (!['artifacts.html', 'collection.html', 'totals.html', 'ratings.html', 'scanner.html', 'storage-scanner.html'].includes(file)) return;
-    const scanner = file === 'scanner.html' || file === 'storage-scanner.html';
-    const parent = document.getElementById('header-profile') || document.querySelector('.header-controls');
-    if (!parent) return;
-    const picker = document.createElement('label'); picker.className = 'header-strategy-picker';
-    picker.innerHTML = '<span class="filter-label">Strategy</span><select id="strategy-select" class="site-nav-profile-select" aria-label="Active strategy"></select>';
-    parent.appendChild(picker);
-    const select = picker.querySelector('select');
+    if (!['artifacts.html', 'collection.html', 'scanner.html', 'storage-scanner.html'].includes(file)) return;
+    const header = document.querySelector('.app-header');
+    if (!header) return;
+    const parent = document.createElement('div');
+    parent.className = 'page-strategy-controls';
+    parent.setAttribute('aria-label', 'Strategy controls');
+    header.after(parent);
     let comparison;
     if (['artifacts.html', 'collection.html', 'scanner.html', 'storage-scanner.html'].includes(file)) {
       comparison = document.createElement('details'); comparison.className = 'strategy-comparison-picker';
@@ -236,7 +254,6 @@
       try {
         const state = DN.loadStrategies();
         const strategies = state.strategies.filter(s => !s.archived);
-        select.innerHTML = strategies.map(s => `<option value="${DN.esc(s.id)}"${s.id === state.activeId ? ' selected' : ''}>${s.favorite ? '★ ' : ''}${DN.esc(s.name)}</option>`).join('');
         if (comparison) {
           const ids = state.comparisonIds || [];
           comparison.querySelector('summary').textContent = `Compare strategies (${ids.length})`;
@@ -244,13 +261,6 @@
         }
       } catch (err) { showStrategyError(err); }
     }
-    select.addEventListener('change', () => {
-      const id = select.value;
-      if (id === DN.activeStrategyId()) return;
-      if (window.DNStrategyEditor && !window.DNStrategyEditor.canLeave()) { refresh(); return; }
-      try { if (DN.setActiveStrategy(id) && !scanner && file !== 'army.html') location.reload(); }
-      catch (err) { showStrategyError(err); refresh(); }
-    });
     for (const event of ['dn-strategies-changed','focus','storage']) window.addEventListener(event, refresh);
     refresh();
   }

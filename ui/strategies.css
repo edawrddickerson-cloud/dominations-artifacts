@@ -1,4 +1,5 @@
 .header-profile { flex-wrap: wrap; gap: .7rem; }
+.page-strategy-controls { display:flex; flex-wrap:wrap; align-items:flex-end; justify-content:flex-end; gap:.75rem 1rem; padding:.75rem 1.25rem; border-bottom:1px solid var(--line); }
 .header-strategy-picker { display: flex; flex-direction: column; gap: .25rem; min-width: 10rem; max-width: 20rem; }
 .strategy-comparison-picker { position: relative; align-self: end; color: var(--text); }
 .strategy-comparison-picker summary { cursor: pointer; padding: .55rem .7rem; border: 1px solid var(--line); border-radius: 6px; font-size: .8rem; }
@@ -21,4 +22,10 @@
 .strategy-rating-pair { border-left: 2px solid var(--accent); padding-left: .4rem; }
 .strategy-rating-pair .rating-axis { position: relative; }
 .strategy-rating-source { display: block; color: var(--muted); font-size: .6rem; margin-top: .2rem; text-align: center; }
+.page-ratings .ratings-page-head { align-items: end; }
+.loadout-create-fields { padding: 1rem; min-height: 0; overflow-y: auto; }
+.loadout-create-fields label { display: flex; flex-direction: column; gap: .4rem; margin-bottom: 1rem; font-size: .85rem; }
+.loadout-create-fields input, .loadout-create-fields select { width: 100%; min-width: 0; box-sizing: border-box; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: .55rem; font: inherit; }
+.loadout-create-fields .error { margin: .5rem 0; }
+.page-ratings .ratings-page-group-title { white-space: normal; overflow-wrap: anywhere; }
 @media (max-width: 640px) { .header-strategy-picker { min-width: 8rem; } .strategy-comparison-options { position: fixed; top: auto; left: 1rem; right: 1rem; width: auto; } }

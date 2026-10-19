@@ -2,46 +2,58 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <script src="navigation.js?v=5"></script>
+  <script src="navigation.js?v=6"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Artifacts · Perk ratings</title>
-  <link rel="stylesheet" href="styles.css?v=39" />
+  <title>Artifacts · Collection targets</title>
+  <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
+  <link rel="stylesheet" href="crafting-purposes.css?v=19" />
 </head>
 <body class="page-ratings">
   <nav class="site-nav" aria-label="Pages">
     <div class="site-nav-section">
-      <h2 class="site-nav-label">Army Loadout</h2>
-      <a href="army.html">Army</a>
-    </div>
-    <div class="site-nav-section">
       <h2 class="site-nav-label">Artifacts</h2>
-      <a href="artifacts.html">Priority</a>
-      <a href="collection.html">Collection</a>
-      <a href="totals.html">Active totals</a>
+      <a href="artifacts.html">Artifact Rankings</a>
+      <a href="collection.html">Crafted Collection</a>
+      <a href="totals.html">Active Totals</a>
       <a href="scanner.html?v=2">Crafting Scanner</a>
       <a href="storage-scanner.html?v=2">Storage Scanner</a>
     </div>
     <div class="site-nav-section">
       <h2 class="site-nav-label">Council</h2>
-      <a href="council.html">Priority</a>
+      <a href="council.html">Council Rankings</a>
       <a href="council-collection.html">Collection</a>
     </div>
     <div class="site-nav-section">
       <h2 class="site-nav-label">Settings</h2>
       <a href="config.html">Profiles</a>
-      <a href="ratings.html" aria-current="page">Perk ratings</a>
+      <a href="ratings.html" aria-current="page">Collection Targets</a>
     </div>
   </nav>
   <div class="app-main">
-  <header class="top">
-    <div class="top-inner">
-      <h1>DomiNations Artifacts</h1>
+  <header class="top app-header">
+    <div class="top-inner"><h1>DomiNations Artifacts</h1></div>
+    <div class="header-controls" aria-label="Primary filters">
+      <fieldset class="seg-field"><legend>Hall</legend><div class="seg" role="group" aria-label="Hall"><button type="button" class="seg-btn" id="header-main" aria-pressed="false">Main</button><button type="button" class="seg-btn" id="header-war" aria-pressed="false">War</button></div></fieldset>
+      <fieldset class="seg-field"><legend>Base Type</legend><div class="seg seg-mini" role="group" aria-label="Base Type"><button type="button" class="seg-btn" id="header-off" aria-pressed="false">Off</button><button type="button" class="seg-btn" id="header-def" aria-pressed="false">Def</button></div></fieldset>
+      <div id="header-profile" class="header-profile"></div>
     </div>
-    <div class="header-controls" aria-label="Primary filters"><fieldset class="seg-field"><legend>Hall</legend><div class="seg" role="group" aria-label="Hall"><button type="button" class="seg-btn" id="header-main" aria-pressed="false">Main</button><button type="button" class="seg-btn" id="header-war" aria-pressed="false">War</button></div></fieldset><fieldset class="seg-field"><legend>Base Type</legend><div class="seg seg-mini" role="group" aria-label="Base Type"><button type="button" class="seg-btn" id="header-off" aria-pressed="false">Off</button><button type="button" class="seg-btn" id="header-def" aria-pressed="false">Def</button></div></fieldset><div id="header-profile" class="header-profile"></div></div>
   </header>
 
+  <section id="crafting-purposes" class="crafting-workspace" aria-label="Collection targets">
+    <h2 class="panel-title">Collection targets</h2>
+    <div data-crafting-purposes></div>
+  </section>
+
+  <p id="error" class="error" hidden></p>
+  <details id="advanced-ratings" class="advanced-ratings">
+    <summary>Advanced ratings</summary>
+    <p class="ratings-hint">Global defaults, group ratings and existing strategy overrides. Your collection targets use the same shared profile ratings.</p>
   <section class="filters ratings-page-controls" aria-label="Ratings controls">
     <div class="filter-main">
+      <label class="filter-control">
+        Group by
+        <select id="ratings-group-by"><option value="family">Stat family</option><option value="artifact">Artifact type</option><option value="purpose">Collecting target</option></select>
+      </label>
       <label class="filter-control">
         Search
         <input type="search" id="ratings-q" placeholder="Search perks…" autocomplete="off" />
@@ -49,28 +61,31 @@
     </div>
     <div class="filter-actions">
       <button type="button" id="ratings-reset-global" class="btn">Reset global</button>
-      <button type="button" id="ratings-clear-overrides" class="btn" hidden>Clear all profile overrides</button>
+      <button type="button" id="ratings-clear-overrides" class="btn" hidden>Clear profile overrides</button>
     </div>
   </section>
 
-  <p id="error" class="error" hidden></p>
-  <div class="strategy-rating-controls"><strong id="ratings-strategy-name"></strong><label>Default source <select id="ratings-strategy-inherit"><option value="army">Army and group defaults</option><option value="shared">Army defaults + global and profile preferences</option></select></label><button type="button" class="btn" id="ratings-reset-strategy">Clear strategy overrides</button></div>
-  <details class="strategy-notice"><summary>Review shared preferences before inheriting</summary><p>These global and active-profile preferences can include old army zero ratings. Review them before choosing to inherit shared preferences. Strategy overrides always take precedence.</p><ul id="ratings-shared-preview"></ul></details>
-  <aside id="ratings-strategy-legacy" class="strategy-notice" hidden><strong>Migrated rating snapshot.</strong> Your previous priorities are preserved, including previous zero ratings. The strategy column shows the actual source. Adopt army defaults to start fresh, or import the snapshot as explicit strategy overrides to review and edit it.<button type="button" class="btn" id="ratings-adopt-defaults">Adopt army defaults</button><button type="button" class="btn" id="ratings-keep-snapshot">Import snapshot as overrides</button></aside>
+  <p class="ratings-hint" id="ratings-profile-scope"></p>
+  <p class="ratings-hint" id="ratings-artifact-scope" hidden></p>
   <p class="ratings-hint" id="ratings-hint">
-    Set shared Off/Def defaults by group, then expand a section for individual stats, profile preferences and the active strategy’s overrides. The strategy column shows the values and sources used for artifact scoring. Blank fields inherit the value shown; clear a field to restore inheritance. Mixed means factory ratings vary. Changes save automatically.
+    Shared profile ratings are linked to your named collection targets above. Existing strategy overrides remain available in their own columns. Changes save automatically.
   </p>
 
   <div class="ratings-page-scroll" id="ratings-scroll">
     <div class="ratings-page-grid" id="ratings-grid" style="--ratings-groups: 1"></div>
   </div>
+  </details>
   </div>
 
   <script src="data/army_catalog.js?v=8"></script>
-  <script src="shared.js?v=20261018-services"></script>
-  <script src="profiles-ui.js?v=20261017-strategies"></script>
-  <script src="ratings.js?v=20261017-strategies"></script>
+  <script src="shared.js?v=20261019-rating-scale"></script>
+  <script src="profiles-ui.js?v=20261020-title-case-nav"></script>
+  <script src="data/crafted_perk_pools.js?v=20261018"></script>
+  <script src="data/artifact_stat_context.js?v=1"></script>
+  <script src="crafting-purposes.js?v=20261020-collection-targets"></script>
+  <script src="crafting-purpose-editor.js?v=20261020-compact-stats"></script>
+  <script src="ratings.js?v=20261020-advanced-ratings"></script>
 
-  <script src="services.js?v=2"></script>
+  <script src="services.js?v=20261020-title-case-nav"></script>
 </body>
 </html>

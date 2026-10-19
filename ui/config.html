@@ -4,62 +4,72 @@
   <meta charset="utf-8" />
   <meta name="referrer" content="no-referrer" />
   <script src="auth-return.js?v=1"></script>
-  <script src="navigation.js?v=5"></script>
+  <script src="navigation.js?v=6"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts · Profiles</title>
-  <link rel="stylesheet" href="styles.css?v=39" />
+  <link rel="stylesheet" href="styles.css?v=20261020-profile-delete" />
 </head>
 <body class="page-config">
   <nav class="site-nav" aria-label="Pages">
     <div class="site-nav-section">
-      <h2 class="site-nav-label">Army Loadout</h2>
-      <a href="army.html">Army</a>
-    </div>
-    <div class="site-nav-section">
       <h2 class="site-nav-label">Artifacts</h2>
-      <a href="artifacts.html">Priority</a>
-      <a href="collection.html">Collection</a>
-      <a href="totals.html">Active totals</a>
+      <a href="artifacts.html">Artifact Rankings</a>
+      <a href="collection.html">Crafted Collection</a>
+      <a href="totals.html">Active Totals</a>
       <a href="scanner.html?v=2">Crafting Scanner</a>
       <a href="storage-scanner.html?v=2">Storage Scanner</a>
     </div>
     <div class="site-nav-section">
       <h2 class="site-nav-label">Council</h2>
-      <a href="council.html">Priority</a>
+      <a href="council.html">Council Rankings</a>
       <a href="council-collection.html">Collection</a>
     </div>
     <div class="site-nav-section">
       <h2 class="site-nav-label">Settings</h2>
       <a href="config.html" aria-current="page">Profiles</a>
-      <a href="ratings.html">Perk ratings</a>
+      <a href="ratings.html">Collection Targets</a>
     </div>
   </nav>
   <div class="app-main">
-  <header class="top">
-    <div class="top-inner">
-      <h1>DomiNations Artifacts</h1>
+  <header class="top app-header">
+    <div class="top-inner"><h1>DomiNations Artifacts</h1></div>
+    <div class="header-controls" aria-label="Primary filters">
+      <fieldset class="seg-field"><legend>Hall</legend><div class="seg" role="group" aria-label="Hall"><button type="button" class="seg-btn" id="header-main" aria-pressed="false">Main</button><button type="button" class="seg-btn" id="header-war" aria-pressed="false">War</button></div></fieldset>
+      <fieldset class="seg-field"><legend>Base Type</legend><div class="seg seg-mini" role="group" aria-label="Base Type"><button type="button" class="seg-btn" id="header-off" aria-pressed="false">Off</button><button type="button" class="seg-btn" id="header-def" aria-pressed="false">Def</button></div></fieldset>
+      <div id="header-profile" class="header-profile"></div>
     </div>
-    <div class="header-controls" aria-label="Primary filters"><fieldset class="seg-field"><legend>Hall</legend><div class="seg" role="group" aria-label="Hall"><button type="button" class="seg-btn" id="header-main" aria-pressed="false">Main</button><button type="button" class="seg-btn" id="header-war" aria-pressed="false">War</button></div></fieldset><fieldset class="seg-field"><legend>Base Type</legend><div class="seg seg-mini" role="group" aria-label="Base Type"><button type="button" class="seg-btn" id="header-off" aria-pressed="false">Off</button><button type="button" class="seg-btn" id="header-def" aria-pressed="false">Def</button></div></fieldset><div id="header-profile" class="header-profile"></div></div>
   </header>
 
   <section class="config-page-section" aria-label="Profiles">
     <h2 class="panel-title">Profiles</h2>
-    <p class="ratings-hint">Rename, add, or remove profiles. Up to <span id="profiles-max"></span>. Each profile has one artifact inventory and multiple army strategies, with separate perk priorities and saved museum layouts. Manage strategies on Army and their priorities on Perk ratings.</p>
+    <p class="ratings-hint">Rename, add, or remove profiles. Up to <span id="profiles-max"></span>. Each profile has its own artifact inventory, collection targets and saved museum layouts. Manage targets and shared perk priorities on Collection targets.</p>
     <div id="profiles-list" class="profiles-list profiles-list-page"></div>
     <div class="config-section-actions">
       <button type="button" class="btn" id="profiles-add">Add profile</button>
     </div>
     <details data-local-backup></details>
   </section>
+  <p class="ratings-hint"><a href="ratings.html#crafting-purposes">Choose collection targets</a>.</p>
   </div>
 
+  <dialog id="profile-delete-dialog" class="profile-delete-dialog" aria-labelledby="profile-delete-title" aria-describedby="profile-delete-description">
+    <form method="dialog">
+      <h2 id="profile-delete-title">Delete profile?</h2>
+      <p id="profile-delete-description">Delete <strong id="profile-delete-name"></strong> and its saved collection, targets and museum layouts? This cannot be undone.</p>
+      <div class="profile-delete-actions">
+        <button type="submit" class="btn" value="cancel" autofocus>Cancel</button>
+        <button type="submit" class="btn profile-delete-confirm" value="delete">Delete profile</button>
+      </div>
+    </form>
+  </dialog>
+
   <script src="data/army_catalog.js?v=8"></script>
-  <script src="shared.js?v=20261018-services"></script>
-  <script src="profiles-ui.js?v=20261017-strategies"></script>
-  <script src="config.js?v=1"></script>
+  <script src="shared.js?v=20261019-rating-scale"></script>
+  <script src="profiles-ui.js?v=20261020-title-case-nav"></script>
+  <script src="config.js?v=20261020-confirm-delete"></script>
   <script src="stored-artifacts.js?v=20261018-services"></script>
   <script src="local-backup.js?v=20261018-services"></script>
 
-  <script src="services.js?v=2"></script>
+  <script src="services.js?v=20261020-title-case-nav"></script>
 </body>
 </html>

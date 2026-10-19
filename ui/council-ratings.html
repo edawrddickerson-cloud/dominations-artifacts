@@ -2,38 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <script src="navigation.js?v=5"></script>
+  <script src="navigation.js?v=6"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Council · Stat ratings</title>
-  <link rel="stylesheet" href="styles.css?v=39" />
-  <link rel="stylesheet" href="council.css?v=10" />
+  <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
+  <link rel="stylesheet" href="council.css?v=11" />
 </head>
 <body class="page-ratings page-council-ratings">
   <nav class="site-nav" aria-label="Pages">
     <div class="site-nav-section">
-      <h2 class="site-nav-label">Army Loadout</h2>
-      <a href="army.html">Army</a>
-    </div>
-    <div class="site-nav-section">
       <h2 class="site-nav-label">Artifacts</h2>
-      <a href="artifacts.html">Priority</a>
-      <a href="collection.html">Collection</a>
-      <a href="totals.html">Active totals</a>
+      <a href="artifacts.html">Artifact Rankings</a>
+      <a href="collection.html">Crafted Collection</a>
+      <a href="totals.html">Active Totals</a>
       <a href="scanner.html?v=2">Crafting Scanner</a>
       <a href="storage-scanner.html?v=2">Storage Scanner</a>
     </div>
     <div class="site-nav-section">
       <h2 class="site-nav-label">Council</h2>
-      <a href="council.html">Priority</a>
+      <a href="council.html">Council Rankings</a>
       <a href="council-collection.html">Collection</a>
     </div>
   </nav>
   <div class="app-main">
-  <header class="top">
-    <div class="top-inner">
-      <h1>DomiNations Council</h1>
+  <header class="top app-header">
+    <div class="top-inner"><h1>DomiNations Artifacts</h1></div>
+    <div class="header-controls" aria-label="Primary filters">
+      <fieldset class="seg-field"><legend>Hall</legend><div class="seg" role="group" aria-label="Hall"><button type="button" class="seg-btn" id="header-main" aria-pressed="false">Main</button><button type="button" class="seg-btn" id="header-war" aria-pressed="false">War</button></div></fieldset>
+      <fieldset class="seg-field"><legend>Base Type</legend><div class="seg seg-mini" role="group" aria-label="Base Type"><button type="button" class="seg-btn" id="header-off" aria-pressed="false">Off</button><button type="button" class="seg-btn" id="header-def" aria-pressed="false">Def</button></div></fieldset>
+      <div id="header-profile" class="header-profile"></div>
     </div>
-    <div class="header-controls" aria-label="Primary filters"><fieldset class="seg-field"><legend>Hall</legend><div class="seg" role="group" aria-label="Hall"><button type="button" class="seg-btn" id="header-main" aria-pressed="false">Main</button><button type="button" class="seg-btn" id="header-war" aria-pressed="false">War</button></div></fieldset><fieldset class="seg-field"><legend>Base Type</legend><div class="seg seg-mini" role="group" aria-label="Base Type"><button type="button" class="seg-btn" id="header-off" aria-pressed="false">Off</button><button type="button" class="seg-btn" id="header-def" aria-pressed="false">Def</button></div></fieldset><div id="header-profile" class="header-profile"></div></div>
   </header>
 
   <section class="filters ratings-page-controls" aria-label="Ratings controls">
@@ -48,7 +46,7 @@
     </div>
   </section>
 
-  <p class="ratings-hint">These Council ratings apply across this profile’s artifact strategies. Edit artifact priorities on Perk ratings.</p>
+  <p class="ratings-hint">These Council ratings apply across this profile’s artifact strategies. Edit artifact priorities on Collection targets.</p>
   <p id="error" class="error" hidden></p>
   <p class="ratings-hint" id="ratings-hint">
     Scores apply on Council Priority (rating × bonus magnitude). Defaults come from matching artifact perk ratings; overrides stay in a separate council store per profile.
@@ -60,11 +58,11 @@
   </div>
 
   <script src="data/army_catalog.js?v=8"></script>
-  <script src="shared.js?v=20261018-services"></script>
-  <script src="profiles-ui.js?v=20261017-strategies"></script>
-  <script src="council-shared.js?v=20261017-strategies"></script>
+  <script src="shared.js?v=20261019-rating-scale"></script>
+  <script src="profiles-ui.js?v=20261020-title-case-nav"></script>
+  <script src="council-shared.js?v=20261019-rating-scale"></script>
   <script src="council-ratings.js?v=20261017-strategies"></script>
 
-  <script src="services.js?v=2"></script>
+  <script src="services.js?v=20261020-title-case-nav"></script>
 </body>
 </html>

@@ -1,7 +1,7 @@
 /* Authority: existing multi-page navigation and approved Phase 2 scanner.
  * Ownership: page routing only; scanner may be opened without starting capture.
  * Invariants: remembered page must belong to the allowlist; no capture permissions.
- * History: scanner added as a separate, optional page; default Army route retained. */
+ * History: Army editor removed; crafting purposes and ratings are the default. */
 (() => {
   "use strict";
 
@@ -22,10 +22,10 @@
   const file = location.pathname.split("/").pop() || "";
 
   if (!file || file === "index" || file === "index.html") {
-    let destination = "army.html";
+    let destination = "ratings.html";
     try {
       const saved = localStorage.getItem(LAST_PAGE_KEY);
-      if (pages.has(saved)) destination = saved;
+      if (pages.has(saved)) destination = saved === 'army.html' ? 'ratings.html' : saved;
     } catch {
       // Browsers with storage disabled still open the default page.
     }

@@ -76,9 +76,9 @@
   const PERK_RATINGS_KEY = "dn-artifact-perk-ratings";
   const PERK_RATINGS_GLOBAL_KEY = "dn-artifact-perk-ratings-global";
   const PERK_RATINGS_LAYER_MIGRATED_KEY = "dn-perk-ratings-layer-migrated";
-  const PERK_RATINGS_STORE_VERSION = 2;
-  const RATING_MIN = -5;
-  const RATING_MAX = 5;
+  const PERK_RATINGS_STORE_VERSION = 3;
+  const RATING_MIN = -10;
+  const RATING_MAX = 10;
   const RATING_AXES = Object.freeze(/** @type {const} */ (["offensive", "defensive"]));
 
   /** Base localStorage keys scoped per profile (legacy unprefixed → Main on first run). */
@@ -91,6 +91,7 @@
     "dn-army-presets",
     STRATEGIES_KEY,
     STRATEGY_MIGRATION_BACKUP_KEY,
+    "dn-crafting-purposes",
     PERK_RATINGS_KEY,
     "dn-artifact-pref-sort-axes",
     "dn-artifact-hide-collected",
@@ -320,7 +321,7 @@
         if (k === "v" || k === "overrides") continue;
         if (!ptext(k)) continue;
         const entry = normalizePerkRatingEntry(v);
-        if (entry) out[k] = entry;
+        if (entry) out[k] = Number(parsed.v) >= 3 ? entry : Object.fromEntries(Object.entries(entry).map(([axis, value]) => [axis, clampPerkRating(value * 2)]));
       }
       return out;
     } catch {
@@ -333,6 +334,21 @@
    */
   function serializePerkRatingsPayload(overrides) {
     return JSON.stringify({ v: PERK_RATINGS_STORE_VERSION, overrides: overrides || {} });
+  }
+  // Version every rating record independently so partial writes, inactive
+  // profiles and restored older backups cannot cause a second conversion.
+  function readPerkRatingsPayload(key) {
+    const raw = lsGetRaw(key);
+    const bag = parsePerkRatingsPayload(raw);
+    if (raw) {
+      let parsed;
+      try { parsed = JSON.parse(raw); } catch { return bag; }
+      if (parsed && typeof parsed === 'object' && !Array.isArray(parsed) && (parsed.v == null || Number(parsed.v) < 3)) {
+        for (const profile of ensureProfiles().profiles) preserveStrategyMigrationBackup(profile.id);
+        lsSetRaw(key, serializePerkRatingsPayload(bag));
+      }
+    }
+    return bag;
   }
 
   /**
@@ -691,7 +707,7 @@
   ];
   const PERK_GROUP_DEFAULTS_KEY = "dn_perk_group_defaults_v1";
   function loadPerkGroupDefaults() {
-    return parsePerkRatingsPayload(lsGetRaw(PERK_GROUP_DEFAULTS_KEY));
+    return readPerkRatingsPayload(PERK_GROUP_DEFAULTS_KEY);
   }
   function savePerkGroupDefaults(bag) {
     lsSetRaw(PERK_GROUP_DEFAULTS_KEY, serializePerkRatingsPayload(bag || {}));
@@ -713,12 +729,12 @@
   }
   function loadStoredGlobalPerkRatings() {
     ensurePerkRatingsMigrated();
-    const stored = parsePerkRatingsPayload(lsGetRaw(PERK_RATINGS_GLOBAL_KEY));
+    const stored = readPerkRatingsPayload(PERK_RATINGS_GLOBAL_KEY);
     // Apply the requested global General ratings once; later user edits and
     // resets remain authoritative, and profile overrides stay separate.
     const updateKey = 'dn-general-ratings-2026-10-16';
     if (lsGetRaw(updateKey) !== '1') {
-      for (const [name, value] of [["Generals' Damage", 3], ["Generals' Hitpoints", 2], ["Generals' Movement Speed", 2]]) {
+      for (const [name, value] of [["Generals' Damage", 6], ["Generals' Hitpoints", 4], ["Generals' Movement Speed", 4]]) {
         stored[name] = { offensive: value, defensive: value };
       }
       lsSetRaw(PERK_RATINGS_GLOBAL_KEY, serializePerkRatingsPayload(stored));
@@ -756,7 +772,7 @@
   function loadProfilePerkOverrides(profileId) {
     ensurePerkRatingsMigrated();
     const id = ptext(profileId) || activeProfileId();
-    return parsePerkRatingsPayload(lsGetRaw(profileStorageKey(PERK_RATINGS_KEY, id)));
+    return readPerkRatingsPayload(profileStorageKey(PERK_RATINGS_KEY, id));
   }
 
   /**
@@ -1490,7 +1506,7 @@
 
   function freshStrategyState() {
     const id = newStrategyId();
-    return { v: 1, activeId: id, comparisonIds: [id], comparisonAll: true, defaultInheritRatings: true, revision: 0, strategies: [{
+    return { v: 1, ratingScale: 10, activeId: id, comparisonIds: [id], comparisonAll: true, defaultInheritRatings: true, revision: 0, strategies: [{
       id, name: "Main strategy", units: [], overrides: {}, archived: false,
       favorite: false, inheritRatings: true, configured: false, loadout: normalizeLoadout(null),
     }] };
@@ -1518,6 +1534,7 @@
         ratings: cleanRatingBag(src.legacy.ratings || {}),
         groupDefaults: cleanRatingBag(src.legacy.groupDefaults || {}),
       };
+      if (Object.prototype.hasOwnProperty.call(src, 'baselineGroups')) strategy.baselineGroups = cleanRatingBag(src.baselineGroups || {});
       strategies.push(strategy);
     }
     if (!strategies.length) return freshStrategyState();
@@ -1533,7 +1550,7 @@
     if (!comparisonIds.length) comparisonIds = [activeId];
     const defaultInheritRatings = typeof raw.defaultInheritRatings === "boolean"
       ? raw.defaultInheritRatings : !strategies.some(strategy => strategy.legacy);
-    return { v: 1, activeId, comparisonIds, comparisonAll, defaultInheritRatings, strategies,
+    return { v: 1, ratingScale: 10, activeId, comparisonIds, comparisonAll, defaultInheritRatings, strategies,
       revision: Math.max(0, Math.floor(Number(raw.revision) || 0)) };
   }
 
@@ -1566,7 +1583,7 @@
     const layers = loadActivePerkRatingLayers();
     const groupDefaults = loadPerkGroupDefaults();
     const rawGlobal = cleanRatingBag(layers.global);
-    for (const [name, value] of [["Generals' Damage", 3], ["Generals' Hitpoints", 2], ["Generals' Movement Speed", 2]]) {
+    for (const [name, value] of [["Generals' Damage", 6], ["Generals' Hitpoints", 4], ["Generals' Movement Speed", 4]]) {
       const entry = rawGlobal[name];
       if (entry && entry.offensive === value && entry.defensive === value) delete rawGlobal[name];
     }
@@ -1607,7 +1624,16 @@
       let parsed;
       try { parsed = JSON.parse(raw); } catch { /* Back up corrupt input before recovering from legacy state. */ }
       if (parsed && Array.isArray(parsed.strategies) && parsed.strategies.some(item => item && typeof item === "object")) {
-        const normalized = normalizeStrategies(parsed);
+        if (parsed.ratingScale !== 10) preserveStrategyMigrationBackup();
+        const scaleBag = bag => Object.fromEntries(Object.entries(cleanRatingBag(bag || {})).map(([name, values]) => [name, Object.fromEntries(Object.entries(values).map(([axis, value]) => [axis, clampPerkRating(value * 2)]))]));
+        const scaled = parsed.ratingScale === 10 ? parsed : {...parsed, ratingScale: 10, strategies: parsed.strategies.map(strategy => {
+          if (!strategy || typeof strategy !== 'object') return strategy;
+          const next = {...strategy, overrides: scaleBag(strategy.overrides)};
+          if (strategy.baselineGroups) next.baselineGroups = scaleBag(strategy.baselineGroups);
+          if (strategy.legacy) next.legacy = {...strategy.legacy, ratings: scaleBag(strategy.legacy.ratings), groupDefaults: scaleBag(strategy.legacy.groupDefaults)};
+          return next;
+        })};
+        const normalized = normalizeStrategies(scaled);
         // Repair the extra snapshot created by the first strategy migration.
         // Keep its exact ratings and only remove an untouched source preset.
         for (const current of normalized.strategies.filter(s => s.legacy)) {
@@ -1736,9 +1762,63 @@
       strategy.configured = true;
       delete strategy.legacy;
     }
+    if (options.baseline) {
+      if (!['defaults', 'profile', 'strategy'].includes(options.baseline)) throw new Error('Choose a valid rating baseline.');
+      if (!options.factoryDefaults || !Object.keys(options.factoryDefaults).length) throw new Error('Perk defaults are not available. Please retry.');
+      const canon = options.canonPerk || (name => name);
+      const canonicalBag = bag => {
+        const result = {};
+        for (const [key, value] of Object.entries(bag || {})) result[canon(key)] = {...result[canon(key)], ...value};
+        return result;
+      };
+      const defaults = canonicalBag(options.factoryDefaults);
+      const source = options.baseline === 'strategy' && state.strategies.find(s => s.id === options.sourceId);
+      if (options.baseline === 'strategy' && !source) throw new Error('The source strategy is no longer in this profile.');
+      strategy.baselineGroups = source?.baselineGroups || loadPerkGroupDefaults();
+      strategy.inheritRatings = false;
+      delete strategy.legacy;
+      strategy.overrides = {};
+      if (source) strategy.units = normalizeArmyUnits(source.units);
+      if (options.baseline !== 'defaults') {
+        const context = source && createStrategyRatingContext(defaults, {strategyId: source.id, canonPerk: options.canonPerk});
+        const rawLayers = !source && loadActivePerkRatingLayers();
+        const layers = rawLayers && {global: canonicalBag(rawLayers.global), profile: canonicalBag(rawLayers.profile)};
+        const names = new Set([...Object.keys(defaults), ...Object.keys(source?.overrides || {}), ...Object.keys(source?.legacy?.ratings || {}), ...Object.keys(layers?.global || {}), ...Object.keys(layers?.profile || {})].map(canon));
+        for (const name of names) strategy.overrides[name] = Object.fromEntries(RATING_AXES.map(axis => [axis,
+          context ? context.ratingOf(name, axis) : storedPerkRating(layers.global, layers.profile, name, axis) ?? groupPerkRating(name, axis, strategy.baselineGroups) ?? perkRatingAxisOrNull(defaults, name, axis) ?? 0]));
+      }
+    }
     state.strategies.push(strategy);
+    if (options.activate) state.activeId = id;
     saveStrategies(state);
     return id;
+  }
+  // Freeze the old live inheritance model once without changing current scores.
+  // Store only differences from army defaults, so later troop edits still work.
+  function initializeStrategyBaselines(factoryDefaults, options = {}) {
+    const state = loadStrategies();
+    const pending = state.strategies.filter(s => !Object.prototype.hasOwnProperty.call(s, 'baselineGroups'));
+    if (!pending.length) return state;
+    const groups = loadPerkGroupDefaults();
+    const canon = options.canonPerk || (name => name);
+    for (const strategy of pending) {
+      const context = createStrategyRatingContext(factoryDefaults, {strategyId: strategy.id, canonPerk: canon});
+      const effectiveUnits = armyEffectiveAppliedSet(strategy.units);
+      const layers = loadActivePerkRatingLayers();
+      const names = new Set([...Object.keys(factoryDefaults), ...Object.keys(strategy.overrides), ...Object.keys(strategy.legacy?.ratings || {}), ...Object.keys(layers.global), ...Object.keys(layers.profile)].map(canon));
+      const overrides = {};
+      for (const name of names) for (const axis of RATING_AXES) {
+        const detail = context.explain(name, axis);
+        const fallback = axis === 'offensive' && strategy.configured !== false && unitFamily(name) && !effectiveUnits.has(unitFamily(name)) ? 0 :
+          groupPerkRating(name, axis, groups) ?? perkRatingAxisOrNull(factoryDefaults, name, axis) ?? 0;
+        if (detail.source === 'override' || detail.value !== fallback) (overrides[name] ||= {})[axis] = detail.value;
+      }
+      strategy.overrides = overrides;
+      strategy.baselineGroups = groups;
+      strategy.inheritRatings = false;
+      delete strategy.legacy;
+    }
+    return saveStrategies(state);
   }
   function removeStrategy(id) {
     const state = loadStrategies();
@@ -1764,7 +1844,7 @@
     const legacy = strategy.legacy && canonicalBag(strategy.legacy.ratings);
     const layers = strategy.inheritRatings && !legacy ? loadActivePerkRatingLayers() : { global: {}, profile: {} };
     const global = canonicalBag(layers.global), profile = canonicalBag(layers.profile);
-    const groups = legacy ? strategy.legacy.groupDefaults : loadPerkGroupDefaults();
+    const groups = legacy ? strategy.legacy.groupDefaults : strategy.baselineGroups || loadPerkGroupDefaults();
     const effectiveUnits = armyEffectiveAppliedSet(strategy.units);
     const revision = strategyRevision();
     function explain(name, axis) {
@@ -1902,6 +1982,7 @@
     comparisonStrategies,
     setComparisonStrategyIds,
     createStrategyRatingContext,
+    initializeStrategyBaselines,
     saveStrategyOverrides,
     updateStrategy,
     addStrategy,
@@ -1941,6 +2022,26 @@
   };
 
   window.DN.scannerLog = scannerLog;
+  // Native steppers treat an empty input as zero, even when its placeholder
+  // displays an inherited rating. Seed only a step action, leaving ordinary
+  // focusing, typing and clearing free to retain inheritance.
+  function prepareNumberStep(event) {
+    const input = event.target;
+    if (event.defaultPrevented || input?.type !== 'number' || input.disabled || input.readOnly || input.value !== '' || !input.placeholder?.trim()) return;
+    if (event.type === 'keydown' && !['ArrowUp', 'ArrowDown'].includes(event.key)) return;
+    if (event.type === 'pointerdown') {
+      if (event.button !== 0) return;
+      const rect = input.getBoundingClientRect();
+      const spinnerWidth = 1.4 * (parseFloat(getComputedStyle(document.documentElement).fontSize) || 16);
+      if (event.clientX < rect.right - spinnerWidth || event.clientX > rect.right) return;
+    }
+    const value = Number(input.placeholder);
+    if (Number.isFinite(value)) input.value = String(value);
+  }
+  if (typeof document !== 'undefined') {
+    document.addEventListener?.('pointerdown', prepareNumberStep, true);
+    document.addEventListener?.('keydown', prepareNumberStep, true);
+  }
   ensureProfiles();
   ensurePerkRatingsMigrated();
 })();

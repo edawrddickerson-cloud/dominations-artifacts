@@ -26,7 +26,7 @@
     if(!window.DNStoredArtifacts)await script('stored-artifacts.js?v=23');
     if(!window.DNLocalBackupCore)await script('local-backup.js?v=3');
     await script('cloud.js?v=2');
-    await script('services-ui.js?v=2');
+    await script('services-ui.js?v=20261020-title-case-nav');
   }
   window.DNServicesReady=new Promise(resolve=>{
     const run=()=>boot().catch(()=>{ /* Optional services cannot break the local application. */ }).finally(resolve);

@@ -61,12 +61,12 @@
     if(observationProfile!==store.collectionKey()){show('uncertain','Profile changed','Read the current artifact again before saving it to this profile.');return null;}
     if(!reviewable || pending) {show('uncertain','Ownership check pending',pending?'Complete the remaining fields. Valid edits apply automatically.':'Waiting for a current artifact read; the displayed stats may be from the last scan.');return null;}
     if(catalogMatch) {
-      show('collection','Collected · '+catalogMatch.grade,catalogMatch.name+' is marked Collected on Artifacts Priority.');
+      show('collection','Collected · '+catalogMatch.grade,catalogMatch.name+' is marked Collected on Artifact rankings.');
       return matches();
     }
     const linked=store.matchCatalog({name:get('name').value,hall:document.getElementById('scanner-hall').value,rows:current.rows},catalog);
     if(linked && !window.DN.loadCollected().has(linked.artifact_id)) {
-      show('unmatched','Not collected',linked.name+' is unchecked on Artifacts Priority. Tick Collected there or scan it again.');
+      show('unmatched','Not collected',linked.name+' is unchecked on Artifact rankings. Tick Collected there or scan it again.');
       return null;
     }
     const preview=reviewedItem();

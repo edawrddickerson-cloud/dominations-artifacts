@@ -47,10 +47,19 @@
         syncNavSelect();
         render();
       });
-      removeBtn.addEventListener("click", () => {
+      removeBtn.addEventListener("click", async () => {
         const st = DN.ensureProfiles();
         if (st.profiles.length <= 1) return;
-        const switching = st.activeId === id;
+        const dialog = document.getElementById("profile-delete-dialog");
+        if (dialog.open) return;
+        const profile = st.profiles.find(p => p.id === id);
+        if (!profile) return;
+        document.getElementById("profile-delete-name").textContent = profile.name;
+        dialog.returnValue = "cancel";
+        const confirmed = new Promise(resolve => dialog.addEventListener("close", () => resolve(dialog.returnValue === "delete"), {once:true}));
+        dialog.showModal();
+        if (!await confirmed) return;
+        const switching = DN.ensureProfiles().activeId === id;
         if (!DN.removeProfile(id)) return;
         if (switching) {
           location.reload();

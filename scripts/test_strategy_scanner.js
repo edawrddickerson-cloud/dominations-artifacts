@@ -30,6 +30,8 @@ assert.equal(core.compareStrategies(partial,{...params,strategies:strategies()})
 const inferredBelow={...craft('Heavy Tank Damage',1),provisional:true};inferredBelow.rows[0].inferred=true;
 assert.equal(core.compareStrategies(inferredBelow,{...params,strategies:strategies()}).belowDisplayedBenchmarks,true,'inferred points do not suppress the red numeric comparison');
 assert.equal(core.compareStrategies({...craft('Heavy Tank Damage',11),provisional:true},{...params,strategies:strategies()}).status,'check');
+assert.equal(core.compareStrategies({...craft('Heavy Tank Damage',11),provisional:true},{...params,strategies:strategies()}).meetingDisplayedBenchmarks,1,'an estimated numeric improvement retains the green display comparison without confirming Keep');
+assert.equal(core.compareStrategies(craft('Heavy Tank Damage',6),{...params,strategies:strategies()}).meetingDisplayedBenchmarks,1,'numeric ties are green without claiming a replacement');
 assert.equal(core.compareStrategies({...craft('Heavy Tank Damage',11),provisional:true},{...params,strategies:strategies()}).belowDisplayedBenchmarks,false,'an estimated improvement in any strategy prevents an all-below colour');
 assert.equal(core.compareStrategies(craft('Heavy Tank Damage',1),{...params,owned:[],strategies:strategies()}).status,'vacancy');
 assert.equal(core.compareStrategies(inferredBelow,{...params,owned:[],strategies:strategies()}).belowDisplayedBenchmarks,false,'an open slot has no lower-score threshold');

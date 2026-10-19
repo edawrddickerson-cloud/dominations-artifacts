@@ -9,42 +9,43 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
 <head>
   <meta charset="utf-8" />
   <script src="scanner-session-entry.js?v=1"></script>
-  <script src="navigation.js?v=5"></script>
+  <script src="navigation.js?v=6"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts - Crafting Scanner</title>
-  <link rel="stylesheet" href="styles.css?v=41" />
+  <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
   <link rel="stylesheet" href="scanner.css?v=20261018-log-names" />
+  <link rel="stylesheet" href="crafting-purposes.css?v=17" />
 </head>
 <body class="page-scanner">
   <nav class="site-nav" aria-label="Pages">
     <div class="site-nav-section">
-      <h2 class="site-nav-label">Army Loadout</h2>
-      <a href="army.html">Army</a>
-    </div>
-    <div class="site-nav-section">
       <h2 class="site-nav-label">Artifacts</h2>
-      <a href="artifacts.html">Priority</a>
-      <a href="collection.html">Collection</a>
-      <a href="totals.html">Active totals</a>
+      <a href="artifacts.html">Artifact Rankings</a>
+      <a href="collection.html">Crafted Collection</a>
+      <a href="totals.html">Active Totals</a>
       <a href="scanner.html?v=2" aria-current="page">Crafting Scanner</a>
       <a href="storage-scanner.html?v=2">Storage Scanner</a>
     </div>
     <div class="site-nav-section">
       <h2 class="site-nav-label">Council</h2>
-      <a href="council.html">Priority</a>
+      <a href="council.html">Council Rankings</a>
       <a href="council-collection.html">Collection</a>
     </div>
     <div class="site-nav-section">
       <h2 class="site-nav-label">Settings</h2>
       <a href="config.html">Profiles</a>
-      <a href="ratings.html">Perk ratings</a>
+      <a href="ratings.html">Collection Targets</a>
     </div>
   </nav>
   <div class="app-main scanner-main">
-      <header class="top scanner-page-header"><div class="top-inner"><h1>DomiNations Crafting Scanner</h1></div><div class="header-controls" aria-label="Primary filters">
-        <fieldset class="seg-field"><legend>Hall</legend><div class="seg" role="group" aria-label="Hall"><button type="button" class="seg-btn" id="header-main" aria-pressed="false">Main</button><button type="button" class="seg-btn" id="header-war" aria-pressed="false">War</button></div></fieldset>
-        <fieldset class="seg-field"><legend>Base Type</legend><div class="seg seg-mini" role="group" aria-label="Base Type"><button type="button" class="seg-btn" id="header-off" aria-pressed="true">Off</button><button type="button" class="seg-btn" id="header-def" aria-pressed="true">Def</button></div></fieldset>
-        <div id="header-profile" class="header-profile"></div></div></header>
+      <header class="top app-header">
+    <div class="top-inner"><h1>DomiNations Artifacts</h1></div>
+    <div class="header-controls" aria-label="Primary filters">
+      <fieldset class="seg-field"><legend>Hall</legend><div class="seg" role="group" aria-label="Hall"><button type="button" class="seg-btn" id="header-main" aria-pressed="false">Main</button><button type="button" class="seg-btn" id="header-war" aria-pressed="false">War</button></div></fieldset>
+      <fieldset class="seg-field"><legend>Base Type</legend><div class="seg seg-mini" role="group" aria-label="Base Type"><button type="button" class="seg-btn" id="header-off" aria-pressed="false">Off</button><button type="button" class="seg-btn" id="header-def" aria-pressed="false">Def</button></div></fieldset>
+      <div id="header-profile" class="header-profile"></div>
+    </div>
+  </header>
     <details id="scanner-setup" class="scanner-setup">
       <summary><span class="scanner-setup-title">Scanner setup</span><strong id="scanner-status" class="scanner-connection-label is-disconnected" role="status" aria-live="polite">Disconnected</strong><span class="scanner-setup-actions" role="group" aria-label="Scanning controls"><button type="button" class="btn" id="scanner-connect">Connect Game</button><button type="button" class="btn" id="scanner-stop" disabled>Stop Scanning</button><button type="button" class="btn" id="scanner-read" disabled>Read Artifact</button><button type="button" class="btn" id="scanner-find">Find Panel</button></span></summary>
       <p id="scanner-message" class="scanner-connection-detail">Connect Game to begin.</p>
@@ -153,6 +154,7 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
           <p id="scanner-comparison-detail" hidden></p>
           <p id="scanner-keeper-reason" role="status" hidden></p>
           <p id="scanner-score-assumption" hidden></p>
+          <div id="scanner-purpose-results" class="scanner-purpose-results" role="status" hidden></div>
         </section>
         <section class="scanner-benchmark-categories" aria-labelledby="scanner-benchmarks-label">
           <span id="scanner-benchmarks-label" class="scanner-summary-label">Benchmarks</span>
@@ -164,6 +166,7 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
         </div>
       </div>
       <section id="scanner-strategy-results" class="scanner-strategy-results" aria-label="Comparison for each selected strategy" hidden></section>
+      <p class="ratings-hint"><a href="ratings.html#crafting-purposes">Choose collection targets</a>.</p>
       <details><summary>How the comparison works</summary><p>Each selected strategy scores all five stats at maximum percentages and compares against its two best owned items of the same category and hall, including Unused. The large score and category benchmarks use the active strategy. Main Weapons follow Off/Def; Jewelry uses Off, Armor and Pottery use Def, and War items use Off. Potential includes one eligible reroll. An open slot is distinct from an improvement; a tie does not replace an owned item. Incomplete stats or uncertain rerolls require review. The top-two collection target is separate from museum capacity, including four War Equipment slots. Keeping saves one shared artifact.</p></details>
       <details id="scanner-corrections"><summary>Correct Recognition</summary>
         <label id="scanner-category-choice" hidden>Category <select id="scanner-compare-type"><option value="">Choose item type</option></select></label>
@@ -197,13 +200,14 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
   <script src="scanner-regions.js?v=3"></script>
   <script src="scanner-frames.js?v=3"></script>
   <script src="data/army_catalog.js?v=8"></script>
-  <script src="shared.js?v=20261018-services"></script>
+  <script src="shared.js?v=20261019-rating-scale"></script>
   <script src="data/artifact_stat_context.js?v=1"></script>
   <script src="artifact-stat-context.js?v=3"></script>
-  <script src="profiles-ui.js?v=20261017-strategies"></script>
+  <script src="profiles-ui.js?v=20261020-title-case-nav"></script>
   <script src="artifact-scoring.js?v=20261017-strategies-reroll"></script>
   <script src="stored-artifacts.js?v=20261018-services"></script>
-  <script src="scanner-comparison.js?v=20261018-linked-artifacts"></script>
+  <script src="crafting-purposes.js?v=20261020-collection-targets"></script>
+  <script src="scanner-comparison.js?v=20261020-collection-targets"></script>
   <script src="scanner-keep.js?v=20261018-quiet-keep"></script>
   <script src="vendor/tesseract/tesseract.min.js"></script>
   <script src="scanner-reroll-recognition.js?v=1"></script>
@@ -212,9 +216,9 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
   <script src="scanner-field-recognition.js?v=9"></script>
   <script src="scanner-calibration.js?v=4"></script>
   <script src="scanner-collection.js?v=20261018-log-names"></script>
-  <script src="scanner-reading.js?v=20261018-services"></script>
+  <script src="scanner-reading.js?v=20261019-inherited-purpose-ratings"></script>
   <script src="scanner-profile.js?v=1"></script>
   <script src="scanner.js?v=20261018-services"></script>
-  <script src="services.js?v=2"></script>
+  <script src="services.js?v=20261020-title-case-nav"></script>
 </body>
 </html>

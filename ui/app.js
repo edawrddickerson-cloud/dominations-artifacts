@@ -20,8 +20,8 @@
   const HALL_FILTER_KEY = "dn-artifact-hall-filter";
   const GRADE_FILTER_KEY = "dn-artifact-grade-filter";
   const PERK_MATCH_KEY = "dn-artifact-perk-match-mode";
-  const RATING_MIN = window.DN ? window.DN.RATING_MIN : -5;
-  const RATING_MAX = window.DN ? window.DN.RATING_MAX : 5;
+  const RATING_MIN = window.DN ? window.DN.RATING_MIN : -10;
+  const RATING_MAX = window.DN ? window.DN.RATING_MAX : 10;
   const AXES = window.DN
     ? window.DN.RATING_AXES
     : /** @type {const} */ (["offensive", "defensive"]);

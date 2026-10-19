@@ -1,0 +1,30 @@
+'use strict';
+const assert = require('node:assert/strict');
+const {deduplicate} = require('./deduplicate_crafting_log.js');
+const names = ['Heavy Tank Damage', 'Bomber Damage', 'Fighter Damage', 'Raider Damage', 'APC Damage'];
+const item = (id, values = [1, 6, 11, 1, 6], extra = {}) => ({id, hall: 'main', type: 'Weapon',
+  firstSeen: new Date(1000000 + id * 1000).toISOString(), lastUpdated: new Date(1000000 + id * 1000).toISOString(),
+  rows: names.map((name, index) => ({name, value: values[index]})), unlocked: {count: 1}, ...extra});
+const log = items => ({version: 2, items, scans: [{raw: 'preserved'}], labels: [{name: 'preserved'}]});
+let result = deduplicate(log([item(1), item(2)]));
+assert.equal(result.cleaned.items[0].id, 2, 'latest occurrence of an exact repeated version wins');
+result = deduplicate(log([item(1), item(2), item(3, [1, 6, 11, 6, 6])]));
+assert.equal(result.cleaned.items[0].id, 2, 'most repeated version wins over a different last read');
+result = deduplicate(log([item(1), item(2, [1, 6, 11, 6, 11])]));
+assert.equal(result.cleaned.items[0].id, 2, 'last version wins when readings differ and none repeats');
+assert.equal(result.cleaned.items[0].rows[3].value, 6, 'kept fields are not synthesized');
+assert.equal(result.cleaned.scans[0].raw, 'preserved');
+assert.equal(result.cleaned.labels[0].name, 'preserved');
+const distinct = item(2, [6, 11, 1, 6, 11]);
+assert.equal(deduplicate(log([item(1), distinct, item(3)])).cleaned.items.length, 3, 'non-consecutive repeats are preserved');
+assert.equal(deduplicate(log([item(1), item(2, undefined, {hall: 'war'})])).cleaned.items.length, 2);
+assert.equal(deduplicate(log([item(1, undefined, {profileKey: 'a'}), item(2, undefined, {profileKey: 'b'})])).cleaned.items.length, 2);
+assert.equal(deduplicate(log([item(1), item(2, undefined, {type: 'Armor'})])).cleaned.items.length, 2);
+assert.equal(deduplicate(log([item(1), item(1000)])).cleaned.items.length, 2, 'separated sessions are outside the burst window');
+result = deduplicate(log([item(1), item(2, [1, 6, 11, 6, 11]), item(3, [6, 11, 11, 6, 11])]));
+assert.equal(result.cleaned.items.length, 2, 'a partial-match chain cannot absorb a different item');
+assert.equal(deduplicate(result.cleaned).report.summary.removed, 0, 'representatives are stable on a second pass');
+const original = log([item(1), item(2)]), before = JSON.stringify(original);
+deduplicate(original);
+assert.equal(JSON.stringify(original), before, 'source data is immutable');
+console.log('Sequential bursts, modal/last selection, boundaries, no field merging and source preservation passed.');

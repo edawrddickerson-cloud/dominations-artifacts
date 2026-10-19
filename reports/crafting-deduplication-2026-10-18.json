@@ -1,0 +1,2968 @@
+{
+  "version": 1,
+  "source": {
+    "filename": "artifact-perk-observations-2026-10-18.json",
+    "bytes": 64343111,
+    "sha256": "72d5ce488df86613a1186ee29be9cc329148941bfef981400111d98398032f0a"
+  },
+  "output": "data/temp/artifact-perk-observations-2026-10-18-deduplicated.json",
+  "summary": {
+    "before": 979,
+    "after": 931,
+    "removed": 48,
+    "bursts": 33
+  },
+  "rules": {
+    "scope": "Consecutive item entries only; diagnostic scans and label summaries retained.",
+    "minimumMatchingNameAndValueRows": 3,
+    "everyPairMustMatch": true,
+    "maximumAdjacentGapSeconds": 600,
+    "maximumOverlapSeconds": 30,
+    "context": "Same Hall; known types and profile keys must agree.",
+    "selection": "Most repeated canonical names, percentages and unlocked-count version; latest occurrence breaks ties.",
+    "fieldMerging": false,
+    "limits": "Heuristic identity cleanup under the user assumption; matching records can still represent different physical items."
+  },
+  "bursts": [
+    {
+      "sourceItems": [
+        7,
+        8,
+        9
+      ],
+      "keptSourceItem": 9,
+      "keptId": "mvbhqjcy-rl7672dqgjp:1",
+      "removedIds": [
+        "mvbhcuom-f8yb4ocnki:53",
+        "mvbhnkh2-t0luajvy69:1"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 3,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 7,
+          "id": "mvbhcuom-f8yb4ocnki:53",
+          "firstSeen": "2026-10-16T21:32:31.475Z",
+          "type": "Armor",
+          "unlockedCount": 3,
+          "rows": [
+            {
+              "name": "Invading Ranged Siege Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Invading Mortar Troop Damage",
+              "value": -1
+            },
+            {
+              "name": "Invading Generals' Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading APC Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Invading Heavy Cavalry Hitpoints",
+              "value": -1
+            }
+          ]
+        },
+        {
+          "sourceItem": 8,
+          "id": "mvbhnkh2-t0luajvy69:1",
+          "firstSeen": "2026-10-16T21:37:27.667Z",
+          "type": "Armor",
+          "unlockedCount": 3,
+          "rows": [
+            {
+              "name": "Invading Ranged Siege Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Invading Mortar Troop Damage",
+              "value": -1
+            },
+            {
+              "name": "Invading Generals' Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading APC Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Invading Heavy Cavalry Hitpoints",
+              "value": -1
+            }
+          ]
+        },
+        {
+          "sourceItem": 9,
+          "id": "mvbhqjcy-rl7672dqgjp:1",
+          "firstSeen": "2026-10-16T21:39:49.572Z",
+          "type": "Armor",
+          "unlockedCount": 3,
+          "rows": [
+            {
+              "name": "Invading Ranged Siege Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Invading Mortar Troop Damage",
+              "value": -1
+            },
+            {
+              "name": "Invading Generals' Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading APC Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Invading Heavy Cavalry Hitpoints",
+              "value": -1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        10,
+        11
+      ],
+      "keptSourceItem": 11,
+      "keptId": "mvbhsf34-t7folvhxoog:1",
+      "removedIds": [
+        "mvbhqjcy-rl7672dqgjp:4"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 10,
+          "id": "mvbhqjcy-rl7672dqgjp:4",
+          "firstSeen": "2026-10-16T21:40:45.676Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "All Resources Looted",
+              "value": 1
+            },
+            {
+              "name": "Enemy Tower Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Enemy Anti-Tank Gun Damage",
+              "value": -6
+            },
+            {
+              "name": "Enemy Redoubt Damage",
+              "value": -11
+            },
+            {
+              "name": "Enemy Sniper Tower Hitpoints",
+              "value": -1
+            }
+          ]
+        },
+        {
+          "sourceItem": 11,
+          "id": "mvbhsf34-t7folvhxoog:1",
+          "firstSeen": "2026-10-16T21:41:14.894Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "All Resources Looted",
+              "value": 1
+            },
+            {
+              "name": "Enemy Tower Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Enemy Anti-Tank Gun Damage",
+              "value": -6
+            },
+            {
+              "name": "Enemy Redoubt Damage",
+              "value": -11
+            },
+            {
+              "name": "Enemy Sniper Tower Hitpoints",
+              "value": -1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        14,
+        15,
+        16
+      ],
+      "keptSourceItem": 16,
+      "keptId": "mvbhxjcf-hta209hnwf:1",
+      "removedIds": [
+        "mvbhsf34-t7folvhxoog:20",
+        "mvbhsf34-t7folvhxoog:29"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 3,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 14,
+          "id": "mvbhsf34-t7folvhxoog:20",
+          "firstSeen": "2026-10-16T21:43:18.929Z",
+          "type": "Armor",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Invading Bomber Damage",
+              "value": -6
+            },
+            {
+              "name": "Invading Machine Gun Infantry Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading Generals' Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Invading Mortar Troop Damage",
+              "value": -11
+            },
+            {
+              "name": "Invading Heavy Cavalry Damage",
+              "value": -6
+            }
+          ]
+        },
+        {
+          "sourceItem": 15,
+          "id": "mvbhsf34-t7folvhxoog:29",
+          "firstSeen": "2026-10-16T21:43:47.162Z",
+          "type": "Armor",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Invading Bomber Damage",
+              "value": -6
+            },
+            {
+              "name": "Invading Machine Gun Infantry Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading Generals' Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Invading Mortar Troop Damage",
+              "value": -11
+            },
+            {
+              "name": "Invading Heavy Cavalry Damage",
+              "value": -6
+            }
+          ]
+        },
+        {
+          "sourceItem": 16,
+          "id": "mvbhxjcf-hta209hnwf:1",
+          "firstSeen": "2026-10-16T21:45:20.812Z",
+          "type": "Armor",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Invading Bomber Damage",
+              "value": -6
+            },
+            {
+              "name": "Invading Machine Gun Infantry Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading Generals' Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Invading Mortar Troop Damage",
+              "value": -11
+            },
+            {
+              "name": "Invading Heavy Cavalry Damage",
+              "value": -6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        28,
+        29,
+        30
+      ],
+      "keptSourceItem": 30,
+      "keptId": "mvbi9sdy-dhtmqkiuf1v:1",
+      "removedIds": [
+        "mvbhxjcf-hta209hnwf:70",
+        "mvbi5f10-c08zfmu4r35:1"
+      ],
+      "minMatchingRows": 4,
+      "variantCount": 1,
+      "winningVersionOccurrences": 3,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 28,
+          "id": "mvbhxjcf-hta209hnwf:70",
+          "firstSeen": "2026-10-16T21:46:46.334Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Attack Helicopter Damage",
+              "value": 1
+            },
+            {
+              "name": "APC Damage",
+              "value": 1
+            },
+            {
+              "name": "Raider Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Guerrilla Hitpoints",
+              "value": 6
+            },
+            {
+              "name": "",
+              "value": null
+            }
+          ]
+        },
+        {
+          "sourceItem": 29,
+          "id": "mvbi5f10-c08zfmu4r35:1",
+          "firstSeen": "2026-10-16T21:51:25.886Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Attack Helicopter Damage",
+              "value": 1
+            },
+            {
+              "name": "APC Damage",
+              "value": 1
+            },
+            {
+              "name": "Raider Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Guerrilla Hitpoints",
+              "value": 6
+            },
+            {
+              "name": "",
+              "value": null
+            }
+          ]
+        },
+        {
+          "sourceItem": 30,
+          "id": "mvbi9sdy-dhtmqkiuf1v:1",
+          "firstSeen": "2026-10-16T21:55:02.169Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Attack Helicopter Damage",
+              "value": 1
+            },
+            {
+              "name": "APC Damage",
+              "value": 1
+            },
+            {
+              "name": "Raider Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Guerrilla Hitpoints",
+              "value": 6
+            },
+            {
+              "name": "",
+              "value": null
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        33,
+        34,
+        35
+      ],
+      "keptSourceItem": 35,
+      "keptId": "mvbi9sdy-dhtmqkiuf1v:33",
+      "removedIds": [
+        "mvbi9sdy-dhtmqkiuf1v:17",
+        "mvbi9sdy-dhtmqkiuf1v:31"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 3,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 33,
+          "id": "mvbi9sdy-dhtmqkiuf1v:17",
+          "firstSeen": "2026-10-16T21:55:34.557Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Enemy Catapult Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Enemy Tower Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Enemy Anti-Tank Gun Damage",
+              "value": -1
+            },
+            {
+              "name": "Enemy Catapult Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Enemy Redoubt Damage",
+              "value": -11
+            }
+          ]
+        },
+        {
+          "sourceItem": 34,
+          "id": "mvbi9sdy-dhtmqkiuf1v:31",
+          "firstSeen": "2026-10-16T21:58:04.499Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Enemy Catapult Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Enemy Tower Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Enemy Anti-Tank Gun Damage",
+              "value": -1
+            },
+            {
+              "name": "Enemy Catapult Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Enemy Redoubt Damage",
+              "value": -11
+            }
+          ]
+        },
+        {
+          "sourceItem": 35,
+          "id": "mvbi9sdy-dhtmqkiuf1v:33",
+          "firstSeen": "2026-10-16T21:58:06.971Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Enemy Catapult Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Enemy Tower Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Enemy Anti-Tank Gun Damage",
+              "value": -1
+            },
+            {
+              "name": "Enemy Catapult Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Enemy Redoubt Damage",
+              "value": -11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48
+      ],
+      "keptSourceItem": 48,
+      "keptId": "mvbj1tkn-9cwz8auzv1n:1",
+      "removedIds": [
+        "mvbik4dr-wdahurlr8jk:11",
+        "mvbiniq7-gkqkhtiamc9:1",
+        "mvbiniq7-gkqkhtiamc9:2",
+        "mvbiuik3-o7jr822fzzs:1",
+        "mvbiv4vw-ak0qed0g4cb:1",
+        "mvbixnjy-yvfs176c7fk:1"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 7,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 42,
+          "id": "mvbik4dr-wdahurlr8jk:11",
+          "firstSeen": "2026-10-16T22:04:30.223Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Heavy Cavalry Damage",
+              "value": 1
+            },
+            {
+              "name": "Tactical Helicopter Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Ranged Infantry Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Generals' Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Heavy Tank Hitpoints",
+              "value": 11
+            }
+          ]
+        },
+        {
+          "sourceItem": 43,
+          "id": "mvbiniq7-gkqkhtiamc9:1",
+          "firstSeen": "2026-10-16T22:05:25.526Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Heavy Cavalry Damage",
+              "value": 1
+            },
+            {
+              "name": "Tactical Helicopter Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Ranged Infantry Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Generals' Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Heavy Tank Hitpoints",
+              "value": 11
+            }
+          ]
+        },
+        {
+          "sourceItem": 44,
+          "id": "mvbiniq7-gkqkhtiamc9:2",
+          "firstSeen": "2026-10-16T22:08:17.800Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Heavy Cavalry Damage",
+              "value": 1
+            },
+            {
+              "name": "Tactical Helicopter Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Ranged Infantry Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Generals' Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Heavy Tank Hitpoints",
+              "value": 11
+            }
+          ]
+        },
+        {
+          "sourceItem": 45,
+          "id": "mvbiuik3-o7jr822fzzs:1",
+          "firstSeen": "2026-10-16T22:10:53.286Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Heavy Cavalry Damage",
+              "value": 1
+            },
+            {
+              "name": "Tactical Helicopter Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Ranged Infantry Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Generals' Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Heavy Tank Hitpoints",
+              "value": 11
+            }
+          ]
+        },
+        {
+          "sourceItem": 46,
+          "id": "mvbiv4vw-ak0qed0g4cb:1",
+          "firstSeen": "2026-10-16T22:11:22.575Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Heavy Cavalry Damage",
+              "value": 1
+            },
+            {
+              "name": "Tactical Helicopter Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Ranged Infantry Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Generals' Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Heavy Tank Hitpoints",
+              "value": 11
+            }
+          ]
+        },
+        {
+          "sourceItem": 47,
+          "id": "mvbixnjy-yvfs176c7fk:1",
+          "firstSeen": "2026-10-16T22:13:19.837Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Heavy Cavalry Damage",
+              "value": 1
+            },
+            {
+              "name": "Tactical Helicopter Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Ranged Infantry Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Generals' Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Heavy Tank Hitpoints",
+              "value": 11
+            }
+          ]
+        },
+        {
+          "sourceItem": 48,
+          "id": "mvbj1tkn-9cwz8auzv1n:1",
+          "firstSeen": "2026-10-16T22:16:33.455Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Heavy Cavalry Damage",
+              "value": 1
+            },
+            {
+              "name": "Tactical Helicopter Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Ranged Infantry Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Generals' Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Heavy Tank Hitpoints",
+              "value": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        85,
+        86
+      ],
+      "keptSourceItem": 86,
+      "keptId": "mvc8i7hr-9yzuffbsi4u:35",
+      "removedIds": [
+        "mvc8i7hr-9yzuffbsi4u:34"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 85,
+          "id": "mvc8i7hr-9yzuffbsi4u:34",
+          "firstSeen": "2026-10-17T10:11:20.397Z",
+          "type": "Pottery",
+          "unlockedCount": 2,
+          "rows": [
+            {
+              "name": "Redoubt Damage",
+              "value": 6
+            },
+            {
+              "name": "Catapult Damage",
+              "value": 11
+            },
+            {
+              "name": "Missile Silo Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Food from Fruit Trees",
+              "value": 1
+            },
+            {
+              "name": "Anti-Tank Gun Damage",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "sourceItem": 86,
+          "id": "mvc8i7hr-9yzuffbsi4u:35",
+          "firstSeen": "2026-10-17T10:11:22.744Z",
+          "type": "Pottery",
+          "unlockedCount": 2,
+          "rows": [
+            {
+              "name": "Redoubt Damage",
+              "value": 6
+            },
+            {
+              "name": "Catapult Damage",
+              "value": 11
+            },
+            {
+              "name": "Missile Silo Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Food from Fruit Trees",
+              "value": 1
+            },
+            {
+              "name": "Anti-Tank Gun Damage",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        97,
+        98,
+        99
+      ],
+      "keptSourceItem": 99,
+      "keptId": "mvc8i7hr-9yzuffbsi4u:60",
+      "removedIds": [
+        "mvc8i7hr-9yzuffbsi4u:58",
+        "mvc8i7hr-9yzuffbsi4u:59"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 3,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 97,
+          "id": "mvc8i7hr-9yzuffbsi4u:58",
+          "firstSeen": "2026-10-17T11:07:27.959Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Ranged Siege Hitpoints",
+              "value": 6
+            },
+            {
+              "name": "Bazooka Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "MRL Damage",
+              "value": 1
+            },
+            {
+              "name": "MRL Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Mortar Troop Damage",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "sourceItem": 98,
+          "id": "mvc8i7hr-9yzuffbsi4u:59",
+          "firstSeen": "2026-10-17T11:07:30.772Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Ranged Siege Hitpoints",
+              "value": 6
+            },
+            {
+              "name": "Bazooka Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "MRL Damage",
+              "value": 1
+            },
+            {
+              "name": "MRL Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Mortar Troop Damage",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "sourceItem": 99,
+          "id": "mvc8i7hr-9yzuffbsi4u:60",
+          "firstSeen": "2026-10-17T11:09:17.189Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Ranged Siege Hitpoints",
+              "value": 6
+            },
+            {
+              "name": "Bazooka Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "MRL Damage",
+              "value": 1
+            },
+            {
+              "name": "MRL Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Mortar Troop Damage",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        145,
+        146
+      ],
+      "keptSourceItem": 146,
+      "keptId": "mvcaub40-83stxdjf90s:34",
+      "removedIds": [
+        "mvcaub40-83stxdjf90s:32"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 145,
+          "id": "mvcaub40-83stxdjf90s:32",
+          "firstSeen": "2026-10-17T11:17:59.256Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Looted Resource Refund",
+              "value": 1
+            },
+            {
+              "name": "Oil Looted",
+              "value": 1
+            },
+            {
+              "name": "Enemy Redoubt Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Looted Resource Refund",
+              "value": 6
+            },
+            {
+              "name": "Enemy Tower Hitpoints",
+              "value": -6
+            }
+          ]
+        },
+        {
+          "sourceItem": 146,
+          "id": "mvcaub40-83stxdjf90s:34",
+          "firstSeen": "2026-10-17T11:18:10.444Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Looted Resource Refund",
+              "value": 1
+            },
+            {
+              "name": "Oil Looted",
+              "value": 1
+            },
+            {
+              "name": "Enemy Redoubt Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Looted Resource Refund",
+              "value": 6
+            },
+            {
+              "name": "Enemy Tower Hitpoints",
+              "value": -6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        166,
+        167,
+        168
+      ],
+      "keptSourceItem": 167,
+      "keptId": "mvceg19s-vt0aev0rys:41",
+      "removedIds": [
+        "mvceg19s-vt0aev0rys:39",
+        "mvceg19s-vt0aev0rys:42"
+      ],
+      "minMatchingRows": 4,
+      "variantCount": 2,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 166,
+          "id": "mvceg19s-vt0aev0rys:39",
+          "firstSeen": "2026-10-17T13:05:29.994Z",
+          "type": "Armor",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Invading Guerrilla Damage",
+              "value": -1
+            },
+            {
+              "name": "Invading APC Damage",
+              "value": -6
+            },
+            {
+              "name": "Invading Heavy Cavalry Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading Fighter Damage",
+              "value": -1
+            },
+            {
+              "name": "Invading MRL Hitpoints",
+              "value": -1
+            }
+          ]
+        },
+        {
+          "sourceItem": 167,
+          "id": "mvceg19s-vt0aev0rys:41",
+          "firstSeen": "2026-10-17T13:05:49.931Z",
+          "type": "Armor",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Invading Guerrilla Damage",
+              "value": -1
+            },
+            {
+              "name": "Invading APC Damage",
+              "value": -6
+            },
+            {
+              "name": "Invading Heavy Cavalry Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading Fighter Damage",
+              "value": -1
+            },
+            {
+              "name": "Invading MRL Hitpoints",
+              "value": -1
+            }
+          ]
+        },
+        {
+          "sourceItem": 168,
+          "id": "mvceg19s-vt0aev0rys:42",
+          "firstSeen": "2026-10-17T13:05:52.875Z",
+          "type": "Armor",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Invading Guerrilla Damage",
+              "value": -1
+            },
+            {
+              "name": "Invading APC Damage",
+              "value": -6
+            },
+            {
+              "name": "Invading Heavy Cavalry Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading Fighter Damage",
+              "value": -1
+            },
+            {
+              "name": "vad MRL Hitpoints",
+              "value": -1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        189,
+        190
+      ],
+      "keptSourceItem": 190,
+      "keptId": "mvceg19s-vt0aev0rys:102",
+      "removedIds": [
+        "mvceg19s-vt0aev0rys:100"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 189,
+          "id": "mvceg19s-vt0aev0rys:100",
+          "firstSeen": "2026-10-17T13:08:28.239Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Enemy Catapult Hitpoints",
+              "value": -6
+            },
+            {
+              "name": "Enemy Anti-Tank Gun Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "All Resources Looted",
+              "value": 1
+            },
+            {
+              "name": "Enemy Catapult Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "All Resources Looted",
+              "value": 6
+            }
+          ]
+        },
+        {
+          "sourceItem": 190,
+          "id": "mvceg19s-vt0aev0rys:102",
+          "firstSeen": "2026-10-17T13:08:34.705Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Enemy Catapult Hitpoints",
+              "value": -6
+            },
+            {
+              "name": "Enemy Anti-Tank Gun Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "All Resources Looted",
+              "value": 1
+            },
+            {
+              "name": "Enemy Catapult Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "All Resources Looted",
+              "value": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        198,
+        199
+      ],
+      "keptSourceItem": 199,
+      "keptId": "mvceg19s-vt0aev0rys:130",
+      "removedIds": [
+        "mvceg19s-vt0aev0rys:128"
+      ],
+      "minMatchingRows": 4,
+      "variantCount": 2,
+      "winningVersionOccurrences": 1,
+      "reason": "Last version; no version repeats.",
+      "versions": [
+        {
+          "sourceItem": 198,
+          "id": "mvceg19s-vt0aev0rys:128",
+          "firstSeen": "2026-10-17T13:09:54.258Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Enemy Sniper Tower Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Enemy Missile Silo Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Enemy Sniper Tower Damage",
+              "value": -1
+            },
+            {
+              "name": "Enemy Missile Silo Damage",
+              "value": -6
+            },
+            {
+              "name": "Gold Looted",
+              "value": 6
+            }
+          ]
+        },
+        {
+          "sourceItem": 199,
+          "id": "mvceg19s-vt0aev0rys:130",
+          "firstSeen": "2026-10-17T13:10:51.292Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Enemy Sniper Tower Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Enemy Missile Silo Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Enemy Sniper Tower Damage",
+              "value": -1
+            },
+            {
+              "name": "Evening Missile Silo Damage",
+              "value": null
+            },
+            {
+              "name": "Gold Looted",
+              "value": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        224,
+        225
+      ],
+      "keptSourceItem": 225,
+      "keptId": "mvceg19s-vt0aev0rys:205",
+      "removedIds": [
+        "mvceg19s-vt0aev0rys:194"
+      ],
+      "minMatchingRows": 3,
+      "variantCount": 2,
+      "winningVersionOccurrences": 1,
+      "reason": "Last version; no version repeats.",
+      "versions": [
+        {
+          "sourceItem": 224,
+          "id": "mvceg19s-vt0aev0rys:194",
+          "firstSeen": "2026-10-17T13:14:42.514Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Library Tech Gold Cost",
+              "value": -1
+            },
+            {
+              "name": "Enemy Sniper Tower Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Enemy Missile Silo Damage",
+              "value": -11
+            },
+            {
+              "name": "Enemy Catapult Hitpoints",
+              "value": -6
+            },
+            {
+              "name": "All Resources Looted",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "sourceItem": 225,
+          "id": "mvceg19s-vt0aev0rys:205",
+          "firstSeen": "2026-10-17T13:14:58.806Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Library Tech Gold Cost",
+              "value": -1
+            },
+            {
+              "name": "Enemy Sniper Tower Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Library Tech Gold Cost",
+              "value": -6
+            },
+            {
+              "name": "Enemy Anti-Tank Gun Damage",
+              "value": -1
+            },
+            {
+              "name": "All Resources Looted",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        256,
+        257
+      ],
+      "keptSourceItem": 257,
+      "keptId": "mvceg19s-vt0aev0rys:275",
+      "removedIds": [
+        "mvceg19s-vt0aev0rys:273"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 256,
+          "id": "mvceg19s-vt0aev0rys:273",
+          "firstSeen": "2026-10-17T13:16:59.379Z",
+          "type": "Pottery",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Air Defense Damage",
+              "value": 1
+            },
+            {
+              "name": "Gold from Caravans",
+              "value": 1
+            },
+            {
+              "name": "Tower Damage",
+              "value": 11
+            },
+            {
+              "name": "Sniper Tower Damage",
+              "value": 11
+            },
+            {
+              "name": "Air Defense Damage",
+              "value": 11
+            }
+          ]
+        },
+        {
+          "sourceItem": 257,
+          "id": "mvceg19s-vt0aev0rys:275",
+          "firstSeen": "2026-10-17T13:17:50.230Z",
+          "type": "Pottery",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Air Defense Damage",
+              "value": 1
+            },
+            {
+              "name": "Gold from Caravans",
+              "value": 1
+            },
+            {
+              "name": "Tower Damage",
+              "value": 11
+            },
+            {
+              "name": "Sniper Tower Damage",
+              "value": 11
+            },
+            {
+              "name": "Air Defense Damage",
+              "value": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        277,
+        278
+      ],
+      "keptSourceItem": 278,
+      "keptId": "mvceg19s-vt0aev0rys:326",
+      "removedIds": [
+        "mvceg19s-vt0aev0rys:324"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 277,
+          "id": "mvceg19s-vt0aev0rys:324",
+          "firstSeen": "2026-10-17T13:30:05.790Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Enemy Anti-Tank Gun Damage",
+              "value": -1
+            },
+            {
+              "name": "All Resources Looted",
+              "value": 11
+            },
+            {
+              "name": "All Resources Looted",
+              "value": 11
+            },
+            {
+              "name": "Gold Looted",
+              "value": 1
+            },
+            {
+              "name": "Library Tech Gold Cost",
+              "value": -6
+            }
+          ]
+        },
+        {
+          "sourceItem": 278,
+          "id": "mvceg19s-vt0aev0rys:326",
+          "firstSeen": "2026-10-17T13:30:09.830Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Enemy Anti-Tank Gun Damage",
+              "value": -1
+            },
+            {
+              "name": "All Resources Looted",
+              "value": 11
+            },
+            {
+              "name": "All Resources Looted",
+              "value": 11
+            },
+            {
+              "name": "Gold Looted",
+              "value": 1
+            },
+            {
+              "name": "Library Tech Gold Cost",
+              "value": -6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        315,
+        316
+      ],
+      "keptSourceItem": 316,
+      "keptId": "mvcsvsld-9uul7j6y7b:31",
+      "removedIds": [
+        "mvcsvsld-9uul7j6y7b:30"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 315,
+          "id": "mvcsvsld-9uul7j6y7b:30",
+          "firstSeen": "2026-10-17T19:40:46.936Z",
+          "type": "Pottery",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Food from Farms",
+              "value": 1
+            },
+            {
+              "name": "Tower Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "Catapult Damage",
+              "value": 1
+            },
+            {
+              "name": "Anti-Tank Gun Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "Sniper Tower Hitpoints",
+              "value": 11
+            }
+          ]
+        },
+        {
+          "sourceItem": 316,
+          "id": "mvcsvsld-9uul7j6y7b:31",
+          "firstSeen": "2026-10-17T19:40:47.787Z",
+          "type": "Pottery",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Food from Farms",
+              "value": 1
+            },
+            {
+              "name": "Tower Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "Catapult Damage",
+              "value": 1
+            },
+            {
+              "name": "Anti-Tank Gun Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "Sniper Tower Hitpoints",
+              "value": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        340,
+        341,
+        342
+      ],
+      "keptSourceItem": 342,
+      "keptId": "mvctarz7-np3brcifv2:1",
+      "removedIds": [
+        "mvct4nk8-u42gi61u8zn:18",
+        "mvct4nk8-u42gi61u8zn:19"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 3,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 340,
+          "id": "mvct4nk8-u42gi61u8zn:18",
+          "firstSeen": "2026-10-17T19:49:58.338Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Enemy Redoubt Hitpoints",
+              "value": -6
+            },
+            {
+              "name": "Enemy Catapult Damage",
+              "value": -1
+            },
+            {
+              "name": "Enemy Catapult Damage",
+              "value": -1
+            },
+            {
+              "name": "Enemy Redoubt Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Enemy Catapult Damage",
+              "value": -11
+            }
+          ]
+        },
+        {
+          "sourceItem": 341,
+          "id": "mvct4nk8-u42gi61u8zn:19",
+          "firstSeen": "2026-10-17T19:50:00.063Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Enemy Redoubt Hitpoints",
+              "value": -6
+            },
+            {
+              "name": "Enemy Catapult Damage",
+              "value": -1
+            },
+            {
+              "name": "Enemy Catapult Damage",
+              "value": -1
+            },
+            {
+              "name": "Enemy Redoubt Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Enemy Catapult Damage",
+              "value": -11
+            }
+          ]
+        },
+        {
+          "sourceItem": 342,
+          "id": "mvctarz7-np3brcifv2:1",
+          "firstSeen": "2026-10-17T19:51:12.775Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Enemy Redoubt Hitpoints",
+              "value": -6
+            },
+            {
+              "name": "Enemy Catapult Damage",
+              "value": -1
+            },
+            {
+              "name": "Enemy Catapult Damage",
+              "value": -1
+            },
+            {
+              "name": "Enemy Redoubt Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Enemy Catapult Damage",
+              "value": -11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        346,
+        347,
+        348
+      ],
+      "keptSourceItem": 348,
+      "keptId": "mvctarz7-np3brcifv2:29",
+      "removedIds": [
+        "mvctarz7-np3brcifv2:27",
+        "mvctarz7-np3brcifv2:28"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 3,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 346,
+          "id": "mvctarz7-np3brcifv2:27",
+          "firstSeen": "2026-10-17T19:53:05.355Z",
+          "type": "Pottery",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Missile Silo Damage",
+              "value": 11
+            },
+            {
+              "name": "Redoubt Damage",
+              "value": 11
+            },
+            {
+              "name": "Library Tech Food Cost",
+              "value": -1
+            },
+            {
+              "name": "Tower Damage",
+              "value": 11
+            },
+            {
+              "name": "Gold from Gold Mines",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "sourceItem": 347,
+          "id": "mvctarz7-np3brcifv2:28",
+          "firstSeen": "2026-10-17T19:53:08.132Z",
+          "type": "Pottery",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Missile Silo Damage",
+              "value": 11
+            },
+            {
+              "name": "Redoubt Damage",
+              "value": 11
+            },
+            {
+              "name": "Library Tech Food Cost",
+              "value": -1
+            },
+            {
+              "name": "Tower Damage",
+              "value": 11
+            },
+            {
+              "name": "Gold from Gold Mines",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "sourceItem": 348,
+          "id": "mvctarz7-np3brcifv2:29",
+          "firstSeen": "2026-10-17T19:53:10.064Z",
+          "type": "Pottery",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Missile Silo Damage",
+              "value": 11
+            },
+            {
+              "name": "Redoubt Damage",
+              "value": 11
+            },
+            {
+              "name": "Library Tech Food Cost",
+              "value": -1
+            },
+            {
+              "name": "Tower Damage",
+              "value": 11
+            },
+            {
+              "name": "Gold from Gold Mines",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        354,
+        355
+      ],
+      "keptSourceItem": 355,
+      "keptId": "mvctarz7-np3brcifv2:55",
+      "removedIds": [
+        "mvctarz7-np3brcifv2:54"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 354,
+          "id": "mvctarz7-np3brcifv2:54",
+          "firstSeen": "2026-10-17T19:53:59.398Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Heavy Infantry Damage",
+              "value": 6
+            },
+            {
+              "name": "Generals' Damage",
+              "value": 11
+            },
+            {
+              "name": "MRL Damage",
+              "value": 1
+            },
+            {
+              "name": "APC Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "Ranged Infantry Damage",
+              "value": 11
+            }
+          ]
+        },
+        {
+          "sourceItem": 355,
+          "id": "mvctarz7-np3brcifv2:55",
+          "firstSeen": "2026-10-17T19:54:02.157Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Heavy Infantry Damage",
+              "value": 6
+            },
+            {
+              "name": "Generals' Damage",
+              "value": 11
+            },
+            {
+              "name": "MRL Damage",
+              "value": 1
+            },
+            {
+              "name": "APC Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "Ranged Infantry Damage",
+              "value": 11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        357,
+        358
+      ],
+      "keptSourceItem": 358,
+      "keptId": "mvctarz7-np3brcifv2:71",
+      "removedIds": [
+        "mvctarz7-np3brcifv2:70"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 357,
+          "id": "mvctarz7-np3brcifv2:70",
+          "firstSeen": "2026-10-17T19:54:49.072Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Enemy Redoubt Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Enemy Sniper Tower Damage",
+              "value": -1
+            },
+            {
+              "name": "Enemy Anti-Tank Gun Damage",
+              "value": -1
+            },
+            {
+              "name": "Looted Resource Refund",
+              "value": 6
+            },
+            {
+              "name": "Enemy Catapult Damage",
+              "value": -11
+            }
+          ]
+        },
+        {
+          "sourceItem": 358,
+          "id": "mvctarz7-np3brcifv2:71",
+          "firstSeen": "2026-10-17T19:54:52.917Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Enemy Redoubt Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Enemy Sniper Tower Damage",
+              "value": -1
+            },
+            {
+              "name": "Enemy Anti-Tank Gun Damage",
+              "value": -1
+            },
+            {
+              "name": "Looted Resource Refund",
+              "value": 6
+            },
+            {
+              "name": "Enemy Catapult Damage",
+              "value": -11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        365,
+        366
+      ],
+      "keptSourceItem": 366,
+      "keptId": "mvctarz7-np3brcifv2:86",
+      "removedIds": [
+        "mvctarz7-np3brcifv2:85"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 365,
+          "id": "mvctarz7-np3brcifv2:85",
+          "firstSeen": "2026-10-17T19:55:46.178Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Guerrilla Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "Raider Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Bomber Damage",
+              "value": 6
+            },
+            {
+              "name": "Bazooka Damage",
+              "value": 1
+            },
+            {
+              "name": "Assault Vehicle Hitpoints",
+              "value": 6
+            }
+          ]
+        },
+        {
+          "sourceItem": 366,
+          "id": "mvctarz7-np3brcifv2:86",
+          "firstSeen": "2026-10-17T19:55:58.287Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Guerrilla Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "Raider Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Bomber Damage",
+              "value": 6
+            },
+            {
+              "name": "Bazooka Damage",
+              "value": 1
+            },
+            {
+              "name": "Assault Vehicle Hitpoints",
+              "value": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        399,
+        400
+      ],
+      "keptSourceItem": 400,
+      "keptId": "mvcv9vri-wn8ug2d05mf:34",
+      "removedIds": [
+        "mvcv9vri-wn8ug2d05mf:33"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 399,
+          "id": "mvcv9vri-wn8ug2d05mf:33",
+          "firstSeen": "2026-10-17T20:49:07.006Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Enemy Anti-Tank Gun Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Enemy Missile Silo Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Enemy Tower Damage",
+              "value": -11
+            },
+            {
+              "name": "Enemy Missile Silo Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Enemy Redoubt Damage",
+              "value": -6
+            }
+          ]
+        },
+        {
+          "sourceItem": 400,
+          "id": "mvcv9vri-wn8ug2d05mf:34",
+          "firstSeen": "2026-10-17T20:49:09.816Z",
+          "type": "Jewelry",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Enemy Anti-Tank Gun Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Enemy Missile Silo Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Enemy Tower Damage",
+              "value": -11
+            },
+            {
+              "name": "Enemy Missile Silo Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Enemy Redoubt Damage",
+              "value": -6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        434,
+        435
+      ],
+      "keptSourceItem": 435,
+      "keptId": "mvcv9vri-wn8ug2d05mf:150",
+      "removedIds": [
+        "mvcv9vri-wn8ug2d05mf:149"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 434,
+          "id": "mvcv9vri-wn8ug2d05mf:149",
+          "firstSeen": "2026-10-17T20:53:48.420Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Armored Car Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Raider Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "Heavy Cavalry Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Defender Spawn Time",
+              "value": -11
+            },
+            {
+              "name": "Ranged Infantry Damage",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "sourceItem": 435,
+          "id": "mvcv9vri-wn8ug2d05mf:150",
+          "firstSeen": "2026-10-17T20:55:04.640Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Armored Car Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Raider Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "Heavy Cavalry Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Defender Spawn Time",
+              "value": -11
+            },
+            {
+              "name": "Ranged Infantry Damage",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        449,
+        450
+      ],
+      "keptSourceItem": 450,
+      "keptId": "mvcvqwdo-ryya99owo5g:17",
+      "removedIds": [
+        "mvcvqwdo-ryya99owo5g:12"
+      ],
+      "minMatchingRows": 3,
+      "variantCount": 2,
+      "winningVersionOccurrences": 1,
+      "reason": "Last version; no version repeats.",
+      "versions": [
+        {
+          "sourceItem": 449,
+          "id": "mvcvqwdo-ryya99owo5g:12",
+          "firstSeen": "2026-10-17T21:03:51.435Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Paratrooper Damage",
+              "value": 1
+            },
+            {
+              "name": "Tactical Helicopter Healing",
+              "value": 6
+            },
+            {
+              "name": "APC Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Paratrooper Hitpoints",
+              "value": 6
+            },
+            {
+              "name": "Machine Gun Infantry Damage",
+              "value": 11
+            }
+          ]
+        },
+        {
+          "sourceItem": 450,
+          "id": "mvcvqwdo-ryya99owo5g:17",
+          "firstSeen": "2026-10-17T21:03:58.792Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Paratrooper Damage",
+              "value": 1
+            },
+            {
+              "name": "Tactical Helicopter Healing",
+              "value": 6
+            },
+            {
+              "name": "APC Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Ranged Infantry Hitpoints",
+              "value": 6
+            },
+            {
+              "name": "Defender Spawn Time",
+              "value": -11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        453,
+        454
+      ],
+      "keptSourceItem": 454,
+      "keptId": "mvcvqwdo-ryya99owo5g:31",
+      "removedIds": [
+        "mvcvqwdo-ryya99owo5g:24"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 453,
+          "id": "mvcvqwdo-ryya99owo5g:24",
+          "firstSeen": "2026-10-17T21:04:15.579Z",
+          "type": "Jewelry",
+          "unlockedCount": 2,
+          "rows": [
+            {
+              "name": "National Trade Good Loot Chance",
+              "value": 11
+            },
+            {
+              "name": "Enemy Tower Damage",
+              "value": -11
+            },
+            {
+              "name": "Looted Resource Refund",
+              "value": 6
+            },
+            {
+              "name": "Oil Looted",
+              "value": 6
+            },
+            {
+              "name": "Enemy Anti-Tank Gun Damage",
+              "value": -1
+            }
+          ]
+        },
+        {
+          "sourceItem": 454,
+          "id": "mvcvqwdo-ryya99owo5g:31",
+          "firstSeen": "2026-10-17T21:05:13.436Z",
+          "type": "Jewelry",
+          "unlockedCount": 2,
+          "rows": [
+            {
+              "name": "National Trade Good Loot Chance",
+              "value": 11
+            },
+            {
+              "name": "Enemy Tower Damage",
+              "value": -11
+            },
+            {
+              "name": "Looted Resource Refund",
+              "value": 6
+            },
+            {
+              "name": "Oil Looted",
+              "value": 6
+            },
+            {
+              "name": "Enemy Anti-Tank Gun Damage",
+              "value": -1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        459,
+        460,
+        461
+      ],
+      "keptSourceItem": 461,
+      "keptId": "mvcvqwdo-ryya99owo5g:68",
+      "removedIds": [
+        "mvcvqwdo-ryya99owo5g:64",
+        "mvcvqwdo-ryya99owo5g:65"
+      ],
+      "minMatchingRows": 4,
+      "variantCount": 3,
+      "winningVersionOccurrences": 1,
+      "reason": "Last version; no version repeats.",
+      "versions": [
+        {
+          "sourceItem": 459,
+          "id": "mvcvqwdo-ryya99owo5g:64",
+          "firstSeen": "2026-10-17T21:07:23.433Z",
+          "type": "Armor",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Invading Tactical Helicopter Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading Mortar Troop Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading Machine Gun Infantry Damage",
+              "value": -6
+            },
+            {
+              "name": "IF adifig Assault Vericke Damage",
+              "value": null
+            },
+            {
+              "name": "Invading Armored Car Damage",
+              "value": -1
+            }
+          ]
+        },
+        {
+          "sourceItem": 460,
+          "id": "mvcvqwdo-ryya99owo5g:65",
+          "firstSeen": "2026-10-17T21:07:25.821Z",
+          "type": "Armor",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Invading Tactical Helicopter Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading Mortar Troop Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading Machine Gun Infantry Damage",
+              "value": -6
+            },
+            {
+              "name": "If aching Assault Vehcke Damage",
+              "value": -6
+            },
+            {
+              "name": "Invading Armored Car Damage",
+              "value": -1
+            }
+          ]
+        },
+        {
+          "sourceItem": 461,
+          "id": "mvcvqwdo-ryya99owo5g:68",
+          "firstSeen": "2026-10-17T21:10:34.945Z",
+          "type": "Armor",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Invading Tactical Helicopter Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading Mortar Troop Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading Machine Gun Infantry Damage",
+              "value": -6
+            },
+            {
+              "name": "Invading Assault Vehicle Damage",
+              "value": null
+            },
+            {
+              "name": "Invading Armored Car Damage",
+              "value": -1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        603,
+        604
+      ],
+      "keptSourceItem": 604,
+      "keptId": "mvcvqwdo-ryya99owo5g:356",
+      "removedIds": [
+        "mvcvqwdo-ryya99owo5g:355"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 603,
+          "id": "mvcvqwdo-ryya99owo5g:355",
+          "firstSeen": "2026-10-17T21:20:16.301Z",
+          "type": "Pottery",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Forest Expansion Cost Refund",
+              "value": 1
+            },
+            {
+              "name": "Anti-Tank Gun Damage",
+              "value": 1
+            },
+            {
+              "name": "Anti-Tank Gun Damage",
+              "value": 11
+            },
+            {
+              "name": "Air Defense Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "Anti-Tank Gun Damage",
+              "value": 6
+            }
+          ]
+        },
+        {
+          "sourceItem": 604,
+          "id": "mvcvqwdo-ryya99owo5g:356",
+          "firstSeen": "2026-10-17T21:20:18.764Z",
+          "type": "Pottery",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Forest Expansion Cost Refund",
+              "value": 1
+            },
+            {
+              "name": "Anti-Tank Gun Damage",
+              "value": 1
+            },
+            {
+              "name": "Anti-Tank Gun Damage",
+              "value": 11
+            },
+            {
+              "name": "Air Defense Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "Anti-Tank Gun Damage",
+              "value": 6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        777,
+        778
+      ],
+      "keptSourceItem": 778,
+      "keptId": "mvdoueab-uvijbt358i:283",
+      "removedIds": [
+        "mvdoueab-uvijbt358i:252"
+      ],
+      "minMatchingRows": 4,
+      "variantCount": 2,
+      "winningVersionOccurrences": 1,
+      "reason": "Last version; no version repeats.",
+      "versions": [
+        {
+          "sourceItem": 777,
+          "id": "mvdoueab-uvijbt358i:252",
+          "firstSeen": "2026-10-18T10:39:41.866Z",
+          "type": "Armor",
+          "unlockedCount": 3,
+          "rows": [
+            {
+              "name": "Invading Ranged Siege Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Invading Attack Helicopter Damage",
+              "value": -11
+            },
+            {
+              "name": "Invading Machine Gun Infantry Damage",
+              "value": -1
+            },
+            {
+              "name": "Invading Bomber Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Invading Bazooka Damage",
+              "value": null
+            }
+          ]
+        },
+        {
+          "sourceItem": 778,
+          "id": "mvdoueab-uvijbt358i:283",
+          "firstSeen": "2026-10-18T10:40:23.702Z",
+          "type": "Armor",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Invading Ranged Siege Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Invading Attack Helicopter Damage",
+              "value": -11
+            },
+            {
+              "name": "Invading Machine Gun Infantry Damage",
+              "value": -1
+            },
+            {
+              "name": "Invading Bomber Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Invading Bomber Damage",
+              "value": -1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        801,
+        802
+      ],
+      "keptSourceItem": 802,
+      "keptId": "mvdq1tkd-bd22uakwn6c:1",
+      "removedIds": [
+        "mvdprdhm-3u6jm25ub7c:76"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 801,
+          "id": "mvdprdhm-3u6jm25ub7c:76",
+          "firstSeen": "2026-10-18T11:07:39.019Z",
+          "type": "Jewelry",
+          "unlockedCount": 2,
+          "rows": [
+            {
+              "name": "Enemy Redoubt Damage",
+              "value": -11
+            },
+            {
+              "name": "Enemy Redoubt Damage",
+              "value": -11
+            },
+            {
+              "name": "Enemy Missile Silo Damage",
+              "value": -1
+            },
+            {
+              "name": "Library Tech Gold Cost",
+              "value": -6
+            },
+            {
+              "name": "Enemy Catapult Hitpoints",
+              "value": -11
+            }
+          ]
+        },
+        {
+          "sourceItem": 802,
+          "id": "mvdq1tkd-bd22uakwn6c:1",
+          "firstSeen": "2026-10-18T11:08:10.985Z",
+          "type": "Jewelry",
+          "unlockedCount": 2,
+          "rows": [
+            {
+              "name": "Enemy Redoubt Damage",
+              "value": -11
+            },
+            {
+              "name": "Enemy Redoubt Damage",
+              "value": -11
+            },
+            {
+              "name": "Enemy Missile Silo Damage",
+              "value": -1
+            },
+            {
+              "name": "Library Tech Gold Cost",
+              "value": -6
+            },
+            {
+              "name": "Enemy Catapult Hitpoints",
+              "value": -11
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        826,
+        827
+      ],
+      "keptSourceItem": 827,
+      "keptId": "mve9l149-zq8uz8fp2o:26",
+      "removedIds": [
+        "mve9l149-zq8uz8fp2o:24"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 826,
+          "id": "mve9l149-zq8uz8fp2o:24",
+          "firstSeen": "2026-10-18T20:16:03.398Z",
+          "type": "Armor",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Invading MRL Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading Paratrooper Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading Generals' Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Defender Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Invading Guerrilla Damage",
+              "value": -6
+            }
+          ]
+        },
+        {
+          "sourceItem": 827,
+          "id": "mve9l149-zq8uz8fp2o:26",
+          "firstSeen": "2026-10-18T20:16:07.797Z",
+          "type": "Armor",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Invading MRL Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading Paratrooper Hitpoints",
+              "value": -1
+            },
+            {
+              "name": "Invading Generals' Hitpoints",
+              "value": -11
+            },
+            {
+              "name": "Defender Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Invading Guerrilla Damage",
+              "value": -6
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        836,
+        837
+      ],
+      "keptSourceItem": 837,
+      "keptId": "mve9l149-zq8uz8fp2o:41",
+      "removedIds": [
+        "mve9l149-zq8uz8fp2o:39"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 836,
+          "id": "mve9l149-zq8uz8fp2o:39",
+          "firstSeen": "2026-10-18T20:16:57.692Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Supply Vehicle Hitpoints",
+              "value": 6
+            },
+            {
+              "name": "Tactical Helicopter Healing",
+              "value": 6
+            },
+            {
+              "name": "Raider Damage",
+              "value": 11
+            },
+            {
+              "name": "Attack Helicopter Damage",
+              "value": 11
+            },
+            {
+              "name": "Supply Vehicle Healing",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "sourceItem": 837,
+          "id": "mve9l149-zq8uz8fp2o:41",
+          "firstSeen": "2026-10-18T20:24:16.100Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Supply Vehicle Hitpoints",
+              "value": 6
+            },
+            {
+              "name": "Tactical Helicopter Healing",
+              "value": 6
+            },
+            {
+              "name": "Raider Damage",
+              "value": 11
+            },
+            {
+              "name": "Attack Helicopter Damage",
+              "value": 11
+            },
+            {
+              "name": "Supply Vehicle Healing",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        849,
+        850
+      ],
+      "keptSourceItem": 850,
+      "keptId": "mvea13m8-exoqb7aajl5:16",
+      "removedIds": [
+        "mvea13m8-exoqb7aajl5:12"
+      ],
+      "minMatchingRows": 5,
+      "variantCount": 1,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 849,
+          "id": "mvea13m8-exoqb7aajl5:12",
+          "firstSeen": "2026-10-18T20:27:50.247Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Tactical Helicopter Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "Assault Vehicle Damage",
+              "value": 1
+            },
+            {
+              "name": "Attack Helicopter Damage",
+              "value": 1
+            },
+            {
+              "name": "Wall Sapper Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "Machine Gun Infantry Damage",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "sourceItem": 850,
+          "id": "mvea13m8-exoqb7aajl5:16",
+          "firstSeen": "2026-10-18T20:28:14.314Z",
+          "type": "Weapon",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Tactical Helicopter Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "Assault Vehicle Damage",
+              "value": 1
+            },
+            {
+              "name": "Attack Helicopter Damage",
+              "value": 1
+            },
+            {
+              "name": "Wall Sapper Hitpoints",
+              "value": 1
+            },
+            {
+              "name": "Machine Gun Infantry Damage",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "sourceItems": [
+        968,
+        969,
+        970
+      ],
+      "keptSourceItem": 969,
+      "keptId": "mvebwyv3-6l3sa4xp9lt:29",
+      "removedIds": [
+        "mvebwyv3-6l3sa4xp9lt:28",
+        "mvebwyv3-6l3sa4xp9lt:35"
+      ],
+      "minMatchingRows": 4,
+      "variantCount": 2,
+      "winningVersionOccurrences": 2,
+      "reason": "Most repeated version; last occurrence wins ties.",
+      "versions": [
+        {
+          "sourceItem": 968,
+          "id": "mvebwyv3-6l3sa4xp9lt:28",
+          "firstSeen": "2026-10-18T21:21:56.597Z",
+          "type": "Pottery",
+          "unlockedCount": 2,
+          "rows": [
+            {
+              "name": "Redoubt Damage",
+              "value": 6
+            },
+            {
+              "name": "Redoubt Damage",
+              "value": 6
+            },
+            {
+              "name": "Air Defense Damage",
+              "value": 11
+            },
+            {
+              "name": "Air Defense Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Catapult Hitpoints",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "sourceItem": 969,
+          "id": "mvebwyv3-6l3sa4xp9lt:29",
+          "firstSeen": "2026-10-18T21:22:00.609Z",
+          "type": "Pottery",
+          "unlockedCount": 2,
+          "rows": [
+            {
+              "name": "Redoubt Damage",
+              "value": 6
+            },
+            {
+              "name": "Redoubt Damage",
+              "value": 6
+            },
+            {
+              "name": "Air Defense Damage",
+              "value": 11
+            },
+            {
+              "name": "Air Defense Hitpoints",
+              "value": 11
+            },
+            {
+              "name": "Catapult Hitpoints",
+              "value": 1
+            }
+          ]
+        },
+        {
+          "sourceItem": 970,
+          "id": "mvebwyv3-6l3sa4xp9lt:35",
+          "firstSeen": "2026-10-18T21:23:31.077Z",
+          "type": "Pottery",
+          "unlockedCount": 1,
+          "rows": [
+            {
+              "name": "Redoubt Damage",
+              "value": 6
+            },
+            {
+              "name": "Redoubt Damage",
+              "value": 6
+            },
+            {
+              "name": "Air Defense Damage",
+              "value": 11
+            },
+            {
+              "name": "Anti-Tank Gun Damage",
+              "value": 1
+            },
+            {
+              "name": "Catapult Hitpoints",
+              "value": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -15,7 +15,7 @@ DN.saveProfilePerkOverrides(DN.activeProfileId(),{"Generals' Damage":{offensive:
 const global=DN.loadStoredGlobalPerkRatings();
 const defaults=JSON.parse(fs.readFileSync('ui/data/perk_rating_defaults.json','utf8'));
 assert.deepEqual(defaults,JSON.parse(fs.readFileSync('data/perk_rating_defaults.json','utf8')));
-for(const [name,value] of [["Generals' Damage",3],["Generals' Hitpoints",2],["Generals' Movement Speed",2]]) {
+for(const [name,value] of [["Generals' Damage",6],["Generals' Hitpoints",4],["Generals' Movement Speed",4]]) {
   assert.deepEqual(structuredClone(global[name]),{offensive:value,defensive:value});
   assert.deepEqual(defaults[name],{offensive:value,defensive:value});
 }
@@ -25,9 +25,9 @@ const row={perk_1_name:"Generals' Hitpoints",perk_1_base:20};
 function score(offensive,defensive,ratings) {
   return scorer.comparisonScore(row,{canonPerk:name=>name,ratingOf:(name,axis)=>ratings[name][axis],prefSortAxes:{offensive,defensive}}, {grade:'Legendary'}).basePreference;
 }
-assert.equal(score(true,false,global),40);
-assert.equal(score(false,true,global),40);
-assert.equal(score(true,true,global),40);
+assert.equal(score(true,false,global),80);
+assert.equal(score(false,true,global),80);
+assert.equal(score(true,true,global),80);
 assert.equal(score(true,true,{"Generals' Hitpoints":{offensive:3,defensive:3}}),60,'both axes count the perk once');
 assert.equal(score(true,true,{"Generals' Hitpoints":{offensive:2,defensive:5}}),100,'higher defense wins');
 assert.equal(score(true,true,{"Generals' Hitpoints":{offensive:5,defensive:2}}),100,'higher offense wins');

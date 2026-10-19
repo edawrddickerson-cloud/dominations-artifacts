@@ -1,0 +1,33 @@
+(async()=>{
+  const checks={},check=(name,value)=>{checks[name]=!!value;if(!value)throw Error(name);};
+  const wait=async predicate=>{for(let i=0;i<500;i++){if(predicate())return;await new Promise(resolve=>setTimeout(resolve,20));}throw Error('Timed out waiting for profile UI');};
+  const frame=document.createElement('iframe');frame.style.cssText='position:fixed;inset:0;width:100%;height:100%;border:0';frame.src='config.html?delete-test=1';document.body.append(frame);
+  const doc=()=>frame.contentDocument,win=()=>frame.contentWindow;
+  await wait(()=>doc()?.querySelector('#profiles-add'));
+  const original=win().DN.activeProfileId();
+  doc().querySelector('#profiles-add').click();
+  const extra=win().DN.ensureProfiles().profiles.find(profile=>profile.id!==original).id;
+  const row=id=>doc().querySelector('[data-profile-id="'+id+'"]');
+  const dialog=()=>doc().getElementById('profile-delete-dialog');
+  row(extra).querySelector('.profiles-name').value='Test <profile>';
+  row(extra).querySelector('.profiles-name').dispatchEvent(new (win().Event)('change',{bubbles:true}));
+  row(extra).querySelector('.profiles-remove').click();
+  check('Deletion waits for confirmation and names the profile safely',dialog().matches(':modal')&&doc().getElementById('profile-delete-name').textContent==='Test <profile>'&&win().DN.ensureProfiles().profiles.length===2);
+  check('Cancel has initial focus',doc().activeElement===dialog().querySelector('[value="cancel"]'));
+  const bounds=dialog().getBoundingClientRect();
+  check('The themed dialog fits and is centered',bounds.left>=0&&bounds.right<=win().innerWidth&&Math.abs(bounds.left+bounds.width/2-doc().documentElement.clientWidth/2)<2);
+  dialog().querySelector('[value="cancel"]').click();await wait(()=>!dialog().open);
+  check('Cancel preserves the profile',!!row(extra)&&win().DN.ensureProfiles().profiles.length===2);
+  row(extra).querySelector('.profiles-remove').click();dialog().dispatchEvent(new (win().Event)('cancel',{cancelable:true}));dialog().close();
+  await wait(()=>!dialog().open);await new Promise(resolve=>setTimeout(resolve,30));
+  check('Dismissing the dialog preserves the profile',win().DN.ensureProfiles().profiles.length===2);
+  row(extra).querySelector('.profiles-remove').click();dialog().querySelector('[value="delete"]').click();
+  await wait(()=>!row(extra));
+  check('Confirm deletes only the named profile',win().DN.ensureProfiles().profiles.length===1&&win().DN.activeProfileId()===original);
+  check('The final profile cannot be removed',row(original).querySelector('.profiles-remove').disabled);
+  doc().querySelector('#profiles-add').click();
+  const previous=doc();row(original).querySelector('.profiles-remove').click();dialog().querySelector('[value="delete"]').click();
+  await wait(()=>doc()!==previous&&doc()?.querySelector('#profiles-list .profiles-row'));
+  check('Deleting the active profile reloads into the remaining profile',win().DN.activeProfileId()!==original&&win().DN.ensureProfiles().profiles.length===1);
+  frame.remove();return {passed:true,checks};
+})()

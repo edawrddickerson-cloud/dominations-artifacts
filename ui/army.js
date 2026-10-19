@@ -2,7 +2,9 @@
   "use strict";
   const DN = window.DN;
   const el = Object.fromEntries(['preset-strip', 'preset-name', 'preset-add', 'preset-remove', 'army-save', 'army-discard', 'unit-grid', 'error', 'army-hint', 'strategy-status'].map(id => [id, document.getElementById(id)]));
+  el.error = document.getElementById('army-error') || el.error;
   let state, draftUnits = new Set(), unitImages = {}, dirty = false, leaveRequest;
+  let factoryDefaults, canonicalizePerk = name => name, creating = false, creationProfile;
   const active = () => state?.strategies.find(s => s.id === state.activeId);
   const units = () => DN.normalizeArmyUnits([...draftUnits]);
   function error(err) { el.error.hidden = !err; el.error.textContent = err ? `Could not save your loadout. ${err.message || err}` : ''; }
@@ -80,7 +82,7 @@
       const linked = DN.armyIncludes(fam);
       return `<label class="army-unit-check${linked.length ? ' is-linked' : ''}">${DN.thumbHtml(unitImages[fam] || '', fam, 'entity-thumb--army')}<input type="checkbox" data-unit="${DN.esc(fam)}"${draftUnits.has(fam) ? ' checked' : ''}/><span class="army-unit-label"><span>${DN.esc(fam)}</span>${linked.length ? `<span class="army-unit-link">includes ${DN.esc(linked.join(', '))}</span>` : ''}</span></label>`;
     }).join('')}</div></section>`).join('');
-    el['preset-add'].disabled = state.strategies.length >= DN.STRATEGY_MAX;
+    el['preset-add'].disabled = !factoryDefaults || state.strategies.length >= DN.STRATEGY_MAX;
     el['preset-remove'].disabled = !selected;
     setDirty();
   }
@@ -103,14 +105,46 @@
   el['army-discard'].addEventListener('click', async () => {
     if (await ask('Revert loadout changes?', 'Restore the last saved name and troop choices for this loadout?', [['cancel', 'Cancel'], ['discard', 'Revert changes', true]]) === 'discard') resetDraft();
   });
-  el['preset-add'].addEventListener('click', () => run(() => {
+  const createDialog = document.getElementById('loadout-create-dialog');
+  const createName = document.getElementById('loadout-create-name');
+  const createBaseline = document.getElementById('loadout-create-baseline');
+  const createError = document.getElementById('loadout-create-error');
+  function describeBaseline() {
+    document.getElementById('loadout-create-description').textContent = createBaseline.value === 'defaults' ? 'Start with no troops selected and standard army and group ratings.' :
+      createBaseline.value === 'profile' ? 'Start with no troops selected and a copy of this profile’s current shared perk ratings.' : 'Copy this strategy’s troop choices and effective ratings. Its saved artifact layout stays separate.';
+  }
+  createBaseline.addEventListener('change', describeBaseline);
+  el['preset-add'].addEventListener('click', async () => {
+    if (creating) return;
+    creating = true;
+    if (!await canLeave()) { creating = false; return; }
     const names = new Set(DN.loadStrategies().strategies.map(s => s.name));
     let number = 1;
     while (names.has(`Loadout ${number}`)) number++;
-    const created = DN.addStrategy(`Loadout ${number}`, {units: []});
-    if (!created) throw new Error('The loadout limit has been reached.');
-    DN.setActiveStrategy(typeof created === 'string' ? created : created.id);
-  }, {leave: true}));
+    creationProfile = DN.activeProfileId();
+    createName.value = `Loadout ${number}`;
+    createBaseline.innerHTML = '<option value="defaults">Defaults</option><option value="profile">Current profile</option>' + DN.loadStrategies().strategies.filter(s => !s.archived).map(s => `<option value="strategy:${DN.esc(s.id)}">Existing strategy: ${DN.esc(s.name)}</option>`).join('');
+    createBaseline.value = 'defaults';
+    createError.hidden = true;
+    describeBaseline();
+    createDialog.showModal();
+    createName.focus(); createName.select();
+  });
+  createDialog.addEventListener('close', () => { creating = false; });
+  document.getElementById('loadout-create-form').addEventListener('submit', ev => {
+    if (ev.submitter?.value !== 'create') return;
+    ev.preventDefault();
+    try {
+      if (DN.activeProfileId() !== creationProfile) throw new Error('The profile changed. Cancel and create the loadout again.');
+      const name = createName.value.trim();
+      if (!name) throw new Error('Give the loadout a name.');
+      const fromStrategy = createBaseline.value.startsWith('strategy:');
+      const created = DN.addStrategy(name, {units: [], baseline: fromStrategy ? 'strategy' : createBaseline.value, sourceId: fromStrategy ? createBaseline.value.slice(9) : null,
+        factoryDefaults, canonPerk: canonicalizePerk, activate: true});
+      if (!created) throw new Error('The loadout limit has been reached.');
+      error(''); resetDraft(); createDialog.close('create');
+    } catch (err) { createError.hidden = false; createError.textContent = err.message || String(err); }
+  });
   el['preset-remove'].addEventListener('click', async () => {
     const id = state.activeId;
     const answer = await ask('Delete loadout?', `Delete “${active().name}”, including its perk overrides and saved artifact layout?`, [['cancel', 'Cancel'], ['delete', 'Delete loadout', true]]);
@@ -138,7 +172,12 @@
   async function load() {
     resetDraft();
     try {
-      const response = await fetch('./data/army_unit_images.json');
+      const [defaultsResponse, mappingResponse, response] = await Promise.all([fetch('./data/perk_rating_defaults.json', {cache:'no-store'}), fetch('./data/perk_name_mapping.csv'), fetch('./data/army_unit_images.json')]);
+      if (!defaultsResponse.ok) throw new Error('Could not load perk defaults. Reload to retry.');
+      canonicalizePerk = DN.makeCanonPerk(mappingResponse.ok ? DN.parseMappingCsv(await mappingResponse.text()) : {});
+      factoryDefaults = Object.fromEntries(Object.entries(await defaultsResponse.json()).map(([name, value]) => [canonicalizePerk(name), value]));
+      if (!Object.keys(factoryDefaults).length) throw new Error('Perk defaults are empty. Reload to retry.');
+      DN.initializeStrategyBaselines(factoryDefaults, {canonPerk: canonicalizePerk});
       unitImages = response.ok ? DN.imageUrlMap(await response.json()) : {};
       for (const unit of DN.ARMY_UNITS) if (!unitImages[unit.name]) unitImages[unit.name] = unit.aliases.map(a => unitImages[a]).find(Boolean) || '';
       render();

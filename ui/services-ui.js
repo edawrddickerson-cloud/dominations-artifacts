@@ -7,7 +7,7 @@
   const nav=document.querySelector('.site-nav-section[data-nav-settings]') || document.querySelector('.site-nav');
   if(nav && !nav.querySelector('[data-account-link]')) {
     const link=document.createElement('a');link.href='config.html#account-privacy';link.dataset.accountLink='1';link.className='nav-link';
-    link.innerHTML='<span class="nav-text">Account & privacy</span>';nav.appendChild(link);
+    link.innerHTML='<span class="nav-text">Account & Privacy</span>';nav.appendChild(link);
   }
   const text={disabled:'Cloud accounts are not enabled in this version. Your data is saved in this browser.',
     'signed-out':'Use the planner locally, or sign in to save a cloud copy.',unlinked:'This browser is not linked to this account. Choose which data to use.',

@@ -165,7 +165,9 @@
       results.every(item=>reliable(item) && ['below','tie'].includes(item.status))?'tie':'check';
     const belowDisplayedBenchmarks=results.length>0 && results.every(item=>
       Number.isFinite(item.score) && Number.isFinite(item.threshold) && item.score<item.threshold);
-    return {status,results,belowDisplayedBenchmarks,improvements:improvements.length,vacancies:vacancies.length,ties:ties.length,below:below.length};
+    const meetingDisplayedBenchmarks=results.filter(item=>
+      Number.isFinite(item.score) && Number.isFinite(item.threshold) && item.score>=item.threshold).length;
+    return {status,results,belowDisplayedBenchmarks,meetingDisplayedBenchmarks,improvements:improvements.length,vacancies:vacancies.length,ties:ties.length,below:below.length};
   }
   function compare(result,{type,hall,owned,options,levels={},limit=null},benchmark=ownedBenchmark) {
     options=options?{...options,scoreMode:'combined'}:options;
@@ -260,6 +262,7 @@
     const summary=comparison?comparison.belowDisplayedBenchmarks?(comparison.status==='below'?'':'Estimated · ')+'Below top 2 in all '+strategies.length+' selected strategies':
       comparison.status==='better'?'Improves top 2 for '+comparison.improvements+' of '+strategies.length+' strategies':
       comparison.status==='vacancy'?'Open top-two slot for '+comparison.vacancies+' of '+strategies.length+' strategies':
+      comparison.meetingDisplayedBenchmarks?(comparison.status==='check'?'Estimated · ':'')+'Meets top 2 for '+comparison.meetingDisplayedBenchmarks+' of '+strategies.length+' strategies'+(comparison.status==='tie'?' · tie does not replace an owned item':''):
       comparison.status==='below'?'Below top 2 in all '+strategies.length+' selected strategies':
       comparison.status==='tie'?'Ties top 2 for '+comparison.ties+' strategies · no replacement':'Check strategy comparisons · incomplete or uncertain evidence':
       available?'Choose the artifact category to compare strategies':'Strategy benchmarks unavailable';
@@ -275,15 +278,22 @@
           (item?.threshold===null?'Open slot':metric(item?.threshold,item?.top?.[1]?.uncertain))+'</td><td>'+DN.esc(statusText(item))+'</td></tr>';
       }).join('')+'</tbody></table></div>';
     const benchmark=document.getElementById('scanner-benchmark');
+    // The active score and cutoff stay visible even when that strategy is not
+    // selected in the comparison table. Its numeric result still sets colour.
+    const activeComparison=available && confirmed && type.value?compareOwned(latest,{type:type.value,hall:hall.value,owned,options,limit:2}):null;
+    const activeMeetsBenchmark=Number.isFinite(activeComparison?.score) && Number.isFinite(activeComparison?.threshold) && activeComparison.score>=activeComparison.threshold;
     benchmark.classList.remove('is-top-two');benchmark.classList.remove('is-below-cutoff');
     if(!comparison || !confirmed){benchmark.classList.add('is-unknown');return;}
-    if(comparison.belowDisplayedBenchmarks) {
+    if(activeMeetsBenchmark || comparison.meetingDisplayedBenchmarks) {
+      benchmark.classList.remove('is-unknown');benchmark.classList.add('is-top-two');
+      if(latest?.provisional || activeComparison?.provisional || comparison.status==='check')benchmark.classList.add('is-provisional');
+    }else if(comparison.belowDisplayedBenchmarks) {
       benchmark.classList.remove('is-unknown');benchmark.classList.add('is-below-cutoff');
       if(comparison.status!=='below')benchmark.classList.add('is-provisional');
     }else if(['better','vacancy','below'].includes(comparison.status)) {
       benchmark.classList.remove('is-unknown');benchmark.classList.add(comparison.status==='below'?'is-below-cutoff':'is-top-two');
     }else benchmark.classList.add('is-unknown');
-    flag.textContent=summary;
+    flag.textContent=activeMeetsBenchmark && !comparison.meetingDisplayedBenchmarks?'Meets top 2 · '+options.strategyName+' · '+summary:summary;
     if(options.strategyName && detail.textContent)detail.textContent=options.strategyName+' · '+detail.textContent;
   }
   function render() {
@@ -292,6 +302,8 @@
     try {
     renderBenchmarks();
     const get=id=>document.getElementById('scanner-'+id),capture=identification();
+    const benchmarkLabel=get('benchmark-label');
+    if(benchmarkLabel)benchmarkLabel.textContent='Top 2 benchmark';
     const board=get('glance-board');
     const artwork=get('artwork'),image=latest?.artifact?.image;
     if(artwork){artwork.hidden=!image;if(image && artwork.getAttribute('src')!==image)artwork.src=image;if(!image)artwork.removeAttribute('src');}
@@ -354,7 +366,42 @@
       (comparison.score-comparison.threshold>0?'+':'')+(comparison.score-comparison.threshold)+' points · Rank '+comparison.rank;
     detail.textContent+=' · Upgraded '+comparison.baseScore+' → Potential '+comparison.score+(comparison.rerollGain>0?' (+ '+comparison.rerollGain+' from stat '+(comparison.rerollIndex+1)+')':'')+(comparison.provisional?' · Reroll availability needs review':'');
     if(keeper)detail.textContent+=' · 3 open stats · Keep for review';
-    } finally {renderStrategyResults();}
+    } finally {renderStrategyResults();renderPurposeResults();}
+  }
+  function renderPurposeResults() {
+    const service=window.DNCraftingPurposes,panel=document.getElementById('scanner-purpose-results');
+    if(!service || !panel)return;
+    const state=service.settings();
+    panel.hidden=!state.selected.length;
+    flag.hidden=!state.selected.length;
+    if(!state.selected.length){panel.innerHTML='';return;}
+    const result=confirmed && latest?{...latest,rows:captureResult?.rows || latest.rows}:null;
+    const available=!error && loadedProfile===DN.activeProfileId() && (!loading || loadedProfile===DN.activeProfileId());
+    const results=service.evaluate(result,{...state,type:type.value,hall:hall.value,owned,canonPerk:options?.canonPerk,available});
+    const hits=results.filter(item=>item.hit);
+    const message=item=>{
+      if(item.status==='waiting')return 'Waiting for a current read';
+      if(item.status==='category')return 'Identify the artifact type';
+      if(item.status==='unavailable')return 'Collection unavailable';
+      if(item.status==='irrelevant')return 'No contributing perks';
+      if(item.status==='owned')return item.score===item.threshold?'Ties your second best; keep existing':'You already own two stronger artifacts';
+      if(item.status==='review')return 'Owned stats need review before comparing';
+      return item.status==='vacancy'?'Meets your target; open place in top two':'Improves your top two';
+    };
+    panel.innerHTML='<strong>Selected targets</strong><ul>'+results.map(item=>'<li data-purpose-result="'+DN.esc(item.id)+'"'+(item.hit?' class="purpose-hit"':'')+'><strong>'+DN.esc(item.label)+
+      ' · '+(item.score===null?'—':(item.uncertain?'~':'')+item.score)+' weighted points</strong><small>'+DN.esc(message(item))+
+      (item.score!==null?' · '+item.lines+' useful '+(item.lines===1?'line':'lines'):'')+
+      (item.threshold!==null?' · Second owned '+item.threshold:'')+(item.uncertain && item.score!==null?' · Review read':'')+'</small></li>').join('')+'</ul>';
+    const benchmark=document.getElementById('scanner-benchmark');
+    document.getElementById('scanner-item-type').textContent='Target matches';
+    document.getElementById('scanner-item-total').textContent=String(hits.length);
+    document.getElementById('scanner-benchmark-label').textContent='Owned comparison';
+    document.getElementById('scanner-benchmark-value').textContent='Top two';
+    benchmark.classList.remove('is-top-two','is-below-cutoff','is-unknown','is-provisional');
+    const pending=results.some(item=>['waiting','category','unavailable','review'].includes(item.status));
+    benchmark.classList.add(hits.length?'is-top-two':pending?'is-unknown':'is-below-cutoff');
+    if(hits.some(item=>item.uncertain))benchmark.classList.add('is-provisional');
+    flag.textContent=hits.length?'Useful for '+hits.map(item=>item.label).join(', '):pending?'Check target comparisons':'No selected target improves your top two';
   }
   async function refresh() {
     const ticket=++request,profile=DN.activeProfileId();loading=true;error='';render();
@@ -400,6 +447,7 @@
   window.addEventListener('storage',refresh);
   window.addEventListener('dn-craft-kept',refresh);
   window.addEventListener('dn-artifacts-changed',refresh);
+  window.addEventListener('dn-crafting-purposes-changed',render);
   for(const event of ['focus','storage'])window.addEventListener(event,()=>{types();render();});
   types();refresh();
 })();

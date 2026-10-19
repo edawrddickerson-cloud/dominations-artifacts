@@ -32,12 +32,12 @@ assert.equal(comparison.compare(craft,{type:'Equipment',hall:'war',owned:[],opti
 const defaults=JSON.parse(fs.readFileSync('ui/data/perk_rating_defaults.json','utf8'));
 const factory={...options,ratingOf:(name,axis)=>defaults[name]?.[axis] ?? 0};
 const ceiling=(hall,grade,opts=factory)=>scoring.rerollPotential({hall,grade},opts);
-for(const [hall,grade,axis,expected] of [['main','Weapon','offensive',100],['main','Weapon','defensive',100],['main','Armor','defensive',60],['main','Jewelry','offensive',40],['main','Pottery','defensive',40],['war','Weapon','offensive',30],['war','Armor','offensive',15],['war','Equipment','offensive',75]]) {
+for(const [hall,grade,axis,expected] of [['main','Weapon','offensive',200],['main','Weapon','defensive',200],['main','Armor','defensive',120],['main','Jewelry','offensive',80],['main','Pottery','defensive',80],['war','Weapon','offensive',60],['war','Armor','offensive',30],['war','Equipment','offensive',150]]) {
   const actual=ceiling(hall,grade,{...factory,prefSortAxes:{offensive:axis==='offensive',defensive:axis==='defensive'}});
   assert.equal(actual.rerollTarget,expected,hall+' '+grade+' ceiling uses the highest legal factory-rated benefit');
   assert.ok(actual.rerollStat,'each ceiling names a legal replacement stat');
 }
-assert.equal(ceiling('war','Weapon',{...factory,ratingOf:(name,axis)=>/Healing$/.test(name)?0:factory.ratingOf(name,axis)}).rerollTarget,15,'army exclusion of healers lowers the War Weapon ceiling to a rating-one attack benefit');
+assert.equal(ceiling('war','Weapon',{...factory,ratingOf:(name,axis)=>/Healing$/.test(name)?0:factory.ratingOf(name,axis)}).rerollTarget,30,'army exclusion of healers lowers the War Weapon ceiling to a rating-two attack benefit');
 assert.equal(ceiling('main','Jewelry',{...factory,ratingOf:(name,axis)=>name==='All Resources Looted' && axis==='offensive'?4:factory.ratingOf(name,axis)}).rerollTarget,80,'a configured rating of four for a legal loot stat produces an 80-point target');
 for(const [grade,illegal] of [['Jewelry','Enemy Defender Spawn Time'],['Pottery','All Defensive Towers Damage'],['Armor','Invading Barracks Troop Damage']]) {
   const actual=ceiling('main',grade,{...options,ratingOf:name=>name===illegal?5:1});

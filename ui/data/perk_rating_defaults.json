@@ -1,58 +1,58 @@
 {
   "APC Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "APC Deploy Time": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "APC Deploys Marines On Death": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "APC Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Air Defense Attack Speed": {
     "offensive": 0,
-    "defensive": 2
+    "defensive": 4
   },
   "Air Defense Damage": {
     "offensive": 0,
-    "defensive": 2
+    "defensive": 4
   },
   "Air Defense Hitpoints": {
     "offensive": 0,
-    "defensive": 2
+    "defensive": 4
   },
   "Airstrip Troop Damage": {
-    "offensive": 5,
+    "offensive": 10,
     "defensive": 0
   },
   "Airstrip Troop Hitpoints": {
-    "offensive": 3,
+    "offensive": 6,
     "defensive": 0
   },
   "All Defensive Towers Damage": {
     "offensive": 0,
-    "defensive": 5
+    "defensive": 10
   },
   "All Defensive Towers Hitpoints": {
     "offensive": 0,
-    "defensive": 5
+    "defensive": 10
   },
   "All Defensive Towers Hitpoints & Damage": {
     "offensive": 0,
-    "defensive": 5
+    "defensive": 10
   },
   "All Enemy Defensive Towers Damage": {
-    "offensive": 5,
+    "offensive": 10,
     "defensive": 0
   },
   "All Enemy Defensive Towers Hitpoints": {
-    "offensive": 5,
+    "offensive": 10,
     "defensive": 0
   },
   "All Resources Looted": {
@@ -61,34 +61,34 @@
   },
   "Anti-Tank Gun Damage": {
     "offensive": 0,
-    "defensive": 2
+    "defensive": 4
   },
   "Armored Car Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Assault Vehicle Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Assault Vehicle Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Attack Helicopter Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Attack Helicopter Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Barracks Troop Damage": {
-    "offensive": 5,
+    "offensive": 10,
     "defensive": 0
   },
   "Barracks Troop Hitpoints": {
-    "offensive": 3,
+    "offensive": 6,
     "defensive": 0
   },
   "Barracks Troop Training Cost": {
@@ -96,135 +96,135 @@
     "defensive": 0
   },
   "Bazooka Attack Speed": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Bazooka Cooldown": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Bazooka Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Bazooka Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Bomber Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Bomber Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Castle spawns Sword Saints when Destroyed": {
     "offensive": 0,
-    "defensive": 3
+    "defensive": 6
   },
   "Catapult Damage": {
     "offensive": 0,
-    "defensive": 2
+    "defensive": 4
   },
   "Catapult Hitpoints": {
     "offensive": 0,
-    "defensive": 2
+    "defensive": 4
   },
   "Coalition Troop Damage": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Commando Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Commando Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Decoy Tactic Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Defender Damage": {
     "offensive": 0,
-    "defensive": 3
+    "defensive": 6
   },
   "Defender Hitpoints": {
     "offensive": 0,
-    "defensive": 3
+    "defensive": 6
   },
   "Defender Movement Speed": {
     "offensive": 0,
-    "defensive": 3
+    "defensive": 6
   },
   "Defender Spawn Time": {
     "offensive": 0,
-    "defensive": 5
+    "defensive": 10
   },
   "Enemy Air Defense Damage": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Enemy Anti-Tank Gun Damage": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Enemy Anti-Tank Gun Hitpoints": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Enemy Catapult Damage": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Enemy Catapult Hitpoints": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Enemy Defender Hitpoints": {
-    "offensive": 3,
+    "offensive": 6,
     "defensive": 0
   },
   "Enemy Defender Spawn Time": {
-    "offensive": 5,
+    "offensive": 10,
     "defensive": 0
   },
   "Enemy Missile Silo Damage": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Enemy Recon Plane Scan Duration": {
-    "offensive": 2,
-    "defensive": 1
+    "offensive": 4,
+    "defensive": 2
   },
   "Enemy Redoubt Damage": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Enemy Sabotage Duration": {
-    "offensive": 2,
-    "defensive": 1
+    "offensive": 4,
+    "defensive": 2
   },
   "Enemy Sniper Tower Damage": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Enemy Tower Damage": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Enemy Tower Hitpoints": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Factory Troop Damage": {
-    "offensive": 5,
+    "offensive": 10,
     "defensive": 0
   },
   "Factory Troop Hitpoints": {
-    "offensive": 3,
+    "offensive": 6,
     "defensive": 0
   },
   "Factory Troop Training Cost": {
@@ -232,19 +232,19 @@
     "defensive": 0
   },
   "Fighter Damage": {
-    "offensive": 1,
-    "defensive": 0
-  },
-  "Fighter Hitpoints": {
-    "offensive": 1,
-    "defensive": 0
-  },
-  "Fighter Hitpoints & Damage": {
     "offensive": 2,
     "defensive": 0
   },
+  "Fighter Hitpoints": {
+    "offensive": 2,
+    "defensive": 0
+  },
+  "Fighter Hitpoints & Damage": {
+    "offensive": 4,
+    "defensive": 0
+  },
   "First Aid Duration": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Food Looted": {
@@ -260,24 +260,24 @@
     "defensive": 0
   },
   "Generals' Attack Speed": {
-    "offensive": 5,
-    "defensive": 5
+    "offensive": 10,
+    "defensive": 10
   },
   "Generals' Damage": {
-    "offensive": 3,
-    "defensive": 3
+    "offensive": 6,
+    "defensive": 6
   },
   "Generals' Hitpoints": {
-    "offensive": 2,
-    "defensive": 2
+    "offensive": 4,
+    "defensive": 4
   },
   "Generals' Hitpoints & Damage": {
-    "offensive": 5,
-    "defensive": 5
+    "offensive": 10,
+    "defensive": 10
   },
   "Generals' Movement Speed": {
-    "offensive": 2,
-    "defensive": 2
+    "offensive": 4,
+    "defensive": 4
   },
   "Gold Looted": {
     "offensive": 0,
@@ -292,140 +292,140 @@
     "defensive": 0
   },
   "Guerrilla Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Guerrilla Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Guerrilla Movement Speed": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Heavy Cavalry Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Heavy Cavalry Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Heavy Infantry Attack Speed": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Heavy Infantry Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Heavy Infantry Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Heavy Infantry Movement Speed": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Heavy Tank Attack Speed": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Heavy Tank Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Heavy Tank Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Increase Rally Duration": {
-    "offensive": 3,
+    "offensive": 6,
     "defensive": 0
   },
   "Invading Airstrip Troop Damage": {
     "offensive": 0,
-    "defensive": 4
+    "defensive": 8
   },
   "Invading Airstrip Unit Hitpoints": {
     "offensive": 0,
-    "defensive": 4
+    "defensive": 8
   },
   "Invading Barracks Troop Damage": {
     "offensive": 0,
-    "defensive": 4
+    "defensive": 8
   },
   "Invading Barracks Troop Hitpoints": {
     "offensive": 0,
-    "defensive": 4
+    "defensive": 8
   },
   "Invading Bazooka Damage": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Bomber Damage": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Bomber Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Factory Troop Damage": {
     "offensive": 0,
-    "defensive": 4
+    "defensive": 8
   },
   "Invading Factory Troop Hitpoints": {
     "offensive": 0,
-    "defensive": 4
+    "defensive": 8
   },
   "Invading Fighter Damage": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Fighter Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Generals' Damage": {
     "offensive": 0,
-    "defensive": 2
+    "defensive": 4
   },
   "Invading Generals' Hitpoints": {
     "offensive": 0,
-    "defensive": 2
+    "defensive": 4
   },
   "Invading Guerrilla Damage": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Guerrilla Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Heavy Cavalry Damage": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Heavy Tank Damage": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Heavy Tank Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Machine Gun Infantry Damage": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Mortar Troop Damage": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Paratrooper Damage": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Paratrooper Hitpoints": {
     "offensive": 0,
@@ -433,19 +433,19 @@
   },
   "Invading Recon Scan Duration": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Sabotage Duration": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Transport Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Library Research Time": {
-    "offensive": 3,
-    "defensive": 3
+    "offensive": 6,
+    "defensive": 6
   },
   "Library Tech Food Cost": {
     "offensive": 0,
@@ -468,39 +468,39 @@
     "defensive": 0
   },
   "MRL Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Machine Gun Infantry Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Machine Gun Infantry Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Mercenary Camp Deploys Spartans when Destroyed": {
     "offensive": 0,
-    "defensive": 3
+    "defensive": 6
   },
   "Missile Silo Damage": {
     "offensive": 0,
-    "defensive": 2
+    "defensive": 4
   },
   "Missile Silo and Big Red Button Damage": {
-    "offensive": 1,
-    "defensive": 2
+    "offensive": 2,
+    "defensive": 4
   },
   "Mortar Troop Attack Speed": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Mortar Troop Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Mortar Troop Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "National Trade Good Loot Chance": {
@@ -516,100 +516,100 @@
     "defensive": 0
   },
   "Paratrooper Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Paratrooper Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Quick Victory Time": {
-    "offensive": 3,
+    "offensive": 6,
     "defensive": 0
   },
   "Raider Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Raider Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Raiders Spawn from Forest When Attacking": {
     "offensive": 0,
-    "defensive": 3
+    "defensive": 6
   },
   "Rally Cooldown": {
-    "offensive": 3,
+    "offensive": 6,
     "defensive": 0
   },
   "Ranged Infantry Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Ranged Infantry Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Ranged Siege Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Ranged Siege Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Recon Bonus Duration": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Recon Scan Duration": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Redoubt Damage": {
     "offensive": 0,
-    "defensive": 2
+    "defensive": 4
   },
   "Sniper Tower Damage": {
     "offensive": 0,
-    "defensive": 2
+    "defensive": 4
   },
   "Sniper Tower Hitpoints": {
     "offensive": 0,
-    "defensive": 2
+    "defensive": 4
   },
   "Supply Vehicle": {
-    "offensive": 1,
-    "defensive": 0
-  },
-  "Supply Vehicle Healing": {
     "offensive": 2,
     "defensive": 0
   },
+  "Supply Vehicle Healing": {
+    "offensive": 4,
+    "defensive": 0
+  },
   "Tactical Helicopter Healing": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Tower Damage": {
     "offensive": 0,
-    "defensive": 2
+    "defensive": 4
   },
   "Tower Hitpoints": {
     "offensive": 0,
-    "defensive": 2
+    "defensive": 4
   },
   "Transport Cooldown": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Transport Movement Speed": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "University Research Time": {
-    "offensive": 3,
-    "defensive": 3
+    "offensive": 6,
+    "defensive": 6
   },
   "Vault Capacity": {
     "offensive": 0,
@@ -620,60 +620,60 @@
     "defensive": 0
   },
   "Wall Miner Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Wall Sapper Damage": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Wall Sapper Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Wall Miner Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Armored Car Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "MRL Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Enemy Sniper Tower Hitpoints": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Enemy Missile Silo Hitpoints": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Supply Vehicle Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "Enemy Air Defense Hitpoints": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Invading Raider Damage": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Tactical Helicopter Healing": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Ranged Infantry Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Heavy Infantry Damage": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Food from Fruit Trees": {
     "offensive": 0,
@@ -681,86 +681,86 @@
   },
   "Invading Heavy Cavalry Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Attack Helicopter Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Armored Car Damage": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Heavy Infantry Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Supply Vehicle Healing": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Supply Vehicle Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading MRL Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Bazooka Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Anti-Tank Gun Hitpoints": {
     "offensive": 0,
-    "defensive": 2
+    "defensive": 4
   },
   "Missile Silo Hitpoints": {
     "offensive": 0,
-    "defensive": 2
+    "defensive": 4
   },
   "Invading Machine Gun Infantry Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading APC Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading MRL Damage": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Assault Vehicle Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Ranged Infantry Damage": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Ranged Siege Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Tactical Helicopter Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Assault Vehicle Damage": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Armored Car Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Enemy Redoubt Hitpoints": {
-    "offensive": 2,
+    "offensive": 4,
     "defensive": 0
   },
   "Tactical Helicopter Hitpoints": {
-    "offensive": 1,
+    "offensive": 2,
     "defensive": 0
   },
   "All Resources from Hunting": {
@@ -769,26 +769,26 @@
   },
   "Redoubt Hitpoints": {
     "offensive": 0,
-    "defensive": 2
+    "defensive": 4
   },
   "Invading Raider Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Mortar Troop Hitpoints": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading APC Damage": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Attack Helicopter Damage": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   },
   "Invading Ranged Siege Damage": {
     "offensive": 0,
-    "defensive": 1
+    "defensive": 2
   }
 }

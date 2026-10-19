@@ -1150,7 +1150,7 @@
       const filtered=owned.filter(row=>(listSlotTypes===null || listSlotTypes.includes(DN.text(row.grade))) && matchesStrategyFilter(row));
       if (!collected.size) {
         el.list.innerHTML =
-          `<p class="collection-empty">No owned artifacts yet. Add verified inventory from <a href="storage-scanner.html">Storage Scanner</a>, or mark artifacts on the <a href="artifacts.html">Artifacts Priority</a> page.</p>`;
+          `<p class="collection-empty">No owned artifacts yet. Add verified inventory from <a href="storage-scanner.html">Storage Scanner</a>, or mark artifacts on the <a href="artifacts.html">Artifact rankings</a> page.</p>`;
       } else if (!owned.length) {
         el.list.innerHTML = `<p class="collection-empty">Nothing owned in ${DN.esc(ui.hall)} hall.</p>`;
       } else {

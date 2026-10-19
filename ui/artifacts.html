@@ -2,54 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <script src="navigation.js?v=5"></script>
+  <script src="navigation.js?v=6"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Artifacts · Priority</title>
-  <link rel="stylesheet" href="styles.css?v=39" />
+  <title>Artifacts · Artifact rankings</title>
+  <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
   <link rel="stylesheet" href="strategy-collection.css?v=20261017-strategies" />
 </head>
 <body class="page-priority">
   <nav class="site-nav" aria-label="Pages">
     <div class="site-nav-section">
-      <h2 class="site-nav-label">Army Loadout</h2>
-      <a href="army.html">Army</a>
-    </div>
-    <div class="site-nav-section">
       <h2 class="site-nav-label">Artifacts</h2>
-      <a href="artifacts.html" aria-current="page">Priority</a>
-      <a href="collection.html">Collection</a>
-      <a href="totals.html">Active totals</a>
+      <a href="artifacts.html" aria-current="page">Artifact Rankings</a>
+      <a href="collection.html">Crafted Collection</a>
+      <a href="totals.html">Active Totals</a>
       <a href="scanner.html?v=2">Crafting Scanner</a>
       <a href="storage-scanner.html?v=2">Storage Scanner</a>
     </div>
     <div class="site-nav-section">
       <h2 class="site-nav-label">Council</h2>
-      <a href="council.html">Priority</a>
+      <a href="council.html">Council Rankings</a>
       <a href="council-collection.html">Collection</a>
     </div>
   </nav>
   <div class="app-main">
-  <header class="top">
-    <div class="top-inner">
-      <h1>DomiNations Artifacts</h1>
+  <header class="top app-header">
+    <div class="top-inner"><h1>DomiNations Artifacts</h1></div>
+    <div class="header-controls" aria-label="Primary filters">
+      <fieldset class="seg-field"><legend>Hall</legend><div class="seg" role="group" aria-label="Hall"><button type="button" class="seg-btn" id="hall-main" data-hall="Main" aria-pressed="false">Main</button><button type="button" class="seg-btn" id="hall-war" data-hall="War" aria-pressed="false">War</button></div></fieldset>
+      <fieldset class="seg-field" id="pref-sort-axes"><legend>Base Type</legend><div class="seg seg-mini" role="group" aria-label="Base Type"><button type="button" class="seg-btn" id="sort-off" aria-pressed="false">Off</button><button type="button" class="seg-btn" id="sort-def" aria-pressed="false">Def</button></div></fieldset>
+      <div id="header-profile" class="header-profile"></div>
     </div>
-    <div class="top-aside">
-    </div>
-    <div class="header-controls" aria-label="Primary filters">      <fieldset class="seg-field">
-        <legend>Hall</legend>
-        <div class="seg" role="group" aria-label="Hall">
-          <button type="button" class="seg-btn" data-hall="Main" id="hall-main" aria-pressed="false">Main</button>
-          <button type="button" class="seg-btn is-active" data-hall="War" id="hall-war" aria-pressed="true">War</button>
-        </div>
-      </fieldset>
-      <fieldset class="seg-field pref-sort-axes" id="pref-sort-axes" title="Off/Def = perk rating × strongest available stat magnitude">
-        <legend>Base Type</legend>
-        <div class="seg seg-mini" role="group" aria-label="Base Type">
-          <button type="button" class="seg-btn is-active" id="sort-off" aria-pressed="true">Off</button>
-          <button type="button" class="seg-btn is-active" id="sort-def" aria-pressed="true">Def</button>
-        </div>
-      </fieldset>
-<div id="header-profile" class="header-profile"></div></div>
   </header>
 
   <section class="filters" aria-label="Filters">
@@ -146,12 +128,12 @@
 
   </div>
   <script src="data/army_catalog.js?v=8"></script>
-  <script src="shared.js?v=20261018-services"></script>
-  <script src="profiles-ui.js?v=20261017-strategies"></script>
+  <script src="shared.js?v=20261019-rating-scale"></script>
+  <script src="profiles-ui.js?v=20261020-title-case-nav"></script>
   <script src="artifact-scoring.js?v=20261017-strategies-reroll"></script>
   <script src="stored-artifacts.js?v=20261018-services"></script>
-  <script src="app.js?v=20261018-linked-artifacts"></script>
+  <script src="app.js?v=20261019-rating-scale"></script>
 
-  <script src="services.js?v=2"></script>
+  <script src="services.js?v=20261020-title-case-nav"></script>
 </body>
 </html>

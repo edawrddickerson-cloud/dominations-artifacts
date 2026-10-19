@@ -97,7 +97,7 @@
   editor.requestSubmit();
   await wait(()=>row(jewelry.id)?.querySelector('.collection-table-name').textContent==='Corrected jewelry');
   check('editing name and type preserves the artifact ID',row(jewelry.id).querySelector('.collection-table-type').textContent==='Jewelry');
-  check('correcting Armor to Jewelry immediately restores rated scores',Number.parseFloat(cells(jewelry.id)[0].textContent)===160);
+  check('correcting Armor to Jewelry immediately restores rated scores',Number.parseFloat(cells(jewelry.id)[0].textContent)===320);
   const stored=(await win.DNStoredArtifacts.read(win.DNStoredArtifacts.collectionKey())).find(item=>item.id===jewelry.id);
   check('name and type edits persist with all five stats',stored.name==='Corrected jewelry' && stored.type==='Jewelry' && stored.rows.length===5 && stored.rows[0].value===-11);
   const reloaded=await makeFrame('collection.html');

@@ -435,16 +435,16 @@ button.ratings-sort-btn[aria-sort="descending"]::after {
   opacity: 0.85;
 }
 
-/* Perk ratings page: tall spin buttons that fill the input height (Chromium/WebKit). */
-.page-ratings .rating-input {
+/* Use the Perk Ratings hover stepper consistently across editable numbers. */
+input[type="number"] {
   height: 2.4rem;
   box-sizing: border-box;
   padding: 0 0.2rem 0 0.35rem;
   line-height: 2.4rem;
 }
 
-.page-ratings .rating-input::-webkit-inner-spin-button,
-.page-ratings .rating-input::-webkit-outer-spin-button {
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
   opacity: 0;
   margin: 0;
   height: 2.4rem;
@@ -453,10 +453,10 @@ button.ratings-sort-btn[aria-sort="descending"]::after {
   transition: opacity 0.12s ease;
 }
 
-.page-ratings .rating-input:hover::-webkit-inner-spin-button,
-.page-ratings .rating-input:hover::-webkit-outer-spin-button,
-.page-ratings .rating-input:focus::-webkit-inner-spin-button,
-.page-ratings .rating-input:focus::-webkit-outer-spin-button {
+input[type="number"]:hover::-webkit-inner-spin-button,
+input[type="number"]:hover::-webkit-outer-spin-button,
+input[type="number"]:focus::-webkit-inner-spin-button,
+input[type="number"]:focus::-webkit-outer-spin-button {
   opacity: 1;
 }
 
@@ -1098,6 +1098,15 @@ th.th-plain {
 .uncollect-dialog {
   width: min(30rem, calc(100vw - 1.5rem));
 }
+
+.profile-delete-dialog { position:fixed; inset:0; margin:auto; box-sizing:border-box; width:min(28rem,calc(100vw - 2rem)); max-height:calc(100dvh - 2rem); padding:1.5rem; border:1px solid var(--line); border-top:2px solid var(--accent); border-radius:8px; background:linear-gradient(150deg,#2c3036,var(--panel)); color:var(--text); box-shadow:0 1.5rem 5rem #0009; }
+.profile-delete-dialog::backdrop { background:#0009; backdrop-filter:blur(3px); }
+.profile-delete-dialog h2 { margin:0 0 .75rem; color:var(--accent); font-size:1.2rem; }
+.profile-delete-dialog p { margin:0; color:var(--muted); line-height:1.6; overflow-wrap:anywhere; }
+.profile-delete-dialog strong { color:var(--text); }
+.profile-delete-actions { display:flex; justify-content:flex-end; flex-wrap:wrap; gap:.65rem; margin-top:1.5rem; }
+.profile-delete-confirm { background:var(--accent); border-color:var(--accent); color:var(--bg); font-weight:650; }
+.profile-delete-confirm:hover { background:#d4b46c; border-color:#d4b46c; color:var(--bg); }
 
 .ratings-form {
   display: flex;
@@ -1750,10 +1759,6 @@ body.page-council-collection .app-main {
   min-height: 0;
   height: 100vh;
   overflow: hidden;
-}
-
-.page-collection .top {
-  align-items: flex-start;
 }
 
 .collection-controls {
@@ -2655,7 +2660,7 @@ body.page-collection .app-main { height:auto; min-height:100vh; overflow:visible
 .page-collection #museum-detail .card-head { margin-bottom:.45rem; }
 .page-collection #museum-detail .card-perks { gap:.15rem; }
 .page-collection #museum-detail .card-perks li { padding:.12rem .15rem; gap:.4rem; font-size:.82rem; min-height:1.6rem; }
-.page-collection #museum-detail .collection-perk-value { width:3.3rem; padding:.1rem .2rem; }
+.page-collection #museum-detail .collection-perk-value { width:4.5rem; padding:.1rem .2rem; }
 .page-collection #museum-detail .lvl-btn { padding:.1rem .25rem; min-height:0; }
 .page-collection #museum-detail .artifact-delete { margin-top:.4rem; padding:.2rem .5rem; font-size:.75rem; }
 .collection-perk-star { color:#b4bac2; font-size:1.25rem; line-height:1; flex:0 0 1.15rem; text-align:center; }
