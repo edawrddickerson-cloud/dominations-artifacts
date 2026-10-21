@@ -97,7 +97,9 @@
   await read('Six-row fixture',Array.from({length:6},()=>({...rows[0],name:'Catapult Damage',value:13,level:3,unlocked:true})), 'Mythical');
   await wait(async()=>(await store.read('items')).some(item=>item.name==='Six-row fixture'));
   check('six-row special artifact saves without ordinary tier',(await store.read('items')).find(item=>item.name==='Six-row fixture').rows.every(row=>row.tier===null));
-  const restored=document.createElement('iframe');restored.hidden=true;restored.src='storage-scanner.html';document.body.append(restored);
+  // Distinguish the reopened document from its ancestor URL so Chromium's
+  // recursive-frame protection does not leave this test frame at about:blank.
+  const restored=document.createElement('iframe');restored.hidden=true;restored.src='storage-scanner.html?passive-reopen=inventory';document.body.append(restored);
   await wait(()=>restored.contentDocument?.getElementById('storage-items')?.firstElementChild);
   check('newest-first display survives reopening the page',restored.contentDocument.querySelector('#storage-items li > div > strong').textContent==='Six-row fixture');
   restored.remove();

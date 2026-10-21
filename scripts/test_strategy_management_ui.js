@@ -1,12 +1,13 @@
-/* Local Chrome integration for strategy editing, migration and rating controls. */
+/* Current target-management UI and native number controls. The retired Army
+ * editor's model remains covered by test_strategies.js. */
 const fs=require('node:fs'),path=require('node:path');
 const project=path.resolve(__dirname,'..');
 let runner=fs.readFileSync(path.join(project,'scripts/run_scanner_ocr_fixture.js'),'utf8');
 runner=runner.replace("const root = path.resolve(__dirname, '..');",'const root = '+JSON.stringify(project)+';');
 runner=runner.replace("await client.send('Network.enable');", "await client.send('Network.enable'); await client.send('Network.setBlockedURLs',{urls:['https://*']});");
-runner=runner.replace("(storage?'storage-scanner.html':'scanner.html')", "'army.html'");
 const fixture=file=>fs.readFileSync(path.join(project,file),'utf8').trim().replace(/;$/,'');
-const expression='(async()=>{const strategies=await '+fixture('tests/strategies-management-browser.js')+';const numbers=await '+fixture('tests/number-inputs-browser.js')+';return {passed:strategies.passed && numbers.passed,checks:[...strategies.checks,...numbers.checks]};})()';
+const scenario='(async()=>{const targets=await '+fixture('tests/scanner/purposes-browser.js')+';const numbers=await '+fixture('tests/number-inputs-browser.js')+';return {passed:targets.passed && numbers.passed,checks:[...Object.entries(targets.checks).map(([name,passed])=>({name,passed})),...numbers.checks]};})()';
+const expression='(document.getElementById("scanner-view")?.contentWindow || window).eval('+JSON.stringify(scenario)+')';
 runner=runner.replace("const evaluation=client.send('Runtime.evaluate'",'expression = '+JSON.stringify(expression)+";\n    const evaluation=client.send('Runtime.evaluate'");
 // Exercise the browser's actual number steppers and keyboard defaults through CDP.
 runner=runner.replace("if(process.argv.includes('--regions-ui')) {",'if(true) {');

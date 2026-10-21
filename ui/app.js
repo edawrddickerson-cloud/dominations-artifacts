@@ -1,7 +1,7 @@
 /*
  * Authority: Existing artifact priority behavior; approved scanner Phase 3 reuse.
  * Ownership: Catalogue UI and effective rating state; artifact-scoring.js owns arithmetic.
- * Invariants: Preserve canonical names, global/group/profile precedence, army fallback,
+ * Invariants: Preserve canonical names, global/group/profile precedence,
  * enabled axes and Hall/Showcase selection. Scanner integration must not change scores.
  * History: Private arithmetic extracted unchanged for scanner/manual-input reuse.
  */
@@ -94,13 +94,47 @@
    * @type {Record<string, { offensive?: number, defensive?: number }>}
    */
   let ratings = {};
-  let strategyContexts=new Map();
-  function strategyContext(strategyId=window.DN.activeStrategyId()) {
-    if(!strategyContexts.has(strategyId))strategyContexts.set(strategyId,window.DN.createStrategyRatingContext(defaultRatings,{strategyId,canonPerk}));
-    return strategyContexts.get(strategyId);
+  const TARGETS_KEY = 'dn-artifact-ranking-targets';
+  let rankingTargets = [], selectedTargets = [], targetPicker;
+  let selectedTargetStats = new Set();
+  function targetScore(row, target) {
+    if (window.DNCraftingPurposes.sourceIssues(target).length) return null;
+    return window.DNArtifactScoring.score(row, {canonPerk, scoreMode, prefSortAxes,
+      ratingOf: (name, axis) => target.stats.has(name) && window.DNCraftingPurposes.axisFor(name) === axis ? window.DNCraftingPurposes.ratingOf(name) : 0
+    }).preference;
   }
-  function strategyScore(row,strategyId) {
-    return window.DNArtifactScoring.score(row,{canonPerk,ratingOf:strategyContext(strategyId).ratingOf,scoreMode,prefSortAxes}).preference;
+
+  function mountTargetPicker() {
+    const parent = document.createElement('div');
+    parent.className = 'page-strategy-controls';
+    parent.setAttribute('aria-label', 'Collection target controls');
+    targetPicker = document.createElement('details');
+    targetPicker.className = 'strategy-comparison-picker';
+    targetPicker.innerHTML = '<summary>Collection targets</summary><div class="strategy-comparison-options"></div>';
+    parent.append(targetPicker);
+    document.querySelector('.app-header').after(parent);
+    targetPicker.addEventListener('change', event => {
+      if (!event.target.matches('[data-ranking-target]')) return;
+      const ids = [...targetPicker.querySelectorAll('[data-ranking-target]:checked')].map(input => input.value);
+      try { window.DN.lsSet(TARGETS_KEY, JSON.stringify(ids)); render(); }
+      catch (error) { el.error.hidden = false; el.error.textContent = error.message; render(); }
+    });
+  }
+
+  function refreshTargetPicker() {
+    rankingTargets = window.DNCraftingPurposes.definitions;
+    let ids;
+    try { ids = JSON.parse(window.DN.lsGet(TARGETS_KEY) || '[]'); } catch { ids = []; }
+    if (!Array.isArray(ids)) ids = [];
+    selectedTargets = rankingTargets.filter(target => ids.includes(target.id));
+    selectedTargetStats = new Set(selectedTargets.flatMap(target => [...target.stats]));
+    targetPicker.querySelector('summary').textContent = `Collection targets (${selectedTargets.length})`;
+    targetPicker.querySelector('.strategy-comparison-options').innerHTML = rankingTargets.length
+      ? rankingTargets.map(target => `<label><input type="checkbox" data-ranking-target value="${esc(target.id)}"${ids.includes(target.id) ? ' checked' : ''}/> ${esc(target.label)}</label>`).join('')
+      : '<a href="ratings.html#crafting-purposes">Create target</a>';
+    if (sortState.key.startsWith('target:') && !selectedTargets.some(target => 'target:' + target.id === sortState.key)) {
+      sortState = {key: resolvePrefSortKey('preference'), dir: -1};
+    }
   }
 
   /** Which axes feed preference sort (at least one should be on). */
@@ -208,32 +242,6 @@
       migrateRatings(layers.global),
       migrateRatings(layers.profile)
     );
-  }
-
-  /** @type {Set<string> | null} null = army never configured; no unit gating */
-  let armyLastApplied = null;
-
-  function refreshArmyLastApplied() {
-    try {
-      if (!window.DN || !window.DN.lsHas(window.DN.ARMY_PRESETS_KEY)) {
-        armyLastApplied = null;
-        return;
-      }
-      armyLastApplied = window.DN.armyEffectiveAppliedSet();
-    } catch {
-      armyLastApplied = null;
-    }
-  }
-
-  /** @param {"offensive" | "defensive"} axis */
-  function defaultRating(name, axis) {
-    if (armyLastApplied && window.DN && window.DN.isUnitPerk(name)) {
-      const fam = window.DN.unitFamily(name);
-      if (fam && !armyLastApplied.has(fam)) return 0;
-    }
-    const entry = defaultRatings[name];
-    if (!entry) return 0;
-    return entry[axis] || 0;
   }
 
   function hasFactoryDefaults() {
@@ -452,7 +460,12 @@
   /** Effective rating: user override if set (incl. 0), else factory default. */
   /** @param {"offensive" | "defensive"} axis */
   function ratingOf(name, axis) {
-    return strategyContext().ratingOf(name,axis);
+    if (selectedTargets.length) {
+      return selectedTargetStats.has(name) && window.DNCraftingPurposes.axisFor(name) === axis
+        ? window.DNCraftingPurposes.ratingOf(name) : 0;
+    }
+    return window.DN.perkRatingAxisOrNull(ratings, name, axis) ??
+      window.DN.perkRatingAxisOrNull(defaultRatings, name, axis) ?? 0;
   }
 
   function hasAnyRatings() {
@@ -793,7 +806,7 @@
   }
 
   function sortValue(row, key) {
-    if(key.startsWith('strategy:'))return strategyScore(row,key.slice(9));
+    if (key.startsWith('target:')) return targetScore(row, selectedTargets.find(target => target.id === key.slice(7)));
     switch (key) {
       case "preference":
         return preferenceScore(row);
@@ -958,16 +971,14 @@
   }
 
   function render() {
-    strategyContexts=new Map();
-    const strategies=window.DN.comparisonStrategies();
+    refreshTargetPicker();
+    renderPerkFilterList();
     el.table.querySelectorAll('th.priority-strategy-heading').forEach(header=>header.remove());
-    for(const strategy of strategies){
-      const header=document.createElement('th');header.scope='col';header.className='priority-strategy-heading';header.dataset.sort='strategy:'+strategy.id;
-      const button=document.createElement('button');button.type='button';button.className='th-sort';button.textContent=strategy.name;header.append(button);
+    for(const target of selectedTargets){
+      const header=document.createElement('th');header.scope='col';header.className='priority-strategy-heading';header.dataset.sort='target:'+target.id;
+      const button=document.createElement('button');button.type='button';button.className='th-sort';button.textContent=target.label;header.append(button);
       el.table.querySelector('thead tr').append(header);
     }
-    const context=document.getElementById('priority-strategy-context');
-    context.textContent='Active strategy: '+window.DN.activeStrategy().name+' · Comparison scores use '+(scoreMode==='maxrow'?'Showcase best line':'Hall sum')+' with the selected Off / Def axes. Each strategy has its own ratings; scores are not added together.';
     document.querySelectorAll("th[data-score-axis]").forEach((header) => {
       header.hidden = !prefSortAxes[header.dataset.scoreAxis];
     });
@@ -980,7 +991,7 @@
 
     if (!filtered.length) {
       el.tbody.innerHTML =
-        `<tr class="empty-row"><td colspan="${8 + strategies.length + 2 * (Number(prefSortAxes.offensive) + Number(prefSortAxes.defensive))}">No artifacts match these filters.</td></tr>`;
+        `<tr class="empty-row"><td colspan="${8 + selectedTargets.length + 2 * (Number(prefSortAxes.offensive) + Number(prefSortAxes.defensive))}">No artifacts match these filters.</td></tr>`;
       return;
     }
 
@@ -1030,7 +1041,10 @@
           (prefSortAxes.defensive ? `<td class="pref-cell pref-total-cell">${axisTotalBlock(scores, "defensive")}</td>` : "") +
           `<td class="cost-cell">${costBlock(row)}</td>` +
           `<td class="pref-cell pref-per-cost-cell">${prefPerCostBlock(row)}</td>` +
-          strategies.map(strategy=>`<td class="priority-strategy-score">${Math.round(strategyScore(row,strategy.id)*100)/100}<small>${esc(strategy.name)}</small></td>`).join('')+
+          selectedTargets.map(target => {
+            const score = targetScore(row, target);
+            return `<td class="priority-strategy-score">${score === null ? '—' : Math.round(score * 100) / 100}</td>`;
+          }).join('')+
           `</tr>`
         );
       })
@@ -1057,7 +1071,7 @@
       sortState.dir = /** @type {1 | -1} */ (sortState.dir === 1 ? -1 : 1);
     } else {
       // Preference axes and Pref/cost default to highest-first; other columns asc.
-      const highFirst = isPrefSortKey(resolved) || resolved.startsWith('strategy:') || resolved === "pref_per_cost" || resolved === "collected";
+      const highFirst = isPrefSortKey(resolved) || resolved.startsWith('target:') || resolved === "pref_per_cost" || resolved === "collected";
       sortState = { key: resolved, dir: highFirst ? -1 : 1 };
     }
     render();
@@ -1302,7 +1316,7 @@
         throw new Error("perk_rating_defaults.json contained no usable defaults");
       }
       defaultRatings = defaults;
-      refreshArmyLastApplied();
+      window.DNCraftingPurposes.setDefaults(defaultRatings, canonPerk);
 
       // Effective bag: profile overrides over global (factory fills gaps in ratingOf).
       ratings = loadEffectiveRatings();
@@ -1335,8 +1349,9 @@
     }
   }
 
+  mountTargetPicker();
   bind();
-  const refreshStrategies=async()=>{
+  const refreshRankings=async()=>{
     if(!rows.length)return;
     const sequence=++inventoryRefresh,key=window.DNStoredArtifacts.collectionKey();
     try {
@@ -1344,12 +1359,13 @@
       if(sequence!==inventoryRefresh || key!==window.DNStoredArtifacts.collectionKey())return;
       rows=window.DNStoredArtifacts.catalogRows(catalogRows,scans);
     } catch {return;}
-    strategyContexts=new Map();collected=loadCollected();ratings=loadEffectiveRatings();
+    collected=loadCollected();ratings=loadEffectiveRatings();
     renderPerkFilterList();render();
   };
-  window.addEventListener('focus',refreshStrategies);
-  window.addEventListener('storage',refreshStrategies);
-  window.addEventListener('dn-strategies-changed',refreshStrategies);
-  window.addEventListener('dn-artifacts-changed',refreshStrategies);
+  window.addEventListener('focus',refreshRankings);
+  window.addEventListener('storage',refreshRankings);
+  window.addEventListener('dn-strategies-changed',refreshRankings);
+  window.addEventListener('dn-artifacts-changed',refreshRankings);
+  window.addEventListener('dn-crafting-purposes-changed',refreshRankings);
   load();
 })();

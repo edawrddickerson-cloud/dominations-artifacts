@@ -61,8 +61,12 @@
   await wait(()=>totals.contentDocument?.querySelectorAll('.active-total').length>0);
   check('totals label the strategy and show physical bonuses',totals.contentDocument.getElementById('totals-sub').textContent.includes('Positive') && totals.contentDocument.querySelector('.active-total strong').textContent==='+30%');
   const priority=await makeFrame('artifacts.html');
+  await wait(()=>priority.contentWindow.DNCraftingPurposes && priority.contentDocument.querySelector('#tbody tr[data-artifact-id]'));
+  const ranking=priority.contentWindow;
+  const rankingTargets=['First ranking target','Second ranking target'].map(label=>ranking.DNCraftingPurposes.saveCustom({label,category:'attacking',selections:[],perks:['Heavy Tank Damage']}));
+  ranking.DN.lsSet('dn-artifact-ranking-targets',JSON.stringify(rankingTargets));ranking.dispatchEvent(new ranking.Event('dn-crafting-purposes-changed'));
   await wait(()=>priority.contentDocument?.querySelectorAll('.priority-strategy-heading').length===2 && priority.contentDocument.querySelector('#tbody tr[data-artifact-id]'));
-  check('priority provides strategy comparison columns',priority.contentDocument.querySelectorAll('#tbody tr:first-child .priority-strategy-score').length===2 && priority.contentDocument.getElementById('priority-strategy-context').textContent.includes('Positive'));
+  check('rankings provides selected target comparison columns',priority.contentDocument.querySelectorAll('#tbody tr:first-child .priority-strategy-score').length===2 && !priority.contentDocument.getElementById('priority-strategy-context'));
   win.DN.saveStrategyOverrides(first,{'Catapult Damage':{offensive:2,defensive:2}});
   await wait(()=>Number.parseFloat(cells('High')[0].textContent)===150);
   check('live rating changes refresh collection strategy scores',Number.parseFloat(cells('High')[1].textContent)===-75);

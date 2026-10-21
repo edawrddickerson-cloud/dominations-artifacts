@@ -92,6 +92,7 @@
     STRATEGIES_KEY,
     STRATEGY_MIGRATION_BACKUP_KEY,
     "dn-crafting-purposes",
+    "dn-artifact-ranking-targets",
     PERK_RATINGS_KEY,
     "dn-artifact-pref-sort-axes",
     "dn-artifact-hide-collected",

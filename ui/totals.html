@@ -5,7 +5,7 @@
   <script src="navigation.js?v=6"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts · Active totals</title>
-  <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
+  <link rel="stylesheet" href="styles.css?v=20261021-totals-fixed-alignment" />
 </head>
 <body class="page-totals">
   <nav class="site-nav" aria-label="Pages">
@@ -38,9 +38,9 @@
           <h2>Active totals</h2>
           <p id="totals-sub" aria-live="polite">Loading your collection…</p>
         </div>
+        <fieldset class="seg-field"><legend>Sources</legend><div class="seg" role="group" aria-label="Source visibility"><button type="button" class="seg-btn is-active" id="totals-sources-all" aria-pressed="true" aria-controls="totals-list">Show all</button><button type="button" class="seg-btn" id="totals-sources-none" aria-pressed="false" aria-controls="totals-list">None</button></div></fieldset>
         <label class="filter-control">Search stats<input type="search" id="totals-search" placeholder="Find a bonus…" autocomplete="off" /></label>
       </div>
-      <p class="active-totals-note">Actual current bonuses for the active strategy, from Hall, exhibits, Hermitage, and its selected Showcase perks. Locked scanned stats are excluded. Ratings do not weight these totals. Expand a stat to see its artifacts.</p>
       <p id="error" class="error" hidden></p>
       <div id="totals-list" class="active-totals-grid" aria-live="polite"></div>
     </main>
@@ -49,8 +49,8 @@
   <script src="shared.js?v=20261019-rating-scale"></script>
   <script src="profiles-ui.js?v=20261020-title-case-nav"></script>
   <script src="stored-artifacts.js?v=20261018-services"></script>
-  <script src="totals.js?v=20261018-linked-artifacts"></script>
+  <script src="totals.js?v=20261021-totals-sources-toggle"></script>
 
-  <script src="services.js?v=20261020-title-case-nav"></script>
+  <script src="services.js?v=20261022-public-accounts"></script>
 </body>
 </html>

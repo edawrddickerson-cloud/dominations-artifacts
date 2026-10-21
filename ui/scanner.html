@@ -13,8 +13,8 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts - Crafting Scanner</title>
   <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
-  <link rel="stylesheet" href="scanner.css?v=20261018-log-names" />
-  <link rel="stylesheet" href="crafting-purposes.css?v=17" />
+  <link rel="stylesheet" href="scanner.css?v=20261021-compact-log" />
+  <link rel="stylesheet" href="crafting-purposes.css?v=20261021-focus-tubes" />
 </head>
 <body class="page-scanner">
   <nav class="site-nav" aria-label="Pages">
@@ -143,31 +143,29 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
       <p id="scanner-result-status" hidden>Loading perk settings…</p>
       <div class="scanner-analysis-grid">
         <div id="scanner-result"></div>
-        <div class="scanner-artwork"><img id="scanner-artwork" alt="Captured artifact" hidden /></div>
-        <section id="scanner-benchmark" class="scanner-summary-card scanner-benchmark" aria-label="Item total versus top two benchmark">
+        <div class="scanner-decision-stack">
+        <section id="scanner-benchmark" class="scanner-summary-card scanner-benchmark" aria-label="Crafting focus areas and keep indicator">
+          <div class="scanner-focus-areas">
+            <div id="scanner-purpose-results" class="scanner-purpose-results" role="status"></div>
+            <p id="scanner-comparison" hidden></p>
+            <p id="scanner-comparison-detail" hidden></p>
+            <p id="scanner-keeper-reason" role="status" hidden></p>
+            <p id="scanner-score-assumption" hidden></p>
+          </div>
           <div class="scanner-item-score">
+            <strong id="scanner-decision-state" class="scanner-decision-state">Discard</strong>
             <span id="scanner-item-type" class="scanner-summary-label">Item total</span>
             <strong id="scanner-item-total" class="scanner-summary-number" role="status" aria-live="polite">—</strong>
             <div class="scanner-benchmark-cutoff"><span id="scanner-benchmark-label">Top 2 benchmark</span><strong id="scanner-benchmark-value">—</strong></div>
           </div>
-          <p id="scanner-comparison" hidden></p>
-          <p id="scanner-comparison-detail" hidden></p>
-          <p id="scanner-keeper-reason" role="status" hidden></p>
-          <p id="scanner-score-assumption" hidden></p>
-          <div id="scanner-purpose-results" class="scanner-purpose-results" role="status" hidden></div>
-        </section>
-        <section class="scanner-benchmark-categories" aria-labelledby="scanner-benchmarks-label">
-          <span id="scanner-benchmarks-label" class="scanner-summary-label">Benchmarks</span>
-          <dl id="scanner-benchmarks" class="scanner-benchmarks" aria-labelledby="scanner-benchmarks-label"></dl>
         </section>
         <div class="scanner-keep">
-          <button type="button" id="scanner-keep" class="btn" disabled>Keep</button>
-          <p id="scanner-keep-status" class="scanner-warning" role="status" hidden></p>
+          <button type="button" id="scanner-keep" class="btn" disabled>Add to Collection</button>
         </div>
+        </div>
+        <div class="scanner-artwork"><img id="scanner-artwork" alt="Captured artifact" hidden /></div>
       </div>
-      <section id="scanner-strategy-results" class="scanner-strategy-results" aria-label="Comparison for each selected strategy" hidden></section>
       <p class="ratings-hint"><a href="ratings.html#crafting-purposes">Choose collection targets</a>.</p>
-      <details><summary>How the comparison works</summary><p>Each selected strategy scores all five stats at maximum percentages and compares against its two best owned items of the same category and hall, including Unused. The large score and category benchmarks use the active strategy. Main Weapons follow Off/Def; Jewelry uses Off, Armor and Pottery use Def, and War items use Off. Potential includes one eligible reroll. An open slot is distinct from an improvement; a tie does not replace an owned item. Incomplete stats or uncertain rerolls require review. The top-two collection target is separate from museum capacity, including four War Equipment slots. Keeping saves one shared artifact.</p></details>
       <details id="scanner-corrections"><summary>Correct Recognition</summary>
         <label id="scanner-category-choice" hidden>Category <select id="scanner-compare-type"><option value="">Choose item type</option></select></label>
         <label>Hall <select id="scanner-correct-hall"><option value="">Choose hall</option><option value="main">Main</option><option value="war">War</option></select></label>
@@ -206,19 +204,19 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
   <script src="profiles-ui.js?v=20261020-title-case-nav"></script>
   <script src="artifact-scoring.js?v=20261017-strategies-reroll"></script>
   <script src="stored-artifacts.js?v=20261018-services"></script>
-  <script src="crafting-purposes.js?v=20261020-collection-targets"></script>
-  <script src="scanner-comparison.js?v=20261020-collection-targets"></script>
-  <script src="scanner-keep.js?v=20261018-quiet-keep"></script>
+  <script src="crafting-purposes.js?v=20261021-enemy-defender-stats"></script>
+  <script src="scanner-comparison.js?v=20261021-focus-tubes"></script>
+  <script src="scanner-keep.js?v=20261021-no-status-line"></script>
   <script src="vendor/tesseract/tesseract.min.js"></script>
   <script src="scanner-reroll-recognition.js?v=1"></script>
   <script src="scanner-name-catalog.js?v=1"></script>
-  <script src="scanner-recognition.js?v=38"></script>
-  <script src="scanner-field-recognition.js?v=9"></script>
+  <script src="scanner-recognition.js?v=20261021-artifact-title"></script>
+  <script src="scanner-field-recognition.js?v=20261021-title-witness"></script>
   <script src="scanner-calibration.js?v=4"></script>
-  <script src="scanner-collection.js?v=20261018-log-names"></script>
-  <script src="scanner-reading.js?v=20261019-inherited-purpose-ratings"></script>
+  <script src="scanner-collection.js?v=20261021-compact-log"></script>
+  <script src="scanner-reading.js?v=20261021-artifact-title"></script>
   <script src="scanner-profile.js?v=1"></script>
   <script src="scanner.js?v=20261018-services"></script>
-  <script src="services.js?v=20261020-title-case-nav"></script>
+  <script src="services.js?v=20261022-public-accounts"></script>
 </body>
 </html>

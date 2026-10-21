@@ -52,10 +52,15 @@
   check('sign-in does not upload existing browser data',!backend.workspaces[owner]);
   const item={id:'cloud-browser-craft',name:'Private artifact name',type:'Weapon',hall:'main',image:'data:image/png;base64,YQ==',reviewed:true,rows:Array.from({length:5},()=>({name:'Aircraft Damage',value:6,known:true,hasPercent:true,level:1,tier:'green',rerollEligible:true,raw:'Private OCR text'}))};
   await app.DNStoredArtifacts.keepCraft(item);
-  app.localStorage.setItem('dn_perk_group_defaults_v1','{"Aircraft:damage":{"offensive":4}}');
+  app.DN.savePerkGroupDefaults({'Aircraft:damage':{offensive:4}});
+  const targetSettings={version:6,selected:['backend-test-target'],activeId:'backend-test-target',customPurposes:[{id:'backend-test-target',label:'Backend target',category:'attacking',selections:['attack-heavy-infantry'],addOns:{}}]};
+  app.DN.lsSet('dn-crafting-purposes',JSON.stringify(targetSettings));
+  app.DN.lsSet('dn-artifact-ranking-targets',JSON.stringify(targetSettings.selected));
   doc.querySelector('[data-use-local]').click();
   await wait(()=>!!backend.workspaces[owner],'initial cloud upload');
-  check('global group defaults survive cloud migration',backend.workspaces[owner].data.settings.dn_perk_group_defaults_v1.includes('offensive'));
+  check('global group defaults survive cloud migration',JSON.parse(backend.workspaces[owner].data.settings.dn_perk_group_defaults_v1).overrides['Aircraft:damage'].offensive===4);
+  const targetKey='dn-p:'+app.DN.activeProfileId()+':dn-crafting-purposes';
+  check('collection targets and selections are included in the cloud workspace',backend.workspaces[owner].data.settings[targetKey]===JSON.stringify(targetSettings) && backend.workspaces[owner].data.settings['dn-p:'+app.DN.activeProfileId()+':dn-artifact-ranking-targets']===JSON.stringify(targetSettings.selected));
   const saved=backend.workspaces[owner].data.records.find(record=>record.id==='collection:main').items.find(row=>row.id===item.id);
   check('cloud preserves all ordered perk rows and reroll metadata',saved.rows.length===5 && saved.rows.every(row=>row.rerollEligible===true));
   check('screenshots and raw OCR do not enter cloud payloads',!JSON.stringify(saved).includes('data:image') && !JSON.stringify(saved).includes('Private OCR'));
@@ -130,7 +135,7 @@
   app.DNConsent.set({});
 
   await app.DNStoredArtifacts.update(item.id,{name:'Local conflict version'});
-  backend.workspaces[owner].revision++;backend.workspaces[owner].data.settings.dn_perk_group_defaults_v1='{"Aircraft:damage":{"offensive":2}}';
+  backend.workspaces[owner].revision++;backend.workspaces[owner].data.settings.dn_perk_group_defaults_v1=JSON.stringify({v:3,overrides:{'Aircraft:damage':{offensive:2}}});
   await app.DNCloud.sync();
   check('concurrent edits produce a visible conflict',app.DNCloud.state().status==='conflict' && !doc.querySelector('[data-cloud-choice]').hidden);
   check('conflict never silently replaces local data',(await app.DNStoredArtifacts.read('collection:main')).find(row=>row.id===item.id).name==='Local conflict version');

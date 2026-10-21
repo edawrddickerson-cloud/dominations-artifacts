@@ -560,7 +560,7 @@
       })());
       return initializing.get(kind);
     }
-    async function recognize(source, {expectedRows=5, layout="panel",hall='main',inferColours=false,categorySource=null,fields=null,colourHall=null,knownTiers=[],isCurrent=()=>true,fieldReuse=null}={},fallbackEncounter=null) {
+    async function recognize(source, {expectedRows=5, layout="panel",hall='main',inferColours=false,categorySource=null,titleSource=null,fields=null,colourHall=null,knownTiers=[],isCurrent=()=>true,fieldReuse=null}={},fallbackEncounter=null) {
       const stopped=()=>closed || !isCurrent();
       const check=()=>{if(stopped())throw new Error('Recognition superseded or stopped');};
       if(stopped())fieldEvidence=null;
@@ -589,9 +589,19 @@
       let ocrCalls=0;
       const readView=async(...args)=>{check();ocrCalls++;const output=await activeWorker.recognize(...args);check();return output;};
       if(layout==='storage' || layout==='storage-rows' || layout==='storage-rows-dice')return window.DNStorageRecognition.recognize(source,{worker:activeWorker,names,canonPerk,expectedRows,layout,hall,knownTiers,fields,isClosed:stopped});
+      let artifactName=null;
+      if(titleSource?.width && titleSource?.height) {
+        try {
+          await activeWorker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});
+          const read=await readView(titleSource,{}, {text:true,blocks:true});
+          const name=String(read.data.text || '').replace(/\s+/g,' ').trim();
+          if(read.data.confidence>=60 && /[a-z]{3}/i.test(name) && name.length<=160)artifactName=name;
+        } finally {if(!closed)await activeWorker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});}
+      }
       if(fieldViews?.valid) {
         try {
           let calibrated=await window.DNScannerFieldRecognition.recognize(fieldViews,{worker:activeWorker,readView,names,canonPerk,hall,inferColours,categorySource,isClosed:stopped,ocrCalls:()=>ocrCalls,reuse});
+          if(artifactName)calibrated={...calibrated,artifact:{...calibrated.artifact,name:artifactName}};
           // Metadata uses its own pixels. Repeating every text row cannot repair
           // an unread category or star, and used to multiply complete read time.
           if(calibrated.valid) {
@@ -658,6 +668,7 @@
         } catch(error) {if(closed)throw error;}
         finally {if(!closed)await activeWorker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});}
       }
+      if(artifactName)artifact={...artifact,name:artifactName};
       let calibrated=null;
       if(layout==='panel') {
         const candidate=detectPanel(source);

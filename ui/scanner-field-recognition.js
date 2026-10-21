@@ -395,7 +395,7 @@
   // image the ordinary settled read would consume. Pixels stay in memory, scoped
   // to one job. The panel covers temporal stat/star crops and standard fallback;
   // category/hall/dice also freeze from their original non-temporal source.
-  function witness(source,fields,categorySource,context,byteLimit=8*1024*1024) {
+  function witness(source,fields,categorySource,context,byteLimit=8*1024*1024,titleSource=null) {
     if(!fields || !source?.width || source.width*source.height*4>byteLimit)return null;
     let frozen;
     try {
@@ -409,7 +409,7 @@
         images.push({id,width:canvas.width,height:canvas.height,pixels:canvas.getContext('2d',{willReadFrequently:true}).getImageData(0,0,canvas.width,canvas.height).data});
         return true;
       };
-      if(!add('panel',source) || !add('category-source',categorySource))return null;
+      if(!add('panel',source) || !add('category-source',categorySource) || !add('title-source',titleSource))return null;
       for(const [id,canvas] of Object.entries(frozen.crops))if(id==='category' || id==='hall' || id.endsWith('-dice'))if(!add(id,canvas))return null;
       return {key:JSON.stringify([context,frozen.reuseGeometry]),images};
     }catch{return null;}

@@ -68,7 +68,7 @@
     let current;
     try {
       current=captureInput();
-      const witness=window.DNScannerFieldRecognition.witness(current.snapshot,latestFields,current.categorySource,readContext());
+      const witness=window.DNScannerFieldRecognition.witness(current.snapshot,latestFields,current.categorySource,readContext(),undefined,current.titleSource);
       if(!window.DNScannerFieldRecognition.sameWitness(job.witness,witness)){discardSpeculation('changed pixels');return;}
       job.approvedTemporal=current.temporal;job.artwork=captureArtwork(current.metadataPanel);job.validationDone=true;job.approved=true;job.witness=null;
       job.timing?.('speculation-validated');job.resolveValidation(true);
@@ -331,7 +331,7 @@
         const best=rerollTotal?.rerollIndex===index && gain>0;
         const rerollTitle=best?'Best single reroll gain, included in the item total. '+rerollTotal.rerollStat+' at '+rerollTotal.rerollMagnitude+'%: '+rerollTotal.rerollTarget+' points before replacing this row.':'Gain is shown only for the lowest-scoring rerollable row';
         const colourClass=['neutral','green','blue'].includes(colour)?' is-'+colour:'';
-        return '<div class="scanner-perk'+colourClass+(state===true?' is-unlocked':'')+'"><span class="scanner-stat-title">'+starMarkup(state,index)+(index+1)+'. '+DN.esc(perk?.name || 'Waiting for stat')+'</span><span class="scanner-stat-value">'+
+        return '<div class="scanner-perk'+colourClass+(state===true?' is-unlocked':state===false?' is-locked':'')+'"><span class="scanner-stat-title">'+starMarkup(state,index)+(index+1)+'. '+DN.esc(perk?.name || 'Waiting for stat')+'</span><span class="scanner-stat-value">'+
           (perk?.value!=null?(perk.value>=0?'+':'')+perk.value+'%':'?%')+'</span><span class="scanner-stat-score"'+(scoreTitle?' title="'+DN.esc(scoreTitle)+'" tabindex="0"':'')+'>'+(rowScore!=null?(provisional || scored?.estimated?'~':'')+rowScore:'&mdash;')+'</span><span class="scanner-stat-reroll'+(best?' is-best-reroll':'')+'" title="'+DN.esc(rerollTitle)+'"><span class="scanner-reroll-gain">'+(best?'+'+gain:'')+'</span>'+rerollMarkup(rerollEligible,index)+'</span></div>';
       }).join('')+'</div>');
     if(storage || resultHtml!==renderedResultHtml){el.result.innerHTML=resultHtml;renderedResultHtml=resultHtml;}
@@ -457,7 +457,24 @@
         context.putImageData(pixels,0,0);
       }
     }
-    return {snapshot,temporal,categorySource,metadataPanel,release(){snapshot.width=snapshot.height=0;if(categorySource)categorySource.width=categorySource.height=0;}};
+    let titleSource=null;
+    if(categoryRect && metadataPanel && latestCategorySource) {
+      const source=latestCategorySource;
+      const left=Math.max(0,Math.floor(categoryRect.x-metadataPanel.width*source.width*.04));
+      const top=Math.max(0,Math.floor((metadataPanel.y-metadataPanel.height*.65)*source.height));
+      const right=Math.min(source.width,Math.ceil((metadataPanel.x+metadataPanel.width)*source.width));
+      const bottom=Math.max(top,categoryRect.y-2);
+      if(right>left && bottom>top) {
+        titleSource=document.createElement('canvas');const scale=Math.min(2,1800/(right-left));
+        titleSource.width=Math.round((right-left)*scale);titleSource.height=Math.round((bottom-top)*scale);
+        const context=titleSource.getContext('2d',{willReadFrequently:true});
+        context.drawImage(source,left,top,right-left,bottom-top,0,0,titleSource.width,titleSource.height);
+        const pixels=context.getImageData(0,0,titleSource.width,titleSource.height);
+        for(let i=0;i<pixels.data.length;i+=4){const [r,g,b]=pixels.data.subarray(i,i+3);const value=Math.min(r,g,b)>145 || g>90 && g>r*1.25 && g>b*1.05?0:255;pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=value;pixels.data[i+3]=255;}
+        context.putImageData(pixels,0,0);
+      }
+    }
+    return {snapshot,temporal,categorySource,titleSource,metadataPanel,release(){snapshot.width=snapshot.height=0;if(categorySource)categorySource.width=categorySource.height=0;if(titleSource)titleSource.width=titleSource.height=0;}};
   }
   function captureArtwork(metadataPanel) {
     // The crafting artwork sits immediately left of the gold benefits panel.
@@ -483,9 +500,9 @@
       try{window.DNTelemetry?.scannerStage(point);}catch{}
     };
     timing(speculative?'speculation-start':'read-start');
-    const input=captureInput(),{snapshot,categorySource,metadataPanel}=input;
+    const input=captureInput(),{snapshot,categorySource,titleSource,metadataPanel}=input;
     let temporal=input.temporal,rerollObservations=null;
-    const context=readContext(),witness=speculative?window.DNScannerFieldRecognition.witness(snapshot,latestFields,categorySource,context):null;
+    const context=readContext(),witness=speculative?window.DNScannerFieldRecognition.witness(snapshot,latestFields,categorySource,context,undefined,titleSource):null;
     if(speculative && !witness){input.release();return;}
     let artwork=speculative?null:captureArtwork(metadataPanel);
     if(storage && el.layout.value==='storage') {
@@ -518,7 +535,7 @@
     let serviceOutcome='cancelled',serviceCalls=0,serviceInferences=0;
     try {
       timing('ocr-start');
-      const parsed=await owner.recognize(snapshot,{expectedRows:Number(el.rows.value),layout:el.layout.value,hall:el.hall.value,inferColours:el.infer.checked,categorySource,fields:latestFields?{...latestFields,panelSource:snapshot}:null,knownTiers,
+      const parsed=await owner.recognize(snapshot,{expectedRows:Number(el.rows.value),layout:el.layout.value,hall:el.hall.value,inferColours:el.infer.checked,categorySource,titleSource,fields:latestFields?{...latestFields,panelSource:snapshot}:null,knownTiers,
         fieldReuse:!storage && !speculative?{epoch:JSON.stringify([session,itemId,fieldGeometry,request]),profile:readingProfile || DN.activeProfileId()}:null,
         isCurrent:()=>request===token && owner===engine && !!latestCanvas && !job.discarded && (!speculative || context===readContext())});
       timing('ocr-end');

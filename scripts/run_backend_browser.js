@@ -12,6 +12,8 @@ if(!/^\d{3,4}x\d{3,4}$/.test(viewport))throw Error('Invalid viewport');
 const [width,height]=viewport.split('x').map(Number);
 runner=runner.replace("await client.send('Page.enable');","await client.send('Page.enable');await client.send('Page.addScriptToEvaluateOnNewDocument',{source:"+JSON.stringify(fixture)+"});await client.send('Emulation.setDeviceMetricsOverride',"+JSON.stringify({width,height,deviceScaleFactor:1,mobile:false})+");");
 runner=runner.replace("const evaluation=client.send('Runtime.evaluate'",'expression = '+JSON.stringify(fs.readFileSync(path.join(project,'tests/backend-browser.js'),'utf8'))+";\n    const evaluation=client.send('Runtime.evaluate'");
+// Backend reports have their own filenames; do not overwrite the OCR fixture.
+runner=runner.replace("if(process.argv.includes('--report') && !process.argv.includes('--crafting-audit')) fs.writeFileSync",'if(false) fs.writeFileSync');
 if(process.argv.includes('--screenshots'))runner=runner.replace('const result=await evaluation;',"const result=await evaluation;const shot=await client.send('Page.captureScreenshot',{format:'png'});fs.mkdirSync(path.join(root,'data/temp/backend-previews'),{recursive:true});fs.writeFileSync(path.join(root,'data/temp/backend-previews/account-"+viewport+".png'),Buffer.from(shot.data,'base64'));");
 if(process.argv.includes('--report'))runner=runner.replace('const summary={passed:value.passed',"fs.mkdirSync(path.join(root,'reports'),{recursive:true});fs.writeFileSync(path.join(root,'reports/backend-browser-"+viewport+".json'),JSON.stringify({passed:value.passed,ui:value.ui,limitations:value.limitations,network:{external:value.network.externalRequests.length,errors:value.network.browserErrors}},null,2));const summary={passed:value.passed");
 eval(runner);

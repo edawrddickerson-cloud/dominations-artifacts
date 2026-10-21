@@ -67,7 +67,8 @@
         // Dice observations can improve independently of the text read. Never
         // replace manual choices or attach them to a different encounter.
         if(!sameArtifact(prior,result))return false;
-        let changed=false;
+        const scannedName=result.artifact?.name;
+        let changed=!!scannedName && !prior.name && prior.nameSource!=='manual';
         const rows=prior.rows.map((row,index)=>{
           const next=result.rows[index];
           if(row.rerollSource==='manual' || !next || !Object.prototype.hasOwnProperty.call(next,'rerollEligible'))return row;
@@ -76,7 +77,7 @@
           return {...row,rerollEligible:next.rerollEligible,rerollSource:next.rerollSource,
             rerollConfidence:next.rerollConfidence,rerollEvidence:next.rerollEvidence,rerollConflict:next.rerollConflict};
         });
-        if(changed)setItem(id,clone({...prior,rows,lastUpdated:new Date().toISOString()}));
+        if(changed)setItem(id,clone({...prior,...(scannedName && !prior.name && prior.nameSource!=='manual'?{name:scannedName,nameSource:'scanned'}:{}),rows,lastUpdated:new Date().toISOString()}));
         return changed;
       }
       const timestamp=new Date().toISOString();
@@ -88,7 +89,7 @@
         keepId:prior?.keepId || 'craft-log-'+id,keptId:prior?.keptId || null,
         hallSource:result.hallSource || prior?.hallSource || null,
         name:prior?.nameSource==='manual'?prior.name:result.artifact?.name || prior?.name || null,
-        nameSource:prior?.nameSource || null,image:result.artifact?.image || prior?.image || null,
+        nameSource:prior?.nameSource || (result.artifact?.name?'scanned':null),image:result.artifact?.image || prior?.image || null,
         type:result.artifact?.type || prior?.type || null,freshCraft:result.freshCraft ?? prior?.freshCraft ?? rows.every(row=>row.rerollSource==='fresh-craft'),rows,unlocked:result.unlocked || prior?.unlocked || null};
       const next=clone(window.DNStoredArtifacts?.backfillItem(item) || item);
       if(prior) {
@@ -163,7 +164,7 @@
     } catch {storageMessage='Saved logs could not be loaded. Export this session to keep a copy.';}
   }
   const collector=createCollector({initialData}), count=document.getElementById('scanner-collection-count'), list=document.getElementById('scanner-collected-labels');
-  const keeping=new Set(),keepMessages=new Map(),itemNodes=new Map(),itemNumbers=new Map();
+  const keeping=new Set(),keepMessages=new Map(),itemNodes=new Map(),itemNumbers=new Map(),itemNameKeys=new Map(),nameGroups=new Map();
   let persistence=Promise.resolve(),storageRevision=0,preferenceRevision=0;
   function downloadJSON(data,prefix) {
     const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)+'\n'],{type:'application/json'}));
@@ -223,20 +224,33 @@
     if(log) {
       document.getElementById('scanner-item-count').textContent=data.itemCount+' items logged'+(data.itemCount>=5000?' · Limit reached; export and clear.':'');
       const escape=value=>String(value).replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-      if(data.reset){log.textContent='';itemNodes.clear();itemNumbers.clear();}
+      if(data.reset){log.textContent='';itemNodes.clear();itemNumbers.clear();itemNameKeys.clear();nameGroups.clear();}
       if(itemId && !data.items.some(item=>item.id===itemId)){const item=collector.getItem(itemId);if(item)data.items.push(item);}
+      const affected=new Set();
+      for(const item of data.items) {
+        const oldKey=itemNameKeys.get(item.id),key=item.name?JSON.stringify([item.profileKey,item.hall,item.type,String(item.name).trim().toLowerCase().replace(/\s+/g,' ')]):null;
+        if(oldKey===key)continue;
+        if(oldKey){const group=nameGroups.get(oldKey);group?.delete(item.id);for(const id of group || [])affected.add(id);if(!group?.size)nameGroups.delete(oldKey);}
+        itemNameKeys.set(item.id,key);
+        if(key){if(!nameGroups.has(key))nameGroups.set(key,new Set());const group=nameGroups.get(key);group.add(item.id);for(const id of group)affected.add(id);}
+      }
+      const changedIds=new Set(data.items.map(item=>item.id));
+      for(const id of affected)if(!changedIds.has(id)){const item=collector.getItem(id);if(item)data.items.push(item);}
       for(const item of data.items) {
         if(!itemNumbers.has(item.id))itemNumbers.set(item.id,itemNumbers.size+1);
         const reason=window.DNScannerKeep?.loggedReason(item) || '',busy=keeping.has(item.id);
         const categories=window.DN?.ARTIFACT_TYPE_EXHIBITS[item.hall==='war'?'War':'Main'] || [];
         const category=window.DNScannerKeep && !item.type?'<label>Category <select data-log-type="'+escape(item.id)+'"><option value="">Choose category</option>'+categories.map(ex=>{const type=ex.key.replace(/^war-/,'');return '<option value="'+escape(type)+'">'+escape(ex.label.replace(/ Exhibit$/,''))+'</option>';}).join('')+'</select></label>':'';
         const node=document.createElement('li');node.dataset.logItem=item.id;
-        node.innerHTML='<strong>Item '+itemNumbers.get(item.id)+'</strong>'+(item.name?' · '+escape(item.name):'')+' · '+escape(hallLabel(item.hall))+(item.type?' · '+escape(item.type):'')+' · '+(item.corrected?'Corrected':isComplete(item)?'Stats complete':item.validated?'Read complete':'Needs review')+
-        '<label class="scanner-log-name">Item name <input type="text" data-log-name="'+escape(item.id)+'" value="'+escape(item.name || '')+'" placeholder="Name this artifact"'+(busy || item.keptId?' disabled':'')+' /></label>'+
-        '<ol>'+Array.from({length:item.expectedRows || 5},(_,i)=>{const row=item.rows[i];return '<li>'+escape(row?.name || row?.raw || 'Unread stat')+' <strong>'+escape(Number.isFinite(row?.value)?(row.value>=0?'+':'')+row.value+'%':'?%')+'</strong>'+(row?.inferred?' (inferred)':row?.assumed?' (assumed)':'')+'</li>';}).join('')+'</ol>'+category+
+        const repeated=nameGroups.get(itemNameKeys.get(item.id))?.size || 0;
+        const date=new Date(item.firstSeen),timestamp=Number.isFinite(date.getTime())?date.toISOString().slice(0,19):'Unknown time';
+        node.innerHTML='<div class="scanner-log-heading"><details><summary><strong>'+escape(item.name || 'Unnamed artifact')+'</strong> <span class="scanner-log-meta">#'+itemNumbers.get(item.id)+' · <time datetime="'+escape(Number.isFinite(date.getTime())?date.toISOString():'')+'">'+timestamp+'</time> UTC · '+escape(item.hall==='main'?'Main':hallLabel(item.hall))+(item.type?' · '+escape(item.type):'')+' · '+(item.corrected?'Corrected':isComplete(item)?'Stats complete':item.validated?'Read complete':'Needs review')+(repeated>1?' · Same name ×'+repeated:'')+'</span></summary>'+
+        '<label class="scanner-log-name">Name <input type="text" data-log-name="'+escape(item.id)+'" value="'+escape(item.name || '')+'"'+(busy || item.keptId?' disabled':'')+' /></label>'+
+        '<ol>'+Array.from({length:item.expectedRows || 5},(_,i)=>{const row=item.rows[i];return '<li>'+escape(row?.name || row?.raw || 'Unread stat')+' <strong>'+escape(Number.isFinite(row?.value)?(row.value>=0?'+':'')+row.value+'%':'?%')+'</strong>'+(row?.inferred?' (inferred)':row?.assumed?' (assumed)':'')+'</li>';}).join('')+'</ol>'+category+'</details>'+
         (window.DNScannerKeep?'<button type="button" class="btn" data-keep-log="'+escape(item.id)+'"'+(busy || item.keptId || reason?' disabled':'')+' title="'+escape(item.keptId?'Added to Collection':reason || 'Add this logged craft to Collection and benchmarks')+'">'+(busy?'Saving…':item.keptId?'Kept':'Keep')+'</button>':'')+
-        (keepMessages.has(item.id)?'<p role="status">'+escape(keepMessages.get(item.id))+'</p>':'');
+        '</div>'+(keepMessages.has(item.id)?'<p role="status">'+escape(keepMessages.get(item.id))+'</p>':'');
         const previous=itemNodes.get(item.id);
+        if(previous?.querySelector('details')?.open)node.querySelector('details').open=true;
         if(previous)log.replaceChild(node,previous);else log.insertBefore(node,log.firstChild);
         itemNodes.set(item.id,node);
       }
@@ -271,6 +285,10 @@
   document.getElementById('scanner-item-log')?.addEventListener('change',event=>{
     const id=event.target.dataset.logType;if(!id || !event.target.value)return;
     afterChange(collector.updateItem(id,{type:event.target.value.replace(/^./,letter=>letter.toUpperCase())}));
+  });
+  document.getElementById('scanner-item-log')?.addEventListener('focusout',event=>{
+    // A name field losing focus to Keep must not replace the button before its click.
+    if(event.target.dataset.logName && !event.relatedTarget?.closest('[data-keep-log]'))render();
   });
   saveLogs?.addEventListener('change',async()=>{
     const revision=++preferenceRevision,wantsSaving=saveLogs.checked;

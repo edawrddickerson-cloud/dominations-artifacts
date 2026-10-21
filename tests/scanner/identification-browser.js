@@ -2,7 +2,7 @@
  * totals, field provenance, correction navigation and the manual-entry gate. */
 (async()=>{
   const get=id=>document.getElementById('scanner-'+id),checks={};
-  const check=(name,value)=>{checks[name]=!!value;if(!value)throw Error(name+' / '+get('capture-percent').textContent+' / '+get('capture-detail').textContent+' / '+get('keep-status').textContent);};
+  const check=(name,value)=>{checks[name]=!!value;if(!value)throw Error(name+' / '+get('capture-percent').textContent+' / '+get('capture-detail').textContent+' / '+get('keep').title);};
   async function wait(test){const end=performance.now()+10000;while(!test()){if(performance.now()>end)throw Error('Timed out');await new Promise(resolve=>setTimeout(resolve,20));}}
   await wait(()=>get('names').children.length);
   get('auto').checked=false;get('collect').checked=false;

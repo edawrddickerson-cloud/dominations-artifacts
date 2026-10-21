@@ -18,6 +18,7 @@
     "account controls show the Discord display name": true,
     "sign-in does not upload existing browser data": true,
     "global group defaults survive cloud migration": true,
+    "collection targets and selections are included in the cloud workspace": true,
     "cloud preserves all ordered perk rows and reroll metadata": true,
     "screenshots and raw OCR do not enter cloud payloads": true,
     "replacement commits an importable safety backup first": true,

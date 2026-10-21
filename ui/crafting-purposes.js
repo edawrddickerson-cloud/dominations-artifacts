@@ -10,7 +10,13 @@
   const slug = name => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-$/, '');
   const aircraft = new Set(['Fighter', 'Bomber', 'Transport', 'Recon', 'Attack Helicopter', 'Tactical Helicopter']);
   const airDefence = ['Air Defense Damage', 'Air Defense Hitpoints'];
-  const enemyAirDefence = ['Enemy Air Defense Damage', 'Enemy Air Defense Hitpoints'];
+  const enemyBuildings = DN.PERK_GROUPS.filter(group=>['enemy-buildings','enemy-all'].includes(group.id)).flatMap(group=>group.perks.map(perk=>perk.name));
+  const enemyDefenders = DN.PERK_GROUPS.find(group=>group.id==='enemy-defenders').perks.map(perk=>perk.name);
+  function enemyBuildingDebuffs(units) {
+    const air=units.some(unit=>aircraft.has(unit)),ground=units.some(unit=>!aircraft.has(unit));
+    return enemyBuildings.filter(name=>name.startsWith('All Enemy Defensive Towers ')||name.startsWith('Enemy Tower ')||
+      (name.startsWith('Enemy Air Defense ')?air:ground));
+  }
   const kinds = new Set(['damage', 'hp', 'combined', 'healing', 'speed', 'movement', 'cooldown']);
   const choices = [];
   const add = (id, label, group, stats) => {
@@ -27,8 +33,9 @@
     });
   }
   for (const unit of DN.ARMY_UNIT_FAMILIES) {
+    const attackingUnits=DN.expandArmyUnitsWithLinks([unit]);
     add('attack-' + slug(unit), unit + ' attack', 'Unit attack', [
-      ...unitStats(DN.expandArmyUnitsWithLinks([unit]), false), ...(aircraft.has(unit) ? enemyAirDefence : []),
+      ...unitStats(attackingUnits, false), ...enemyBuildingDebuffs(attackingUnits), ...enemyDefenders,
     ]);
     // Countering APC does not imply countering every linked infantry unit.
     add('counter-' + slug(unit), unit + ' counter', 'Unit counters', [
@@ -38,7 +45,9 @@
   for (const group of DN.PERK_GROUPS.filter(group => ['loot', 'production', 'research'].includes(group.id))) {
     add(group.id, group.label, 'Economy', group.perks.map(perk => perk.name));
   }
+  add('expansion', 'Expansion', 'Economy', ['Forest Expansion Cost Refund']);
 
+  add('attack-enemy-buildings','Include All Enemy Building & Defender Debuffs','Unit attack',[...enemyBuildings,...enemyDefenders]);
   const defensiveStats = new Set(DN.PERK_GROUPS.filter(group => ['buildings','all-towers','defenders'].includes(group.id)).flatMap(group => group.perks.map(perk => perk.name)));
   const economyStats = new Set(choices.filter(choice => choice.group === 'Economy').flatMap(choice => [...choice.stats]));
   const axisFor = name => /^Invading /.test(name) || defensiveStats.has(name) || name === 'Looted Resource Refund' ? 'defensive' : 'offensive';
@@ -48,38 +57,95 @@
   }
   choices.forEach(choice => {choice.category = choice.group === 'Unit attack' ? 'attacking' : choice.group === 'Unit counters' ? 'defensive' : 'economy';});
   const choiceById = new Map(choices.map(choice => [choice.id,choice]));
-  const defaults = [
+  // Retired saved defaults are recognised only for migration compatibility.
+  const retiredDefaults = [
     {id:'custom-general-attacking',label:'Offensive - General',category:'attacking'},
     {id:'custom-general-defensive',label:'Defensive - General',category:'defensive'},
     {id:'custom-general-economy',label:'Economy - General',category:'economy'},
   ];
-  const defaultById = new Map(defaults.map(purpose=>[purpose.id,purpose]));
+  const retiredById = new Map(retiredDefaults.map(purpose=>[purpose.id,purpose]));
+  const categories = ['attacking','defensive','economy'];
   const definitions = [], byId = new Map();
   let factoryDefaults = {}, ratingLayers = {global:{},profile:{}};
   const validWeight = value => Number.isInteger(value) && value >= 0 && value <= 10;
   const validPerks = list => [...new Set((Array.isArray(list) ? list : []).filter(name => typeof name === 'string' && Object.hasOwn(metadata,name)))];
-  function candidatePerks(entry) {
+  function rawPerks(entry) {
     return [...new Set([...(entry.selections || []).flatMap(id => [...(choiceById.get(id)?.stats || [])]),...validPerks(entry.perks)])].sort((a,b)=>a.localeCompare(b));
   }
-  function includedPerks(entry) {
+  function primaryCategory(entry) {
+    return retiredById.get(entry.id)?.category || (categories.includes(entry.category) ? entry.category :
+      choiceById.get(entry.selections?.[0])?.category || (validPerks(entry.perks)[0] ? categoryFor(validPerks(entry.perks)[0]) : 'attacking'));
+  }
+  function baseCandidatePerks(entry) {
+    return rawPerks(entry).filter(name=>categoryFor(name)===primaryCategory(entry));
+  }
+  function baseIncludedPerks(entry) {
     const excluded = new Set(entry.excludedPerks || []);
-    return candidatePerks(entry).filter(name => !excluded.has(name));
+    return baseCandidatePerks(entry).filter(name => !excluded.has(name));
+  }
+  function addonPerks(entry, entries=definitions) {
+    return Object.entries(entry.addOns || {}).flatMap(([category,addon])=>{
+      if(category===primaryCategory(entry)||!categories.includes(category))return [];
+      if(addon.source==='profile')return names.filter(name=>categoryFor(name)===category);
+      if(addon.source==='snapshot')return validPerks(addon.perks).filter(name=>categoryFor(name)===category);
+      const donor=entries.find(item=>item.id===addon.targetId&&primaryCategory(item)===category);
+      return donor ? baseIncludedPerks(donor) : [];
+    });
+  }
+  function sourceIssues(entry, entries=definitions) {
+    return Object.entries(entry.addOns || {}).filter(([category,addon])=>addon.source==='target'&&
+      !entries.some(item=>item.id===addon.targetId&&primaryCategory(item)===category)).map(([category])=>category);
+  }
+  function candidatePerks(entry, entries=definitions) {
+    return [...new Set([...baseCandidatePerks(entry),...addonPerks(entry,entries)])].sort((a,b)=>a.localeCompare(b));
+  }
+  function includedPerks(entry, entries=definitions) {
+    return [...new Set([...baseIncludedPerks(entry),...addonPerks(entry,entries)])].sort((a,b)=>a.localeCompare(b));
   }
   function normalizeEntry(entry) {
     if (!entry || !/^custom-[a-z0-9-]{1,80}$/.test(entry.id) || typeof entry.label !== 'string') return null;
     if(entry.id.startsWith('custom-migrated-selections')&&/^My (?:crafting purpose|collecting goal)(?: \d+)?$/.test(entry.label))entry={...entry,label:entry.label.replace(/^My (?:crafting purpose|collecting goal)/,'My collection target')};
-    const builtIn=defaultById.get(entry.id);
+    const builtIn=retiredById.get(entry.id);
     if(builtIn)entry={...entry,label:builtIn.label,selections:['general-'+builtIn.category],perks:[]};
     const label=entry.label.trim().slice(0,60);
-    const selections=[...new Set((Array.isArray(entry.selections)?entry.selections:[]).filter(id=>choiceById.has(id)))];
-    const result={id:entry.id,label,selections,perks:validPerks(entry.perks),excludedPerks:validPerks(entry.excludedPerks)};
+    const category=primaryCategory(entry);
+    const selections=[...new Set((Array.isArray(entry.selections)?entry.selections:[]).filter(id=>choiceById.get(id)?.category===category))];
+    const addOns={};
+    for(const other of categories.filter(value=>value!==category)) {
+      const addon=entry.addOns?.[other];
+      if(addon?.source==='profile')addOns[other]={source:'profile'};
+      else if(addon?.source==='target')addOns[other]={source:'target',targetId:String(addon.targetId||'')};
+      else if(addon?.source==='snapshot')addOns[other]={source:'snapshot',perks:validPerks(addon.perks).filter(name=>categoryFor(name)===other)};
+    }
+    const result={id:entry.id,label,category,selections,perks:validPerks(entry.perks).filter(name=>categoryFor(name)===category),excludedPerks:validPerks(entry.excludedPerks),addOns};
     if(builtIn){result.builtIn=true;result.category=builtIn.category;}
-    const candidates=new Set(candidatePerks(result));
+    const candidates=new Set(baseCandidatePerks(result));
     result.excludedPerks=result.excludedPerks.filter(name=>candidates.has(name));
-    return label && (builtIn || includedPerks(result).length) ? result : null;
+    return label && (builtIn || baseIncludedPerks(result).length) ? result : null;
+  }
+  // Preserve older mixed targets as explicit, category-local source targets.
+  function migrateEntries(values, reserved=[]) {
+    const all=[...values,...reserved];
+    const entries=[],ids=new Set(all.map(entry=>entry?.id)),labels=new Set(all.map(entry=>String(entry?.label||'').toLowerCase()));
+    for(const value of values) {
+      if(!value||typeof value.label!=='string'||typeof value.id!=='string'||retiredById.has(value.id)){entries.push(value);continue;}
+      const category=primaryCategory(value),addOns={...value.addOns};
+      for(const other of categories.filter(other=>other!==category)) {
+        const selections=(Array.isArray(value.selections)?value.selections:[]).filter(id=>choiceById.get(id)?.category===other);
+        const perks=validPerks(value.perks).filter(name=>categoryFor(name)===other);
+        const donor={category:other,selections,perks,excludedPerks:validPerks(value.excludedPerks).filter(name=>categoryFor(name)===other)};
+        if(!baseIncludedPerks(donor).length)continue;
+        let id=value.id.slice(0,64)+'-'+other,index=2;while(ids.has(id))id=value.id.slice(0,60)+'-'+other+'-'+index++;ids.add(id);
+        const suffix=other==='defensive'?'Defence':other==='economy'?'Economy':'Attack';
+        let label=value.label.slice(0,44)+' - '+suffix;index=2;while(labels.has(label.toLowerCase()))label=value.label.slice(0,40)+' - '+suffix+' '+index++;labels.add(label.toLowerCase());
+        entries.push({...donor,id,label,addOns:{}});addOns[other]={source:'target',targetId:id};
+      }
+      entries.push({...value,category,addOns});
+    }
+    return entries;
   }
   function syncDefinitions(entries) {
-    definitions.splice(0,definitions.length,...entries.map(entry=>({...entry,stats:new Set(includedPerks(entry)),group:'Saved targets',custom:true})));
+    definitions.splice(0,definitions.length,...entries.map(entry=>({...entry,stats:new Set(includedPerks(entry,entries)),group:'Saved targets',custom:true})));
     byId.clear();definitions.forEach(purpose=>byId.set(purpose.id,purpose));
   }
   function sharedRating(name) {
@@ -90,45 +156,58 @@
     ratingLayers=DN.loadActivePerkRatingLayers();
     let raw;try{raw=JSON.parse(DN.lsGet(key)||'null');}catch{}
     const entries=[],seen=new Set();
-    for(const value of Array.isArray(raw?.customPurposes)?raw.customPurposes:[]) {
+    const storedEntries=Array.isArray(raw?.customPurposes)?raw.customPurposes:[];
+    const retired=new Map(storedEntries.filter(entry=>retiredById.has(entry?.id)).map(entry=>[entry.id,normalizeEntry(entry)]));
+    for(const value of (raw?.version||1)>=5?storedEntries:migrateEntries(storedEntries)) {
+      if(retiredById.has(value?.id))continue;
       const entry=normalizeEntry(value);
+      if(entry)for(const [category,addon] of Object.entries(entry.addOns)) {
+        if(addon.source!=='target'||!retiredById.has(addon.targetId))continue;
+        const donor=retired.get(addon.targetId)||normalizeEntry(retiredById.get(addon.targetId));
+        if(donor.category!==category)continue;
+        const perks=baseIncludedPerks(donor);
+        entry.addOns[category]=perks.length===names.filter(name=>categoryFor(name)===category).length?{source:'profile'}:{source:'snapshot',perks};
+      }
       if(entry && !seen.has(entry.id)){entries.push(entry);seen.add(entry.id);}
     }
-    for(const builtIn of defaults)if(!seen.has(builtIn.id)){entries.push(normalizeEntry(builtIn));seen.add(builtIn.id);}
-    entries.sort((a,b)=>(defaultById.has(a.id)?defaults.findIndex(p=>p.id===a.id):3)-(defaultById.has(b.id)?defaults.findIndex(p=>p.id===b.id):3));
     const legacySelected=[...new Set(Array.isArray(raw?.selected)?raw.selected:[])];
     let combined;
-    if(raw && raw.version!==4) {
+    if(raw && (raw.version||1)<4) {
       const selections=legacySelected.filter(id=>choiceById.has(id));
       if(selections.length) {
         let id='custom-migrated-selections';while(seen.has(id))id+='-old';
         let label='My collection target',index=2;while(entries.some(entry=>entry.label===label))label='My collection target '+index++;
-        combined={id,label,selections,perks:[],excludedPerks:[]};entries.push(combined);seen.add(id);
+        combined={id,label,selections,perks:[],excludedPerks:[]};
+        for(const value of migrateEntries([combined],entries)){const entry=normalizeEntry(value);if(entry&&!seen.has(entry.id)){entries.push(entry);seen.add(entry.id);}}
       }
     }
     const importedArmies=[];
-    if(raw?.version!==4) {
+    if((raw?.version||1)<4) {
       const armies=DN.loadStrategies();
       for(const army of armies.strategies) {
         const selections=[...new Set((army.units||[]).map(unit=>'attack-'+slug(unit)).filter(id=>choiceById.has(id)))];
         if(!selections.length)continue;
         let id='custom-army-'+slug(army.id).slice(0,60);while(seen.has(id))id+='-old';
         let label=army.name.slice(0,60),index=2;while(entries.some(entry=>entry.label.toLowerCase()===label.toLowerCase()))label=army.name.slice(0,48)+' (army '+index++ +')';
-        const entry={id,label,selections,perks:[],excludedPerks:[]};entries.push(entry);seen.add(id);
+        const entry=normalizeEntry({id,label,selections,perks:[],excludedPerks:[]});entries.push(entry);seen.add(id);
         if(army.id===armies.activeId)importedArmies.push(id);
       }
     }
     const selected=legacySelected.filter(id=>seen.has(id));if(combined)selected.unshift(combined.id);
     selected.push(...importedArmies);
     const activeId=seen.has(raw?.activeId)?raw.activeId:selected[0]||entries[0]?.id||null;
-    const state={version:4,selected,activeId,customPurposes:entries};
+    const state={version:6,selected,activeId,customPurposes:entries};
     if(raw?.legacyPurposeRatings)state.legacyPurposeRatings=raw.legacyPurposeRatings;
     if(raw?.legacySelections)state.legacySelections=raw.legacySelections;
+    if(raw?.legacyTargets)state.legacyTargets=raw.legacyTargets;
+    else if(raw&&(raw.version||1)<5)state.legacyTargets={version:raw.version||1,customPurposes:storedEntries};
+    if(raw?.removedDefaultTargets)state.removedDefaultTargets=raw.removedDefaultTargets;
+    else if(retired.size)state.removedDefaultTargets=storedEntries.filter(entry=>retiredById.has(entry?.id));
     syncDefinitions(entries);
-    if(raw?.version!==4 && (raw || entries.length)) {
-      state.legacySelections={version:raw?.version||1,selected:legacySelected,customPurposes:raw?.customPurposes||[]};
+    if(raw?.version!==6 && (raw || entries.length)) {
+      if((raw?.version||1)<4)state.legacySelections={version:raw?.version||1,selected:legacySelected,customPurposes:raw?.customPurposes||[]};
       const profile=structuredClone(ratingLayers.profile);let changed=false;
-      if(raw && raw.version!==3) {
+      if(raw && (raw.version||1)<3) {
         if(Object.keys(raw.purposes||{}).length)state.legacyPurposeRatings={version:raw.version||1,purposes:raw.purposes};
         for(const id of legacySelected) {
           const purpose=choiceById.get(id)||byId.get(id);if(!purpose)continue;
@@ -149,23 +228,33 @@
     DN.lsSet(key,JSON.stringify(state));syncDefinitions(state.customPurposes);
     window.dispatchEvent(new CustomEvent('dn-crafting-purposes-changed'));
   }
-  function saveCustom({id,label,selections=[],perks=[],excludedPerks=[]}) {
-    const state=settings();label=String(label||'').trim();
-    if(defaultById.has(id)&&label!==defaultById.get(id).label)throw Error('General target names are fixed.');
+  function prepareCustom(state,{id,label,category,selections=[],perks=[],excludedPerks=[],addOns={}}) {
+    label=String(label||'').trim();
     if(!label||label.length>60)throw Error('Give this target a name of up to 60 characters.');
     if(state.customPurposes.some(purpose=>purpose.id!==id&&purpose.label.toLowerCase()===label.toLowerCase()))throw Error('A target already has that name.');
     if(id&&!state.customPurposes.some(purpose=>purpose.id===id))throw Error('Choose a saved target to edit.');
+    const previous=state.customPurposes.find(purpose=>purpose.id===id);
+    category=previous?.category||category||primaryCategory({selections,perks});
+    if(!categories.includes(category))throw Error('Choose an Attacking, Defensive or Economy target.');
+    if(selections.some(value=>choiceById.has(value)&&choiceById.get(value).category!==category)||validPerks(perks).some(name=>categoryFor(name)!==category))throw Error('Save selections from this tab only. Use the optional stat sources for other categories.');
     const created=!id;
     id ||= 'custom-'+Date.now().toString(36)+'-'+Math.random().toString(36).slice(2,10);
-    const entry=normalizeEntry({id,label,selections,perks,excludedPerks});
+    const entry=normalizeEntry({id,label,category,selections,perks,excludedPerks,addOns});
     if(!entry)throw Error('Choose at least one selection or included perk.');
+    if(sourceIssues(entry,state.customPurposes).length)throw Error('Choose an existing target from the matching category for each included stat source.');
     const index=state.customPurposes.findIndex(purpose=>purpose.id===id);
     if(index<0)state.customPurposes.push(entry);else state.customPurposes[index]=entry;
-    if(created)state.selected.push(id);state.activeId=id;save(state);return id;
+    if(created)state.selected.push(id);state.activeId=id;return id;
   }
+  function saveCustoms(values) {
+    const state=settings(),ids=values.map(value=>prepareCustom(state,value));
+    save(state);return ids;
+  }
+  function saveCustom(value) {return saveCustoms([value])[0];}
   function removeCustom(id) {
     const state=settings();if(!byId.has(id))throw Error('Choose a saved target to delete.');
-    if(defaultById.has(id))throw Error('The default General target cannot be deleted.');
+    const dependent=state.customPurposes.find(entry=>Object.values(entry.addOns||{}).some(addon=>addon.source==='target'&&addon.targetId===id));
+    if(dependent)throw Error('This target supplies stats to “'+dependent.label+'”. Change that target’s source before deleting it.');
     state.customPurposes=state.customPurposes.filter(purpose=>purpose.id!==id);state.selected=state.selected.filter(value=>value!==id);
     if(state.activeId===id)state.activeId=state.customPurposes[0]?.id||null;save(state);
   }
@@ -258,16 +347,18 @@
       }
       const benchmark = benchmarks.get(cacheKey) || {candidates: [], incomplete: 0};
       const threshold = benchmark.candidates[1]?.score ?? null;
-      let status = !result || score === null ? 'waiting' : !validCategory ? 'category' : !available ? 'unavailable' :
+      const missingSources=sourceIssues(purpose);
+      let status = !result || score === null ? 'waiting' : !validCategory ? 'category' : !available || missingSources.length ? 'unavailable' :
         score <= 0 ? 'irrelevant' : threshold !== null && score <= threshold ? 'owned' :
         benchmark.incomplete ? 'review' : threshold === null ? 'vacancy' : 'better';
       return {id, label: purpose.label, score, lines, threshold, best: benchmark.candidates[0]?.score ?? null,
-        count: benchmark.candidates.length, incomplete: benchmark.incomplete, uncertain, status,
+        count: benchmark.candidates.length, incomplete: benchmark.incomplete, uncertain, status, missingSources,
         hit: status === 'vacancy' || status === 'better'};
     });
   }
 
-  window.DNCraftingPurposes={get definitions(){settings();return definitions;},get choices(){return choices;},settings,saveCustom,removeCustom,configure,setRating,selectPurpose,setActive,candidatePerks,includedPerks,axisFor,categoryFor,ratingRows,evaluate,renderGrouped,
+  window.DNCraftingPurposes={get definitions(){settings();return definitions;},get choices(){return choices;},settings,saveCustom,saveCustoms,removeCustom,configure,setRating,selectPurpose,setActive,candidatePerks,includedPerks,baseCandidatePerks,baseIncludedPerks,primaryCategory,sourceIssues,axisFor,categoryFor,ratingRows,evaluate,renderGrouped,
+    ratingOf:sharedRating,
     editCustom:id=>window.DNCraftingPurposeEditor?.edit(id),
     setDefaults(defaults,canonPerk=name=>name){factoryDefaults=Object.fromEntries(Object.entries(defaults).map(([name,entry])=>[canonPerk(name),entry]));benchmarks.clear();window.dispatchEvent(new CustomEvent('dn-crafting-purposes-changed'));}
   };

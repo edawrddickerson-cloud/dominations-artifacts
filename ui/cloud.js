@@ -124,7 +124,7 @@
   window.DNConsent.subscribe(()=>{consentTask=syncConsent().catch(()=>{});});
   window.addEventListener('online',()=>{if(!client)start();else{consentTask=syncConsent().catch(()=>{});schedule(0);}});
   window.addEventListener('focus',()=>schedule(0));
-  for(const event of ['dn-artifacts-changed','dn-strategies-changed','storage'])window.addEventListener(event,()=>schedule());
+  for(const event of ['dn-artifacts-changed','dn-strategies-changed','dn-crafting-purposes-changed','storage'])window.addEventListener(event,()=>schedule());
   for(const event of ['change','click'])document.addEventListener(event,()=>schedule());
   setInterval(()=>{if(!document.hidden)schedule(0);},30000);
   start();

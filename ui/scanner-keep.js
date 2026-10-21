@@ -48,11 +48,9 @@
   function render(){
     const logged=currentLog(),kept=saved.has(key()) || !!logged?.keptId,blocked=reason(),busy=saving || pending.has(logged?.keepId);
     if(logged && !logged.keptId && saved.has(key()))window.DNScannerCollection?.markKept(logged.id,saved.get(key()),{keepId:saved.get(key())});
-    button.textContent=busy?'Saving…':kept?'Kept':'Keep';
+    button.textContent=busy?'Saving…':kept?'Added':'Add to Collection';
     button.disabled=busy || kept || !!blocked;
-    button.title=kept?'Added to Collection':blocked || 'Add this craft to Collection and benchmarks';
-    const status=get('keep-status');
-    status.textContent=(failureKey===key()?failure:'') || (kept?'Added to Collection.':state.current?blocked:'');status.hidden=!status.textContent;
+    button.title=(failureKey===key()?failure:'') || (kept?'Added to Collection':blocked || 'Add to Collection');
   }
   window.DNScannerKeep={loggedReason,keepLogged,update(next,nextState){result=next;state=nextState;render();}};
   button.addEventListener('click',async()=>{

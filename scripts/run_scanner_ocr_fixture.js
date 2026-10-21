@@ -111,6 +111,7 @@ async function main() {
     if(process.argv.includes('--field-reuse'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-field-reuse-browser.js'),'utf8');
     if(process.argv.includes('--worker-experiment'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-worker-experiment-browser.js'),'utf8');
     if(process.argv.includes('--crafting-keep'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-keep-browser.js'),'utf8');
+    if(process.argv.includes('--crafting-log'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-log-browser.js'),'utf8');
     if(process.argv.includes('--reroll-ui'))expression=fs.readFileSync(path.join(root,'tests/scanner/reroll-browser.js'),'utf8');
     if(process.argv.includes('--reroll-pools'))expression=fs.readFileSync(path.join(root,'tests/scanner/reroll-pools-browser.js'),'utf8');
     if(percent)expression="window.DNStorageFixtureVariants=['native','video','muted'];\n"+expression.replace('storage-coverage.labels.json','storage-percent.labels.json');

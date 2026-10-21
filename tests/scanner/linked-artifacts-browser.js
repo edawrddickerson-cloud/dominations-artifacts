@@ -32,7 +32,7 @@
   await wait(()=>card(legendary) && card(mythical));
   check('Collection has one row per edition',collection.contentDocument.querySelectorAll('#collection-list .artifact-card').length===2);
   const totals=document.createElement('iframe');totals.hidden=true;totals.srcdoc=await source('totals.html');document.body.append(totals);
-  const totalValue=()=>Number(totals.contentDocument?.querySelector('.active-total summary strong')?.textContent.replace('%',''));
+    const totalValue=()=>Number(totals.contentDocument?.querySelector('.active-total header strong')?.textContent.replace('%',''));
   await wait(()=>Number.isFinite(totalValue()));
   let encounter=0;
   const canvas=document.createElement('canvas');canvas.width=640;canvas.height=360;let nextRead;

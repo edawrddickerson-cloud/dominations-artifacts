@@ -24,7 +24,7 @@
   check('owned fixture has its expected numeric cutoff',expected.threshold===100);
   window.dispatchEvent(new Event('focus'));publish(craft(1));
   await wait(()=>get('benchmark-value').textContent==='100');
-  check('test exercises both strategy comparison rows',get('strategy-results').querySelectorAll('tbody tr').length===2);
+  check('test exercises both strategy focus rows',get('purpose-results').querySelectorAll('[data-strategy-focus]').length===2 && !get('strategy-results'));
   check('verified lower score is red',red());
 
   const inferred=craft(1);inferred.valid=false;inferred.rows[0].inferred=true;
@@ -44,7 +44,7 @@
   const threeStars=craft(1);threeStars.unlocked={count:3,states:[true,true,true,false,false]};
   publish(threeStars);
   check('three unlocked stats override a lower score with green across selected strategies',green() && !get('keeper-reason').hidden && get('benchmark').classList.contains('is-below-cutoff'));
-  check('three unlocked Keep reason is bold',Number(getComputedStyle(get('keeper-reason')).fontWeight)>=900);
+  check('three unlocked focus row is green',getComputedStyle(get('purpose-results').querySelector('[data-unlocked-focus]')).backgroundColor==='rgb(18, 78, 41)');
   window.dispatchEvent(new Event('dn-craft-kept'));
   await wait(()=>get('benchmark-value').textContent==='100');
   check('three unlocked Keep override survives strategy refresh',green());
@@ -86,7 +86,7 @@
   publish(craft(1));
   check('next lower item clears the numeric green state',red() && !get('benchmark').classList.contains('is-top-two'));
   DNScannerComparison.update(core.estimate(inferred),false,options,{captureResult:inferred});
-  check('a paused or unavailable comparison is not a lower numeric score',get('item-total').textContent==='—' && !red());
+  check('a paused or unavailable comparison is not a lower numeric score',get('item-total').textContent==='—' && get('benchmark').classList.contains('is-unknown') && get('decision-state').textContent==='Discard');
   await store.write(store.collectionKey(),owned.slice(0,1));
   window.dispatchEvent(new Event('focus'));publish(inferred);
   await wait(()=>get('benchmark-value').textContent==='Open slot');

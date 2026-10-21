@@ -201,9 +201,10 @@
     select.addEventListener("change", async () => {
       const id = select.value;
       if (!id || id === DN.activeProfileId()) return;
-      if (window.DNStrategyEditor) {
+      const editor = window.DNCraftingPurposeEditor || window.DNStrategyEditor;
+      if (editor?.canLeave) {
         select.value = DN.activeProfileId();
-        if (!await window.DNStrategyEditor.canLeave()) return;
+        if (!await editor.canLeave()) return;
       }
       try { if (DN.setActiveProfile(id)) location.reload(); }
       catch (err) { showStrategyError(err); select.value = DN.activeProfileId(); }
@@ -231,6 +232,7 @@
   function mountStrategies() {
     if (!DN.loadStrategies) return;
     const file = fileForHref(location.pathname).replace(/^(army|artifacts|collection|totals|ratings|scanner|storage-scanner)$/, '$1.html');
+    if (file === 'artifacts.html') return;
     if (!['artifacts.html', 'collection.html', 'scanner.html', 'storage-scanner.html'].includes(file)) return;
     const header = document.querySelector('.app-header');
     if (!header) return;

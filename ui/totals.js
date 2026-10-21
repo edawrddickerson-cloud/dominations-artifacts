@@ -5,9 +5,11 @@
     main:document.getElementById('header-main'), war:document.getElementById('header-war'),
     sub:document.getElementById('totals-sub'), list:document.getElementById('totals-list'),
     search:document.getElementById('totals-search'), error:document.getElementById('error'),
+    sourcesAll:document.getElementById('totals-sources-all'), sourcesNone:document.getElementById('totals-sources-none'),
   };
   let rows = [], canonPerk = DN.polishPerk, hall = DN.loadCollectionUi().hall;
   let totals = [], refreshId = 0;
+  let showSources = true;
   const percent = value => (value > 0 ? '+' : '') + value + '%';
 
   function computeTotals(scans) {
@@ -61,6 +63,11 @@
   function render() {
     const query = el.search.value.trim().toLowerCase();
     const shown = totals.filter(total => total.name.toLowerCase().includes(query));
+    el.list.classList.toggle('hide-sources', !showSources);
+    for (const [button, active] of [[el.sourcesAll,showSources], [el.sourcesNone,!showSources]]) {
+      button.classList.toggle('is-active', active);
+      button.setAttribute('aria-pressed', String(active));
+    }
     for (const [button, value] of [[el.main,'Main'], [el.war,'War']]) {
       button.classList.toggle('is-active', hall === value);
       button.setAttribute('aria-pressed', String(hall === value));
@@ -68,8 +75,9 @@
     el.sub.textContent = `${DN.activeStrategy().name} · ${totals.length} active stats · ${hall} hall`;
     el.list.innerHTML = shown.length ? shown.map(total => {
       const tone = total.value > 0 ? 'pref-pos' : total.value < 0 ? 'pref-neg' : '';
-      return `<details class="active-total"><summary><span>${DN.esc(total.name)}</span><strong class="${tone}">${percent(total.value)}</strong></summary>` +
-        '<ul>' + total.sources.map(source => `<li><span>${DN.esc(source.name)}<small>${DN.esc(source.role)}</small></span><b>${percent(source.value)}</b></li>`).join('') + '</ul></details>';
+      const sourceRow = source => `<li><span>${DN.esc(source.name)}<small>${DN.esc(source.role)}</small></span><b>${percent(source.value)}</b></li>`;
+      return `<article class="active-total"><header><h3>${DN.esc(total.name)}</h3><strong class="${tone}">${percent(total.value)}</strong></header>` +
+        '<div class="active-total-sources"><ul aria-label="Contributing artifacts">' + total.sources.map(sourceRow).join('') + '</ul></div></article>';
     }).join('') : `<p class="totals-empty">${query ? 'No stats match your search.' : 'No active bonuses in this hall. Assign artifacts in <a href="collection.html">Collection</a> to build your totals.'}</p>`;
   }
 
@@ -97,6 +105,10 @@
       await window.DNStoredArtifacts.reconcileCatalog(rows);
       canonPerk = DN.makeCanonPerk(DN.parseMappingCsv(await mapping.text()));
       el.search.addEventListener('input', render);
+      for (const [button, value] of [[el.sourcesAll,true], [el.sourcesNone,false]]) button.addEventListener('click', () => {
+        showSources = value;
+        render();
+      });
       for (const [button, value] of [[el.main,'Main'], [el.war,'War']]) button.addEventListener('click', () => {
         hall = value;
         DN.saveCollectionUi({...DN.loadCollectionUi(), hall});

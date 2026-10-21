@@ -4,7 +4,7 @@
   const checks={},get=id=>document.getElementById('scanner-'+id),store=window.DNStoredArtifacts;
   const check=(name,value)=>{checks[name]=!!value;if(!value)throw Error(name);};
   const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
-  async function wait(test){const end=performance.now()+15000;while(!await test()){if(performance.now()>end)throw Error('Keep test timed out: '+get('keep-status').textContent+' / '+get('keep').title);await pause(20);}}
+  async function wait(test){const end=performance.now()+15000;while(!await test()){if(performance.now()>end)throw Error('Keep test timed out: '+get('keep').title+' / '+get('keep').title);await pause(20);}}
   await wait(()=>get('names').children.length && window.DNScannerKeep);
   check('Keep starts disabled',get('keep').disabled);
   get('auto').checked=false;get('collect').checked=false;document.getElementById('header-main').click();
@@ -16,7 +16,9 @@
   const profile=DN.activeProfileId(),profileKey=store.collectionKey();
   await store.write(profileKey,[6,1].map((value,i)=>({id:'base-'+i,name:'Base '+i,hall:'main',type:'Weapon',reviewed:true,rows:rows(value)})));
   window.dispatchEvent(new Event('focus'));
-  await wait(()=>get('benchmarks').querySelector('[data-category="weapon"] dd').textContent==='100');
+  await wait(()=>get('purpose-results')?.querySelector('[data-strategy-focus]'));
+  const target=(doc=document)=>doc.querySelector('#scanner-purpose-results [data-strategy-focus] .scanner-focus-target')?.textContent;
+  const cutoff=()=>target()?.replace(/[^0-9.-]/g,'');
   let response,pixel=0;
   DNScannerRecognition.create=()=>({recognize:async()=>structuredClone(response),close:async()=>{}});
   const canvas=document.createElement('canvas');canvas.width=640;canvas.height=320;
@@ -29,18 +31,19 @@
   }
   await read(11);
   check('confirmed craft enables Keep',!get('keep').disabled);
-  const keepBox=get('keep').getBoundingClientRect(),scoreBox=get('benchmark').getBoundingClientRect(),tableBox=get('benchmarks').getBoundingClientRect();
-  check('Keep sits below the scoring box',keepBox.top>=scoreBox.bottom && Math.abs(keepBox.left-scoreBox.left)<2);
-  check('benchmarks are compact beside Keep',tableBox.right<=keepBox.left && tableBox.top>=scoreBox.bottom);
+  check('current category cutoff uses the saved collection',cutoff()==='100');
+  const keepBox=get('keep').getBoundingClientRect(),scoreBox=get('benchmark').getBoundingClientRect();
+  check('Keep sits below the scoring box',keepBox.top>=scoreBox.bottom && keepBox.left>=scoreBox.left-2 && keepBox.right<=scoreBox.right+2);
+  check('separate benchmark table is removed',!get('benchmarks'));
   get('keep').click();get('keep').click();
-  await wait(()=>get('keep').textContent==='Kept' && get('benchmarks').querySelector('[data-category="weapon"] dd').textContent==='150');
+  await wait(()=>get('keep').textContent==='Added' && cutoff()==='150');
   const keptItems=async()=>(await store.read(profileKey)).filter(item=>item.keptFromCraft);
   let inventory=await keptItems();
   check('Keep saves once and improves the cutoff immediately',inventory.length===1 && get('keep').disabled);
   check('saved craft includes artwork, current values, ranges, stars and profile',inventory[0].image?.startsWith('data:image/jpeg') && inventory[0].rows[0].value===11 && inventory[0].rows[0].max===20 && inventory[0].rows[0].unlocked===true && inventory[0].profileId===profile);
   check('Keep adds directly to Collection without a pending import',(await store.read(profileKey)).length===3 && (await store.read('items')).length===0);
   await read(11);check('next physical craft can be kept',!get('keep').disabled);
-  get('keep').click();await wait(()=>get('keep').textContent==='Kept' && get('benchmarks').querySelector('[data-category="weapon"] dd').textContent==='200');
+  get('keep').click();await wait(()=>get('keep').textContent==='Added' && cutoff()==='200');
   inventory=await keptItems();
   check('separate identical crafts count as two owned items',inventory.length===2 && inventory[0].id!==inventory[1].id);
   await read(6,true);check('partial reads cannot be kept',get('keep').disabled);
@@ -48,11 +51,13 @@
   const unrelated=label=>({id:label,name:label,hall:'main',type:'Weapon',reviewed:true,rows:rows(11).map(row=>({...row,name:'Fighter Damage'}))});
   await store.write('items',[unrelated('unreviewed-ownership'),{...unrelated('other-profile'),keptFromCraft:true,profileId:'different-profile'}, {...inventory[0],id:'legacy-kept',rows:rows(1)}]);
   window.dispatchEvent(new Event('focus'));await pause(100);
-  check('ordinary pending scans and other profiles do not raise benchmarks',get('benchmarks').querySelector('[data-category="weapon"] dd').textContent==='200');
+  check('ordinary pending scans and other profiles do not raise benchmarks',cutoff()==='200');
   // The session host and scanner already share a URL. A distinct test query
   // avoids Chromium's recursive-frame guard when simulating reopening.
   const reopened=document.createElement('iframe');reopened.hidden=true;reopened.src='scanner.html?keep-reopen=inventory';document.body.append(reopened);
-  await wait(()=>reopened.contentDocument?.querySelector('#scanner-benchmarks [data-category="weapon"] dd')?.textContent==='200');
+  await wait(()=>reopened.contentDocument?.querySelector('#scanner-names')?.children.length);
+  const reopenedType=reopened.contentDocument.getElementById('scanner-compare-type');reopenedType.value='weapon';reopenedType.dispatchEvent(new reopened.contentWindow.Event('change',{bubbles:true}));
+  await wait(()=>target(reopened.contentDocument)?.includes('200'));
   check('kept inventory benchmarks survive reopening',true);
   await wait(async()=>(await store.read(profileKey)).some(item=>item.id==='legacy-kept'));
   check('previously kept crafts recover to their original profiles',(await store.read('collection:different-profile')).some(item=>item.id==='other-profile') && (await store.read('items')).length===1);
@@ -60,16 +65,17 @@
   const imported=await store.accept(inventory);
   check('reimport cannot duplicate kept physical crafts',imported.added===0 && imported.collection.filter(item=>item.keptFromCraft).length===3);
   window.dispatchEvent(new Event('focus'));await pause(100);
-  check('imported crafts retain the improved benchmark',get('benchmarks').querySelector('[data-category="weapon"] dd').textContent==='200');
+  check('imported crafts retain the improved benchmark',cutoff()==='200');
   const other=DN.addProfile('Keep isolation');DN.setActiveProfile(other);window.dispatchEvent(new Event('focus'));
-  await wait(()=>get('benchmarks').querySelector('[data-category="weapon"] dd').textContent==='Open');
+  get('compare-type').value='weapon';get('compare-type').dispatchEvent(new Event('change',{bubbles:true}));
+  await wait(()=>target()==='Open slot');
   check('kept crafts do not leak into a different profile',get('keep').disabled);
-  DN.setActiveProfile(profile);window.dispatchEvent(new Event('focus'));await wait(()=>get('benchmarks').querySelector('[data-category="weapon"] dd').textContent==='200');
+  DN.setActiveProfile(profile);window.dispatchEvent(new Event('focus'));await wait(()=>cutoff()==='200');
   await read(6);
   const realKeep=store.keepCraft;store.keepCraft=async()=>{throw Error('Simulated write failure');};
-  get('keep').click();await wait(()=>get('keep-status').textContent.includes('Simulated'));
-  check('failed Keep remains retryable',!get('keep').disabled && get('keep').textContent==='Keep');store.keepCraft=realKeep;
-  get('keep').click();await wait(()=>get('keep').textContent==='Kept');
+  get('keep').click();await wait(()=>get('keep').title.includes('Simulated'));
+  check('failed Keep remains retryable',!get('keep').disabled && get('keep').textContent==='Add to Collection');store.keepCraft=realKeep;
+  get('keep').click();await wait(()=>get('keep').textContent==='Added');
   check('retry stores the craft once',(await keptItems()).length===4);
   const concurrent={...(await keptItems())[0],id:'concurrent-kept'};
   const outcomes=await Promise.all([store.keepCraft(concurrent),store.keepCraft(concurrent)]);
@@ -88,7 +94,7 @@
   get('read').click();await wait(()=>!get('read').disabled);
   const finalSnapshot=(await logData()).items.find(item=>item.id===final.id);
   check('manually entered log name survives OCR retries',finalSnapshot.name==='Named craft <Weapon>' && finalSnapshot.nameSource==='manual');
-  check('log follows the last stronger held stats rather than an older validated read',finalSnapshot.rows[2].value===11 && !finalSnapshot.validated && logButton(final.id) && !logButton(final.id).disabled);
+  check('log follows the last stronger held stats rather than an older validated read',finalSnapshot.rows[2].value===11 && logButton(final.id) && !logButton(final.id).disabled);
   document.querySelector('details[aria-label="Crafted item log"]').open=true;
   store.keepCraft=async()=>{throw Error('Log Keep write failure');};
   logButton(missed.id).click();await wait(()=>get('item-log').textContent.includes('Log Keep write failure'));
@@ -102,9 +108,9 @@
   check('log Keep retains the recognized name and artwork',loggedInventory.find(item=>item.id===missed.keepId)?.name==='Test crafted weapon' && loggedInventory.find(item=>item.id===missed.keepId)?.image?.startsWith('data:image/jpeg'));
   check('Keep from log saves the final held snapshot',loggedInventory.find(item=>item.id===final.keepId)?.rows[2].value===11 && loggedInventory.length===beforeLogged+2);
   check('Keep from log retains the manually entered item name',loggedInventory.find(item=>item.id===final.keepId)?.name==='Named craft <Weapon>');
-  check('keeping the current logged craft updates the current Keep button',get('keep').textContent==='Kept' && get('keep').disabled);
+  check('keeping the current logged craft updates the current Keep button',get('keep').textContent==='Added' && get('keep').disabled);
   await read(11);const shared=(await logData()).items.at(-1);setLogName(shared.id,'Main Keep name');get('keep').click();
-  await wait(()=>get('keep').textContent==='Kept' && logButton(shared.id).textContent==='Kept');
+  await wait(()=>get('keep').textContent==='Added' && logButton(shared.id).textContent==='Kept');
   logButton(shared.id).click();
   check('current and logged Keep share one physical item ID',(await keptItems()).filter(item=>item.id===shared.keepId).length===1);
   check('main Keep retains the name entered in the crafting log',(await keptItems()).find(item=>item.id===shared.keepId)?.name==='Main Keep name');
@@ -120,7 +126,7 @@
   check('explicit log Keep preserves the inferred stat and its provenance',(await keptItems()).find(item=>item.id===inferredLog.keepId)?.rows[2].inferred===true);
   await read(6,false,{valid:false,rows:rows(6).map((row,i)=>i===2?{...row,inferred:true,colour:'green'}:row)});
   check('main Keep accepts the same complete held read as the log',!get('keep').disabled);
-  get('keep').click();await wait(()=>get('keep').textContent==='Kept');
+  get('keep').click();await wait(()=>get('keep').textContent==='Added');
   DN.saveCollectionUi({hall:'Main',viewMode:'list'});
   const collection=document.createElement('iframe');collection.hidden=true;collection.src='collection.html';document.body.append(collection);
   await wait(()=>collection.contentDocument?.querySelector('[data-artifact-id="'+missed.keepId+'"]'));

@@ -18,14 +18,14 @@
   window.DNServiceLoader={script};
   async function boot() {
     if(!window.DN)return;
-    await script('service-config.js?v=2');
-    await script('integration-core.js?v=2');
+    await script('service-config.js?v=20261022-public-accounts');
+    await script('integration-core.js?v=20261022-collection-targets');
     await script('service-store.js?v=2');
     await script('telemetry.js?v=2');
     await Promise.all([script('cloud-sync.js?v=2'),script('research.js?v=2')]);
     if(!window.DNStoredArtifacts)await script('stored-artifacts.js?v=23');
     if(!window.DNLocalBackupCore)await script('local-backup.js?v=3');
-    await script('cloud.js?v=2');
+    await script('cloud.js?v=20261022-collection-targets');
     await script('services-ui.js?v=20261020-title-case-nav');
   }
   window.DNServicesReady=new Promise(resolve=>{

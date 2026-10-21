@@ -1062,6 +1062,7 @@
       label: "Hermitage",
       emptyAction: "slot-hermitage",
     });
+    const hermGroup = `<div class="museum-section"><h3 class="museum-section-title">Hermitage</h3><div class="museum-row">${hermTile}</div></div>`;
 
     const typeGroups = typeExhibits
       .map((ex) => {
@@ -1079,7 +1080,8 @@
           `<div class="museum-section">` +
           `<h3 class="museum-section-title">${DN.esc(ex.label)}</h3>` +
           `<div class="museum-row museum-row--4">${tiles}</div>` +
-          `</div>`
+          `</div>` +
+          (ex.key.replace(/^war-/, '') === 'armor' ? hermGroup : '')
         );
       })
       .join("");
@@ -1098,7 +1100,6 @@
       `<div class="museum-section">` +
       `<h3 class="museum-section-title">Legendary Hall</h3>` +
       `<div class="museum-row">${legTiles}</div>` +
-      `</div><div class="museum-section"><h3 class="museum-section-title">Hermitage</h3><div class="museum-row">${hermTile}</div>`+
       `</div>` +
       `<div class="museum-type-exhibits">${typeGroups}</div>` +
       `<div class="museum-section">` +

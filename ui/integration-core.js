@@ -6,7 +6,7 @@
   'use strict';
   const VERSION=1,POLICY='2026-10-18',MAX_BYTES=16*1024*1024;
   const globals=new Set(['dn-profiles','dn-artifact-perk-ratings-global','dn-perk-ratings-layer-migrated','dn_perk_group_defaults_v1','dn-general-ratings-2026-10-16']);
-  const profileKeys=new Set(['dn-artifact-collected','dn-artifact-loadout','dn-artifact-perk-levels','dn-artifact-perk-edits','dn-artifact-collection-ui','dn-army-presets','dn-strategies','dn-artifact-perk-ratings','dn-artifact-pref-sort-axes','dn-artifact-hide-collected','dn-artifact-score-mode','dn-artifact-hall-filter','dn-artifact-grade-filter','dn-artifact-perk-match-mode','dn-council-owned','dn-council-active','dn-council-stat-ratings','dn-council-ui','dn-council-pref-sort-axes','dn-council-hide-owned','dn-council-score-mode']);
+  const profileKeys=new Set(['dn-artifact-collected','dn-artifact-loadout','dn-artifact-perk-levels','dn-artifact-perk-edits','dn-artifact-collection-ui','dn-army-presets','dn-strategies','dn-crafting-purposes','dn-artifact-ranking-targets','dn-artifact-perk-ratings','dn-artifact-pref-sort-axes','dn-artifact-hide-collected','dn-artifact-score-mode','dn-artifact-hall-filter','dn-artifact-grade-filter','dn-artifact-perk-match-mode','dn-council-owned','dn-council-active','dn-council-stat-ratings','dn-council-ui','dn-council-pref-sort-axes','dn-council-hide-owned','dn-council-score-mode']);
   const forbidden=new Set(['__proto__','prototype','constructor','image','artwork','screenshot','screenshots','frame','frames','canvas','raw','rawType','observations','percentageReads','samples','access_token','refresh_token','authorization','api_key']);
   function clean(value,depth=0) {
     if(depth>20)throw Error('Workspace data is nested too deeply.');

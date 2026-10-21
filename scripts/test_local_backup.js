@@ -2,7 +2,7 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('nod
 const context={window:{},document:{querySelector:()=>null}};
 vm.createContext(context);
 vm.runInContext(fs.readFileSync('ui/local-backup.js','utf8'),context);
-const {validate,restore,settingsSnapshot}=context.window.DNLocalBackupCore;
+const {validate,restore,settingsSnapshot,saveRecovery}=context.window.DNLocalBackupCore;
 class Storage {
   constructor(entries){this.values=new Map(entries);}
   get length(){return this.values.size;}
@@ -16,6 +16,13 @@ const data={kind:'dominations-planner-backup',version:1,settings:{'dn_perk_group
   {id:'collection:main',items:[]}
 ]};
 (async()=>{
+  let copies=[];
+  const recoveryStore={async get(){return copies;},async put(key,value){assert.equal(key,'cloud-recovery');copies=value;}};
+  for(let i=0;i<4;i++)await saveRecovery({...data,exportedAt:String(i)},recoveryStore);
+  assert.equal(copies.length,3,'import recovery retains the latest three safety copies');
+  assert.deepEqual(Array.from(copies,copy=>copy.local.exportedAt),['3','2','1']);
+  validate(copies[0].local);
+  await assert.rejects(()=>saveRecovery(data,{async get(){return [];},async put(){throw Error('Recovery quota');}}),/Recovery quota/);
   validate(data);
   for(const bad of [{}, {...data,version:2},{...data,settings:{unrelated:'x'}},{...data,records:[data.records[0],data.records[0]]},
     {...data,records:[{id:'items',items:[{...data.records[0].items[0],image:'https://example.com/image.png'}]}]}])assert.throws(()=>validate(bad));

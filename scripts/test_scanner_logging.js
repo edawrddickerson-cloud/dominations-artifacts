@@ -8,6 +8,7 @@ const deferred=()=>{let resolve;const promise=new Promise(done=>resolve=done);re
 function element() {
   return {checked:true,dataset:{},listeners:{},children:[],html:'',text:'',htmlWrites:0,nodeChanges:0,
     addEventListener(name,fn){this.listeners[name]=fn;},
+    querySelector(){return null;},
     set innerHTML(value){this.html=value;this.htmlWrites++;},get innerHTML(){return this.html;},
     set textContent(value){this.text=value;this.children=[];},get textContent(){return this.text;},
     get firstChild(){return this.children[0] || null;},
@@ -55,7 +56,7 @@ async function browser(initialData) {
   assert.equal(log.nodeChanges-before,1,'one new result inserts one item node');
   assert.equal(log.htmlWrites,0,'the history container is never rebuilt with innerHTML');
   assert.equal(log.children.length,1001);assert.equal(log.children[1],priorNewest);assert.equal(log.children.at(-1),oldest);
-  assert.match(log.children[0].innerHTML,/Item 1001/);assert.match(oldest.innerHTML,/Item 1<\/strong>/);
+  assert.match(log.children[0].innerHTML,/#1001\b/);assert.match(oldest.innerHTML,/#1 ·/);
   await app.collection.flush();assert.equal(log.nodeChanges-before,1,'storage completion does not render the history again');
   app.operations.length=0;
   assert.equal(app.collection.recordResult(result(1),result(6),1,options,()=>publishes++),false,'identical evidence and item retries are unchanged');

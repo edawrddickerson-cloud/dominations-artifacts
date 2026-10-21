@@ -17,15 +17,47 @@ const rows=(a=-11,b=-1)=>[row('Invading Bomber Damage',a),row('Invading Bomber H
 const craft=(rs=rows())=>({valid:true,hall:'main',artifact:{type:'Armor'},rows:rs});
 const owned=(id,rs,type='Armor',hall='main')=>store.toRow({id,name:id,hall,type,rows:rs});
 assert.equal(service.settings().selected.length,0);
-assert.equal(service.settings().customPurposes.length,3,'each profile starts with three protected defaults');
-assert.equal(service.settings().customPurposes[0].label,'Offensive - General');
-for(const purpose of service.settings().customPurposes){assert.ok(purpose.builtIn);assert.throws(()=>service.removeCustom(purpose.id),/cannot be deleted/);assert.throws(()=>service.saveCustom({...purpose,label:'Renamed'}),/fixed/);}
+assert.equal(service.settings().customPurposes.length,0,'new profiles have no automatic saved targets');
 assert.equal(service.choices.filter(choice=>choice.id.startsWith('general-')).length,3);
 const generalSets=service.choices.filter(choice=>choice.id.startsWith('general-')).map(choice=>[...choice.stats]);
 assert.equal(new Set(generalSets.flat()).size,Object.keys(metadata).length,'General choices cover all canonical stats');
 assert.equal(generalSets.flat().length,Object.keys(metadata).length,'General categories do not duplicate stat identities');
+assert.equal(service.categoryFor('Forest Expansion Cost Refund'),'economy');
+assert.ok(service.choices.find(choice=>choice.id==='expansion').stats.has('Forest Expansion Cost Refund'));
+assert.ok(service.choices.find(choice=>choice.id==='general-economy').stats.has('Forest Expansion Cost Refund'));
+assert.ok(!service.choices.find(choice=>choice.id==='general-attacking').stats.has('Forest Expansion Cost Refund'));
+assert.equal(service.axisFor('Forest Expansion Cost Refund'),'offensive','the Economy category retains its shared rating axis');
 assert.ok(service.choices.find(choice=>choice.id==='attack-apc').stats.has('Heavy Infantry Damage'));
 assert.ok(!service.choices.find(choice=>choice.id==='attack-apc').stats.has('Invading APC Damage'));
+const buildingDebuffs=service.choices.find(choice=>choice.id==='attack-enemy-buildings');
+for(const group of DN.PERK_GROUPS.filter(group=>['enemy-buildings','enemy-all','enemy-defenders'].includes(group.id))) {
+  for(const perk of group.perks)assert.ok(buildingDebuffs.stats.has(perk.name),'building debuffs include '+perk.name);
+}
+const aircraftAndBuildings=service.baseIncludedPerks({category:'attacking',selections:['attack-bomber','attack-enemy-buildings']});
+assert.equal(aircraftAndBuildings.filter(name=>name==='Enemy Air Defense Hitpoints').length,1,'aircraft and building choices share each stat once');
+assert.ok(aircraftAndBuildings.includes('Enemy Tower Hitpoints'));
+const groundBuildings=service.baseIncludedPerks({category:'attacking',selections:['attack-heavy-infantry']});
+assert.ok(groundBuildings.includes('Enemy Tower Hitpoints'));
+assert.ok(groundBuildings.includes('Enemy Anti-Tank Gun Damage'));
+assert.ok(groundBuildings.includes('All Enemy Defensive Towers Damage'));
+assert.ok(!groundBuildings.includes('Enemy Air Defense Damage'),'ground units do not pull in anti-air-only building debuffs');
+const airBuildings=service.baseIncludedPerks({category:'attacking',selections:['attack-bomber']});
+assert.ok(airBuildings.includes('Enemy Tower Damage'));
+assert.ok(airBuildings.includes('Enemy Air Defense Hitpoints'));
+assert.ok(airBuildings.includes('All Enemy Defensive Towers Hitpoints'));
+assert.ok(!airBuildings.includes('Enemy Anti-Tank Gun Damage'),'air-only targets exclude ground-only building debuffs');
+const mixedBuildings=service.baseIncludedPerks({category:'attacking',selections:['attack-heavy-infantry','attack-bomber']});
+assert.equal(mixedBuildings.filter(name=>name==='Enemy Tower Damage').length,1);
+for(const name of buildingDebuffs.stats)assert.ok(mixedBuildings.includes(name),'mixed ground and air covers '+name);
+const paratrooperBuildings=service.baseIncludedPerks({category:'attacking',selections:['attack-paratrooper']});
+assert.ok(paratrooperBuildings.includes('Enemy Anti-Tank Gun Damage'),'paratroopers fight on the ground despite their Airstrip category');
+assert.ok(!paratrooperBuildings.includes('Enemy Air Defense Damage'));
+for(const choice of service.choices.filter(choice=>choice.id.startsWith('attack-'))) {
+  assert.ok(choice.stats.has('Enemy Defender Spawn Time'),choice.label+' includes enemy spawn time');
+  assert.ok(choice.stats.has('Enemy Defender Hitpoints'),choice.label+' includes enemy defender hitpoints');
+}
+const ungroupedEnemyStats=Object.keys(metadata).filter(name=>/^Enemy |^All Enemy /.test(name)&&!buildingDebuffs.stats.has(name));
+assert.deepEqual(ungroupedEnemyStats.sort(),['Enemy Recon Plane Scan Duration','Enemy Sabotage Duration'],'every canonical enemy building/defender stat is covered; only battle effects remain separate');
 assert.throws(()=>service.saveCustom({label:'',selections:['counter-bomber']}),/name/);
 assert.throws(()=>service.saveCustom({label:'Empty',selections:[]}),/at least one/);
 assert.throws(()=>service.saveCustom({label:'Invalid',perks:['__proto__','toString']}),/at least one/);
@@ -52,7 +84,8 @@ DN.saveProfilePerkOverrides(DN.activeProfileId(),{'Invading Bomber Damage':{defe
 assert.equal(evaluate(craft())[0].score,210);assert.equal(evaluate(craft(),items)[0].threshold,195);
 reset();
 // Multiple component selections produce one stat identity, not multiplied points.
-const mixed=service.saveCustom({label:'Mixed target',selections:['attack-heavy-infantry','attack-ranged-infantry','counter-bomber','loot','counter-bomber']});
+assert.throws(()=>service.saveCustom({label:'Implicit mixed target',category:'attacking',selections:['attack-heavy-infantry','counter-bomber']}),/this tab only/);
+const mixed=service.saveCustom({label:'Mixed target',category:'attacking',selections:['attack-heavy-infantry','attack-ranged-infantry'],addOns:{defensive:{source:'target',targetId:duplicate},economy:{source:'profile'}}});
 const mixedDefinition=()=>service.definitions.find(purpose=>purpose.id===mixed);
 assert.ok(mixedDefinition().stats.has('Barracks Troop Damage'));assert.ok(mixedDefinition().stats.has('Invading Bomber Damage'));assert.ok(mixedDefinition().stats.has('All Resources Looted'));
 assert.equal([...mixedDefinition().stats].filter(name=>name==='Barracks Troop Damage').length,1);
@@ -83,15 +116,15 @@ assert.match(service.renderGrouped(bomber),/Anti bomber/);assert.equal(service.r
 configure({'Invading Bomber Damage':9});service.removeCustom(bomber);
 assert.equal(DN.loadProfilePerkOverrides()['Invading Bomber Damage'].defensive,9);assert.ok(!service.settings().selected.includes(bomber));
 const first=DN.activeProfileId(),second=DN.addProfile('Separate targets');DN.setActiveProfile(second);
-assert.equal(service.settings().selected.length,0);assert.equal(service.definitions.length,3);DN.setActiveProfile(first);assert.ok(service.definitions.length);
+assert.equal(service.settings().selected.length,0);assert.equal(service.definitions.length,0);DN.setActiveProfile(first);assert.ok(service.definitions.length);
 // Old selected components become one named purpose; custom names remain saved.
 reset();
 const legacyCustom={id:'custom-legacy',label:'Existing custom target',perks:['Invading Bomber Hitpoints']};
 DN.lsSet('dn-crafting-purposes',JSON.stringify({version:3,selected:['attack-heavy-infantry','attack-ranged-infantry','counter-bomber','custom-legacy'],customPurposes:[legacyCustom],legacyPurposeRatings:{version:2,purposes:{old:{}}}}));
-let migrated=service.settings();assert.equal(migrated.version,4);assert.equal(migrated.selected.length,2);
-const imported=migrated.customPurposes.find(purpose=>!purpose.builtIn&&purpose.id!=='custom-legacy');
-assert.equal(imported.selections.length,3);assert.equal(imported.label,'My collection target');assert.ok(migrated.legacySelections);assert.ok(migrated.legacyPurposeRatings);
-assert.equal(service.settings().customPurposes.length,5,'migration does not repeat or duplicate defaults');
+let migrated=service.settings();assert.equal(migrated.version,6);assert.equal(migrated.selected.length,2);
+const imported=migrated.customPurposes.find(purpose=>purpose.id==='custom-migrated-selections');
+assert.equal(imported.selections.length,2);assert.equal(imported.label,'My collection target');assert.ok(imported.addOns.defensive);assert.ok(migrated.legacySelections);assert.ok(migrated.legacyPurposeRatings);
+assert.equal(service.settings().customPurposes.length,3,'migration creates one category-local donor and no automatic defaults');
 // Pre-v3 weights migrate once and preserve conflicts in the backup.
 DN.saveProfilePerkOverrides(DN.activeProfileId(),{'Invading Bomber Damage':{defensive:7}});
 DN.lsSet('dn-crafting-purposes',JSON.stringify({version:2,selected:['counter-bomber'],purposes:{'counter-bomber':{weights:{'Invading Bomber Damage':10,'Invading Bomber Hitpoints':0}}}}));
@@ -101,11 +134,94 @@ service.setRating('Invading Bomber Damage',2);service.settings();assert.equal(DN
 DN.updateStrategy(DN.activeStrategyId(),{name:'My existing army',units:['Heavy Infantry','Ranged Infantry']});
 DN.lsSet('dn-crafting-purposes',JSON.stringify({version:3,selected:[],customPurposes:[]}));
 migrated=service.settings();const army=migrated.customPurposes.find(purpose=>purpose.label==='My existing army');
-assert.ok(army&&army.selections.includes('attack-heavy-infantry'));assert.ok(migrated.selected.includes(army.id));assert.equal(service.settings().customPurposes.length,4);
+assert.ok(army&&army.selections.includes('attack-heavy-infantry'));assert.ok(migrated.selected.includes(army.id));assert.equal(service.settings().customPurposes.length,1);
 reset();service.setDefaults(JSON.parse(fs.readFileSync('ui/data/perk_rating_defaults.json','utf8')));
 DN.saveGlobalPerkRatings({'All Resources Looted':{offensive:2,defensive:9},'Looted Resource Refund':{offensive:8,defensive:3}});
 const economy=service.saveCustom({label:'Economy',selections:['general-economy']});
 service.configure(economy,{weights:{'All Resources Looted':7,'Looted Resource Refund':6}});
 assert.equal(DN.loadProfilePerkOverrides()['All Resources Looted'].offensive,7);assert.equal(DN.loadProfilePerkOverrides()['Looted Resource Refund'].defensive,6);
 assert.equal(DN.loadProfilePerkOverrides()['Looted Resource Refund'].offensive,undefined);
-console.log('Named targets, deduplicated unions, General options, shared ratings, owned comparisons, migration and profile isolation passed.');
+// Add-ons borrow only category-local stats, even when the donor itself has add-ons.
+DN.setActiveProfile(DN.addProfile('Explicit stat sources'));
+service.setDefaults(Object.fromEntries(Object.keys(metadata).map(name=>[name,{offensive:5,defensive:5}])));
+const defenceSource=service.saveCustom({label:'Bomber defence source',category:'defensive',selections:['counter-bomber'],addOns:{attacking:{source:'profile'}}});
+const economySource=service.saveCustom({label:'Research source',category:'economy',selections:['research'],addOns:{defensive:{source:'profile'}}});
+const armyTarget=service.saveCustom({label:'Bomber with extras',category:'attacking',selections:['attack-bomber'],addOns:{defensive:{source:'target',targetId:defenceSource},economy:{source:'target',targetId:economySource}}});
+const entry=id=>service.settings().customPurposes.find(p=>p.id===id);
+const stats=id=>service.definitions.find(p=>p.id===id).stats;
+assert.equal(entry(armyTarget).category,'attacking');
+assert.ok(stats(armyTarget).has('Bomber Damage'));assert.ok(stats(armyTarget).has('Invading Bomber Damage'));assert.ok(stats(armyTarget).has('Library Research Time'));
+assert.ok(!stats(armyTarget).has('Heavy Tank Damage'),'a defensive donor does not pass on its attacking add-on');
+assert.ok(!stats(armyTarget).has('Tower Damage'),'an economy donor does not pass on its defensive add-on');
+service.saveCustom({...entry(defenceSource),addOns:{attacking:{source:'target',targetId:armyTarget}}});
+assert.ok(stats(armyTarget).has('Invading Bomber Damage'),'mutual references resolve base stats without recursion');
+service.saveCustom({...entry(defenceSource),excludedPerks:['Invading Bomber Hitpoints']});
+assert.ok(!stats(armyTarget).has('Invading Bomber Hitpoints'),'source exclusions update dependents immediately');
+assert.throws(()=>service.removeCustom(defenceSource),/supplies stats/);
+assert.throws(()=>service.saveCustom({...entry(armyTarget),addOns:{defensive:{source:'target',targetId:economySource}}}),/matching category/);
+const hybridRows=value=>[row('Bomber Damage',value),row('Invading Bomber Damage',-value),row('Library Research Time',-value),row('Heavy Tank Damage',value),row('Tower Damage',value)];
+const hybridOwned=[owned('hybrid-best',hybridRows(11)),owned('hybrid-second',hybridRows(6))];
+let hybrid=service.evaluate(craft(hybridRows(11)),{type:'Armor',hall:'main',owned:hybridOwned,selected:[armyTarget]})[0];
+assert.equal(hybrid.score,300);assert.equal(hybrid.threshold,225);assert.ok(hybrid.hit,'craft and owned items use the same combined membership');
+const attackSpecialist=service.saveCustom({label:'Pure bomber attack',category:'attacking',selections:['attack-bomber']});
+const defenceSpecialist=service.saveCustom({label:'Pure bomber defence',category:'defensive',selections:['counter-bomber']});
+const specialistRows=(name,value)=>[row(name,value),filler(),filler(),filler(),filler()];
+const specialists=[owned('attack-a',specialistRows('Bomber Damage',11)),owned('attack-b',specialistRows('Bomber Damage',11)),owned('defence-a',specialistRows('Invading Bomber Damage',-11)),owned('defence-b',specialistRows('Invading Bomber Damage',-11))];
+const balancedCraft=craft([row('Bomber Damage',6),row('Invading Bomber Damage',-6),filler(),filler(),filler()]);
+const balanced=service.evaluate(balancedCraft,{type:'Armor',hall:'main',owned:specialists,selected:[attackSpecialist,defenceSpecialist,armyTarget]});
+assert.ok(!balanced[0].hit&&!balanced[1].hit&&balanced[2].hit,'a balanced improvement can win its explicit combined benchmark while losing both specialist checks');
+assert.equal(balanced[2].score,150);assert.equal(balanced[2].threshold,100);
+service.saveCustom({...entry(armyTarget),addOns:{defensive:{source:'profile'}}});
+assert.ok(stats(armyTarget).has('Tower Damage'));assert.ok(!stats(armyTarget).has('Library Research Time'));
+service.saveCustom({...entry(armyTarget),addOns:{}});
+assert.ok(!stats(armyTarget).has('Invading Bomber Damage'),'disabled add-ons contribute nothing');
+service.saveCustom({...entry(armyTarget),addOns:{defensive:{source:'target',targetId:defenceSource}}});
+const missing=service.settings();missing.customPurposes=missing.customPurposes.filter(p=>p.id!==defenceSource);DN.lsSet('dn-crafting-purposes',JSON.stringify(missing));
+hybrid=service.evaluate(craft(hybridRows(11)),{type:'Armor',hall:'main',owned:[],selected:[armyTarget]})[0];
+assert.equal(hybrid.status,'unavailable');assert.ok(!hybrid.hit,'missing imported donors cannot silently qualify a target');
+DN.setActiveProfile(DN.addProfile('Source isolation'));
+assert.throws(()=>service.saveCustom({label:'Cross profile',category:'attacking',selections:['attack-bomber'],addOns:{defensive:{source:'target',targetId:defenceSource}}}),/matching category/);
+// v4 mixed targets retain scoring through explicit named donors, with originals backed up.
+DN.lsSet('dn-crafting-purposes',JSON.stringify({version:4,selected:['custom-v4'],activeId:'custom-v4',customPurposes:[{id:'custom-v4',label:'Existing mixed army',selections:['attack-bomber','counter-bomber','loot'],perks:[],excludedPerks:['Invading Bomber Hitpoints']}]}));
+const upgraded=service.settings(),legacy=upgraded.customPurposes.find(p=>p.id==='custom-v4');
+assert.equal(upgraded.version,6);assert.equal(legacy.category,'attacking');assert.equal(legacy.selections.length,1);
+assert.ok(legacy.addOns.defensive);assert.ok(legacy.addOns.economy);assert.equal(upgraded.selected.join(','),'custom-v4');
+assert.ok(stats('custom-v4').has('Invading Bomber Damage'));assert.ok(!stats('custom-v4').has('Invading Bomber Hitpoints'));assert.ok(stats('custom-v4').has('All Resources Looted'));
+assert.equal(upgraded.legacyTargets.customPurposes[0].selections.length,3);assert.equal(service.settings().customPurposes.length,3,'migration is idempotent');
+// Retiring the three automatic targets preserves any borrowed scoring scope.
+DN.lsSet('dn-crafting-purposes',JSON.stringify({version:5,selected:['custom-general-attacking','custom-general-defensive','custom-general-economy','custom-user'],activeId:'custom-general-attacking',customPurposes:[
+  {id:'custom-general-attacking',label:'Offensive - General',category:'attacking',selections:['general-attacking'],excludedPerks:[]},
+  {id:'custom-general-defensive',label:'Defensive - General',category:'defensive',selections:['general-defensive'],excludedPerks:['Invading Bomber Hitpoints']},
+  {id:'custom-general-economy',label:'Economy - General',category:'economy',selections:['general-economy'],excludedPerks:[]},
+  {id:'custom-user',label:'My bomber target',category:'attacking',selections:['attack-bomber'],addOns:{defensive:{source:'target',targetId:'custom-general-defensive'},economy:{source:'target',targetId:'custom-general-economy'}}}
+]}));
+const retired=service.settings();
+assert.equal(retired.customPurposes.length,1);assert.equal(retired.selected.join(','),'custom-user');assert.equal(retired.activeId,'custom-user');
+assert.equal(retired.customPurposes[0].addOns.defensive.source,'snapshot');assert.equal(retired.customPurposes[0].addOns.economy.source,'profile');
+assert.ok(stats('custom-user').has('Invading Bomber Damage'));assert.ok(!stats('custom-user').has('Invading Bomber Hitpoints'));assert.ok(stats('custom-user').has('All Resources Looted'));
+assert.equal(retired.removedDefaultTargets.length,3);assert.equal(service.settings().customPurposes.length,1,'removed defaults never return');
+service.saveCustom({...retired.customPurposes[0],label:'My renamed bomber target'});
+assert.ok(!stats('custom-user').has('Invading Bomber Hitpoints'),'a migrated snapshot survives save and reload');
+service.removeCustom('custom-user');assert.equal(service.settings().customPurposes.length,0,'deleting the last target leaves an empty collection');
+const beforeBatch=JSON.stringify(service.settings());
+assert.throws(()=>service.saveCustoms([
+  {label:'Batch attack',category:'attacking',selections:['attack-bomber']},
+  {label:'',category:'defensive',selections:['counter-bomber']}
+]),/name/);
+assert.equal(JSON.stringify(service.settings()),beforeBatch,'invalid batch saves must not persist partial changes');
+const batch=service.saveCustoms([
+  {label:'Batch attack',category:'attacking',selections:['attack-bomber']},
+  {label:'Batch defence',category:'defensive',selections:['counter-bomber']}
+]);
+assert.equal(batch.length,2);assert.equal(service.settings().customPurposes.length,2);
+reset();
+const groundTarget=service.saveCustom({label:'Ground building test',category:'attacking',selections:['attack-heavy-infantry']});
+const towerCraftRows=[row('Enemy Tower Damage',-11),filler(),filler(),filler(),filler()];
+const towerOwnedRows=[row('Enemy Tower Damage',-6),filler(),filler(),filler(),filler()];
+const towerResult=service.evaluate({...craft(towerCraftRows),artifact:{type:'Jewelry'}},{type:'Jewelry',hall:'main',owned:[owned('tower-benchmark',towerOwnedRows,'Jewelry'),owned('tower-benchmark-2',towerOwnedRows,'Jewelry')],selected:[groundTarget]})[0];
+assert.equal(towerResult.score,100);assert.equal(towerResult.threshold,75);assert.ok(towerResult.hit,'newly relevant building stats score for crafted and owned artifacts alike');
+const defenderRows=[row('Enemy Defender Spawn Time',11),row('Enemy Defender Hitpoints',-6),filler(),filler(),filler()];
+const defenderOwnedRows=[row('Enemy Defender Spawn Time',1),row('Enemy Defender Hitpoints',-6),filler(),filler(),filler()];
+const defenderResult=service.evaluate({...craft(defenderRows),artifact:{type:'Weapon'}},{type:'Weapon',hall:'main',owned:[owned('defender-one',defenderOwnedRows,'Weapon'),owned('defender-two',defenderOwnedRows,'Weapon')],selected:[groundTarget]})[0];
+assert.equal(defenderResult.score,175);assert.equal(defenderResult.threshold,125);assert.ok(defenderResult.hit,'positive enemy spawn-time and negative defender-hitpoint stats both score consistently for crafted and owned items');
+console.log('Category-local targets, explicit profile/named sources, non-recursive borrowing, live updates, combined benchmarks, migration, isolation and atomic draft saves passed.');

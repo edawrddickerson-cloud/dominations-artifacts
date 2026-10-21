@@ -59,7 +59,11 @@
       throw error;
     }
   }
-  window.DNLocalBackupCore={validate,settingsSnapshot,restore};
+  async function saveRecovery(local,serviceStore) {
+    const previous=await serviceStore.get('cloud-recovery') || [];
+    await serviceStore.put('cloud-recovery',[{createdAt:new Date().toISOString(),owner:null,local,remote:null},...previous].slice(0,3));
+  }
+  window.DNLocalBackupCore={validate,settingsSnapshot,restore,saveRecovery};
   const root=document.querySelector('[data-local-backup]');
   if(!root)return;
   root.innerHTML='<summary>Back up / restore saved data</summary><p>Browser storage survives normal restarts, but clearing site data removes it. Export a file to keep a separate copy of crafting logs, scanned stats and artwork, every profile\'s Collection, and planner settings.</p><button type="button" class="btn" data-backup-export>Export Backup</button> <button type="button" class="btn" data-backup-import>Import Backup</button><input type="file" accept=".json,application/json" data-backup-file hidden /><p role="status" aria-live="polite" data-backup-status></p>';
@@ -88,8 +92,10 @@
     try {
       const data=validate(JSON.parse(await file.text()));
       const total=data.records.reduce((sum,record)=>sum+(record.items?.length || 0),0);
-      if(!confirm('Restore this backup ('+total+' scanned artifacts)? This replaces ALL saved planner data in this browser, including every profile and crafting log. Close other planner tabs and stop scanning first. A safety backup of your current data will download before restore.'))return;
-      download(await snapshot(),'dominations-before-restore');
+      if(!confirm('Restore backup ('+total+' scanned artifacts)? This replaces this browser’s planner data. Close other planner tabs and stop scanning. A local safety copy will be available in Show safety backups.'))return;
+      await window.DNServicesReady;
+      if(!window.DNServiceStore)throw Error('Safety backup storage is unavailable. Reload and try again.');
+      await saveRecovery(await snapshot(),window.DNServiceStore);
       await restore(data,localStorage,store);
       location.reload();
     } catch(error){status.textContent='Backup could not be restored: '+error.message;}
