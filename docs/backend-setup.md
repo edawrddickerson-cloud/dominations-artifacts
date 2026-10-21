@@ -2,7 +2,7 @@
 
 The browser application remains the source of local saves. Supabase adds optional account storage through a versioned workspace; PostHog receives explicit, consented usage and diagnostic events. OCR, scoring and local collection writes never wait for either service.
 
-The prepared release configuration enables cloud accounts only on `https://dominations-artifacts.pages.dev`; operator account testing also remains available at `http://127.0.0.1:8765`. The public origin uses `environment: production`; local and preview origins use `development`, keeping their activity out of production dashboards. Product analytics and diagnostics can be selected in Account & privacy and default off; `privacyReady` is true and `researchEnabled` remains false. The privacy notice identifies the confirmed PostHog Free one-year analysis window; that window is not a physical-deletion guarantee. These release files must be deployed before the public site adopts the new configuration.
+The prepared release configuration enables cloud accounts only on `https://dominations-planner.ededed84.workers.dev`; operator account testing also remains available at `http://127.0.0.1:8765`. The public origin uses `environment: production`; local and preview origins use `development`, keeping their activity out of production dashboards. Product analytics and diagnostics can be selected in Account & privacy and default off; `privacyReady` is true and `researchEnabled` remains false. The privacy notice identifies the confirmed PostHog Free one-year analysis window; that window is not a physical-deletion guarantee. These release files must be deployed before the public site adopts the new configuration.
 
 ## Local configuration
 

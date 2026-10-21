@@ -3,7 +3,7 @@
  * of output. Checks CORS, gateway configuration and runtime-key availability. */
 const fs=require('node:fs'),vm=require('node:vm');
 const context={window:{}};vm.runInNewContext(fs.readFileSync('ui/service-config.js','utf8'),context);
-const config=context.window.DNServiceConfig,origin=process.argv.includes('--public')?'https://dominations-artifacts.pages.dev':'http://127.0.0.1:8765';
+const config=context.window.DNServiceConfig,origin=process.argv.includes('--public')?'https://dominations-planner.ededed84.workers.dev':'http://127.0.0.1:8765';
 (async()=>{
   if(!config.supabaseUrl || !config.supabasePublishableKey)throw Error('missing-configuration');
   const url=config.supabaseUrl+'/functions/v1/delete-account';

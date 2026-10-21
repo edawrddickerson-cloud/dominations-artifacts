@@ -28,7 +28,7 @@ async function main(){
   const otherPlanner=()=>query(database,tables.map(table=>`select '${table}:'||count(*)||':'||md5(coalesce(string_agg(md5(to_jsonb(t)::text),'' order by md5(to_jsonb(t)::text)),'')) from public.${table} t where owner_id<>'${id}';`).join('\n'));
   const baselineAccounts=otherAccounts(),baselinePlanner=otherPlanner();
   let accessToken=null,refreshToken=null;
-  async function request(route,{method='GET',body,token=accessToken,origin='https://dominations-artifacts.pages.dev'}={}){
+  async function request(route,{method='GET',body,token=accessToken,origin='https://dominations-planner.ededed84.workers.dev'}={}){
     const response=await fetch(new URL(route,configOrigin),{method,headers:{apikey:config.supabasePublishableKey,Origin:origin,...(token?{Authorization:'Bearer '+token}:{}),...(body?{'Content-Type':'application/json'}:{})},...(body?{body:JSON.stringify(body)}:{}),redirect:'error',signal:AbortSignal.timeout(20000)});
     let data;try{data=await response.json();}catch{}
     return {ok:response.ok,status:response.status,data};
@@ -58,7 +58,7 @@ async function main(){
     const lookup=()=>api.request(api.base+'persons/?distinct_id='+encodeURIComponent(distinct));
     const existing=await lookup();
     check('test analytics identity starts empty',Array.isArray(existing.results) && existing.results.length===0 && !existing.next);
-    const capture=await fetch(config.posthogHost+'/i/v0/e/',{method:'POST',headers:{'Content-Type':'text/plain',Origin:'https://dominations-artifacts.pages.dev'},redirect:'error',signal:AbortSignal.timeout(15000),body:JSON.stringify({api_key:config.posthogToken,event:'feature_used',distinct_id:distinct,timestamp:new Date().toISOString(),properties:{distinct_id:distinct,feature:'deletion-check',environment:'test',app_build:'live-account-deletion-check',identity_kind:'account',$process_person_profile:true,$set:{dn_setup_check:'live-account-deletion-v1',dn_setup_nonce:nonce},$geoip_disable:true,$ip:null,$insert_id:crypto.randomUUID(),$session_id:crypto.randomUUID()}})});
+    const capture=await fetch(config.posthogHost+'/i/v0/e/',{method:'POST',headers:{'Content-Type':'text/plain',Origin:'https://dominations-planner.ededed84.workers.dev'},redirect:'error',signal:AbortSignal.timeout(15000),body:JSON.stringify({api_key:config.posthogToken,event:'feature_used',distinct_id:distinct,timestamp:new Date().toISOString(),properties:{distinct_id:distinct,feature:'deletion-check',environment:'test',app_build:'live-account-deletion-check',identity_kind:'account',$process_person_profile:true,$set:{dn_setup_check:'live-account-deletion-v1',dn_setup_nonce:nonce},$geoip_disable:true,$ip:null,$insert_id:crypto.randomUUID(),$session_id:crypto.randomUUID()}})});
     if(!capture.ok)throw Error('Synthetic account analytics capture failed.');
     let persons;let notice=Date.now()+20000;
     for(let attempt=0;attempt<40;attempt++) {

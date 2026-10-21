@@ -28,7 +28,7 @@ async function checkOrigin(origin,environment,accounts){
   await new Promise(resolve=>setTimeout(resolve,10));assert.equal(sent.length,before);
 }
 (async()=>{
-  await checkOrigin('https://dominations-artifacts.pages.dev','production',true);
+  await checkOrigin('https://dominations-planner.ededed84.workers.dev','production',true);
   await checkOrigin('http://127.0.0.1:8765','development',true);
   await checkOrigin('http://localhost:8765','development',false);
   await checkOrigin('https://preview.dominations-artifacts.pages.dev','development',false);

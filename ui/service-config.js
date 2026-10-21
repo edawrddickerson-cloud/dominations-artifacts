@@ -1,10 +1,10 @@
 /* Public integration configuration. Never put privileged keys in ui/.
  * Empty project values keep all cloud/analytics connections disabled. */
 window.DNServiceConfig=Object.freeze({
-  build:'2026-10-22-public-accounts-v1',
+  build:'2026-10-22-public-accounts-v2',
   // Local work and preview hosts stay out of production usage dashboards.
-  environment:typeof location!=='undefined' && location.origin!=='https://dominations-artifacts.pages.dev'?'development':'production',
-  cloudEnabled:typeof location==='undefined' || location.origin==='https://dominations-artifacts.pages.dev',
+  environment:typeof location!=='undefined' && location.origin!=='https://dominations-planner.ededed84.workers.dev'?'development':'production',
+  cloudEnabled:typeof location==='undefined' || location.origin==='https://dominations-planner.ededed84.workers.dev',
   // Local account testing remains restricted to the existing loopback URL.
   localCloudTesting:true,
   supabaseUrl:"https://gdzfpyrtdhzxvwcxqzdv.supabase.co",
