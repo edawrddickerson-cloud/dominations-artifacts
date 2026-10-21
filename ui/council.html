@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Council Rankings</title>
   <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
-  <link rel="stylesheet" href="council.css?v=11" />
+  <link rel="stylesheet" href="council.css?v=20261022-shared-ratings" />
 </head>
 <body class="page-council-priority">
   <nav class="site-nav" aria-label="Pages">
@@ -92,7 +92,6 @@
     </div>
   </section>
 
-  <p class="ratings-hint">Council scores use this profile’s Council ratings. Artifact strategy priorities apply on the artifact pages.</p>
   <p id="error" class="error" hidden></p>
 
   <div class="table-wrap">
@@ -108,6 +107,7 @@
           <th data-score-axis="defensive" scope="col" class="th-plain th-numeric" title="Per-line Defensive scores (rating × magnitude)"><span class="th-label">Def</span></th>
           <th class="th-numeric" data-score-axis="offensive" data-sort="offensive" aria-sort="none" scope="col" title="Offensive total: Hall sum or Showcase line. Sorts by this total first; with both axes selected, the other total breaks ties."><button type="button" class="th-sort">Off Σ</button></th>
           <th class="th-numeric" data-score-axis="defensive" data-sort="defensive" aria-sort="none" scope="col" title="Defensive total: Hall sum or Showcase line. Sorts by this total first; with both axes selected, the other total breaks ties."><button type="button" class="th-sort">Def Σ</button></th>
+          <th class="th-numeric" data-sort="preference" aria-sort="none" scope="col" title="Hall sums the higher selected-axis score per stat. Showcase uses the highest selected-axis stat."><button type="button" class="th-sort">Score</button></th>
         </tr>
       </thead>
       <tbody id="tbody"></tbody>
@@ -117,10 +117,10 @@
   </div>
   <script src="data/army_catalog.js?v=8"></script>
   <script src="shared.js?v=20261019-rating-scale"></script>
-  <script src="profiles-ui.js?v=20261020-title-case-nav"></script>
-  <script src="council-shared.js?v=20261019-rating-scale"></script>
-  <script src="council.js?v=18"></script>
+  <script src="profiles-ui.js?v=20261022-council-nav"></script>
+  <script src="council-shared.js?v=20261022-shared-ratings"></script>
+  <script src="council.js?v=20261022-shared-ratings"></script>
 
-  <script src="services.js?v=20261022-public-accounts"></script>
+  <script src="services.js?v=20261022-discord-user"></script>
 </body>
 </html>

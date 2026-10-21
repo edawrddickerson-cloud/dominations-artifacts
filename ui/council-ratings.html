@@ -4,9 +4,9 @@
   <meta charset="utf-8" />
   <script src="navigation.js?v=6"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Council · Stat ratings</title>
+  <title>Council Ratings</title>
   <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
-  <link rel="stylesheet" href="council.css?v=11" />
+  <link rel="stylesheet" href="council.css?v=20261022-shared-ratings" />
 </head>
 <body class="page-ratings page-council-ratings">
   <nav class="site-nav" aria-label="Pages">
@@ -36,33 +36,36 @@
 
   <section class="filters ratings-page-controls" aria-label="Ratings controls">
     <div class="filter-main">
+      <label class="filter-control">Group by
+        <select id="ratings-group-by"><option value="family">Stat family</option><option value="none">None</option></select>
+      </label>
+      <label class="filter-control">Show
+        <select id="ratings-show"><option value="all">All ratings</option><option value="overridden">Council overrides</option><option value="zero">Zero ratings</option><option value="shared">Shared stats</option><option value="council">Council-only stats</option></select>
+      </label>
       <label class="filter-control">
         Search
         <input type="search" id="ratings-q" placeholder="Search stats…" autocomplete="off" />
       </label>
     </div>
     <div class="filter-actions">
-      <button type="button" id="ratings-reset" class="btn">Reset to defaults</button>
+      <button type="button" id="ratings-reset" class="btn">Clear Council overrides</button>
     </div>
   </section>
 
-  <p class="ratings-hint">These Council ratings apply across this profile’s artifact strategies. Edit artifact priorities on Collection targets.</p>
   <p id="error" class="error" hidden></p>
-  <p class="ratings-hint" id="ratings-hint">
-    Scores apply on Council Priority (rating × bonus magnitude). Defaults come from matching artifact perk ratings; overrides stay in a separate council store per profile.
-  </p>
+  <div class="stats" id="ratings-count" aria-live="polite"></div>
 
   <div class="ratings-page-scroll" id="ratings-scroll">
-    <div class="ratings-page-grid" id="ratings-grid" style="--ratings-groups: 1"></div>
+    <div id="ratings-grid"></div>
   </div>
   </div>
 
   <script src="data/army_catalog.js?v=8"></script>
   <script src="shared.js?v=20261019-rating-scale"></script>
-  <script src="profiles-ui.js?v=20261020-title-case-nav"></script>
-  <script src="council-shared.js?v=20261019-rating-scale"></script>
-  <script src="council-ratings.js?v=20261017-strategies"></script>
+  <script src="profiles-ui.js?v=20261022-council-nav"></script>
+  <script src="council-shared.js?v=20261022-shared-ratings"></script>
+  <script src="council-ratings.js?v=20261022-shared-ratings"></script>
 
-  <script src="services.js?v=20261022-public-accounts"></script>
+  <script src="services.js?v=20261022-discord-user"></script>
 </body>
 </html>

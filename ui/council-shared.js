@@ -382,6 +382,56 @@
     const payload = JSON.stringify({ v: RATINGS_STORE_VERSION, ratings });
     if (window.DN) window.DN.lsSet(RATINGS_KEY, payload);
     else localStorage.setItem(RATINGS_KEY, payload);
+    if (window.dispatchEvent && window.CustomEvent) {
+      window.dispatchEvent(new window.CustomEvent("dn-council-ratings-changed"));
+    }
+  }
+
+  // Council overrides sit above shared profile/global/group/factory ratings.
+  // Artifact strategy snapshots and loadout overrides never enter this chain.
+  function createRatingContext(artifactDefaults, councilDefaults, canon = name => name) {
+    const DN = window.DN;
+    const artifact = remapDefaults(artifactDefaults, canon);
+    const council = remapDefaults(councilDefaults, canon);
+    let global, groups, profile, ratings;
+    function refresh() {
+      global = remapOverrides(DN.loadStoredGlobalPerkRatings(), canon);
+      groups = DN.loadPerkGroupDefaults();
+      profile = remapOverrides(DN.loadProfilePerkOverrides(DN.activeProfileId()), canon);
+      ratings = remapOverrides(sanitizeOverrides(migrateRatings(loadRatingsRaw())), canon);
+    }
+    function sharedDefault(name, axis) {
+      name = canon(name);
+      if (!Object.hasOwn(artifact, name)) return {value: council[name]?.[axis] ?? 0, source: "Council default"};
+      const value = DN.perkRatingAxisOrNull(global, name, axis);
+      if (value != null) return {value, source: "Global rating"};
+      const group = DN.groupPerkRating(name, axis, groups);
+      return group != null ? {value: group, source: "Group rating"} : {value: artifact[name][axis], source: "Artifact default"};
+    }
+    function inherited(name, axis) {
+      name = canon(name);
+      const value = Object.hasOwn(artifact, name) ? DN.perkRatingAxisOrNull(profile, name, axis) : null;
+      return value != null ? {value, source: "Shared profile"} : sharedDefault(name, axis);
+    }
+    function explain(name, axis) {
+      name = canon(name);
+      const value = DN.perkRatingAxisOrNull(ratings, name, axis);
+      return value != null ? {value, source: "Council override"} : inherited(name, axis);
+    }
+    refresh();
+    return {
+      refresh, explain, inherited, sharedDefault,
+      isShared: name => Object.hasOwn(artifact, canon(name)),
+      ratingOf: (name, axis) => explain(name, axis).value,
+      profileValue: (name, axis) => DN.perkRatingAxisOrNull(profile, canon(name), axis),
+      councilValue: (name, axis) => DN.perkRatingAxisOrNull(ratings, canon(name), axis),
+      get overrides() { return ratings; },
+    };
+  }
+
+  function activeLineScore(offensive, defensive, axes) {
+    if (axes.offensive && axes.defensive) return Math.max(offensive, defensive);
+    return axes.offensive ? offensive : axes.defensive ? defensive : 0;
   }
 
   function parsePercent(value) {
@@ -452,6 +502,8 @@
     remapOverrides,
     remapDefaults,
     saveRatings,
+    createRatingContext,
+    activeLineScore,
     parsePercent,
     bonusMagnitude,
     SCORE_MODE_KEY,

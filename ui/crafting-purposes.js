@@ -282,7 +282,7 @@
     return [...new Set(perks)].sort((a,b)=>a.localeCompare(b)).map(name=>{
       const axis=axisFor(name),label=axis==='offensive'?'Off':'Def',value=DN.perkRatingAxisOrNull(ratingLayers.profile,name,axis);
       const inherited=Math.max(0,DN.perkRatingAxisOrNull(ratingLayers.global,name,axis)??DN.perkRatingAxisOrNull(factoryDefaults,name,axis)??0);
-      return '<label><span>'+DN.esc(name)+' <small class="purpose-rating-axis">'+label+'</small></span><input type="number" class="rating-input" min="0" max="10" step="1" value="'+(value==null?'':Math.max(0,value))+'" placeholder="'+inherited+'" data-purpose-weight="'+id+'" data-perk="'+DN.esc(name)+'" data-purpose-axis="'+axis+'" aria-label="'+DN.esc(name+': shared profile '+label+' rating')+'" /></label>';
+      return '<label><span>'+DN.esc(name)+'</span><input type="number" class="rating-input" min="0" max="10" step="1" value="'+(value==null?'':Math.max(0,value))+'" placeholder="'+inherited+'" data-purpose-weight="'+id+'" data-perk="'+DN.esc(name)+'" data-purpose-axis="'+axis+'" aria-label="'+DN.esc(name+': shared profile '+label+' rating')+'" /></label>';
     }).join('');
   }
   function renderGrouped(id,query='') {

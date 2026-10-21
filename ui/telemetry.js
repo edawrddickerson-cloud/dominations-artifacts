@@ -6,6 +6,9 @@
   'use strict';
   const C=window.DNIntegrationCore,config=window.DNServiceConfig;
   const listeners=new Set(),pending=new Set(),requests=new Set(),attempts=new Map(),seen=new Set();
+  // Local UI timing only; never sends or stores scan data before consent.
+  const successfulScanListeners=new Set();
+  let successfulScan=false;
   let preferences=C.consent(localStorage),owner=null,lastActivity=0,activeSince=0,lastTick=Date.now();
   const page=(location.pathname.split('/').pop() || '').replace('.html','');
   const pages=new Set(['army','artifacts','collection','totals','ratings','council','council-collection','council-ratings','config','scanner','storage-scanner']);
@@ -118,6 +121,11 @@
       inferred_count:info.inferredCount,corrected_count:info.correctedCount || 0,sample_rate:config.diagnosticsSampleRate});
   }
   function scannerResult(result,{source,encounterId,corrected=false}) {
+    if(result?.valid && !successfulScan){
+      successfulScan=true;
+      for(const listener of successfulScanListeners)try{listener();}catch{}
+      successfulScanListeners.clear();
+    }
     const key=source+':'+encounterId;
     if(seen.has(key))return;
     if(seen.size>=10000)seen.delete(seen.keys().next().value);seen.add(key);
@@ -142,6 +150,7 @@
       $exception_fingerprint:type+':'+tag+':'+(frames.at(-1)?.filename || 'unknown')+':'+(frames.at(-1)?.lineno || 0),$exception_level:'error',error_tag:tag});
   }
   window.DNTelemetry={event,exception,scannerStage,scannerFinished,scannerResult,milestone,
+    onSuccessfulScan(listener){if(successfulScan)listener();else successfulScanListeners.add(listener);return ()=>successfulScanListeners.delete(listener);},
     setOwner(id){if(owner!==id){cancelPending();owner=id || null;lastActivity=0;activeSince=0;}},
     analyticsId(){return permitted('$pageview')?distinct('analytics',session(false)):null;}};
   window.addEventListener('error',e=>exception(e.error));

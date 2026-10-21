@@ -66,7 +66,7 @@
   window.DNLocalBackupCore={validate,settingsSnapshot,restore,saveRecovery};
   const root=document.querySelector('[data-local-backup]');
   if(!root)return;
-  root.innerHTML='<summary>Back up / restore saved data</summary><p>Browser storage survives normal restarts, but clearing site data removes it. Export a file to keep a separate copy of crafting logs, scanned stats and artwork, every profile\'s Collection, and planner settings.</p><button type="button" class="btn" data-backup-export>Export Backup</button> <button type="button" class="btn" data-backup-import>Import Backup</button><input type="file" accept=".json,application/json" data-backup-file hidden /><p role="status" aria-live="polite" data-backup-status></p>';
+  root.innerHTML='<summary>Backups</summary><p>All profiles, collections, scanner logs, images and settings.</p><button type="button" class="btn" data-backup-export>Export Backup</button> <button type="button" class="btn" data-backup-import>Import Backup</button><input type="file" accept=".json,application/json" data-backup-file hidden /><p role="status" aria-live="polite" data-backup-status></p>';
   const exportButton=root.querySelector('[data-backup-export]'),importButton=root.querySelector('[data-backup-import]'),fileInput=root.querySelector('[data-backup-file]'),status=root.querySelector('[data-backup-status]');
   const store=window.DNStoredArtifacts;
   const snapshot=async()=>{
@@ -81,7 +81,7 @@
   const busy=value=>{exportButton.disabled=value;importButton.disabled=value;};
   exportButton.addEventListener('click',async()=>{
     busy(true);
-    try {download(await snapshot());status.textContent='Backup download started. Keep the JSON file somewhere safe; export again after adding or editing stats.';}
+    try {download(await snapshot());status.textContent='Backup download started.';}
     catch(error){status.textContent='Backup failed: '+error.message;}
     finally{busy(false);}
   });

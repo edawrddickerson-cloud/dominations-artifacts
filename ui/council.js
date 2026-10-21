@@ -48,6 +48,7 @@
   let defaultRatings = {};
   /** @type {Record<string, { offensive?: number, defensive?: number }>} */
   let ratings = {};
+  let ratingContext;
   let prefSortAxes = { offensive: true, defensive: true };
   /** @type {"combined" | "maxrow"} */
   let scoreMode = "combined";
@@ -86,17 +87,11 @@
 
   /** @param {"offensive" | "defensive"} axis */
   function ratingOf(name, axis) {
-    const entry = ratings[name];
-    if (entry && Object.prototype.hasOwnProperty.call(entry, axis) && typeof entry[axis] === "number") {
-      return entry[axis];
-    }
-    const def = defaultRatings[name];
-    return def ? def[axis] : 0;
+    return ratingContext.ratingOf(name, axis);
   }
 
   function hasAnyRatings() {
-    if (Object.keys(ratings).length > 0) return true;
-    return Object.values(defaultRatings).some((v) => v.offensive || v.defensive);
+    return allStatNames.some(name => C.AXES.some(axis => ratingOf(name, axis) !== 0));
   }
 
   function hasAnyPrefSortAxis() {
@@ -150,10 +145,7 @@
   }
 
   function lineActiveScore(line) {
-    let sum = 0;
-    if (prefSortAxes.offensive) sum += line.offensive;
-    if (prefSortAxes.defensive) sum += line.defensive;
-    return sum;
+    return C.activeLineScore(line.offensive, line.defensive, prefSortAxes);
   }
 
   /**
@@ -195,9 +187,7 @@
       offensive += line.offensive;
       defensive += line.defensive;
     }
-    let preference = 0;
-    if (prefSortAxes.offensive) preference += offensive;
-    if (prefSortAxes.defensive) preference += defensive;
+    const preference = lines.reduce((sum, line) => sum + lineActiveScore(line), 0);
     return { lines, bestIndex: -1, offensive, defensive, preference };
   }
 
@@ -285,7 +275,7 @@
         scoreMode === "maxrow" && scores && i === scores.bestIndex ? " is-best-line" : "";
       return (
         `<div class="perk-row${highlight}${best}">` +
-        `<span class="perk-name">${line.name ? C.esc(line.name) : C.blankSpan(C.BLANK)}</span>` +
+        `<span class="perk-name">${line.name ? `<a class="council-stat-link" href="council-ratings.html?stat=${C.esc(encodeURIComponent(line.name))}" title="Edit ${C.esc(line.name)} ratings">${C.esc(line.name)}</a>` : C.blankSpan(C.BLANK)}</span>` +
         `<span class="perk-vals"><span class="perk-val-main">${
           line.value ? C.esc(line.value) : C.blankSpan(C.BLANK)
         }</span></span>` +
@@ -462,8 +452,8 @@
         bv = C.text(b.type).toLowerCase();
         break;
       case "stats":
-        av = currentStats(a).length;
-        bv = currentStats(b).length;
+        av = currentBonuses(a).map(b => `${C.text(b.stat)} ${C.text(b.value)}`).join("; ").toLowerCase();
+        bv = currentBonuses(b).map(b => `${C.text(b.stat)} ${C.text(b.value)}`).join("; ").toLowerCase();
         break;
       default: {
         const ka = defaultSortKey(a);
@@ -541,7 +531,8 @@
   function resolvePrefSortKey(requested) {
     const off = !!prefSortAxes.offensive;
     const def = !!prefSortAxes.defensive;
-    if (off && def) return requested === "defensive" ? "defensive" : "offensive";
+    if (requested === "preference") return "preference";
+    if (off && def) return requested === "defensive" || requested === "offensive" ? requested : "preference";
     if (off) return "offensive";
     if (def) return "defensive";
     return requested;
@@ -646,7 +637,7 @@
 
     if (!filtered.length) {
       el.tbody.innerHTML =
-        `<tr class="empty-row"><td colspan="${5 + 2 * (Number(prefSortAxes.offensive) + Number(prefSortAxes.defensive))}">No councilors match these filters.</td></tr>`;
+        `<tr class="empty-row"><td colspan="${6 + 2 * (Number(prefSortAxes.offensive) + Number(prefSortAxes.defensive))}">No councilors match these filters.</td></tr>`;
       return;
     }
 
@@ -690,6 +681,7 @@
           (prefSortAxes.defensive ? `<td class="pref-cell">${axisLinesBlock(scores, "defensive")}</td>` : "") +
           (prefSortAxes.offensive ? `<td class="pref-cell pref-total-cell">${axisTotalBlock(scores, "offensive")}</td>` : "") +
           (prefSortAxes.defensive ? `<td class="pref-cell pref-total-cell">${axisTotalBlock(scores, "defensive")}</td>` : "") +
+          `<td class="pref-cell pref-total-cell council-preference">${axisTotalBlock(scores, "preference")}</td>` +
           `</tr>`
         );
       })
@@ -772,18 +764,31 @@
       if (!th) return;
       setSort(th.getAttribute("data-sort"));
     });
+    for (const event of ["focus", "storage", "dn-strategies-changed", "dn-council-ratings-changed"]) {
+      window.addEventListener(event, () => {
+        try {
+          ratingContext.refresh();
+          ratings = ratingContext.overrides;
+          maybeDefaultPreferenceSort();
+          render();
+          showError("");
+        } catch (err) { showError(`Could not refresh ratings: ${err.message || err}`); }
+      });
+    }
   }
 
   async function load() {
     try {
-      const [dataRes, defRes, imgRes, mapRes] = await Promise.all([
+      const [dataRes, defRes, imgRes, mapRes, artifactDefRes] = await Promise.all([
         fetch(DATA_URL, { cache: "no-store" }),
         fetch(DEFAULTS_URL, { cache: "no-store" }),
         fetch(IMAGES_URL, { cache: "no-store" }),
         fetch(MAPPING_URL, { cache: "no-store" }),
+        fetch("./data/perk_rating_defaults.json", { cache: "no-store" }),
       ]);
       if (!dataRes.ok) throw new Error(`HTTP ${dataRes.status} loading ${DATA_URL}`);
       if (!defRes.ok) throw new Error(`HTTP ${defRes.status} loading ${DEFAULTS_URL}`);
+      if (!artifactDefRes.ok) throw new Error(`HTTP ${artifactDefRes.status} loading artifact ratings`);
       const data = await dataRes.json();
       if (!data || !Array.isArray(data.councilors)) {
         throw new Error("councilors.json missing councilors array");
@@ -794,6 +799,14 @@
         window.DN && mapRes.ok
           ? window.DN.makeCanonPerk(window.DN.parseMappingCsv(await mapRes.text()))
           : (n) => C.text(n);
+      rows = rows.map(row => {
+        const normalized = {...row};
+        for (const key of ["warBonuses", "multiplayerBonuses"]) {
+          normalized[key] = Object.fromEntries(Object.entries(row[key] || {}).map(([rarity, bonuses]) =>
+            [rarity, bonuses.map(bonus => ({...bonus, stat: canonStat(bonus.stat)}))]));
+        }
+        return normalized;
+      });
 
       const rawDefaults = await defRes.json();
       /** @type {Record<string, { offensive: number, defensive: number }>} */
@@ -809,10 +822,8 @@
       councilorImages =
         imgRes.ok && window.DN ? window.DN.imageUrlMap(await imgRes.json()) : {};
 
-      ratings = C.remapOverrides(
-        C.sanitizeOverrides(C.migrateRatings(C.loadRatingsRaw())),
-        canonStat
-      );
+      ratingContext = C.createRatingContext(await artifactDefRes.json(), defaultRatings, canonStat);
+      ratings = ratingContext.overrides;
       C.saveRatings(ratings);
       prefSortAxes = C.loadPrefSortAxes();
       scoreMode = C.loadScoreMode();

@@ -1,5 +1,33 @@
 /* Council-specific layout overrides (shared chrome lives in styles.css). */
 
+.council-stat-link { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: .2em; }
+.council-stat-link:hover, .council-stat-link:focus-visible { color: var(--accent); }
+.page-council-ratings #ratings-grid { width: min(100%, 60rem); min-width: 36rem; }
+/* Keep absolute screen-reader labels inside the horizontal scroll region. */
+.page-council-ratings .ratings-page-scroll { position: relative; }
+.council-rating-section { margin: .5rem 0 1rem; border: 1px solid var(--line); border-radius: 6px; }
+.council-rating-section > summary { cursor: pointer; padding: .7rem; font-weight: 650; }
+.council-rating-section > summary span { margin-left: .5rem; color: var(--muted); font-size: .8rem; }
+.council-ratings-table { width: 100%; min-width: 36rem; table-layout: fixed; }
+.council-ratings-table thead { position: sticky; top: 0; z-index: 2; background: var(--bg); }
+.council-ratings-table th, .council-ratings-table td { padding: .35rem .5rem; }
+.council-ratings-table thead th { position: static; text-align: center; }
+.council-ratings-table thead tr:first-child th:first-child { width: 42%; }
+.council-ratings-table thead tr:first-child th:last-child { width: 4.5rem; }
+.council-ratings-table tbody th { position: static; z-index: auto; background: transparent; color: var(--text); font-size: .875rem; font-weight: 400; text-align: left; white-space: normal; overflow-wrap: anywhere; text-transform: none; letter-spacing: normal; }
+.council-ratings-table .rating-axis, .council-ratings-table input { display: block; width: 100%; min-width: 0; }
+.council-ratings-table .is-override input { border-color: var(--accent); }
+.council-ratings-table .council-rating-unavailable { color: var(--muted); text-align: center; }
+.council-ratings-table button:disabled { opacity: .4; cursor: default; }
+.council-ratings-table .th-sort { width: 100%; justify-content: center; }
+.page-council-ratings #ratings-count { padding: .25rem 1rem; color: var(--muted); font-size: .8rem; }
+@media (min-width: 901px) {
+  body.page-council-ratings { height: 100vh; overflow: hidden; }
+  .page-council-ratings .app-main { height: 100vh; min-height: 0; overflow: hidden; }
+  .page-council-ratings .app-header, .page-council-ratings .filters, .page-council-ratings #ratings-count { flex-shrink: 0; }
+  .page-council-ratings .ratings-page-scroll { flex: 1; min-height: 0; }
+}
+
 .council-collection-layout {
   grid-template-columns: minmax(0, 1.35fr) minmax(18rem, 0.85fr);
 }

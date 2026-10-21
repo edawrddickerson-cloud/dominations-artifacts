@@ -13,6 +13,14 @@ const {DNConsent:consent,DNTelemetry:telemetry}=context.window;
 async function flush(){for(const [id,timer] of [...timers])if(timer.delay===0){timers.delete(id);timer.fn();}await Promise.resolve();await Promise.resolve();await Promise.resolve();}
 (async()=>{
   assert.equal(telemetry.event('artifact_saved',{count:1}),false);await flush();assert.equal(sent.length,0);assert.equal(values.size,0,'no optional identifier is created before consent');
+  let successfulScans=0;
+  telemetry.onSuccessfulScan(()=>successfulScans++);
+  telemetry.scannerResult({valid:false},{source:'crafting',encounterId:'incomplete'});
+  assert.equal(successfulScans,0,'incomplete scans cannot trigger the sharing prompt');
+  telemetry.scannerResult({valid:true},{source:'crafting',encounterId:'first'});
+  telemetry.scannerResult({valid:true},{source:'crafting',encounterId:'second'});
+  assert.equal(successfulScans,1,'the sharing prompt triggers only once');
+  await flush();assert.equal(sent.length,0);assert.equal(values.size,0,'local prompt timing creates no telemetry or persistent scan data before consent');
   consent.set({analytics:true});await flush();sent.length=0;
   clock+=14000;telemetry.event('artifact_saved',{source:'crafting',action:'added',count:1,email:'private@example.invalid',image:'data:image/png;base64,YQ=='},true);await flush();
   clock+=1000;intervals[0]();await flush();

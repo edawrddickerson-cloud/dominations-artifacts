@@ -42,14 +42,13 @@
 
   <section class="config-page-section" aria-label="Profiles">
     <h2 class="panel-title">Profiles</h2>
-    <p class="ratings-hint">Rename, add, or remove profiles. Up to <span id="profiles-max"></span>. Each profile has its own artifact inventory, collection targets and saved museum layouts. Manage targets and shared perk priorities on Collection targets.</p>
+    <p class="ratings-hint"><span id="profiles-count"></span> / <span id="profiles-max"></span> profiles</p>
     <div id="profiles-list" class="profiles-list profiles-list-page"></div>
     <div class="config-section-actions">
       <button type="button" class="btn" id="profiles-add">Add profile</button>
     </div>
     <details data-local-backup></details>
   </section>
-  <p class="ratings-hint"><a href="ratings.html#crafting-purposes">Choose collection targets</a>.</p>
   </div>
 
   <dialog id="profile-delete-dialog" class="profile-delete-dialog" aria-labelledby="profile-delete-title" aria-describedby="profile-delete-description">
@@ -65,11 +64,11 @@
 
   <script src="data/army_catalog.js?v=8"></script>
   <script src="shared.js?v=20261019-rating-scale"></script>
-  <script src="profiles-ui.js?v=20261020-title-case-nav"></script>
-  <script src="config.js?v=20261020-confirm-delete"></script>
+  <script src="profiles-ui.js?v=20261022-council-nav"></script>
+  <script src="config.js?v=20261022-concise-profiles"></script>
   <script src="stored-artifacts.js?v=20261018-services"></script>
-  <script src="local-backup.js?v=20261021-import-recovery"></script>
+  <script src="local-backup.js?v=20261022-concise-profiles"></script>
 
-  <script src="services.js?v=20261022-public-accounts"></script>
+  <script src="services.js?v=20261022-discord-user"></script>
 </body>
 </html>

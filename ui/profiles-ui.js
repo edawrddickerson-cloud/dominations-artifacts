@@ -139,7 +139,22 @@
     }
 
     ensureLink("config.html", "Profiles");
-    ensureLink("council-ratings.html", "Council Ratings");
+  }
+
+  function ensureCouncilNav(nav) {
+    const councilLink = nav.querySelector('a[href="council.html"]');
+    const section = councilLink?.closest(".site-nav-section");
+    if (!section) return;
+    let link = nav.querySelector('a[href="council-ratings.html"]');
+    if (!link) {
+      link = document.createElement("a");
+      link.href = "council-ratings.html";
+      link.textContent = "Council Ratings";
+    }
+    if (fileForHref(location.pathname) === "council-ratings.html") {
+      link.setAttribute("aria-current", "page");
+    }
+    section.appendChild(link);
   }
 
   function ensureTargetsNav(nav) {
@@ -169,6 +184,7 @@
 
     const state = DN.ensureProfiles();
     ensureSettingsNav(nav);
+    ensureCouncilNav(nav);
     ensureTargetsNav(nav);
 
     const toggleWrap = document.createElement("div");

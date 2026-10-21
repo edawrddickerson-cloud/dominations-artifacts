@@ -4,7 +4,6 @@
   const wait=async fn=>{for(let i=0;i<500;i++){if(fn())return;await new Promise(resolve=>setTimeout(resolve,20));}throw Error('Timed out: '+get('purpose-results').textContent);};
   await wait(()=>window.DNScannerComparison&&window.DNCraftingPurposes&&get('names').children.length);
   get('auto').checked=false;get('collect').checked=false;document.getElementById('header-main').click();
-  check('Scanner links to named target settings',!!document.querySelector('a[href="ratings.html#crafting-purposes"]'));
   const frame=document.createElement('iframe');frame.style.cssText='position:fixed;inset:0;width:100%;height:100%;border:0;visibility:hidden';frame.src='ratings.html?purpose-test=1';document.body.append(frame);
   const doc=()=>frame.contentDocument,win=()=>frame.contentWindow,service=()=>win().DNCraftingPurposes;
   await wait(()=>doc()?.querySelector('[data-purpose-name]')&&doc()?.querySelector('[data-layer="profile"]'));

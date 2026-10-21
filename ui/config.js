@@ -25,6 +25,7 @@
   function render() {
     if (el.max) el.max.textContent = String(DN.PROFILE_MAX);
     const state = DN.ensureProfiles();
+    document.getElementById('profiles-count').textContent = String(state.profiles.length);
     const canRemove = state.profiles.length > 1;
     el.list.innerHTML = state.profiles
       .map((p) => {
@@ -32,7 +33,7 @@
         return (
           `<div class="profiles-row${active}" data-profile-id="${DN.esc(p.id)}">` +
           `<input type="text" class="profiles-name" maxlength="40" value="${DN.esc(p.name)}" aria-label="Profile name" />` +
-          `<button type="button" class="btn btn-small profiles-remove" ${canRemove ? "" : "disabled "}>Remove</button>` +
+          `<button type="button" class="btn btn-small profiles-remove" ${canRemove ? "" : "disabled "}>Delete</button>` +
           `</div>`
         );
       })

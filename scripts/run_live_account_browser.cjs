@@ -116,7 +116,7 @@ async function main(){
       await click(first,'[data-consent=analytics]');
       check('changing a checkbox shows an unsaved draft without enabling collection',await evaluate(first,"!DNConsent.get().analytics && document.querySelector('[data-privacy-status]').dataset.state==='unsaved' && !document.querySelector('[data-save-consent]').disabled"));
       await click(first,'[data-save-consent]');
-      check('Save preferences visibly confirms the actual saved choices',await evaluate(first,"document.querySelector('[data-save-consent]').textContent==='Saved' && document.querySelector('[data-save-consent]').disabled && document.querySelector('[data-privacy-status]').textContent.includes('Product analytics: on. Diagnostics: off.') && JSON.parse(localStorage.getItem('dn_service_consent')).analytics"));
+      check('Save preferences visibly confirms the actual saved choices',await evaluate(first,"document.querySelector('[data-save-consent]').textContent==='Saved' && document.querySelector('[data-save-consent]').disabled && document.querySelector('[data-privacy-status]').textContent.includes('Preferences saved.') && JSON.parse(localStorage.getItem('dn_service_consent')).analytics"));
       await evaluate(first,"DNTelemetry.event('feature_used',{feature:'config'},true)");
       const until=Date.now()+15000;while(testTelemetryResponses.length<2 && Date.now()<until)await delay(200);
       check('real browser opt-in delivers consented events to PostHog',testTelemetryResponses.length>=2 && testTelemetryResponses.every(status=>status>=200 && status<300) && testTelemetry.length>=2 && testTelemetry.every(event=>event.localBrowser && !event.personProfile));
@@ -126,9 +126,11 @@ async function main(){
       check('withdrawal blocks subsequent browser capture',await evaluate(first,"!DNConsent.get().analytics && DNTelemetry.event('feature_used',{feature:'config'},true)===false"));
       await delay(300);check('withdrawal sends no further PostHog requests',telemetryRequests===before);
       await reloadPrivacy(first);
-      check('withdrawal remains saved after reload with visible off confirmation',await evaluate(first,"!DNConsent.get().analytics && !DNConsent.get().diagnostics && !document.querySelector('[data-consent=analytics]').checked && document.querySelector('[data-privacy-status]').textContent.includes('Product analytics: off. Diagnostics: off.')"));
+      check('withdrawal remains saved after reload with visible off confirmation',await evaluate(first,"!DNConsent.get().analytics && !DNConsent.get().diagnostics && !document.querySelector('[data-consent=analytics]').checked && document.querySelector('[data-privacy-status]').textContent.includes('Preferences saved.')"));
     }
     const bannerPage=await pageInContext(null,false);
+    await evaluate(bannerPage,"DNTelemetry.scannerResult({valid:true},{source:'crafting',encounterId:'sharing-prompt'})");
+    await waitFor(bannerPage,"document.querySelector('.service-consent-banner')?.open");
     await click(bannerPage,'.service-consent-banner [data-consent=diagnostics]');
     await click(bannerPage,'.service-consent-banner [data-save-consent]');
     check('saving from the first-visit banner leaves visible confirmation in Account and privacy',await evaluate(bannerPage,"!document.querySelector('.service-consent-banner') && document.querySelector('#account-privacy [data-privacy-status]').textContent.includes('saved') && DNConsent.get().diagnostics"));
@@ -136,10 +138,12 @@ async function main(){
     check('a banner choice survives reload without enabling the other purpose',await evaluate(bannerPage,"DNConsent.get().diagnostics && !DNConsent.get().analytics && document.querySelector('[data-consent=diagnostics]').checked && document.querySelector('[data-save-consent]').textContent==='Saved'"));
     const featurePage=await pageInContext(null,false);
     await featurePage.send('Page.navigate',{url:origin+'/army.html'});
-    await waitFor(featurePage,"!!window.DNConsent && !!document.querySelector('.service-consent-banner [data-save-consent]') && !document.getElementById('account-privacy')");
+    await waitFor(featurePage,"!!window.DNTelemetry && !document.getElementById('account-privacy')");
+    await evaluate(featurePage,"DNTelemetry.scannerResult({valid:true},{source:'crafting',encounterId:'sharing-prompt'})");
+    await waitFor(featurePage,"document.querySelector('.service-consent-banner')?.open");
     await click(featurePage,'.service-consent-banner [data-consent=diagnostics]');
     await click(featurePage,'.service-consent-banner [data-save-consent]');
-    check('saving a banner on a feature page leaves a visible confirmation and preferences link',await evaluate(featurePage,"!document.querySelector('.service-consent-banner') && document.querySelector('.service-consent-notice').textContent.includes('Product analytics: off. Diagnostics: on.') && document.querySelector('.service-consent-notice a').getAttribute('href')==='config.html#account-privacy' && document.querySelector('.service-consent-notice').getBoundingClientRect().bottom<=innerHeight"));
+    check('saving a banner on a feature page leaves a visible confirmation and preferences link',await evaluate(featurePage,"!document.querySelector('.service-consent-banner') && document.querySelector('.service-consent-notice').textContent.includes('Thank you for helping make the tool better for everyone.') && document.querySelector('.service-consent-notice a').getAttribute('href')==='config.html#account-privacy' && document.querySelector('.service-consent-notice').getBoundingClientRect().bottom<=innerHeight"));
     await click(featurePage,'.service-consent-notice a');
     await waitFor(featurePage,"!!window.DNConsent && !!document.querySelector('#account-privacy [data-save-consent]')");
     check('the confirmation link opens the persisted choices in Account and privacy',await evaluate(featurePage,"DNConsent.get().diagnostics && !DNConsent.get().analytics && document.querySelector('[data-consent=diagnostics]').checked && document.querySelector('[data-save-consent]').textContent==='Saved'"));
