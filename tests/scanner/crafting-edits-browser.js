@@ -15,7 +15,7 @@
   const details=get('correct').closest('details');details.open=true;
   const matchNote=get('correct').querySelector('.scanner-edit-row small[title]');
   check('clear OCR name registers and exposes matching evidence',get('correct').querySelector('.scanner-perk-name').value==='Heavy Tank Damage' && matchNote?.textContent.includes('Matched automatically') && matchNote.title.includes('Heawy Tank Damage'));
-  check('existing results and comparison layout remains',!!document.querySelector('.scanner-summary-bar') && get('result').querySelectorAll('.scanner-stat-table .scanner-perk').length===5);
+  check('existing results and comparison layout remains',!!document.querySelector('.scanner-capture-inline') && get('result').querySelectorAll('.scanner-stat-table .scanner-perk').length===5);
   check('fresh craft has five blue reroll dice',get('result').querySelectorAll('.scanner-perk-reroll.is-rerollable').length===5 && get('correct').querySelectorAll('.scanner-perk-reroll.is-rerollable').length===5);
   check('fresh craft reroll summary is explicit',get('reroll-status').textContent==='All 5 stats rerollable');
   check('stars beside scanned titles',get('result').querySelectorAll('.scanner-stat-title button.scanner-perk-unlocked').length===5);

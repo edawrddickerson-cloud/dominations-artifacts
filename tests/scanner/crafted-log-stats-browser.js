@@ -4,7 +4,13 @@
   const wait=async(test,label)=>{const end=performance.now()+60000;while(!await test()){if(performance.now()>end)throw Error('Timed out: '+label);await new Promise(resolve=>setTimeout(resolve,25));}};
   await wait(()=>window.DNScannerCollection && document.getElementById('crafted-log-stats'),'inline stats');
   const log=window.DNScannerCollection,root=document.getElementById('crafted-log-stats');
-  const anchor=document.getElementById('scanner-crafted-log');anchor.open=true;root.open=true;
+  const anchor=document.getElementById('scanner-crafted-log');
+  anchor.open=false;
+  const headline=document.getElementById('scanner-lifetime-stats'),setup=document.getElementById('scanner-setup');
+  check('headline stats remain visible with the log collapsed',headline.getBoundingClientRect().height>0 && [...headline.querySelectorAll('[data-crafted-stat]')].every(node=>node.getBoundingClientRect().height>0));
+  check('Scanner setup occupies the top control row above the crafted log',setup.closest('.scanner-header-controls')?.nextElementSibling===anchor);
+  check('stat boxes are enlarged and fit the viewport',[...headline.children].every(node=>node.getBoundingClientRect().height>=88 && node.getBoundingClientRect().right<=innerWidth+1));
+  anchor.open=true;root.open=true;
   await window.DNServicesReady;window.DNConsent.set({});
   check('stats are inside the existing crafted item log',anchor.contains(root) && !document.getElementById('crafting-history'));
   check('no manual session, confirmation, version or event inputs',!root.querySelector('button,input[type=text],form') && !window.DNCraftingHistory);

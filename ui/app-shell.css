@@ -1,6 +1,10 @@
 html:has(> body.app-shell), body.app-shell { height: 100%; overflow: hidden; }
 body.app-shell { min-height: 0; }
 .app-shell > .site-nav { flex-shrink: 0; overflow-y: auto; }
+.site-nav .scanner-connection-dot { width:.6rem; height:.6rem; flex:0 0 .6rem; margin-left:auto; border-radius:50%; background:#ef4444; }
+.site-nav [data-capture-status="connected"] .scanner-connection-dot { background:#22c55e; }
+body.nav-collapsed .site-nav a[data-capture-status] { position:relative; }
+body.nav-collapsed .site-nav .scanner-connection-dot { position:absolute; top:.3rem; right:.3rem; width:.45rem; height:.45rem; }
 .app-shell-main { display: flex; flex-direction: column; flex: 1 1 auto; min-width: 0; min-height: 0; height: 100%; }
 .app-shell-main > .app-header { flex-shrink: 0; }
 .app-shell-main > .app-header .site-nav-profile-collapsed-btn { display: none; }

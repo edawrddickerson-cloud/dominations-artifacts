@@ -594,9 +594,9 @@
         try {
           await activeWorker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});
           const read=await readView(titleSource,{}, {text:true,blocks:true});
-          const name=String(read.data.text || '').replace(/\s+/g,' ').trim();
+          const rawName=String(read.data.text || '').replace(/\s+/g,' ').trim(),name=cleanArtifactName(rawName);
           if(read.data.confidence>=60 && /[a-z]{3}/i.test(name) && name.length<=160)artifactName=name;
-          nameEvidence={text:name.slice(0,500),confidence:Number.isFinite(read.data.confidence)?read.data.confidence:null,accepted:!!artifactName};
+          nameEvidence={text:rawName.slice(0,500),confidence:Number.isFinite(read.data.confidence)?read.data.confidence:null,accepted:!!artifactName};
         } finally {if(!closed)await activeWorker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});}
       }
       if(fieldViews?.valid) {
@@ -824,5 +824,6 @@
     return {recognize,close,warm:({fast=false}={})=>getWorker(fast?'fast':'standard'),
       isWarm:({fast=false}={})=>!closed && warmed.has(fast?'fast':'standard')};
   }
-  window.DNScannerRecognition={matchName,NAME_MATCH_THRESHOLD,parseText,parseFieldRow,positionRows,signIssues,reconcileReads,combineReads,retainCraftRead,classifyBrightness,classifyStars,rowColours,inferColourValues,usefulRow,coverage,textContrast,detectPanel,parseCraftCategory,craftCategoryEvidence,classifyHallColour,hallColour,craftHall,categoryRect,categoryLine,create};
+  function cleanArtifactName(value) {return String(value || '').replace(/\s+/g,' ').trim().replace(/^[^\p{L}\p{N}]+/u,'');}
+  window.DNScannerRecognition={cleanArtifactName,matchName,NAME_MATCH_THRESHOLD,parseText,parseFieldRow,positionRows,signIssues,reconcileReads,combineReads,retainCraftRead,classifyBrightness,classifyStars,rowColours,inferColourValues,usefulRow,coverage,textContrast,detectPanel,parseCraftCategory,craftCategoryEvidence,classifyHallColour,hallColour,craftHall,categoryRect,categoryLine,create};
 })();

@@ -21,6 +21,7 @@
     return reasons.join('; ');
   }
   function craftOptions(options,{hall,type,rows}={}) {
+    if(options?.targetScoring)return options;
     if(!options || !options.prefSortAxes.offensive && !options.prefSortAxes.defensive)return options;
     const category=typeName(type);
     if(hallName(hall)==='Main' && category==='weapon')return options;
@@ -191,7 +192,12 @@
       capacity,score,rank,threshold,count:candidates.length,top:candidates.slice(0,capacity)};
   }
   const isUnlockedKeeper=result=>result?.unlocked?.count===3;
-  window.DNScannerComparisonCore={compare,compareStrategies,createComparator,currentRows,maxRows,statRow,estimate,previewRowScore,isUnlockedKeeper,captureCompleteness,craftScore,craftPotential,craftOptions,scoreExclusion};
+  function selectTargetFocus(results,manualId=null) {
+    const manual=results.find(item=>item.id===manualId);if(manual)return manual;
+    const hits=results.filter(item=>item.hit),pool=hits.length?hits:results;
+    return pool.reduce((best,item)=>!best || (item.score ?? -Infinity)>(best.score ?? -Infinity)?item:best,null);
+  }
+  window.DNScannerComparisonCore={compare,compareStrategies,createComparator,currentRows,maxRows,statRow,estimate,previewRowScore,isUnlockedKeeper,captureCompleteness,craftScore,craftPotential,craftOptions,scoreExclusion,selectTargetFocus};
   const type=document.getElementById('scanner-compare-type');if(!type)return;
   const compareOwned=createComparator();
   const flag=document.getElementById('scanner-comparison'),detail=document.getElementById('scanner-comparison-detail'),hall=document.getElementById('scanner-hall');
@@ -202,6 +208,7 @@
   let captureResult=null;
   let captureEncounter=null;
   let keeperResult=null;
+  let targetResults=[],targetFocus=null,manualTarget=null,focusProfile=null,focusNotification=null;
 
   function identification() {
     const overridden=categoryOrigin==='override' && !!type.value && !!captureResult;
@@ -269,10 +276,12 @@
     const artwork=get('artwork'),image=latest?.artifact?.image;
     if(artwork){artwork.hidden=!image;if(image && artwork.getAttribute('src')!==image)artwork.src=image;if(!image)artwork.removeAttribute('src');}
     board.style.setProperty('--capture-hue',capture.identified===capture.expected?'120':capture.identified?'40':'0');
-    board.className='scanner-summary-card scanner-capture-card'+(capture.missing.length && captureResult?' is-incomplete':'');
+    board.className=(get('row-status')?'scanner-capture-inline':'scanner-summary-card scanner-capture-card')+(capture.missing.length && captureResult?' is-incomplete':'');
     get('capture-percent').textContent=capture.identified+'/'+capture.expected+' identified';
     get('capture-meter').value=capture.percent;
     get('capture-detail').textContent=capture.read+' read · '+capture.inferred+' inferred · '+capture.typed+' typed';
+    const sources=get('capture-sources');
+    if(sources)sources.textContent=[capture.inferred?capture.inferred+' inferred':'',capture.typed?capture.typed+' typed':''].filter(Boolean).join(' · ');
     const review=get('capture-review');
     if(review){review.hidden=true;review.textContent='';}
     board.title=capture.names+'/5 names · '+capture.values+'/5 percentages · '+capture.stars+'/5 stars · Category '+(capture.type?'identified':'unknown')+' · Hall '+(capture.hall?'identified':'unknown')+(capture.diceExpected?' · '+capture.dice+'/'+capture.diceExpected+' dice':'');
@@ -338,11 +347,27 @@
     const result=confirmed && latest?{...latest,rows:captureResult?.rows || latest.rows}:null;
     const available=!error && loadedProfile===DN.activeProfileId() && (!loading || loadedProfile===DN.activeProfileId());
     const results=service && state.selected.length?service.evaluate(result,{...state,type:type.value,hall:hall.value,owned,canonPerk:options?.canonPerk,available}):[];
+    if(focusProfile!==DN.activeProfileId())manualTarget=null;
+    focusProfile=DN.activeProfileId();
+    // Retained readings remain inspectable while capture is paused. Their
+    // contributions never turn the separate live qualification state green.
+    const retained=!result && captureResult && service?service.evaluate(captureResult,{...state,type:type.value,hall:hall.value,owned,canonPerk:options?.canonPerk,available:false}):null;
+    targetResults=retained?results.map((item,index)=>({...item,score:retained[index]?.score ?? null,contributions:retained[index]?.contributions || []})):results;
+    if(!targetResults.some(item=>item.id===manualTarget))manualTarget=null;
+    targetFocus=selectTargetFocus(targetResults,manualTarget);
+    const notification=JSON.stringify([focusProfile,targetFocus?.id || null]);
+    if(notification!==focusNotification){
+      focusNotification=notification;
+      Promise.resolve().then(()=>window.dispatchEvent(new CustomEvent('dn-scanner-target-focus-changed')));
+    }
     const hits=results.filter(item=>item.hit);
     let focusHit=hits.length>0;
     const benchmark=document.getElementById('scanner-benchmark');
     const keeper=isUnlockedKeeper(keeperResult),count=keeperResult?.unlocked?.count;
-    const row=(name,target,score,hit,attribute='')=>'<li '+attribute+' class="'+(hit?'purpose-hit':'purpose-miss')+'"><strong>'+DN.esc(name)+'</strong><span class="scanner-focus-target">'+DN.esc(target)+'</span><b class="scanner-focus-score">'+DN.esc(score)+'</b></li>';
+    const row=(name,target,score,hit,attribute='')=>{
+      const content='<strong>'+DN.esc(name)+'</strong><span class="scanner-focus-target">'+DN.esc(target)+'</span><b class="scanner-focus-score">'+DN.esc(score)+'</b>';
+      return '<li '+attribute+' class="'+(hit?'purpose-hit':'purpose-miss')+'">'+(attribute.startsWith('data-purpose-result=')?'<button type="button" class="scanner-target-rating-open" aria-pressed="false">'+content+'</button>':content)+'</li>';
+    };
     let lines=results.map(item=>row(item.label,item.threshold!==null?'> '+item.threshold:item.score!==null?'Open slot':'—',item.score===null?'—':(item.uncertain?'~':'')+item.score,item.hit,'data-purpose-result="'+DN.esc(item.id)+'"')).join('');
     if(!state.selected.length){
       const strategies=[...(options?.strategyOptions || [])];
@@ -354,7 +379,12 @@
         return row(strategy.name,item?.threshold===null?'Open slot':Number.isFinite(item?.threshold)?'≥ '+item.threshold:'—',Number.isFinite(item?.score)?(item.provisional?'~':'')+item.score:'—',hit,'data-strategy-focus');
       }).join('');
     }
-    panel.innerHTML='<div class="scanner-focus-heading" aria-hidden="true"><span>Focus area</span><span>Target</span><span>Score</span></div><ul>'+lines+row('3 Unlocked Rows','= 3',Number.isFinite(count)?count:'—',keeper,'data-unlocked-focus')+'</ul>';
+    panel.innerHTML='<div class="scanner-focus-heading" aria-hidden="true"><span>Collection Targets</span><span>Target</span><span>Score</span></div><ul>'+lines+row('3 Unlocked Rows','= 3',Number.isFinite(count)?count:'—',keeper,'data-unlocked-focus')+'</ul>';
+    for(const node of panel.querySelectorAll('[data-purpose-result]')){
+      const focused=node.dataset.purposeResult===targetFocus?.id;
+      node.classList.toggle('is-score-focus',focused);node.querySelector('button')?.setAttribute('aria-pressed',String(focused));
+    }
+    window.DNScannerTargetRatings?.refresh({rows:captureResult?.rows || [],canonPerk:options?.canonPerk});
     if(!state.selected.length){
       if(focusHit){benchmark.classList.remove('is-unknown','is-below-cutoff');benchmark.classList.add('is-top-two');}
       document.getElementById('scanner-decision-state').textContent=keeper || focusHit?'Keep':'Discard';
@@ -388,7 +418,11 @@
     } catch {if(ticket===request)error='Could not load your collection. Refocus this window to retry.';}
     finally {if(ticket===request){loading=false;render();}}
   }
-  window.DNScannerComparison={identification,update(result,isConfirmed,opts,state={}){
+  window.DNScannerComparison={identification,
+    scoringContext(){return targetFocus?{...targetFocus,automatic:!manualTarget,options:window.DNCraftingPurposes?.scoringOptions(targetFocus.id,options)}:null;},
+    focusTarget(id){if(targetResults.some(item=>item.id===id)){manualTarget=id;render();}},
+    automaticTarget(){manualTarget=null;render();},
+    update(result,isConfirmed,opts,state={}){
     latest=result;confirmed=isConfirmed;options=opts;
     keeperResult=Object.prototype.hasOwnProperty.call(state,'keeperResult')?state.keeperResult:result;
     captureResult=Object.prototype.hasOwnProperty.call(state,'captureResult')?state.captureResult:result;

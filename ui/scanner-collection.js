@@ -334,6 +334,7 @@
   window.DNScannerCollection={isEnabled,itemForEncounter:collector.itemForEncounter,
     historyItems:collector.historyItems,sessionId:collector.sessionId,
     ocrFeedbackItems:collector.ocrFeedbackItems,
+    setName:(id,name)=>afterChange(collector.updateItem(id,{name:String(name || '').trim().slice(0,160) || null,nameSource:'manual',lastUpdated:new Date().toISOString()})),
     subscribe(fn){historyListeners.add(fn);return ()=>historyListeners.delete(fn);},
     markKept:(id,keptId,metadata={})=>afterChange(collector.updateItem(id,{...metadata,keptId})),flush:()=>persistence,
     recordResult(observation,result,id,options,publish){

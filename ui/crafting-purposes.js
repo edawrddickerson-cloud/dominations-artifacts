@@ -351,14 +351,25 @@
       let status = !result || score === null ? 'waiting' : !validCategory ? 'category' : !available || missingSources.length ? 'unavailable' :
         score <= 0 ? 'irrelevant' : threshold !== null && score <= threshold ? 'owned' :
         benchmark.incomplete ? 'review' : threshold === null ? 'vacancy' : 'better';
-      return {id, label: purpose.label, score, lines, threshold, best: benchmark.candidates[0]?.score ?? null,
+      const contributions=rows.slice(0,5).map((row,index)=>{
+        const name=canonPerk(row.name),included=purpose.stats.has(name),usable=!!potentialRows[index]?.name;
+        return {name,included,weight:included?sharedRating(name):null,score:included && usable?potentialRows[index].value*sharedRating(name):null,
+          uncertain:!!row.assumed || !!row.inferred || !!row.inferredFields?.length};
+      });
+      return {id, label: purpose.label, score, contributions, lines, threshold, best: benchmark.candidates[0]?.score ?? null,
         count: benchmark.candidates.length, incomplete: benchmark.incomplete, uncertain, status, missingSources,
         hit: status === 'vacancy' || status === 'better'};
     });
   }
 
+  function scoringOptions(id,base) {
+    settings();const purpose=byId.get(id);if(!purpose || !base)return null;
+    return {...base,targetScoring:true,prefSortAxes:{offensive:true,defensive:true},
+      ratingOf:(name,axis)=>purpose.stats.has(name) && axisFor(name)===axis?sharedRating(name):0};
+  }
+
   window.DNCraftingPurposes={get definitions(){settings();return definitions;},get choices(){return choices;},settings,saveCustom,saveCustoms,removeCustom,configure,setRating,selectPurpose,setActive,candidatePerks,includedPerks,baseCandidatePerks,baseIncludedPerks,primaryCategory,sourceIssues,axisFor,categoryFor,ratingRows,evaluate,renderGrouped,
-    ratingOf:sharedRating,
+    ratingOf:sharedRating,scoringOptions,
     editCustom:id=>window.DNCraftingPurposeEditor?.edit(id),
     setDefaults(defaults,canonPerk=name=>name){factoryDefaults=Object.fromEntries(Object.entries(defaults).map(([name,entry])=>[canonPerk(name),entry]));benchmarks.clear();window.dispatchEvent(new CustomEvent('dn-crafting-purposes-changed'));}
   };

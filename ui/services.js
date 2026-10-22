@@ -19,15 +19,15 @@
   async function boot() {
     if(!window.DN)return;
     await script('service-config.js?v=20261022-ocr-feedback');
-    await script('integration-core.js?v=20261022-ocr-feedback');
+    await script('integration-core.js?v=20261022-lifetime-comparison');
     await script('service-store.js?v=2');
     await script('telemetry.js?v=20261022-ocr-feedback');
-    await Promise.all([script('cloud-sync.js?v=20261022-auto-link'),script('research.js?v=2')]);
+    await Promise.all([script('cloud-sync.js?v=20261022-lifetime-comparison'),script('research.js?v=2')]);
     if(!window.DNStoredArtifacts)await script('stored-artifacts.js?v=23');
     if(!window.DNLocalBackupCore)await script('local-backup.js?v=3');
-    await script('cloud.js?v=20261022-auto-link');
+    await script('cloud.js?v=20261022-lifetime-comparison');
     await script('ocr-feedback.js?v=1');
-    await script('services-ui.js?v=20261022-ocr-feedback');
+    await script('services-ui.js?v=20261022-lifetime-comparison');
   }
   window.DNServicesReady=new Promise(resolve=>{
     const run=()=>boot().catch(()=>{ /* Optional services cannot break the local application. */ }).finally(resolve);

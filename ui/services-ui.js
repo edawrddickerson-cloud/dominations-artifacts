@@ -29,8 +29,9 @@
     displayed=value;
     const date=value=>value && Number.isFinite(Date.parse(value))?new Date(value).toLocaleString():'Not recorded';
     const esc=window.DN.esc;
-    const rows=[['Artifacts','artifacts'],['Collection targets','targets'],['Profiles','profiles']].map(([label,key])=>
-      '<tr><th scope="row">'+label+'</th><td>'+value.cloud[key]+'</td><td>'+value.local[key]+'</td></tr>').join('');
+    const count=value=>value==null?'Not recorded':value.toLocaleString();
+    const rows=[['Artifacts','artifacts'],['Collection targets','targets'],['Profiles','profiles'],['Lifetime crafts logged','lifetimeCraftsLogged']].map(([label,key])=>
+      '<tr><th scope="row">'+label+'</th><td>'+count(value.cloud[key])+'</td><td>'+count(value.local[key])+'</td></tr>').join('');
     versionField('version-table').innerHTML='<table><thead><tr><th></th><th scope="col">Account</th><th scope="col">This browser</th></tr></thead><tbody>'+rows+
       '<tr><th scope="row">Last synced</th><td>'+esc(date(value.cloud.updatedAt))+'</td><td>'+esc(date(value.local.updatedAt))+'</td></tr></tbody></table>';
     versionField('use-cloud').disabled=!value.revision;

@@ -16,7 +16,7 @@ function target() {
 function harness() {
   const elements = {}, timers = new Map(), captureRequests = [], bitmapRequests = [];
   let timerId = 0;
-  for (const id of ['connect', 'stop', 'source', 'select', 'retry', 'status', 'message', 'freshness', 'meta', 'frame', 'crop', 'video', 'file', 'apply', 'x', 'y', 'width', 'height']) {
+  for (const id of ['connect', 'stop', 'source', 'select', 'retry', 'status', 'message', 'freshness', 'meta', 'frame', 'crop', 'video', 'file', 'apply', 'x', 'y', 'width', 'height','image-refresh']) {
     const draws = [];
     elements[id] = Object.assign(target(), {
       value: '', files: [], textContent: '', disabled: false, width: 640, height: 360,
@@ -55,6 +55,7 @@ async function main() {
   const h = harness(), e = h.elements;
   assert.equal(h.captureRequests.length, 0, 'initialization never asks permission');
   assert.equal(e.status.textContent, 'Disconnected');
+  assert.equal(e['image-refresh'].hidden,true,'image refresh stays hidden without live capture');
   assert.equal(h.core.regionBetween({ x: 0, y: 0 }, { x: 0, y: 1 }), null);
   assert.equal(h.core.regionBetween({ x: NaN, y: 0 }, { x: 1, y: 1 }), null);
   const region = h.core.regionBetween({ x: 1.2, y: .8 }, { x: -.1, y: .2 });
@@ -75,6 +76,7 @@ async function main() {
   const live = await start(h);
   assert.equal(live.audio.stops, 1, 'unexpected audio is stopped');
   assert.equal(e.video.srcObject, live); assert.equal(h.timers.size, 1);
+  assert.equal(e['image-refresh'].hidden,false,'image refresh appears after connecting');
   Object.assign(e.x, { value: '10' }); e.y.value = '20'; e.width.value = '50'; e.height.value = '50';
   e.apply.fire('click'); assert.equal(e.crop.width, 960); assert.equal(e.crop.height, 540);
   assert.equal(e.status.textContent, 'Region preview active');
@@ -86,6 +88,7 @@ async function main() {
   live.video.muted = false; live.video.fire('unmute'); e.retry.fire('click');
   assert.equal(e.status.textContent, 'Select artifact region');
   live.video.fire('ended'); assert.equal(e.status.textContent, 'Capture ended');
+  assert.equal(e['image-refresh'].hidden,true,'ending capture hides image refresh');
   assert.equal(live.video.stops, 1); assert.equal(e.video.srcObject, null); assert.equal(h.timers.size, 0);
   const next = await start(h); e.stop.fire('click');
   assert.equal(next.video.stops, 1); assert.equal(e.status.textContent, 'Disconnected');

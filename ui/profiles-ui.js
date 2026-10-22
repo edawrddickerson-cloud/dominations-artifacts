@@ -254,12 +254,19 @@
     if (!header) return;
     const parent = document.createElement('div');
     parent.className = 'page-strategy-controls';
-    parent.setAttribute('aria-label', 'Strategy controls');
+    parent.setAttribute('aria-label', 'Collection targets');
     header.after(parent);
+    if(file==='scanner.html') {
+      parent.classList.add('scanner-header-controls');
+      parent.setAttribute('aria-label','Scanner controls');
+      const setup=document.getElementById('scanner-setup');
+      if(setup)parent.appendChild(setup);
+      return;
+    }
     let comparison;
     if (['artifacts.html', 'collection.html', 'scanner.html', 'storage-scanner.html'].includes(file)) {
       comparison = document.createElement('details'); comparison.className = 'strategy-comparison-picker';
-      comparison.innerHTML = '<summary>Compare strategies</summary><div class="strategy-comparison-options"></div>';
+      comparison.innerHTML = '<summary>Collection Targets</summary><div class="strategy-comparison-options"></div>';
       parent.appendChild(comparison);
       comparison.addEventListener('change', ev => {
         if (!ev.target.matches('[data-compare-strategy]')) return;
@@ -274,8 +281,8 @@
         const strategies = state.strategies.filter(s => !s.archived);
         if (comparison) {
           const ids = state.comparisonIds || [];
-          comparison.querySelector('summary').textContent = `Compare strategies (${ids.length})`;
-          comparison.querySelector('.strategy-comparison-options').innerHTML = '<p>Choose the strategies used for comparison. At least one stays selected. The active strategy is shown separately.</p>' + strategies.map(s => `<label><input type="checkbox" data-compare-strategy value="${DN.esc(s.id)}"${ids.includes(s.id) ? ' checked' : ''}/> ${DN.esc(s.name)}${s.id === state.activeId ? ' (active)' : ''}</label>`).join('');
+          comparison.querySelector('summary').textContent = `Collection Targets (${ids.length})`;
+          comparison.querySelector('.strategy-comparison-options').innerHTML = strategies.map(s => `<label><input type="checkbox" data-compare-strategy value="${DN.esc(s.id)}"${ids.includes(s.id) ? ' checked' : ''}/> ${DN.esc(s.name)}${s.id === state.activeId ? ' (active)' : ''}</label>`).join('');
         }
       } catch (err) { showStrategyError(err); }
     }

@@ -13,8 +13,8 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts - Crafting Scanner</title>
   <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
-  <link rel="stylesheet" href="scanner.css?v=20261022-lifetime-log" />
-  <link rel="stylesheet" href="crafting-purposes.css?v=20261021-focus-tubes" />
+  <link rel="stylesheet" href="scanner.css?v=20261023-stat-rating-label" />
+  <link rel="stylesheet" href="crafting-purposes.css?v=20261023-muted-red-targets" />
   <link rel="stylesheet" href="crafted-log-stats.css?v=1" />
 </head>
 <body class="page-scanner">
@@ -47,8 +47,32 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
       <div id="header-profile" class="header-profile"></div>
     </div>
   </header>
+    <details id="scanner-crafted-log" class="scanner-reading scanner-panel" aria-label="Crafted item log">
+      <summary><span class="scanner-log-title">Crafted item log</span>
+      <span id="scanner-lifetime-stats" class="scanner-lifetime-stats" role="list">
+        <span role="listitem"><span class="scanner-stat-label">Lifetime Crafted Artifacts</span><strong data-crafted-stat="logged">0</strong></span>
+        <span role="listitem"><span class="scanner-stat-label">Kept</span><strong data-crafted-stat="kept">0</strong></span>
+        <span role="listitem"><span class="scanner-stat-label">Crafted since last kept</span><strong data-crafted-stat="sinceLastKept">0</strong></span>
+        <span role="listitem"><span class="scanner-stat-label">Crafted Main Artifacts</span><strong data-crafted-stat="main">0</strong></span>
+        <span role="listitem"><span class="scanner-stat-label">Crafted War Artifacts</span><strong data-crafted-stat="war">0</strong></span>
+        <span role="listitem"><span class="scanner-stat-label">3 Rows Unlocked</span><strong data-crafted-stat="threeUnlocked">0</strong></span>
+      </span></summary>
+      <p id="scanner-log-storage-status" role="status"></p>
+      <p id="scanner-item-count" role="status"></p>
+      <details open><summary>Logged items and stats</summary><ol id="scanner-item-log" class="scanner-item-log"></ol></details>
+      <p id="scanner-collection-count" role="status"></p>
+      <div class="scanner-controls">
+        <button type="button" class="btn" id="scanner-collection-export">Export Full Item Log</button>
+        <button type="button" class="btn" id="scanner-collection-clear">Clear Item Log and Names</button>
+      </div>
+      <p id="scanner-collection-export-status" role="status" aria-live="polite"></p>
+      <details><summary>Scanner diagnostics</summary><p id="scanner-name-review-count"></p><ol id="scanner-name-review"></ol><pre id="scanner-collected-labels" style="white-space:pre-wrap"></pre><button type="button" class="btn" id="scanner-stat-evidence-export">Export Stat Evidence</button><p id="scanner-stat-evidence-status" role="status"></p></details>
+    </details>
     <details id="scanner-setup" class="scanner-setup">
-      <summary><span class="scanner-setup-title">Scanner setup</span><strong id="scanner-status" class="scanner-connection-label is-disconnected" role="status" aria-live="polite">Disconnected</strong><span class="scanner-setup-actions" role="group" aria-label="Scanning controls"><button type="button" class="btn" id="scanner-connect">Connect Game</button><button type="button" class="btn" id="scanner-stop" disabled>Stop Scanning</button><button type="button" class="btn" id="scanner-read" disabled>Read Artifact</button><button type="button" class="btn" id="scanner-find">Find Panel</button></span></summary>
+      <summary><span class="scanner-setup-title">Scanner setup</span><strong id="scanner-status" class="scanner-connection-label is-disconnected" role="status" aria-live="polite">Disconnected</strong><span class="scanner-setup-actions" role="group" aria-label="Scanning controls"><button type="button" class="btn" id="scanner-connect">Connect Game</button><button type="button" class="btn" id="scanner-stop" disabled>Stop Scanning</button></span></summary>
+      <div class="scanner-setup-overview">
+      <div class="scanner-setup-options">
+      <button type="button" id="scanner-read" hidden disabled>Read Artifact</button>
       <p id="scanner-message" class="scanner-connection-detail">Connect Game to begin.</p>
       <p id="scanner-freshness" class="scanner-connection-detail">No calibrated region.</p>
       <section class="scanner-intro">
@@ -68,6 +92,19 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
         <label>Visible rows <select id="scanner-rows" disabled><option value="5">5</option></select></label>
         <select id="scanner-hall" hidden><option value="main">Main</option><option value="war">War</option></select>
         <label><input type="checkbox" id="scanner-infer" checked /> Infer unclear values from colour</label>
+        <label id="scanner-category-choice" hidden>Category <select id="scanner-compare-type"><option value="">Choose item type</option></select></label>
+        <label>Hall <select id="scanner-correct-hall"><option value="">Choose hall</option><option value="main">Main</option><option value="war">War</option></select></label>
+      </div>
+      </div>
+      <aside class="scanner-setup-capture" aria-label="Capture status">
+      <div id="scanner-glance-board" class="scanner-capture-inline" role="status" aria-label="Capture status">
+        <strong id="scanner-row-status">0/5 stats captured</strong>
+        <span class="scanner-capture-fields"><span id="scanner-capture-percent">0/17 identified</span><span id="scanner-capture-sources"></span></span>
+        <progress id="scanner-capture-meter" max="100" value="0" hidden></progress>
+        <span id="scanner-capture-detail" hidden>0 read · 0 inferred · 0 typed</span>
+        <button id="scanner-capture-review" type="button" hidden></button>
+      </div>
+      </aside>
       </div>
       <div class="scanner-workspace">
         <section class="scanner-panel">
@@ -125,15 +162,6 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
     <div class="scanner-session">
 
 
-      <div class="scanner-summary-bar">
-        <section id="scanner-glance-board" class="scanner-summary-card scanner-capture-card" aria-label="Artifact identification">
-          <span class="scanner-summary-label">Artifact</span>
-          <strong id="scanner-capture-percent" class="scanner-summary-number" role="status" aria-live="polite">0/17 identified</strong>
-          <progress id="scanner-capture-meter" max="100" value="0" aria-label="Expected information identified"></progress>
-          <p id="scanner-capture-detail">0 read · 0 inferred · 0 typed</p>
-          <button id="scanner-capture-review" type="button" hidden></button>
-        </section>
-      </div>
       <select id="scanner-mode" hidden><option value="combined">All 5 stats</option></select>
       <input type="checkbox" id="scanner-off" checked hidden />
       <input type="checkbox" id="scanner-def" checked hidden />
@@ -146,6 +174,9 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
         <div id="scanner-result"></div>
         <div class="scanner-decision-stack">
         <section id="scanner-benchmark" class="scanner-summary-card scanner-benchmark" aria-label="Crafting focus areas and keep indicator">
+        <div class="scanner-keep">
+          <button type="button" id="scanner-keep" class="btn" disabled>Add to Collection</button>
+        </div>
           <div class="scanner-focus-areas">
             <div id="scanner-purpose-results" class="scanner-purpose-results" role="status"></div>
             <p id="scanner-comparison" hidden></p>
@@ -160,44 +191,20 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
             <div class="scanner-benchmark-cutoff"><span id="scanner-benchmark-label">Top 2 benchmark</span><strong id="scanner-benchmark-value">—</strong></div>
           </div>
         </section>
-        <div class="scanner-keep">
-          <button type="button" id="scanner-keep" class="btn" disabled>Add to Collection</button>
         </div>
+        <div class="scanner-artwork-column">
+          <div id="scanner-image-refresh" class="scanner-image-refresh" hidden><span>Unable to see the artifact image clearly?</span><button type="button" class="btn" id="scanner-find">Refresh Image Detection</button></div>
+          <div class="scanner-artwork"><img id="scanner-artwork" alt="Captured artifact" hidden /></div>
         </div>
-        <div class="scanner-artwork"><img id="scanner-artwork" alt="Captured artifact" hidden /></div>
       </div>
-      <details id="scanner-corrections"><summary>Correct Recognition</summary>
-        <label id="scanner-category-choice" hidden>Category <select id="scanner-compare-type"><option value="">Choose item type</option></select></label>
-        <label>Hall <select id="scanner-correct-hall"><option value="">Choose hall</option><option value="main">Main</option><option value="war">War</option></select></label>
+      <div id="scanner-corrections" hidden>
         <p id="scanner-warnings" class="scanner-warning"></p>
-        <p>Verify every visible row. Duplicate perks stay separate. Corrected values use the same rating calculation as recognised values.</p>
         <datalist id="scanner-names"></datalist>
         <p id="scanner-reroll-status" role="status"></p>
         <div id="scanner-correct"></div>
         <button type="button" class="btn" id="scanner-accept" disabled>Use Corrected Values</button>
-      </details>
-    </section>
-    <details id="scanner-crafted-log" class="scanner-reading scanner-panel" aria-label="Crafted item log">
-      <summary>Crafted item log</summary>
-      <dl id="scanner-lifetime-stats" class="scanner-lifetime-stats">
-        <div><dt>Lifetime crafts logged</dt><dd data-crafted-stat="logged">0</dd></div>
-        <div><dt>Kept</dt><dd data-crafted-stat="kept">0</dd></div>
-        <div><dt>Crafted since last kept</dt><dd data-crafted-stat="sinceLastKept">0</dd></div>
-        <div><dt>Main</dt><dd data-crafted-stat="main">0</dd></div>
-        <div><dt>War</dt><dd data-crafted-stat="war">0</dd></div>
-        <div><dt>3 unlocked rows</dt><dd data-crafted-stat="threeUnlocked">0</dd></div>
-      </dl>
-      <p id="scanner-log-storage-status" role="status"></p>
-      <p id="scanner-item-count" role="status"></p>
-      <details open><summary>Logged items and stats</summary><ol id="scanner-item-log" class="scanner-item-log"></ol></details>
-      <p id="scanner-collection-count" role="status"></p>
-      <div class="scanner-controls">
-        <button type="button" class="btn" id="scanner-collection-export">Export Full Item Log</button>
-        <button type="button" class="btn" id="scanner-collection-clear">Clear Item Log and Names</button>
       </div>
-      <p id="scanner-collection-export-status" role="status" aria-live="polite"></p>
-      <details><summary>Scanner diagnostics</summary><p id="scanner-name-review-count"></p><ol id="scanner-name-review"></ol><pre id="scanner-collected-labels" style="white-space:pre-wrap"></pre><button type="button" class="btn" id="scanner-stat-evidence-export">Export Stat Evidence</button><p id="scanner-stat-evidence-status" role="status"></p></details>
-    </details>
+    </section>
     <video id="scanner-video" class="scanner-video" muted playsinline aria-hidden="true"></video>
   </div>
   <script src="scanner-core.js?v=1"></script>
@@ -207,24 +214,26 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
   <script src="shared.js?v=20261019-rating-scale"></script>
   <script src="data/artifact_stat_context.js?v=1"></script>
   <script src="artifact-stat-context.js?v=3"></script>
-  <script src="profiles-ui.js?v=20261022-council-nav"></script>
+  <script src="profiles-ui.js?v=20261022-scanner-header"></script>
   <script src="artifact-scoring.js?v=20261017-strategies-reroll"></script>
   <script src="stored-artifacts.js?v=20261018-services"></script>
-  <script src="crafting-purposes.js?v=20261022-rating-labels"></script>
-  <script src="scanner-comparison.js?v=20261021-focus-tubes"></script>
+  <script src="crafting-purposes.js?v=20261022-target-breakdown"></script>
+  <script src="scanner-comparison.js?v=20261023-target-bars"></script>
+  <script src="scanner-target-ratings.js?v=20261023-no-auto"></script>
+  <script src="scanner-layout.js?v=20261023-aligned-image-heading"></script>
   <script src="scanner-keep.js?v=20261021-no-status-line"></script>
   <script src="vendor/tesseract/tesseract.min.js"></script>
   <script src="scanner-reroll-recognition.js?v=1"></script>
   <script src="scanner-name-catalog.js?v=1"></script>
-  <script src="scanner-recognition.js?v=20261022-name-review"></script>
+  <script src="scanner-recognition.js?v=20261023-title-cleanup"></script>
   <script src="scanner-field-recognition.js?v=20261021-title-witness"></script>
   <script src="scanner-calibration.js?v=4"></script>
-  <script src="scanner-collection.js?v=20261022-automatic-log"></script>
+  <script src="scanner-collection.js?v=20261023-artifact-rename"></script>
   <script src="crafted-log-stats.js?v=1"></script>
   <script src="crafted-log-stats-ui.js?v=20261022-automatic-log"></script>
-  <script src="scanner-reading.js?v=20261022-name-review"></script>
+  <script src="scanner-reading.js?v=20261023-stat-rating-label"></script>
   <script src="scanner-profile.js?v=1"></script>
-  <script src="scanner.js?v=20261018-services"></script>
+  <script src="scanner.js?v=20261022-image-refresh"></script>
   <script src="services.js?v=20261022-automatic-log"></script>
 </body>
 </html>

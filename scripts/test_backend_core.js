@@ -74,6 +74,13 @@ function workspace(value=6) {
   const existing=linkingFixture({revision:7,data:savedSettings,updated_at:'2026-10-22T12:00:00Z'});
   await existing.sync.inspect();assert.equal(existing.writes,0,'zero artifacts does not mean an empty account');
   let comparison=existing.sync.state().comparison;
+  assert.equal(comparison.cloud.lifetimeCraftsLogged,null,'account history that is not synced must not be reported as zero');
+  assert.equal(C.lifetimeCraftsLogged(null),null);
+  assert.equal(C.lifetimeCraftsLogged({version:2,items:[]}),0);
+  const lifetimeLog={version:2,items:[{id:'one',rows:[]},{id:'one',rows:[]},{id:'two',rows:[]}],lifetimeStatistics:{version:1,archived:{logged:300,kept:10,main:200,war:100,threeUnlocked:3}}};
+  assert.equal(C.lifetimeCraftsLogged(lifetimeLog),302,'comparison includes archived counts and distinct current log items');
+  lifetimeLog.lifetimeStatistics.archived.logged=-1;
+  assert.equal(C.lifetimeCraftsLogged(lifetimeLog),2,'invalid archived counts cannot corrupt comparison totals');
   assert.equal(comparison.cloud.artifacts,0);assert.equal(comparison.cloud.targets,1);assert.equal(comparison.local.artifacts,1);assert.equal(comparison.cloud.profiles,1);
   assert.equal(comparison.cloud.updatedAt,'2026-10-22T12:00:00Z');assert.equal(comparison.local.updatedAt,null,'unknown dates are not invented');
   existing.row={revision:8,data:workspace(22)};

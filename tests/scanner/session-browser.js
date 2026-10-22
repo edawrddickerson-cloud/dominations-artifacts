@@ -8,6 +8,18 @@
   const ready = path => waitFor(() => view().location.pathname.endsWith(path) && view().document.readyState === 'complete' && view().DNScannerProfile && view().document.getElementById('scanner-connect'));
   const click = id => view().document.getElementById(id).click();
   await ready('scanner.html');
+  const indicators=()=>[...document.querySelectorAll('.site-nav a[data-capture-status]')];
+  check('Both scanner links start with red disconnected dots',indicators().length===2 && indicators().every(link=>link.dataset.captureStatus==='disconnected' && link.querySelector('.scanner-connection-dot') && getComputedStyle(link.querySelector('.scanner-connection-dot')).backgroundColor==='rgb(239, 68, 68)'));
+  const scannerGet=id=>view().document.getElementById('scanner-'+id);
+  check('Scanner bar only contains Connect and Stop',scannerGet('setup').querySelector('summary').querySelectorAll('button').length===2 && scannerGet('read').hidden && !scannerGet('setup').querySelector('summary').contains(scannerGet('find')));
+  check('Scanner setup uses the header control row without the old comparison menu',scannerGet('setup').parentElement.classList.contains('scanner-header-controls') && !view().document.querySelector('.strategy-comparison-picker'));
+  check('Image refresh is hidden before connecting',scannerGet('image-refresh').hidden);
+  check('Capture status is only shown inside expanded setup',!scannerGet('setup').open && scannerGet('setup').contains(scannerGet('glance-board')) && !scannerGet('glance-board').checkVisibility());
+  scannerGet('setup').open=true;
+  const captureBox=scannerGet('glance-board').closest('.scanner-setup-capture'),options=scannerGet('setup').querySelector('.scanner-setup-options');
+  check('Expanded setup contains a boxed capture status',captureBox.getBoundingClientRect().height>0 && parseFloat(view().getComputedStyle(captureBox).borderTopWidth)>0);
+  if(view().innerWidth>800)check('Capture status sits at the top right of setup',captureBox.getBoundingClientRect().left>=options.getBoundingClientRect().right && Math.abs(captureBox.getBoundingClientRect().top-options.getBoundingClientRect().top)<=20);
+  scannerGet('setup').open=false;
   let requests = 0;
   const canvas = document.createElement('canvas'); canvas.width=640; canvas.height=360;
   canvas.getContext('2d').fillRect(0,0,640,360);
@@ -17,8 +29,32 @@
   }});
   click('scanner-connect');
   await waitFor(() => view().document.getElementById('scanner-video').srcObject);
+  await waitFor(()=>!scannerGet('image-refresh').hidden);
+  check('Connected image refresh uses the requested wording',scannerGet('find').textContent==='Refresh Image Detection' && scannerGet('image-refresh').querySelector('span').textContent==='Unable to see the artifact image clearly?');
+  const refresh=scannerGet('image-refresh'),prompt=refresh.querySelector('span'),refreshButton=scannerGet('find');
+  check('Image refresh appears above the image on one line',refresh.getBoundingClientRect().bottom<=scannerGet('artwork').parentElement.getBoundingClientRect().top && view().getComputedStyle(refresh).flexWrap==='nowrap' && Math.abs((prompt.getBoundingClientRect().top+prompt.getBoundingClientRect().bottom)/2-(refreshButton.getBoundingClientRect().top+refreshButton.getBoundingClientRect().bottom)/2)<1);
+  let detections=0;const detector=view().DNScannerRecognition.detectPanel;
+  view().DNScannerRecognition.detectPanel=()=>{detections++;return null;};click('scanner-find');view().DNScannerRecognition.detectPanel=detector;
+  check('Refresh Image Detection reruns panel detection',detections===1);
   const first = DNScannerSession.current();
+  check('Both scanner links turn green when the shared source connects',indicators().every(link=>link.dataset.captureStatus==='connected' && link.getAttribute('aria-label').includes('Connected') && getComputedStyle(link.querySelector('.scanner-connection-dot')).backgroundColor==='rgb(34, 197, 94)'));
+  document.getElementById('nav-collapse-btn').click();
+  check('Connection dots remain visible in collapsed navigation',indicators().every(link=>{
+    const dot=link.querySelector('.scanner-connection-dot'),bounds=dot.getBoundingClientRect(),parent=link.getBoundingClientRect();
+    return dot.checkVisibility() && bounds.left>=parent.left && bounds.right<=parent.right && bounds.top>=parent.top;
+  }));
+  document.getElementById('nav-collapse-btn').click();
   check('Single profile starts without confirmation',requests===1 && !view().document.getElementById('scanner-profile-dialog'));
+  for(const page of ['collection.html','artifacts.html','ratings.html','config.html','council.html','council-collection.html','council-ratings.html','totals.html']) {
+    document.querySelector('.site-nav a[href^="'+page+'"]').click();
+    await waitFor(()=>view().location.pathname.endsWith(page) && view().document.readyState==='complete' && view().DN);
+    await view().DNServicesReady;
+    check(page+' retains the connection and green indicators',DNScannerSession.current()===first && first.getVideoTracks()[0].readyState==='live' && requests===1 && indicators().every(link=>link.dataset.captureStatus==='connected'));
+  }
+  document.querySelector('.site-nav a[href^="scanner.html"]').click();
+  await ready('scanner.html');
+  await waitFor(()=>view().document.getElementById('scanner-video')?.srcObject===first);
+  check('Returning from planner pages reuses the original capture without permission',requests===1);
   view().document.querySelector('a[href^="storage-scanner.html"]').click();
   await ready('storage-scanner.html');
   await waitFor(() => view().document.getElementById('scanner-video')?.srcObject === first);
@@ -33,6 +69,7 @@
   check('Browser back retains capture',requests===1);
   click('scanner-stop');
   check('Stop ends the shared track',first.getVideoTracks()[0].readyState==='ended' && !DNScannerSession.current());
+  check('Stop returns both scanner indicators to red',indicators().every(link=>link.dataset.captureStatus==='disconnected' && getComputedStyle(link.querySelector('.scanner-connection-dot')).backgroundColor==='rgb(239, 68, 68)'));
   const secondProfile = view().DN.addProfile('Second scanner profile');
   const beforeReload = view().document;
   view().location.reload();
@@ -53,6 +90,12 @@
   click('scanner-profile-continue');
   await waitFor(() => DNScannerSession.current());
   check('Continue starts scanning for the chosen profile',requests===2 && view().DN.activeProfileId()===secondProfile);
-  click('scanner-stop');
+  const second=DNScannerSession.current();
+  document.querySelector('.site-nav a[href^="config.html"]').click();
+  await waitFor(()=>view().location.pathname.endsWith('config.html') && view().document.readyState==='complete');
+  second.getVideoTracks()[0].stop();second.getVideoTracks()[0].dispatchEvent(new Event('ended'));
+  check('Browser stop-sharing updates both indicators while away from scanners',!DNScannerSession.current() && indicators().every(link=>link.dataset.captureStatus==='disconnected'));
+  document.querySelector('.site-nav a[href^="storage-scanner.html"]').click();await ready('storage-scanner.html');
+  check('Returning after browser stop does not ask for permission automatically',requests===2 && !view().document.getElementById('scanner-video').srcObject);
   return {passed:checks.every(check=>check.passed),checks};
 })()

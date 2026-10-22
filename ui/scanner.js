@@ -42,6 +42,8 @@
     el.retry.disabled = !(stream || image) || pending;
     el.apply.disabled = !(stream || image) || pending;
     el.file.disabled = pending || !!stream;
+    const imageRefresh=get('image-refresh');
+    if(imageRefresh)imageRefresh.hidden=!stream;
     el.select.setAttribute("aria-pressed", selecting ? "true" : "false");
     el.frame.classList.toggle("is-selecting", selecting);
   }
@@ -158,7 +160,7 @@
           status("Monitoring may be delayed", "Keep the planner visible beside the game. Background execution is not guaranteed.");
           el.freshness.textContent = "Preview sampled, but continuous monitoring is unconfirmed.";
         } else if (region) status("Region preview active", "All visible perk rows count, including locked rows. Verify the crop and recognised values.");
-        else status("Select artifact region", "Try Find Panel, or drag over the full artifact panel. Text-only calibration is available for other layouts.");
+        else status("Select artifact region", "Try "+(window.DNStorageRecognition?"Find Panel":"Refresh Image Detection")+", or drag over the full artifact panel. Text-only calibration is available for other layouts.");
       }
     } catch {
       window.DNScannerReading?.update(el.crop,{session:generation,current:false});

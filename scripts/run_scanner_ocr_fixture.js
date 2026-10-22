@@ -61,7 +61,7 @@ async function main() {
       if(message.method==='Target.attachedToTarget')client.send('Network.enable',{},message.params.sessionId).catch(error=>browserErrors.push(error.message));
     });
     await client.send('Network.enable');
-    if(process.argv.includes('--crafting-stats'))await client.send('Network.setBlockedURLs',{urls:['https://*']});
+    if(process.argv.includes('--crafting-stats') || process.argv.includes('--session'))await client.send('Network.setBlockedURLs',{urls:['https://*']});
     // Cross-page checks visit pages with existing analytics. Block those scripts
     // in this local-only harness.
     if(process.argv.includes('--primary-filters') || process.argv.includes('--crafting-keep') || process.argv.includes('--collection-comparison') || process.argv.includes('--storage-catalog') || process.argv.includes('--linked-artifacts'))await client.send('Network.setBlockedURLs',{urls:['*://static.cloudflareinsights.com/*',...(process.argv.includes('--collection-comparison') || process.argv.includes('--storage-catalog') || process.argv.includes('--linked-artifacts')?['*://static.wikia.nocookie.net/*']:[])]});

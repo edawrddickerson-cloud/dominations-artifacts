@@ -48,6 +48,7 @@
     }
   }
   const engine=window.DNCloudSyncCore.create({capture,readBinding:binding,saveBinding,recover,apply,notify:announce,
+    async readLocalCraftsLogged(){try{return C.lifetimeCraftsLogged(JSON.parse(await window.DN.scannerLog.read() || 'null'));}catch{return null;}},
     remote:{async read(){return rpc('planner_read_workspace');},async write(owner,revision,operation,data){return rpc('planner_save_workspace',{p_expected_revision:revision,p_operation_id:operation,p_data:data});}}});
   function schedule(delay=2000) {
     clearTimeout(timer);if(!currentUser || !configured())return;

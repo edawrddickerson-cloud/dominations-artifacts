@@ -85,12 +85,14 @@
   await wait(()=>app.DNCloud.state().status==='synced','saved state after reload');
   check('a real page reload retains the linked workspace and saved status',(await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture()))===savedHash && doc.querySelector('[data-cloud-choice]').hidden);
 
+  await app.DN.scannerLog.write(JSON.stringify({version:2,items:[],scans:[],labels:[],lifetimeStatistics:{version:1,archived:{logged:300,kept:12,main:200,war:100,threeUnlocked:4}}}));
   app.localStorage.removeItem('dn_cloud_binding');await app.DNCloud.sync();
   await wait(()=>doc.querySelector('[data-cloud-choice]').open,'returning account comparison');
   const versions=doc.querySelector('[data-cloud-choice]');
   check('returning unlinked browser gets a themed comparison dialog',versions.matches(':modal') && versions.textContent.includes('Choose your saved data') && versions.textContent.includes('Account') && versions.textContent.includes('This browser'));
   const counts=[...versions.querySelectorAll('tbody tr')].map(row=>[...row.cells].map(cell=>cell.textContent));
-  check('comparison includes artifacts, targets, profiles and sync timestamps',counts[0][0]==='Artifacts' && counts[0][1]==='1' && counts[0][2]==='1' && counts[1][0]==='Collection targets' && counts[1][1]==='1' && counts[1][2]==='1' && counts[2][0]==='Profiles' && counts[3][0]==='Last synced');
+  check('comparison includes artifacts, targets, profiles and sync timestamps',counts[0][0]==='Artifacts' && counts[0][1]==='1' && counts[0][2]==='1' && counts[1][0]==='Collection targets' && counts[1][1]==='1' && counts[1][2]==='1' && counts[2][0]==='Profiles' && counts[4][0]==='Last synced');
+  check('comparison shows lifetime crafts logged without inventing an account count',counts[3][0]==='Lifetime crafts logged' && counts[3][1]==='Not recorded' && counts[3][2]==='300');
   const versionBounds=versions.getBoundingClientRect();
   check('comparison dialog fits the viewport',versionBounds.left>=0 && versionBounds.right<=app.innerWidth && versionBounds.height<=app.innerHeight && versions.scrollWidth<=versions.clientWidth);
   const revisionBeforeCancel=backend.workspaces[owner].revision;

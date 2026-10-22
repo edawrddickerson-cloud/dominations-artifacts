@@ -4,23 +4,23 @@
  * automatically. A conflict needs an explicit choice and a committed safety copy. */
 (() => {
   'use strict';
-  function create({capture,remote,readBinding,saveBinding,recover,apply,notify=()=>{}}) {
+  function create({capture,remote,readBinding,saveBinding,recover,apply,readLocalCraftsLogged=async()=>null,notify=()=>{}}) {
     const C=window.DNIntegrationCore;
     let owner=null,epoch=0,running=false,state={status:'signed-out'},latest=null;
     function summary(workspace,updatedAt) {
-      if(!workspace)return {artifacts:0,targets:0,profiles:0,updatedAt:null};
+      if(!workspace)return {artifacts:0,targets:0,profiles:0,lifetimeCraftsLogged:null,updatedAt:null};
       let targets=0;
       for(const [key,value] of Object.entries(workspace.settings))if(/^dn-p:[^:]+:dn-crafting-purposes$/.test(key)) {
         try{targets+=(JSON.parse(value).customPurposes || []).length;}catch{}
       }
-      return {artifacts:workspace.records.reduce((sum,record)=>sum+record.items.length,0),targets,
+      return {artifacts:workspace.records.reduce((sum,record)=>sum+record.items.length,0),targets,lifetimeCraftsLogged:null,
         profiles:JSON.parse(workspace.settings['dn-profiles']).profiles.length,updatedAt:updatedAt || null};
     }
     function comparison() {
       if(!latest)return null;
       const binding=readBinding();
       return {owner,localHash:latest.localHash,remoteHash:latest.remoteHash,revision:latest.row?.revision || 0,
-        local:summary(latest.local,binding?.owner===owner && binding.hash===latest.localHash?binding.savedAt:null),
+        local:{...summary(latest.local,binding?.owner===owner && binding.hash===latest.localHash?binding.savedAt:null),lifetimeCraftsLogged:latest.localCraftsLogged},
         cloud:summary(latest.row?.data,latest.row?.updated_at)};
     }
     const publish=next=>{state={...next,comparison:comparison()};notify({...state});return state;};
@@ -33,11 +33,13 @@
         if(!valid(id,generation))return state;
         if(row)C.validate(row.data);
         const remoteHash=row?await C.fingerprint(row.data):null;
+        const localCraftsLogged=await readLocalCraftsLogged();
+        if(!valid(id,generation))return state;
         let binding=readBinding();
         if(binding?.owner===id && binding.pending?.operation===row?.operation_id && binding.pending?.hash===remoteHash) {
           binding={owner:id,revision:row.revision,hash:remoteHash,savedAt:row.updated_at || null};saveBinding(binding);
         }
-        latest={local,localHash,row,remoteHash};
+        latest={local,localHash,row,remoteHash,localCraftsLogged};
         const status=C.decision({boundOwner:binding?.owner,owner:id,baseHash:binding?.hash,localHash,remoteHash});
         if(status==='synced') {
           saveBinding({owner:id,revision:row.revision,hash:remoteHash,savedAt:row.updated_at || binding?.savedAt || null});

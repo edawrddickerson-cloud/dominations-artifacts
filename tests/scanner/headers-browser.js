@@ -12,6 +12,8 @@
     check(page+' has the common title and two primary filters',header.querySelector('h1').textContent==='DomiNations Artifacts'&&[...header.querySelectorAll('legend')].map(node=>node.textContent).join('|')==='Hall|Base Type'&&header.querySelectorAll('.seg-btn').length===4);
     check(page+' keeps only the profile selector in the title bar',header.querySelectorAll('select').length===1&&!!header.querySelector('#profile-select')&&!header.querySelector('.strategy-comparison-picker'));
     check(page+' has no strategy dropdown',!doc.querySelector('#strategy-select'));
+    if(page==='scanner.html')check('Crafting scanner replaces the comparison menu with Scanner setup',!doc.querySelector('.strategy-comparison-picker')&&doc.querySelector('.scanner-header-controls > #scanner-setup'));
+    if(['collection.html','storage-scanner.html'].includes(page))check(page+' uses the Collection Targets label',/^Collection Targets \(\d+\)$/.test(doc.querySelector('.strategy-comparison-picker summary')?.textContent));
     const appearance=JSON.stringify([header,header.querySelector('h1'),header.querySelector('.header-controls'),header.querySelector('#profile-select')].map(node=>{const css=view.getComputedStyle(node);return [css.fontSize,css.padding,css.gap,node.getBoundingClientRect().height];}));
     headerAppearance??=appearance;
     check(page+' matches the shared header appearance',appearance===headerAppearance);

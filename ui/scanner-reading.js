@@ -23,6 +23,8 @@
   let displayedScore=null;
   let displayedKeeper=null;
   let displayedCapture=null,renderedResultHtml=null;
+  let displayedItemId=null;
+  let inlineEditing=false,deferredFrame=null;
   let latestCategorySource=null,categoryRegion=null;
   let latestFields=null,fieldGeometry=null;
   let ratingContext=null;
@@ -95,6 +97,7 @@
     attempts=0;settled=false;best=null;anchor=null;progress('idle','Waiting for an artifact');
   }
   function reset() {
+    inlineEditing=false;deferredFrame=null;window.DNScannerTargetRatings?.stopEditing?.();
     liveCapture=false;sampleRevision=0;speculatedToken=null;
     focusAnchor=null;focusAbsent=null;focusCleared=false;
     latestCategorySource=null;categoryRegion=null;
@@ -153,6 +156,7 @@
     return differences>a.length*threshold;
   }
   function update(canvas, state) {
+    if(!storage && inlineEditing){deferredFrame={canvas,state:{...state}};return;}
     if(session!==state.session){reset();session=state.session;}
     if(Object.prototype.hasOwnProperty.call(state,'live'))liveCapture=state.live===true;
     if(Object.prototype.hasOwnProperty.call(state,'fields')) {
@@ -261,7 +265,7 @@
     result?.rows.forEach((perk,index)=>{row["perk_"+(index+1)+"_name"]=perk.name;row["perk_"+(index+1)+"_base"]=String(perk.value);row["perk_"+(index+1)+"_max"]="";});
     const current=resultCurrent && !!latestCanvas && (!editing || confirmed);
     const starCurrent=resultCurrent && !!latestCanvas;
-    if(!storage && starCurrent && result){displayedKeeper=result;displayedCapture=result;}
+    if(!storage && starCurrent && result){displayedKeeper=result;displayedCapture=result;displayedItemId=itemId;}
     const captureHolding=!storage && !!displayedCapture && !starCurrent;
     const visibleResult=captureHolding?displayedCapture:result;
     const estimate=!storage && current && opts?window.DNScannerComparisonCore?.estimate(result,{names,options:opts,hall:el.hall.value,expectedRows:rowCount()}):null;
@@ -281,9 +285,11 @@
     window.DNScannerComparison?.update(scoreResult || result,(current && !!candidate) || retainDecision,baseOpts,{keeperResult,categoryResult:starCurrent?result:null,captureResult,captureRetained:captureHolding,encounterId:JSON.stringify([session,itemId])});
     window.DNScannerKeep?.update(result,{current,confirmed,profileKey:resultProfile,encounterId:JSON.stringify([session,itemId])});
     const rerollType=get('compare-type')?.value || scoreResult?.artifact?.type;
+    const targetContext=!storage?window.DNScannerComparison?.scoringContext?.():null;
+    const editingRatings=!storage && !!window.DNScannerTargetRatings?.isEditing();
     if(!storage && baseOpts && scoreResult)opts=window.DNScannerComparisonCore?.craftOptions(baseOpts,{hall:scoreResult.hall || el.hall.value,type:rerollType,rows:scoreResult.rows}) || baseOpts;
     const totals=scoreResult && opts?window.DNArtifactScoring.score(!storage && window.DNScannerComparisonCore?window.DNScannerComparisonCore.statRow(scoreResult.rows.map(perk=>({...perk,value:Math.sign(perk.value)*(Math.abs(perk.value)+9)}))):row,opts):null;
-    const rerollTotal=!storage && scoreResult && opts?window.DNScannerComparisonCore?.craftPotential?.({...scoreResult,artifact:{...scoreResult.artifact,type:rerollType}},opts):null;
+    const rerollTotal=!storage && scoreResult && opts?window.DNScannerComparisonCore?.craftPotential?.({...scoreResult,artifact:{...scoreResult.artifact,type:rerollType}},targetContext?.options || opts):null;
     const live=get('live-score'),assumption=get('score-assumption');
     if(live) {
       const visible=totals;
@@ -300,13 +306,18 @@
       (String(input.value ?? '').trim()==='' || input.classList.contains('is-unknown') || input.validity?.valid===false));
     window.DNStorageScanner?.update(result,confirmed && !!latestCanvas,{reviewable:resultCurrent && !!latestCanvas && (!editing || confirmed),pending:editing && !confirmed,correctionError,expectedRows:rowCount(),unknownEditable,profileKey:resultProfile,encounterId:JSON.stringify([session,itemId]),manualCorrection:editing && confirmed});
     let previewOpts;
-    const resultHtml='<div class="scanner-glance"><div class="scanner-traffic is-'+progress.light+'" role="status"><span class="scanner-light" aria-hidden="true"></span><strong>'+progress.total+'/'+rowCount()+' · '+lightText+'</strong><small>'+progress.known+' known · '+progress.assumed+' assumed · '+progress.collected+' new names</small></div>'+
-      '<div class="scanner-enabled"><strong>'+(count ?? '?')+'</strong><span>ENABLED STATS<small>'+(count!=null?'Filled yellow stars':storage?'Include row stars in the full item crop':'Include all five stars in the panel crop')+'</small></span></div></div>'+
+    const rowStatus=get('row-status');
+    if(rowStatus)rowStatus.textContent=progress.total+'/'+rowCount()+' stats captured';
+    const artifactName=recognition.cleanArtifactName(visibleResult?.artifact?.name) || (editingRatings?'':visibleResult?'Unknown artifact':'Artifact');
+    const scoringName=targetContext?.label || baseOpts?.strategyName || '';
+    const scoringTitle=scoringName?scoringName+' Score':'';
+    const resultHtml=(storage?'<div class="scanner-glance"><div class="scanner-traffic is-'+progress.light+'" role="status"><span class="scanner-light" aria-hidden="true"></span><strong>'+progress.total+'/'+rowCount()+' · '+lightText+'</strong><small>'+progress.known+' known · '+progress.assumed+' assumed · '+progress.collected+' new names</small></div>'+
+      '<div class="scanner-enabled"><strong>'+(count ?? '?')+'</strong><span>ENABLED STATS<small>'+(count!=null?'Filled yellow stars':'Include row stars in the full item crop')+'</small></span></div></div>':'')+
       '<div class="scanner-score">'+(!holding && totals?
       (opts.prefSortAxes.offensive?'<span>Off <strong>'+totals.offensive+'</strong></span>':'')+
       (opts.prefSortAxes.defensive?'<span>Def <strong>'+totals.defensive+'</strong></span>':''):'<span>Rating unconfirmed</span>')+'</div>'+
-      '<p>'+(count!=null?count+' of '+rowCount()+' unlocked — filled stars':storage?'Unlocked stars unclear':'Star count unclear — expected 1–3 filled stars')+' · All '+rowCount()+' count toward rating'+(visibleResult?.temporal?.frames===3?' · 3-frame noise filtering':'')+'</p>'+
-      (storage?'':'<div class="scanner-stat-table"><div class="scanner-stat-heading"><span>Stat</span><span>%</span><span>Score</span><span>Reroll gain</span></div>'+Array.from({length:rowCount()},(_,index)=>{
+      (storage?'<p>'+(count!=null?count+' of '+rowCount()+' unlocked — filled stars':'Unlocked stars unclear')+' · All '+rowCount()+' count toward rating'+(visibleResult?.temporal?.frames===3?' · 3-frame noise filtering':'')+'</p>':'')+
+      (storage?'':'<div class="scanner-score-heading"><h3 id="scanner-artifact-name" class="scanner-artifact-name scanner-inline-field" data-inline-field="artifact" contenteditable="'+(editingRatings?'plaintext-only':'false')+'"'+(editingRatings?' role="textbox" tabindex="0" aria-label="Artifact name"':'')+' title="'+DN.esc(artifactName)+'">'+DN.esc(artifactName)+'</h3><button type="button" class="btn" data-target-edit aria-pressed="'+editingRatings+'">Edit</button></div><div class="scanner-stat-table'+(editingRatings?' is-editing':'')+'"><div class="scanner-scoring-heading"><span id="scanner-score-context" class="scanner-score-context" title="'+DN.esc(scoringTitle)+'">'+DN.esc(scoringTitle)+'</span></div><div class="scanner-stat-heading"><span>Stat</span><span>%</span><span title="Shared rating multiplier" aria-label="Stat Rating">Stat Rating</span><span title="Score at maximum upgrade">Max score</span><span>Dice</span></div>'+Array.from({length:rowCount()},(_,index)=>{
         const perk=visibleResult?.rows[index],edit=editing && !confirmed?el.correct.querySelectorAll('.scanner-edit-row')[index]:null;
         const star=edit?.querySelector('.scanner-perk-unlocked');
         const state=star?.tagName==='BUTTON'?star.value===''?null:star.value==='true':perk?.unlocked;
@@ -324,17 +335,34 @@
           if(previewOpts===undefined)previewOpts=baseOpts && window.DNScannerComparisonCore?.craftOptions(baseOpts,{hall:visibleResult.hall || el.hall.value,type:visibleResult.artifact?.type || get('compare-type')?.value,rows:visibleResult.rows}) || baseOpts;
           previewScore=window.DNScannerComparisonCore?.previewRowScore(perk,previewOpts) ?? null;
         }
-        const provisional=previewScore!==null;
-        const rowScore=acceptedScore ?? previewScore;
-        const scoreTitle=provisional?'Provisional score for the best current reading; excluded from the item subtotal. '+window.DNScannerComparisonCore.scoreExclusion(perk):rowScore===null?(window.DNScannerComparisonCore?.scoreExclusion(perk) || (!opts?'Perk ratings are still loading':editing?'Apply the corrected values to score this row':'Waiting for a scoring result matching this row')):perk?.inferred?'Score uses the displayed percentage, inferred from text colour':scored?.estimated?'Estimated maximum percentage times perk rating':'';
-        const gain=!provisional && rowScore!==null && rerollTotal && rerollEligible===true?Math.max(0,rerollTotal.rerollTarget-rowScore):null;
+        const contribution=targetContext?.contributions?.[index];
+        const excluded=!!targetContext && contribution?.included===false && !!perk?.known;
+        const multiplier=excluded?0:targetContext?contribution?.weight:acceptedScore!=null && maxMagnitude?acceptedScore/maxMagnitude:null;
+        const multiplierMarkup=editingRatings && contribution?.included?'<input type="number" class="scanner-rating-input" min="0" max="10" step="1" data-target-rating-row="'+index+'" data-target-id="'+DN.esc(targetContext.id)+'" data-perk="'+DN.esc(contribution.name)+'" value="'+multiplier+'" aria-label="'+DN.esc(contribution.name+': shared rating multiplier')+'" />':multiplier!=null?String(multiplier):'&mdash;';
+        const provisional=!excluded && (targetContext?!!contribution?.uncertain:previewScore!==null);
+        const rowScore=excluded?0:targetContext?contribution?.score ?? null:acceptedScore ?? previewScore;
+        const scoreTitle=targetContext?(contribution?.included?targetContext.label+(rowScore!==null?' · Max '+(Math.abs(perk.value)+9)+'% × '+multiplier+' = '+rowScore:''): 'Not included in '+targetContext.label):provisional?'Provisional score for the best current reading; excluded from the item subtotal. '+window.DNScannerComparisonCore.scoreExclusion(perk):rowScore===null?(window.DNScannerComparisonCore?.scoreExclusion(perk) || (!opts?'Perk ratings are still loading':editing?'Apply the corrected values to score this row':'Waiting for a scoring result matching this row')):perk?.inferred?'Score uses the displayed percentage, inferred from text colour':scored?.estimated?'Estimated maximum percentage times perk rating':'';
+        const gain=!provisional && (rowScore!==null || targetContext && perk?.known && Number.isFinite(perk.value)) && rerollTotal && rerollEligible===true?Math.max(0,rerollTotal.rerollTarget-(rowScore ?? 0)):null;
         const best=rerollTotal?.rerollIndex===index && gain>0;
-        const rerollTitle=best?'Best single reroll gain, included in the item total. '+rerollTotal.rerollStat+' at '+rerollTotal.rerollMagnitude+'%: '+rerollTotal.rerollTarget+' points before replacing this row.':'Gain is shown only for the lowest-scoring rerollable row';
+        const rerollTitle=best?(targetContext?'Possible reroll gain for '+targetContext.label+'. ':'Best single reroll gain, included in the item total. ')+rerollTotal.rerollStat+' at '+rerollTotal.rerollMagnitude+'%: '+rerollTotal.rerollTarget+' points before replacing this row.':'Gain is shown only for the lowest-scoring rerollable row';
         const colourClass=['neutral','green','blue'].includes(colour)?' is-'+colour:'';
-        return '<div class="scanner-perk'+colourClass+(state===true?' is-unlocked':state===false?' is-locked':'')+'"><span class="scanner-stat-title">'+starMarkup(state,index)+(index+1)+'. '+DN.esc(perk?.name || 'Waiting for stat')+'</span><span class="scanner-stat-value">'+
-          (perk?.value!=null?(perk.value>=0?'+':'')+perk.value+'%':'?%')+'</span><span class="scanner-stat-score"'+(scoreTitle?' title="'+DN.esc(scoreTitle)+'" tabindex="0"':'')+'>'+(rowScore!=null?(provisional || scored?.estimated?'~':'')+rowScore:'&mdash;')+'</span><span class="scanner-stat-reroll'+(best?' is-best-reroll':'')+'" title="'+DN.esc(rerollTitle)+'"><span class="scanner-reroll-gain">'+(best?'+'+gain:'')+'</span>'+rerollMarkup(rerollEligible,index)+'</span></div>';
+        const editable=(field,label)=>' class="scanner-inline-field" data-inline-row="'+index+'" data-inline-field="'+field+'" contenteditable="'+(editingRatings?'plaintext-only':'false')+'"'+(editingRatings?' role="textbox" tabindex="0" aria-label="'+label+' '+(index+1)+'"':'');
+        return '<div class="scanner-perk'+colourClass+(state===true?' is-unlocked':state===false?' is-locked':'')+'"><span class="scanner-stat-title">'+starMarkup(state,index)+(index+1)+'. <span'+editable('name','Perk name')+'>'+DN.esc(perk?.name || (editingRatings?'':'Waiting for stat'))+'</span></span><span class="scanner-stat-value"><span'+editable('value','Percentage')+'>'+
+          (perk?.value!=null?(perk.value>=0?'+':'')+perk.value+'%':editingRatings?'':'?%')+'</span></span><span class="scanner-stat-multiplier">'+multiplierMarkup+'</span><span class="scanner-stat-score'+(best?' is-best-reroll':'')+'"'+(scoreTitle?' title="'+DN.esc(scoreTitle)+'" tabindex="0"':'')+'>'+'<span class="scanner-stat-base-score">'+(rowScore!=null?(!excluded && (provisional || scored?.estimated)?'~':'')+rowScore:'&mdash;')+'</span>'+(best?' <span class="scanner-reroll-gain" title="'+DN.esc(rerollTitle)+'">+ '+gain+'</span>':'<span class="scanner-reroll-gain"></span>')+'</span><span class="scanner-stat-reroll" title="'+DN.esc(rerollTitle)+'">'+rerollMarkup(rerollEligible,index)+'</span></div>';
       }).join('')+'</div>');
-    if(storage || resultHtml!==renderedResultHtml){el.result.innerHTML=resultHtml;renderedResultHtml=resultHtml;}
+    if(storage || resultHtml!==renderedResultHtml){
+      const focused=editingRatings && document.activeElement?.matches?.('[data-target-rating-row],[data-inline-field]')?document.activeElement:null;
+      const selection=focused?.dataset.inlineField?window.getSelection?.():null;
+      const start=selection?.anchorOffset,end=selection?.focusOffset;
+      el.result.innerHTML=resultHtml;renderedResultHtml=resultHtml;
+      if(focused){
+        const replacement=focused.dataset.inlineField==='artifact'?get('artifact-name'):focused.dataset.inlineField?el.result.querySelector('[data-inline-row="'+focused.dataset.inlineRow+'"][data-inline-field="'+focused.dataset.inlineField+'"]'):el.result.querySelector('[data-target-rating-row="'+focused.dataset.targetRatingRow+'"]');
+        if(replacement && (focused.dataset.inlineField || replacement.dataset.perk===focused.dataset.perk && replacement.dataset.targetId===focused.dataset.targetId)){
+          replacement.replaceWith(focused);focused.focus({preventScroll:true});
+          if(selection && focused.firstChild){const range=document.createRange(),length=focused.firstChild.textContent.length;range.setStart(focused.firstChild,Math.min(start,length));range.setEnd(focused.firstChild,Math.min(end,length));selection.removeAllRanges();selection.addRange(range);}
+        }
+      }
+    }
     const rerollStatus=get('reroll-status');
     if(rerollStatus) {
       const diceRows=(visibleResult?.rows || []).map((row,i)=>{
@@ -492,7 +520,7 @@
     return artwork;
   }
   async function read({speculative=false}={}) {
-    if(!ready || busy || !latestCanvas)return;
+    if(!ready || busy || !latestCanvas || inlineEditing)return;
     const request=token,source=latestCanvas,readingProfile=window.DNStoredArtifacts?.collectionKey(),readingSession=session,readingItemId=itemId;
     const timing=stage=>{
       const point={stage,time:performance.now(),session:readingSession,itemId:readingItemId,request,source:serviceSource};
@@ -574,6 +602,9 @@
         const incoming=parsed.artifact?.nameEvidence,held=result.artifact?.nameEvidence;
         result.artifact={...result.artifact,image:artwork,...(!result.artifact?.name && parsed.artifact?.name?{name:parsed.artifact.name}:{}),
           ...(incoming && (!held || (incoming.confidence ?? -1)>=(held.confidence ?? -1))?{nameEvidence:incoming}:{})};
+        const logged=window.DNScannerCollection?.itemForEncounter?.(JSON.stringify([session,itemId]),resultProfile);
+        if(logged?.nameSource==='manual')result.artifact={...result.artifact,name:logged.name,nameSource:'manual'};
+        result.artifact.name=recognition.cleanArtifactName(result.artifact.name) || null;
       }
       el.warnings.textContent=(result?.warnings || parsed.warnings).join(" ");
       if(!confirmed && result)el.warnings.textContent+=' Verify inferred values and unclear names in Correct Recognition.';
@@ -638,7 +669,7 @@
       window.DNStorageScanner?.update(null,false);
     });
   }
-  el.read.addEventListener("click",()=>{editing=false;attempts=0;settled=false;best=null;return startRead();});
+  el.read.addEventListener("click",()=>{if(inlineEditing)return;editing=false;attempts=0;settled=false;best=null;return startRead();});
   function autofillCraftingRow(target) {
     if(storage)return;
     const field=target?.closest?.('.scanner-edit-row');
@@ -736,7 +767,7 @@
     const dice=event.target.closest?.('.scanner-perk-reroll');
     if(dice && resultCurrent && latestCanvas) {
       const edit=el.correct.querySelectorAll('.scanner-edit-row')[Number(dice.dataset.rowIndex)]?.querySelector('.scanner-perk-reroll');
-      cycleReroll(edit);edit?.dispatchEvent(new Event('input',{bubbles:true}));return;
+      cycleReroll(edit);edit?.dispatchEvent(new Event('input',{bubbles:true}));applyCorrections(true);if(!inlineEditing){editing=false;score();}return;
     }
     const button=event.target.closest?.('.scanner-perk-unlocked');
     if(!button || !resultCurrent || !latestCanvas)return;
@@ -744,8 +775,47 @@
     if(!edit)return;
     syncStar(edit,button.value!=='true',Number(button.dataset.rowIndex));
     edit.dispatchEvent(new Event('input',{bubbles:true}));
+    applyCorrections(true);if(!inlineEditing){editing=false;score();}
     el.result.querySelector?.('.scanner-perk-unlocked[data-row-index="'+button.dataset.rowIndex+'"]')?.focus();
   });
+  el.result.addEventListener('keydown',event=>{
+    if(event.key==='Enter' && event.target.closest?.('[data-inline-field]'))event.preventDefault();
+  });
+  el.result.addEventListener('input',event=>{
+    const field=event.target.closest?.('[data-inline-field]');if(!inlineEditing || !field)return;
+    if(field.dataset.inlineField==='artifact'){
+      const name=recognition.cleanArtifactName(field.textContent).slice(0,160);
+      result={...result,artifact:{...result.artifact,name:name || null,nameSource:'manual'}};best=result;
+      const logged=window.DNScannerCollection?.itemForEncounter?.(JSON.stringify([session,itemId]),resultProfile);
+      if(logged)window.DNScannerCollection.setName?.(logged.id,name);
+      score();observeServices(result,{corrected:true});return;
+    }
+    const index=Number(field.dataset.inlineRow),kind=field.dataset.inlineField;
+    const input=el.correct.querySelectorAll('.scanner-edit-row')[index]?.querySelector('.scanner-perk-'+kind);if(!input)return;
+    const text=field.textContent.replace(kind==='value'?/%/g:/\s+/g,kind==='value'?'':' ').trim();
+    input.value=kind==='value' && text!=='' && Number.isFinite(Number(text))?String(Number(text)):text;
+    if(kind==='value' && input.value===''){
+      const tier=el.correct.querySelectorAll('.scanner-edit-row')[index]?.querySelector('.scanner-perk-tier');if(tier)tier.value='';
+    }
+    input.dataset.manual='true';delete input.dataset.autoInferred;
+    input.dispatchEvent(new Event('input',{bubbles:true}));applyCorrections(true);
+    const valid=kind==='name'?names.includes(canonPerk(input.value)):input.value!=='' && Number.isFinite(Number(input.value)) && Math.abs(Number(input.value))<=40 && !result?.rows[index]?.tierConflict && !recognition.signIssues([result?.rows[index] || {}]).length;
+    field.setAttribute('aria-invalid',String(!valid));field.title=valid?'':el.warnings.textContent;
+  });
+  function setInlineEditing(enabled) {
+    if(storage)return false;
+    if(enabled){
+      if(!resultCurrent && displayedCapture && itemId===displayedItemId){result=displayedCapture;resultCurrent=true;confirmed=!!result.valid;}
+      if(!result || !resultCurrent || !latestCanvas)return false;
+      inlineEditing=true;editing=true;token++;clearTimeout(stableTimer);stableTimer=null;discardSpeculation('manual editing');showCorrection();score();
+    } else {
+      inlineEditing=false;editing=false;best=result;settled=confirmed;readHash=confirmed?readHash:null;
+      const pending=deferredFrame;deferredFrame=null;score();
+      if(pending)update(pending.canvas,pending.state);
+      if(!settled && latestCanvas)schedule();
+    }
+    return true;
+  }
   function corrections(automatic=false) {
     let rows=[...el.correct.querySelectorAll(".scanner-edit-row")].map((row,rowsIndex)=>{
       const name=canonPerk(row.querySelector(".scanner-perk-name").value.trim());
@@ -888,7 +958,9 @@
     if(resultCurrent && result)observeServices({...result,artifact:{...result.artifact,type:get('compare-type').value || result.artifact?.type}});
   });
   for(const event of ['focus','storage','dn-strategies-changed'])window.addEventListener(event,()=>{ratingContext=null;if(ready)score();});
-  window.DNScannerReading={update,reset,invalidate};
+  window.addEventListener('dn-scanner-target-focus-changed',()=>{if(ready)score();});
+  window.addEventListener('dn-scanner-target-edit-changed',()=>{if(ready)score();});
+  window.DNScannerReading={update,reset,invalidate,setInlineEditing};
   score();
   (async()=>{
     try {

@@ -5,6 +5,7 @@
   const check=(name,value)=>{checks[name]=!!value;if(!value)throw Error(name+' / '+get('capture-percent').textContent+' / '+get('capture-detail').textContent+' / '+get('keep').title);};
   async function wait(test){const end=performance.now()+10000;while(!test()){if(performance.now()>end)throw Error('Timed out');await new Promise(resolve=>setTimeout(resolve,20));}}
   await wait(()=>get('names').children.length);
+  get('setup').open=true;
   get('auto').checked=false;window.DNScannerCollection.isEnabled=()=>false;
   const name='Heavy Tank Damage';
   const complete=()=>({valid:true,warnings:[],hall:'main',hallSource:'hall-colour',artifact:{type:'Weapon'},unlocked:{count:2,states:[true,true,false,false,false]},
@@ -17,7 +18,7 @@
   check('empty identification starts at zero',get('capture-percent').textContent==='0/17 identified');
   const missing=complete();missing.valid=false;missing.rows[4].name='';missing.rows[4].known=false;
   await read(missing);
-  check('one unknown field is amber without an extra warning line',get('capture-percent').textContent==='16/17 identified' && getComputedStyle(get('glance-board')).backgroundColor==='rgb(88, 64, 24)' && get('capture-review').hidden && get('capture-review').textContent==='' && get('keep').disabled);
+  check('one unknown field is amber without an extra warning line',get('capture-percent').textContent==='16/17 identified' && getComputedStyle(get('glance-board')).color==='rgb(255, 228, 173)' && get('capture-review').hidden && get('capture-review').textContent==='' && get('keep').disabled);
   const incompleteBarHeight=get('glance-board').getBoundingClientRect().height;
   get('corrections').open=true;
   const nameInput=get('correct').querySelectorAll('.scanner-perk-name')[4];

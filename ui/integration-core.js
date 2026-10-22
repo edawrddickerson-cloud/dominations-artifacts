@@ -67,6 +67,15 @@
     // JSON normalization also makes hashes match PostgreSQL after transmission.
     return validate(JSON.parse(JSON.stringify({kind:'dominations-cloud-workspace',version:VERSION,game:'dominations',settings:safeSettings,records:records.filter(record=>record.id==='items' || record.id.startsWith('collection:')).map(record=>({id:record.id,items:record.items.map(sanitizeItem)}))})));
   }
+  function lifetimeCraftsLogged(log) {
+    if(log?.version!==2 || !Array.isArray(log.items))return null;
+    const keys=['logged','kept','main','war','threeUnlocked'],archived=log.lifetimeStatistics?.archived;
+    const valid=log.lifetimeStatistics?.version===1 && archived && keys.every(key=>Number.isSafeInteger(archived[key]) && archived[key]>=0) &&
+      archived.kept<=archived.logged && archived.main+archived.war<=archived.logged && archived.threeUnlocked<=archived.logged;
+    const ids=new Set(log.items.slice(0,5000).filter(item=>item?.id!=null && Array.isArray(item.rows)).map(item=>item.id));
+    const count=(valid?archived.logged:0)+ids.size;
+    return Number.isSafeInteger(count)?count:null;
+  }
   function canonical(value) {
     if(Array.isArray(value))return '['+value.map(canonical).join(',')+']';
     if(value && typeof value==='object')return '{'+Object.keys(value).sort().map(key=>JSON.stringify(key)+':'+canonical(value[key])).join(',')+'}';
@@ -102,5 +111,5 @@
   const ocrFeedbackReady=config=>privacyReady(config) && config.ocrFeedbackEnabled===true;
   const cloudReady=(config,origin)=>!!config?.supabaseUrl && !!config.supabasePublishableKey &&
     (config.cloudEnabled===true && privacyReady(config) || config.localCloudTesting===true && config.environment==='development' && origin==='http://127.0.0.1:8765');
-  window.DNIntegrationCore={VERSION,POLICY,MAX_BYTES,isSyncedSetting,settingsSnapshot,sanitizeItem,createWorkspace,validate,canonical,fingerprint,decision,consent,setConsent,privacyReady,researchReady,ocrFeedbackReady,cloudReady};
+  window.DNIntegrationCore={VERSION,POLICY,MAX_BYTES,isSyncedSetting,settingsSnapshot,sanitizeItem,createWorkspace,validate,canonical,fingerprint,decision,consent,setConsent,privacyReady,researchReady,ocrFeedbackReady,cloudReady,lifetimeCraftsLogged};
 })();

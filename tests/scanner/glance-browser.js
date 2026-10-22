@@ -11,9 +11,10 @@
   DN.comparisonStrategies=()=>[];
   const bounds=element=>{const rect=element.getBoundingClientRect();return {top:rect.top,bottom:rect.bottom,left:rect.left,right:rect.right};};
   const visible=element=>{const rect=bounds(element);return rect.top>=-1 && rect.bottom<=innerHeight+1 && rect.left>=-1 && rect.right<=innerWidth+1;};
-  check('setup starts collapsed above summary',!get('setup').open && !!(get('setup').compareDocumentPosition(get('glance-board')) & Node.DOCUMENT_POSITION_FOLLOWING));
+  check('capture status starts inside collapsed Scanner setup',!get('setup').open && get('setup').contains(get('glance-board')) && !get('glance-board').checkVisibility());
+  get('setup').open=true;
   check('old score category and hall strip removed',!document.querySelector('.scanner-score-controls') && !get('category-label') && !get('hall-label'));
-  check('manual category correction moved out of top bar',!document.querySelector('.scanner-session').contains(get('compare-type')) && get('compare-type').closest('details').querySelector('summary').textContent==='Correct Recognition');
+  check('manual metadata controls live in Scanner setup without a correction section',get('setup').contains(get('compare-type')) && get('corrections').hidden && !get('corrections').querySelector('summary'));
   check('empty capture begins red at zero',get('capture-percent').textContent==='0/17 identified' && getComputedStyle(get('glance-board')).getPropertyValue('--capture-hue').trim()==='0');
   get('auto').checked=false;window.DNScannerCollection.isEnabled=()=>false;
   document.getElementById('header-main').click();
@@ -42,15 +43,26 @@
   check('complete capture is green',get('glance-board').style.getPropertyValue('--capture-hue')==='120');
   check('type total and same-type cutoff use shared maximum scores',get('item-type').textContent==='Weapon total · Off' && get('item-total').textContent==='200' && get('benchmark-value').textContent==='150');
   check('qualifying top-two item is green',get('benchmark').classList.contains('is-top-two') && get('comparison').textContent.includes('top 2') && getComputedStyle(get('benchmark')).backgroundColor==='rgb(18, 78, 41)');
-  if(innerWidth<=1100)get('benchmark').scrollIntoView({block:'end'});
-  for(const id of ['benchmark','item-total','decision-state'])check(id+' fits viewport',visible(get(id)));
+  await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  get('benchmark').scrollIntoView({block:'end'});
+  for(const id of ['benchmark','item-total','decision-state']){
+    const rect=bounds(get(id));
+    if(id==='benchmark' && rect.bottom-rect.top>innerHeight)check('tall benchmark fits mobile width and remains scrollable',rect.left>=0 && rect.right<=innerWidth);
+    else check(id+' fits viewport',visible(get(id)));
+  }
   const captureFont=parseFloat(getComputedStyle(get('capture-percent')).fontSize),scoreFont=parseFloat(getComputedStyle(get('item-total')).fontSize);
-  check('capture is compact and item total is prominent',captureFont>=20 && captureFont<=24 && scoreFont>=24 && bounds(get('glance-board')).bottom-bounds(get('glance-board')).top<80);
+  const captureHeight=get('glance-board').getBoundingClientRect().height;
+  check('capture is compact inside the setup status box',captureFont<=14 && scoreFont>=24 && captureHeight<48 && get('glance-board').closest('.scanner-setup-capture') && !get('result').querySelector('.scanner-traffic'));
   const artwork=get('artwork'),artworkBox=artwork.parentElement;
   check('captured artwork is shown',!artwork.hidden && artwork.src.startsWith('data:image/jpeg'));
   check('cutoff blurb is removed',!document.querySelector('.scanner-benchmarks-hint'));
   check('only total verdict has a green background',getComputedStyle(get('glance-board')).backgroundColor!=='rgb(18, 78, 41)' && !get('benchmarks') && !get('benchmark').contains(get('result')));
-  if(innerWidth>1100)check('artwork and verdict sit right of captured stats',bounds(get('result')).right<=bounds(artworkBox).left && bounds(get('benchmark')).bottom<=bounds(artworkBox).top);
+  await new Promise(resolve=>requestAnimationFrame(()=>requestAnimationFrame(resolve)));
+  const scannedRows=get('result').querySelectorAll('.scanner-perk');
+  check('artifact image matches the five scanned rows including their header',Math.abs(bounds(get('result')).top-bounds(artworkBox).top)<1 && Math.abs(bounds(get('result')).bottom-bounds(artworkBox).bottom)<1);
+  check('artifact image and verdict share their right edge',Math.abs(bounds(artworkBox).right-bounds(get('benchmark')).right)<1 && getComputedStyle(artwork).objectPosition==='100% 50%');
+  check('captured stats and artwork remain above the verdict',bounds(get('result')).right<=bounds(artworkBox).left+1 && Math.max(bounds(get('result')).bottom,bounds(artworkBox).bottom)<=bounds(get('benchmark')).top+1);
+  check('unlocked and frame-filtering blurb is removed',!get('result').querySelector(':scope > p'));
   check('no horizontal overflow',document.documentElement.scrollWidth<=innerWidth+1);
   check('five-stat weighted rows remain visible',get('result').querySelectorAll('.scanner-stat-score').length===5 && [...get('result').querySelectorAll('.scanner-stat-score')].every(element=>element.textContent==='40'));
   const statRows=get('result').querySelectorAll('.scanner-perk');
@@ -66,17 +78,17 @@
   delayed.resolve(JSON.parse(JSON.stringify(response)));delayed=null;await wait(()=>!get('read').disabled);
   check('completed retry retains the same artwork without re-encoding',get('capture-percent').textContent==='17/17 identified' && artworkEncodes===originalEncodes && artwork.src===originalArtwork);
   window.scrollTo(0,document.body.scrollHeight);await new Promise(resolve=>requestAnimationFrame(resolve));
-  check('compact capture bar stays pinned while scrolling',visible(get('glance-board')));window.scrollTo(0,0);
+  check('compact capture status stays inside Scanner setup',get('setup').contains(get('glance-board')));window.scrollTo(0,0);
   await read(complete(6));check('tie is green',get('item-total').textContent==='150' && getComputedStyle(get('benchmark')).backgroundColor==='rgb(18, 78, 41)');
   check('a new artifact gets a new artwork capture',artwork.src!==originalArtwork && artworkEncodes===originalEncodes+1);
   await read(complete(1));check('below-cutoff item is red',get('comparison').textContent==='Below top 2' && get('benchmark').classList.contains('is-below-cutoff') && getComputedStyle(get('benchmark')).backgroundColor==='rgb(87, 29, 36)');
   const rerollExample=complete(1);rerollExample.rows[2].rerollEligible=true;
   await read(rerollExample);
-  check('four aligned stat columns include reroll gain',get('result').querySelectorAll('.scanner-stat-heading > span').length===4 && get('result').querySelectorAll('.scanner-stat-reroll').length===5);
-  check('best reroll gain is shown separately and added once',get('result').querySelector('.is-best-reroll .scanner-reroll-gain').textContent==='+80' && get('item-total').textContent==='180' && get('result').querySelectorAll('.scanner-stat-score')[2].textContent==='20');
+  check('five aligned stat columns include multiplier and reroll gain',get('result').querySelectorAll('.scanner-stat-heading > span').length===5 && get('result').querySelectorAll('.scanner-stat-multiplier').length===5 && get('result').querySelectorAll('.scanner-stat-reroll').length===5);
+  check('Max score shows base plus reroll gain and totals add it once',get('result').querySelectorAll('.scanner-stat-score')[2].textContent==='20 + 80' && get('item-total').textContent==='180' && !get('result').querySelector('.scanner-stat-reroll .scanner-reroll-gain'));
   const tiedRerolls=complete(1);tiedRerolls.rows.forEach(row=>row.rerollEligible=true);
   await read(tiedRerolls);
-  const gains=()=>Array.from(get('result').querySelectorAll('.scanner-reroll-gain')).map(node=>node.textContent);
+  const gains=()=>Array.from(get('result').querySelectorAll('.scanner-reroll-gain')).map(node=>node.textContent.replace(/\s/g,''));
   check('tied lowest rows show a gain only on the first row',JSON.stringify(gains())==='["+80","","","",""]' && get('item-total').textContent==='180');
   const lowestLast=complete(11);lowestLast.rows.forEach(row=>row.rerollEligible=true);lowestLast.rows[4].value=1;
   await read(lowestLast);
@@ -132,10 +144,10 @@
   check('readable subtotal above the benchmark is green',getComputedStyle(get('benchmark')).backgroundColor==='rgb(18, 78, 41)');
   const middleMissing=complete(1);middleMissing.valid=false;middleMissing.rows[2]={name:'',value:null,known:false,rerollEligible:true};middleMissing.rows[3].value=6;middleMissing.rows[3].rerollEligible=true;
   await read(middleMissing);
-  check('missing middle row preserves readable scores and single reroll position',get('item-total').textContent==='~160' && JSON.stringify(Array.from(get('result').querySelectorAll('.scanner-stat-score')).map(node=>node.textContent))==='["20","20","—","30","20"]' && get('result').querySelectorAll('.scanner-reroll-gain')[3].textContent==='+70');
+  check('missing middle row preserves readable scores and single reroll position',get('item-total').textContent==='~160' && JSON.stringify(Array.from(get('result').querySelectorAll('.scanner-stat-base-score')).map(node=>node.textContent))==='["20","20","—","30","20"]' && get('result').querySelectorAll('.scanner-stat-score')[3].textContent==='30 + 70');
   const unknownName=complete(1);unknownName.valid=false;unknownName.rows[4].known=false;unknownName.rows[4].name='Unknown stat';
   await read(unknownName);check('unrecognised name loses only its own field credit',get('capture-percent').textContent==='16/17 identified');
-  check('one missing field remains amber and blocks Keep',getComputedStyle(get('glance-board')).backgroundColor==='rgb(88, 64, 24)' && get('keep').disabled);
+  check('one missing field remains amber and blocks Keep',getComputedStyle(get('glance-board')).color==='rgb(255, 228, 173)' && get('keep').disabled);
   get('corrections').open=true;
   const missingName=get('correct').querySelectorAll('.scanner-perk-name')[4];missingName.value=perk;missingName.dispatchEvent(new Event('input',{bubbles:true}));
   check('typed field updates the identified total immediately',get('capture-percent').textContent==='17/17 identified' && get('capture-detail').textContent==='16 read · 0 inferred · 1 typed' && get('capture-review').hidden);
@@ -202,6 +214,7 @@
   await read(complete(11));
   check('returning artifact restores its score and artwork',get('item-total').textContent==='200' && !get('artwork').hidden);
   DNScannerReading.reset();check('reset clears score and identified fields',get('item-total').textContent==='—' && get('capture-percent').textContent==='0/17 identified');
+  check('capture status keeps its height from complete to empty results',get('glance-board').getBoundingClientRect().height===captureHeight && get('row-status').textContent==='0/5 stats captured');
   await read(complete(11));
   return {passed:Object.values(checks).every(Boolean),viewport:{width:innerWidth,height:innerHeight},ui:checks,captureFont,scoreFont,
     captureBounds:bounds(get('glance-board')),benchmarkBounds:bounds(get('benchmark')),limitations:'Actual page/controller and shared scoring tested with synthetic OCR responses. Real screenshot OCR is tested separately.'};

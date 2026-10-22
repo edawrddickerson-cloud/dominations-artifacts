@@ -8,6 +8,7 @@
   let stream = null, nav = null, checking = false, restoring = null;
   let currentURL, currentIndex = 0;
   let header = null, headerObserver = null;
+  let captureEnded = null;
   const headerButtons = {
     main: '#hall-main, #mode-main, #header-main',
     war: '#hall-war, #mode-war, #header-war',
@@ -73,13 +74,41 @@
     return file.endsWith('.html') ? file : file + '.html';
   }
   function isScanner(url) { return ['scanner.html','storage-scanner.html'].includes(fileOf(url)); }
+  function connected() { return !!stream?.getVideoTracks().some(track => track.readyState === 'live'); }
+  function updateCaptureIndicators() {
+    const state = connected() ? 'connected' : 'disconnected';
+    for (const link of nav?.querySelectorAll('a[href]') || []) {
+      const url = pageURL(link.href);
+      if (!url || !isScanner(url)) continue;
+      let dot = link.querySelector('.scanner-connection-dot');
+      if (!dot) {
+        dot = document.createElement('span');
+        dot.className = 'scanner-connection-dot';
+        dot.setAttribute('aria-hidden', 'true');
+        link.appendChild(dot);
+      }
+      link.dataset.captureStatus = state;
+      const label = link.querySelector('.nav-text')?.textContent.trim() || link.textContent.trim();
+      link.title = label + ': ' + (state === 'connected' ? 'Connected' : 'Disconnected');
+      link.setAttribute('aria-label', link.title);
+    }
+  }
   function stop() {
+    if (captureEnded) stream?.getVideoTracks().forEach(track => track.removeEventListener('ended', captureEnded));
+    captureEnded = null;
     stream?.getTracks().forEach(track => track.stop());
     stream = null;
+    updateCaptureIndicators();
   }
   window.DNScannerSession = {
     current() { return stream?.getVideoTracks().some(track => track.readyState === 'live') ? stream : null; },
-    retain(capture) { if (stream && stream !== capture) stop(); stream = capture; },
+    retain(capture) {
+      if (stream === capture) { updateCaptureIndicators(); return; }
+      stop();stream = capture;
+      captureEnded = () => { if (stream === capture && !connected()) stop(); };
+      stream.getVideoTracks().forEach(track => track.addEventListener('ended', captureEnded));
+      updateCaptureIndicators();
+    },
     capture(options) { return navigator.mediaDevices.getDisplayMedia(options); },
     stop, confirmProfile: false,
   };
@@ -107,7 +136,6 @@
     updateNav(url);
   }
   function display(url) {
-    if (!isScanner(url)) stop();
     const child = frame.contentWindow;
     if (child.location.origin === url.origin && child.location.pathname === url.pathname && child.location.search === url.search) {
       if (child.location.hash !== url.hash) {
@@ -181,6 +209,7 @@
       nav.querySelector('#nav-collapse-btn')?.addEventListener('click', () => setCollapsed(!document.body.classList.contains('nav-collapsed')));
       setCollapsed(document.body.classList.contains('nav-collapsed'));
     }
+    updateCaptureIndicators();
     document.title = child.document.title;
     mountHeader(child);
     frame.title = child.document.title;
