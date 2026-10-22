@@ -5,5 +5,7 @@ let runner = fs.readFileSync(path.join(project, 'scripts/run_scanner_ocr_fixture
 runner = runner.replace("const root = path.resolve(__dirname, '..');", 'const root = ' + JSON.stringify(project) + ';');
 runner = runner.replace("await client.send('Network.enable');", "await client.send('Network.enable'); await client.send('Network.setBlockedURLs',{urls:['https://*']});");
 runner = runner.replace("(storage?'storage-scanner.html':'scanner.html')", "'artifacts.html'");
-runner = runner.replace("const evaluation=client.send('Runtime.evaluate'", 'expression = ' + JSON.stringify(fs.readFileSync(path.join(project, 'tests/artifact-ranking-targets-browser.js'), 'utf8')) + ";\n    const evaluation=client.send('Runtime.evaluate'");
+const scenario = fs.readFileSync(path.join(project, 'tests/artifact-ranking-targets-browser.js'), 'utf8');
+const expression = '(document.getElementById("scanner-view")?.contentWindow || window).eval(' + JSON.stringify(scenario) + ')';
+runner = runner.replace("const evaluation=client.send('Runtime.evaluate'", 'expression = ' + JSON.stringify(expression) + ";\n    const evaluation=client.send('Runtime.evaluate'");
 eval(runner);

@@ -88,18 +88,19 @@
   function consent(storage) {
     try {
       const value=JSON.parse(storage.getItem('dn_service_consent') || 'null');
-      if(value?.policy===POLICY)return {policy:POLICY,analytics:value.analytics===true,diagnostics:value.diagnostics===true,research:value.research===true,decided:true};
+      if(value?.policy===POLICY)return {policy:POLICY,analytics:value.analytics===true,diagnostics:value.diagnostics===true,research:value.research===true,ocrFeedback:value.ocrFeedback===true,decided:true};
     }catch{ /* Unavailable or invalid storage defaults to no optional collection. */ }
-    return {policy:POLICY,analytics:false,diagnostics:false,research:false,decided:false};
+    return {policy:POLICY,analytics:false,diagnostics:false,research:false,ocrFeedback:false,decided:false};
   }
   function setConsent(storage,value) {
-    const next={policy:POLICY,analytics:value.analytics===true,diagnostics:value.diagnostics===true,research:value.research===true,decided:true};
+    const next={policy:POLICY,analytics:value.analytics===true,diagnostics:value.diagnostics===true,research:value.research===true,ocrFeedback:value.ocrFeedback===true,decided:true};
     storage.setItem('dn_service_consent',JSON.stringify(next));
     return next;
   }
   const privacyReady=config=>config?.privacyReady===true && typeof config.privacyContact==='string' && config.privacyContact.trim().length>0;
   const researchReady=config=>privacyReady(config) && config.researchEnabled===true;
+  const ocrFeedbackReady=config=>privacyReady(config) && config.ocrFeedbackEnabled===true;
   const cloudReady=(config,origin)=>!!config?.supabaseUrl && !!config.supabasePublishableKey &&
     (config.cloudEnabled===true && privacyReady(config) || config.localCloudTesting===true && config.environment==='development' && origin==='http://127.0.0.1:8765');
-  window.DNIntegrationCore={VERSION,POLICY,MAX_BYTES,isSyncedSetting,settingsSnapshot,sanitizeItem,createWorkspace,validate,canonical,fingerprint,decision,consent,setConsent,privacyReady,researchReady,cloudReady};
+  window.DNIntegrationCore={VERSION,POLICY,MAX_BYTES,isSyncedSetting,settingsSnapshot,sanitizeItem,createWorkspace,validate,canonical,fingerprint,decision,consent,setConsent,privacyReady,researchReady,ocrFeedbackReady,cloudReady};
 })();

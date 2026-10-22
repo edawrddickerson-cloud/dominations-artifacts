@@ -4,7 +4,7 @@
   const check=(name,value)=>{checks[name]=!!value;if(!value)throw Error(name);};
   async function wait(test){const end=performance.now()+60000;while(!await test()){if(performance.now()>end)throw Error('Log test timed out');await new Promise(resolve=>setTimeout(resolve,30));}}
   await wait(()=>get('names').children.length && window.DNScannerCollection);
-  get('auto').checked=false;get('collect').checked=true;
+  get('auto').checked=false;
   const bitmap=await createImageBitmap(await(await fetch('../tests/scanner/pic1.png')).blob());
   const source=document.createElement('canvas');source.width=bitmap.width;source.height=bitmap.height;source.getContext('2d').drawImage(bitmap,0,0);bitmap.close();
   const panel=DNScannerRecognition.detectPanel(source),rect=DNScannerCore.cropPixels(panel,source.width,source.height);
@@ -15,12 +15,23 @@
   check('real screenshot title is saved automatically',/The Yongle Emperor.s Vase/.test(item.name));
   check('scanned name source is retained',item.nameSource==='scanned');
   const entry=get('item-log').querySelector('[data-log-item]'),details=entry.querySelector('details');
+  check('artifact crop is saved with the logged name',/^data:image\/jpeg;base64,/.test(item.image));
+  check('expanded entry contains its saved artifact image',details.querySelector('.scanner-log-artwork')?.getAttribute('src')===item.image);
   check('entry starts compact with its scanned name',!details.open && details.querySelector('summary').textContent.includes(item.name));
   check('UTC timestamp has the requested second precision',/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/.test(entry.querySelector('time').textContent) && entry.querySelector('time').textContent===item.firstSeen.slice(0,19));
   check('name prompt removed',!entry.querySelector('[placeholder="Name this artifact"]'));
   get('read').click();await wait(()=>!get('read').disabled);await DNScannerCollection.flush();
   data=JSON.parse(await DN.scannerLog.read());
   check('retry retains one entry and its original timestamp',data.items.length===1 && data.items[0].firstSeen===item.firstSeen && data.items[0].name===item.name);
+  const stat=(key,doc=document)=>doc.querySelector('[data-crafted-stat="'+key+'"]')?.textContent;
+  check('lifetime total appears at the top and retries do not increase it',stat('logged')==='1' && get('lifetime-stats').compareDocumentPosition(get('item-log')) & Node.DOCUMENT_POSITION_FOLLOWING);
+  let exportedBlob,exportedName;
+  const createURL=URL.createObjectURL,anchorClick=HTMLAnchorElement.prototype.click;
+  URL.createObjectURL=blob=>{exportedBlob=blob;return 'blob:crafting-log-fixture';};
+  HTMLAnchorElement.prototype.click=function(){exportedName=this.download;};
+  try{get('collection-export').click();}finally{URL.createObjectURL=createURL;HTMLAnchorElement.prototype.click=anchorClick;}
+  const exported=JSON.parse(await exportedBlob.text()),exportedItem=exported.items.find(row=>row.id===item.id);
+  check('log export includes image and recognized name',exportedName.startsWith('artifact-perk-observations-') && exportedItem.image===data.items[0].image && exportedItem.name===item.name);
   DNScannerCollection.recordItem({...item,valid:true,artifact:{name:item.name,type:item.type}},'another-craft',{newEncounter:true,profileKey:item.profileKey});
   await DNScannerCollection.flush();
   check('same names remain separate and both are flagged',get('item-log').children.length===2 && [...get('item-log').children].every(node=>node.querySelector('summary').textContent.includes('Same name ×2')));
@@ -34,9 +45,16 @@
   check('leaving name field for Keep preserves its button',keep.isConnected && !keep.disabled);keep.click();
   await wait(()=>[...get('item-log').children].find(node=>node.dataset.logItem===item.id).querySelector('[data-keep-log]').textContent==='Kept');
   check('Keep retains the scanned entry name',(await DNStoredArtifacts.read(item.profileKey)).find(saved=>saved.id===item.keepId)?.name==='Corrected name');
+  check('lifetime logged and kept totals update',stat('logged')==='2' && stat('kept')==='1');
   const frame=document.createElement('iframe');frame.hidden=true;frame.src='scanner.html?log-reopen';document.body.append(frame);
   await wait(()=>frame.contentWindow?.DNScannerCollection);
   const restored=[...frame.contentDocument.getElementById('scanner-item-log').children].find(node=>node.dataset.logItem===item.id);
   check('names and timestamps survive reopening',restored.textContent.includes('Corrected name') && restored.querySelector('time').textContent===item.firstSeen.slice(0,19));
+  check('saved artwork survives reopening',restored.querySelector('.scanner-log-artwork')?.getAttribute('src')===exportedItem.image);
+  check('lifetime totals survive reopening',stat('logged',frame.contentDocument)==='2' && stat('kept',frame.contentDocument)==='1');
+  frame.contentWindow.confirm=()=>true;
+  frame.contentDocument.getElementById('scanner-collection-clear').click();
+  await frame.contentWindow.DNScannerCollection.flush();
+  check('clearing visible history preserves lifetime totals',frame.contentDocument.getElementById('scanner-item-log').children.length===0 && stat('logged',frame.contentDocument)==='2' && JSON.parse(await DN.scannerLog.read()).lifetimeStatistics.totals.logged===2);
   frame.remove();return {passed:true,ui:checks,recognizedName:item.name};
 })()

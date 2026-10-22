@@ -95,7 +95,7 @@
     for(const listener of listeners)try{listener({...preferences})?.catch?.(()=>{});}catch{}
     if(preferences.analytics)event('$pageview');
   }
-  window.DNConsent={get:()=>({...preferences}),set(value){if((value.analytics || value.diagnostics || value.research) && !C.privacyReady(config))throw Error('Optional sharing is not available in this version.');if(value.research && !C.researchReady(config))throw Error('Research sharing is not available in this version.');const next=C.setConsent(localStorage,value);changed(next);return next;},subscribe(fn){listeners.add(fn);return ()=>listeners.delete(fn);}};
+  window.DNConsent={get:()=>({...preferences}),set(value){if((value.analytics || value.diagnostics || value.research || value.ocrFeedback) && !C.privacyReady(config))throw Error('Optional sharing is not available in this version.');if(value.research && !C.researchReady(config))throw Error('Research sharing is not available in this version.');if(value.ocrFeedback && !C.ocrFeedbackReady(config))throw Error('OCR feedback is not available in this version.');const next=C.setConsent(localStorage,value);changed(next);return next;},subscribe(fn){listeners.add(fn);return ()=>listeners.delete(fn);}};
   window.addEventListener('storage',e=>{if(e.key==='dn_service_consent')changed(C.consent(localStorage));});
   function milestone(step) {
     if(!permitted('onboarding_step_completed'))return;

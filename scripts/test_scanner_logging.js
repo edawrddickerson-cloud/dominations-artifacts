@@ -18,7 +18,7 @@ function element() {
 const result=value=>({valid:true,hall:'main',artifact:{type:'Weapon',image:'data:image/jpeg;base64,artwork'},
   rows:Array.from({length:5},(_,i)=>({known:true,name:'Damage '+i,value,raw:'Damage '+i+' +'+value+'%',hasPercent:true}))});
 async function browser(initialData) {
-  const ids=['scanner-collect','scanner-save-logs','scanner-log-storage-status','scanner-collection-count','scanner-collected-labels',
+  const ids=['scanner-crafted-log','scanner-log-storage-status','scanner-collection-count','scanner-collected-labels',
     'scanner-collection-clear','scanner-read','scanner-item-log','scanner-item-count'];
   const elements=Object.fromEntries(ids.map(id=>[id,element()])),events={},preferences=new Map(),operations=[];
   let durable=initialData?JSON.stringify(initialData):null,queue=Promise.resolve(),block=null,failure=false;
@@ -78,12 +78,9 @@ async function browser(initialData) {
   ordered.collection.recordResult(result(6),result(6),2,{encounterId:'2',profileKey:'p'});
   assert.equal(ordered.operations.length,2,'rapid observations are submitted before any storage completion, without waiting for timers');
   assert.equal(JSON.parse(ordered.operations[0].value).items.length,1,'queued snapshots cannot be mutated by later reads');
-  ordered.e['scanner-save-logs'].checked=false;
-  const optedOut=ordered.e['scanner-save-logs'].listeners.change();
-  assert.deepEqual(ordered.operations.map(op=>op.kind),['write','write','remove'],'opt-out deletion follows both pending writes');
-  gate.resolve();await optedOut;assert.equal(ordered.durable,null,'pending writes cannot restore an opted-out log');
-  ordered.e['scanner-save-logs'].checked=true;await ordered.e['scanner-save-logs'].listeners.change();
-  assert.equal(JSON.parse(ordered.durable).items.length,2,'enabling saving retains both observations in memory');
+  assert.deepEqual(ordered.operations.map(op=>op.kind),['write','write'],'automatic logging queues both observations');
+  gate.resolve();await ordered.collection.flush();
+  assert.equal(JSON.parse(ordered.durable).items.length,2,'both observations save without a settings action');
   const clearGate=ordered.block();
   ordered.collection.recordResult(result(11),result(11),3,{encounterId:'3',profileKey:'p'});
   ordered.e['scanner-collection-clear'].listeners.click();
@@ -91,15 +88,15 @@ async function browser(initialData) {
   clearGate.resolve();await ordered.collection.flush();assert.equal(JSON.parse(ordered.durable).items.length,0);assert.equal(ordered.e['scanner-item-log'].children.length,0);
   ordered.fail();ordered.collection.recordResult(result(1),result(1),4,{});await ordered.collection.flush();
   assert.match(ordered.e['scanner-log-storage-status'].textContent,/Could not save/);
-  console.log('Immediate write submission, immutable snapshots, ordered opt-out, save re-enable, pending-write clear, and failure status passed.');
+  console.log('Immediate automatic writes, immutable snapshots, pending-write clear, and failure status passed.');
 
   const thrown=await browser();
   assert.throws(()=>thrown.collection.recordResult(result(1),result(1),1,{},()=>{throw Error('render failure');}),/render failure/);
   assert.equal(thrown.operations.length,1,'a publishing failure still submits the observed result');await thrown.collection.flush();
   assert.equal(JSON.parse(thrown.durable).items.length,1);
-  thrown.e['scanner-collect'].checked=false;let disabledPublish=false;
-  assert.equal(thrown.collection.recordResult(result(6),result(6),2,{},()=>disabledPublish=true),false);
-  assert.equal(disabledPublish,true,'visible result publication still runs with collection disabled');
-  assert.equal(thrown.operations.length,1,'disabled collection does not save new observations');
-  console.log('Publishing failure durability and disabled-collection publication passed.');
+  let published=false;
+  assert.equal(thrown.collection.recordResult(result(6),result(6),2,{},()=>published=true),true);
+  assert.equal(published,true,'visible result publication runs with automatic logging');
+  assert.equal(thrown.operations.length,2,'the next observed item is automatically saved');
+  console.log('Publishing failure durability and automatic collection publication passed.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

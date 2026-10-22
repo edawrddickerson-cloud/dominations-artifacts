@@ -2,7 +2,7 @@
 const fs=require('node:fs'),path=require('node:path');
 const project=path.resolve(__dirname,'..');
 const fixture=fs.readFileSync(path.join(project,'tests/backend-sdk-fixture.js'),'utf8');
-const configuration='window.DNServiceConfig='+JSON.stringify({build:'backend-browser-test',environment:'test',cloudEnabled:true,supabaseUrl:'https://test-project.supabase.co',supabasePublishableKey:'sb_publishable_test',posthogToken:'phc_test',posthogHost:'https://eu.i.posthog.com',privacyReady:true,researchEnabled:true,privacyContact:'privacy@example.invalid',analyticsRetentionDays:365,diagnosticsRetentionDays:365,researchRetentionDays:730,diagnosticsSampleRate:1})+';';
+const configuration='window.DNServiceConfig='+JSON.stringify({build:'backend-browser-test',environment:'test',cloudEnabled:true,supabaseUrl:'https://test-project.supabase.co',supabasePublishableKey:'sb_publishable_test',posthogToken:'phc_test',posthogHost:'https://eu.i.posthog.com',privacyReady:true,researchEnabled:true,ocrFeedbackEnabled:process.argv.includes('--ocr-feedback'),privacyContact:'privacy@example.invalid',analyticsRetentionDays:365,diagnosticsRetentionDays:365,researchRetentionDays:730,diagnosticsSampleRate:1})+';';
 let runner=fs.readFileSync(path.join(project,'scripts/run_scanner_ocr_fixture.js'),'utf8');
 runner=runner.replace("const root = path.resolve(__dirname, '..');",'const root = '+JSON.stringify(project)+';');
 runner=runner.replace('fs.readFile(file, (error, data) => {',"if(file===path.join(root,'ui/service-config.js')){res.setHeader('Content-Type','text/javascript');res.end("+JSON.stringify(configuration)+");return;}\n    fs.readFile(file, (error, data) => {");
@@ -11,7 +11,8 @@ const viewport=process.argv.find(arg=>arg.startsWith('--viewport='))?.slice(11) 
 if(!/^\d{3,4}x\d{3,4}$/.test(viewport))throw Error('Invalid viewport');
 const [width,height]=viewport.split('x').map(Number);
 runner=runner.replace("await client.send('Page.enable');","await client.send('Page.enable');await client.send('Page.addScriptToEvaluateOnNewDocument',{source:"+JSON.stringify(fixture)+"});await client.send('Emulation.setDeviceMetricsOverride',"+JSON.stringify({width,height,deviceScaleFactor:1,mobile:false})+");");
-const expression=(process.argv.includes('--sharing-preview')?'window.DNPreviewSharing=true;\n':'')+fs.readFileSync(path.join(project,'tests/backend-browser.js'),'utf8');
+const scenario=(process.argv.includes('--sharing-preview')?'window.DNPreviewSharing=true;\n':'')+fs.readFileSync(path.join(project,process.argv.includes('--ocr-feedback')?'tests/ocr-feedback-browser.js':'tests/backend-browser.js'),'utf8');
+const expression='(document.getElementById("scanner-view")?.contentWindow || window).eval('+JSON.stringify(scenario)+')';
 runner=runner.replace("const evaluation=client.send('Runtime.evaluate'",'expression = '+JSON.stringify(expression)+";\n    const evaluation=client.send('Runtime.evaluate'");
 // Backend reports have their own filenames; do not overwrite the OCR fixture.
 runner=runner.replace("if(process.argv.includes('--report') && !process.argv.includes('--crafting-audit')) fs.writeFileSync",'if(false) fs.writeFileSync');

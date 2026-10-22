@@ -15,7 +15,7 @@
   check('old score category and hall strip removed',!document.querySelector('.scanner-score-controls') && !get('category-label') && !get('hall-label'));
   check('manual category correction moved out of top bar',!document.querySelector('.scanner-session').contains(get('compare-type')) && get('compare-type').closest('details').querySelector('summary').textContent==='Correct Recognition');
   check('empty capture begins red at zero',get('capture-percent').textContent==='0/17 identified' && getComputedStyle(get('glance-board')).getPropertyValue('--capture-hue').trim()==='0');
-  get('auto').checked=false;get('collect').checked=false;
+  get('auto').checked=false;window.DNScannerCollection.isEnabled=()=>false;
   document.getElementById('header-main').click();
   if(!get('off').checked)document.getElementById('header-off').click();
   if(get('def').checked)document.getElementById('header-def').click();

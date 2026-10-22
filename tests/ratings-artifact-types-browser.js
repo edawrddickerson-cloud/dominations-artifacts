@@ -29,7 +29,7 @@
   const search = document.getElementById('ratings-q'); search.value = 'all resources looted'; search.dispatchEvent(new Event('input', {bubbles: true}));
   check('Search finds only the appropriate category', !!document.querySelector('[data-section="artifact-main-Jewelry"]') && !document.querySelector('[data-section="artifact-main-Weapon"]'));
   search.value = ''; search.dispatchEvent(new Event('input', {bubbles: true}));
-  const frame = document.createElement('iframe'); frame.src = 'ratings.html'; document.body.append(frame);
+  const frame = document.createElement('iframe'); frame.src = 'ratings.html?ratings-reload-check=1'; document.body.append(frame);
   await waitFor(() => frame.contentDocument?.querySelector('[data-section="artifact-main-Weapon"]'));
   check('Selected grouping and ratings survive a new page', frame.contentDocument.getElementById('ratings-group-by').value === 'artifact' && frame.contentDocument.querySelector('[data-layer="strategy"][data-key="Heavy Tank Damage"][data-axis="offensive"]').value === '-3');
   frame.remove();

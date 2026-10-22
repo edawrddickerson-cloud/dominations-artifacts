@@ -3,21 +3,66 @@
 (() => {
   'use strict';
   const config=window.DNServiceConfig,cloud=window.DNCloud,consent=window.DNConsent;
-  const sheet=document.createElement('link');sheet.rel='stylesheet';sheet.href='services.css?v=20261022-discord-account';document.head.appendChild(sheet);
+  const sheet=document.createElement('link');sheet.rel='stylesheet';sheet.href='services.css?v=20261022-cloud-choice';document.head.appendChild(sheet);
   const text={disabled:'Cloud sync unavailable.',
     'signed-out':'Not signed in.',unlinked:'Choose which data to use.',
     synced:'Saved to your account.',upload:'Waiting to sync.',remote:'Newer account data available.',
     conflict:'Conflicting changes. Choose which data to use.',
-    pending:'Saved locally. Sync pending.',offline:'Saved locally. Cloud sync unavailable.',error:'Saved locally. Cloud sync needs attention.'};
+    pending:'Saved locally. Backup pending.',offline:'Saved locally. Backup pending.',error:'Saved locally. Cloud sync needs attention.'};
   function download(value,prefix) {
     const link=document.createElement('a'),url=URL.createObjectURL(new Blob([JSON.stringify(value,null,2)],{type:'application/json'}));
     link.href=url;link.download=prefix+'-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
   }
+  const versions=document.createElement('dialog');
+  versions.className='profile-delete-dialog service-panel service-version-dialog';versions.hidden=true;
+  versions.dataset.cloudChoice='';versions.setAttribute('aria-labelledby','cloud-choice-title');
+  versions.innerHTML='<h2 id="cloud-choice-title">Choose your saved data</h2><div data-version-table></div>'+
+    '<p>Includes all planner settings. Both versions are saved before replacement. Stop scanning and close other planner tabs first.</p>'+
+    '<div class="service-actions"><button type="button" class="btn" data-use-cloud>Use account data</button><button type="button" class="btn" data-use-local>Use browser data</button><button type="button" class="btn" data-cancel-choice>Cancel</button></div><p role="alert" data-choice-error></p>';
+  document.body.appendChild(versions);
+  const versionField=name=>versions.querySelector('[data-'+name+']');
+  let displayed=null,dismissed=null,choiceBusy=false,choiceTimer=null;
+  const versionKey=value=>value?[value.owner,value.revision,value.localHash,value.remoteHash].join(':'):'';
+  const needsChoice=state=>!!cloud.user() && !!state.comparison && ['unlinked','remote','conflict','error'].includes(state.status);
+  function closeVersions(){if(versions.open)versions.close();versions.hidden=true;}
+  function fillVersions(value) {
+    displayed=value;
+    const date=value=>value && Number.isFinite(Date.parse(value))?new Date(value).toLocaleString():'Not recorded';
+    const esc=window.DN.esc;
+    const rows=[['Artifacts','artifacts'],['Collection targets','targets'],['Profiles','profiles']].map(([label,key])=>
+      '<tr><th scope="row">'+label+'</th><td>'+value.cloud[key]+'</td><td>'+value.local[key]+'</td></tr>').join('');
+    versionField('version-table').innerHTML='<table><thead><tr><th></th><th scope="col">Account</th><th scope="col">This browser</th></tr></thead><tbody>'+rows+
+      '<tr><th scope="row">Last synced</th><td>'+esc(date(value.cloud.updatedAt))+'</td><td>'+esc(date(value.local.updatedAt))+'</td></tr></tbody></table>';
+    versionField('use-cloud').disabled=!value.revision;
+  }
+  function showVersions(force=false) {
+    clearTimeout(choiceTimer);
+    const state=cloud.state();
+    if(!needsChoice(state) || choiceBusy)return;
+    if(!force && dismissed===versionKey(state.comparison))return;
+    if(versions.open)return;
+    if(document.hidden || document.querySelector('dialog[open]')){choiceTimer=setTimeout(()=>showVersions(force),500);return;}
+    fillVersions(state.comparison);versionField('choice-error').textContent='';versions.hidden=false;versions.showModal();
+  }
+  function cancelVersions(){if(choiceBusy)return;dismissed=versionKey(cloud.state().comparison);closeVersions();}
+  versions.addEventListener('cancel',event=>{event.preventDefault();cancelVersions();});
+  versionField('cancel-choice').addEventListener('click',cancelVersions);
+  for(const [name,choice] of [['use-local','local'],['use-cloud','cloud']])versionField(name).addEventListener('click',async()=>{
+    if(choiceBusy)return;
+    const expected=displayed;choiceBusy=true;versionField('choice-error').textContent='';
+    for(const button of versions.querySelectorAll('button'))button.disabled=true;
+    try{const result=await cloud.choose(choice,expected);dismissed=null;closeVersions();if(result.reload)location.reload();}
+    catch(error){versionField('choice-error').textContent=error.message || 'Could not save. Both versions are unchanged.';if(cloud.state().comparison)fillVersions(cloud.state().comparison);}
+    finally{choiceBusy=false;for(const button of versions.querySelectorAll('button'))button.disabled=false;versionField('use-cloud').disabled=!displayed?.revision;}
+  });
+  cloud.subscribe(state=>{if(!needsChoice(state)){clearTimeout(choiceTimer);if(!choiceBusy)closeVersions();}else showVersions();});
+  showVersions();
   function privacyMarkup(prefix) {
     const prompt=prefix==='banner';
     return '<fieldset class="service-preferences"><legend>Optional data sharing</legend>'+
       '<label><input type="checkbox" data-consent="analytics" id="'+prefix+'-analytics"><span><strong>Improve features</strong><small>Share which features you use.</small></span></label>'+
       '<label><input type="checkbox" data-consent="diagnostics" id="'+prefix+'-diagnostics"><span><strong>Improve scanner reliability</strong><small>Share errors and scan performance.</small></span></label>'+
+      '<label><input type="checkbox" data-consent="ocrFeedback" id="'+prefix+'-ocr-feedback"><span><strong>Improve OCR matching</strong><small>Share unrecognized text and corrections. Requires sign-in.</small></span></label>'+
       '<label><input type="checkbox" data-consent="research" id="'+prefix+'-research"><span><strong>Contribute crafting research</strong><small>Only from research sessions you choose to start.</small></span></label>'+
       '</fieldset><p class="service-sharing-facts">No screenshots or full scan text.'+(prompt?' Sharing is optional.':'')+' <a href="privacy.html">Privacy details</a></p>'+
       (prompt?'<p class="service-sharing-settings">Change anytime in <a href="config.html#account-privacy">Profiles → Account & Privacy</a>.</p>':'')+
@@ -39,6 +84,7 @@
       for(const input of inputs){
         const research=input.dataset.consent==='research';input.disabled=!ready || research && !researchReady;input.checked=!input.disabled && value[input.dataset.consent];
         if(research)input.closest('label').hidden=!researchReady;
+        if(input.dataset.consent==='ocrFeedback'){const available=window.DNIntegrationCore.ocrFeedbackReady(config);input.disabled=!available;input.checked=available && value.ocrFeedback;input.closest('label').hidden=!available;}
       }
       save.disabled=!ready || value.decided;save.textContent=ready && value.decided?'Saved':saveLabel;
       status.dataset.state=ready?'saved':'unavailable';
@@ -55,7 +101,7 @@
     function persist(values) {
       try{
         const previous=consent.get();consent.set(values);
-        if(['analytics','diagnostics','research'].some(key=>values[key] && !previous[key]))showPrivacyNotice('Thank you for helping make the tool better for everyone.');
+        if(['analytics','diagnostics','research','ocrFeedback'].some(key=>values[key] && !previous[key]))showPrivacyNotice('Thank you for helping make the tool better for everyone.');
         else if(prompt && !document.getElementById('account-privacy'))showPrivacyNotice('Sharing preferences saved.');
       }
       catch{status.dataset.state='error';status.textContent='Preferences could not be saved in this browser. Your previously saved choices still apply. Please try again.';}
@@ -87,10 +133,10 @@
     root.innerHTML='<h2>Account & Privacy</h2><p role="status" data-cloud-status></p><p role="alert" data-auth-error hidden></p>'+
       '<div class="service-actions service-discord-account"><button type="button" class="btn" data-signin>Continue with Discord</button><button type="button" class="btn" data-signout hidden>Sign out</button><span data-account-identity></span></div>'+
       '<div class="service-actions" data-signed-in hidden><button type="button" class="btn" data-sync>Sync now</button><button type="button" class="btn" data-export-account>Export account data</button></div>'+
-      '<div class="service-choice" data-cloud-choice hidden><p>A safety backup is saved before replacement. Close other tabs and stop scanning first.</p><div class="service-actions"><button type="button" class="btn" data-use-local>Use this browser’s data</button><button type="button" class="btn" data-use-cloud>Use the account’s data</button></div></div>'+
+      '<div class="service-actions" data-cloud-review hidden><button type="button" class="btn" data-review-versions>Choose saved data</button></div>'+
       '<div class="service-actions"><button type="button" class="btn" data-download-recovery>Show safety backups</button></div><div data-recovery-list></div><p role="status" data-account-action-status></p>'+
       privacyMarkup('settings')+'<details data-privacy-details><summary>Data & privacy details</summary><p data-privacy-contact></p><p data-retention></p><p data-analytics-id></p></details>'+
-      '<details data-delete-options hidden><summary>Delete account or research</summary><p>Deletes cloud collections, settings and research. Analytics deletion is requested separately. Local data stays on this device. Export a backup first.</p><div class="service-actions"><button type="button" class="btn" data-delete-research>Delete contributed research</button><button type="button" class="btn" data-delete-account>Delete account</button></div></details>';
+      '<details data-delete-options hidden><summary>Delete data or account</summary><p>Deletes cloud collections, settings, research and OCR feedback. Analytics deletion is requested separately. Local data stays on this device. Export a backup first.</p><div class="service-actions"><button type="button" class="btn" data-delete-research>Delete contributed research</button><button type="button" class="btn" data-delete-ocr hidden>Delete OCR feedback</button><button type="button" class="btn" data-delete-account>Delete account</button></div></details>';
     document.querySelector('.app-main').appendChild(root);wirePrivacy(root);
     const get=name=>root.querySelector('[data-'+name+']');let busy=false;
     async function run(action) {
@@ -105,9 +151,9 @@
       get('signin').hidden=!!user || !cloud.configured();get('signout').hidden=!user;
       get('auth-error').textContent=state.authError || '';get('auth-error').hidden=!state.authError;
       get('signed-in').hidden=!user;get('delete-options').hidden=!user;
-      get('cloud-choice').hidden=!user || !['unlinked','remote','conflict','error'].includes(state.status);
-      get('use-cloud').disabled=busy || !state.revision;
-      for(const button of root.querySelectorAll('button:not([data-use-cloud]):not([data-save-consent]):not([data-reject-consent])'))button.disabled=busy;
+      get('delete-ocr').hidden=!window.DNIntegrationCore.ocrFeedbackReady(config);
+      get('cloud-review').hidden=!needsChoice(state);
+      for(const button of root.querySelectorAll('button:not([data-save-consent]):not([data-reject-consent])'))button.disabled=busy;
       get('privacy-contact').textContent=config.privacyContact?'Privacy contact: '+config.privacyContact:'';
       get('retention').textContent=window.DNIntegrationCore.privacyReady(config)?'Analysis history: feature use '+config.analyticsRetentionDays+' days; scanner reliability '+config.diagnosticsRetentionDays+' days. This is not a deletion deadline.'+(window.DNIntegrationCore.researchReady(config)?' Research retention: '+config.researchRetentionDays+' days.':''):'';
       const analyticsId=window.DNTelemetry.analyticsId();get('analytics-id').textContent=analyticsId?'Analytics reference: '+analyticsId:'';
@@ -128,17 +174,17 @@
         list.appendChild(actions);
       });
     }));
-    for(const [name,choice] of [['use-local','local'],['use-cloud','cloud']])get(name).addEventListener('click',()=>run(async()=>{
-      if(choice==='cloud' && !confirm('Use the account’s saved data in this browser? Stop scanning and close other planner tabs first. Your current data will be saved as a safety copy.'))return;
-      if(choice==='local' && cloud.state().revision && !confirm('Replace the account’s current version with this browser’s data? A safety copy of both versions will be retained.'))return;
-      const result=await cloud.choose(choice);if(result.reload)location.reload();
-    }));
+    get('review-versions').addEventListener('click',()=>showVersions(true));
     get('delete-research').addEventListener('click',()=>run(async()=>{if(!confirm('Delete this account’s contributed research? Collection data will remain.'))return;consent.set({...consent.get(),research:false});await window.DNResearch.clear();await cloud.deleteResearch();get('account-action-status').textContent='Contributed research deleted.';}));
     get('delete-account').addEventListener('click',()=>run(async()=>{if(!confirm('Permanently delete this cloud account and its contributed research? Export your data first. Local planner data will remain.'))return;const response=await cloud.deleteAccount();get('account-action-status').textContent=response.analyticsDeletionRequested?'Account deleted. Analytics deletion has been requested.':'Account deleted. Your local planner data remains available.';}));
+    get('delete-ocr').addEventListener('click',()=>run(async()=>{
+      if(!confirm('Delete this account’s OCR feedback?'))return;
+      consent.set({...consent.get(),ocrFeedback:false});await window.DNOCRFeedback.remove();get('account-action-status').textContent='OCR feedback deleted.';
+    }));
     cloud.subscribe(refresh);consent.subscribe(refresh);refresh();
     if(location.hash==='#account-privacy')root.scrollIntoView({block:'start'});
   }
-  const scanner=document.getElementById('scanner-collect');
+  const scanner=document.getElementById('scanner-crafted-log') || document.getElementById('scanner-collect');
   if(scanner && !window.DNStorageRecognition && window.DNResearch && window.DNIntegrationCore.researchReady(config)) {
     const root=document.createElement('details');root.className='service-panel service-research';
     root.innerHTML='<summary>Optional crafting research</summary><p>Confirm only artifacts just generated in the game. Revisiting an artifact is not a new craft. Include rejected and incomplete results as well as good ones. This does not add items to your Collection.</p>'+

@@ -61,7 +61,7 @@
   document.querySelector('th[data-sort="target:' + target + '"] button').click();
   const values = [...document.querySelectorAll('.priority-strategy-score')].map(cell => Number(cell.textContent));
   check('Target column sorts descending', values.every((value, i) => !i || value <= values[i - 1]));
-  const frame = document.createElement('iframe'); frame.src = 'artifacts.html'; document.body.append(frame);
+  const frame = document.createElement('iframe'); frame.src = 'artifacts.html?rankings-reload-check=1'; document.body.append(frame);
   await waitFor(() => frame.contentDocument?.querySelector('th[data-sort="target:' + target + '"]'));
   check('Rankings selection survives reload', frame.contentDocument.querySelector(`[data-ranking-target][value="${target}"]`).checked);
   frame.remove();

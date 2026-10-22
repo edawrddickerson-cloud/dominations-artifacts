@@ -1,0 +1,20 @@
+.crafted-log-stats { margin-block: .8rem; min-width: 0; }
+.crafted-stats-controls { display: flex; flex-wrap: wrap; align-items: end; gap: .65rem; margin-block: .8rem; }
+.crafted-stats-controls label { display: grid; gap: .3rem; min-width: 0; max-width: 100%; }
+.crafted-stats-controls input, .crafted-stats-controls select { box-sizing: border-box; max-width: 100%; padding: .4rem; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; font: inherit; }
+.crafted-stats-controls input { width: 10rem; }
+.crafted-stats-controls select { max-width: 20rem; }
+.crafted-stats-scroll { overflow-x: auto; max-width: 100%; margin-block: .7rem; }
+.crafted-log-stats table { width: 100%; border-collapse: collapse; }
+.crafted-log-stats th, .crafted-log-stats td { text-align: left; padding: .45rem .65rem; border-bottom: 1px solid var(--line); }
+.crafted-log-stats th { white-space: nowrap; }
+.crafted-log-stats dl { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: .4rem 1rem; }
+.crafted-log-stats dd { margin: 0; font-variant-numeric: tabular-nums; }
+.crafted-log-stats p:empty { display: none; }
+.page-scanner #scanner-log-storage-status:empty { display: none; }
+@media (max-width: 600px) {
+  .crafted-stats-controls { align-items: stretch; }
+  .crafted-stats-controls label, .crafted-stats-controls input, .crafted-stats-controls select { width: 100%; max-width: 100%; }
+  .crafted-log-stats dl { grid-template-columns: 1fr; }
+  .crafted-log-stats dd { margin-bottom: .5rem; }
+}

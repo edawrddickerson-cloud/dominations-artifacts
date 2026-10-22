@@ -12,6 +12,10 @@
 .service-discord-account [data-account-identity] { min-width:0; overflow-wrap:anywhere; }
 .service-panel [hidden] { display:none !important; }
 .service-choice { padding:.75rem; border:1px solid var(--accent); border-radius:4px; }
+.service-version-dialog { width:min(42rem,calc(100vw - 2rem)); max-height:calc(100dvh - 2rem); margin:auto; overflow:auto; }
+.service-version-dialog table { width:100%; border-collapse:collapse; table-layout:fixed; }
+.service-version-dialog th,.service-version-dialog td { padding:.55rem .35rem; text-align:left; border-bottom:1px solid var(--line); overflow-wrap:anywhere; }
+.service-version-dialog [data-choice-error] { color:var(--uncertain); }
 .service-panel summary { cursor:pointer; font-weight:600; }
 .service-privacy-status { padding:.65rem .8rem; border-left:3px solid var(--accent); background:var(--bg); }
 .service-privacy-status[data-state=unsaved] { border-left-color:var(--focus); }

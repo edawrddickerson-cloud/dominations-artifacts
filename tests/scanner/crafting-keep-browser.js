@@ -7,7 +7,7 @@
   async function wait(test){const end=performance.now()+15000;while(!await test()){if(performance.now()>end)throw Error('Keep test timed out: '+get('keep').title+' / '+get('keep').title);await pause(20);}}
   await wait(()=>get('names').children.length && window.DNScannerKeep);
   check('Keep starts disabled',get('keep').disabled);
-  get('auto').checked=false;get('collect').checked=false;document.getElementById('header-main').click();
+  get('auto').checked=false;window.DNScannerCollection.isEnabled=()=>false;document.getElementById('header-main').click();
   if(!get('off').checked)document.getElementById('header-off').click();
   if(get('def').checked)document.getElementById('header-def').click();
   DN.saveGlobalPerkRatings({'Heavy Tank Damage':{offensive:2,defensive:2},'Fighter Damage':{offensive:5,defensive:5}});
@@ -81,7 +81,7 @@
   const outcomes=await Promise.all([store.keepCraft(concurrent),store.keepCraft(concurrent)]);
   check('atomic Keep prevents concurrent duplicate writes',outcomes.filter(outcome=>outcome.action==='added').length===1 && outcomes.filter(outcome=>outcome.action==='duplicate').length===1);
   check('profile mismatch cancels persistence',(await store.keepCraft({...concurrent,id:'wrong-profile'},{profileKey:'collection:wrong'})).action==='cancelled');
-  get('collect').checked=true;
+  const priorConfirm=window.confirm;window.confirm=()=>true;get('collection-clear').click();window.confirm=priorConfirm;
   const logData=async()=>JSON.parse(await DN.scannerLog.read());
   const logButton=id=>[...get('item-log').querySelectorAll('[data-keep-log]')].find(button=>button.dataset.keepLog===id);
   const beforeLogged=(await keptItems()).length;

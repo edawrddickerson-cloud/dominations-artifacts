@@ -569,13 +569,18 @@
       if(useful===0 && !parsed.rows.some(row=>row.known) && !best?.rows.some(row=>row.known))best=null;
       if(parsed.unlocked?.count===3)best={...(best || parsed),unlocked:parsed.unlocked};
       result=best;resultProfile=readingProfile;confirmed=!!result?.valid;resultCurrent=true;editing=false;
-      if(!storage && result){itemArtwork=artwork;result.artifact={...result.artifact,image:artwork};}
+      if(!storage && result){
+        itemArtwork=artwork;
+        const incoming=parsed.artifact?.nameEvidence,held=result.artifact?.nameEvidence;
+        result.artifact={...result.artifact,image:artwork,...(!result.artifact?.name && parsed.artifact?.name?{name:parsed.artifact.name}:{}),
+          ...(incoming && (!held || (incoming.confidence ?? -1)>=(held.confidence ?? -1))?{nameEvidence:incoming}:{})};
+      }
       el.warnings.textContent=(result?.warnings || parsed.warnings).join(" ");
       if(!confirmed && result)el.warnings.textContent+=' Verify inferred values and unclear names in Correct Recognition.';
       const recognized=result?.rows?.some(row=>row.known && !row.assumed);
       settled=confirmed || (storage?attempts>=2 || useful===0:!recognized) || (!el.auto.checked && !window.DNScannerCollection?.isEnabled());
       parsed.presentation={attempt:attempts,finished:settled,coverage:recognition.coverage(result?.rows || [],rowCount()),rows:result?.rows || [],temporal:result?.temporal || temporal};
-      const logOptions={expectedRows:rowCount(),continuous:true,newEncounter:itemBoundary,steadyState:!storage,profileKey:readingProfile,encounterId:JSON.stringify([session,itemId])};
+      const logOptions={expectedRows:rowCount(),continuous:true,newEncounter:itemBoundary,steadyState:!storage,profileKey:readingProfile,encounterId:JSON.stringify([session,itemId]),captureMethod:liveCapture?'live-capture':'local-image'};
       const publish=()=>{
         if(result?.rows?.length)itemBoundary=false;
         progress(settled?'finished':'reading',settled?'Finished · '+recognition.coverage(result?.rows || [],rowCount()).total+'/'+rowCount()+' · '+(confirmed?'ready to move on':result?'best read · review or move on':'nothing useful in view'):'Improving the read · keeping these rows visible');

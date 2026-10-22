@@ -92,8 +92,9 @@ async function main() {
   }
   if(process.argv.includes('--configure-maintenance')) {
     const definition=query(source,"select prosrc from pg_proc where oid='public.planner_prune_expired_data()'::regprocedure");
-    const migration=fs.readFileSync(path.join(root,'supabase/migrations/202610180001_planner_backend.sql'),'utf8');
-    const expected=migration.match(/create function public\.planner_prune_expired_data\(\)[\s\S]*?as \$\$([\s\S]*?)\$\$;/)?.[1];
+    const hasOCRFeedback=query(source,"select to_regclass('public.planner_ocr_feedback_samples') is not null")==='t';
+    const migration=fs.readFileSync(path.join(root,'supabase/migrations',hasOCRFeedback?'202610220002_ocr_feedback.sql':'202610180001_planner_backend.sql'),'utf8');
+    const expected=migration.match(/create (?:or replace )?function public\.planner_prune_expired_data\(\)[\s\S]*?as \$\$([\s\S]*?)\$\$;/)?.[1];
     const normalized=value=>value?.replace(/\s+/g,' ').trim();
     if(!expected || normalized(definition)!==normalized(expected))throw Error('The deployed retention function differs from the reviewed migration.');
     const writable={...source,PGOPTIONS:'-c timezone=UTC'};

@@ -61,6 +61,7 @@ async function main() {
       if(message.method==='Target.attachedToTarget')client.send('Network.enable',{},message.params.sessionId).catch(error=>browserErrors.push(error.message));
     });
     await client.send('Network.enable');
+    if(process.argv.includes('--crafting-stats'))await client.send('Network.setBlockedURLs',{urls:['https://*']});
     // Cross-page checks visit pages with existing analytics. Block those scripts
     // in this local-only harness.
     if(process.argv.includes('--primary-filters') || process.argv.includes('--crafting-keep') || process.argv.includes('--collection-comparison') || process.argv.includes('--storage-catalog') || process.argv.includes('--linked-artifacts'))await client.send('Network.setBlockedURLs',{urls:['*://static.cloudflareinsights.com/*',...(process.argv.includes('--collection-comparison') || process.argv.includes('--storage-catalog') || process.argv.includes('--linked-artifacts')?['*://static.wikia.nocookie.net/*']:[])]});
@@ -74,7 +75,7 @@ async function main() {
     const storagePassive=process.argv.includes('--storage-passive');
     const glance=process.argv.includes('--glance');
     const viewport=process.argv.find(arg=>arg.startsWith('--viewport='))?.slice(11) || '1440x900';
-    if(glance || process.argv.includes('--identification') || process.argv.includes('--crafting-keep') || process.argv.includes('--regions-ui')){if(!/^\d{3,4}x\d{3,4}$/.test(viewport))throw new Error('Invalid viewport');const [width,height]=viewport.split('x').map(Number);await client.send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:false});}
+    if(glance || process.argv.includes('--identification') || process.argv.includes('--crafting-keep') || process.argv.includes('--regions-ui') || process.argv.includes('--crafting-stats')){if(!/^\d{3,4}x\d{3,4}$/.test(viewport))throw new Error('Invalid viewport');const [width,height]=viewport.split('x').map(Number);await client.send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:false});}
     if(inventory)await client.send('Emulation.setDeviceMetricsOverride',{width:1800,height:1100,deviceScaleFactor:1,mobile:false});
     if(storageLayout)await client.send('Emulation.setDeviceMetricsOverride',{width:1440,height:900,deviceScaleFactor:1,mobile:false});
     const storage=process.argv.includes('--storage') || inventory || storageLayout || storagePassive || process.argv.includes('--storage-fields') || process.argv.includes('--storage-catalog') || process.argv.includes('--linked-artifacts');
@@ -112,6 +113,7 @@ async function main() {
     if(process.argv.includes('--worker-experiment'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-worker-experiment-browser.js'),'utf8');
     if(process.argv.includes('--crafting-keep'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-keep-browser.js'),'utf8');
     if(process.argv.includes('--crafting-log'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-log-browser.js'),'utf8');
+    if(process.argv.includes('--crafting-stats'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafted-log-stats-browser.js'),'utf8');
     if(process.argv.includes('--reroll-ui'))expression=fs.readFileSync(path.join(root,'tests/scanner/reroll-browser.js'),'utf8');
     if(process.argv.includes('--reroll-pools'))expression=fs.readFileSync(path.join(root,'tests/scanner/reroll-pools-browser.js'),'utf8');
     if(percent)expression="window.DNStorageFixtureVariants=['native','video','muted'];\n"+expression.replace('storage-coverage.labels.json','storage-percent.labels.json');
@@ -132,10 +134,12 @@ async function main() {
         const response=await client.send('Runtime.evaluate',{expression:'(document.getElementById("scanner-view")?.contentWindow || window).DNRegionPointerRequest || null',returnByValue:true});
         const pointer=response.result?.value;
         if(pointer) {
-          await client.send('Input.dispatchMouseEvent',{type:'mouseMoved',x:pointer.x0,y:pointer.y0});
-          await client.send('Input.dispatchMouseEvent',{type:'mousePressed',x:pointer.x0,y:pointer.y0,button:'left',clickCount:1});
-          await client.send('Input.dispatchMouseEvent',{type:'mouseMoved',x:pointer.x1,y:pointer.y1,button:'left',buttons:1});
-          await client.send('Input.dispatchMouseEvent',{type:'mouseReleased',x:pointer.x1,y:pointer.y1,button:'left',clickCount:1});
+          const placement=await client.send('Runtime.evaluate',{expression:'(()=>{const r=document.getElementById("scanner-view")?.getBoundingClientRect();return {x:r?.left||0,y:r?.top||0};})()',returnByValue:true});
+          const offset=placement.result.value;
+          await client.send('Input.dispatchMouseEvent',{type:'mouseMoved',x:pointer.x0+offset.x,y:pointer.y0+offset.y});
+          await client.send('Input.dispatchMouseEvent',{type:'mousePressed',x:pointer.x0+offset.x,y:pointer.y0+offset.y,button:'left',clickCount:1});
+          await client.send('Input.dispatchMouseEvent',{type:'mouseMoved',x:pointer.x1+offset.x,y:pointer.y1+offset.y,button:'left',buttons:1});
+          await client.send('Input.dispatchMouseEvent',{type:'mouseReleased',x:pointer.x1+offset.x,y:pointer.y1+offset.y,button:'left',clickCount:1});
           await client.send('Runtime.evaluate',{expression:'(document.getElementById("scanner-view")?.contentWindow || window).DNRegionPointerDone()'});
         }else await delay(30);
       }
@@ -143,6 +147,7 @@ async function main() {
     const result=await evaluation;
     if(result.exceptionDetails) throw new Error(JSON.stringify(result.exceptionDetails));
     const value=result.result.value;
+    if(process.argv.includes('--crafting-stats') && process.argv.includes('--report')){fs.mkdirSync(path.join(root,'data/temp/crafted-log-stats-previews'),{recursive:true});const screenshot=await client.send('Page.captureScreenshot',{format:'png'});fs.writeFileSync(path.join(root,'data/temp/crafted-log-stats-previews/'+viewport+'.png'),Buffer.from(screenshot.data,'base64'));}
     if(process.argv.includes('--regions-ui') && process.argv.includes('--report')){const screenshot=await client.send('Page.captureScreenshot',{format:'png'});fs.writeFileSync(path.join(root,'tests/scanner/regions-ui-'+viewport+'.png'),Buffer.from(screenshot.data,'base64'));}
     if(glance && process.argv.includes('--report')){const screenshot=await client.send('Page.captureScreenshot',{format:'png'});fs.writeFileSync(path.join(root,'tests/scanner/glance-'+viewport+'.png'),Buffer.from(screenshot.data,'base64'));}
     value.network={requests:observedRequests,blockedRequests:observedRequests.filter(request=>blockedRequests.has(request.requestId)),externalRequests:observedRequests.filter(request=>!blockedRequests.has(request.requestId)&&!request.url.startsWith(origin+'/')&&!request.url.startsWith('data:')&&!request.url.startsWith('blob:')),nonGetRequests:observedRequests.filter(request=>request.method!=='GET'&&!blockedRequests.has(request.requestId)),browserErrors};
@@ -160,7 +165,7 @@ async function main() {
       if(!auditReport.startsWith(path.join(root,'reports')+path.sep) || path.extname(auditReport)!=='.json')throw Error('Audit report must be JSON inside reports.');
       fs.writeFileSync(auditReport,JSON.stringify({passed:value.passed,snapshot,performance,before,runs,limitations:value.limitations,network:{external:value.network.externalRequests.length,errors:browserErrors}},null,2)+'\n');
     }
-    if(process.argv.includes('--report') && !process.argv.includes('--crafting-audit')) fs.writeFileSync(path.join(root,process.argv.includes('--crafting-metadata')?'tests/scanner/crafting-metadata-result.json':process.argv.includes('--regions-benchmark')?'tests/scanner/regions-'+(process.argv.includes('--baseline')?'baseline':process.argv.includes('--regions-tight')?'tight':'calibrated')+'.json':process.argv.includes('--regions-ui')?'tests/scanner/regions-ui-'+viewport+'.json':glance?'tests/scanner/glance-'+viewport+'.json':percent?'tests/scanner/storage-percent.ocr-result.json':coverage?'tests/scanner/storage-coverage.ocr-result.json':storage?'tests/scanner/storage.ocr-result.json':fixture?'tests/scanner/'+fixture+'.ocr-result.json':green?'tests/scanner/greenissue.ocr-result.json':uiSmoke?'tests/scanner/pic1.ui-result.json':'tests/scanner/pic1.ocr-result.json'),JSON.stringify(value,null,2)+'\n');
+    if(process.argv.includes('--report') && !process.argv.includes('--crafting-audit')) fs.writeFileSync(path.join(root,process.argv.includes('--crafting-stats')?'data/temp/crafted-log-stats-previews/'+viewport+'.json':process.argv.includes('--crafting-metadata')?'tests/scanner/crafting-metadata-result.json':process.argv.includes('--regions-benchmark')?'tests/scanner/regions-'+(process.argv.includes('--baseline')?'baseline':process.argv.includes('--regions-tight')?'tight':'calibrated')+'.json':process.argv.includes('--regions-ui')?'tests/scanner/regions-ui-'+viewport+'.json':glance?'tests/scanner/glance-'+viewport+'.json':percent?'tests/scanner/storage-percent.ocr-result.json':coverage?'tests/scanner/storage-coverage.ocr-result.json':storage?'tests/scanner/storage.ocr-result.json':fixture?'tests/scanner/'+fixture+'.ocr-result.json':green?'tests/scanner/greenissue.ocr-result.json':uiSmoke?'tests/scanner/pic1.ui-result.json':'tests/scanner/pic1.ocr-result.json'),JSON.stringify(value,null,2)+'\n');
     const summary={passed:value.passed,ui:value.ui,network:{external:value.network.externalRequests.length,errors:value.network.browserErrors}};
     if(process.argv.includes('--crafting-audit'))summary.audit={cases:value.runs.length,complete:value.runs.filter(r=>r.complete).length,direct:value.runs.filter(r=>r.complete && r.accuracy.directPercentages===5).length,confirmed:value.runs.filter(r=>r.valid).length,confidentlyIncorrect:value.runs.filter(r=>r.confidentlyIncorrect).length,review:value.runs.filter(r=>!r.valid).map(r=>({fixture:r.fixture,scale:r.scale,directPercentages:r.accuracy.directPercentages}))};
     else summary.runs=value.runs?.map(r=>({fixture:r.fixture,scale:r.scale,kind:r.kind,stamp:r.stamp,variant:r.variant,elapsedMs:r.elapsedMs,passed:r.passed ?? r.complete,exact:r.exact,...(!(r.passed ?? r.complete)?{warnings:r.warnings}: {})}));

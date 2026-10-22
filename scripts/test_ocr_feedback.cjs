@@ -1,0 +1,43 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),crypto=require('node:crypto').webcrypto;
+const context={window:{},crypto,TextEncoder};vm.createContext(context);vm.runInContext(fs.readFileSync('ui/ocr-feedback.js','utf8'),context);
+const F=context.window.DNOCRFeedbackCore,copy=value=>JSON.parse(JSON.stringify(value));
+const item={id:'canonical-one',hall:'main',type:'Jewelry',name:null,image:'private-image',nameEvidence:{text:'Poman der',confidence:42,accepted:false},
+  rows:[{raw:'Heavy Tnak Damage +6%',name:'Heavy Tank Damage',known:true,nameMatch:{name:'Heavy Tank Damage',confidence:.81,method:'ocr-glyphs'}},
+    {raw:'Tower Damage +6%',name:'Tower Damage',known:true,nameMatch:{name:'Tower Damage',confidence:1,method:'exact'}}]};
+assert.equal(F.samples([item],'build').length,2);assert(!JSON.stringify(F.samples([item],'build')).includes('private-image'));
+assert.equal(F.safeText('https://private.invalid/token',500),null);assert.equal(F.safeText('private@example.invalid',500),null);
+assert.equal(F.samples([{...item,nameEvidence:{text:'',confidence:0,accepted:false},rows:[]}],'build').length,0,'a missing name without text is not invented into training evidence');
+const defer=()=>{let resolve;const promise=new Promise(done=>resolve=done);return {resolve,promise};};
+(async()=>{
+ let who='account-a',optedIn=false,available=true,connected=false,writes=0;const saved=new Map(),calls=[];
+ const store={get:async key=>copy(saved.get(key)||null),put:async(key,data)=>{writes++;saved.set(key,copy(data));},remove:async key=>saved.delete(key)};
+ let grantGate=null;const rpc=async(name,args)=>{calls.push({name,args:copy(args),who});if(grantGate && name==='planner_set_ocr_feedback_consent' && args.p_enabled)await grantGate.promise;return {accepted:args.p_samples?.length};};
+ const create=()=>F.create({store,rpc,owner:()=>who,consent:()=>optedIn,ready:()=>available,online:()=>connected,build:'test-build'});
+ let client=create();await client.collect([item]);await client.flush();assert.equal(writes,0);assert.equal(calls.length,0,'no optional queue or requests before OCR consent');
+ optedIn=true;available=false;await client.collect([item]);assert.equal(writes,0,'the release gate is separate from consent');available=true;
+ await client.collect([item]);assert.equal(client.status().pending,2);await client.flush();assert.equal(calls.length,0,'offline samples stay local');
+ const firstIds=Object.values(saved.get('ocr-feedback:account-a')).map(e=>e.sample.id);
+ client=create();connected=true;await client.flush();assert.equal(client.status().pending,0);assert.equal(calls.filter(c=>c.name==='planner_submit_ocr_feedback').length,1);
+ const sent=calls.find(c=>c.name==='planner_submit_ocr_feedback').args.p_samples;assert.deepEqual(sent.map(s=>s.id),firstIds);
+ assert(!JSON.stringify(sent).includes('private-image'));assert(!JSON.stringify(sent).includes('canonical-one'),'local encounter IDs are not uploaded');
+ await client.collect([item]);await client.flush();assert.equal(calls.filter(c=>c.name==='planner_submit_ocr_feedback').length,1,'unchanged OCR retries submit once');
+ const corrected=copy(item);corrected.name='Pomander Watch';corrected.nameSource='manual';corrected.rows[0].name='Heavy Tank Hitpoints';corrected.rows[0].nameSource='manual';
+ await client.collect([corrected]);await client.flush();const corrections=calls.filter(c=>c.name==='planner_submit_ocr_feedback').at(-1).args.p_samples;
+ assert.deepEqual(corrections.map(s=>s.id),firstIds,'corrections update the original sample IDs');assert.equal(corrections[0].corrected_name,'Pomander Watch');
+ await client.collect([item]);assert.equal(client.status().pending,0,'a stale OCR read cannot erase an explicit correction');
+ who='account-b';client=create();await client.flush();assert.equal(client.status().pending,0,'another account cannot flush the previous account queue');
+ who='account-a';client=create();await client.collect([{...item,id:'late-item'}]);grantGate=defer();const flushing=client.flush();
+ for(let i=0;i<30;i++)await Promise.resolve();const before=calls.filter(c=>c.name==='planner_submit_ocr_feedback').length;
+ optedIn=false;const withdrawing=client.withdraw();grantGate.resolve();await flushing;await withdrawing;grantGate=null;
+ assert.equal(calls.filter(c=>c.name==='planner_submit_ocr_feedback').length,before,'withdrawal interrupts a submission waiting for server consent');
+ assert.equal(saved.has('ocr-feedback:account-a'),false,'withdrawal removes its durable queue');
+ saved.set('ocr-feedback:account-a',{});const unopened=create();await unopened.withdraw();
+ assert.equal(saved.has('ocr-feedback:account-a'),false,'withdrawal also clears a queue before its first load after reopening');
+ optedIn=true;client=create();await client.collect(Array.from({length:60},(_,i)=>({...item,id:'bulk-'+i,rows:[]})));await client.flush();
+ assert.equal(client.status().pending,0,'all batches drain without requiring another scan');
+ assert(calls.filter(c=>c.name==='planner_submit_ocr_feedback').every(c=>c.args.p_samples.length<=50));
+ const gate=defer(),racing=F.create({store:{...store,get:async()=>{await gate.promise;return null;}},rpc,owner:()=>who,consent:()=>optedIn,ready:()=>true,build:'test'});
+ const callCount=calls.length;const collecting=racing.collect([item]);await Promise.resolve();who='account-b';gate.resolve();await collecting;
+ assert.equal(calls.length,callCount,'an account switch during loading cannot send the previous account evidence');
+ console.log('OCR feedback passed: separate default-off consent, rollout gate, field minimization, offline recovery, stable IDs, corrections, stale-read protection, account isolation, withdrawal and bounded batch draining.');
+})().catch(error=>{console.error(error);process.exitCode=1;});

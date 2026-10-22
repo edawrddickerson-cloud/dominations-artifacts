@@ -36,7 +36,7 @@
     const normalized=value=>canon(value).toLowerCase().replace(/\s+/g,' ').trim();
     const exact=result=>fixture.labels.rows.every((row,i)=>normalized(result?.rows?.[i]?.name || '')===normalized(row.name) && result.rows[i].value===row.value) && result?.rows?.length===5;
     const metadata=result=>({category:fixture.labels.category?result?.artifact?.type?.toLowerCase()===fixture.labels.category.toLowerCase():null,hall:fixture.labels.hall?result?.hall===fixture.labels.hall && result?.hallSource==='hall-colour':null,stars:typeof fixture.labels.unlocked==='number'?Array.from({length:5},(_,i)=>result?.unlocked?.states?.[i]=== (i<fixture.labels.unlocked)).every(Boolean):null,dice:typeof fixture.labels.dice==='boolean'?result?.rows?.every(row=>row.rerollEligible===fixture.labels.dice):null});
-    get('auto').checked=true;get('collect').checked=true;get('save-logs').checked=true;get('layout').value='panel';get('infer').checked=true;
+    get('auto').checked=true;get('layout').value='panel';get('infer').checked=true;
     let started=0,lastResult=null,lastParsed=null,firstStatsPaintedMs=null,firstScorePaintedMs=null,fullCapturePaintedMs=null,lastRecordAt=0,expectedScore=null;
     const fullAssessable=!!fixture.labels.category && !!fixture.labels.hall && typeof fixture.labels.unlocked==='number';
     const scoreRows=fixture.labels.rows.map(row=>({...row,name:Array.from(get('names').children,option=>option.value).find(name=>normalized(name)===normalized(row.name)) || canon(row.name),known:true,hasPercent:true,rerollEligible:true}));

@@ -99,14 +99,19 @@
   }
   window.DNCloud={configured,start,rpc,capture,fullBackup,user:()=>currentUser?{id:currentUser.id,email:currentUser.email,displayName:String(currentUser.user_metadata?.preferred_username || currentUser.user_metadata?.full_name || currentUser.user_metadata?.name || currentUser.email || 'Discord account').slice(0,100)}:null,state:()=>({...message}),
     subscribe(fn){listeners.add(fn);return ()=>listeners.delete(fn);},
-    sync:()=>engine.inspect(),choose:choice=>engine.choose(choice),
+    sync:()=>engine.inspect(),choose:(choice,expected)=>engine.choose(choice,expected),
     consentReady:()=>consentTask,
     async signInWithDiscord(){
       await start();if(!client || !configured())throw Error('Account services are unavailable.');
       authenticationError='';announce(message);
       const redirect=new URL('config.html',location.href);
-      const {error}=await client.auth.signInWithOAuth({provider:'discord',options:{redirectTo:redirect.href}});
+      const shell=window.parent!==window && window.parent.DNAppShell;
+      const {data,error}=await client.auth.signInWithOAuth({provider:'discord',options:{redirectTo:redirect.href,...(shell?{skipBrowserRedirect:true}:{})}});
       if(error)throw Error('Discord sign-in could not be started. Try again shortly.');
+      if(shell) {
+        if(!data?.url)throw Error('Discord sign-in could not be started. Try again shortly.');
+        window.parent.location.assign(data.url);
+      }
     },
     async signOut(){if(!client)return;const {error}=await client.auth.signOut({scope:'local'});if(error)throw Error('Could not sign out. Try again.');setSession(null);},
     async exportAccount(){return {kind:'dominations-account-export',version:1,account:window.DNCloud.user(),exportedAt:new Date().toISOString(),data:await rpc('planner_export_account')};},

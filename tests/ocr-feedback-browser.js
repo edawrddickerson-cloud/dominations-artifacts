@@ -1,0 +1,30 @@
+/* Real privacy controls, scanner callbacks and opt-in transport; test backend only. */
+(async()=>{
+  const checks={},check=(name,value)=>{checks[name]=!!value;if(!value)throw Error(name);};
+  const wait=async(fn,label)=>{const until=performance.now()+15000;while(!await fn()){if(performance.now()>until)throw Error('Timed out: '+label);await new Promise(resolve=>setTimeout(resolve,25));}};
+  await window.DNServicesReady;await wait(()=>window.DNOCRFeedback && window.DNScannerCollection,'scanner services');
+  const backend=window.top.DNTestBackend,owner='11111111-1111-4111-8111-111111111111';
+  backend.switchOwner(owner);await wait(()=>DNCloud.user()?.id===owner,'account');
+  const result={valid:true,hall:'main',artifact:{type:'Jewelry',nameEvidence:{text:'Poman der',confidence:42,accepted:false}},rows:Array.from({length:5},()=>({known:true,name:'Tower Damage',value:6,raw:'Tower Damage +6%',hasPercent:true,nameMatch:{name:'Tower Damage',method:'exact',confidence:1}}))};
+  DNScannerCollection.recordItem(result,'ocr-one',{encounterId:'ocr-one',captureMethod:'live-capture',profileKey:DNStoredArtifacts.collectionKey()});
+  await new Promise(resolve=>setTimeout(resolve,2200));check('normal diagnostics and feature use do not enable OCR sharing',!backend.ocrSamples?.[owner] && !DNConsent.get().ocrFeedback);
+  const frame=document.createElement('iframe');frame.src='config.html';document.body.append(frame);
+  await wait(()=>frame.contentWindow.DNOCRFeedback && frame.contentDocument.querySelector('[data-consent="ocrFeedback"]'),'privacy controls');await frame.contentWindow.DNServicesReady;
+  const doc=frame.contentDocument,box=doc.querySelector('[data-consent="ocrFeedback"]'),save=doc.querySelector('#account-privacy [data-save-consent]');
+  check('OCR sharing has its own initially unchecked choice',!box.checked && !box.disabled && !box.closest('label').hidden);
+  box.checked=true;box.dispatchEvent(new frame.contentWindow.Event('change'));save.click();
+  await wait(()=>DNConsent.get().ocrFeedback,'saved consent across documents');
+  await wait(()=>Object.values(backend.ocrSamples?.[owner] || {}).length===1,'automatic feedback');
+  const sample=Object.values(backend.ocrSamples[owner])[0];
+  check('opt-in automatically sends compact OCR feedback without analytics',sample.observed_text==='Poman der' && !DNConsent.get().analytics && backend.telemetry.length===0 && !JSON.stringify(sample).includes('image'));
+  const name=document.querySelector('[data-log-name]');name.value='Pomander Watch';name.dispatchEvent(new Event('input',{bubbles:true}));name.dispatchEvent(new FocusEvent('focusout',{bubbles:true}));
+  await wait(()=>Object.values(backend.ocrSamples[owner])[0].corrected_name==='Pomander Watch','corrected name upload');
+  check('manual name correction revises the same feedback record',Object.keys(backend.ocrSamples[owner]).length===1 && Object.values(backend.ocrSamples[owner])[0].id===sample.id);
+  box.checked=false;box.dispatchEvent(new frame.contentWindow.Event('change'));save.click();
+  await wait(()=>!DNConsent.get().ocrFeedback && backend.ocrConsent[owner]===false,'withdrawal');
+  check('withdrawal clears queued samples but leaves local crafted history',await DNServiceStore.get('ocr-feedback:'+owner)===null && DNScannerCollection.historyItems().length===1);
+  const oldConfirm=frame.contentWindow.confirm;frame.contentWindow.confirm=()=>true;doc.querySelector('[data-delete-ocr]').click();
+  await wait(()=>Object.keys(backend.ocrSamples[owner]).length===0,'delete feedback');frame.contentWindow.confirm=oldConfirm;
+  check('separate feedback deletion leaves the local log intact',DNScannerCollection.historyItems().length===1);
+  frame.remove();return {passed:Object.values(checks).every(Boolean),ui:checks,limitations:['Provider transport is simulated; SQL/RLS is checked separately.','No real data or external writes.']};
+})();

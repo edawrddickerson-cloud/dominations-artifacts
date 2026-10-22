@@ -8,13 +8,14 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <script src="scanner-session-entry.js?v=1"></script>
-  <script src="navigation.js?v=6"></script>
+  <script src="scanner-session-entry.js?v=20261022-fixed-header"></script>
+  <script src="navigation.js?v=20261022-fixed-header"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts - Crafting Scanner</title>
   <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
-  <link rel="stylesheet" href="scanner.css?v=20261021-compact-log" />
+  <link rel="stylesheet" href="scanner.css?v=20261022-lifetime-log" />
   <link rel="stylesheet" href="crafting-purposes.css?v=20261021-focus-tubes" />
+  <link rel="stylesheet" href="crafted-log-stats.css?v=1" />
 </head>
 <body class="page-scanner">
   <nav class="site-nav" aria-label="Pages">
@@ -176,10 +177,16 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
         <button type="button" class="btn" id="scanner-accept" disabled>Use Corrected Values</button>
       </details>
     </section>
-    <details class="scanner-reading scanner-panel" aria-label="Crafted item log">
+    <details id="scanner-crafted-log" class="scanner-reading scanner-panel" aria-label="Crafted item log">
       <summary>Crafted item log</summary>
-      <label><input type="checkbox" id="scanner-collect" checked /> Log items and stats while I cycle through artifacts</label>
-      <label><input type="checkbox" id="scanner-save-logs" checked /> Save logs in this browser</label>
+      <dl id="scanner-lifetime-stats" class="scanner-lifetime-stats">
+        <div><dt>Lifetime crafts logged</dt><dd data-crafted-stat="logged">0</dd></div>
+        <div><dt>Kept</dt><dd data-crafted-stat="kept">0</dd></div>
+        <div><dt>Crafted since last kept</dt><dd data-crafted-stat="sinceLastKept">0</dd></div>
+        <div><dt>Main</dt><dd data-crafted-stat="main">0</dd></div>
+        <div><dt>War</dt><dd data-crafted-stat="war">0</dd></div>
+        <div><dt>3 unlocked rows</dt><dd data-crafted-stat="threeUnlocked">0</dd></div>
+      </dl>
       <p id="scanner-log-storage-status" role="status"></p>
       <p id="scanner-item-count" role="status"></p>
       <details open><summary>Logged items and stats</summary><ol id="scanner-item-log" class="scanner-item-log"></ol></details>
@@ -189,7 +196,7 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
         <button type="button" class="btn" id="scanner-collection-clear">Clear Item Log and Names</button>
       </div>
       <p id="scanner-collection-export-status" role="status" aria-live="polite"></p>
-      <details><summary>Labels needing review</summary><pre id="scanner-collected-labels" style="white-space:pre-wrap"></pre><button type="button" class="btn" id="scanner-stat-evidence-export">Export Stat Evidence</button><p id="scanner-stat-evidence-status" role="status"></p></details>
+      <details><summary>Scanner diagnostics</summary><p id="scanner-name-review-count"></p><ol id="scanner-name-review"></ol><pre id="scanner-collected-labels" style="white-space:pre-wrap"></pre><button type="button" class="btn" id="scanner-stat-evidence-export">Export Stat Evidence</button><p id="scanner-stat-evidence-status" role="status"></p></details>
     </details>
     <video id="scanner-video" class="scanner-video" muted playsinline aria-hidden="true"></video>
   </div>
@@ -209,13 +216,15 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
   <script src="vendor/tesseract/tesseract.min.js"></script>
   <script src="scanner-reroll-recognition.js?v=1"></script>
   <script src="scanner-name-catalog.js?v=1"></script>
-  <script src="scanner-recognition.js?v=20261021-artifact-title"></script>
+  <script src="scanner-recognition.js?v=20261022-name-review"></script>
   <script src="scanner-field-recognition.js?v=20261021-title-witness"></script>
   <script src="scanner-calibration.js?v=4"></script>
-  <script src="scanner-collection.js?v=20261021-compact-log"></script>
-  <script src="scanner-reading.js?v=20261021-artifact-title"></script>
+  <script src="scanner-collection.js?v=20261022-automatic-log"></script>
+  <script src="crafted-log-stats.js?v=1"></script>
+  <script src="crafted-log-stats-ui.js?v=20261022-automatic-log"></script>
+  <script src="scanner-reading.js?v=20261022-name-review"></script>
   <script src="scanner-profile.js?v=1"></script>
   <script src="scanner.js?v=20261018-services"></script>
-  <script src="services.js?v=20261022-discord-user"></script>
+  <script src="services.js?v=20261022-automatic-log"></script>
 </body>
 </html>

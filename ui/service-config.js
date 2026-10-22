@@ -15,6 +15,8 @@ window.DNServiceConfig=Object.freeze({
   privacyReady:true,
   // Research has a separate rollout after retention and recovery checks.
   researchEnabled:false,
+  // Requires the separate OCR feedback migration and consent rollout.
+  ocrFeedbackEnabled:false,
   diagnosticsSampleRate:0.1,
   // PostHog Free analysis windows, not guaranteed physical-erasure deadlines.
   analyticsRetentionDays:365,

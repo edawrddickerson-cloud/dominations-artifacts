@@ -5,7 +5,7 @@
   const check=(name,value)=>{checks[name]=!!value;if(!value)throw Error(name+' / '+get('capture-percent').textContent+' / '+get('capture-detail').textContent+' / '+get('keep').title);};
   async function wait(test){const end=performance.now()+10000;while(!test()){if(performance.now()>end)throw Error('Timed out');await new Promise(resolve=>setTimeout(resolve,20));}}
   await wait(()=>get('names').children.length);
-  get('auto').checked=false;get('collect').checked=false;
+  get('auto').checked=false;window.DNScannerCollection.isEnabled=()=>false;
   const name='Heavy Tank Damage';
   const complete=()=>({valid:true,warnings:[],hall:'main',hallSource:'hall-colour',artifact:{type:'Weapon'},unlocked:{count:2,states:[true,true,false,false,false]},
     rows:Array.from({length:5},(_,i)=>({name,value:11,known:true,hasPercent:true,unlocked:i<2,level:1,levelSource:'crafting',rerollEligible:true,rerollSource:'fresh-craft'}))});

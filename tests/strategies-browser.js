@@ -4,7 +4,7 @@
   const check=(name,value)=>{checks[name]=!!value;if(!value)throw Error(name);};
   async function wait(test,description='condition'){const end=performance.now()+16000;while(!test()){if(performance.now()>end)throw Error('Timed out: '+description+' · '+get('benchmarks')?.textContent+' · '+get('comparison')?.textContent+' · '+get('profile-label')?.textContent);await pause(30);}}
   await wait(()=>get('names')?.children.length && window.DNScannerReading && document.getElementById('strategy-select'),'scanner ready');
-  get('auto').checked=false;get('collect').checked=false;
+  get('auto').checked=false;window.DNScannerCollection.isEnabled=()=>false;
   document.getElementById('header-main').click();
   if(!get('off').checked)document.getElementById('header-off').click();
   if(get('def').checked)document.getElementById('header-def').click();
