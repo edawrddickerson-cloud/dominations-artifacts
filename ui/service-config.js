@@ -1,7 +1,7 @@
 /* Public integration configuration. Never put privileged keys in ui/.
  * Empty project values keep all cloud/analytics connections disabled. */
 window.DNServiceConfig=Object.freeze({
-  build:'2026-10-23-crafting-statistics-v2',
+  build:'2026-10-24-community-test',
   // Local work and preview hosts stay out of production usage dashboards.
   environment:typeof location!=='undefined' && location.origin!=='https://dominations-planner.ededed84.workers.dev'?'development':'production',
   cloudEnabled:typeof location==='undefined' || location.origin==='https://dominations-planner.ededed84.workers.dev',
@@ -13,8 +13,8 @@ window.DNServiceConfig=Object.freeze({
   posthogHost:'https://eu.i.posthog.com',
   privacyContact:'ededed84@gmail.com',
   privacyReady:true,
-  // Research has a separate rollout after retention and recovery checks.
-  researchEnabled:false,
+  // User-authorized opt-in rollout for real-game community acceptance.
+  researchEnabled:true,
   // Requires the separate OCR feedback migration and consent rollout.
   ocrFeedbackEnabled:false,
   diagnosticsSampleRate:0.1,

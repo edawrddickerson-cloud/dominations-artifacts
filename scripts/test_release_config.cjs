@@ -11,7 +11,8 @@ async function checkOrigin(origin,environment,accounts){
   const {DNServiceConfig:config,DNIntegrationCore:core,DNConsent:consent,DNTelemetry:telemetry}=context.window;
   assert.equal(config.environment,environment);
   assert.equal(core.cloudReady(config,origin),accounts);
-  assert.equal(config.researchEnabled,false);
+  assert.equal(config.researchEnabled,true);
+  assert.equal(consent.get().research,false);
   assert.equal(consent.get().analytics,false);
   assert.equal(consent.get().diagnostics,false);
   assert.equal(telemetry.event('feature_used',{feature:'collection'},true),false);
@@ -22,7 +23,8 @@ async function checkOrigin(origin,environment,accounts){
   await new Promise(resolve=>setTimeout(resolve,30));
   assert.equal(sent.length,2);
   assert(sent.every(event=>event.properties.environment===environment && event.properties.app_build===config.build));
-  assert.throws(()=>consent.set({research:true}),/not available/);
+  consent.set({research:true});assert.equal(consent.get().research,false,'old manual-session consent remains insufficient');
+  consent.set({research:true,researchPolicy:'2026-10-23'});assert.equal(consent.get().research,true,'explicit current-policy opt-in is available');
   consent.set({});
   const before=sent.length;assert.equal(telemetry.event('feature_used',{feature:'collection'},true),false);
   await new Promise(resolve=>setTimeout(resolve,10));assert.equal(sent.length,before);
@@ -33,5 +35,5 @@ async function checkOrigin(origin,environment,accounts){
   await checkOrigin('http://localhost:8765','development',false);
   await checkOrigin('https://preview.dominations-artifacts.pages.dev','development',false);
   const config=fs.readFileSync('ui/service-config.js','utf8');assert(!/sb_secret_|phx_/.test(config));
-  console.log('Release config passed: production accounts/events, local/preview separation, default-off sharing, withdrawal and disabled research.');
+  console.log('Release config passed: production accounts/events, local/preview separation, default-off sharing, explicit research opt-in and withdrawal.');
 })().catch(error=>{console.error(error.message);process.exitCode=1;});

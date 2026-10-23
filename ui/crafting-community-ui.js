@@ -8,7 +8,7 @@
     '<label>Category <select data-community="category"><option value="">All</option>'+['weapon','armor','jewelry','pottery','equipment','unknown'].map(v=>'<option value="'+v+'">'+v[0].toUpperCase()+v.slice(1)+'</option>').join('')+'</select></label>'+
     '<label>Event <select data-community="event"><option value="">All</option><option value="unknown">Unknown</option></select></label>'+
     '<label>Game version <select data-community="version"><option value="">All</option><option value="unknown">Unknown</option></select></label>'+
-    '<button type="button" class="btn" data-community-refresh>Refresh</button></div><p role="status" data-community-status></p><p data-community-count></p>'+
+    '<button type="button" class="btn" data-community-refresh>Refresh</button></div><p role="status" data-community-sharing></p><p role="status" data-community-status></p><p data-community-count></p>'+
     '<div class="crafted-stats-scroll"><table><thead><tr><th>Observed sample</th><th>Count / sample</th><th>Frequency</th><th>95% CI</th></tr></thead><tbody data-community-results></tbody></table></div>'+
     '<p><a href="crafting-statistics.html">Methods and sampling limits</a></p>';
   anchor.append(root);
@@ -28,7 +28,7 @@
         const registered=data.contexts?.[key] || [],signature=JSON.stringify(registered);
         if(select.dataset.contexts!==signature){for(const option of [...select.options].slice(2))option.remove();for(const id of registered){const option=document.createElement('option');option.value=id;option.textContent=id;select.append(option);}select.value=value;select.dataset.contexts=signature;}
       }
-      if(data.status!=='ready'){get('status').textContent='Insufficient sample';return;}
+      if(data.status!=='ready'){get('status').textContent='No crafts recorded';return;}
       get('count').textContent=data.recorded.toLocaleString()+' Crafts recorded · '+data.excluded.toLocaleString()+' excluded';
       for(const [key,label] of [['rows11','Starting rows at 11%'],['any11','Artifacts with ≥1 starting 11%'],['two11','Artifacts with ≥2 starting 11%'],['duplicate','Repeated canonical perk']]) {
         const metric=data.metrics[key],tr=document.createElement('tr');
@@ -40,5 +40,9 @@
     finally{if(current===request)get('refresh').disabled=!ready();}
   }
   get('refresh').addEventListener('click',refresh);root.addEventListener('change',refresh);root.addEventListener('toggle',()=>{if(root.open)refresh();});
+  let timer;
+  function sharingStatus(){const state=window.DNResearch?.status();get('sharing').textContent=state?.error || (state?.pending?'Contributions pending':state?.active?'Sharing on':'Sharing off');}
+  window.DNResearch?.subscribe(()=>{sharingStatus();if(root.open){clearTimeout(timer);timer=setTimeout(refresh,300);}});
+  sharingStatus();
   get('status').textContent=ready()?'Not loaded':'Unavailable';get('refresh').disabled=!ready();
 })();

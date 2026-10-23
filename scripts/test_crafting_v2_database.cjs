@@ -13,9 +13,10 @@ const denied=(fn,code='42501')=>assert.rejects(fn,error=>error.code===code);
 (async()=>{
   await db.exec("create role anon; create role authenticated; create role service_role bypassrls; create schema auth; create table auth.users(id uuid primary key); create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$; grant usage on schema auth to anon,authenticated,service_role; grant execute on function auth.uid() to anon,authenticated,service_role;");
   for(const id of ids)await db.query('insert into auth.users values($1)',[id]);
-  for(const file of ['202610180001_planner_backend.sql','202610220002_ocr_feedback.sql','202610230001_crafting_statistics_v2.sql','202610230002_crafting_starting_rules.sql'])await db.exec(fs.readFileSync('supabase/migrations/'+file,'utf8'));
+  for(const file of ['202610180001_planner_backend.sql','202610220002_ocr_feedback.sql','202610230001_crafting_statistics_v2.sql','202610230002_crafting_starting_rules.sql','202610240001_community_first_contributor.sql'])await db.exec(fs.readFileSync('supabase/migrations/'+file,'utf8'));
   await user(null,'anon');await denied(()=>call('planner_submit_crafting',[crypto.randomUUID(),payload([])]));await denied(()=>db.query('select * from public.planner_crafting_evidence'));
   assert.equal((await call('planner_crafting_report')).status,'insufficient-sample');
+  assert.equal((await call('planner_crafting_report')).minimumContributors,1);
   await user(ids[0]);
   const privateLog=app.window.DNCraftingHistory.project({version:2,items:[],lifetimeStatistics:{version:1,archived:{logged:363,kept:0,main:363,war:0,threeUnlocked:0},sinceLastKept:363}});
   const workspace={kind:'dominations-cloud-workspace',version:1,game:'dominations',settings:{'dn-profiles':'{"activeId":"main","profiles":[{"id":"main","name":"Main"}]}'},records:[{id:'items',items:[]},{id:'collection:main',items:[]}],craftingLog:privateLog};
@@ -33,6 +34,7 @@ const denied=(fn,code='42501')=>assert.rejects(fn,error=>error.code===code);
     if(i===2)item.rows[1].perk=item.rows[0].perk;
     if(i===4){item.exclusion='incomplete';item.rows=[];}
     records.push(item);await call('planner_submit_crafting',[receipt.epoch,payload([item])]);await call('planner_submit_crafting',[receipt.epoch,payload([item])]);
+    if(i===0){const first=await call('planner_crafting_report');assert.equal(first.status,'ready');assert.equal(first.recorded,1);assert.equal(first.metrics.rows11.hits,2);assert.equal(first.metrics.rows11.total,5);assert.equal(first.metrics.two11.hits,1);assert.equal(first.metrics.two11.total,1);assert(!JSON.stringify(first).includes(ids[0]));assert(!JSON.stringify(first).includes(item.id));}
     assert.equal((await db.query('select count(*)::int n from public.planner_crafting_evidence')).rows[0].n,1,'RLS exposes only the caller, retries remain one record');
   }
   await user(ids[5]);assert.equal((await db.query('select count(*)::int n from public.planner_crafting_evidence')).rows[0].n,0);

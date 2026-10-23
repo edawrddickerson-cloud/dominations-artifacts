@@ -18,7 +18,7 @@
   window.DNServiceLoader={script};
   async function boot() {
     if(!window.DN)return;
-    await script('service-config.js?v=20261023-crafting-v2');
+    await script('service-config.js?v=20261024-community-test');
     if(!window.DNCraftingHistory)await script('crafting-history.js?v=2');
     await script('integration-core.js?v=20261023-history-v2');
     await script('service-store.js?v=2');
@@ -32,7 +32,7 @@
     await script('cloud.js?v=20261023-history-v2');
     await script('ocr-feedback.js?v=1');
     await script('services-ui.js?v=20261023-history-v2');
-    await script('crafting-community-ui.js?v=2');
+    await script('crafting-community-ui.js?v=20261024-first-contributor');
   }
   window.DNServicesReady=new Promise(resolve=>{
     const run=()=>boot().catch(()=>{ /* Optional services cannot break the local application. */ }).finally(resolve);

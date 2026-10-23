@@ -3,8 +3,8 @@
   const wait=async(fn,label)=>{for(let i=0;i<400;i++){if(await fn())return;await new Promise(r=>setTimeout(r,25));}throw Error('Timed out: '+label);};
   await window.DNServicesReady;await wait(()=>window.DNScannerCollection && document.getElementById('crafting-community'),'v2 controls');
   const H=window.DNCraftingHistory,S=window.DNCraftingCommunity,log=window.DNScannerCollection,root=document.getElementById('crafting-community');
-  check('production research flag remains disabled',!window.DNServiceConfig.researchEnabled);
-  check('community report starts unavailable',root.querySelector('[data-community-status]').textContent==='Unavailable');
+  check('research opt-in is available without automatically opting in',window.DNServiceConfig.researchEnabled && !window.DNConsent.get().research);
+  check('community report starts ready to load',root.querySelector('[data-community-status]').textContent==='Not loaded');
   const names=['Armored Car Damage','Armored Car Hitpoints','Attack Helicopter Damage','Attack Helicopter Hitpoints','APC Hitpoints'];
   const result=values=>({valid:true,freshCraft:true,hall:'main',artifact:{name:'Test artifact',type:'Weapon',image:'data:image/png;base64,YQ=='},rows:names.map((name,i)=>({name,value:values[i],known:true,hasPercent:true,level:1,levelSource:'crafting',raw:'private OCR'})),unlocked:{count:3}});
   const options={newEncounter:true,continuous:true,captureMethod:'live-capture',identityEvidence:'observed-transition',profileKey:DNStoredArtifacts.collectionKey()};
