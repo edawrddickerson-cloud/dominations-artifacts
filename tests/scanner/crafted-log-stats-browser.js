@@ -13,7 +13,7 @@
   anchor.open=true;root.open=true;
   await window.DNServicesReady;window.DNConsent.set({});
   check('stats are inside the existing crafted item log',anchor.contains(root) && !document.getElementById('crafting-history'));
-  check('no manual session, confirmation, version or event inputs',!root.querySelector('button,input[type=text],form') && !window.DNCraftingHistory);
+  check('no manual session, confirmation, version or event inputs',!root.querySelector('button,input[type=text],form') && !window.DNCraftingHistory?.startSession);
   check('logging is automatic without log or save checkboxes',log.isEnabled() && !document.getElementById('scanner-collect') && !document.getElementById('scanner-save-logs'));
   document.getElementById('scanner-auto').checked=false;
   const bitmap=await createImageBitmap(await(await fetch('../tests/scanner/pic1.png')).blob());

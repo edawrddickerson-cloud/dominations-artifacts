@@ -38,7 +38,12 @@ function run(tool,args,env,input) {
   }
   return result.stdout || '';
 }
-function query(env,sql){return run('psql',['-X','-w','-A','-t','-v','ON_ERROR_STOP=1','-c',sql],env).trim();}
+function query(env,sql){
+  const args=['-X','-w','-A','-t','-v','ON_ERROR_STOP=1'];
+  // Large release migrations exceed Windows' command-line limit. Callers of
+  // this path supply their own explicit BEGIN/COMMIT transaction.
+  return (sql.length>16000?run('psql',[...args,'-f','-'],env,sql):run('psql',[...args,'-c',sql],env)).trim();
+}
 const quote=value=>'"'+value.replaceAll('"','""')+'"';
 function inventory(env) {
   return JSON.parse(query(env,`select coalesce(json_agg(json_build_object('schema',schemaname,'name',tablename) order by schemaname,tablename),'[]') from pg_tables where schemaname in ('public','auth','research_reporting')`));
@@ -153,6 +158,19 @@ async function main() {
     if(query(local,"select has_table_privilege('anon','public.planner_workspaces','select') or has_function_privilege('anon','public.planner_read_workspace()','execute')")!=='f')throw Error('Restored anonymous workspace access is not denied.');
     manifest.restoreVerified=true;manifest.restoredAt=new Date().toISOString();
     manifest.verification={tableChecksumsMatch:true,plannerFunctionsMatch:true,rowSecurityPoliciesMatch:true,restoredAccountIsolation:true,anonymousWorkspaceAccessDenied:true,restoredTables:tables.length};
+    if(process.argv.includes('--rehearse-crafting-v2')) {
+      // Only the newly created loopback restore is writable. The source remains
+      // read-only, and the original archive is unchanged by this rehearsal.
+      if(local.PGHOST!=='127.0.0.1' || !process.argv.includes('--verify'))throw Error('Crafting rehearsal requires an isolated restore.');
+      const files=['202610230001_crafting_statistics_v2.sql','202610230002_crafting_starting_rules.sql'];
+      const sql=files.map(file=>fs.readFileSync(path.join(root,'supabase/migrations',file),'utf8')).join('\n');
+      query(local,'begin;'+sql+'\ncommit;');
+      if(JSON.stringify(before)!==JSON.stringify(fingerprints(local,tables)))throw Error('Crafting rehearsal changed existing account data.');
+      const checks=JSON.parse(query(local,"select json_build_object('rules',(select count(*) from public.planner_crafting_rules),'anonymousRawDenied',not has_table_privilege('anon','public.planner_crafting_evidence','select'),'anonymousPrivateSaveDenied',not has_function_privilege('anon','public.planner_save_workspace_v2(uuid,bigint,uuid,jsonb)','execute'),'aggregateAvailable',has_function_privilege('anon','public.planner_crafting_report(text,text,text,text)','execute'),'emptyReportSuppressed',(public.planner_crafting_report()->>'status')='insufficient-sample')"));
+      if(checks.rules!==514 || !checks.anonymousRawDenied || !checks.anonymousPrivateSaveDenied || !checks.aggregateAvailable || !checks.emptyReportSuppressed)throw Error('Crafting rehearsal checks failed.');
+      manifest.craftingV2Rehearsal={passed:true,migrationHash:crypto.createHash('sha256').update(sql).digest('hex'),existingRowsUnchanged:true,...checks};
+      console.log('Crafting v2 migration rehearsal passed against the isolated live-data restore.');
+    }
     fs.writeFileSync(path.join(directory,'manifest.json'),JSON.stringify(manifest,null,2));
     console.log('Isolated local restore passed: table contents, planner functions and row security policies match.');
   } finally {

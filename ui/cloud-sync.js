@@ -4,7 +4,7 @@
  * automatically. A conflict needs an explicit choice and a committed safety copy. */
 (() => {
   'use strict';
-  function create({capture,remote,readBinding,saveBinding,recover,apply,readLocalCraftsLogged=async()=>null,notify=()=>{}}) {
+  function create({capture,remote,readBinding,saveBinding,recover,apply,applyHistory,readLocalCraftsLogged=async()=>null,notify=()=>{}}) {
     const C=window.DNIntegrationCore;
     let owner=null,epoch=0,running=false,state={status:'signed-out'},latest=null;
     function summary(workspace,updatedAt) {
@@ -13,7 +13,7 @@
       for(const [key,value] of Object.entries(workspace.settings))if(/^dn-p:[^:]+:dn-crafting-purposes$/.test(key)) {
         try{targets+=(JSON.parse(value).customPurposes || []).length;}catch{}
       }
-      return {artifacts:workspace.records.reduce((sum,record)=>sum+record.items.length,0),targets,lifetimeCraftsLogged:null,
+      return {artifacts:workspace.records.reduce((sum,record)=>sum+record.items.length,0),targets,lifetimeCraftsLogged:workspace.craftingLog?window.DNCraftingHistory.totals(workspace.craftingLog).logged:null,
         profiles:JSON.parse(workspace.settings['dn-profiles']).profiles.length,updatedAt:updatedAt || null};
     }
     function comparison() {
@@ -40,6 +40,27 @@
           binding={owner:id,revision:row.revision,hash:remoteHash,savedAt:row.updated_at || null};saveBinding(binding);
         }
         latest={local,localHash,row,remoteHash,localCraftsLogged};
+        if(automatic && applyHistory && binding?.owner===id && row && local.craftingLog && row.data.craftingLog) {
+          const withoutHistory=value=>{const {craftingLog,...rest}=value;return C.canonical(rest);};
+          if(withoutHistory(local)===withoutHistory(row.data)) {
+            const merged=window.DNCraftingHistory.project(window.DNCraftingHistory.reconcile(local.craftingLog,row.data.craftingLog));
+            if(C.canonical(merged)!==C.canonical(local.craftingLog) || C.canonical(merged)!==C.canonical(row.data.craftingLog)) {
+              await recover({owner:id,remote:row});
+              if(!valid(id,generation))return state;
+              if(await C.fingerprint(await capture())!==localHash)return publish({status:'pending'});
+              await applyHistory(merged);
+              if(!valid(id,generation))return state;
+              const combined=C.validate(await capture()),hash=await C.fingerprint(combined),operation=crypto.randomUUID();
+              if(!valid(id,generation))return state;
+              saveBinding({...binding,owner:id,pending:{operation,hash}});
+              const saved=await remote.write(id,row.revision,operation,combined);
+              if(!valid(id,generation))return state;
+              saveBinding({owner:id,revision:saved.revision,hash,savedAt:saved.updated_at || null});
+              latest={local:combined,localHash:hash,row:{...saved,data:combined},remoteHash:hash,localCraftsLogged:window.DNCraftingHistory.totals(combined.craftingLog).logged};
+              return publish({status:'synced',revision:saved.revision});
+            }
+          }
+        }
         const status=C.decision({boundOwner:binding?.owner,owner:id,baseHash:binding?.hash,localHash,remoteHash});
         if(status==='synced') {
           saveBinding({owner:id,revision:row.revision,hash:remoteHash,savedAt:row.updated_at || binding?.savedAt || null});
@@ -66,7 +87,7 @@
         return publish({status,revision:row?.revision || 0});
       }catch(error) {
         if(!valid(id,generation))return state;
-        return publish({status:error?.code==='409' || error?.code==='40001'?'conflict':'offline',error:error?.message || 'Cloud connection unavailable.'});
+        return publish({status:['409','40001','LEGACY_BASELINE'].includes(error?.code)?'conflict':'offline',error:error?.message || 'Cloud connection unavailable.'});
       }finally{running=false;}
     }
     async function choose(choice,expected) {
@@ -83,11 +104,17 @@
         if(await C.fingerprint(await capture())!==selected.localHash)throw Error('Local data changed while preparing the safety copy. Stop scanning and try again.');
         if(!valid(id,generation))throw Error('The signed-in account changed. Nothing was replaced.');
         if(choice==='local') {
-          const operation=crypto.randomUUID();
-          saveBinding({...readBinding(),owner:id,pending:{operation,hash:selected.localHash}});
-          const saved=await remote.write(id,selected.row?.revision || 0,operation,selected.local);
+          const data={...selected.local};
+          if(data.craftingLog && selected.row?.data.craftingLog)data.craftingLog=window.DNCraftingHistory.project(window.DNCraftingHistory.reconcile(data.craftingLog,selected.row.data.craftingLog,{baselineChoice:'local'}));
+          const hash=await C.fingerprint(data);
           if(!valid(id,generation))return state;
-          saveBinding({owner:id,revision:saved.revision,hash:selected.localHash,savedAt:saved.updated_at || new Date().toISOString()});
+          const operation=crypto.randomUUID();
+          saveBinding({...readBinding(),owner:id,pending:{operation,hash}});
+          const saved=await remote.write(id,selected.row?.revision || 0,operation,data);
+          if(!valid(id,generation))return state;
+          if(applyHistory && data.craftingLog)await applyHistory(data.craftingLog);
+          if(!valid(id,generation))return state;
+          saveBinding({owner:id,revision:saved.revision,hash,savedAt:saved.updated_at || new Date().toISOString()});
           return publish({status:'synced',revision:saved.revision});
         }
         // Recheck the remote revision too; never apply a choice from a stale dialog.
@@ -96,10 +123,18 @@
         if(!valid(id,generation))throw Error('The signed-in account changed. Nothing was replaced.');
         if(await C.fingerprint(await capture())!==selected.localHash)throw Error('Local data changed. Stop scanning and review the versions again.');
         if(!valid(id,generation))throw Error('The signed-in account changed. Nothing was replaced.');
-        await apply(selected.row.data,{preserveArtwork:readBinding()?.owner===id});
+        let data=selected.row.data,revision=selected.row.revision,hash=selected.remoteHash;
+        if(readBinding()?.owner===id && data.craftingLog && selected.local.craftingLog) {
+          data={...data,craftingLog:window.DNCraftingHistory.project(window.DNCraftingHistory.reconcile(selected.local.craftingLog,data.craftingLog,{baselineChoice:'cloud'}))};
+          hash=await C.fingerprint(data);
+          if(!valid(id,generation))return state;
+          if(hash!==selected.remoteHash){const saved=await remote.write(id,revision,crypto.randomUUID(),data);revision=saved.revision;}
+          if(!valid(id,generation))return state;
+        }
+        await apply(data,{preserveArtwork:readBinding()?.owner===id});
         if(!valid(id,generation))return state;
-        saveBinding({owner:id,revision:selected.row.revision,hash:selected.remoteHash,savedAt:selected.row.updated_at || null});
-        return publish({status:'synced',revision:selected.row.revision,reload:true});
+        saveBinding({owner:id,revision,hash,savedAt:selected.row.updated_at || null});
+        return publish({status:'synced',revision,reload:true});
       }catch(error) {
         if(valid(id,generation))publish({status:error?.code==='409'?'conflict':'error',error:error.message});
         throw error;

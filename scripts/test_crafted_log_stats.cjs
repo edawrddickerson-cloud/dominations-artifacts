@@ -1,6 +1,6 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
 const context={window:{},document:{getElementById:()=>null},Date};vm.createContext(context);
-for(const name of ['scanner-collection','crafted-log-stats'])vm.runInContext(fs.readFileSync('ui/'+name+'.js','utf8'),context);
+for(const name of ['crafting-history','scanner-collection','crafted-log-stats'])vm.runInContext(fs.readFileSync('ui/'+name+'.js','utf8'),context);
 const {DNScannerCollectionCore:C,DNCraftedLogStats:S}=context.window;
 const result=value=>({valid:true,hall:'main',artifact:{type:'Weapon',image:'private pixels'},rows:Array.from({length:5},(_,i)=>({name:i<2?'Damage':'Perk '+i,value,known:true,hasPercent:true,tier:'green',level:1,raw:'private OCR'}))});
 const collector=C.createCollector(),options={expectedRows:5,profileKey:'collection:main',captureMethod:'live-capture',continuous:true,newEncounter:true};

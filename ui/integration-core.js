@@ -57,17 +57,23 @@
       }
     }
     if(!records.has('items') || [...ids].some(id=>!records.has('collection:'+id)))fail();
+    if(workspace.craftingLog!=null) {
+      if(!window.DNCraftingHistory)fail();
+      window.DNCraftingHistory.validate(workspace.craftingLog);
+      if(canonical(window.DNCraftingHistory.project(workspace.craftingLog))!==canonical(workspace.craftingLog))fail();
+    }
     if(new TextEncoder().encode(JSON.stringify(workspace)).length>MAX_BYTES)throw Error('This workspace exceeds the 16 MB cloud limit. Your complete data is still saved locally; export a backup.');
     return workspace;
   }
-  function createWorkspace(settings,records) {
+  function createWorkspace(settings,records,craftingLog) {
     const safeSettings=Object.fromEntries(Object.entries(settings).map(([key,value])=>{
       try{return [key,JSON.stringify(clean(JSON.parse(value)))];}catch{return [key,value];}
     }));
     // JSON normalization also makes hashes match PostgreSQL after transmission.
-    return validate(JSON.parse(JSON.stringify({kind:'dominations-cloud-workspace',version:VERSION,game:'dominations',settings:safeSettings,records:records.filter(record=>record.id==='items' || record.id.startsWith('collection:')).map(record=>({id:record.id,items:record.items.map(sanitizeItem)}))})));
+    return validate(JSON.parse(JSON.stringify({kind:'dominations-cloud-workspace',version:VERSION,game:'dominations',settings:safeSettings,records:records.filter(record=>record.id==='items' || record.id.startsWith('collection:')).map(record=>({id:record.id,items:record.items.map(sanitizeItem)})),...(craftingLog?{craftingLog:window.DNCraftingHistory.project(craftingLog)}:{})})));
   }
   function lifetimeCraftsLogged(log) {
+    if(log?.ledger && window.DNCraftingHistory)return window.DNCraftingHistory.totals(log).logged;
     if(log?.version!==2 || !Array.isArray(log.items))return null;
     const keys=['logged','kept','main','war','threeUnlocked'],archived=log.lifetimeStatistics?.archived;
     const valid=log.lifetimeStatistics?.version===1 && archived && keys.every(key=>Number.isSafeInteger(archived[key]) && archived[key]>=0) &&
@@ -97,12 +103,12 @@
   function consent(storage) {
     try {
       const value=JSON.parse(storage.getItem('dn_service_consent') || 'null');
-      if(value?.policy===POLICY)return {policy:POLICY,analytics:value.analytics===true,diagnostics:value.diagnostics===true,research:value.research===true,ocrFeedback:value.ocrFeedback===true,decided:true};
+      if(value?.policy===POLICY)return {policy:POLICY,analytics:value.analytics===true,diagnostics:value.diagnostics===true,research:value.research===true && value.researchPolicy==='2026-10-23',researchPolicy:value.researchPolicy || null,ocrFeedback:value.ocrFeedback===true,decided:true};
     }catch{ /* Unavailable or invalid storage defaults to no optional collection. */ }
     return {policy:POLICY,analytics:false,diagnostics:false,research:false,ocrFeedback:false,decided:false};
   }
   function setConsent(storage,value) {
-    const next={policy:POLICY,analytics:value.analytics===true,diagnostics:value.diagnostics===true,research:value.research===true,ocrFeedback:value.ocrFeedback===true,decided:true};
+    const next={policy:POLICY,analytics:value.analytics===true,diagnostics:value.diagnostics===true,research:value.research===true && value.researchPolicy==='2026-10-23',researchPolicy:value.researchPolicy || null,ocrFeedback:value.ocrFeedback===true,decided:true};
     storage.setItem('dn_service_consent',JSON.stringify(next));
     return next;
   }

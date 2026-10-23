@@ -9,6 +9,10 @@
   'use strict';
   const isComplete=item=>!!item && (item.expectedRows || 5)===5 && item.rows?.length===5 && item.rows.every(row=>row.known && row.name && !row.assumed && !row.conflict && !row.tierConflict && Number.isFinite(row.value) && row.hasPercent!==false);
   function createCollector({initialData}={}) {
+    const history=window.DNCraftingHistory;
+    if(history)initialData=history.normalize(initialData);
+    const ledger=initialData?.ledger || null;
+    const archivedIds=new Set((ledger?.archived || []).map(item=>item.id));let afterClear=0;
     const scans=[],labels=new Map(),items=new Map(),aliases=new Map(),encounters=new Map(),dirtyItems=new Set();let previous=null,activeItem=null,labelsDirty=true,resetView=true;
     const statKeys=['logged','kept','main','war','threeUnlocked'];
     const emptyStats=()=>Object.fromEntries(statKeys.map(key=>[key,0]));
@@ -16,6 +20,7 @@
     const validStats=value=>value && statKeys.every(key=>Number.isSafeInteger(value[key]) && value[key]>=0) &&
       value.kept<=value.logged && value.main+value.war<=value.logged && value.threeUnlocked<=value.logged;
     let archivedStats=initialData?.version===2 && savedStats?.version===1 && validStats(savedStats.archived)?Object.fromEntries(statKeys.map(key=>[key,savedStats.archived[key]])):emptyStats();
+    if(ledger)archivedStats=history.archivedTotals(initialData);
     const currentStats=emptyStats();
     const contribution=item=>({logged:1,kept:item.keptId?1:0,main:item.hall==='main'?1:0,war:item.hall==='war'?1:0,threeUnlocked:item.unlocked?.count===3?1:0});
     function countItem(item,sign=1){const counts=contribution(item);for(const key of statKeys)currentStats[key]+=counts[key]*sign;}
@@ -25,7 +30,7 @@
     const labelKey=(name,hall)=>JSON.stringify([hall,name.toLowerCase().replace(/\s+/g,' ')]);
     const sessionId=Date.now().toString(36)+'-'+Math.random().toString(36).slice(2);
     if(initialData?.version===2) {
-      for(const item of (Array.isArray(initialData.items)?initialData.items:[]).slice(0,5000))if(item?.id!=null && Array.isArray(item.rows))items.set(item.id,clone(window.DNStoredArtifacts?.backfillItem(item) || item));
+      for(const item of (Array.isArray(initialData.items)?initialData.items:[]))if(item?.id!=null && Array.isArray(item.rows))items.set(item.id,clone(window.DNStoredArtifacts?.backfillItem(item) || item));
       for(const scan of (Array.isArray(initialData.scans)?initialData.scans:[]).slice(0,5000))if(Array.isArray(scan?.observations))scans.push(clone(scan));
       for(const label of (Array.isArray(initialData.labels)?initialData.labels:[]))if(typeof label?.name==='string')labels.set(labelKey(label.name,hallOf(label)),clone({...label,hall:hallOf(label)}));
     }
@@ -42,6 +47,8 @@
       savedStats.sinceLastKept>=0 && savedStats.sinceLastKept<=lifetimeTotals().logged)sinceLastKept=savedStats.sinceLastKept;
     function setItem(id,item) {
       const prior=items.get(id);
+      item.revision=(prior?.revision || 0)+1;item.writer=sessionId;
+      if(item.keptId && !prior?.keptId)item.keptAt=new Date().toISOString();
       if(!prior)sinceLastKept++;
       if(item.keptId && !prior?.keptId)sinceLastKept=0;
       if(prior)countItem(prior,-1);
@@ -65,7 +72,7 @@
       }
       return matching>=Math.min(3,a.rows.length);
     }
-    function recordItem(result,id,{corrected=false,expectedRows=5,continuous=false,newEncounter=false,steadyState=false,profileKey=null,encounterId=null,captureMethod='unknown'}={}) {
+    function recordItem(result,id,{corrected=false,expectedRows=5,continuous=false,newEncounter=false,steadyState=false,profileKey=null,encounterId=null,captureMethod='unknown',identityEvidence='ambiguous'}={}) {
       if(id==null || !(result?.rows || []).some(row=>row.name || row.raw))return false;
       id=sessionId+':'+id;
       const requested=id;
@@ -74,10 +81,17 @@
       if(existing)id=existing.id;
       else if(continuous && !newEncounter && activeItem && (!profileKey || items.get(activeItem)?.profileKey===profileKey) && sameArtifact(items.get(activeItem),result))id=activeItem;
       else if(!newEncounter && aliases.has(id))id=aliases.get(id);
+      if(!items.has(id) && archivedIds.has(id))id+=':after-clear:'+(++afterClear);
       aliases.set(requested,id);
       if(aliases.size>10000)aliases.delete(aliases.keys().next().value);
       const prior=items.get(id);
+      const previousActive=activeItem;
       activeItem=id;
+      if(!prior && identityEvidence==='observed-transition') {
+        const signature=item=>JSON.stringify([item.hall,item.type || item.artifact?.type,item.rows.map(row=>[row.name,row.value])]);
+        const nextSignature=signature(result);
+        if([...items.values()].some(item=>item.id!==previousActive && signature(item)===nextSignature))identityEvidence='possible-revisit';
+      }
       const incomingEvidence=result.artifact?.nameEvidence;
       const nameEvidence=incomingEvidence && (!prior?.nameEvidence || (incomingEvidence.confidence ?? -1)>=(prior.nameEvidence.confidence ?? -1))?incomingEvidence:prior?.nameEvidence || null;
       if(!prior && items.size>=5000)return false;
@@ -110,14 +124,20 @@
         captureSessionId:prior?.captureSessionId || sessionId,
         captureMethod:['live-capture','local-image'].includes(prior?.captureMethod)?prior.captureMethod:['live-capture','local-image'].includes(captureMethod)?captureMethod:'unknown',
         craftingEventId:prior?.craftingEventId || null,craftingEventSource:prior?.craftingEventSource || 'unknown',
+        gameVersion:prior?.gameVersion || null,gameVersionSource:prior?.gameVersionSource || 'unknown',
+        startingContextSource:prior?.startingContextSource || 'unknown',
         validated:!!result.valid,corrected:corrected || !!prior?.corrected,expectedRows,hall:result.hall || prior?.hall || null,
         encounterId:encounter || prior?.encounterId || null,profileKey:profileKey || prior?.profileKey || null,
         keepId:prior?.keepId || 'craft-log-'+id,keptId:prior?.keptId || null,
         hallSource:result.hallSource || prior?.hallSource || null,
         name:prior?.nameSource==='manual'?prior.name:result.artifact?.name || prior?.name || null,
         nameSource:prior?.nameSource || (result.artifact?.name?'scanned':null),image:result.artifact?.image || prior?.image || null,
-        type:result.artifact?.type || prior?.type || null,freshCraft:result.freshCraft ?? prior?.freshCraft ?? rows.every(row=>row.rerollSource==='fresh-craft'),rows,unlocked:result.unlocked || prior?.unlocked || null};
+        type:result.artifact?.type || prior?.type || null,freshCraft:result.freshCraft ?? prior?.freshCraft ?? rows.every(row=>row.rerollSource==='fresh-craft'),rows,unlocked:result.unlocked || prior?.unlocked || null,
+        revision:prior?.revision || 0,writer:prior?.writer || '',keptAt:prior?.keptAt || null,
+        identityEvidence:prior?.identityEvidence || identityEvidence,
+        reconciliationConflict:corrected?false:prior?.reconciliationConflict || false};
       item.nameEvidence=nameEvidence;
+      if(prior && !corrected && JSON.stringify(prior.rows.map(row=>[row.name,row.value]))!==JSON.stringify(rows.map(row=>[row.name,row.value])))item.startingContextSource='unknown';
       const next=clone(window.DNStoredArtifacts?.backfillItem(item) || item);
       if(prior) {
         const {lastUpdated:oldTime,...oldFields}=prior,{lastUpdated:newTime,...newFields}=next;
@@ -173,14 +193,35 @@
     }
     function snapshot({includeImages=false}={}){
       const snapshots=includeImages?[...items.values()]:[...items.values()].map(({image,...text})=>text);
-      return {version:2,kind:'unverified-artifact-perk-observations',exportedAt:new Date().toISOString(),notes:'Items contain the best read per detected artifact encounter; retries and corrections update that entry. Separate encounters may have identical stats. OCR observations require verification.'+(includeImages?' Artifact artwork included.':' No images included.'),lifetimeStatistics:{version:1,archived:{...archivedStats},totals:lifetimeTotals(),sinceLastKept},items:snapshots,scans,labels:[...labels.values()],nameReviews:nameReviews()};
+      return {...(ledger?{ledger:clone(ledger)}:{}),version:2,kind:'unverified-artifact-perk-observations',exportedAt:new Date().toISOString(),notes:'Items contain the best read per detected artifact encounter; retries and corrections update that entry. Separate encounters may have identical stats. OCR observations require verification.'+(includeImages?' Artifact artwork included.':' No images included.'),lifetimeStatistics:{version:1,archived:{...archivedStats},totals:lifetimeTotals(),sinceLastKept},items:snapshots,scans,labels:[...labels.values()],nameReviews:nameReviews()};
     }
     function takeChanges({all=false}={}) {
       const changes={scanCount:scans.length,itemCount:items.size,reset:resetView,lifetime:lifetimeTotals(),sinceLastKept,nameReviews:all || resetView || dirtyItems.size?nameReviews():null,
         items:clone([...(all?items.keys():dirtyItems)].map(id=>items.get(id))),labels:all || labelsDirty?clone([...labels.values()]):null};
       dirtyItems.clear();labelsDirty=false;resetView=false;return changes;
     }
-    function clear(){archivedStats=lifetimeTotals();for(const key of statKeys)currentStats[key]=0;scans.length=0;labels.clear();items.clear();aliases.clear();encounters.clear();dirtyItems.clear();activeItem=null;previous=null;labelsDirty=true;resetView=true;}
+    function clear(){if(ledger){ledger.archived.push(...[...items.values()].map(history.facts));for(const id of items.keys())archivedIds.add(id);}archivedStats=lifetimeTotals();for(const key of statKeys)currentStats[key]=0;scans.length=0;labels.clear();items.clear();aliases.clear();encounters.clear();dirtyItems.clear();activeItem=null;previous=null;labelsDirty=true;resetView=true;}
+    function reconcileHistory(remote) {
+      if(!history || !ledger)throw Error('Crafting history is unavailable.');
+      const local=snapshot({includeImages:true});
+      const merged=history.preserveLocalDetails(history.reconcile(local,remote),local);
+      const artwork=new Map([...items.values()].map(item=>[item.id,item.image]));
+      ledger.baseline=merged.ledger.baseline;ledger.sinceBaseline=merged.ledger.sinceBaseline;ledger.archived=merged.ledger.archived;
+      archivedIds.clear();for(const item of ledger.archived)archivedIds.add(item.id);
+      archivedStats=history.archivedTotals(merged);
+      for(const key of statKeys)currentStats[key]=0;
+      items.clear();encounters.clear();
+      for(const item of merged.items){if(artwork.has(item.id))item.image=artwork.get(item.id);items.set(item.id,item);countItem(item);if(item.encounterId)encounters.set(encounterKey(item.encounterId,item.profileKey),item.id);}
+      sinceLastKept=merged.lifetimeStatistics.sinceLastKept;
+      if(!items.has(activeItem))activeItem=null;
+      resetView=true;labelsDirty=true;for(const id of items.keys())dirtyItems.add(id);
+      return true;
+    }
+    function weekly() {
+      const now=new Date(),start=new Date(now);start.setUTCHours(0,0,0,0);start.setUTCDate(start.getUTCDate()-(start.getUTCDay()+6)%7);
+      let total=0;for(const list of [items.values(),ledger?.archived || []])for(const item of list){const at=Date.parse(item.firstSeen);if(at>=start.getTime() && at<=now.getTime())total++;}
+      return total;
+    }
     // A small, isolated projection of the canonical best records. No pixels,
     // diagnostic reads or raw OCR; statistics never create another item store.
     function historyItems() {
@@ -195,7 +236,7 @@
         rows:item.rows.map(row=>({name:row.name,raw:row.raw,known:row.known,assumed:row.assumed,nameSource:row.nameSource,
           nameMatch:row.nameMatch?{name:row.nameMatch.name,method:row.nameMatch.method,confidence:row.nameMatch.confidence}:null}))}));
     }
-    return {record,recordItem,itemForEncounter,updateItem,historyItems,ocrFeedbackItems,nameReviews,sessionId,exportData:options=>clone(snapshot(options)),
+    return {record,recordItem,itemForEncounter,updateItem,historyItems,ocrFeedbackItems,nameReviews,sessionId,reconcileHistory,weekly,exportData:options=>clone(snapshot(options)),
       // Persistence owns this immutable string. Avoid cloning the entire log
       // before serializing it; exports and public summaries remain isolated.
       serialize:()=>JSON.stringify(snapshot({includeImages:true})),takeChanges,getItem:id=>items.has(id)?clone(items.get(id)):null,
@@ -284,7 +325,7 @@
     renderStorage();
     const data=collector.takeChanges({all});
     const statistics=document.getElementById('scanner-lifetime-stats');
-    if(statistics)for(const field of statistics.querySelectorAll('[data-crafted-stat]'))field.textContent=(field.dataset.craftedStat==='sinceLastKept'?data.sinceLastKept:data.lifetime[field.dataset.craftedStat]).toLocaleString();
+    if(statistics)for(const field of statistics.querySelectorAll('[data-crafted-stat]'))field.textContent=(field.dataset.craftedStat==='sinceLastKept'?data.sinceLastKept:field.dataset.craftedStat==='weekly'?collector.weekly():data.lifetime[field.dataset.craftedStat]).toLocaleString();
     const hallLabel=hall=>hall==='war'?'War':hall==='main'?'Main (Multiplayer)':'Hall unclear';
     if(data.labels) {
       const unknown=data.labels.filter(item=>!item.known);labelCount=data.labels.length;unknownCount=unknown.length;
@@ -330,8 +371,10 @@
     }
   }
   const historyListeners=new Set();
-  function afterChange(changed) {if(changed){persist();render();for(const fn of historyListeners)try{fn();}catch{}}return changed;}
+  function afterChange(changed) {if(changed){persist();render();for(const fn of historyListeners)try{fn();}catch{}if(typeof window.Event==='function')window.dispatchEvent(new window.Event('dn-crafting-log-changed'));}return changed;}
   window.DNScannerCollection={isEnabled,itemForEncounter:collector.itemForEncounter,
+    setStartingContext:(id,metadata,revision)=>{if(revision!=null && collector.getItem(id)?.revision!==revision)return false;return afterChange(collector.updateItem(id,{startingContextSource:metadata.startingContextSource}));},
+    async reconcileHistory(log){afterChange(collector.reconcileHistory(log));await persistence;},
     historyItems:collector.historyItems,sessionId:collector.sessionId,
     ocrFeedbackItems:collector.ocrFeedbackItems,
     setName:(id,name)=>afterChange(collector.updateItem(id,{name:String(name || '').trim().slice(0,160) || null,nameSource:'manual',lastUpdated:new Date().toISOString()})),

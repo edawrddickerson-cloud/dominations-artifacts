@@ -79,20 +79,21 @@
   check('replacement commits an importable safety backup first',(await app.DNCloud.recovery())[0].local.kind==='dominations-planner-backup');
   await wait(()=>app.DNCloud.state().status==='synced','initial sync completion');
   check('linking choices disappear once the browser is saved',doc.querySelector('[data-cloud-choice]').hidden && doc.querySelector('[data-cloud-status]').textContent==='Saved to your account.');
-  const savedHash=await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture());
+  let savedHash=await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture());
   app.location.reload();
   await wait(()=>iframe.contentDocument!==doc && iframe.contentDocument.querySelector('[data-signin]'),'reload of the saved browser');doc=iframe.contentDocument;await app.DNServicesReady;
   await wait(()=>app.DNCloud.state().status==='synced','saved state after reload');
   check('a real page reload retains the linked workspace and saved status',(await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture()))===savedHash && doc.querySelector('[data-cloud-choice]').hidden);
 
   await app.DN.scannerLog.write(JSON.stringify({version:2,items:[],scans:[],labels:[],lifetimeStatistics:{version:1,archived:{logged:300,kept:12,main:200,war:100,threeUnlocked:4}}}));
+  savedHash=await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture());
   app.localStorage.removeItem('dn_cloud_binding');await app.DNCloud.sync();
   await wait(()=>doc.querySelector('[data-cloud-choice]').open,'returning account comparison');
   const versions=doc.querySelector('[data-cloud-choice]');
   check('returning unlinked browser gets a themed comparison dialog',versions.matches(':modal') && versions.textContent.includes('Choose your saved data') && versions.textContent.includes('Account') && versions.textContent.includes('This browser'));
   const counts=[...versions.querySelectorAll('tbody tr')].map(row=>[...row.cells].map(cell=>cell.textContent));
   check('comparison includes artifacts, targets, profiles and sync timestamps',counts[0][0]==='Artifacts' && counts[0][1]==='1' && counts[0][2]==='1' && counts[1][0]==='Collection targets' && counts[1][1]==='1' && counts[1][2]==='1' && counts[2][0]==='Profiles' && counts[4][0]==='Last synced');
-  check('comparison shows lifetime crafts logged without inventing an account count',counts[3][0]==='Lifetime crafts logged' && counts[3][1]==='Not recorded' && counts[3][2]==='300');
+  check('comparison shows lifetime crafts logged without inventing an account count',counts[3][0]==='Lifetime crafts logged' && counts[3][1]==='0' && counts[3][2]==='300');
   const versionBounds=versions.getBoundingClientRect();
   check('comparison dialog fits the viewport',versionBounds.left>=0 && versionBounds.right<=app.innerWidth && versionBounds.height<=app.innerHeight && versions.scrollWidth<=versions.clientWidth);
   const revisionBeforeCancel=backend.workspaces[owner].revision;
@@ -133,7 +134,7 @@
   check('retry reconciles a committed write without creating a second cloud revision',app.DNCloud.state().status==='synced' && backend.workspaces[owner].revision===beforeLostResponse+1);
 
   const telemetryBefore=backend.telemetry.length;
-  app.DNConsent.set({analytics:true,diagnostics:true,research:true});
+  app.DNConsent.set({analytics:true,diagnostics:true,research:true,researchPolicy:'2026-10-23'});await app.DNResearch.setSharing(true);
   await wait(()=>app.DNResearch.status().saved,'account-bound research storage');
   app.DNTelemetry.event('artifact_saved',{source:'crafting',action:'added',count:1,email:'private@example.invalid',image:'data:image/png;base64,YQ==',ocr:'Private OCR'},true);
   app.DNTelemetry.event('scanner_fields_corrected',{source:'crafting',count:2});
@@ -141,28 +142,26 @@
   check('analytics sends allowlisted fields with no cookies or referrer',backend.telemetry.slice(telemetryBefore).every(entry=>entry.options.credentials==='omit' && entry.options.referrerPolicy==='no-referrer' && !JSON.stringify(entry.payload).includes('private@example.invalid') && !JSON.stringify(entry.payload).includes('data:image')));
   check('analytics uses the same opaque account identity across devices',backend.telemetry.some(entry=>entry.payload.properties.distinct_id==='u:'+owner));
 
-  await app.DNResearch.start({gameVersion:'test-version',expectedCrafts:2});
-  const result={valid:true,hall:'main',artifact:{type:'Weapon',image:'data:image/png;base64,YQ=='},rows:item.rows};
-  for(let i=0;i<22;i++)app.DNResearch.observe(result,{source:'crafting',encounterId:'research-craft-one'});
-  await app.DNResearch.confirm();await app.DNResearch.upload();
-  check('22 OCR retries submit one confirmed new craft',Object.keys(backend.outcomes[owner]).length===1);
-  app.DNResearch.observe(result,{source:'crafting',encounterId:'research-craft-two'});await app.DNResearch.confirm();
-  app.DNResearch.observe(result,{source:'storage',encounterId:'storage-revisit'});await app.DNResearch.upload();
-  check('a separate identical craft counts while storage scans do not',Object.keys(backend.outcomes[owner]).length===2);
-  backend.offline=true;app.DNResearch.observe({...result,rows:result.rows.map(row=>({...row,value:11}))},{source:'crafting',encounterId:'research-craft-two',corrected:true});
-  await app.DNResearch.upload();backend.offline=false;await app.DNResearch.upload();
-  check('corrected outcomes recover after outage without increasing frequency',Object.keys(backend.outcomes[owner]).length===2 && Object.values(backend.outcomes[owner]).some(outcome=>outcome.perks[0].current_value===11));
-  app.dispatchEvent(new app.CustomEvent('dn-account-changed'));
-  await wait(()=>app.DNResearch.status().saved,'restored research queue');
-  check('durable research restoration retains each outcome and original evidence',app.DNResearch.export().observations.length===2 && app.DNResearch.export().observations.some(outcome=>outcome.perks[0].current_value===11 && outcome.first_read[0].current_value===6));
+  const craft={id:'automatic-research-one',revision:1,writer:'device-a',firstSeen:new Date().toISOString(),lastUpdated:new Date().toISOString(),hall:'main',type:'Weapon',freshCraft:true,startingContextSource:'craft-result-controls-v1',captureMethod:'live-capture',identityEvidence:'observed-transition',rows:['Armored Car Damage','Armored Car Hitpoints','Attack Helicopter Damage','Attack Helicopter Hitpoints','APC Hitpoints'].map(name=>({name,value:6,level:1,known:true,hasPercent:true}))};
+  let canonical=app.DNCraftingHistory.normalize(JSON.parse(await app.DN.scannerLog.read()));canonical.items.push(craft);
+  await app.DN.scannerLog.write(JSON.stringify(canonical));
+  for(let i=0;i<22;i++)await app.DNResearch.upload();
+  check('22 retries submit one canonical automatic craft',Object.keys(backend.craftingEvidence[owner]).length===1);
+  canonical.items.push({...craft,id:'automatic-research-two'});await app.DN.scannerLog.write(JSON.stringify(canonical));await app.DNResearch.upload();
+  check('independent identical crafts remain separate',Object.keys(backend.craftingEvidence[owner]).length===2);
+  backend.offline=true;canonical.items[1]={...canonical.items[1],revision:2,rows:canonical.items[1].rows.map(row=>({...row,value:11}))};
+  await app.DN.scannerLog.write(JSON.stringify(canonical));await app.DNResearch.upload();backend.offline=false;await app.DNResearch.upload();
+  check('offline corrections revise the existing contribution',Object.keys(backend.craftingEvidence[owner]).length===2 && backend.craftingEvidence[owner]['automatic-research-two'].rows[0].value===11);
+  app.dispatchEvent(new app.CustomEvent('dn-account-changed'));await wait(()=>app.DNResearch.status().saved,'restored consent receipt');
+  await app.DNResearch.upload();check('reload derives contributions from the canonical log',Object.keys(backend.craftingEvidence[owner]).length===2 && !app.DNResearch.export().observations);
   app.DNConsent.set({diagnostics:true});
   const countAfterWithdrawal=backend.telemetry.length;
   app.DNTelemetry.event('artifact_saved',{source:'crafting',action:'added',count:1});
   app.DNTelemetry.event('capture_failed',{reason:'NotAllowedError'});
   await wait(()=>backend.telemetry.length>countAfterWithdrawal,'diagnostics-only event');
   check('diagnostics consent works independently of product analytics',backend.telemetry.slice(countAfterWithdrawal).every(entry=>entry.payload.event==='capture_failed'));
-  await wait(async()=>await app.DNServiceStore.get('research:'+owner)===null,'withdrawal clears local research');
-  check('research withdrawal clears the durable upload queue',await app.DNServiceStore.get('research:'+owner)===null);
+  await wait(()=>Object.keys(backend.craftingEvidence[owner] || {}).length===0,'withdrawal deletes contributions');
+  check('withdrawal preserves private history and clears contributions',JSON.parse(await app.DN.scannerLog.read()).items.length===2 && Object.keys(backend.craftingEvidence[owner]).length===0);
   app.DNServiceConfig.researchEnabled=false;
   let researchBlocked=false;try{app.DNConsent.set({research:true});}catch{researchBlocked=true;}
   app.DNConsent.set({analytics:true});
@@ -184,7 +183,7 @@
   doc.querySelector('[data-use-cloud]').click();
   await wait(()=>iframe.contentDocument!==doc && iframe.contentDocument.querySelector('[data-signin]'),'cloud replacement reload');doc=iframe.contentDocument;await app.DNServicesReady;
   await wait(()=>app.DNCloud.state().status==='synced','saved state after choosing cloud');
-  check('choosing the cloud version restores its data through the UI and reloads cleanly',(await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture()))===remoteConflictHash && doc.querySelector('[data-cloud-choice]').hidden);
+  check('choosing account settings preserves reconciled craft history and reloads cleanly',(await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture()))===(await app.DNIntegrationCore.fingerprint(backend.workspaces[owner].data)) && JSON.parse(await app.DN.scannerLog.read()).items.length===2 && doc.querySelector('[data-cloud-choice]').hidden);
   check('the overwritten local conflict remains in an importable safety backup',(await app.DNCloud.recovery())[0].local.records.some(record=>record.items?.some(row=>row.id===item.id && row.name==='Local conflict version')));
   const other='22222222-2222-4222-8222-222222222222';backend.switchOwner(other);
   await wait(()=>app.DNCloud.user()?.id===other,'account change');await app.DNCloud.sync();

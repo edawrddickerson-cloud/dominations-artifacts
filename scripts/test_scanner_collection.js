@@ -3,6 +3,7 @@
  * exported text contains no pixels; snapshots cannot mutate collector state. */
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
 const context={window:{},document:{getElementById:()=>null},Date};vm.createContext(context);
+vm.runInContext(fs.readFileSync(path.join(__dirname,'../ui/crafting-history.js'),'utf8'),context);
 vm.runInContext(fs.readFileSync(path.join(__dirname,'../ui/scanner-collection.js'),'utf8'),context);
 const collector=context.window.DNScannerCollectionCore.createCollector();
 const unknown={valid:false,rows:[{raw:'Enemy Sniper Tower Hitpoints +1%',name:'Enemy Sniper Tower Hitpoints',known:false,value:1}],warnings:['Unknown label']};
@@ -133,7 +134,7 @@ async function browser(storage=saved) {
   const elements={};
   for(const id of ['scanner-crafted-log','scanner-log-storage-status','scanner-collection-count','scanner-collected-labels','scanner-export','scanner-collection-clear','scanner-read'])elements[id]={checked:true,textContent:'',listeners:{},addEventListener(event,fn){this.listeners[event]=fn;}};
   const app={window:{DN:{scannerLog:{async read(){return storage.get(logKey)??null;},async write(value){storage.set(logKey,value);},async remove(){storage.delete(logKey);}}}},document:{getElementById:id=>elements[id] || null},localStorage:{getItem:key=>storage.get(key)??null,setItem:(key,value)=>storage.set(key,value),removeItem:key=>storage.delete(key)},Date,confirm:()=>true};
-  vm.createContext(app);vm.runInContext(fs.readFileSync(path.join(__dirname,'../ui/stored-artifacts.js'),'utf8'),app);
+  vm.createContext(app);vm.runInContext(fs.readFileSync(path.join(__dirname,'../ui/crafting-history.js'),'utf8'),app);vm.runInContext(fs.readFileSync(path.join(__dirname,'../ui/stored-artifacts.js'),'utf8'),app);
   await vm.runInContext(fs.readFileSync(path.join(__dirname,'../ui/scanner-collection.js'),'utf8'),app);
   return {elements,collection:app.window.DNScannerCollection};
 }
@@ -184,7 +185,7 @@ assert.equal(restoredCraft.rows[1].base,-3);assert.equal(restoredCraft.rows[1].m
 assert.equal(restoredCraft.rows[0].tier,'blue');assert.equal(restoredCraft.rows[0].tierSource,'starting-percentage');
 assert.equal(restoredCraft.rows[1].tier,'green');
 const tieredContext={window:{},document:{getElementById:()=>null},Date};vm.createContext(tieredContext);
-for(const file of ['stored-artifacts.js','scanner-collection.js'])vm.runInContext(fs.readFileSync(path.join(__dirname,'../ui',file),'utf8'),tieredContext);
+for(const file of ['crafting-history.js','stored-artifacts.js','scanner-collection.js'])vm.runInContext(fs.readFileSync(path.join(__dirname,'../ui',file),'utf8'),tieredContext);
 const tieredCollector=tieredContext.window.DNScannerCollectionCore.createCollector();
 tieredCollector.recordItem({hall:'main',valid:true,rows:[{name:'Damage',value:6,colour:'green',levelSource:'crafting'},{name:'Damage',value:11,colour:'blue',levelSource:'crafting'}]},1);
 const tieredExport=tieredCollector.exportData();

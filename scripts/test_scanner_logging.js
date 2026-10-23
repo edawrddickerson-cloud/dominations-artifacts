@@ -3,7 +3,7 @@
  * separate from the accepted item, and older entries retain their DOM nodes.
  * Uses DOM/ordered-storage doubles; real OCR accuracy is tested separately. */
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
-const source=fs.readFileSync('ui/scanner-collection.js','utf8');
+const source=fs.readFileSync('ui/crafting-history.js','utf8')+'\n'+fs.readFileSync('ui/scanner-collection.js','utf8');
 const deferred=()=>{let resolve;const promise=new Promise(done=>resolve=done);return {promise,resolve};};
 function element() {
   return {checked:true,dataset:{},listeners:{},children:[],html:'',text:'',htmlWrites:0,nodeChanges:0,

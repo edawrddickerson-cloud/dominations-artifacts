@@ -1,5 +1,7 @@
 # Crafted item log statistics
 
+V2 account-history reconciliation and separately opted-in aggregate reporting are described in [crafting statistics v2](crafting-statistics-v2.md). Live research remains disabled pending acceptance; the local observed-statistics workflow below remains unchanged.
+
 Statistics expand **Crafted item log → Observed stats** in the existing Crafting Scanner. There is no separate history store or workflow. Every canonical logged item participates automatically; no session start, finish, per-item confirmation or keep/reject tagging is required. The only item action remains **Keep**, which adds it to Collection. Not collected does not mean rejected.
 
 The collector remains authoritative for encounter identity, duplicate prevention, strongest OCR candidates, corrections, artwork, persistence, exports and clearing. Statistics read a lightweight projection of those same records and subscribe to log changes. They never write Collection, upload data, or request capture permissions. A retry updates the existing ID; independently encountered items with identical stats remain separate. Crafting logging and local saving are automatic, with no log/save checkboxes. Obsolete saving preferences are ignored. Existing exports, clearing and planner backups cover the data; storage failures remain visible.

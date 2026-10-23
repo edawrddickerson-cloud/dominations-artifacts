@@ -64,7 +64,7 @@
       '<label><input type="checkbox" data-consent="analytics" id="'+prefix+'-analytics"><span><strong>Improve features</strong><small>Share which features you use.</small></span></label>'+
       '<label><input type="checkbox" data-consent="diagnostics" id="'+prefix+'-diagnostics"><span><strong>Improve scanner reliability</strong><small>Share errors and scan performance.</small></span></label>'+
       '<label><input type="checkbox" data-consent="ocrFeedback" id="'+prefix+'-ocr-feedback"><span><strong>Improve OCR matching</strong><small>Share unrecognized text and corrections. Requires sign-in.</small></span></label>'+
-      '<label><input type="checkbox" data-consent="research" id="'+prefix+'-research"><span><strong>Contribute crafting research</strong><small>Only from research sessions you choose to start.</small></span></label>'+
+      '<label><input type="checkbox" data-consent="research" id="'+prefix+'-research"><span><strong>Contribute crafting research</strong><small>Structured craft records. No images.</small></span></label>'+
       '</fieldset><p class="service-sharing-facts">No screenshots or full scan text.'+(prompt?' Sharing is optional.':'')+' <a href="privacy.html">Privacy details</a></p>'+
       (prompt?'<p class="service-sharing-settings">Change anytime in <a href="config.html#account-privacy">Profiles → Account & Privacy</a>.</p>':'')+
       '<div class="service-actions"><button type="button" class="btn'+(prompt?' profile-delete-confirm':'')+'" data-save-consent>'+(prompt?'Share selected data':'Save preferences')+'</button><button type="button" class="btn" data-reject-consent>'+(prompt?'No thanks':'Turn off sharing')+'</button></div><p class="service-privacy-status" role="status" aria-live="polite" aria-atomic="true" data-privacy-status></p>';
@@ -84,14 +84,14 @@
       const ready=window.DNIntegrationCore.privacyReady(config),researchReady=window.DNIntegrationCore.researchReady(config),value=consent.get();
       for(const input of inputs){
         const research=input.dataset.consent==='research';input.disabled=!ready || research && !researchReady;input.checked=!input.disabled && value[input.dataset.consent];
-        if(research)input.closest('label').hidden=!researchReady;
+        if(research){input.closest('label').hidden=!researchReady;input.disabled=!researchReady || !cloud.user();}
         if(input.dataset.consent==='ocrFeedback'){const available=window.DNIntegrationCore.ocrFeedbackReady(config);input.disabled=!available;input.checked=available && value.ocrFeedback;input.closest('label').hidden=!available;}
       }
       save.disabled=!ready || value.decided;save.textContent=ready && value.decided?'Saved':saveLabel;
       status.dataset.state=ready?'saved':'unavailable';
       status.textContent=!ready?'Sharing is unavailable.':value.decided?privacySummary(value):'';
     }
-    refresh();const unsubscribe=consent.subscribe(refresh);
+    refresh();const unsubscribe=consent.subscribe(refresh);cloud.subscribe(refresh);
     for(const input of inputs)input.addEventListener('change',()=>{
       const value=consent.get(),dirty=inputs.some(field=>!field.disabled && field.checked!==value[field.dataset.consent]);
       save.disabled=!window.DNIntegrationCore.privacyReady(config) || value.decided && !dirty;
@@ -101,7 +101,7 @@
     });
     function persist(values) {
       try{
-        const previous=consent.get();consent.set(values);
+        const previous=consent.get();consent.set({...values,researchPolicy:'2026-10-23'});if(values.research && !previous.research)window.DNResearch.setSharing(true).catch(error=>{status.textContent=error.message;});
         if(['analytics','diagnostics','research','ocrFeedback'].some(key=>values[key] && !previous[key]))showPrivacyNotice('Thank you for helping make the tool better for everyone.');
         else if(prompt && !document.getElementById('account-privacy'))showPrivacyNotice('Sharing preferences saved.');
       }
@@ -184,31 +184,5 @@
     }));
     cloud.subscribe(refresh);consent.subscribe(refresh);refresh();
     if(location.hash==='#account-privacy')root.scrollIntoView({block:'start'});
-  }
-  const scanner=document.getElementById('scanner-crafted-log') || document.getElementById('scanner-collect');
-  if(scanner && !window.DNStorageRecognition && window.DNResearch && window.DNIntegrationCore.researchReady(config)) {
-    const root=document.createElement('details');root.className='service-panel service-research';
-    root.innerHTML='<summary>Optional crafting research</summary><p>Confirm only artifacts just generated in the game. Revisiting an artifact is not a new craft. Include rejected and incomplete results as well as good ones. This does not add items to your Collection.</p>'+
-      '<div data-research-start><label>Game version, if known <input type="text" maxlength="80" data-game-version></label><label>Crafting event, if known <input type="text" maxlength="120" data-event-context></label><label>Planned craft count, if known <input type="number" min="0" max="100000" data-expected-crafts></label><button type="button" class="btn" data-start-research>Start research session</button></div>'+
-      '<div data-research-active hidden><p data-research-latest></p><div class="service-actions"><button type="button" class="btn" data-confirm-craft>Confirm this is a new craft</button><label>Decision <select data-disposition><option value="unknown">Unknown</option><option value="retained">Retained</option><option value="rejected">Rejected</option></select></label></div><label>Total crafts actually attempted, if known <input type="number" min="0" max="100000" data-attempted-crafts></label><button type="button" class="btn" data-finish-research>Finish session</button></div>'+
-      '<p role="status" data-research-status></p><button type="button" class="btn" data-export-research>Export research evidence</button><p><a href="config.html#account-privacy">Account and sharing preferences</a></p>';
-    scanner.closest('details').after(root);
-    const get=name=>root.querySelector('[data-'+name+']');let busy=false,localError='';
-    function refresh() {
-      const state=window.DNResearch.status(),ready=consent.get().research && !!cloud.user();
-      get('research-start').hidden=!!state.active;get('research-active').hidden=!state.active;
-      get('start-research').disabled=busy || !ready;get('confirm-craft').disabled=busy || !state.latest || !!state.latest.new_craft;
-      get('finish-research').disabled=busy;get('disposition').disabled=busy || !state.latest;
-      get('disposition').value=state.latest?.disposition || 'unknown';
-      get('research-latest').textContent=state.latest?(state.latest.category || 'Unidentified artifact')+' · '+state.latest.perks.length+' rows · '+(state.latest.new_craft?'confirmed new craft':'not confirmed as a new craft'):'Read the next newly crafted artifact.';
-      get('research-status').textContent=localError || state.error || (!ready?'Enable research sharing and sign in to contribute.':state.confirmed+' confirmed outcomes recorded.');
-    }
-    async function run(fn){if(busy)return;busy=true;localError='';refresh();try{await fn();}catch(error){localError=error.message;}finally{busy=false;refresh();}}
-    get('start-research').addEventListener('click',()=>run(()=>window.DNResearch.start({gameVersion:get('game-version').value,eventContext:get('event-context').value,expectedCrafts:get('expected-crafts').value===''?null:Number(get('expected-crafts').value)})));
-    get('confirm-craft').addEventListener('click',()=>run(()=>window.DNResearch.confirm()));
-    get('disposition').addEventListener('change',()=>{const value=get('disposition').value;run(()=>window.DNResearch.disposition(value));});
-    get('finish-research').addEventListener('click',()=>run(()=>window.DNResearch.finish(get('attempted-crafts').value===''?null:Number(get('attempted-crafts').value))));
-    get('export-research').addEventListener('click',()=>run(()=>{const value=window.DNResearch.export();if(!value)throw Error('There is no saved research for this account on this device.');download(value,'dominations-research');}));
-    window.DNResearch.subscribe(refresh);consent.subscribe(refresh);cloud.subscribe(refresh);refresh();
   }
 })();

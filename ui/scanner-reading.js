@@ -20,6 +20,7 @@
   const frames=window.DNScannerFrames.create();
   let signatures=[];
   let itemId=0,itemAnchor=null,itemBoundary=false;
+  let observedPanel=false;
   let displayedScore=null;
   let displayedKeeper=null;
   let displayedCapture=null,renderedResultHtml=null;
@@ -41,7 +42,6 @@
   function observeServices(value,options={}) {
     const context={source:serviceSource,captureMethod:liveCapture?'live-capture':'local-image',encounterId:JSON.stringify([session,itemId]),expectedRows:rowCount(),...options};
     try{window.DNTelemetry?.scannerResult(value,context);}catch{}
-    try{window.DNResearch?.observe(value,context);}catch{}
   }
   const rowCount=()=>Number(el.rows.value)===6?6:5;
   function say(text){el["result-status"].textContent=text;}
@@ -72,6 +72,7 @@
       current=captureInput();
       const witness=window.DNScannerFieldRecognition.witness(current.snapshot,latestFields,current.categorySource,readContext(),undefined,current.titleSource);
       if(!window.DNScannerFieldRecognition.sameWitness(job.witness,witness)){discardSpeculation('changed pixels');return;}
+      if(current.startingSource){job.startingSource=document.createElement('canvas');job.startingSource.width=current.startingSource.width;job.startingSource.height=current.startingSource.height;job.startingSource.getContext('2d').drawImage(current.startingSource,0,0);}
       job.approvedTemporal=current.temporal;job.artwork=captureArtwork(current.metadataPanel);job.validationDone=true;job.approved=true;job.witness=null;
       job.timing?.('speculation-validated');job.resolveValidation(true);
     }catch{discardSpeculation('validation unavailable');}
@@ -103,6 +104,7 @@
     latestCategorySource=null;categoryRegion=null;
     latestFields=null;fieldGeometry=null;
     itemAnchor=null;itemBoundary=true;
+    observedPanel=false;
     invalidate("No artifact read yet."); session=null; latestCanvas=null; hash=null; readHash=null;
     stableSince=0; editing=false; el.read.disabled=true;
     if(busy){busy.snapshot.width=busy.snapshot.height=0;if(busy.categorySource)busy.categorySource.width=busy.categorySource.height=0;busy=null;}
@@ -502,7 +504,8 @@
         context.putImageData(pixels,0,0);
       }
     }
-    return {snapshot,temporal,categorySource,titleSource,metadataPanel,release(){snapshot.width=snapshot.height=0;if(categorySource)categorySource.width=categorySource.height=0;if(titleSource)titleSource.width=titleSource.height=0;}};
+    const startingSource=!storage && liveCapture && window.DNCraftingResultContext?.enabled()?window.DNCraftingResultContext.capture(latestCategorySource,metadataPanel):null;
+    return {snapshot,temporal,categorySource,titleSource,metadataPanel,startingSource,release(){snapshot.width=snapshot.height=0;if(categorySource)categorySource.width=categorySource.height=0;if(titleSource)titleSource.width=titleSource.height=0;if(startingSource)startingSource.width=startingSource.height=0;}};
   }
   function captureArtwork(metadataPanel) {
     // The crafting artwork sits immediately left of the gold benefits panel.
@@ -611,9 +614,9 @@
       const recognized=result?.rows?.some(row=>row.known && !row.assumed);
       settled=confirmed || (storage?attempts>=2 || useful===0:!recognized) || (!el.auto.checked && !window.DNScannerCollection?.isEnabled());
       parsed.presentation={attempt:attempts,finished:settled,coverage:recognition.coverage(result?.rows || [],rowCount()),rows:result?.rows || [],temporal:result?.temporal || temporal};
-      const logOptions={expectedRows:rowCount(),continuous:true,newEncounter:itemBoundary,steadyState:!storage,profileKey:readingProfile,encounterId:JSON.stringify([session,itemId]),captureMethod:liveCapture?'live-capture':'local-image'};
+      const logOptions={expectedRows:rowCount(),continuous:true,newEncounter:itemBoundary,steadyState:!storage,profileKey:readingProfile,encounterId:JSON.stringify([session,itemId]),captureMethod:liveCapture?'live-capture':'local-image',identityEvidence:liveCapture && itemBoundary && observedPanel?'observed-transition':'ambiguous'};
       const publish=()=>{
-        if(result?.rows?.length)itemBoundary=false;
+        if(result?.rows?.length){itemBoundary=false;observedPanel=true;}
         progress(settled?'finished':'reading',settled?'Finished · '+recognition.coverage(result?.rows || [],rowCount()).total+'/'+rowCount()+' · '+(confirmed?'ready to move on':result?'best read · review or move on':'nothing useful in view'):'Improving the read · keeping these rows visible');
         say(confirmed?"Visible perks read. Check the values before making a game decision.":"Recognition needs correction; no rating confirmed.");
         // The score and comparison take the first paint. Building editable
@@ -637,6 +640,11 @@
         publish();
       }
       serviceOutcome=confirmed?'complete':'partial';
+      const startingSource=speculative?job.startingSource:input.startingSource;
+      if(startingSource && request===token && owner===engine) {
+        const logged=collection?.itemForEncounter?.(logOptions.encounterId,readingProfile);
+        if(logged && logged.startingContextSource!=='craft-result-controls-v1')window.DNCraftingResultContext?.observe(startingSource,logged.id,logged.revision);
+      }
       observeServices(result || {rows:[]},{original:parsed});
     } catch (error) {
       if(request!==token || owner!==engine)return;
@@ -653,6 +661,7 @@
     } finally {
       try{window.DNTelemetry?.scannerFinished({source:serviceSource,outcome:serviceOutcome,time:performance.now(),session:readingSession,itemId:readingItemId,request,workerCalls:serviceCalls,inferredCount:serviceInferences});}catch{}
       input.release();job.witness=null;
+      if(job.startingSource)job.startingSource.width=job.startingSource.height=0;
       if(busy===job){
         if(speculative && !job.approved && request===token){attempts=0;readHash=null;settled=false;}
         busy=null;el.read.disabled=!ready || !latestCanvas;

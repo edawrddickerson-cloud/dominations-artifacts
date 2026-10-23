@@ -18,16 +18,21 @@
   window.DNServiceLoader={script};
   async function boot() {
     if(!window.DN)return;
-    await script('service-config.js?v=20261022-ocr-feedback');
-    await script('integration-core.js?v=20261022-lifetime-comparison');
+    await script('service-config.js?v=20261023-crafting-v2');
+    if(!window.DNCraftingHistory)await script('crafting-history.js?v=2');
+    await script('integration-core.js?v=20261023-history-v2');
     await script('service-store.js?v=2');
     await script('telemetry.js?v=20261022-ocr-feedback');
-    await Promise.all([script('cloud-sync.js?v=20261022-lifetime-comparison'),script('research.js?v=2')]);
+    if(!window.DN_ARTIFACT_STAT_CONTEXT)await script('data/artifact_stat_context.js?v=1');
+    await script('crafting-community.js?v=2');
+    await script('crafting-result-context.js?v=1');
+    await Promise.all([script('cloud-sync.js?v=20261023-history-v2'),script('research.js?v=20261023-automatic-v2')]);
     if(!window.DNStoredArtifacts)await script('stored-artifacts.js?v=23');
     if(!window.DNLocalBackupCore)await script('local-backup.js?v=3');
-    await script('cloud.js?v=20261022-lifetime-comparison');
+    await script('cloud.js?v=20261023-history-v2');
     await script('ocr-feedback.js?v=1');
-    await script('services-ui.js?v=20261022-lifetime-comparison');
+    await script('services-ui.js?v=20261023-history-v2');
+    await script('crafting-community-ui.js?v=2');
   }
   window.DNServicesReady=new Promise(resolve=>{
     const run=()=>boot().catch(()=>{ /* Optional services cannot break the local application. */ }).finally(resolve);

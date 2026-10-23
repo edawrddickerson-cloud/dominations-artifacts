@@ -13,7 +13,9 @@
   function saveBinding(value) {localStorage.setItem('dn_cloud_binding',JSON.stringify(value));}
   async function capture() {
     const settings=C.settingsSnapshot(localStorage),profiles=JSON.parse(settings['dn-profiles']);
-    return C.createWorkspace(settings,await store.readPlannerRecords(profiles.profiles.map(p=>p.id)));
+    if(window.DNScannerCollection)await window.DNScannerCollection.flush();
+    const log=JSON.parse(await window.DN.scannerLog.read() || 'null');
+    return C.createWorkspace(settings,await store.readPlannerRecords(profiles.profiles.map(p=>p.id)),log || window.DNCraftingHistory.normalize(null));
   }
   async function fullBackup() {
     await window.DN.scannerLog.ready;
@@ -33,7 +35,18 @@
     const records=workspace.records.map(record=>({id:record.id,items:record.items.map(item=>({...C.sanitizeItem(item),...(art.has(record.id+':'+item.id)?{image:art.get(record.id+':'+item.id)}:{})}))}));
     // Keep this account's local diagnostic history. Never carry another account's
     // history into a newly adopted cloud workspace.
-    if(preserveArtwork)records.push(...previous.records.filter(record=>record.id==='crafting-log'));
+    const localLog=previous.records.find(record=>record.id==='crafting-log');
+    if(workspace.craftingLog) {
+      const local=preserveArtwork && localLog?JSON.parse(localLog.value):null;
+      const log=window.DNCraftingHistory.preserveLocalDetails(window.DNCraftingHistory.normalize(workspace.craftingLog),local);
+      const artwork=new Map((local?.items || []).map(i=>[i.id,i.image]));
+      for(const item of log.items)if(artwork.has(item.id))item.image=artwork.get(item.id);
+      const totals=window.DNCraftingHistory.totals(log);
+      log.lifetimeStatistics={version:1,archived:window.DNCraftingHistory.archivedTotals(log),totals,sinceLastKept:totals.sinceLastKept};
+      // Local diagnostic reads stay local when the same account reconciles.
+      log.scans=local?.scans || [];log.labels=local?.labels || [];
+      records.push({id:'crafting-log',value:JSON.stringify(log)});
+    }else if(preserveArtwork && localLog)records.push(localLog); // Old backups do not replace this account's history.
     await window.DNLocalBackupCore.restore({kind:'dominations-planner-backup',version:1,settings,records},localStorage,store);
   }
   async function rpc(name,args={}) {
@@ -48,16 +61,25 @@
     }
   }
   const engine=window.DNCloudSyncCore.create({capture,readBinding:binding,saveBinding,recover,apply,notify:announce,
+    async applyHistory(log){
+      if(window.DNScannerCollection){await window.DNScannerCollection.reconcileHistory(log);return;}
+      const previous=JSON.parse(await window.DN.scannerLog.read() || 'null');
+      const merged=window.DNCraftingHistory.preserveLocalDetails(window.DNCraftingHistory.reconcile(previous,log),previous);
+      const artwork=new Map((previous?.items || []).map(i=>[i.id,i.image]));
+      for(const item of merged.items)if(artwork.has(item.id))item.image=artwork.get(item.id);
+      await window.DN.scannerLog.write(JSON.stringify({...merged,scans:previous?.scans || [],labels:previous?.labels || []}));
+    },
     async readLocalCraftsLogged(){try{return C.lifetimeCraftsLogged(JSON.parse(await window.DN.scannerLog.read() || 'null'));}catch{return null;}},
-    remote:{async read(){return rpc('planner_read_workspace');},async write(owner,revision,operation,data){return rpc('planner_save_workspace',{p_expected_revision:revision,p_operation_id:operation,p_data:data});}}});
+    remote:{async read(){return rpc('planner_read_workspace');},async write(owner,revision,operation,data){return rpc('planner_save_workspace_v2',{p_owner:owner,p_expected_revision:revision,p_operation_id:operation,p_data:data});}}});
   function schedule(delay=2000) {
     clearTimeout(timer);if(!currentUser || !configured())return;
     timer=setTimeout(()=>{timer=null;engine.inspect().catch(()=>{});},delay);
   }
   async function syncConsent() {
     if(!client || !currentUser)return;
-    const user=currentUser.id,preferences=window.DNConsent.get();
-    await rpc('planner_set_research_consent',{p_enabled:preferences.research && C.researchReady(config),p_policy:C.POLICY});
+    const user=currentUser.id;
+    // Legacy manual-session consent cannot authorize automatic v2 contributions.
+    await rpc('planner_set_research_consent',{p_enabled:false,p_policy:C.POLICY});
     if(currentUser?.id!==user)throw Error('Account changed.');
   }
   function setSession(session) {
@@ -99,6 +121,7 @@
     return starting;
   }
   window.DNCloud={configured,start,rpc,capture,fullBackup,user:()=>currentUser?{id:currentUser.id,email:currentUser.email,displayName:String(currentUser.user_metadata?.preferred_username || currentUser.user_metadata?.full_name || currentUser.user_metadata?.name || currentUser.email || 'Discord account').slice(0,100)}:null,state:()=>({...message}),
+    async communityReport(args={}){await start();if(!client || !C.researchReady(config))throw Error('Unavailable');const result=await client.rpc('planner_crafting_report',args);if(result.error)throw result.error;return result.data;},
     subscribe(fn){listeners.add(fn);return ()=>listeners.delete(fn);},
     sync:()=>engine.inspect(),choose:(choice,expected)=>engine.choose(choice,expected),
     consentReady:()=>consentTask,

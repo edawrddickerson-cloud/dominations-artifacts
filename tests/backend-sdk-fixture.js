@@ -33,7 +33,8 @@
       if(backend.offline)return {data:null,error:{code:'503'}};
       const owner=backend.owner?.id;if(!owner)return {data:null,error:{code:'42501'}};
       if(name==='planner_read_workspace')return {data:copy(backend.workspaces[owner] || null),error:null};
-      if(name==='planner_save_workspace') {
+      if(name==='planner_save_workspace' || name==='planner_save_workspace_v2') {
+        if(name==='planner_save_workspace_v2' && args.p_owner!==owner)return {data:null,error:{code:'42501'}};
         const current=backend.workspaces[owner];
         if(current?.operation_id===args.p_operation_id)return {data:copy(current),error:null};
         if((current?.revision || 0)!==args.p_expected_revision)return {data:null,error:{code:'40001'}};
@@ -42,6 +43,19 @@
         return {data:copy(next),error:null};
       }
       if(name==='planner_set_research_consent'){backend.consent[owner]=args.p_enabled;return {data:null,error:null};}
+      if(name==='planner_set_crafting_consent'){
+        backend.craftingConsent ||= {};backend.craftingOperations ||= {};backend.craftingEvidence ||= {};
+        const key=owner+':'+args.p_operation;
+        if(backend.craftingOperations[key])return {data:copy(backend.craftingOperations[key]),error:null};
+        const receipt={epoch:crypto.randomUUID()};backend.craftingOperations[key]=receipt;backend.craftingConsent[owner]={...receipt,enabled:args.p_enabled};
+        if(!args.p_enabled)backend.craftingEvidence[owner]={};return {data:copy(receipt),error:null};
+      }
+      if(name==='planner_submit_crafting'){
+        const receipt=backend.craftingConsent?.[owner];if(!receipt?.enabled || receipt.epoch!==args.p_epoch)return {data:null,error:{code:'42501'}};
+        backend.craftingEvidence ||= {};backend.craftingEvidence[owner] ||= {};
+        for(const record of args.p_payload.records)backend.craftingEvidence[owner][record.id]=copy(record);
+        return {data:{accepted:true},error:null};
+      }
       if(name==='planner_submit_research') {
         if(!backend.consent[owner])return {data:null,error:{code:'42501'}};
         backend.outcomes[owner] ||= {};backend.sessions[owner] ||= {};
