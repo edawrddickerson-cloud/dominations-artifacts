@@ -158,6 +158,19 @@ async function main() {
     if(query(local,"select has_table_privilege('anon','public.planner_workspaces','select') or has_function_privilege('anon','public.planner_read_workspace()','execute')")!=='f')throw Error('Restored anonymous workspace access is not denied.');
     manifest.restoreVerified=true;manifest.restoredAt=new Date().toISOString();
     manifest.verification={tableChecksumsMatch:true,plannerFunctionsMatch:true,rowSecurityPoliciesMatch:true,restoredAccountIsolation:true,anonymousWorkspaceAccessDenied:true,restoredTables:tables.length};
+    if(process.argv.includes('--rehearse-ocr-weekly')) {
+      if(local.PGHOST!=='127.0.0.1' || !process.argv.includes('--verify'))throw Error('Weekly rehearsal requires isolated restore.');
+      const files=['202610240004_ocr_weekly_reports.sql','202610240005_ocr_matching_names.sql'];
+      const sql='begin;\n'+files.map(file=>fs.readFileSync(path.join(root,'supabase/migrations',file),'utf8')).join('\n').replace(/^begin;\r?$/gm,'').replace(/^commit;\r?$/gm,'')+'\ncommit;\n';
+      const protectedSQL="select json_object_agg(proname,pg_get_functiondef(oid) order by proname) from pg_proc where pronamespace='public'::regnamespace and (proname like 'planner_export%' or proname like 'planner_prune%' or proname in ('planner_delete_ocr_feedback','planner_submit_ocr_feedback','planner_crafting_summary'))";
+      const originalFunctions=query(local,protectedSQL);
+      query(local,sql);query(local,'select public.planner_run_ocr_weekly_reports();');
+      if(JSON.stringify(before)!==JSON.stringify(fingerprints(local,tables)) || originalFunctions!==query(local,protectedSQL))throw Error('Weekly rehearsal changed existing data/functions.');
+      const checks=JSON.parse(query(local,"select json_build_object('privateReports',not has_table_privilege('authenticated','research_reporting.ocr_weekly_reports','select'),'privateRPC',not has_function_privilege('anon','public.planner_read_ocr_weekly_reports(date)','execute'),'reports',(select count(*) from research_reporting.ocr_weekly_reports),'names',(select count(*) from research_reporting.ocr_matching_names),'baselineCases',(select count(*) from research_reporting.ocr_matching_cases))"));
+      if(!checks.privateReports || !checks.privateRPC || checks.reports<1 || checks.names!==198 || checks.baselineCases<checks.names)throw Error('Weekly rehearsal verification failed.');
+      manifest.ocrWeeklyRehearsal={passed:true,migrationHash:crypto.createHash('sha256').update(sql).digest('hex'),existingRowsAndFunctionsUnchanged:true,...checks};
+      console.log('Weekly OCR report rehearsal passed against the isolated live-data restore.');
+    }
     if(process.argv.includes('--rehearse-ocr-feedback')) {
       if(local.PGHOST!=='127.0.0.1' || !process.argv.includes('--verify'))throw Error('OCR rehearsal requires isolated restore.');
       const sql=fs.readFileSync(path.join(root,'supabase/migrations/202610240002_ocr_matching_feedback.sql'),'utf8');
