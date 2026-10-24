@@ -36,8 +36,11 @@ browserRun(async({evaluate})=>{
   assert('crafting opt-in registers research consent',researchCalls.length===2&&researchCalls[1]===true);
   assert('sharing does not refresh report filters',reportCalls===before);
   assert('profile reflects crafting opt-in',field('research').checked);
-  share.click();await new Promise(ok=>setTimeout(ok,0));
-  assert('crafting checkbox can withdraw sharing',!prefs.research&&!share.checked&&prefs.ocrFeedback);
+  assert('accepted sharing hides the prompt and success copy',document.querySelector('[data-community-opt-in]').hidden&&!share.getClientRects().length&&!document.querySelector('[data-community-sharing]').textContent);
+  cloudListeners.forEach(fn=>fn({status:'synced'}));researchListeners.forEach(fn=>fn());
+  assert('background updates keep the accepted prompt hidden',document.querySelector('[data-community-opt-in]').hidden);
+  prefs={...prefs,research:false};consentListeners.forEach(fn=>fn(prefs));
+  assert('withdrawing through preferences restores the opt-in',!document.querySelector('[data-community-opt-in]').hidden&&!share.checked&&prefs.ocrFeedback);
   document.querySelector('[data-community-refresh]').click();await new Promise(ok=>setTimeout(ok,0));
   const exclusions=document.querySelector('[data-community-exclusions]');
   assert('report displays historical exclusion reasons and counts',!exclusions.hidden&&exclusions.textContent.includes('Starting rolls unverified490')&&exclusions.textContent.includes('Craft encounter unverified5'));
@@ -57,7 +60,7 @@ browserRun(async({evaluate})=>{
   refresh.click();resolveReport({status:'empty'});await new Promise(ok=>setTimeout(ok,0));
   assert('confirmed empty report clears stale results',document.querySelector('[data-community-expanded]').hidden&&!count.textContent&&exclusions.hidden&&status.textContent==='No crafts recorded');
   user=null;cloudListeners.forEach(fn=>fn({status:'signed-out'}));
-  assert('signed-out sharing explains required action',share.disabled&&document.querySelector('[data-community-sharing]').textContent.includes('Sign in'));
+  assert('signed-out sharing offers a concise sign-in action',share.disabled&&!document.querySelector('[data-community-signin]').hidden);
   return checks;
  })()`);
  assert(result.length>=13);console.log('Sharing UI passed: '+result.length+' browser checks.');

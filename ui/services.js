@@ -36,7 +36,7 @@
     await script('services-ui.js?v=20261024-consent-drafts');
     if(document.body.classList.contains('page-crafting-stats')){
       if(!window.DNCraftingStatsTables)await script('crafting-stats-tables.js?v=20261025-dashboard');
-      await script('crafting-community-ui.js?v=20261025-dashboard');
+      await script('crafting-community-ui.js?v=20261025-consent-copy');
     }
   }
   window.DNServicesReady=new Promise(resolve=>{
