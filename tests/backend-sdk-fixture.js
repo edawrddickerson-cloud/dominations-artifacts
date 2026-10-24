@@ -64,14 +64,22 @@
         return {data:{accepted:args.p_payload.outcomes.length},error:null};
       }
       if(name==='planner_delete_research'){backend.outcomes[owner]={};backend.sessions[owner]={};backend.consent[owner]=false;return {data:null,error:null};}
-      if(name==='planner_set_ocr_feedback_consent'){backend.ocrConsent ||= {};backend.ocrConsent[owner]=args.p_enabled;return {data:null,error:null};}
+      backend.ocrReceipt ||= {};backend.ocrOperations ||= {};
+      if(name==='planner_get_ocr_feedback_consent')return {data:backend.ocrReceipt[owner] || {enabled:false,epoch:null,since:null},error:null};
+      if(name==='planner_set_ocr_feedback_consent'){
+        const key=owner+':'+args.p_operation;if(backend.ocrOperations[key])return {data:copy(backend.ocrOperations[key]),error:null};
+        if(args.p_enabled && args.p_expected!==(backend.ocrReceipt[owner]?.epoch || null))return {data:null,error:{code:'42501'}};
+        backend.ocrConsent ||= {};backend.ocrConsent[owner]=args.p_enabled;
+        const receipt={enabled:args.p_enabled,epoch:crypto.randomUUID(),since:new Date().toISOString()};backend.ocrReceipt[owner]=receipt;backend.ocrOperations[key]=receipt;
+        return {data:copy(receipt),error:null};
+      }
       if(name==='planner_submit_ocr_feedback'){
-        if(!backend.ocrConsent?.[owner])return {data:null,error:{code:'42501'}};
+        if(!backend.ocrConsent?.[owner] || backend.ocrReceipt[owner]?.epoch!==args.p_epoch)return {data:null,error:{code:'42501'}};
         backend.ocrSamples ||= {};backend.ocrSamples[owner] ||= {};
         for(const sample of args.p_samples)backend.ocrSamples[owner][sample.id]=copy(sample);
         return {data:{accepted:args.p_samples.length},error:null};
       }
-      if(name==='planner_delete_ocr_feedback'){backend.ocrSamples ||= {};backend.ocrSamples[owner]={};backend.ocrConsent ||= {};backend.ocrConsent[owner]=false;return {data:null,error:null};}
+      if(name==='planner_delete_ocr_feedback'){backend.ocrSamples ||= {};backend.ocrSamples[owner]={};backend.ocrConsent ||= {};backend.ocrConsent[owner]=false;backend.ocrReceipt[owner]={enabled:false,epoch:crypto.randomUUID(),since:new Date().toISOString()};return {data:null,error:null};}
       if(name==='planner_export_account')return {data:{workspace:copy(backend.workspaces[owner]),research_outcomes:Object.values(backend.outcomes[owner] || {})},error:null};
       return {data:null,error:{code:'unknown'}};
     },functions:{async invoke(){return {data:null,error:{code:'not-tested'}};}}};}};

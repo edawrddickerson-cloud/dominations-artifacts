@@ -13,6 +13,8 @@
     if(history)initialData=history.normalize(initialData);
     const ledger=initialData?.ledger || null;
     const archivedIds=new Set((ledger?.archived || []).map(item=>item.id));let afterClear=0;
+    const feedbackRecent=new Set();
+    const touchFeedback=id=>{feedbackRecent.delete(id);feedbackRecent.add(id);if(feedbackRecent.size>100)feedbackRecent.delete(feedbackRecent.values().next().value);};
     const scans=[],labels=new Map(),items=new Map(),aliases=new Map(),encounters=new Map(),dirtyItems=new Set();let previous=null,activeItem=null,labelsDirty=true,resetView=true;
     const statKeys=['logged','kept','main','war','threeUnlocked'];
     const emptyStats=()=>Object.fromEntries(statKeys.map(key=>[key,0]));
@@ -36,10 +38,11 @@
     }
     const encounterKey=(encounter,profile)=>JSON.stringify([encounter,profile]);
     for(const item of items.values()) {
-      countItem(item);
+      countItem(item);touchFeedback(item.id);
       dirtyItems.add(item.id);
       if(item.encounterId)encounters.set(encounterKey(item.encounterId,item.profileKey),item.id);
     }
+    feedbackRecent.clear();for(const item of [...items.values()].sort((a,b)=>Date.parse(a.lastUpdated)-Date.parse(b.lastUpdated)).slice(-100))touchFeedback(item.id);
     let sinceLastKept=0;
     for(const item of items.values())sinceLastKept=item.keptId?0:sinceLastKept+1;
     if(!lifetimeTotals().kept)sinceLastKept=lifetimeTotals().logged;
@@ -54,7 +57,7 @@
       if(prior)countItem(prior,-1);
       countItem(item);
       if(prior?.encounterId && (prior.encounterId!==item.encounterId || prior.profileKey!==item.profileKey))encounters.delete(encounterKey(prior.encounterId,prior.profileKey));
-      items.set(id,item);dirtyItems.add(id);
+      items.set(id,item);dirtyItems.add(id);touchFeedback(id);
       if(item.encounterId)encounters.set(encounterKey(item.encounterId,item.profileKey),id);
     }
     function sameArtifact(a,b) {
@@ -72,8 +75,9 @@
       }
       return matching>=Math.min(3,a.rows.length);
     }
-    function recordItem(result,id,{corrected=false,expectedRows=5,continuous=false,newEncounter=false,steadyState=false,profileKey=null,encounterId=null,captureMethod='unknown',identityEvidence='ambiguous'}={}) {
-      if(id==null || !(result?.rows || []).some(row=>row.name || row.raw))return false;
+    function recordItem(result,id,{corrected=false,expectedRows=5,continuous=false,newEncounter=false,steadyState=false,profileKey=null,encounterId=null,captureMethod='unknown',identityEvidence='ambiguous',observation=null,scannerSource=null}={}) {
+      if(id==null || !result || !(result.rows || []).some(row=>row.name || row.raw) && !(window.DNOCRFeedback?.allowed() && result.artifact?.nameEvidence?.text))return false;
+      if(!result.rows)result={...result,rows:[]};
       id=sessionId+':'+id;
       const requested=id;
       const encounter=encounterId==null?null:sessionId+':'+encounterId;
@@ -85,6 +89,9 @@
       aliases.set(requested,id);
       if(aliases.size>10000)aliases.delete(aliases.keys().next().value);
       const prior=items.get(id);
+      // Bounded text evidence belongs to this canonical encounter, including weaker reads.
+      const evidence=mergeOCREvidence(prior,result,observation,corrected,scannerSource);
+      const evidenceChanged=JSON.stringify(evidence)!==JSON.stringify(prior?.ocrEvidence || []);
       const previousActive=activeItem;
       activeItem=id;
       if(!prior && identityEvidence==='observed-transition') {
@@ -102,10 +109,10 @@
         (!!prior.validated===!!result.valid && quality(prior.rows)>quality(result.rows)))) {
         // Dice observations can improve independently of the text read. Never
         // replace manual choices or attach them to a different encounter.
-        if(!sameArtifact(prior,result))return false;
+        if(!sameArtifact(prior,result)){if(evidenceChanged)setItem(id,clone({...prior,ocrEvidence:evidence}));return evidenceChanged;}
         const scannedName=result.artifact?.name;
         const recoveredImage=!prior.image && result.artifact?.image;
-        let changed=!!recoveredImage || !!scannedName && !prior.name && prior.nameSource!=='manual' || JSON.stringify(nameEvidence)!==JSON.stringify(prior.nameEvidence || null);
+        let changed=evidenceChanged || !!recoveredImage || !!scannedName && !prior.name && prior.nameSource!=='manual' || JSON.stringify(nameEvidence)!==JSON.stringify(prior.nameEvidence || null);
         const rows=prior.rows.map((row,index)=>{
           const next=result.rows[index];
           if(row.rerollSource==='manual' || !next || !Object.prototype.hasOwnProperty.call(next,'rerollEligible'))return row;
@@ -114,7 +121,7 @@
           return {...row,rerollEligible:next.rerollEligible,rerollSource:next.rerollSource,
             rerollConfidence:next.rerollConfidence,rerollEvidence:next.rerollEvidence,rerollConflict:next.rerollConflict};
         });
-        if(changed)setItem(id,clone({...prior,...(recoveredImage?{image:recoveredImage}:{}),...(scannedName && !prior.name && prior.nameSource!=='manual'?{name:scannedName,nameSource:'scanned'}:{}),nameEvidence,rows,lastUpdated:new Date().toISOString()}));
+        if(changed)setItem(id,clone({...prior,...(recoveredImage?{image:recoveredImage}:{}),...(scannedName && !prior.name && prior.nameSource!=='manual'?{name:scannedName,nameSource:'scanned'}:{}),nameEvidence,ocrEvidence:evidence,rows,lastUpdated:new Date().toISOString()}));
         return changed;
       }
       const timestamp=new Date().toISOString();
@@ -136,7 +143,7 @@
         revision:prior?.revision || 0,writer:prior?.writer || '',keptAt:prior?.keptAt || null,
         identityEvidence:prior?.identityEvidence || identityEvidence,
         reconciliationConflict:corrected?false:prior?.reconciliationConflict || false};
-      item.nameEvidence=nameEvidence;
+      item.nameEvidence=nameEvidence;item.ocrEvidence=evidence;item.scannerSource=prior?.scannerSource || scannerSource || null;
       if(prior && !corrected && JSON.stringify(prior.rows.map(row=>[row.name,row.value]))!==JSON.stringify(rows.map(row=>[row.name,row.value])))item.startingContextSource='unknown';
       const next=clone(window.DNStoredArtifacts?.backfillItem(item) || item);
       if(prior) {
@@ -154,7 +161,7 @@
       const item=items.get(id);if(!item)return false;
       const next=clone({...item,...changes,id});
       if(JSON.stringify(item)===JSON.stringify(next))return false;
-      setItem(id,next);return true;
+      next.lastUpdated=new Date().toISOString();setItem(id,next);return true;
     }
     function record(result) {
       const hall=hallOf(result);
@@ -200,7 +207,7 @@
         items:clone([...(all?items.keys():dirtyItems)].map(id=>items.get(id))),labels:all || labelsDirty?clone([...labels.values()]):null};
       dirtyItems.clear();labelsDirty=false;resetView=false;return changes;
     }
-    function clear(){if(ledger){ledger.archived.push(...[...items.values()].map(history.facts));for(const id of items.keys())archivedIds.add(id);}archivedStats=lifetimeTotals();for(const key of statKeys)currentStats[key]=0;scans.length=0;labels.clear();items.clear();aliases.clear();encounters.clear();dirtyItems.clear();activeItem=null;previous=null;labelsDirty=true;resetView=true;}
+    function clear(){if(ledger){ledger.archived.push(...[...items.values()].map(history.facts));for(const id of items.keys())archivedIds.add(id);}archivedStats=lifetimeTotals();for(const key of statKeys)currentStats[key]=0;scans.length=0;labels.clear();items.clear();feedbackRecent.clear();aliases.clear();encounters.clear();dirtyItems.clear();activeItem=null;previous=null;labelsDirty=true;resetView=true;}
     function reconcileHistory(remote) {
       if(!history || !ledger)throw Error('Crafting history is unavailable.');
       const local=snapshot({includeImages:true});
@@ -210,8 +217,8 @@
       archivedIds.clear();for(const item of ledger.archived)archivedIds.add(item.id);
       archivedStats=history.archivedTotals(merged);
       for(const key of statKeys)currentStats[key]=0;
-      items.clear();encounters.clear();
-      for(const item of merged.items){if(artwork.has(item.id))item.image=artwork.get(item.id);items.set(item.id,item);countItem(item);if(item.encounterId)encounters.set(encounterKey(item.encounterId,item.profileKey),item.id);}
+      items.clear();feedbackRecent.clear();encounters.clear();
+      for(const item of merged.items){if(artwork.has(item.id))item.image=artwork.get(item.id);items.set(item.id,item);countItem(item);touchFeedback(item.id);if(item.encounterId)encounters.set(encounterKey(item.encounterId,item.profileKey),item.id);}
       sinceLastKept=merged.lifetimeStatistics.sinceLastKept;
       if(!items.has(activeItem))activeItem=null;
       resetView=true;labelsDirty=true;for(const id of items.keys())dirtyItems.add(id);
@@ -230,11 +237,32 @@
         expectedRows:item.expectedRows,hall:item.hall,type:item.type,validated:item.validated,corrected:item.corrected,keptId:item.keptId,
         rows:item.rows.map(row=>Object.fromEntries(['name','known','value','hasPercent','level','tier','base','max','assumed','inferred','conflict','tierConflict','nameSource','valueSource','unlocked','rerollEligible'].map(key=>[key,row[key]])))}));
     }
+    function mergeOCREvidence(prior,result,observation,corrected,source) {
+      const entries=clone(prior?.ocrEvidence || []).filter(e=>Date.now()-Date.parse(e.observedAt)<90*86400000);
+      if(corrected || !window.DNOCRFeedback?.allowed())return entries;
+      const add=(kind,position,text,match,accepted,pass)=>{
+        if(typeof text!=='string' || !text.trim() || text.length>500)return;
+        const value={kind,position,text,match:match || null,accepted:!!accepted,pass,source:source || prior?.scannerSource || 'unknown',build:window.DNServiceConfig?.build || 'unknown',owner:window.DNCloud?.user()?.id || null};
+        const signature=JSON.stringify(value);
+        if(entries.some(e=>e.signature===signature))return;
+        if(entries.filter(e=>e.kind===kind && e.position===position).length>=6)return;
+        entries.push({...value,signature,read:entries.length+1,observedAt:new Date().toISOString()});
+      };
+      const titleArtifact=observation?.artifact?.nameEvidence?observation.artifact:result.artifact;
+      const title=titleArtifact?.nameEvidence;
+      if(title)add('artifact-name',0,title.text,{name:title.accepted?titleArtifact.name || null:null,method:'title-ocr',confidence:Number.isFinite(title.confidence)?title.confidence/100:null},title.accepted,'title');
+      const passes=observation?.observations || [{pass:'read',rows:observation?.rows || result.rows}];
+      for(const pass of passes)for(const [index,row] of (pass.rows || []).slice(0,6).entries())
+        add('perk-name',index+1,row.rawName || row.raw,row.nameMatch || (row.known?{name:row.name,method:'exact',confidence:1}:null),row.known && !row.assumed,pass.pass || 'read');
+      return entries;
+    }
     function ocrFeedbackItems() {
-      return [...items.values()].map(item=>({id:item.id,hall:item.hall,type:item.type,name:item.name,nameSource:item.nameSource,
+      return [...feedbackRecent].map(id=>items.get(id)).filter(Boolean).map(item=>({id:item.id,hall:item.hall,type:item.type,name:item.name,nameSource:item.nameSource,
+        firstSeen:item.firstSeen,revision:item.revision,writer:item.writer,scannerSource:item.scannerSource,
+        captureMethod:item.captureMethod,ocrEvidence:clone(item.ocrEvidence || []),
         nameEvidence:item.nameEvidence?{text:item.nameEvidence.text,confidence:item.nameEvidence.confidence,accepted:item.nameEvidence.accepted}:null,
-        rows:item.rows.map(row=>({name:row.name,raw:row.raw,known:row.known,assumed:row.assumed,nameSource:row.nameSource,
-          nameMatch:row.nameMatch?{name:row.nameMatch.name,method:row.nameMatch.method,confidence:row.nameMatch.confidence}:null}))}));
+        rows:item.rows.map(row=>({name:row.name,raw:row.raw,rawName:row.rawName,known:row.known,assumed:row.assumed,nameSource:row.nameSource,
+          nameMatch:row.nameMatch?{name:row.nameMatch.name,method:row.nameMatch.method,confidence:row.nameMatch.confidence,automatic:row.nameMatch.automatic}:null}))}));
     }
     return {record,recordItem,itemForEncounter,updateItem,historyItems,ocrFeedbackItems,nameReviews,sessionId,reconcileHistory,weekly,exportData:options=>clone(snapshot(options)),
       // Persistence owns this immutable string. Avoid cloning the entire log
@@ -246,7 +274,7 @@
   const enabled=document.getElementById('scanner-collect');
   const craftingLog=document.getElementById('scanner-crafted-log');
   if(!craftingLog && !enabled)return;
-  const isEnabled=()=>!!craftingLog || enabled.checked;
+  const isEnabled=()=>!!craftingLog || enabled.checked || !!window.DNOCRFeedback?.allowed();
   let initialData,storageMessage='';
   if(craftingLog) {
     try {
@@ -382,7 +410,7 @@
     markKept:(id,keptId,metadata={})=>afterChange(collector.updateItem(id,{...metadata,keptId})),flush:()=>persistence,
     recordResult(observation,result,id,options,publish){
       if(!isEnabled()){publish?.();return false;}
-      const observed=collector.record(observation),updated=collector.recordItem(result,id,options);
+      const observed=collector.record(observation),updated=collector.recordItem(result,id,{...options,observation});
       try {publish?.();}finally {afterChange(observed || updated);}
       return observed || updated;
     },

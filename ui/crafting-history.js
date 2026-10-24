@@ -114,6 +114,8 @@
     for(const item of log.items) {
       const prior=previous.get(item.id);if(!prior)continue;
       if(prior.image)item.image=prior.image;
+      if(prior.ocrEvidence)item.ocrEvidence=copy(prior.ocrEvidence);
+      if(prior.scannerSource)item.scannerSource=prior.scannerSource;
       if(prior.name===item.name && prior.nameEvidence)item.nameEvidence=copy(prior.nameEvidence);
       item.rows=item.rows.map((row,index)=>{
         const old=prior.rows[index];

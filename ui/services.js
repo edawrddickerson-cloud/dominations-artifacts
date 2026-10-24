@@ -18,8 +18,8 @@
   window.DNServiceLoader={script};
   async function boot() {
     if(!window.DN)return;
-    await script('service-config.js?v=20261024-community-test');
-    if(!window.DNCraftingHistory)await script('crafting-history.js?v=2');
+    await script('service-config.js?v=20261024-ocr-matching');
+    if(!window.DNCraftingHistory)await script('crafting-history.js?v=20261024-ocr-matching');
     await script('integration-core.js?v=20261023-history-v2');
     await script('service-store.js?v=2');
     await script('telemetry.js?v=20261022-ocr-feedback');
@@ -30,8 +30,8 @@
     if(!window.DNStoredArtifacts)await script('stored-artifacts.js?v=23');
     if(!window.DNLocalBackupCore)await script('local-backup.js?v=3');
     await script('cloud.js?v=20261024-events-only');
-    await script('ocr-feedback.js?v=1');
-    await script('services-ui.js?v=20261023-history-v2');
+    await script('ocr-feedback.js?v=20261024-ocr-matching');
+    await script('services-ui.js?v=20261024-ocr-matching');
     await script('crafting-community-ui.js?v=20261024-events-only');
   }
   window.DNServicesReady=new Promise(resolve=>{

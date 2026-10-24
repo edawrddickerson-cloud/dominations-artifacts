@@ -5,6 +5,7 @@
   const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
   async function wait(fn){const until=performance.now()+10000;while(!await fn()){if(performance.now()>until)throw new Error('Passive scanner timeout: '+get('keep-status').textContent);await pause(25);}}
   await wait(()=>window.DNScannerReading && scanner('names').children.length && !get('saved').textContent.startsWith('Loading'));
+  window.DNConsent?.set({});
   check('correction confirmation button is removed',!scanner('accept'));
   check('manual keep action is hidden',get('keep').hidden);
   scanner('auto').checked=false;scanner('collect').checked=false;scanner('layout').value='storage';

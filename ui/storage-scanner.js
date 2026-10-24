@@ -175,6 +175,7 @@
   }};
   for(const id of ['name','type'])get(id).addEventListener('input',()=>{
     edited=true;manualCorrection=true;
+    if(id==='name' && current){const logged=window.DNScannerCollection?.itemForEncounter?.(encounter,observationProfile);if(logged)window.DNScannerCollection.setName(logged.id,get('name').value);}
     if(id==='type' && get('type').value) {
       const hall=/^War /i.test(get('type').value)?'war':'main';
       document.getElementById('scanner-hall').value=hall;window.DNPrimaryFilters?.setHall(hall);

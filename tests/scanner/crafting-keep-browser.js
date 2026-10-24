@@ -6,6 +6,7 @@
   const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
   async function wait(test){const end=performance.now()+15000;while(!await test()){if(performance.now()>end)throw Error('Keep test timed out: '+get('keep').title+' / '+get('keep').title);await pause(20);}}
   await wait(()=>get('names').children.length && window.DNScannerKeep);
+  window.DNConsent?.set({});
   check('Keep starts disabled',get('keep').disabled);
   get('auto').checked=false;window.DNScannerCollection.isEnabled=()=>false;document.getElementById('header-main').click();
   if(!get('off').checked)document.getElementById('header-off').click();
@@ -33,7 +34,7 @@
   check('confirmed craft enables Keep',!get('keep').disabled);
   check('current category cutoff uses the saved collection',cutoff()==='100');
   const keepBox=get('keep').getBoundingClientRect(),scoreBox=get('benchmark').getBoundingClientRect();
-  check('Keep sits below the scoring box',keepBox.top>=scoreBox.bottom && keepBox.left>=scoreBox.left-2 && keepBox.right<=scoreBox.right+2);
+  check('Add to Collection sits above the Keep indicator within the decision box',keepBox.bottom<=get('decision-state').getBoundingClientRect().top && keepBox.left>=scoreBox.left-2 && keepBox.right<=scoreBox.right+2);
   check('separate benchmark table is removed',!get('benchmarks'));
   get('keep').click();get('keep').click();
   await wait(()=>get('keep').textContent==='Added' && cutoff()==='150');

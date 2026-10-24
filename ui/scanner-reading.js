@@ -614,7 +614,7 @@
       const recognized=result?.rows?.some(row=>row.known && !row.assumed);
       settled=confirmed || (storage?attempts>=2 || useful===0:!recognized) || (!el.auto.checked && !window.DNScannerCollection?.isEnabled());
       parsed.presentation={attempt:attempts,finished:settled,coverage:recognition.coverage(result?.rows || [],rowCount()),rows:result?.rows || [],temporal:result?.temporal || temporal};
-      const logOptions={expectedRows:rowCount(),continuous:true,newEncounter:itemBoundary,steadyState:!storage,profileKey:readingProfile,encounterId:JSON.stringify([session,itemId]),captureMethod:liveCapture?'live-capture':'local-image',identityEvidence:liveCapture && itemBoundary && observedPanel?'observed-transition':'ambiguous'};
+      const logOptions={scannerSource:storage?'storage':'crafting',expectedRows:rowCount(),continuous:true,newEncounter:itemBoundary,steadyState:!storage,profileKey:readingProfile,encounterId:JSON.stringify([session,itemId]),captureMethod:liveCapture?'live-capture':'local-image',identityEvidence:liveCapture && itemBoundary && observedPanel?'observed-transition':'ambiguous'};
       const publish=()=>{
         if(result?.rows?.length){itemBoundary=false;observedPanel=true;}
         progress(settled?'finished':'reading',settled?'Finished · '+recognition.coverage(result?.rows || [],rowCount()).total+'/'+rowCount()+' · '+(confirmed?'ready to move on':result?'best read · review or move on':'nothing useful in view'):'Improving the read · keeping these rows visible');
@@ -836,7 +836,9 @@
       const max=storage?row.querySelector('.scanner-perk-max')?.value.trim() || '':'';
       const next={...result?.rows[rowsIndex],name,value:raw===''?null:Number(raw),known:names.includes(name),
         ...(storage?{level:level===''?null:Number(level),unlocked:star===''?null:star==='true',base:base===''?null:Number(base),max:max===''?null:Number(max)}:{unlocked:starInput?.tagName==='BUTTON'?star===''?null:star==='true':result?.rows[rowsIndex]?.unlocked}),
-        raw:name+' '+raw+'%',hasPercent:true,assumed:false,inferred:false,conflict:false};
+        raw:result?.rows[rowsIndex]?.raw || '',hasPercent:true,assumed:false,inferred:false,conflict:false};
+      const original=result?.rows[rowsIndex];
+      next.nameSource=name!==original?.name || row.querySelector('.scanner-perk-name')?.dataset?.manual==='true' || storageEdits.get(rowsIndex)?.has('name')?'manual':original?.nameSource;
       if(!storage) {
         const prior=result?.rows[rowsIndex];
         const manual=key=>row.querySelector('.scanner-perk-'+key)?.dataset?.manual==='true';

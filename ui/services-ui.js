@@ -63,11 +63,11 @@
     return '<fieldset class="service-preferences"><legend>Optional data sharing</legend>'+
       '<label><input type="checkbox" data-consent="analytics" id="'+prefix+'-analytics"><span><strong>Improve features</strong><small>Share which features you use.</small></span></label>'+
       '<label><input type="checkbox" data-consent="diagnostics" id="'+prefix+'-diagnostics"><span><strong>Improve scanner reliability</strong><small>Share errors and scan performance.</small></span></label>'+
-      '<label><input type="checkbox" data-consent="ocrFeedback" id="'+prefix+'-ocr-feedback"><span><strong>Improve OCR matching</strong><small>Share unrecognized text and corrections. Requires sign-in.</small></span></label>'+
+      '<label><input type="checkbox" data-consent="ocrFeedback" id="'+prefix+'-ocr-feedback"><span><strong>Improve OCR matching</strong><small>OCR names and corrections ? Sign-in required</small></span></label>'+
       '<label><input type="checkbox" data-consent="research" id="'+prefix+'-research"><span><strong>Contribute crafting research</strong><small>Structured craft records. No images.</small></span></label>'+
       '</fieldset><p class="service-sharing-facts">No screenshots or full scan text.'+(prompt?' Sharing is optional.':'')+' <a href="privacy.html">Privacy details</a></p>'+
       (prompt?'<p class="service-sharing-settings">Change anytime in <a href="config.html#account-privacy">Profiles → Account & Privacy</a>.</p>':'')+
-      '<div class="service-actions"><button type="button" class="btn'+(prompt?' profile-delete-confirm':'')+'" data-save-consent>'+(prompt?'Share selected data':'Save preferences')+'</button><button type="button" class="btn" data-reject-consent>'+(prompt?'No thanks':'Turn off sharing')+'</button></div><p class="service-privacy-status" role="status" aria-live="polite" aria-atomic="true" data-privacy-status></p>';
+      '<div class="service-actions"><button type="button" class="btn'+(prompt?' profile-delete-confirm':'')+'" data-save-consent>'+(prompt?'Share selected data':'Save preferences')+'</button><button type="button" class="btn" data-reject-consent>'+(prompt?'No thanks':'Turn off sharing')+'</button></div><p class="service-privacy-status" role="status" aria-live="polite" aria-atomic="true" data-privacy-status></p><p data-ocr-status role="status" aria-live="polite"></p>';
   }
   function privacySummary(value) {
     return 'Preferences saved.';
@@ -85,13 +85,16 @@
       for(const input of inputs){
         const research=input.dataset.consent==='research';input.disabled=!ready || research && !researchReady;input.checked=!input.disabled && value[input.dataset.consent];
         if(research){input.closest('label').hidden=!researchReady;input.disabled=!researchReady || !cloud.user();}
-        if(input.dataset.consent==='ocrFeedback'){const available=window.DNIntegrationCore.ocrFeedbackReady(config);input.disabled=!available;input.checked=available && value.ocrFeedback;input.closest('label').hidden=!available;}
+        if(input.dataset.consent==='ocrFeedback'){const available=window.DNIntegrationCore.ocrFeedbackReady(config);input.disabled=!available || !cloud.user();input.checked=available && value.ocrFeedback;input.closest('label').hidden=!available;}
       }
       save.disabled=!ready || value.decided;save.textContent=ready && value.decided?'Saved':saveLabel;
       status.dataset.state=ready?'saved':'unavailable';
       status.textContent=!ready?'Sharing is unavailable.':value.decided?privacySummary(value):'';
     }
     refresh();const unsubscribe=consent.subscribe(refresh);cloud.subscribe(refresh);
+    const ocrStatus=root.querySelector('[data-ocr-status]');
+    const renderOCR=()=>{if(ocrStatus){const value=window.DNOCRFeedback?.status();ocrStatus.textContent=value?.error || (value?.pending?'OCR feedback: '+value.pending+' pending.':'');if(value?.error && consent.get().ocrFeedback){save.disabled=false;save.textContent=saveLabel;}}};
+    window.addEventListener('dn-ocr-feedback-status',renderOCR);
     for(const input of inputs)input.addEventListener('change',()=>{
       const value=consent.get(),dirty=inputs.some(field=>!field.disabled && field.checked!==value[field.dataset.consent]);
       save.disabled=!window.DNIntegrationCore.privacyReady(config) || value.decided && !dirty;
@@ -99,13 +102,15 @@
       status.dataset.state=dirty?'unsaved':'saved';
       status.textContent=prompt?'':dirty?'Unsaved changes.':value.decided?privacySummary(value):'';
     });
-    function persist(values) {
+    async function persist(values) {
       try{
-        const previous=consent.get();consent.set({...values,researchPolicy:'2026-10-23'});if(values.research && !previous.research)window.DNResearch.setSharing(true).catch(error=>{status.textContent=error.message;});
+        const previous=consent.get();
+        if(values.ocrFeedback && (!previous.ocrFeedback || !window.DNOCRFeedback.allowed())){if(!await window.DNOCRFeedback.setSharing(true))throw Error('Connect and save OCR preferences again.');}
+        consent.set({...values,researchPolicy:'2026-10-23'});if(values.research && !previous.research)window.DNResearch.setSharing(true).catch(error=>{status.textContent=error.message;});
         if(['analytics','diagnostics','research','ocrFeedback'].some(key=>values[key] && !previous[key]))showPrivacyNotice('Thank you for helping make the tool better for everyone.');
         else if(prompt && !document.getElementById('account-privacy'))showPrivacyNotice('Sharing preferences saved.');
       }
-      catch{status.dataset.state='error';status.textContent='Preferences could not be saved in this browser. Your previously saved choices still apply. Please try again.';}
+      catch{status.dataset.state='error';status.textContent='Preferences could not be saved. Your previously saved choices still apply. Reconnect and retry.';}
     }
     save.addEventListener('click',()=>persist(Object.fromEntries(inputs.map(input=>[input.dataset.consent,!input.disabled && input.checked]))));
     root.querySelector('[data-reject-consent]').addEventListener('click',()=>persist({}));

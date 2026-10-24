@@ -158,6 +158,16 @@ async function main() {
     if(query(local,"select has_table_privilege('anon','public.planner_workspaces','select') or has_function_privilege('anon','public.planner_read_workspace()','execute')")!=='f')throw Error('Restored anonymous workspace access is not denied.');
     manifest.restoreVerified=true;manifest.restoredAt=new Date().toISOString();
     manifest.verification={tableChecksumsMatch:true,plannerFunctionsMatch:true,rowSecurityPoliciesMatch:true,restoredAccountIsolation:true,anonymousWorkspaceAccessDenied:true,restoredTables:tables.length};
+    if(process.argv.includes('--rehearse-ocr-feedback')) {
+      if(local.PGHOST!=='127.0.0.1' || !process.argv.includes('--verify'))throw Error('OCR rehearsal requires isolated restore.');
+      const sql=fs.readFileSync(path.join(root,'supabase/migrations/202610240002_ocr_matching_feedback.sql'),'utf8');
+      query(local,sql);
+      if(JSON.stringify(before)!==JSON.stringify(fingerprints(local,tables)))throw Error('OCR rehearsal changed existing data.');
+      const checks=JSON.parse(query(local,"select json_build_object('anonymousDenied',not has_table_privilege('anon','public.planner_ocr_feedback_samples','select'),'rpcAvailable',has_function_privilege('authenticated','public.planner_submit_ocr_feedback(uuid,jsonb)','execute'),'v2ExportPreserved',(select prosrc like '%crafting_evidence%' from pg_proc where oid='public.planner_export_before_ocr_v2()'::regprocedure),'v2RetentionPreserved',(select prosrc like '%planner_crafting_evidence%' from pg_proc where oid='public.planner_prune_before_ocr_v2()'::regprocedure))"));
+      if(!Object.values(checks).every(Boolean))throw Error('OCR rehearsal checks failed.');
+      manifest.ocrRehearsal={passed:true,migrationHash:crypto.createHash('sha256').update(sql).digest('hex'),existingRowsUnchanged:true,...checks};
+      console.log('OCR migration rehearsal passed against the isolated live-data restore.');
+    }
     if(process.argv.includes('--rehearse-crafting-v2')) {
       // Only the newly created loopback restore is writable. The source remains
       // read-only, and the original archive is unchanged by this rehearsal.

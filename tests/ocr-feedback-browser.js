@@ -14,6 +14,8 @@
   check('OCR sharing has its own initially unchecked choice',!box.checked && !box.disabled && !box.closest('label').hidden);
   box.checked=true;box.dispatchEvent(new frame.contentWindow.Event('change'));save.click();
   await wait(()=>DNConsent.get().ocrFeedback,'saved consent across documents');
+  await wait(()=>DNOCRFeedback.allowed(),'account consent receipt');
+  DNScannerCollection.recordItem(result,'ocr-one',{encounterId:'ocr-one',captureMethod:'live-capture',profileKey:DNStoredArtifacts.collectionKey(),scannerSource:'crafting'});
   await wait(()=>Object.values(backend.ocrSamples?.[owner] || {}).length===1,'automatic feedback');
   const sample=Object.values(backend.ocrSamples[owner])[0];
   check('opt-in automatically sends compact OCR feedback without analytics',sample.observed_text==='Poman der' && !DNConsent.get().analytics && backend.telemetry.length===0 && !JSON.stringify(sample).includes('image'));
@@ -22,7 +24,7 @@
   check('manual name correction revises the same feedback record',Object.keys(backend.ocrSamples[owner]).length===1 && Object.values(backend.ocrSamples[owner])[0].id===sample.id);
   box.checked=false;box.dispatchEvent(new frame.contentWindow.Event('change'));save.click();
   await wait(()=>!DNConsent.get().ocrFeedback && backend.ocrConsent[owner]===false,'withdrawal');
-  check('withdrawal clears queued samples but leaves local crafted history',await DNServiceStore.get('ocr-feedback:'+owner)===null && DNScannerCollection.historyItems().length===1);
+  check('withdrawal clears queued samples but leaves local crafted history',Object.keys((await DNServiceStore.get('ocr-feedback:'+owner))?.entries || {}).length===0 && DNScannerCollection.historyItems().length===1);
   const oldConfirm=frame.contentWindow.confirm;frame.contentWindow.confirm=()=>true;doc.querySelector('[data-delete-ocr]').click();
   await wait(()=>Object.keys(backend.ocrSamples[owner]).length===0,'delete feedback');frame.contentWindow.confirm=oldConfirm;
   check('separate feedback deletion leaves the local log intact',DNScannerCollection.historyItems().length===1);
