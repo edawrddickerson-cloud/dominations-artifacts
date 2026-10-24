@@ -18,6 +18,8 @@ Personal and Community are two views of one page, selected by a top-level toggle
 
 The top dashboard shows exact counts and frequencies for zero through five top-value rolls. Main uses magnitude 11; War uses magnitude 6 and never enters the Main denominator. Each perk row contains exact two-, three-, four- and five-copy counts over the complete eligible-artifact sample. Repetition always uses all positions. The previous cumulative frequency column and largest-group table are removed.
 
+The page filter bar groups View, the shared Main/War/All Hall toggle, Collection Targets, category and view-specific controls, search, and scanner navigation. Dashboard cards have no separate Hall controls. Collection Targets uses the same checkbox dropdown styling as Crafted Collection; selecting multiple targets filters perk rows to the union of their included stats. Clearing all selections shows every stat. Selection applies to both Personal and Community without changing saved target definitions or profile comparison selections. Crafted Collection now places its existing comparison-target picker inside the collection filter bar in both List and Structured views.
+
 The UI no longer includes the separate threshold estimator or redundant selected-perk value table. The pure analysis helper retains its threshold/projection API for compatibility; these estimates are not presented as established game probabilities.
 
 Validation:

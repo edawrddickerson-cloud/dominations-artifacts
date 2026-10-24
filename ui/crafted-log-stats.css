@@ -31,6 +31,14 @@
 .page-crafting-stats[data-stats-view="community"] #crafted-log-stats,
 .page-crafting-stats[data-stats-view="community"] [data-dashboard="crafted-log-stats"],
 .page-crafting-stats[data-stats-view="community"] #crafting-log-details { display: none; }
+.page-crafting-stats[data-stats-view="personal"] [data-stats-controls="community"],
+.page-crafting-stats[data-stats-view="community"] [data-stats-controls="personal"] { display: none; }
+.crafting-view-filters { display: flex; flex-wrap: wrap; align-items: end; gap: .75rem 1rem; min-width: 0; max-width: 100%; }
+.crafting-view-filters > label { display: flex; flex-direction: column; gap: .35rem; font-size: .8rem; max-width: 100%; min-width: 0; }
+.crafting-view-filters select, .crafting-view-filters input { box-sizing: border-box; max-width: 20rem; padding: .45rem; color: inherit; background: var(--panel); border: 1px solid var(--line); border-radius: .4rem; font: inherit; min-width: 0; }
+.crafting-view-filters .crafted-stats-search { margin: 0; }
+.crafting-stats-filters .strategy-comparison-options { left: 0; right: auto; }
+@media(max-width: 640px) { .crafting-stats-filters .strategy-comparison-options { left: 1rem; right: 1rem; } }
 .crafted-log-stats th[aria-sort="ascending"] .crafted-stats-sort::after { content: ' ↑'; }
 .crafted-log-stats th[aria-sort="descending"] .crafted-stats-sort::after { content: ' ↓'; }
 .page-scanner #scanner-log-storage-status:empty { display: none; }

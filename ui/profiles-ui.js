@@ -6,7 +6,7 @@
 
   const strategyStyles = document.createElement('link');
   strategyStyles.rel = 'stylesheet';
-  strategyStyles.href = 'strategies.css?v=20261020-page-controls';
+  strategyStyles.href = 'strategies.css?v=20261025-page-filters';
   document.head.appendChild(strategyStyles);
 
   const NAV_COLLAPSED_KEY = "dn-nav-collapsed";
@@ -259,10 +259,9 @@
     if (!['artifacts.html', 'collection.html', 'scanner.html', 'storage-scanner.html'].includes(file)) return;
     const header = document.querySelector('.app-header');
     if (!header) return;
-    const parent = document.createElement('div');
-    parent.className = 'page-strategy-controls';
-    parent.setAttribute('aria-label', 'Collection targets');
-    header.after(parent);
+    const filters=file==='collection.html'?document.querySelector('.collection-controls .filter-main'):null;
+    const parent = filters || document.createElement('div');
+    if(!filters){parent.className = 'page-strategy-controls';parent.setAttribute('aria-label', 'Collection targets');header.after(parent);}
     if(file==='scanner.html') {
       parent.classList.add('scanner-header-controls');
       parent.setAttribute('aria-label','Scanner controls');
@@ -274,7 +273,7 @@
     if (['artifacts.html', 'collection.html', 'scanner.html', 'storage-scanner.html'].includes(file)) {
       comparison = document.createElement('details'); comparison.className = 'strategy-comparison-picker';
       comparison.innerHTML = '<summary>Collection Targets</summary><div class="strategy-comparison-options"></div>';
-      parent.appendChild(comparison);
+      if(filters)parent.insertBefore(comparison,filters.querySelector('#collection-list-toolbar'));else parent.appendChild(comparison);
       comparison.addEventListener('change', ev => {
         if (!ev.target.matches('[data-compare-strategy]')) return;
         const selected = [...comparison.querySelectorAll('[data-compare-strategy]:checked')].map(input => input.value);
@@ -289,7 +288,7 @@
         if (comparison) {
           const ids = state.comparisonIds || [];
           comparison.querySelector('summary').textContent = `Collection Targets (${ids.length})`;
-          comparison.querySelector('.strategy-comparison-options').innerHTML = strategies.map(s => `<label><input type="checkbox" data-compare-strategy value="${DN.esc(s.id)}"${ids.includes(s.id) ? ' checked' : ''}/> ${DN.esc(s.name)}${s.id === state.activeId ? ' (active)' : ''}</label>`).join('');
+          comparison.querySelector('.strategy-comparison-options').innerHTML = strategies.map(s => `<label${filters?' class="perk-check"':''}><input type="checkbox" data-compare-strategy value="${DN.esc(s.id)}"${ids.includes(s.id) ? ' checked' : ''}/> ${DN.esc(s.name)}${s.id === state.activeId ? ' (active)' : ''}</label>`).join('');
         }
       } catch (err) { showStrategyError(err); }
     }

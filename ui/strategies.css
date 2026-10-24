@@ -5,6 +5,7 @@
 .strategy-comparison-picker summary { cursor: pointer; padding: .55rem .7rem; border: 1px solid var(--line); border-radius: 6px; font-size: .8rem; }
 .strategy-comparison-options { position: absolute; top: calc(100% + .4rem); right: 0; z-index: 30; background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: .75rem; min-width: 15rem; max-width: 24rem; max-height: 60vh; overflow: auto; box-shadow: 0 8px 24px #0005; }
 .strategy-comparison-options label { display: flex; align-items: center; gap: .5rem; padding: .4rem .2rem; font-size: .85rem; }
+.filters .strategy-comparison-options label.perk-check { align-items: center; gap: .5rem; padding: .4rem .2rem; font-weight: 400; }
 .strategy-comparison-options p { color: var(--muted); font-size: .75rem; margin: .2rem 0 .5rem; }
 .strategy-save-bar { display: flex; gap: .65rem; align-items: center; padding: .8rem 1rem; flex-wrap: wrap; border-bottom: 1px solid var(--line); }
 #strategy-status { margin-right: auto; color: var(--muted); font-size: .85rem; }

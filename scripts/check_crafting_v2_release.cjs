@@ -3,7 +3,7 @@ const fs=require('node:fs'),cp=require('node:child_process'),vm=require('node:vm
 const commit=process.argv.find(a=>a.startsWith('--commit='))?.slice(9);
 if(!/^[a-f0-9]{7,40}$/i.test(commit || ''))throw Error('Supply --commit=HASH.');
 const origin='https://dominations-planner.ededed84.workers.dev';
-const files=['scanner.html','crafting-stats.html','crafting-stats-tables.js','crafted-log-stats.css','navigation.js','scanner-session.js','profiles-ui.js','config.html','services.js','service-config.js','integration-core.js','cloud.js','cloud-sync.js','research.js','scanner-collection.js','scanner-reading.js','crafted-log-stats.js','crafted-log-stats-ui.js','crafting-history.js','crafting-community.js','crafting-community-ui.js','crafting-result-context.js','crafting-statistics.html','privacy.html','storage-scanner.html','storage-scanner.js','ocr-feedback.js','services-ui.js'];
+const files=['scanner.html','collection.html','strategies.css','crafting-stats.html','crafting-stats-tables.js','crafted-log-stats.css','navigation.js','scanner-session.js','profiles-ui.js','config.html','services.js','service-config.js','integration-core.js','cloud.js','cloud-sync.js','research.js','scanner-collection.js','scanner-reading.js','crafted-log-stats.js','crafted-log-stats-ui.js','crafting-history.js','crafting-community.js','crafting-community-ui.js','crafting-result-context.js','crafting-statistics.html','privacy.html','storage-scanner.html','storage-scanner.js','ocr-feedback.js','services-ui.js'];
 (async()=>{
   const checks=[];let config,expectedConfig;
   for(const file of files){

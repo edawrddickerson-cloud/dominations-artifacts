@@ -7,7 +7,7 @@
   <title>Artifacts · Crafting Stats</title>
   <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
   <link rel="stylesheet" href="scanner.css?v=20261023-stat-rating-label" />
-  <link rel="stylesheet" href="crafted-log-stats.css?v=20261025-dashboard" />
+  <link rel="stylesheet" href="crafted-log-stats.css?v=20261025-page-filters" />
 </head>
 <body class="page-crafting-stats">
   <nav class="site-nav" aria-label="Pages">
@@ -38,9 +38,13 @@
       <div id="header-profile" class="header-profile"></div>
     </div>
   </header>
-    <main class="crafting-stats-page"><h2>Crafting Stats</h2><p><a class="btn" href="scanner.html?v=2">Crafting Scanner</a></p>
-    <div class="seg" role="group" aria-label="Crafting statistics source"><button type="button" class="seg-btn is-active" data-stats-view="personal" aria-pressed="true">Personal</button><button type="button" class="seg-btn" data-stats-view="community" aria-pressed="false">Community</button></div>
-    <label class="crafted-stats-target">Collection Target <select data-stats-target><option value="">All stats</option></select></label>
+    <main class="crafting-stats-page"><h2>Crafting Stats</h2>
+    <section id="crafting-stats-page-filters" class="filters crafting-stats-filters" aria-label="Crafting statistics filters"><div class="filter-main">
+      <fieldset class="seg-field"><legend>View</legend><div class="seg" role="group" aria-label="Crafting statistics source"><button type="button" class="seg-btn is-active" data-stats-view="personal" aria-pressed="true">Personal</button><button type="button" class="seg-btn" data-stats-view="community" aria-pressed="false">Community</button></div></fieldset>
+      <fieldset class="seg-field"><legend>Hall</legend><div class="seg" role="group" aria-label="Hall"><button type="button" class="seg-btn is-active" data-stats-hall="main" aria-pressed="true">Main</button><button type="button" class="seg-btn" data-stats-hall="war" aria-pressed="false">War</button><button type="button" class="seg-btn" data-stats-hall="" aria-pressed="false">All</button></div></fieldset>
+      <details class="strategy-comparison-picker" data-stats-target-picker><summary>Collection Targets (All)</summary><div class="strategy-comparison-options" data-stats-target-options></div></details>
+      <a class="btn btn-accent" href="scanner.html?v=2">Crafting Scanner</a>
+    </div></section>
     <div id="crafting-stats-dashboard" aria-label="Top-value roll frequencies"></div>
     <section id="scanner-crafted-log" aria-label="Crafting statistics">
     <details id="crafting-log-details"><summary>Crafted item log</summary>      <p id="scanner-log-storage-status" role="status"></p>
@@ -62,14 +66,14 @@
   <script src="artwork.js?v=20261025-local-first"></script>
   <script src="data/artifact_stat_context.js?v=1"></script>
   <script src="artifact-stat-context.js?v=3"></script>
-  <script src="profiles-ui.js?v=20261025-crafting-stats"></script>
+  <script src="profiles-ui.js?v=20261025-page-filters"></script>
   <script src="stored-artifacts.js?v=20261024-artwork"></script>
   <script src="crafting-history.js?v=20261024-artwork"></script>
   <script src="scanner-keep.js?v=20261025-stats-page"></script>
   <script src="scanner-collection.js?v=20261025-eligibility"></script>
   <script src="crafted-log-stats.js?v=20261025-tiers"></script>
   <script src="crafting-purposes.js?v=20261022-target-breakdown"></script>
-  <script src="crafting-stats-tables.js?v=20261025-tiers"></script>
-  <script src="crafted-log-stats-ui.js?v=20261025-open-list"></script>
-  <script src="services.js?v=20261025-open-list"></script>
+  <script src="crafting-stats-tables.js?v=20261025-page-filters"></script>
+  <script src="crafted-log-stats-ui.js?v=20261025-page-filters"></script>
+  <script src="services.js?v=20261025-page-filters"></script>
 </body></html>

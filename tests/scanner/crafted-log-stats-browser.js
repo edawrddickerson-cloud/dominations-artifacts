@@ -30,7 +30,7 @@
   check('three 11 percent rows have a headline count',board.querySelector('[data-roll-count="3"] [data-roll-sample]').textContent.startsWith('1 / '));
   check('repeated-perk frequency is attached to the perk',perk.cells[8].textContent.includes('3× · 1 / '));
   check('source and evidence filters are hardcoded',!root.querySelector('[data-stat-filter="source"],[data-stat-filter="evidence"]'));
-  check('controls fit the viewport',[...root.querySelectorAll('input,select')].every(node=>node.getBoundingClientRect().right<=iframe.clientWidth+1));
+  check('controls fit the viewport',[...d.querySelectorAll('#crafting-stats-page-filters input,#crafting-stats-page-filters select')].filter(node=>node.getClientRects().length).every(node=>node.getBoundingClientRect().right<=iframe.clientWidth+1));
   root.scrollIntoView({block:'start'});
   return {passed:true,checks,limitations:['Real screenshot OCR verifies canonical persistence; controlled readings verify distribution denominators.']};
 })();
