@@ -15,6 +15,7 @@ browserRun(async({evaluate,send})=>{
   for(const n of [2,3,4,5])w.DNScannerCollection.recordItem({valid:true,hall:'main',artifact:{type:'Weapon'},rows:names.map((name,i)=>({name:i<n?names[0]:name,value:i<n?11:1,known:true,hasPercent:true,level:1}))},'stats-'+n,{continuous:true,newEncounter:true,encounterId:'stats-'+n,captureMethod:'live-capture',identityEvidence:'observed-transition'});
   await w.DNScannerCollection.flush();
   const personal=d.querySelector('#crafted-log-stats'),frequencies=personal.querySelector('[data-stat-frequency]');
+  assert('stats views are permanent lists without disclosure controls',personal.tagName==='SECTION'&&d.querySelector('#crafting-community').tagName==='SECTION'&&!d.querySelector('#crafted-log-stats > summary,#crafting-community > summary'));
   const damageRow=[...frequencies.rows].find(row=>row.cells[0].textContent===names[0]);
   assert('Main tier columns contain row frequencies only',damageRow.cells[5].textContent==='0.0%'&&damageRow.cells[6].textContent==='0.0%'&&damageRow.cells[7].textContent==='100.0%'&&[...frequencies.closest('table').querySelectorAll('th')].slice(5,8).map(th=>th.textContent).join('|')==='1%|6%|11%');
   frequencies.closest('table').querySelectorAll('th button')[7].click();assert('tier header sorts by row frequency',frequencies.rows[0].cells[7].textContent==='100.0%');

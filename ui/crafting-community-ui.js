@@ -3,13 +3,13 @@
   'use strict';
   const anchor=document.getElementById('scanner-crafted-log');if(!anchor)return;
   if(!document.body.classList.contains('page-crafting-stats'))return;
-  const root=document.createElement('details');root.className='crafted-log-stats';root.id='crafting-community';
-  root.innerHTML='<summary>Community observed stats</summary><div class="crafted-stats-controls">'+
+  const root=document.createElement('section');root.className='crafted-log-stats';root.id='crafting-community';root.setAttribute('aria-label','Community crafting statistics');
+  root.innerHTML='<div class="crafted-stats-controls">'+
     '<label>Hall <select data-community="hall"><option value="">All</option><option value="main" selected>Main</option><option value="war">War</option><option value="unknown">Unknown</option></select></label>'+
     '<label>Category <select data-community="category"><option value="">All</option>'+['weapon','armor','jewelry','pottery','equipment','unknown'].map(v=>'<option value="'+v+'">'+v[0].toUpperCase()+v.slice(1)+'</option>').join('')+'</select></label>'+
     '<label>Event <select data-community="event"><option value="">All</option><option value="unknown">Unknown</option></select></label>'+
     '<button type="button" class="btn" data-community-refresh>Refresh</button></div><p data-community-opt-in><label><input type="checkbox" data-community-share> Share crafted stats</label> <a href="config.html#account-privacy" data-community-signin hidden>Sign in to share</a></p><p role="status" data-community-sharing></p><p role="status" data-community-status></p><p data-community-count></p><dl data-community-exclusions hidden></dl>'+
-    '<div data-community-expanded hidden><h3>Perk frequencies</h3><div class="crafted-stats-scroll"><table><thead><tr><th>Perk</th><th>Rating</th><th>Items</th><th>Item frequency</th><th>Rows</th><th>1%</th><th>6%</th><th>11%</th><th>Copies per artifact · all positions</th></tr></thead><tbody data-community-frequency></tbody></table></div></div>'+
+    '<div data-community-expanded hidden><div class="crafted-stats-scroll"><table><thead><tr><th>Perk</th><th>Rating</th><th>Items</th><th>Item frequency</th><th>Rows</th><th>1%</th><th>6%</th><th>11%</th><th>Copies per artifact · all positions</th></tr></thead><tbody data-community-frequency></tbody></table></div></div>'+
     '<p><a href="crafting-statistics.html">Methods and sampling limits</a></p>';
   const log=anchor.querySelector('#crafting-log-details');if(log)log.before(root);else anchor.append(root);
   const frequency=window.DNCraftingStatsTables.frequency(root.querySelector('[data-community-frequency]'));
@@ -52,7 +52,7 @@
     }catch{if(current===request)get('status').textContent='Unavailable';}
     finally{if(current===request){get('refresh').disabled=!ready();root.setAttribute('aria-busy','false');}}
   }
-  get('refresh').addEventListener('click',refresh);root.addEventListener('change',event=>{if(event.target.matches('[data-community]'))refresh();});root.addEventListener('toggle',()=>{if(root.open)refresh();});
+  get('refresh').addEventListener('click',refresh);root.addEventListener('change',event=>{if(event.target.matches('[data-community]'))refresh();});
   let timer,sharingBusy=false,sharingError='';
   function sharingStatus(){
     const state=window.DNResearch?.status(),signedIn=!!window.DNCloud?.user();
@@ -75,8 +75,8 @@
   });
   window.DNConsent?.subscribe(sharingStatus);
   window.DNCloud?.subscribe(sharingStatus);
-  window.DNResearch?.subscribe(()=>{sharingStatus();if(root.open){clearTimeout(timer);timer=setTimeout(refresh,300);}});
+  window.DNResearch?.subscribe(()=>{sharingStatus();clearTimeout(timer);timer=setTimeout(refresh,300);});
   sharingStatus();
   get('status').textContent=ready()?'Not loaded':'Unavailable';get('refresh').disabled=!ready();
-  root.open=true;
+  refresh();
 })();
