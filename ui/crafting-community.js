@@ -2,14 +2,14 @@
  * raw OCR, profile names, account names or inventory decisions. */
 (() => {
   'use strict';
-  const POLICY='2026-10-23',RULES='ordinary-starts-2026-10-23';
+  const POLICY='2026-10-23',RULES='complete-stats-2026-10-25';
   const normal=value=>String(value || '').trim().toLowerCase().replace(/[\u2018\u2019]/g,"'").replace(/\s+/g,' ');
-  function rules(data=window.DN_ARTIFACT_STAT_CONTEXT) {
+  function rules(data=window.DN_ARTIFACT_STAT_CONTEXT,{reviewedOnly=false}={}) {
     const index=new Map();if(!data)return index;
     for(const [perk,stat] of Object.entries(data.stats)) {
-      if(stat.unit!=='percent' || ![-1,1].includes(stat.expected_sign))continue;
+      if((reviewedOnly && stat.unit!=='percent') || ![-1,1].includes(stat.expected_sign))continue;
       for(const hall of ['main','war']) {
-        if(!['confirmed','approved','observed-reviewed'].includes(stat.ordinary_availability?.[hall]?.status))continue;
+        if(reviewedOnly && !['confirmed','approved','observed-reviewed'].includes(stat.ordinary_availability?.[hall]?.status))continue;
         const starts=Object.values(data.tier_profiles[hall].tiers).map(value=>stat.expected_sign*value);
         for(const category of data.rules.ordinary_categories[hall])for(const alias of [perk,...stat.aliases])index.set([hall,normal(category),normal(alias)].join('|'),{perk,starts});
       }
@@ -18,17 +18,15 @@
   }
   function encode(item,index=rules()) {
     const category=normal(item.type).replace(/^war /,''),hall=item.hall || 'unknown';
-    let exclusion=item.archived?'archived':item.reconciliationConflict?'conflict':item.captureMethod!=='live-capture' || item.identityEvidence!=='observed-transition'?'identity':
-      item.freshCraft!==true || item.startingContextSource!=='craft-result-controls-v1'?'starting-unknown':item.rows?.length!==5?'incomplete':null;
+    let exclusion=item.archived?'archived':window.DNCraftedLogStats.manuallyEdited(item)?'manual':item.reconciliationConflict?'conflict':item.rows?.length!==5?'incomplete':null;
     const rows=[];
     if(!exclusion)for(const row of item.rows) {
       const rule=index.get([hall,category,normal(row.name)].join('|'));
-      if(row.level!==1){exclusion='upgraded';break;}
-      if(!row.known || row.assumed || row.inferred || row.conflict || row.tierConflict || row.outOfRange || row.hasPercent===false || !Number.isFinite(row.value)){exclusion='uncertain';break;}
+      if(!(row.known || row.assumed || row.inferred) || row.conflict || row.tierConflict || row.outOfRange || row.hasPercent===false || !Number.isFinite(row.value)){exclusion='incomplete';break;}
       if(!rule || !rule.starts.includes(row.value)){exclusion='range';break;}
       rows.push({perk:rule.perk,value:row.value});
     }
-    return {id:item.id,revision:item.revision || 0,writer:item.writer || '',deleted:!!item.archived,observed_at:item.firstSeen || null,hall,category,
+    return {id:item.id,revision:item.revision || 0,writer:item.writer || '',projection:2,deleted:!!item.archived,observed_at:item.firstSeen || null,hall,category,
       event_id:item.craftingEventSource==='dataset'?item.craftingEventId || null:null,
       exclusion,rows:exclusion?[]:rows};
   }

@@ -3,36 +3,78 @@
   'use strict';
   const percent=value=>value==null?'—':(100*value).toFixed(1)+'%';
   function cell(row,value){const td=document.createElement('td');td.textContent=value;row.append(td);return td;}
-  const distributionsMarkup=()=>'<h3>11% stats per artifact · Main · all positions</h3>'+table('eleven','11% stats')+'<h3>Largest same-perk group per artifact · all positions</h3>'+table('duplicates','Same perk rows');
-  function table(key,label){return '<div class="crafted-stats-scroll"><table><thead><tr><th>'+label+'</th><th>Exactly · count / sample</th><th>Frequency</th><th>At least · count / sample</th><th>Frequency</th></tr></thead><tbody data-distribution="'+key+'"></tbody></table></div>';}
-  function renderDistributions(root,data){
-    for(const key of ['eleven','duplicates']){
-      const body=root.querySelector('[data-distribution="'+key+'"]'),fragment=document.createDocumentFragment();
-      for(const bin of data?.[key] || []){const tr=document.createElement('tr');for(const value of [bin.count,bin.exact.hits+' / '+bin.exact.total,percent(bin.exact.rate),bin.atLeast.hits+' / '+bin.atLeast.total,percent(bin.atLeast.rate)])cell(tr,value);fragment.append(tr);}
-      body.replaceChildren(fragment);
+  const dashboards=new WeakMap();
+  function dashboard(root,label){
+    const section=document.createElement('section');section.className='crafting-stats-dashboard';section.dataset.dashboard=root.id;
+    section.innerHTML='<div class="crafting-dashboard-heading"><h3>'+label+'</h3><label>Hall <select data-dashboard-hall><option value="main">Main · 11%</option><option value="war">War · 6%</option></select></label></div><div class="crafting-dashboard-cards">'+[0,1,2,3,4,5].map(count=>'<div class="crafting-dashboard-card" data-roll-count="'+count+'"><span data-roll-label></span><strong data-roll-rate>—</strong><span data-roll-sample>0 / 0</span></div>').join('')+'</div>';
+    const target=document.getElementById('crafting-stats-dashboard');if(target)target.append(section);else root.prepend(section);
+    dashboards.set(root,section);
+    section.querySelector('select').addEventListener('change',event=>{
+      const filter=root.querySelector('[data-stat-filter="hall"], [data-community="hall"]');
+      if(filter){filter.value=event.target.value;filter.dispatchEvent(new Event('change',{bubbles:true}));}
+    });
+    renderDistributions(root,null);
+  }
+  function renderDistributions(root,data,hall){
+    const section=dashboards.get(root);if(!section)return;
+    const select=section.querySelector('select');if(hall==='main' || hall==='war')select.value=hall;
+    const war=select.value==='war',bins=data?.[war?'six':'eleven'];
+    for(const card of section.querySelectorAll('[data-roll-count]')){
+      const count=Number(card.dataset.rollCount),metric=bins?.find(bin=>bin.count===count)?.exact;
+      const values={'label':'Exactly '+count+' × '+(war?'6%':'11%'),'rate':percent(metric?.rate),'sample':(metric?.hits || 0)+' / '+(metric?.total || 0)};
+      for(const [key,value] of Object.entries(values)){const node=card.querySelector('[data-roll-'+key+']');if(node.textContent!==value)node.textContent=value;}
     }
   }
   function frequency(body){
     const table=body.closest('table'),wrapper=table.parentElement;
     const search=document.createElement('label');search.className='crafted-stats-search filter-control';search.textContent='Search perks';
     const input=document.createElement('input');input.type='search';input.autocomplete='off';search.append(input);wrapper.before(search);
-    let entries=[],total=0,sort='items',direction=-1;
-    const headers=[...table.querySelectorAll('th')],keys=['name','items','frequency','rows'];
+    let entries=[],total=0,sort='rating',direction=-1;
+    const headers=[...table.querySelectorAll('th')],keys=['name','rating','items','frequency','rows',null,null,null,'repeats'];
     headers.forEach((th,i)=>{if(!keys[i])return;const button=document.createElement('button');button.type='button';button.className='crafted-stats-sort';button.textContent=th.textContent;th.replaceChildren(button);button.addEventListener('click',()=>{direction=sort===keys[i]?-direction:keys[i]==='name'?1:-1;sort=keys[i];render();});});
     function render(){
-      const query=input.value.trim().toLowerCase(),fragment=document.createDocumentFragment();
-      const value=entry=>sort==='frequency'?entry.items:entry[sort];
-      const visible=entries.filter(entry=>entry.name.toLowerCase().includes(query)).sort((a,b)=>direction*(sort==='name'?a.name.localeCompare(b.name):value(a)-value(b)) || a.name.localeCompare(b.name));
+      const query=input.value.trim().toLowerCase(),fragment=document.createDocumentFragment(),service=window.DNCraftingPurposes;
+      const definitions=service?.definitions || [],target=definitions.find(entry=>entry.id===document.querySelector('[data-stats-target]')?.value);
+      const canonical=name=>{const stats=window.DN_ARTIFACT_STAT_CONTEXT?.stats || {};return Object.hasOwn(stats,name)?name:Object.keys(stats).find(key=>stats[key].aliases?.includes(name)) || name;};
+      const rating=entry=>service && ratingsReady?service.ratingOf(canonical(entry.name)):null;
+      const value=entry=>sort==='rating'?rating(entry)??-1:sort==='frequency'?entry.items:sort==='repeats'?(entry.repeats || []).reduce((sum,bin)=>sum+bin.hits,0):entry[sort];
+      const visible=entries.filter(entry=>entry.name.toLowerCase().includes(query) && (!target || target.stats.has(canonical(entry.name)))).sort((a,b)=>direction*(sort==='name'?a.name.localeCompare(b.name):value(a)-value(b)) || a.name.localeCompare(b.name));
       headers.forEach((th,i)=>{if(keys[i])th.setAttribute('aria-sort',keys[i]===sort?(direction===1?'ascending':'descending'):'none');});
       for(const entry of visible){
-        const tr=document.createElement('tr');for(const v of [entry.name,entry.items,percent(total?entry.items/total:null),entry.rows])cell(tr,v);
-        const values=cell(tr,'');for(const bin of entry.values){const line=document.createElement('div');line.textContent=bin.count+' @ '+bin.value+'% ('+percent(bin.rate)+')';values.append(line);}fragment.append(tr);
+        const tr=document.createElement('tr');for(const v of [entry.name,rating(entry)??'—',entry.items,percent(total?entry.items/total:null),entry.rows])cell(tr,v);
+        for(const field of ['value','count','rate']){const values=cell(tr,'');values.className='crafting-stat-values';for(const bin of entry.values){const line=document.createElement('div');line.textContent=field==='value'?bin.value+'%':field==='rate'?percent(bin.rate):bin.count;values.append(line);}}
+        const repeats=cell(tr,'');for(const bin of entry.repeats || []){const line=document.createElement('div');line.textContent=bin.count+'× · '+bin.hits+' / '+bin.total+' ('+percent(bin.rate)+')';repeats.append(line);}fragment.append(tr);
       }
-      if(!visible.length){const tr=document.createElement('tr');cell(tr,entries.length?'No matching perks':'No eligible items').colSpan=5;fragment.append(tr);}
+      if(!visible.length){const tr=document.createElement('tr');cell(tr,entries.length?'No matching perks':'No eligible items').colSpan=9;fragment.append(tr);}
       body.replaceChildren(fragment);
     }
     input.addEventListener('input',render);
+    window.addEventListener('dn-crafting-purposes-changed',render);
+    window.addEventListener('storage',render);
+    window.addEventListener('focus',render);
+    window.addEventListener('dn-stats-target-changed',render);
     return {update(data,sample){entries=data;total=sample;render();}};
   }
-  window.DNCraftingStatsTables={distributionsMarkup,renderDistributions,frequency};
+  window.DNCraftingStatsTables={dashboard,renderDistributions,frequency};
+  let ratingsReady=false;
+  const targetSelect=document.querySelector('[data-stats-target]');
+  function targetOptions(){
+    if(!targetSelect)return;
+    const definitions=window.DNCraftingPurposes?.definitions || [],signature=JSON.stringify(definitions.map(entry=>[entry.id,entry.label]));
+    if(targetSelect.dataset.options===signature)return;
+    const previous=targetSelect.value;targetSelect.replaceChildren(new Option('All stats',''));
+    for(const entry of definitions)targetSelect.append(new Option(entry.label,entry.id));
+    targetSelect.value=definitions.some(entry=>entry.id===previous)?previous:'';targetSelect.dataset.options=signature;
+  }
+  targetOptions();window.addEventListener('dn-crafting-purposes-changed',targetOptions);window.addEventListener('storage',targetOptions);window.addEventListener('focus',targetOptions);
+  targetSelect?.addEventListener('change',()=>window.dispatchEvent(new Event('dn-stats-target-changed')));
+  if(window.DNCraftingPurposes)fetch('data/perk_rating_defaults.json').then(response=>{if(!response.ok)throw Error('Ratings unavailable');return response.json();}).then(defaults=>{ratingsReady=true;window.DNCraftingPurposes.setDefaults(defaults);}).catch(()=>{});
+  const viewButtons=[...document.querySelectorAll('button[data-stats-view]')];
+  if(viewButtons.length){
+    document.body.dataset.statsView='personal';
+    for(const button of viewButtons)button.addEventListener('click',()=>{
+      document.body.dataset.statsView=button.dataset.statsView;
+      for(const option of viewButtons){const active=option===button;option.classList.toggle('is-active',active);option.setAttribute('aria-pressed',String(active));}
+    });
+  }
 })();

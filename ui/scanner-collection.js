@@ -237,7 +237,7 @@
       return [...items.values()].map(item=>({id:item.id,name:item.name,firstSeen:item.firstSeen,lastUpdated:item.lastUpdated,
         captureSessionId:item.captureSessionId,profileKey:item.profileKey,captureMethod:item.captureMethod,craftingEventId:item.craftingEventId,craftingEventSource:item.craftingEventSource,
         expectedRows:item.expectedRows,hall:item.hall,type:item.type,validated:item.validated,corrected:item.corrected,keptId:item.keptId,
-        rows:item.rows.map(row=>Object.fromEntries(['name','known','value','hasPercent','level','tier','base','max','assumed','inferred','conflict','tierConflict','nameSource','valueSource','unlocked','rerollEligible'].map(key=>[key,row[key]])))}));
+        rows:item.rows.map(row=>Object.fromEntries(['name','known','value','hasPercent','level','tier','base','max','assumed','inferred','conflict','tierConflict','nameSource','valueSource','levelSource','tierSource','rangeSource','outOfRange','unlocked','rerollEligible'].map(key=>[key,row[key]])))}));
     }
     function mergeOCREvidence(prior,result,observation,corrected,source) {
       const entries=clone(prior?.ocrEvidence || []).filter(e=>Date.now()-Date.parse(e.observedAt)<90*86400000);

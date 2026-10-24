@@ -11,7 +11,7 @@ browserRun(async({evaluate})=>{
   const consentListeners=[],cloudListeners=[],researchListeners=[];
   let prefs={analytics:true,diagnostics:true,ocrFeedback:false,research:false,decided:true},user={id:'test'},researchCalls=[],ocrCalls=0,reportCalls=0;
   window.DNConsent={get:()=>({...prefs}),subscribe:fn=>{consentListeners.push(fn);return()=>{};},set:value=>{prefs={...value,decided:true};consentListeners.forEach(fn=>fn(prefs));}};
-  window.DNCloud={user:()=>user,state:()=>({status:'synced'}),configured:()=>true,subscribe:fn=>cloudListeners.push(fn),communityReport:async()=>{reportCalls++;const metric={hits:0,total:0,rate:null,bounds:null};return {status:'ready',recorded:495,excluded:495,exclusions:{'starting-unknown':490,identity:5},updatedAt:new Date().toISOString(),metrics:{rows11:metric,any11:metric,two11:metric,duplicate:metric}};}};
+  window.DNCloud={user:()=>user,state:()=>({status:'synced'}),configured:()=>true,subscribe:fn=>cloudListeners.push(fn),communityReport:async()=>{reportCalls++;const metric={hits:0,total:0,rate:null,bounds:null};return {status:'ready',recorded:495,excluded:495,exclusions:{'starting-unknown':490,identity:5},updatedAt:new Date().toISOString(),metrics:{rows11:metric,any11:metric,two11:metric,duplicate:metric},frequencies:[{name:'Damage',items:0,rows:0,values:[],repeats:[]}],distributions:{eleven:[],six:[]}};}};
   window.DNTelemetry={analyticsId:()=>null};
   window.DNOCRFeedback={status:()=>({}),allowed:()=>prefs.ocrFeedback,setSharing:async()=>{ocrCalls++;return true;}};
   window.DNResearch={status:()=>({active:prefs.research}),subscribe:fn=>researchListeners.push(fn),setSharing:async value=>{researchCalls.push(value);}};
@@ -41,7 +41,7 @@ browserRun(async({evaluate})=>{
   document.querySelector('[data-community-refresh]').click();await new Promise(ok=>setTimeout(ok,0));
   const exclusions=document.querySelector('[data-community-exclusions]');
   assert('report displays historical exclusion reasons and counts',!exclusions.hidden&&exclusions.textContent.includes('Starting rolls unverified490')&&exclusions.textContent.includes('Craft encounter unverified5'));
-  const panel=document.querySelector('#crafting-community'),refresh=document.querySelector('[data-community-refresh]'),rows=document.querySelector('[data-community-results]'),count=document.querySelector('[data-community-count]'),status=document.querySelector('[data-community-status]');
+  const panel=document.querySelector('#crafting-community'),refresh=document.querySelector('[data-community-refresh]'),rows=document.querySelector('[data-community-frequency]'),count=document.querySelector('[data-community-count]'),status=document.querySelector('[data-community-status]');
   const originalReport=DNCloud.communityReport,data=await originalReport(),oldRow=rows.firstChild,oldExclusion=exclusions.firstChild,oldCount=count.textContent,oldStatus=status.textContent;
   let resolveReport,rejectReport;
   DNCloud.communityReport=()=>new Promise((resolve,reject)=>{resolveReport=resolve;rejectReport=reject;});
@@ -53,9 +53,9 @@ browserRun(async({evaluate})=>{
   refresh.click();rejectReport(Error('offline'));await new Promise(ok=>setTimeout(ok,0));
   assert('failed refresh retains previous report and permits retry',rows.firstChild===oldRow&&count.textContent===oldCount&&!refresh.disabled&&status.textContent==='Unavailable');
   refresh.click();resolveReport({...data,recorded:496});await new Promise(ok=>setTimeout(ok,0));
-  assert('new report replaces results after loading',count.textContent.includes('496 Crafts recorded')&&rows.children.length===4&&exclusions.children.length===4);
+  assert('new report replaces results after loading',count.textContent.includes('496 Crafts recorded')&&rows.children.length===1&&exclusions.children.length===4);
   refresh.click();resolveReport({status:'empty'});await new Promise(ok=>setTimeout(ok,0));
-  assert('confirmed empty report clears stale results',!rows.children.length&&!count.textContent&&exclusions.hidden&&status.textContent==='No crafts recorded');
+  assert('confirmed empty report clears stale results',document.querySelector('[data-community-expanded]').hidden&&!count.textContent&&exclusions.hidden&&status.textContent==='No crafts recorded');
   user=null;cloudListeners.forEach(fn=>fn({status:'signed-out'}));
   assert('signed-out sharing explains required action',share.disabled&&document.querySelector('[data-community-sharing]').textContent.includes('Sign in'));
   return checks;

@@ -17,7 +17,7 @@ const files=['scanner.html','crafting-stats.html','crafting-stats-tables.js','cr
   const headers={apikey:config.supabasePublishableKey,'Content-Type':'application/json'};
   const report=await fetch(config.supabaseUrl+'/rest/v1/rpc/planner_crafting_summary',{method:'POST',headers,body:'{}',signal:AbortSignal.timeout(20000)});
   const aggregate=await report.json();if(!report.ok || !['ready','insufficient-sample'].includes(aggregate.status))throw Error('Community report is unavailable.');
-  if(aggregate.status==='ready' && (!Array.isArray(aggregate.frequencies) || aggregate.distributions?.eleven?.length!==6 || aggregate.distributions?.duplicates?.length!==4))throw Error('Expanded crafting distributions are not deployed.');
+  if(aggregate.status==='ready' && (!Array.isArray(aggregate.frequencies) || aggregate.frequencies.some(entry=>entry.repeats?.length!==4) || aggregate.distributions?.six?.length!==6 || aggregate.distributions?.eleven?.length!==6 || aggregate.distributions?.duplicates?.length!==4))throw Error('Expanded crafting distributions are not deployed.');
   if(Object.hasOwn(aggregate.contexts || {},'version'))throw Error('Obsolete game-version reporting metadata is still present.');
   const empty=await fetch(config.supabaseUrl+'/rest/v1/rpc/planner_crafting_summary',{method:'POST',headers,body:JSON.stringify({p_hall:'__no_matches__'}),signal:AbortSignal.timeout(20000)});
   const emptySample=await empty.json();if(!empty.ok || emptySample.status!=='insufficient-sample' || emptySample.minimumContributors!==1)throw Error('First-contributor threshold is not deployed.');

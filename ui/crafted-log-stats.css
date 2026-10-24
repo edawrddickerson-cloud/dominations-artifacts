@@ -16,6 +16,21 @@
 .crafted-stats-search { display: grid; gap: .3rem; max-width: 24rem; margin-block: .8rem; }
 .crafted-stats-search input { background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: .5rem; font: inherit; min-width: 0; }
 .crafted-stats-sort { color: inherit; background: transparent; border: 0; padding: 0; font: inherit; font-weight: inherit; cursor: pointer; }
+.crafting-stats-dashboard { margin-block: 1rem 1.5rem; }
+.crafting-dashboard-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem; }
+.crafting-dashboard-heading select { padding: .4rem; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; font: inherit; }
+.crafting-dashboard-cards { display: grid; grid-template-columns: repeat(auto-fit,minmax(9rem,1fr)); gap: .75rem; }
+.crafting-dashboard-card { display: flex; flex-direction: column; gap: .5rem; padding: .85rem 1rem; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); font-variant-numeric: tabular-nums; }
+.crafting-dashboard-card strong { font-size: 1.8rem; }
+.crafting-dashboard-card > span { color: var(--muted); }
+.crafted-stats-target { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-block: .8rem; }
+.crafted-stats-target select { max-width: 100%; padding: .4rem; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; font: inherit; }
+.crafting-stat-values { white-space: nowrap; vertical-align: top; }
+.page-crafting-stats[data-stats-view="personal"] #crafting-community,
+.page-crafting-stats[data-stats-view="personal"] [data-dashboard="crafting-community"],
+.page-crafting-stats[data-stats-view="community"] #crafted-log-stats,
+.page-crafting-stats[data-stats-view="community"] [data-dashboard="crafted-log-stats"],
+.page-crafting-stats[data-stats-view="community"] #crafting-log-details { display: none; }
 .crafted-log-stats th[aria-sort="ascending"] .crafted-stats-sort::after { content: ' ↑'; }
 .crafted-log-stats th[aria-sort="descending"] .crafted-stats-sort::after { content: ' ↓'; }
 .page-scanner #scanner-log-storage-status:empty { display: none; }
