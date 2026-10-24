@@ -13,7 +13,7 @@ const denied=(fn,code='42501')=>assert.rejects(fn,error=>error.code===code);
 (async()=>{
   await db.exec("create role anon; create role authenticated; create role service_role bypassrls; create schema auth; create table auth.users(id uuid primary key); create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$; grant usage on schema auth to anon,authenticated,service_role; grant execute on function auth.uid() to anon,authenticated,service_role;");
   for(const id of ids)await db.query('insert into auth.users values($1)',[id]);
-  for(const file of ['202610180001_planner_backend.sql','202610220002_ocr_feedback.sql','202610230001_crafting_statistics_v2.sql','202610230002_crafting_starting_rules.sql','202610240001_community_first_contributor.sql','202610240003_remove_game_version.sql','202610250001_crafting_distributions.sql','202610250002_crafting_perk_repeats.sql','202610250003_crafting_inferred_evidence.sql','202610250004_crafting_complete_stat_rules.sql'])await db.exec(fs.readFileSync('supabase/migrations/'+file,'utf8'));
+  for(const file of ['202610180001_planner_backend.sql','202610220002_ocr_feedback.sql','202610230001_crafting_statistics_v2.sql','202610230002_crafting_starting_rules.sql','202610240001_community_first_contributor.sql','202610240003_remove_game_version.sql','202610250001_crafting_distributions.sql','202610250002_crafting_perk_repeats.sql','202610250003_crafting_inferred_evidence.sql','202610250004_crafting_complete_stat_rules.sql','202610250005_crafting_tier_frequencies.sql'])await db.exec(fs.readFileSync('supabase/migrations/'+file,'utf8'));
   await user(null,'anon');await denied(()=>call('planner_submit_crafting',[crypto.randomUUID(),payload([])]));await denied(()=>db.query('select * from public.planner_crafting_evidence'));
   assert.equal((await call('planner_crafting_summary')).status,'insufficient-sample');
   assert.equal((await call('planner_crafting_summary')).minimumContributors,1);
@@ -61,7 +61,7 @@ const denied=(fn,code='42501')=>assert.rejects(fn,error=>error.code===code);
   }
   const split=evidence('split',[11,11,11,11,11]);split.rows=split.rows.map((row,i)=>({...row,perk:i<2?names[0]:names[1]}));extra.push(split);
   const signed=evidence('signed');signed.rows[0]={perk:'Enemy Air Defense Damage',value:-11};extra.push(signed);
-  const war=evidence('war',Array(5).fill(3));war.hall='war';war.rows=war.rows.map(row=>({...row,perk:'Heavy Tank Damage'}));extra.push(war);
+  const war=evidence('war',[6,3,6,1,6]);war.hall='war';war.rows=war.rows.map(row=>({...row,perk:'Heavy Tank Damage'}));extra.push(war);
   await user(ids[0]);await call('planner_submit_crafting',[receipts[0].epoch,payload(extra)]);
   const collision=evidence('repeat-5',Array(5).fill(6));await user(ids[1]);await call('planner_submit_crafting',[receipts[1].epoch,payload([collision])]);
   await user(null,'anon');
@@ -76,6 +76,7 @@ const denied=(fn,code='42501')=>assert.rejects(fn,error=>error.code===code);
   assert.equal(expanded.distributions.eleven[3].exact.hits,1);
   assert.equal(expanded.distributions.duplicates[1].exact.hits,2,'a 2+3 split has largest group 3');
   const warReport=await call('planner_crafting_summary',['war']);assert.equal(warReport.distributions.eleven[1].atLeast.total,0);assert.equal(warReport.distributions.duplicates[3].exact.hits,1);
+  assert.deepEqual(warReport.frequencies[0].tiers,[.2,.2,.6],'War 6 percent rows occupy the high-tier column');
   const empty=await call('planner_crafting_summary',['main','pottery']);assert.equal(empty.status,'insufficient-sample');
   assert(!JSON.stringify(expanded).includes('repeat-'));assert(!JSON.stringify(expanded).includes(ids[0]));
   await user(ids[0]);const epoch=receipts[0].epoch;

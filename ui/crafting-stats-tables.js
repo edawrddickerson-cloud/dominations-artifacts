@@ -29,20 +29,23 @@
     const table=body.closest('table'),wrapper=table.parentElement;
     const search=document.createElement('label');search.className='crafted-stats-search filter-control';search.textContent='Search perks';
     const input=document.createElement('input');input.type='search';input.autocomplete='off';search.append(input);wrapper.before(search);
-    let entries=[],total=0,sort='rating',direction=-1;
-    const headers=[...table.querySelectorAll('th')],keys=['name','rating','items','frequency','rows',null,null,null,'repeats'];
+    let entries=[],total=0,hall='main',sort='rating',direction=-1;
+    const headers=[...table.querySelectorAll('th')],keys=['name','rating','items','frequency','rows','tier0','tier1','tier2','repeats'];
     headers.forEach((th,i)=>{if(!keys[i])return;const button=document.createElement('button');button.type='button';button.className='crafted-stats-sort';button.textContent=th.textContent;th.replaceChildren(button);button.addEventListener('click',()=>{direction=sort===keys[i]?-direction:keys[i]==='name'?1:-1;sort=keys[i];render();});});
     function render(){
       const query=input.value.trim().toLowerCase(),fragment=document.createDocumentFragment(),service=window.DNCraftingPurposes;
       const definitions=service?.definitions || [],target=definitions.find(entry=>entry.id===document.querySelector('[data-stats-target]')?.value);
       const canonical=name=>{const stats=window.DN_ARTIFACT_STAT_CONTEXT?.stats || {};return Object.hasOwn(stats,name)?name:Object.keys(stats).find(key=>stats[key].aliases?.includes(name)) || name;};
       const rating=entry=>service && ratingsReady?service.ratingOf(canonical(entry.name)):null;
-      const value=entry=>sort==='rating'?rating(entry)??-1:sort==='frequency'?entry.items:sort==='repeats'?(entry.repeats || []).reduce((sum,bin)=>sum+bin.hits,0):entry[sort];
+      const tierRate=(entry,index)=>entry.tiers?.[index] ?? (entry.rows>0 && (hall==='main' || hall==='war')?entry.values?.filter(bin=>Math.abs(bin.value)===(hall==='war'?[1,3,6]:[1,6,11])[index]).reduce((sum,bin)=>sum+bin.count,0)/entry.rows:null);
+      const value=entry=>sort.startsWith('tier')?tierRate(entry,Number(sort.slice(-1)))??-1:sort==='rating'?rating(entry)??-1:sort==='frequency'?entry.items:sort==='repeats'?(entry.repeats || []).reduce((sum,bin)=>sum+bin.hits,0):entry[sort];
       const visible=entries.filter(entry=>entry.name.toLowerCase().includes(query) && (!target || target.stats.has(canonical(entry.name)))).sort((a,b)=>direction*(sort==='name'?a.name.localeCompare(b.name):value(a)-value(b)) || a.name.localeCompare(b.name));
       headers.forEach((th,i)=>{if(keys[i])th.setAttribute('aria-sort',keys[i]===sort?(direction===1?'ascending':'descending'):'none');});
+      const labels=hall==='war'?['1%','3%','6%']:hall==='main'?['1%','6%','11%']:['Low','Mid','High'];
+      for(let i=0;i<3;i++){headers[i+5].querySelector('button').textContent=labels[i];headers[i+5].title=['Main 1% · War 1%','Main 6% · War 3%','Main 11% · War 6%'][i];}
       for(const entry of visible){
         const tr=document.createElement('tr');for(const v of [entry.name,rating(entry)??'—',entry.items,percent(total?entry.items/total:null),entry.rows])cell(tr,v);
-        for(const field of ['value','count','rate']){const values=cell(tr,'');values.className='crafting-stat-values';for(const bin of entry.values){const line=document.createElement('div');line.textContent=field==='value'?bin.value+'%':field==='rate'?percent(bin.rate):bin.count;values.append(line);}}
+        for(let i=0;i<3;i++){const value=cell(tr,percent(tierRate(entry,i)));value.className='crafting-stat-values';}
         const repeats=cell(tr,'');for(const bin of entry.repeats || []){const line=document.createElement('div');line.textContent=bin.count+'× · '+bin.hits+' / '+bin.total+' ('+percent(bin.rate)+')';repeats.append(line);}fragment.append(tr);
       }
       if(!visible.length){const tr=document.createElement('tr');cell(tr,entries.length?'No matching perks':'No eligible items').colSpan=9;fragment.append(tr);}
@@ -53,7 +56,7 @@
     window.addEventListener('storage',render);
     window.addEventListener('focus',render);
     window.addEventListener('dn-stats-target-changed',render);
-    return {update(data,sample){entries=data;total=sample;render();}};
+    return {update(data,sample,selectedHall='main'){entries=data;total=sample;hall=selectedHall;render();}};
   }
   window.DNCraftingStatsTables={dashboard,renderDistributions,frequency};
   let ratingsReady=false;

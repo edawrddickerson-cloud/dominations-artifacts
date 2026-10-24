@@ -62,4 +62,6 @@ assert.equal(S.analyze([inferredComplete],{excludeManual:true}).frequencies[0].r
 const warSix=artifact('war-six',Array(5).fill('Damage'),[6,6,6,3,1],'war');
 assert.equal(S.analyze([warSix],{excludeManual:true}).distributions.six[3].exact.hits,1);
 assert.equal(S.analyze([warSix],{excludeManual:true}).distributions.eleven[3].exact.total,0);
+const mainSix=artifact('main-six',Array(5).fill('Damage'),Array(5).fill(-6)),warHigh=artifact('war-high',Array(5).fill('Damage'),Array(5).fill(-6),'war');
+assert.deepEqual(JSON.parse(JSON.stringify(S.analyze([mainSix,warHigh]).frequencies[0].tiers)),[0,.5,.5],'Main 6 and War 6 occupy different tier columns');
 console.log('Crafted log stats passed: automatic canonical records, 22 retries, best-read retention, independent identical crafts, corrections, incomplete/inferred evidence, positions, artifact/row denominators, input sources, context separation, Keep, exports, reload and clearing.');

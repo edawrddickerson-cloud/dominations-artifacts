@@ -16,7 +16,8 @@ browserRun(async({evaluate,send})=>{
   await w.DNScannerCollection.flush();
   const personal=d.querySelector('#crafted-log-stats'),frequencies=personal.querySelector('[data-stat-frequency]');
   const damageRow=[...frequencies.rows].find(row=>row.cells[0].textContent===names[0]);
-  assert('value, count and frequency use separate columns',damageRow.cells[5].textContent==='11%'&&damageRow.cells[6].textContent==='14'&&damageRow.cells[7].textContent==='100.0%');
+  assert('Main tier columns contain row frequencies only',damageRow.cells[5].textContent==='0.0%'&&damageRow.cells[6].textContent==='0.0%'&&damageRow.cells[7].textContent==='100.0%'&&[...frequencies.closest('table').querySelectorAll('th')].slice(5,8).map(th=>th.textContent).join('|')==='1%|6%|11%');
+  frequencies.closest('table').querySelectorAll('th button')[7].click();assert('tier header sorts by row frequency',frequencies.rows[0].cells[7].textContent==='100.0%');
   const board=d.querySelector('[data-dashboard="crafted-log-stats"]'),three=board.querySelector('[data-roll-count="3"]');
   assert('three 11 percent rows use a headline box',three.querySelector('[data-roll-sample]').textContent==='1 / 4'&&three.querySelector('[data-roll-rate]').textContent==='25.0%');
   assert('repeat counts belong to each perk row',damageRow.cells[8].textContent.includes('5× · 1 / 4 (25.0%)'));
@@ -26,7 +27,7 @@ browserRun(async({evaluate,send})=>{
   assert('personal perk search filters rows',frequencies.rows.length===1);
   search.value='';search.dispatchEvent(new w.Event('input'));frequencies.closest('table').querySelector('th button').click();
   const sorted=[...frequencies.rows].map(row=>row.cells[0].textContent);assert('table header sorts perk names',sorted.join('|')===[...sorted].sort((a,b)=>a.localeCompare(b)).join('|'));
-  const hall=personal.querySelector('[data-stat-filter="hall"]');hall.value='war';hall.dispatchEvent(new w.Event('change'));assert('War headline boxes use 6 percent',three.querySelector('[data-roll-label]').textContent==='Exactly 3 × 6%'&&three.querySelector('[data-roll-sample]').textContent==='0 / 0');hall.value='main';hall.dispatchEvent(new w.Event('change'));
+  const hall=personal.querySelector('[data-stat-filter="hall"]');hall.value='war';hall.dispatchEvent(new w.Event('change'));assert('War headline boxes and columns use War tiers',three.querySelector('[data-roll-label]').textContent==='Exactly 3 × 6%'&&three.querySelector('[data-roll-sample]').textContent==='0 / 0'&&[...frequencies.closest('table').querySelectorAll('th')].slice(5,8).map(th=>th.textContent).join('|')==='1%|3%|6%');hall.value='';hall.dispatchEvent(new w.Event('change'));assert('All halls use tier labels', [...frequencies.closest('table').querySelectorAll('th')].slice(5,8).map(th=>th.textContent).join('|')==='Low|Mid|High');hall.value='main';hall.dispatchEvent(new w.Event('change'));
   const records=w.DNScannerCollection.historyItems().map(item=>({...item,startingContextSource:'craft-result-controls-v1',freshCraft:true,identityEvidence:'observed-transition'}));
   const data=w.DNCraftingCommunity.analyze(records.map(item=>w.DNCraftingCommunity.encode(item)));data.status='ready';data.updatedAt=new Date().toISOString();
   let args;w.DNCloud.communityReport=async value=>{args=value;return data;};
@@ -34,7 +35,7 @@ browserRun(async({evaluate,send})=>{
   d.querySelector('[data-stats-view="community"]').click();
   assert('toggle switches the dashboard and table together',community.getClientRects().length>0&&!personal.getClientRects().length&&d.querySelector('[data-dashboard="crafting-community"]').getClientRects().length>0&&!board.getClientRects().length);
   const communityDamage=[...community.querySelector('[data-community-frequency]').rows].find(row=>row.cells[0].textContent===names[0]);
-  assert('community uses the same value columns',communityDamage.cells[5].textContent==='11%'&&communityDamage.cells[6].textContent==='14'&&communityDamage.cells[7].textContent==='100.0%');
+  assert('community uses the same tier frequencies',communityDamage.cells[5].textContent==='0.0%'&&communityDamage.cells[6].textContent==='0.0%'&&communityDamage.cells[7].textContent==='100.0%');
   assert('community headline boxes share the personal calculation',d.querySelector('[data-dashboard="crafting-community"] [data-roll-count="3"] [data-roll-sample]').textContent==='1 / 4');
   const category=community.querySelector('[data-community="category"]');category.value='weapon';category.dispatchEvent(new w.Event('change',{bubbles:true}));await new Promise(ok=>setTimeout(ok,0));assert('community category filter reaches the report',args.p_category==='weapon');
   const communitySearch=community.querySelector('input[type="search"]');communitySearch.value='APC';communitySearch.dispatchEvent(new w.Event('input'));assert('community search uses the same table controls',community.querySelector('[data-community-frequency]').rows.length===1);communitySearch.value='';communitySearch.dispatchEvent(new w.Event('input'));

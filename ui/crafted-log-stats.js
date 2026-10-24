@@ -20,8 +20,9 @@
       for(const row of item.rows){
         const name=row.name || row.perk;
         let entry=frequencies.get(name);
-        if(!entry){entry={name,items:0,rows:0,values:new Map(),copies:[]};frequencies.set(name,entry);}
+        if(!entry){entry={name,items:0,rows:0,values:new Map(),copies:[],tiers:[0,0,0]};frequencies.set(name,entry);}
         entry.rows++;entry.values.set(row.value,(entry.values.get(row.value)||0)+1);
+        const tier=(item.hall==='war'?[1,3,6]:[1,6,11]).indexOf(Math.abs(row.value));if(tier>=0)entry.tiers[tier]++;
         perks.set(name,(perks.get(name)||0)+1);if(Math.abs(row.value)===11)hits++;
       }
       for(const [name,count] of perks){frequencies.get(name).items++;frequencies.get(name).copies.push(count);}
@@ -31,7 +32,7 @@
     }
     const metric=(hits,total)=>({hits,total,rate:total?hits/total:null,bounds:interval(hits,total)});
     const bins=(values,start)=>Array.from({length:6-start},(_,i)=>{const count=i+start;return {count,exact:metric(values.filter(n=>n===count).length,values.length),atLeast:metric(values.filter(n=>n>=count).length,values.length)};});
-    return {frequencies:[...frequencies.values()].map(({copies,...entry})=>({...entry,repeats:[2,3,4,5].map(count=>({count,...metric(copies.filter(n=>n===count).length,items.length)})),values:[...entry.values].sort((a,b)=>a[0]-b[0]).map(([value,count])=>({value,count,rate:count/entry.rows}))})).sort((a,b)=>b.items-a.items || a.name.localeCompare(b.name)),
+    return {frequencies:[...frequencies.values()].map(({copies,...entry})=>({...entry,tiers:entry.tiers.map(count=>count/entry.rows),repeats:[2,3,4,5].map(count=>({count,...metric(copies.filter(n=>n===count).length,items.length)})),values:[...entry.values].sort((a,b)=>a[0]-b[0]).map(([value,count])=>({value,count,rate:count/entry.rows}))})).sort((a,b)=>b.items-a.items || a.name.localeCompare(b.name)),
       distributions:{eleven:bins(eleven,0),six:bins(six,0),duplicates:bins(duplicates,2)}};
   }
   function analyze(records,filter={}) {
@@ -48,8 +49,9 @@
       for(const [index,row] of item.rows.entries()) {
         if(filter.position && index+1!==Number(filter.position))continue;
         let entry=frequencies.get(row.name);
-        if(!entry){entry={name:row.name,items:0,rows:0,min:row.value,max:row.value,values:new Map()};frequencies.set(row.name,entry);}
+        if(!entry){entry={name:row.name,items:0,rows:0,min:row.value,max:row.value,values:new Map(),tiers:[0,0,0]};frequencies.set(row.name,entry);}
         entry.rows++;entry.min=Math.min(entry.min,row.value);entry.max=Math.max(entry.max,row.value);
+        const tier=(item.hall==='war'?[1,3,6]:[1,6,11]).indexOf(Math.abs(row.value));if(tier>=0)entry.tiers[tier]++;
         entry.values.set(row.value,(entry.values.get(row.value)||0)+1);
         if(!seen.has(row.name)){entry.items++;seen.add(row.name);}
         if(row.name===filter.perk){selectedRows++;values.set(row.value,(values.get(row.value)||0)+1);if(filter.minimum==null || row.value>=filter.minimum)hit=true;}
@@ -65,7 +67,7 @@
     const aggregate=distributions(sample),repeats=new Map(aggregate.frequencies.map(entry=>[entry.name,entry.repeats]));
     return {history,sample,total,kept:history.filter(item=>item.keptId).length,excluded:history.length-total,
       inferred:sample.filter(item=>item.rows.some(row=>row.inferred || row.assumed)).length,
-      frequencies:[...frequencies.values()].map(entry=>({...entry,repeats:repeats.get(entry.name),values:[...entry.values].sort((a,b)=>a[0]-b[0]).map(([value,count])=>({value,count,rate:count/entry.rows}))})).sort((a,b)=>b.items-a.items || a.name.localeCompare(b.name)),
+      frequencies:[...frequencies.values()].map(entry=>({...entry,tiers:entry.tiers.map(count=>count/entry.rows),repeats:repeats.get(entry.name),values:[...entry.values].sort((a,b)=>a[0]-b[0]).map(([value,count])=>({value,count,rate:count/entry.rows}))})).sort((a,b)=>b.items-a.items || a.name.localeCompare(b.name)),
       distributions:aggregate.distributions,
       values:[...values].sort((a,b)=>a[0]-b[0]),selectedRows,hits,rate,bounds,homogeneous,liveOnly,projected};
   }

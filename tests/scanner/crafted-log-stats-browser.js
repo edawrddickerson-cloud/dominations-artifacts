@@ -25,7 +25,7 @@
   const record={valid:true,hall:'main',artifact:{type:'Weapon'},rows:Array.from({length:5},(_,i)=>({name:i<3?'Heavy Tank Damage':i===3?'Heavy Tank Hitpoints':'Bomber Damage',value:i<3?11:1,known:true,hasPercent:true,level:1}))};
   w.DNScannerCollection.recordItem(record,'three',{continuous:true,newEncounter:true,encounterId:'three',captureMethod:'live-capture'});await w.DNScannerCollection.flush();
   const perk=[...root.querySelector('[data-stat-frequency]').rows].find(row=>row.cells[0].textContent==='Heavy Tank Damage');
-  check('per-value counts retain repeated perk rows',perk.cells[5].textContent.includes('11%')&&perk.cells[6].textContent.includes('3'));
+  check('tier columns display row frequencies',parseFloat(perk.cells[7].textContent)>0&&perk.cells[7].textContent.endsWith('%')&&[...root.querySelectorAll('thead th')].slice(5,8).map(th=>th.textContent).join('|')==='1%|6%|11%');
   const board=d.querySelector('[data-dashboard="crafted-log-stats"]');
   check('three 11 percent rows have a headline count',board.querySelector('[data-roll-count="3"] [data-roll-sample]').textContent.startsWith('1 / '));
   check('repeated-perk frequency is attached to the perk',perk.cells[8].textContent.includes('3× · 1 / '));

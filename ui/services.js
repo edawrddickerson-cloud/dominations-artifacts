@@ -25,7 +25,7 @@
     await script('service-store.js?v=2');
     await script('telemetry.js?v=20261022-ocr-feedback');
     if(!window.DN_ARTIFACT_STAT_CONTEXT)await script('data/artifact_stat_context.js?v=1');
-    if(!window.DNCraftedLogStats)await script('crafted-log-stats.js?v=20261025-dashboard');
+    if(!window.DNCraftedLogStats)await script('crafted-log-stats.js?v=20261025-tiers');
     await script('crafting-community.js?v=20261025-inferred');
     await script('crafting-result-context.js?v=1');
     await Promise.all([script('cloud-sync.js?v=20261023-history-v2'),script('research.js?v=20261023-automatic-v2')]);
@@ -35,8 +35,8 @@
     await script('ocr-feedback.js?v=20261024-ocr-matching');
     await script('services-ui.js?v=20261024-consent-drafts');
     if(document.body.classList.contains('page-crafting-stats')){
-      if(!window.DNCraftingStatsTables)await script('crafting-stats-tables.js?v=20261025-dashboard');
-      await script('crafting-community-ui.js?v=20261025-consent-copy');
+      if(!window.DNCraftingStatsTables)await script('crafting-stats-tables.js?v=20261025-tiers');
+      await script('crafting-community-ui.js?v=20261025-tiers');
     }
   }
   window.DNServicesReady=new Promise(resolve=>{

@@ -10,16 +10,16 @@
     const root=document.createElement('details');root.id='crafted-log-stats';root.className='crafted-log-stats';
     root.innerHTML=`<summary>Personal observed stats</summary><p data-stats-count></p>
       <div class="crafted-stats-controls">
-        <label>Hall <select data-stat-filter="hall"><option value="">All halls</option><option value="main">Main</option><option value="war">War</option></select></label>
+        <label>Hall <select data-stat-filter="hall"><option value="">All halls</option><option value="main" selected>Main</option><option value="war">War</option></select></label>
         <label>Category <select data-stat-filter="category"><option value="">All categories</option></select></label>
         <label>Perk position <select data-stat-filter="position"><option value="">All positions</option>${[1,2,3,4,5,6].map(n=>'<option value="'+n+'">'+n+'</option>').join('')}</select></label>
       </div>
-      <div class="crafted-stats-scroll"><table><thead><tr><th>Perk</th><th>Rating</th><th>Items</th><th>Item frequency</th><th>Rows</th><th>Value</th><th>Count</th><th>Row frequency</th><th>Copies per artifact · all positions</th></tr></thead><tbody data-stat-frequency></tbody></table></div>`;
+      <div class="crafted-stats-scroll"><table><thead><tr><th>Perk</th><th>Rating</th><th>Items</th><th>Item frequency</th><th>Rows</th><th>1%</th><th>6%</th><th>11%</th><th>Copies per artifact · all positions</th></tr></thead><tbody data-stat-frequency></tbody></table></div>`;
     anchor.prepend(root);
     root.open=true;
     window.DNCraftingStatsTables.dashboard(root,'Personal · top-value rolls');
     const frequency=window.DNCraftingStatsTables.frequency(root.querySelector('[data-stat-frequency]'));
-    const get=name=>root.querySelector('[data-'+name+']'),filter={excludeManual:true};let dirty=true;
+    const get=name=>root.querySelector('[data-'+name+']'),filter={excludeManual:true,hall:'main'};let dirty=true;
     function options(select,entries) {
       const signature=JSON.stringify(entries);if(select.dataset.options===signature)return;
       const previous=select.value,first=select.options[0].cloneNode(true);select.replaceChildren(first);
@@ -32,7 +32,7 @@
       options(root.querySelector('[data-stat-filter="category"]'),[...new Set(items.map(i=>i.type).filter(Boolean))].sort().map(v=>[v,v]));
       const data=core.analyze(items,filter);
       get('stats-count').textContent=data.history.length+' logged · '+data.kept+' collected · '+data.total+' eligible · '+data.excluded+' excluded · '+data.inferred+' inferred';
-      frequency.update(data.frequencies,data.total);
+      frequency.update(data.frequencies,data.total,filter.hall);
       window.DNCraftingStatsTables.renderDistributions(root,data.distributions,filter.hall);
     }
     root.querySelectorAll('[data-stat-filter]').forEach(input=>input.addEventListener('change',()=>{
