@@ -7,7 +7,6 @@
     '<label>Hall <select data-community="hall"><option value="">All</option><option value="main">Main</option><option value="war">War</option><option value="unknown">Unknown</option></select></label>'+
     '<label>Category <select data-community="category"><option value="">All</option>'+['weapon','armor','jewelry','pottery','equipment','unknown'].map(v=>'<option value="'+v+'">'+v[0].toUpperCase()+v.slice(1)+'</option>').join('')+'</select></label>'+
     '<label>Event <select data-community="event"><option value="">All</option><option value="unknown">Unknown</option></select></label>'+
-    '<label>Game version <select data-community="version"><option value="">All</option><option value="unknown">Unknown</option></select></label>'+
     '<button type="button" class="btn" data-community-refresh>Refresh</button></div><p role="status" data-community-sharing></p><p role="status" data-community-status></p><p data-community-count></p>'+
     '<div class="crafted-stats-scroll"><table><thead><tr><th>Observed sample</th><th>Count / sample</th><th>Frequency</th><th>95% CI</th></tr></thead><tbody data-community-results></tbody></table></div>'+
     '<p><a href="crafting-statistics.html">Methods and sampling limits</a></p>';
@@ -20,10 +19,10 @@
     if(!ready()){get('status').textContent='Unavailable';get('refresh').disabled=true;return;}
     get('refresh').disabled=true;get('status').textContent='Loading';
     try {
-      const args=Object.fromEntries(['hall','category','event','version'].map(key=>['p_'+key,root.querySelector('[data-community="'+key+'"]').value || null]));
+      const args=Object.fromEntries(['hall','category','event'].map(key=>['p_'+key,root.querySelector('[data-community="'+key+'"]').value || null]));
       const data=await window.DNCloud.communityReport(args);
       if(current!==request)return;
-      for(const key of ['event','version']) {
+      for(const key of ['event']) {
         const select=root.querySelector('[data-community="'+key+'"]'),value=select.value;
         const registered=data.contexts?.[key] || [],signature=JSON.stringify(registered);
         if(select.dataset.contexts!==signature){for(const option of [...select.options].slice(2))option.remove();for(const id of registered){const option=document.createElement('option');option.value=id;option.textContent=id;select.append(option);}select.value=value;select.dataset.contexts=signature;}

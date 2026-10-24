@@ -29,12 +29,12 @@
   check('real screenshot independently verifies Sell for and Continue',verified);
   check('mode-derived level 1 is insufficient without craft-result evidence',S.encode({...saved.items[0],startingContextSource:'unknown'}).exclusion==='starting-unknown');
   window.DNServiceConfig={...window.DNServiceConfig,researchEnabled:true};let lastArgs;
-  window.DNCloud.communityReport=async args=>{lastArgs=args;return {...data,status:'ready',updatedAt:new Date().toISOString(),contexts:{event:['verified-event'],version:['verified-version']}};};
+  window.DNCloud.communityReport=async args=>{lastArgs=args;return {...data,status:'ready',updatedAt:new Date().toISOString(),contexts:{event:['verified-event']}};};
   document.getElementById('scanner-crafted-log').open=true;root.open=true;
   await wait(()=>root.querySelector('[data-community-results]').rows.length===4,'aggregate metrics');
   check('row and artifact metrics have distinct denominators',root.querySelector('[data-community-results]').rows[0].cells[1].textContent==='3 / 10' && root.querySelector('[data-community-results]').rows[1].cells[1].textContent==='2 / 2');
   check('sample size, interval and updated status are visible',root.textContent.includes('2 Crafts recorded') && root.querySelector('[data-community-results]').rows[0].cells[3].textContent.includes('%') && root.querySelector('[data-community-status]').textContent.startsWith('Updated '));
-  check('reliable metadata supplies optional filters',root.querySelector('[data-community="event"]').options.length===3 && root.querySelector('[data-community="version"]').options.length===3);
+  check('event filtering remains available without game-version identification',root.querySelector('[data-community="event"]').options.length===3 && !root.querySelector('[data-community="version"]') && !Object.hasOwn(lastArgs,'p_version'));
   const select=root.querySelector('[data-community="event"]');select.value='unknown';select.dispatchEvent(new Event('change',{bubbles:true}));await wait(()=>lastArgs?.p_event==='unknown','explicit unknown filter');
   check('unknown metadata is an explicit filter',lastArgs.p_event==='unknown');
   check('no confirmation or required session inputs',!document.querySelector('[data-confirm-craft],[data-start-research],[data-game-version],input[required]'));

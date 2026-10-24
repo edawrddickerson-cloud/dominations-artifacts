@@ -5,7 +5,7 @@ const db=new PGlite(),ids=Array.from({length:6},(_,i)=>'11111111-1111-4111-8111-
 const app={window:{}};vm.createContext(app);for(const f of ['data/artifact_stat_context','crafting-history','crafting-community'])vm.runInContext(fs.readFileSync('ui/'+f+'.js','utf8'),app);
 const S=app.window.DNCraftingCommunity;
 const names=['Armored Car Damage','Armored Car Hitpoints','Attack Helicopter Damage','Attack Helicopter Hitpoints','APC Hitpoints'];
-const evidence=(id,values=[11,11,6,1,1])=>({id,revision:1,writer:'device-a',deleted:false,observed_at:new Date().toISOString(),hall:'main',category:'weapon',event_id:null,game_version:null,exclusion:null,rows:names.map((perk,i)=>({perk,value:values[i]}))});
+const evidence=(id,values=[11,11,6,1,1])=>({id,revision:1,writer:'device-a',deleted:false,observed_at:new Date().toISOString(),hall:'main',category:'weapon',event_id:null,exclusion:null,rows:names.map((perk,i)=>({perk,value:values[i]}))});
 const payload=records=>({version:2,policy:S.POLICY,rules:S.RULES,records});
 async function user(id,role='authenticated'){await db.exec('reset role');await db.query("select set_config('request.jwt.claim.sub',$1,false)",[id || '']);await db.exec('set role '+role);}
 async function call(name,args=[]){return (await db.query('select public.'+name+'('+args.map((_,i)=>'$'+(i+1)).join(',')+') result',args)).rows[0].result;}
@@ -13,10 +13,10 @@ const denied=(fn,code='42501')=>assert.rejects(fn,error=>error.code===code);
 (async()=>{
   await db.exec("create role anon; create role authenticated; create role service_role bypassrls; create schema auth; create table auth.users(id uuid primary key); create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$; grant usage on schema auth to anon,authenticated,service_role; grant execute on function auth.uid() to anon,authenticated,service_role;");
   for(const id of ids)await db.query('insert into auth.users values($1)',[id]);
-  for(const file of ['202610180001_planner_backend.sql','202610220002_ocr_feedback.sql','202610230001_crafting_statistics_v2.sql','202610230002_crafting_starting_rules.sql','202610240001_community_first_contributor.sql'])await db.exec(fs.readFileSync('supabase/migrations/'+file,'utf8'));
+  for(const file of ['202610180001_planner_backend.sql','202610220002_ocr_feedback.sql','202610230001_crafting_statistics_v2.sql','202610230002_crafting_starting_rules.sql','202610240001_community_first_contributor.sql','202610240003_remove_game_version.sql'])await db.exec(fs.readFileSync('supabase/migrations/'+file,'utf8'));
   await user(null,'anon');await denied(()=>call('planner_submit_crafting',[crypto.randomUUID(),payload([])]));await denied(()=>db.query('select * from public.planner_crafting_evidence'));
-  assert.equal((await call('planner_crafting_report')).status,'insufficient-sample');
-  assert.equal((await call('planner_crafting_report')).minimumContributors,1);
+  assert.equal((await call('planner_crafting_summary')).status,'insufficient-sample');
+  assert.equal((await call('planner_crafting_summary')).minimumContributors,1);
   await user(ids[0]);
   const privateLog=app.window.DNCraftingHistory.project({version:2,items:[],lifetimeStatistics:{version:1,archived:{logged:363,kept:0,main:363,war:0,threeUnlocked:0},sinceLastKept:363}});
   const workspace={kind:'dominations-cloud-workspace',version:1,game:'dominations',settings:{'dn-profiles':'{"activeId":"main","profiles":[{"id":"main","name":"Main"}]}'},records:[{id:'items',items:[]},{id:'collection:main',items:[]}],craftingLog:privateLog};
@@ -34,20 +34,23 @@ const denied=(fn,code='42501')=>assert.rejects(fn,error=>error.code===code);
     if(i===2)item.rows[1].perk=item.rows[0].perk;
     if(i===4){item.exclusion='incomplete';item.rows=[];}
     records.push(item);await call('planner_submit_crafting',[receipt.epoch,payload([item])]);await call('planner_submit_crafting',[receipt.epoch,payload([item])]);
-    if(i===0){const first=await call('planner_crafting_report');assert.equal(first.status,'ready');assert.equal(first.recorded,1);assert.equal(first.metrics.rows11.hits,2);assert.equal(first.metrics.rows11.total,5);assert.equal(first.metrics.two11.hits,1);assert.equal(first.metrics.two11.total,1);assert(!JSON.stringify(first).includes(ids[0]));assert(!JSON.stringify(first).includes(item.id));}
+    if(i===0){const first=await call('planner_crafting_summary');assert.equal(first.status,'ready');assert.equal(first.recorded,1);assert.equal(first.metrics.rows11.hits,2);assert.equal(first.metrics.rows11.total,5);assert.equal(first.metrics.two11.hits,1);assert.equal(first.metrics.two11.total,1);assert(!JSON.stringify(first).includes(ids[0]));assert(!JSON.stringify(first).includes(item.id));}
     assert.equal((await db.query('select count(*)::int n from public.planner_crafting_evidence')).rows[0].n,1,'RLS exposes only the caller, retries remain one record');
   }
   await user(ids[5]);assert.equal((await db.query('select count(*)::int n from public.planner_crafting_evidence')).rows[0].n,0);
   await denied(()=>db.query('insert into public.planner_crafting_evidence(owner_id,id,revision,writer,deleted,data) values($1,$2,1,$3,false,$4)',[ids[0],'illegal','attacker',{}]));
-  await user(null,'anon');const report=await call('planner_crafting_report'),expected=S.analyze(records);
+  await user(null,'anon');const report=await call('planner_crafting_summary'),expected=S.analyze(records);
   assert.equal(report.recorded,5);assert.equal(report.excluded,1);
+  assert.equal(Object.hasOwn(report.contexts,'version'),false,'game versions are absent from reporting metadata');
+  const legacy=await call('planner_crafting_report',['main','weapon',null,'obsolete-version']);
+  assert.equal(legacy.recorded,report.recorded,'cached clients cannot split the sample by obsolete game-version data');
   for(const key of ['rows11','any11','two11','duplicate']){
     assert.equal(report.metrics[key].hits,expected.metrics[key].hits);assert.equal(report.metrics[key].total,expected.metrics[key].total);
     assert(Math.abs(report.metrics[key].rate-expected.metrics[key].rate)<1e-12);
     assert(Math.abs(report.metrics[key].bounds[0]-expected.metrics[key].bounds[0])<1e-12);
   }
-  assert.equal((await call('planner_crafting_report',['main','weapon','unknown','unknown'])).recorded,5);
-  assert.equal((await call('planner_crafting_report',['war'])).status,'insufficient-sample');
+  assert.equal((await call('planner_crafting_summary',['main','weapon','unknown'])).recorded,5);
+  assert.equal((await call('planner_crafting_summary',['war'])).status,'insufficient-sample');
   assert(!JSON.stringify(report).includes('craft-'));assert(!JSON.stringify(report).includes(ids[0]));
   await user(ids[0]);const epoch=receipts[0].epoch;
   const bad={...evidence('bad'),image:'data:image/png;base64,YQ=='};await denied(()=>call('planner_submit_crafting',[epoch,payload([bad])]),'22023');

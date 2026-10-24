@@ -3,7 +3,7 @@ const fs=require('node:fs'),cp=require('node:child_process'),vm=require('node:vm
 const commit=process.argv.find(a=>a.startsWith('--commit='))?.slice(9);
 if(!/^[a-f0-9]{7,40}$/i.test(commit || ''))throw Error('Supply --commit=HASH.');
 const origin='https://dominations-planner.ededed84.workers.dev';
-const files=['scanner.html','config.html','services.js','service-config.js','integration-core.js','cloud.js','cloud-sync.js','research.js','scanner-collection.js','scanner-reading.js','crafted-log-stats.js','crafted-log-stats-ui.js','crafting-history.js','crafting-community.js','crafting-community-ui.js','crafting-result-context.js','crafting-statistics.html','privacy.html'];
+const files=['scanner.html','config.html','services.js','service-config.js','integration-core.js','cloud.js','cloud-sync.js','research.js','scanner-collection.js','scanner-reading.js','crafted-log-stats.js','crafted-log-stats-ui.js','crafting-history.js','crafting-community.js','crafting-community-ui.js','crafting-result-context.js','crafting-statistics.html','privacy.html','storage-scanner.html','storage-scanner.js','ocr-feedback.js','services-ui.js'];
 (async()=>{
   const checks=[];let config,expectedConfig;
   for(const file of files){
@@ -13,17 +13,18 @@ const files=['scanner.html','config.html','services.js','service-config.js','int
     if(file==='service-config.js'){const context={window:{},location:new URL(origin)},expectedContext={window:{},location:new URL(origin)};vm.runInNewContext(body,context);vm.runInNewContext(expected,expectedContext);config=context.window.DNServiceConfig;expectedConfig=expectedContext.window.DNServiceConfig;}
   }
   if(checks.some(c=>!c.matchesCommit))throw Error('Deployed assets do not all match the release commit. Retry after Cloudflare finishes.');
-  if(config.researchEnabled!==expectedConfig.researchEnabled || config.ocrFeedbackEnabled!==false)throw Error('Optional contribution rollout flags differ from the reviewed release.');
+  if(config.researchEnabled!==expectedConfig.researchEnabled || config.ocrFeedbackEnabled!==expectedConfig.ocrFeedbackEnabled)throw Error('Optional contribution rollout flags differ from the reviewed release.');
   const headers={apikey:config.supabasePublishableKey,'Content-Type':'application/json'};
-  const report=await fetch(config.supabaseUrl+'/rest/v1/rpc/planner_crafting_report',{method:'POST',headers,body:'{}',signal:AbortSignal.timeout(20000)});
+  const report=await fetch(config.supabaseUrl+'/rest/v1/rpc/planner_crafting_summary',{method:'POST',headers,body:'{}',signal:AbortSignal.timeout(20000)});
   const aggregate=await report.json();if(!report.ok || !['ready','insufficient-sample'].includes(aggregate.status))throw Error('Community report is unavailable.');
-  const empty=await fetch(config.supabaseUrl+'/rest/v1/rpc/planner_crafting_report',{method:'POST',headers,body:JSON.stringify({p_hall:'__no_matches__'}),signal:AbortSignal.timeout(20000)});
+  if(Object.hasOwn(aggregate.contexts || {},'version'))throw Error('Obsolete game-version reporting metadata is still present.');
+  const empty=await fetch(config.supabaseUrl+'/rest/v1/rpc/planner_crafting_summary',{method:'POST',headers,body:JSON.stringify({p_hall:'__no_matches__'}),signal:AbortSignal.timeout(20000)});
   const emptySample=await empty.json();if(!empty.ok || emptySample.status!=='insufficient-sample' || emptySample.minimumContributors!==1)throw Error('First-contributor threshold is not deployed.');
-  for(const table of ['planner_workspaces','planner_crafting_evidence']){
+  for(const table of ['planner_workspaces','planner_crafting_evidence',...(config.ocrFeedbackEnabled?['planner_ocr_feedback_samples','planner_ocr_feedback_consent','planner_ocr_feedback_operations']:[])]){
     const result=await fetch(config.supabaseUrl+'/rest/v1/'+table+'?select=*&limit=1',{headers,signal:AbortSignal.timeout(20000)});
     if(![401,403].includes(result.status))throw Error('Anonymous private-table access was not denied.');
     checks.push({privateTable:table,anonymousDenied:true,status:result.status});
   }
-  const result={checkedAt:new Date().toISOString(),commit,origin,passed:true,checks,researchEnabled:config.researchEnabled,ocrFeedbackEnabled:false,minimumContributors:1,communityReportStatus:aggregate.status,realGameAcceptance:'pending'};
+  const result={checkedAt:new Date().toISOString(),commit,origin,passed:true,checks,researchEnabled:config.researchEnabled,ocrFeedbackEnabled:config.ocrFeedbackEnabled,minimumContributors:1,communityReportStatus:aggregate.status,realGameAcceptance:'pending'};
   fs.writeFileSync('data/temp/crafting-v2-public-release.json',JSON.stringify(result,null,2)+'\n');console.log(JSON.stringify(result,null,2));
 })().catch(error=>{console.error(error.message);process.exitCode=1;});

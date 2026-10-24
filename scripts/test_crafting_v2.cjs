@@ -70,6 +70,7 @@ assert.equal(stats.metrics.duplicate.hits,1);assert.equal(stats.metrics.duplicat
 assert(stats.metrics.rows11.bounds[0]<.2 && stats.metrics.rows11.bounds[1]>.2);
 assert.equal(S.analyze(payload.records,{event_id:'unknown'}).recorded,7);
 assert(!JSON.stringify(payload).includes('Artifact'));assert(!JSON.stringify(payload).includes('private OCR'));
+assert(!Object.hasOwn(S.encode({...saved.items[0],gameVersion:'unused',gameVersionSource:'dataset'}),'game_version'),'game-version identification is not collected');
 assert.equal(S.encode({...saved.items[0],freshCraft:false}).exclusion,'starting-unknown');
 assert.equal(S.encode({...saved.items[0],freshCraft:true,startingContextSource:'unknown'}).exclusion,'starting-unknown','mode-derived level 1 alone never establishes a starting roll');
 assert(app.window.DNCraftingResultContext.classify({text:'Sell for +30 +18 Continue',confidence:90}));

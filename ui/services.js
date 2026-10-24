@@ -24,15 +24,15 @@
     await script('service-store.js?v=2');
     await script('telemetry.js?v=20261022-ocr-feedback');
     if(!window.DN_ARTIFACT_STAT_CONTEXT)await script('data/artifact_stat_context.js?v=1');
-    await script('crafting-community.js?v=2');
+    await script('crafting-community.js?v=20261024-events-only');
     await script('crafting-result-context.js?v=1');
     await Promise.all([script('cloud-sync.js?v=20261023-history-v2'),script('research.js?v=20261023-automatic-v2')]);
     if(!window.DNStoredArtifacts)await script('stored-artifacts.js?v=23');
     if(!window.DNLocalBackupCore)await script('local-backup.js?v=3');
-    await script('cloud.js?v=20261023-history-v2');
+    await script('cloud.js?v=20261024-events-only');
     await script('ocr-feedback.js?v=1');
     await script('services-ui.js?v=20261023-history-v2');
-    await script('crafting-community-ui.js?v=20261024-first-contributor');
+    await script('crafting-community-ui.js?v=20261024-events-only');
   }
   window.DNServicesReady=new Promise(resolve=>{
     const run=()=>boot().catch(()=>{ /* Optional services cannot break the local application. */ }).finally(resolve);

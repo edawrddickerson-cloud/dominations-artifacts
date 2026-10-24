@@ -10,7 +10,7 @@ The collector remains authoritative for encounter identity, duplicate prevention
 
 **Scanner diagnostics** lists missing artifact names and unknown perk labels, linked to the existing log's name field. Resolving a name removes its review entry without creating an item or changing inventory. Future title reads retain rejected OCR text and confidence alongside the canonical item, and both full-log and evidence exports include the unresolved-name references. Older unnamed items appear automatically even when no title OCR evidence was saved. Separately opted-in remote evidence is described in [OCR feedback](ocr-feedback.md); the release gate remains off.
 
-New log metadata includes capture session ID, live/image/unknown capture source and unknown crafting event ID/source. Existing records remain readable and their capture source stays unknown. Game version is not collected. Event identification is deferred to a local dataset; there are no event or game-version inputs.
+New log metadata includes capture session ID, live/image/unknown capture source and unknown crafting event ID/source. Existing records remain readable and their capture source stays unknown. Game-version identification is permanently outside scope. Event identification is deferred to a local dataset; there are no required event or session inputs.
 
 The default evidence filter uses the best available complete canonical names/values, including inferred readings. Direct/corrected evidence is an optional stricter filter. Incomplete and conflicting results remain in the log and are counted separately. Perk positions and repeated perk rows are preserved; item frequency counts a perk once per item, while row/value distributions retain duplicates.
 

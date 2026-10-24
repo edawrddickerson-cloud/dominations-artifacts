@@ -30,7 +30,6 @@
     }
     return {id:item.id,revision:item.revision || 0,writer:item.writer || '',deleted:!!item.archived,observed_at:item.firstSeen || null,hall,category,
       event_id:item.craftingEventSource==='dataset'?item.craftingEventId || null:null,
-      game_version:item.gameVersionSource==='dataset'?item.gameVersion || null:null,
       exclusion,rows:exclusion?[]:rows};
   }
   function payload(log) {
@@ -44,7 +43,7 @@
   }
   function analyze(records,filter={},index=rules()) {
     const unique=new Map();for(const record of records || [])unique.set(record.id,record);
-    const sample=[...unique.values()].filter(i=>!i.deleted && ['hall','category','event_id','game_version'].every(key=>!filter[key] || (i[key] || 'unknown')===filter[key]));
+    const sample=[...unique.values()].filter(i=>!i.deleted && ['hall','category','event_id'].every(key=>!filter[key] || (i[key] || 'unknown')===filter[key]));
     const counts={recorded:sample.length,excluded:0,eligibleArtifacts:0,eligibleRows:0,elevenRows:0,elevenArtifacts:0,twoElevenArtifacts:0,duplicateArtifacts:0,duplicateEligible:0},exclusions={};
     for(const item of sample) {
       if(item.exclusion){counts.excluded++;exclusions[item.exclusion]=(exclusions[item.exclusion] || 0)+1;continue;}

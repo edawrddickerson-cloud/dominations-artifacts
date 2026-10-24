@@ -121,7 +121,7 @@
     return starting;
   }
   window.DNCloud={configured,start,rpc,capture,fullBackup,user:()=>currentUser?{id:currentUser.id,email:currentUser.email,displayName:String(currentUser.user_metadata?.preferred_username || currentUser.user_metadata?.full_name || currentUser.user_metadata?.name || currentUser.email || 'Discord account').slice(0,100)}:null,state:()=>({...message}),
-    async communityReport(args={}){await start();if(!client || !C.researchReady(config))throw Error('Unavailable');const result=await client.rpc('planner_crafting_report',args);if(result.error)throw result.error;return result.data;},
+    async communityReport(args={}){await start();if(!client || !C.researchReady(config))throw Error('Unavailable');const result=await client.rpc('planner_crafting_summary',args);if(result.error)throw result.error;return result.data;},
     subscribe(fn){listeners.add(fn);return ()=>listeners.delete(fn);},
     sync:()=>engine.inspect(),choose:(choice,expected)=>engine.choose(choice,expected),
     consentReady:()=>consentTask,
