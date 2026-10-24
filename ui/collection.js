@@ -122,6 +122,12 @@
     return true;
   }
   const crafted=row=>row && !['Legendary','Mythical'].includes(DN.text(row.grade));
+  function artworkThumb(id,name,size) {
+    const row=byId[id],item=row?.scanned;
+    if(!window.DNArtwork)return DN.thumbHtml(artifactImages[id] || '',name,size);
+    const image=window.DNArtwork.html(item,'entity-thumb',name,catalogImages[id] || '');
+    return '<span class="entity-thumb-frame '+DN.esc(size)+'">'+image+'</span>';
+  }
   function applyScans(scans) {
     rows=window.DNStoredArtifacts.catalogRows(catalogRows,scans,{includeOrdinary:true});
     byId={};collected=DN.loadCollected();artifactImages={...catalogImages};
@@ -571,7 +577,7 @@
       const weighted='<td class="comparison-line-score"><b>'+(Number.isFinite(value)?formatNum(points):DN.BLANK)+'</b></td>';
       return side==='left'?name+stat+weighted:weighted+stat+name;
     };
-    const portrait=row=>'<figure class="comparison-portrait">'+DN.thumbHtml(artifactImages[DN.artifactKey(row)] || '',DN.show(row.name),'entity-thumb--comparison')+'</figure>';
+    const portrait=row=>'<figure class="comparison-portrait">'+artworkThumb(DN.artifactKey(row),DN.show(row.name),'entity-thumb--comparison')+'</figure>';
     const uncertain=leftScore.rerollUncertain || rightScore?.rerollUncertain;
     const difference=other && valid(selected) && valid(other)?(uncertain?'~':'')+signed(rightScore.potentialPreference-leftScore.potentialPreference):DN.BLANK;
     const delta=other && valid(selected) && valid(other) && !uncertain?rightScore.potentialPreference-leftScore.potentialPreference:0;
@@ -618,11 +624,7 @@
         .map((row) => {
           const id = DN.artifactKey(row);
           const slot = slotLabel(id);
-          const thumb = DN.thumbHtml(
-            artifactImages[id] || "",
-            DN.show(row.name),
-            "entity-thumb--collection"
-          );
+          const thumb = artworkThumb(id,DN.show(row.name),"entity-thumb--collection");
           return (
             `<button type="button" class="slot-picker-item" data-action="picker-pick" data-id="${DN.esc(id)}">` +
             `<span class="slot-picker-thumb">${thumb}</span>` +
@@ -844,7 +846,7 @@
         return '<div class="collection-table-stat"><div class="collection-table-stat-title">'+diceIcon(row,perk)+perkStar(id,perk)+'<span class="comparison-stat-name'+(locked?' is-locked':'')+'">'+DN.esc(perk.name)+'</span></div><div class="collection-table-stat-values"><span>'+(Number.isFinite(value)?(value>=0?'+':'')+formatNum(value)+'%':DN.BLANK)+'</span><span title="Score at maximum upgrade">'+(Number.isFinite(comparisonMaxValue(row,perk))?formatNum(points):DN.BLANK)+'</span></div></div>';
       }).join('');
       const usage=usedStrategies(id);
-      const identity='<div class="collection-table-identity"><div class="collection-table-thumb">'+DN.thumbHtml(artifactImages[id] || '',DN.show(row.name),'entity-thumb--collection')+'</div><div><button type="button" class="card-name collection-table-name" data-action="inspect" data-id="'+DN.esc(id)+'">'+DN.esc(DN.show(row.name))+'</button><small title="'+DN.esc(usage.map(strategy=>strategy.name).join(', '))+'">Used by '+usage.length+' strategies</small></div></div>';
+      const identity='<div class="collection-table-identity"><div class="collection-table-thumb">'+artworkThumb(id,DN.show(row.name),'entity-thumb--collection')+'</div><div><button type="button" class="card-name collection-table-name" data-action="inspect" data-id="'+DN.esc(id)+'">'+DN.esc(DN.show(row.name))+'</button><small title="'+DN.esc(usage.map(strategy=>strategy.name).join(', '))+'">Used by '+usage.length+' strategies</small></div></div>';
       const strategyCells=strategies.map(strategy=>{
         const metric=strategyMetrics.get(strategy.id)?.get(id),rank=strategyRanks.get(strategy.id)?.get(id);
         return '<td class="collection-strategy-score"><button type="button" data-action="strategy-inspect" data-strategy-id="'+DN.esc(strategy.id)+'" data-id="'+DN.esc(id)+'" title="Inspect using '+DN.esc(strategy.name)+'">'+(metric?.value!=null?(metric.uncertain?'~':'')+formatNum(metric.value):DN.BLANK)+'<small>'+(rank?(uncertainStrategyGroups.get(strategy.id)?.has(row.grade)?'Known rank ':'Rank ')+rank+(rank<=2?' · Top 2':''):metric?.value==null?'Incomplete':metric.uncertain?'Uncertain reroll':'Incomplete')+'</small></button></td>';
@@ -933,11 +935,7 @@
         `</ul>`;
     }
 
-    const thumb = DN.thumbHtml(
-      artifactImages[id] || "",
-      DN.show(row.name),
-      "entity-thumb--collection"
-    );
+    const thumb = artworkThumb(id,DN.show(row.name),"entity-thumb--collection");
     return (
       `<article class="artifact-card mode-${mode}" data-artifact-id="${DN.esc(id)}">` +
       `<div class="card-thumb">${thumb}</div>` +
@@ -971,11 +969,7 @@
     if (filled && id) {
       const row = byId[id];
       const name = row ? DN.show(row.name) : id;
-      const thumb = DN.thumbHtml(
-        artifactImages[id] || "",
-        name,
-        "entity-thumb--museum"
-      );
+      const thumb = artworkThumb(id,name,"entity-thumb--museum");
       return (
         `<button type="button" class="museum-tile is-filled${highlightedId===id?' is-highlighted':''}" data-action="${inspectAction}" data-id="${DN.esc(id)}" title="${inspectAction === 'inspect' ? 'Inspect artifact' : 'Inspect and choose a replacement'}">` +
         `<span class="museum-tile-label">${DN.esc(label)}</span>` +
@@ -997,11 +991,7 @@
     const id = DN.artifactKey(row);
     const perks = DN.perksOf(row, canonPerk);
     const singleIdx = hallState().singles[id];
-    const thumb = DN.thumbHtml(
-      artifactImages[id] || "",
-      DN.show(row.name),
-      "entity-thumb--museum"
-    );
+    const thumb = artworkThumb(id,DN.show(row.name),"entity-thumb--museum");
     const perkOpts = perks
       .map((p) => {
         const selected = p.index === singleIdx ? " selected" : "";

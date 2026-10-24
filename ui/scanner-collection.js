@@ -112,7 +112,8 @@
         if(!sameArtifact(prior,result)){if(evidenceChanged)setItem(id,clone({...prior,ocrEvidence:evidence}));return evidenceChanged;}
         const scannedName=result.artifact?.name;
         const recoveredImage=!prior.image && result.artifact?.image;
-        let changed=evidenceChanged || !!recoveredImage || !!scannedName && !prior.name && prior.nameSource!=='manual' || JSON.stringify(nameEvidence)!==JSON.stringify(prior.nameEvidence || null);
+        const recoveredArtwork=result.artifact?.artworkId && result.artifact.artworkId!==prior.artworkId;
+        let changed=evidenceChanged || !!recoveredImage || !!recoveredArtwork || !!scannedName && !prior.name && prior.nameSource!=='manual' || JSON.stringify(nameEvidence)!==JSON.stringify(prior.nameEvidence || null);
         const rows=prior.rows.map((row,index)=>{
           const next=result.rows[index];
           if(row.rerollSource==='manual' || !next || !Object.prototype.hasOwnProperty.call(next,'rerollEligible'))return row;
@@ -121,7 +122,7 @@
           return {...row,rerollEligible:next.rerollEligible,rerollSource:next.rerollSource,
             rerollConfidence:next.rerollConfidence,rerollEvidence:next.rerollEvidence,rerollConflict:next.rerollConflict};
         });
-        if(changed)setItem(id,clone({...prior,...(recoveredImage?{image:recoveredImage}:{}),...(scannedName && !prior.name && prior.nameSource!=='manual'?{name:scannedName,nameSource:'scanned'}:{}),nameEvidence,ocrEvidence:evidence,rows,lastUpdated:new Date().toISOString()}));
+        if(changed)setItem(id,clone({...prior,...(recoveredImage?{image:recoveredImage}:{}),...(recoveredArtwork?{artworkId:result.artifact.artworkId}:{}),...(scannedName && !prior.name && prior.nameSource!=='manual'?{name:scannedName,nameSource:'scanned'}:{}),nameEvidence,ocrEvidence:evidence,rows,lastUpdated:new Date().toISOString()}));
         return changed;
       }
       const timestamp=new Date().toISOString();
@@ -139,6 +140,7 @@
         hallSource:result.hallSource || prior?.hallSource || null,
         name:prior?.nameSource==='manual'?prior.name:result.artifact?.name || prior?.name || null,
         nameSource:prior?.nameSource || (result.artifact?.name?'scanned':null),image:result.artifact?.image || prior?.image || null,
+        ...(result.artifact?.artworkId?{artworkId:result.artifact.artworkId}:prior?.artworkId && (!result.artifact?.image || result.artifact.image===prior.image)?{artworkId:prior.artworkId}:{}),
         type:result.artifact?.type || prior?.type || null,freshCraft:result.freshCraft ?? prior?.freshCraft ?? rows.every(row=>row.rerollSource==='fresh-craft'),rows,unlocked:result.unlocked || prior?.unlocked || null,
         revision:prior?.revision || 0,writer:prior?.writer || '',keptAt:prior?.keptAt || null,
         identityEvidence:prior?.identityEvidence || identityEvidence,
@@ -386,7 +388,7 @@
         const repeated=nameGroups.get(itemNameKeys.get(item.id))?.size || 0;
         const date=new Date(item.firstSeen),timestamp=Number.isFinite(date.getTime())?date.toISOString().slice(0,19):'Unknown time';
         node.innerHTML='<div class="scanner-log-heading"><details><summary><strong>'+escape(item.name || 'Unnamed artifact')+'</strong> <span class="scanner-log-meta">#'+itemNumbers.get(item.id)+' · <time datetime="'+escape(Number.isFinite(date.getTime())?date.toISOString():'')+'">'+timestamp+'</time> UTC · '+escape(item.hall==='main'?'Main':hallLabel(item.hall))+(item.type?' · '+escape(item.type):'')+' · '+(item.corrected?'Corrected':isComplete(item)?'Stats complete':item.validated?'Read complete':'Needs review')+(repeated>1?' · Same name ×'+repeated:'')+'</span></summary>'+
-        (/^data:image\/(?:jpeg|png|webp);base64,/i.test(item.image || '')?'<img class="scanner-log-artwork" src="'+escape(item.image)+'" alt="'+escape(item.name || 'Artifact')+'" width="192" loading="lazy" />':'')+
+        (window.DNArtwork?window.DNArtwork.html(item,'scanner-log-artwork',item.name || 'Artifact'):/^data:image\/(?:jpeg|png|webp);base64,/i.test(item.image || '')?'<img class="scanner-log-artwork" src="'+escape(item.image)+'" alt="'+escape(item.name || 'Artifact')+'" width="192" loading="lazy" />':'')+
         '<label class="scanner-log-name">Name <input type="text" data-log-name="'+escape(item.id)+'" value="'+escape(item.name || '')+'"'+(busy || item.keptId?' disabled':'')+' /></label>'+
         '<ol>'+Array.from({length:item.expectedRows || 5},(_,i)=>{const row=item.rows[i];return '<li>'+escape(row?.name || row?.raw || 'Unread stat')+' <strong>'+escape(Number.isFinite(row?.value)?(row.value>=0?'+':'')+row.value+'%':'?%')+'</strong>'+(row?.inferred?' (inferred)':row?.assumed?' (assumed)':'')+'</li>';}).join('')+'</ol>'+category+'</details>'+
         (window.DNScannerKeep?'<button type="button" class="btn" data-keep-log="'+escape(item.id)+'"'+(busy || item.keptId || reason?' disabled':'')+' title="'+escape(item.keptId?'Added to Collection':reason || 'Add this logged craft to Collection and benchmarks')+'">'+(busy?'Saving…':item.keptId?'Kept':'Keep')+'</button>':'')+
@@ -417,6 +419,17 @@
     record:result=>isEnabled() && afterChange(collector.record(result)),
     recordItem:(result,id,options)=>isEnabled() && afterChange(collector.recordItem(result,id,options))};
   if(typeof window.Event==='function')window.dispatchEvent(new window.Event('dn-crafted-log-ready'));
+  async function backfillArtwork(){
+    if(!window.DNArtwork?.enabled())return;
+    const profile=window.DNStoredArtifacts?.collectionKey(),owner=window.DNCloud?.user()?.id;
+    for(const item of collector.summary().items){
+      if(profile!==window.DNStoredArtifacts?.collectionKey() || owner!==window.DNCloud?.user()?.id)return;
+      if(item.profileKey && item.profileKey!==profile || window.DNArtwork.validId(item.artworkId) || !window.DNArtwork.local(item.image))continue;
+      const match=await window.DNArtwork.match(item.image),current=collector.getItem(item.id);
+      if(match.artworkId && current?.image===item.image && current.artworkId===item.artworkId && profile===window.DNStoredArtifacts?.collectionKey() && owner===window.DNCloud?.user()?.id)afterChange(collector.updateItem(item.id,{artworkId:match.artworkId}));
+    }
+  }
+  if(window.DNArtwork)setTimeout(()=>backfillArtwork().catch(()=>{}),0);
   document.getElementById('scanner-item-log')?.addEventListener('click',async event=>{
     const button=event.target.closest('[data-keep-log]');if(!button || button.disabled)return;
     const id=button.dataset.keepLog,item=collector.getItem(id);

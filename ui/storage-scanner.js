@@ -46,7 +46,7 @@
   async function refreshCollection() {
     const key=store.collectionKey();
     collectionProfile=null;
-    try {const saved=await store.read(key);if(key===store.collectionKey()){collection=saved;collectionProfile=key;}}
+    try {const saved=await store.read(key),inventory=await store.read('items');if(key===store.collectionKey()){collection=saved;collectionProfile=key;items.splice(0,items.length,...inventory);}}
     catch {savedStatus('Could not load Collection. Reload to retry.',true);}
     render();
   }
@@ -133,7 +133,7 @@
     }
     get('add-collection').disabled=!loaded || !items.length || adding || saving;
     get('count').textContent=items.length+' artifacts in your scanned inventory';
-    get('items').innerHTML=items.map((item,index)=>({item,index})).reverse().map(({item,index})=>'<li>'+(item.image?'<img class="storage-artwork" src="'+esc(item.image)+'" alt="'+esc(item.name)+'" loading="lazy" />':'')+'<div><strong>'+esc(item.name)+'</strong> · '+esc(item.type)+' · '+esc(item.hall)+' · '+item.rows.length+' stats'+
+    get('items').innerHTML=items.map((item,index)=>({item,index})).reverse().map(({item,index})=>'<li>'+(window.DNArtwork?window.DNArtwork.html(item,'storage-artwork',item.name):item.image?'<img class="storage-artwork" src="'+esc(item.image)+'" alt="'+esc(item.name)+'" loading="lazy" />':'')+'<div><strong>'+esc(item.name)+'</strong> · '+esc(item.type)+' · '+esc(item.hall)+' · '+item.rows.length+' stats'+
       item.rows.map((row,i)=>row.rangeReview?'<p>Stat '+(i+1)+' ('+esc(row.name)+'): '+esc(row.rangeReview)+' '+esc((row.rangeCandidates || []).map(candidate=>'Base '+candidate.base+'% at level '+candidate.level).join(' or '))+'</p>':'').join('')+
       '<button type="button" class="btn" data-remove="'+index+'" aria-label="Remove '+esc(item.name)+'">Remove</button><ul class="storage-inventory-stats" style="--stat-count:'+item.rows.length+'">'+item.rows.map(inventoryStat).join('')+'</ul></div></li>').join('');
   }
@@ -165,7 +165,8 @@
     }
     artifact=result?.artifact;
     get('picture').hidden=!artifact?.image;
-    if(artifact?.image){get('picture').src=artifact.image;get('picture').alt=get('name').value || 'Captured artifact artwork';}
+    if(window.DNArtwork){window.DNArtwork.bind(get('picture'),artifact);get('picture').alt=get('name').value || 'Artifact';}
+    else if(artifact?.image){get('picture').src=artifact.image;get('picture').alt=get('name').value || 'Captured artifact artwork';}
     else get('picture').removeAttribute('src');
     const notices=(result?.artifact?.metadataWarnings || []).filter(w=>{
       const row=/^Row (\d+): upgrade level/.exec(w);return !row || result.rows[Number(row[1])-1]?.level==null;
@@ -187,7 +188,7 @@
     if(key!==saveKey || saving || keepReason())return;
     const preview=reviewedItem();
     const item={id:preview.catalogId || candidateId,catalogId:preview.catalogId,manualCorrection,name:preview.name,type:preview.type,hall:preview.hall,
-      image:current.artifact?.image || null,capturedAt:new Date().toISOString(),reviewed:true,rows:reviewedItem().rows.map(({name,value,level,levelSource,unlocked,base,max,rangeSource,tier,tierSource,tierEvidence,tierConflict,inferredFields,valueSource,observedValue,observedLevel,rerollEligible,rerollSource,rerollConfidence,rerollEvidence,rerollConflict,rangeCandidates,rangeReview})=>({name,value,level:level??null,levelSource:levelSource??null,unlocked:unlocked??null,base:base??null,max:max??null,rangeSource:rangeSource??null,tier:tier??null,tierSource:tierSource??null,tierEvidence:tierEvidence??null,tierConflict:!!tierConflict,inferredFields:inferredFields || [],valueSource:valueSource??null,observedValue:observedValue??null,observedLevel:observedLevel??null,rerollEligible:typeof rerollEligible==='boolean'?rerollEligible:null,rerollSource:rerollSource??null,rerollConfidence:rerollConfidence??null,rerollEvidence:rerollEvidence??null,rerollConflict:!!rerollConflict,rangeCandidates:rangeCandidates || [],rangeReview:rangeReview || null}))};
+      image:current.artifact?.image || null,...(current.artifact?.artworkId?{artworkId:current.artifact.artworkId}:{}),capturedAt:new Date().toISOString(),reviewed:true,rows:reviewedItem().rows.map(({name,value,level,levelSource,unlocked,base,max,rangeSource,tier,tierSource,tierEvidence,tierConflict,inferredFields,valueSource,observedValue,observedLevel,rerollEligible,rerollSource,rerollConfidence,rerollEvidence,rerollConflict,rangeCandidates,rangeReview})=>({name,value,level:level??null,levelSource:levelSource??null,unlocked:unlocked??null,base:base??null,max:max??null,rangeSource:rangeSource??null,tier:tier??null,tierSource:tierSource??null,tierEvidence:tierEvidence??null,tierConflict:!!tierConflict,inferredFields:inferredFields || [],valueSource:valueSource??null,observedValue:observedValue??null,observedLevel:observedLevel??null,rerollEligible:typeof rerollEligible==='boolean'?rerollEligible:null,rerollSource:rerollSource??null,rerollConfidence:rerollConfidence??null,rerollEvidence:rerollEvidence??null,rerollConflict:!!rerollConflict,rangeCandidates:rangeCandidates || [],rangeReview:rangeReview || null}))};
     saving=true;render();
     try {
       const result=await store.saveScan(item,{profileKey:observationProfile,isCurrent:()=>key===saveKey && !keepReason()});

@@ -8,6 +8,49 @@
   'use strict';
   let opening;
   let catalogPromise;
+  let artworkTask=null,artworkAgain=false;
+  const artworkAttempts=new Map();
+  function backfillArtwork(){
+    if(!window.DNArtwork?.enabled())return Promise.resolve();
+    artworkAgain=true;
+    if(!artworkTask)artworkTask=(async()=>{while(artworkAgain){artworkAgain=false;await runArtworkBackfill();}})().finally(()=>{artworkTask=null;});
+    return artworkTask;
+  }
+  async function runArtworkBackfill(){
+    const profile=collectionKey(),owner=window.DNCloud?.user()?.id;
+    const current=()=>profile===collectionKey() && owner===window.DNCloud?.user()?.id;
+    try{
+      const records=await readBackupRecords();
+      for(const record of records.filter(r=>r.id==='items'||r.id===profile))for(const item of record.items || []){
+        if(!current())return;
+        if(window.DNArtwork.validId(item.artworkId)||!window.DNArtwork.local(item.image))continue;
+        const key=record.id+'|'+item.id;
+        if(artworkAttempts.get(key)===item.image)continue;
+        artworkAttempts.set(key,item.image);if(artworkAttempts.size>1000)artworkAttempts.delete(artworkAttempts.keys().next().value);
+        const match=await window.DNArtwork.match(item.image);
+        if(match.status==='unavailable')artworkAttempts.delete(key);
+        if(!match.artworkId||!current())continue;
+        const db=await open();let changed=false;
+        await new Promise((resolve,reject)=>{
+          const tx=db.transaction('inventory','readwrite'),store=tx.objectStore('inventory'),request=store.get(record.id);
+          request.onsuccess=()=>{
+            const saved=request.result,existing=saved?.items?.find(i=>i.id===item.id);
+            if(!current()||!existing||existing.image!==item.image||existing.artworkId!==item.artworkId)return;
+            existing.artworkId=match.artworkId;store.put(saved);changed=true;
+          };
+          tx.oncomplete=resolve;tx.onabort=tx.onerror=()=>reject(tx.error);
+        });
+        if(changed)announce(record.id);
+      }
+    }catch{ /* Matching must not interfere with local item saving. */ }
+  }
+  if(typeof window.addEventListener==='function'){
+    window.addEventListener('dn-artifacts-changed',()=>setTimeout(backfillArtwork,0));
+    window.addEventListener('dn-craft-kept',()=>setTimeout(backfillArtwork,0));
+    window.addEventListener('dn-strategies-changed',event=>{if(event.detail?.reason==='profile')setTimeout(backfillArtwork,0);});
+    window.addEventListener('online',()=>setTimeout(backfillArtwork,0));
+    if(window.DNArtwork)setTimeout(backfillArtwork,0);
+  }
   const changes=typeof window.BroadcastChannel==='function'?new window.BroadcastChannel('dn-stored-artifacts'):null;
   function announce(profileKey=collectionKey()) {
     changes?.postMessage({profileKey});
@@ -75,7 +118,7 @@
     const db = await open();
     return new Promise((resolve, reject) => {
       const request = db.transaction('inventory', 'readonly').objectStore('inventory').get(key);
-      request.onsuccess = () => resolve(identify(request.result?.items || []));
+      request.onsuccess = () => {resolve(identify(request.result?.items || []));if(window.DNArtwork?.enabled())setTimeout(backfillArtwork,0);};
       request.onerror = () => reject(request.error);
     });
   }
@@ -593,6 +636,6 @@
     });
     return row;
   }
-  window.DNStoredArtifacts = {read, write, readBackupRecords, readPlannerRecords, restoreBackupRecords, accept, saveScan, keepCraft, passivePlan, passiveMerge, remove, update, identify, toRow, matchCatalog, markCatalogOwned, linkCatalogItem, catalogRows, reconcileCatalog, loadCatalog, useCatalog, collectionKey, impliedRange, tierBases, tierMetadata, craftingTier, inferStorageRow, backfillItem, merge,
+  window.DNStoredArtifacts = {read, write, readBackupRecords, readPlannerRecords, restoreBackupRecords, accept, saveScan, keepCraft, passivePlan, passiveMerge, remove, update, identify, toRow, matchCatalog, markCatalogOwned, linkCatalogItem, catalogRows, reconcileCatalog, loadCatalog, useCatalog, collectionKey, impliedRange, tierBases, tierMetadata, craftingTier, inferStorageRow, backfillItem, merge,backfillArtwork,
     newId:() => 'scan-' + crypto.randomUUID()};
 })();

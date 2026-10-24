@@ -1,7 +1,7 @@
 /* Public integration configuration. Never put privileged keys in ui/.
  * Empty project values keep all cloud/analytics connections disabled. */
 window.DNServiceConfig=Object.freeze({
-  build:'2026-10-24-ocr-matching',
+  build:'2026-10-24-shared-artwork',
   // Local work and preview hosts stay out of production usage dashboards.
   environment:typeof location!=='undefined' && location.origin!=='https://dominations-planner.ededed84.workers.dev'?'development':'production',
   cloudEnabled:typeof location==='undefined' || location.origin==='https://dominations-planner.ededed84.workers.dev',
@@ -17,6 +17,7 @@ window.DNServiceConfig=Object.freeze({
   researchEnabled:true,
   // Separate account-bound opt-in; no account is enrolled by this flag.
   ocrFeedbackEnabled:true,
+  artworkMatchingEnabled:true,
   diagnosticsSampleRate:0.1,
   // PostHog Free analysis windows, not guaranteed physical-erasure deadlines.
   analyticsRetentionDays:365,

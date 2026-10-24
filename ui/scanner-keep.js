@@ -33,7 +33,7 @@
     const profileKey=logged.profileKey || store.collectionKey(),type=logged.type;
     const item=store.backfillItem({id:logged.keptId || logged.keepId || 'craft-log-'+logged.id,name:logged.name || 'Crafted '+type,
       hall:logged.hall,hallSource:logged.hallSource,unlocked:structuredClone(logged.unlocked),type,reviewed:true,freshCraft:true,keptFromCraft:true,profileId:DN.activeProfileId(),
-      capturedAt:logged.firstSeen || new Date().toISOString(),image:logged.image || null,rows:structuredClone(logged.rows)});
+      capturedAt:logged.firstSeen || new Date().toISOString(),image:logged.image || null,...(logged.artworkId?{artworkId:logged.artworkId}:{}),rows:structuredClone(logged.rows)});
     return saveItem(item,profileKey,logged,currentLog()?.id===logged.id?key():null);
   }
   function reason(){
@@ -61,7 +61,7 @@
     const type=get('compare-type').value.replace(/^./,letter=>letter.toUpperCase());
     const item=store.backfillItem({id:ids.get(encounter),name:(logged?.nameSource==='manual'?logged.name:result.artifact?.name || logged?.name) || 'Crafted '+type,
       hall:result.hall || get('hall').value,hallSource:result.hallSource,unlocked:structuredClone(result.unlocked),type,reviewed:true,freshCraft:true,keptFromCraft:true,profileId,
-      capturedAt:new Date().toISOString(),image:result.artifact?.image || null,rows:structuredClone(result.rows)});
+      capturedAt:new Date().toISOString(),image:result.artifact?.image || null,...(result.artifact?.artworkId?{artworkId:result.artifact.artworkId}:{}),rows:structuredClone(result.rows)});
     saving=true;failure='';render();
     try{
       await saveItem(item,profileKey,logged,encounter);

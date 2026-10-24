@@ -7,7 +7,7 @@
   const VERSION=1,POLICY='2026-10-18',MAX_BYTES=16*1024*1024;
   const globals=new Set(['dn-profiles','dn-artifact-perk-ratings-global','dn-perk-ratings-layer-migrated','dn_perk_group_defaults_v1','dn-general-ratings-2026-10-16']);
   const profileKeys=new Set(['dn-artifact-collected','dn-artifact-loadout','dn-artifact-perk-levels','dn-artifact-perk-edits','dn-artifact-collection-ui','dn-army-presets','dn-strategies','dn-crafting-purposes','dn-artifact-ranking-targets','dn-artifact-perk-ratings','dn-artifact-pref-sort-axes','dn-artifact-hide-collected','dn-artifact-score-mode','dn-artifact-hall-filter','dn-artifact-grade-filter','dn-artifact-perk-match-mode','dn-council-owned','dn-council-active','dn-council-stat-ratings','dn-council-ui','dn-council-pref-sort-axes','dn-council-hide-owned','dn-council-score-mode']);
-  const forbidden=new Set(['__proto__','prototype','constructor','image','artwork','screenshot','screenshots','frame','frames','canvas','raw','rawType','observations','percentageReads','samples','access_token','refresh_token','authorization','api_key']);
+  const forbidden=new Set(['__proto__','prototype','constructor','image','artwork','artworkMatch','artworkDescriptor','artworkFingerprint','artworkEmbedding','screenshot','screenshots','frame','frames','canvas','raw','rawType','observations','percentageReads','samples','access_token','refresh_token','authorization','api_key']);
   function clean(value,depth=0) {
     if(depth>20)throw Error('Workspace data is nested too deeply.');
     if(typeof value==='string')return /^data:|^blob:/i.test(value)?null:value;
@@ -38,6 +38,7 @@
   }
   function validate(workspace) {
     const fail=()=>{throw Error('Unsupported or invalid cloud workspace. Local data was left unchanged.');};
+    if(workspace?.artworkSchema!=null && workspace.artworkSchema!==1)fail();
     if(workspace?.kind!=='dominations-cloud-workspace' || workspace.version!==VERSION || workspace.game!=='dominations' || !workspace.settings || typeof workspace.settings!=='object' || Array.isArray(workspace.settings) || !Array.isArray(workspace.records))fail();
     for(const [key,value] of Object.entries(workspace.settings))if(!isSyncedSetting(key) || typeof value!=='string')fail();
     let profiles;
@@ -53,6 +54,7 @@
       for(const item of record.items) {
         if(!item || typeof item.id!=='string' || items.has(item.id) || typeof item.name!=='string' || typeof item.type!=='string' || !['main','war'].includes(item.hall) || !Array.isArray(item.rows) || item.rows.length<1 || item.rows.length>6)fail();
         items.add(item.id);
+        if(item.artworkId!=null && !window.DNArtworkIds?.includes(item.artworkId))fail();
         for(const row of item.rows)if(!row || typeof row.name!=='string' || !Number.isFinite(row.value))fail();
       }
     }
@@ -70,7 +72,9 @@
       try{return [key,JSON.stringify(clean(JSON.parse(value)))];}catch{return [key,value];}
     }));
     // JSON normalization also makes hashes match PostgreSQL after transmission.
-    return validate(JSON.parse(JSON.stringify({kind:'dominations-cloud-workspace',version:VERSION,game:'dominations',settings:safeSettings,records:records.filter(record=>record.id==='items' || record.id.startsWith('collection:')).map(record=>({id:record.id,items:record.items.map(sanitizeItem)})),...(craftingLog?{craftingLog:window.DNCraftingHistory.project(craftingLog)}:{})})));
+    const value={kind:'dominations-cloud-workspace',version:VERSION,game:'dominations',settings:safeSettings,records:records.filter(record=>record.id==='items' || record.id.startsWith('collection:')).map(record=>({id:record.id,items:record.items.map(sanitizeItem)})),...(craftingLog?{craftingLog:window.DNCraftingHistory.project(craftingLog)}:{})};
+    if(window.DNArtworkIds)value.artworkSchema=1;
+    return validate(JSON.parse(JSON.stringify(value)));
   }
   function lifetimeCraftsLogged(log) {
     if(log?.ledger && window.DNCraftingHistory)return window.DNCraftingHistory.totals(log).logged;

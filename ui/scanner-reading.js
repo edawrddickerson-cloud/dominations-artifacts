@@ -633,6 +633,13 @@
         timing('published');
       };
       const collection=window.DNScannerCollection;
+      const artworkResult=result,artworkImage=result?.artifact?.image;
+      if(artworkImage && window.DNArtwork)window.DNArtwork.match(artworkImage).then(match=>{
+        if(!match.artworkId || request!==token || result!==artworkResult || !resultCurrent || session!==readingSession || itemId!==readingItemId || readingProfile!==window.DNStoredArtifacts?.collectionKey() || inlineEditing || editing || result.artifact?.image!==artworkImage)return;
+        result.artifact={...result.artifact,artworkId:match.artworkId};
+        window.DNScannerCollection?.recordItem(result,readingItemId,{...logOptions,newEncounter:false});
+        score();
+      }).catch(()=>{});
       if(collection?.recordResult)collection.recordResult(parsed,result,itemId,logOptions,publish);
       else {
         collection?.record(parsed);

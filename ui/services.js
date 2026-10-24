@@ -18,9 +18,10 @@
   window.DNServiceLoader={script};
   async function boot() {
     if(!window.DN)return;
-    await script('service-config.js?v=20261024-ocr-matching');
-    if(!window.DNCraftingHistory)await script('crafting-history.js?v=20261024-ocr-matching');
-    await script('integration-core.js?v=20261023-history-v2');
+    await script('service-config.js?v=20261024-artwork');
+    if(!window.DNArtworkIds)await script('data/artwork_ids.js?v=20261024-artwork');
+    if(!window.DNCraftingHistory)await script('crafting-history.js?v=20261024-artwork');
+    await script('integration-core.js?v=20261024-artwork');
     await script('service-store.js?v=2');
     await script('telemetry.js?v=20261022-ocr-feedback');
     if(!window.DN_ARTIFACT_STAT_CONTEXT)await script('data/artifact_stat_context.js?v=1');

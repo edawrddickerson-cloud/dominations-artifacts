@@ -37,6 +37,7 @@
       if(typeof item.id!=='string' || !item.id || ids.has(item.id) || item.revision!=null && (!Number.isSafeInteger(item.revision) || item.revision<0))throw Error('Invalid crafting record identity.');
       ids.add(item.id);
       if(visible && !Array.isArray(item.rows))throw Error('Invalid crafting rows.');
+      if(item.artworkId!=null && !window.DNArtworkIds?.includes(item.artworkId))throw Error('Invalid artwork reference.');
     }
     return log;
   }
@@ -103,6 +104,7 @@
     const ledger={version:1,baseline:baseline?{id:baseline.id,counts:Object.fromEntries(keys.map(k=>[k,baseline.counts[k]])),sinceLastKept:baseline.sinceLastKept}:null,sinceBaseline:since?{id:since.id,value:since.value,covered:since.covered.slice()}:null,archived:value.ledger.archived.map(facts)};
     return {version:2,ledger,items:value.items.map(i=>({...facts(i),captureMethod:i.captureMethod || 'unknown',expectedRows:i.expectedRows || 5,
       captureSessionId:i.captureSessionId || null,encounterId:i.encounterId || null,profileKey:i.profileKey || null,type:i.type || null,name:i.name || null,nameSource:i.nameSource || null,hallSource:i.hallSource || null,
+      ...(i.artworkId?{artworkId:i.artworkId}:{}),
       validated:!!i.validated,corrected:!!i.corrected,freshCraft:i.freshCraft===true,identityEvidence:i.identityEvidence || 'unknown',reconciliationConflict:!!i.reconciliationConflict,
       startingContextSource:i.startingContextSource || 'unknown',
       craftingEventId:i.craftingEventId || null,craftingEventSource:i.craftingEventSource || 'unknown',gameVersion:i.gameVersion || null,gameVersionSource:i.gameVersionSource || 'unknown',

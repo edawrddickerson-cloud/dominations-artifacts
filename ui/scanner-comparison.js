@@ -274,7 +274,8 @@
     if(benchmarkLabel)benchmarkLabel.textContent='Top 2 benchmark';
     const board=get('glance-board');
     const artwork=get('artwork'),image=latest?.artifact?.image;
-    if(artwork){artwork.hidden=!image;if(image && artwork.getAttribute('src')!==image)artwork.src=image;if(!image)artwork.removeAttribute('src');}
+    if(artwork && window.DNArtwork)window.DNArtwork.bind(artwork,latest?.artifact);
+    else if(artwork){artwork.hidden=!image;if(image && artwork.getAttribute('src')!==image)artwork.src=image;if(!image)artwork.removeAttribute('src');}
     board.style.setProperty('--capture-hue',capture.identified===capture.expected?'120':capture.identified?'40':'0');
     board.className=(get('row-status')?'scanner-capture-inline':'scanner-summary-card scanner-capture-card')+(capture.missing.length && captureResult?' is-incomplete':'');
     get('capture-percent').textContent=capture.identified+'/'+capture.expected+' identified';
