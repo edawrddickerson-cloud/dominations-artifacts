@@ -1,6 +1,6 @@
 # Shared artifact artwork
 
-The planner matches artwork locally against 153 approved display images and 307 reviewed capture examples. It syncs only the selected `artworkId`. Approved images take priority in the scanner, Collection, scanned inventory and crafting history. Unmatched items use their local captured image; items without either image use a placeholder.
+The planner matches artwork locally against 153 approved display images and 307 reviewed capture examples. It syncs only the selected `artworkId`. The player's local captured image always takes priority in the scanner, Collection, scanned inventory and crafting history, including after a successful match. Shared images are fallbacks when the capture is missing (for example, in another browser) or cannot load. Items without either image use a placeholder.
 
 There is no user image upload endpoint, image bucket, server matching call or automatic reference contribution. Visual matching does not read item names and does not establish physical identity, ownership or stats. Reference approval is by the site maintainer, not the game publisher.
 
@@ -8,7 +8,7 @@ There is no user image upload endpoint, image bucket, server matching call or au
 
 `ui/artwork-matcher.js` compares compact spatial colour and normalized luminance descriptors. Each approved example has a conservative acceptance radius bounded by its nearest competing artwork. The best identity must also beat the next identity by a minimum margin. Multiple examples of one identity do not compete with one another. No model or paid inference service is used.
 
-`ui/artwork.js` loads the published descriptors, computes query descriptors in the browser and resolves approved asset URLs. It never submits captures or query descriptors. Approved asset failures fall back locally and retry after reconnect. Existing local artwork and full local backups remain intact.
+`ui/artwork.js` loads the published descriptors, computes query descriptors in the browser and resolves approved asset URLs. It never submits captures or query descriptors. Display order is local capture, approved artwork ID, existing catalog image, then placeholder. Failed images advance through that order; reconnect retries with the local capture first. Matching preserves the captured image alongside its artwork ID. Existing local artwork and full local backups remain intact.
 
 `ui/stored-artifacts.js` backfills the active profile and scanned inventory in the background. Writes recheck the originating profile, account, item existence and unchanged capture before adding an ID. `ui/scanner-collection.js` updates the same canonical log records, preserving encounter IDs and statistics. Unknown captures remain local and can be retried with a future catalog release.
 
@@ -33,7 +33,7 @@ The initial build used 316 unique candidate captures from the owner's October 21
 
 ## Validation and limits
 
-The browser regression checks approved-image priority, local fallback, asset-load recovery, ID-only restore, invalid references, preservation of separate physical copies, delayed deletion and profile-switch races, and absence of uploads. It tests all 153 display assets and compression, scaling and crop shifts for a subset. The initial run accepted 144 display assets; nine stayed unknown or ambiguous. Of 81 synthetic variations, 54 matched their expected identity and 27 stayed unknown. No wrong identity was accepted in that run. See `reports/artwork-browser.json` for current measurements.
+The browser regression checks local-capture priority in both bound images and generated markup, shared fallback when a capture is missing or broken, catalog fallback, reconnect recovery, real Collection rendering, ID-only restore, invalid references, preservation of separate physical copies, delayed deletion and profile-switch races, and absence of uploads. It tests all 153 display assets and compression, scaling and crop shifts for a subset. The initial run accepted 144 display assets; nine stayed unknown or ambiguous. Of 81 synthetic variations, 54 matched their expected identity and 27 stayed unknown. No wrong identity was accepted in that run. See `reports/artwork-browser.json` for current measurements.
 
 These are regression checks against reviewed reference material and synthetic variants, not an independent live-game accuracy estimate. An early sparse-reference trial showed poor coverage across layout and colour changes; it informed conservative rejection and additional reviewed reference examples. Real captures can remain unmatched, especially at unfamiliar layouts or resolutions. Local fallback is the intended outcome in that case.
 

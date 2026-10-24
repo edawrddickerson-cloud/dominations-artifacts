@@ -3,7 +3,7 @@ const fs=require('node:fs'),cp=require('node:child_process'),vm=require('node:vm
 const commit=process.argv.find(a=>a.startsWith('--commit='))?.slice(9);
 if(!/^[a-f0-9]{7,40}$/i.test(commit || ''))throw Error('Supply --commit=HASH.');
 const origin='https://dominations-planner.ededed84.workers.dev';
-const files=['scanner.html','config.html','services.js','service-config.js','integration-core.js','cloud.js','cloud-sync.js','research.js','scanner-collection.js','scanner-reading.js','crafted-log-stats.js','crafted-log-stats-ui.js','crafting-history.js','crafting-community.js','crafting-community-ui.js','crafting-result-context.js','crafting-statistics.html','privacy.html','storage-scanner.html','storage-scanner.js','ocr-feedback.js','services-ui.js'];
+const files=['scanner.html','crafting-stats.html','crafting-stats-tables.js','crafted-log-stats.css','navigation.js','scanner-session.js','profiles-ui.js','config.html','services.js','service-config.js','integration-core.js','cloud.js','cloud-sync.js','research.js','scanner-collection.js','scanner-reading.js','crafted-log-stats.js','crafted-log-stats-ui.js','crafting-history.js','crafting-community.js','crafting-community-ui.js','crafting-result-context.js','crafting-statistics.html','privacy.html','storage-scanner.html','storage-scanner.js','ocr-feedback.js','services-ui.js'];
 (async()=>{
   const checks=[];let config,expectedConfig;
   for(const file of files){
@@ -17,6 +17,7 @@ const files=['scanner.html','config.html','services.js','service-config.js','int
   const headers={apikey:config.supabasePublishableKey,'Content-Type':'application/json'};
   const report=await fetch(config.supabaseUrl+'/rest/v1/rpc/planner_crafting_summary',{method:'POST',headers,body:'{}',signal:AbortSignal.timeout(20000)});
   const aggregate=await report.json();if(!report.ok || !['ready','insufficient-sample'].includes(aggregate.status))throw Error('Community report is unavailable.');
+  if(aggregate.status==='ready' && (!Array.isArray(aggregate.frequencies) || aggregate.distributions?.eleven?.length!==6 || aggregate.distributions?.duplicates?.length!==4))throw Error('Expanded crafting distributions are not deployed.');
   if(Object.hasOwn(aggregate.contexts || {},'version'))throw Error('Obsolete game-version reporting metadata is still present.');
   const empty=await fetch(config.supabaseUrl+'/rest/v1/rpc/planner_crafting_summary',{method:'POST',headers,body:JSON.stringify({p_hall:'__no_matches__'}),signal:AbortSignal.timeout(20000)});
   const emptySample=await empty.json();if(!empty.ok || emptySample.status!=='insufficient-sample' || emptySample.minimumContributors!==1)throw Error('First-contributor threshold is not deployed.');

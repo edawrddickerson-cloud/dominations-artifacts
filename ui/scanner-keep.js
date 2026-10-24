@@ -3,7 +3,7 @@
 (() => {
   'use strict';
   const get=id=>document.getElementById('scanner-'+id),button=get('keep');
-  if(!button)return;
+  if(!button && !document.body.classList.contains('page-crafting-stats'))return;
   const DN=window.DN,store=window.DNStoredArtifacts,saved=new Map(),ids=new Map(),pending=new Map();
   let result=null,state={},saving=false,failure='',failureKey='';
   const key=()=>state.profileKey+':'+state.encounterId;
@@ -46,6 +46,7 @@
     return '';
   }
   function render(){
+    if(!button)return;
     const logged=currentLog(),kept=saved.has(key()) || !!logged?.keptId,blocked=reason(),busy=saving || pending.has(logged?.keepId);
     if(logged && !logged.keptId && saved.has(key()))window.DNScannerCollection?.markKept(logged.id,saved.get(key()),{keepId:saved.get(key())});
     button.textContent=busy?'Saving…':kept?'Added':'Add to Collection';
@@ -53,7 +54,7 @@
     button.title=(failureKey===key()?failure:'') || (kept?'Added to Collection':blocked || 'Add to Collection');
   }
   window.DNScannerKeep={loggedReason,keepLogged,update(next,nextState){result=next;state=nextState;render();}};
-  button.addEventListener('click',async()=>{
+  button?.addEventListener('click',async()=>{
     if(saving || saved.has(key()) || reason())return;
     const encounter=key(),profileKey=state.profileKey,profileId=DN.activeProfileId();
     const logged=currentLog();
@@ -68,7 +69,7 @@
     }catch(error){failureKey=encounter;failure=error.message || 'Could not keep this craft. Try again.';}
     finally{saving=false;render();}
   });
-  get('compare-type').addEventListener('change',render);
+  get('compare-type')?.addEventListener('change',render);
   window.addEventListener('focus',render);
   render();
 })();

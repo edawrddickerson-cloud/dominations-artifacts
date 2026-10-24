@@ -45,6 +45,7 @@
     const unique=new Map();for(const record of records || [])unique.set(record.id,record);
     const sample=[...unique.values()].filter(i=>!i.deleted && ['hall','category','event_id'].every(key=>!filter[key] || (i[key] || 'unknown')===filter[key]));
     const counts={recorded:sample.length,excluded:0,eligibleArtifacts:0,eligibleRows:0,elevenRows:0,elevenArtifacts:0,twoElevenArtifacts:0,duplicateArtifacts:0,duplicateEligible:0},exclusions={};
+    const eligibleItems=[];
     for(const item of sample) {
       if(item.exclusion){counts.excluded++;exclusions[item.exclusion]=(exclusions[item.exclusion] || 0)+1;continue;}
       const checked=item.rows.map(row=>({row,rule:index.get([item.hall,normal(item.category),normal(row.perk)].join('|'))}));
@@ -52,12 +53,13 @@
       counts.duplicateEligible++;
       if(new Set(checked.map(({rule})=>rule.perk)).size<5)counts.duplicateArtifacts++;
       const eligible=checked.filter(({rule})=>rule.starts.some(v=>Math.abs(v)===11));
+      eligibleItems.push({...item,elevenEligible:eligible.length>0});
       const hits=eligible.filter(({row})=>Math.abs(row.value)===11).length;
       counts.eligibleRows+=eligible.length;counts.elevenRows+=hits;
       if(eligible.length){counts.eligibleArtifacts++;if(hits)counts.elevenArtifacts++;if(hits>=2)counts.twoElevenArtifacts++;}
     }
     const metric=(hits,total)=>({hits,total,rate:total?hits/total:null,bounds:interval(hits,total)});
-    return {...counts,exclusions,metrics:{rows11:metric(counts.elevenRows,counts.eligibleRows),any11:metric(counts.elevenArtifacts,counts.eligibleArtifacts),two11:metric(counts.twoElevenArtifacts,counts.eligibleArtifacts),duplicate:metric(counts.duplicateArtifacts,counts.duplicateEligible)}};
+    return {...counts,exclusions,...window.DNCraftedLogStats.distributions(eligibleItems),metrics:{rows11:metric(counts.elevenRows,counts.eligibleRows),any11:metric(counts.elevenArtifacts,counts.eligibleArtifacts),two11:metric(counts.twoElevenArtifacts,counts.eligibleArtifacts),duplicate:metric(counts.duplicateArtifacts,counts.duplicateEligible)}};
   }
   window.DNCraftingCommunity={POLICY,RULES,rules,encode,payload,analyze,interval};
 })();

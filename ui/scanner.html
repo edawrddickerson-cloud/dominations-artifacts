@@ -9,13 +9,12 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
 <head>
   <meta charset="utf-8" />
   <script src="scanner-session-entry.js?v=20261022-fixed-header"></script>
-  <script src="navigation.js?v=20261022-fixed-header"></script>
+  <script src="navigation.js?v=20261025-crafting-stats"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts - Crafting Scanner</title>
   <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
   <link rel="stylesheet" href="scanner.css?v=20261023-stat-rating-label" />
   <link rel="stylesheet" href="crafting-purposes.css?v=20261023-muted-red-targets" />
-  <link rel="stylesheet" href="crafted-log-stats.css?v=1" />
 </head>
 <body class="page-scanner">
   <nav class="site-nav" aria-label="Pages">
@@ -47,8 +46,7 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
       <div id="header-profile" class="header-profile"></div>
     </div>
   </header>
-    <details id="scanner-crafted-log" class="scanner-reading scanner-panel" aria-label="Crafted item log">
-      <summary><span class="scanner-log-title">Crafted item log</span>
+    <section id="scanner-crafted-log" class="scanner-reading scanner-panel" aria-label="Crafting totals">
       <span id="scanner-lifetime-stats" class="scanner-lifetime-stats" role="list">
         <span role="listitem"><span class="scanner-stat-label">Lifetime Crafted Artifacts</span><strong data-crafted-stat="logged">0</strong></span>
         <span role="listitem"><span class="scanner-stat-label">Crafts this week (UTC)</span><strong data-crafted-stat="weekly">0</strong></span>
@@ -57,18 +55,10 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
         <span role="listitem"><span class="scanner-stat-label">Crafted Main Artifacts</span><strong data-crafted-stat="main">0</strong></span>
         <span role="listitem"><span class="scanner-stat-label">Crafted War Artifacts</span><strong data-crafted-stat="war">0</strong></span>
         <span role="listitem"><span class="scanner-stat-label">3 Rows Unlocked</span><strong data-crafted-stat="threeUnlocked">0</strong></span>
-      </span></summary>
+      </span>
+      <p><a class="btn" href="crafting-stats.html">Crafting Stats</a></p>
       <p id="scanner-log-storage-status" role="status"></p>
-      <p id="scanner-item-count" role="status"></p>
-      <details open><summary>Logged items and stats</summary><ol id="scanner-item-log" class="scanner-item-log"></ol></details>
-      <p id="scanner-collection-count" role="status"></p>
-      <div class="scanner-controls">
-        <button type="button" class="btn" id="scanner-collection-export">Export Full Item Log</button>
-        <button type="button" class="btn" id="scanner-collection-clear">Clear Item Log and Names</button>
-      </div>
-      <p id="scanner-collection-export-status" role="status" aria-live="polite"></p>
-      <details><summary>Scanner diagnostics</summary><p id="scanner-name-review-count"></p><ol id="scanner-name-review"></ol><pre id="scanner-collected-labels" style="white-space:pre-wrap"></pre><button type="button" class="btn" id="scanner-stat-evidence-export">Export Stat Evidence</button><p id="scanner-stat-evidence-status" role="status"></p></details>
-    </details>
+    </section>
     <details id="scanner-setup" class="scanner-setup">
       <summary><span class="scanner-setup-title">Scanner setup</span><strong id="scanner-status" class="scanner-connection-label is-disconnected" role="status" aria-live="polite">Disconnected</strong><span class="scanner-setup-actions" role="group" aria-label="Scanning controls"><button type="button" class="btn" id="scanner-connect">Connect Game</button><button type="button" class="btn" id="scanner-stop" disabled>Stop Scanning</button></span></summary>
       <div class="scanner-setup-overview">
@@ -215,17 +205,17 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
   <script src="shared.js?v=20261019-rating-scale"></script>
   <script src="data/artwork_ids.js?v=20261024-artwork"></script>
   <script src="artwork-matcher.js?v=20261024-artwork"></script>
-  <script src="artwork.js?v=20261024-artwork"></script>
+  <script src="artwork.js?v=20261025-local-first"></script>
   <script src="data/artifact_stat_context.js?v=1"></script>
   <script src="artifact-stat-context.js?v=3"></script>
-  <script src="profiles-ui.js?v=20261022-scanner-header"></script>
+  <script src="profiles-ui.js?v=20261025-crafting-stats"></script>
   <script src="artifact-scoring.js?v=20261017-strategies-reroll"></script>
   <script src="stored-artifacts.js?v=20261024-artwork"></script>
   <script src="crafting-purposes.js?v=20261022-target-breakdown"></script>
   <script src="scanner-comparison.js?v=20261024-artwork"></script>
   <script src="scanner-target-ratings.js?v=20261023-no-auto"></script>
   <script src="scanner-layout.js?v=20261023-aligned-image-heading"></script>
-  <script src="scanner-keep.js?v=20261024-artwork"></script>
+  <script src="scanner-keep.js?v=20261025-stats-page"></script>
   <script src="vendor/tesseract/tesseract.min.js"></script>
   <script src="scanner-reroll-recognition.js?v=1"></script>
   <script src="scanner-name-catalog.js?v=1"></script>
@@ -233,12 +223,10 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
   <script src="scanner-field-recognition.js?v=20261021-title-witness"></script>
   <script src="scanner-calibration.js?v=4"></script>
   <script src="crafting-history.js?v=20261024-artwork"></script>
-  <script src="scanner-collection.js?v=20261024-artwork"></script>
-  <script src="crafted-log-stats.js?v=1"></script>
-  <script src="crafted-log-stats-ui.js?v=20261022-automatic-log"></script>
+  <script src="scanner-collection.js?v=20261025-stats-page"></script>
   <script src="scanner-reading.js?v=20261024-artwork"></script>
   <script src="scanner-profile.js?v=1"></script>
   <script src="scanner.js?v=20261022-image-refresh"></script>
-  <script src="services.js?v=20261024-artwork"></script>
+  <script src="services.js?v=20261025-distributions"></script>
 </body>
 </html>

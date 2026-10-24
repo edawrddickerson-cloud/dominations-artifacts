@@ -80,33 +80,33 @@
   function wirePrivacy(root) {
     const inputs=[...root.querySelectorAll('[data-consent]')],save=root.querySelector('[data-save-consent]'),status=root.querySelector('[data-privacy-status]');
     const prompt=root.matches('dialog'),saveLabel=prompt?'Share selected data':'Save preferences';
+    const drafts=new Map();
     function refresh(){
       const ready=window.DNIntegrationCore.privacyReady(config),researchReady=window.DNIntegrationCore.researchReady(config),value=consent.get();
       for(const input of inputs){
         const research=input.dataset.consent==='research';input.disabled=!ready || research && !researchReady;input.checked=!input.disabled && value[input.dataset.consent];
         if(research){input.closest('label').hidden=!researchReady;input.disabled=!researchReady || !cloud.user();}
         if(input.dataset.consent==='ocrFeedback'){const available=window.DNIntegrationCore.ocrFeedbackReady(config);input.disabled=!available || !cloud.user();input.checked=available && value.ocrFeedback;input.closest('label').hidden=!available;}
+        if(drafts.has(input.dataset.consent))input.checked=drafts.get(input.dataset.consent);
       }
-      save.disabled=!ready || value.decided;save.textContent=ready && value.decided?'Saved':saveLabel;
-      status.dataset.state=ready?'saved':'unavailable';
-      status.textContent=!ready?'Sharing is unavailable.':value.decided?privacySummary(value):'';
+      const dirty=inputs.some(input=>!input.disabled && input.checked!==value[input.dataset.consent]);
+      save.disabled=!ready || value.decided && !dirty;save.textContent=ready && value.decided && !dirty?'Saved':saveLabel;
+      status.dataset.state=!ready?'unavailable':dirty?'unsaved':'saved';
+      status.textContent=!ready?'Sharing is unavailable.':dirty?(prompt?'':'Unsaved changes.'):value.decided?privacySummary(value):'';
     }
     refresh();const unsubscribe=consent.subscribe(refresh);cloud.subscribe(refresh);
     const ocrStatus=root.querySelector('[data-ocr-status]');
     const renderOCR=()=>{if(ocrStatus){const value=window.DNOCRFeedback?.status();ocrStatus.textContent=value?.error || (value?.pending?'OCR feedback: '+value.pending+' pending.':'');if(value?.error && consent.get().ocrFeedback){save.disabled=false;save.textContent=saveLabel;}}};
     window.addEventListener('dn-ocr-feedback-status',renderOCR);
     for(const input of inputs)input.addEventListener('change',()=>{
-      const value=consent.get(),dirty=inputs.some(field=>!field.disabled && field.checked!==value[field.dataset.consent]);
-      save.disabled=!window.DNIntegrationCore.privacyReady(config) || value.decided && !dirty;
-      save.textContent=save.disabled && value.decided?'Saved':saveLabel;
-      status.dataset.state=dirty?'unsaved':'saved';
-      status.textContent=prompt?'':dirty?'Unsaved changes.':value.decided?privacySummary(value):'';
+      drafts.set(input.dataset.consent,input.checked);
+      refresh();
     });
     async function persist(values) {
       try{
         const previous=consent.get();
         if(values.ocrFeedback && (!previous.ocrFeedback || !window.DNOCRFeedback.allowed())){if(!await window.DNOCRFeedback.setSharing(true))throw Error('Connect and save OCR preferences again.');}
-        consent.set({...values,researchPolicy:'2026-10-23'});if(values.research && !previous.research)window.DNResearch.setSharing(true).catch(error=>{status.textContent=error.message;});
+        consent.set({...values,researchPolicy:'2026-10-23'});drafts.clear();refresh();if(values.research && !previous.research)window.DNResearch.setSharing(true).catch(error=>{status.textContent=error.message;});
         if(['analytics','diagnostics','research','ocrFeedback'].some(key=>values[key] && !previous[key]))showPrivacyNotice('Thank you for helping make the tool better for everyone.');
         else if(prompt && !document.getElementById('account-privacy'))showPrivacyNotice('Sharing preferences saved.');
       }

@@ -23,10 +23,22 @@ browserRun(async({evaluate,events})=>{
   const entry=c.entries[0],blob=await(await fetch(DNArtwork.asset(entry.id))).blob();
   const local=await new Promise(ok=>{const r=new FileReader();r.onload=()=>ok(r.result);r.readAsDataURL(blob);});
   const item={id:'copy-1',name:'',type:'Weapon',hall:'main',image:local,artworkId:entry.id,rows:[{name:'Damage',value:1}]};
-  assert('approved image takes priority',DNArtwork.src(item)===DNArtwork.asset(entry.id));
+  assert('local capture takes priority over matched artwork',DNArtwork.src(item)===local);
+  assert('ID-only item uses approved fallback',DNArtwork.src({...item,image:undefined})===DNArtwork.asset(entry.id));
+  assert('local capture takes priority over catalog fallback',DNArtwork.src(item,DNArtwork.asset(c.entries[1].id))===local);
   assert('unmatched uses local image',DNArtwork.src({...item,artworkId:null})===local);
   assert('unapproved URLs cannot become artwork',DNArtwork.src({artworkId:'https://evil.invalid'})==='');
-  const node=document.createElement('img');document.body.append(node);DNArtwork.bind(node,item);node.dispatchEvent(new Event('error'));assert('asset error uses local image',node.src===local);window.dispatchEvent(new Event('online'));
+  const node=document.createElement('img');document.body.append(node);DNArtwork.bind(node,item);
+  assert('bound scanner image shows local capture',node.src===local);
+  const htmlNode=document.createElement('div');htmlNode.innerHTML=DNArtwork.html(item);document.body.append(htmlNode);
+  assert('history and inventory markup shows local capture',htmlNode.querySelector('img').src===local);
+  node.dispatchEvent(new Event('error'));assert('broken local capture uses approved fallback',node.src===DNArtwork.asset(entry.id));
+  node.dispatchEvent(new Event('error'));assert('missing local and approved images use placeholder',node.src.endsWith('/assets/artwork/placeholder.svg'));
+  window.dispatchEvent(new Event('online'));assert('recovery restores local capture first',node.src===local);
+  const catalogFallback=DNArtwork.asset(c.entries[1].id);DNArtwork.bind(node,item,catalogFallback);
+  node.dispatchEvent(new Event('error'));node.dispatchEvent(new Event('error'));
+  assert('catalog image is retained as final image fallback',node.src===catalogFallback);
+  window.dispatchEvent(new Event('online'));
   const blank=document.createElement('canvas');blank.width=192;blank.height=240;
   for(let n=0;n<12;n++){const x=blank.getContext('2d');x.fillStyle=['#000','#fff','#6b2020','#133d51'][n%4];x.fillRect(0,0,192,240);if(n>=4){x.fillStyle='#ddd';x.font='20px sans-serif';x.fillText('Notification',10,100);x.fillText('Test content',10,130);}assert('non-game image rejected '+n,!(await DNArtwork.match(blank.toDataURL('image/jpeg'))).artworkId);}
   let activeProfile='main';window.DN={activeProfileId:()=>activeProfile};
@@ -59,9 +71,9 @@ browserRun(async({evaluate,events})=>{
   const app=frame.contentWindow;app.DN.saveCollectionUi({hall:'Main',viewMode:'list',valueMode:'actual'});app.DN.lsSet('dn-artifact-hall-filter','Main');
   await app.DNStoredArtifacts.write(app.DNStoredArtifacts.collectionKey(),[{...item,name:'Approved artwork fixture'}]);
   async function rendered(expected){for(let n=0;n<100;n++){frame.contentDocument.getElementById('hall-main')?.click();frame.contentDocument.getElementById('view-list')?.click();app.dispatchEvent(new app.Event('dn-artifacts-changed'));await new Promise(ok=>setTimeout(ok,25));const img=frame.contentDocument.querySelector('#collection-list img');if(img?.src===expected)return true;}return false;}
-  const hasApproved=await rendered(DNArtwork.asset(entry.id));
-  if(!hasApproved)throw Error('Collection rendering: '+JSON.stringify({error:frame.contentDocument.getElementById('error')?.textContent,list:frame.contentDocument.getElementById('collection-list')?.textContent.slice(0,250),images:[...frame.contentDocument.querySelectorAll('img')].map(i=>i.src.startsWith('data:')?'local image':i.src),profile:app.DN.activeProfileId(),items:(await app.DNStoredArtifacts.read(app.DNStoredArtifacts.collectionKey())).map(i=>({id:i.id,artworkId:i.artworkId}))}));
-  assert('real Collection renders approved image before local capture',hasApproved);
+  assert('real Collection renders local capture before approved image',await rendered(local));
+  await app.DNStoredArtifacts.write(app.DNStoredArtifacts.collectionKey(),[{...item,name:'ID-only artwork fixture',image:undefined}]);
+  assert('real Collection on fresh browser uses approved fallback',await rendered(DNArtwork.asset(entry.id)));
   const unmatched=blank.toDataURL('image/jpeg');await app.DNStoredArtifacts.write(app.DNStoredArtifacts.collectionKey(),[{...item,name:'Local artwork fixture',artworkId:undefined,image:unmatched}]);
   assert('real Collection renders unmatched local capture',await rendered(unmatched));frame.remove();
   durations.sort((a,b)=>a-b);return {checks,assets:{matched,ambiguous,total:c.entries.length},transformed:{matched:transformedMatched,unknown:transformedUnknown},p95Ms:durations[Math.floor(durations.length*.95)],maxMs:durations.at(-1)};

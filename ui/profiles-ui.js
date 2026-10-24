@@ -61,6 +61,7 @@
     if (file === "collection.html") return "Crafted Collection";
     if (file === "totals.html") return "Active Artifact Totals";
     if (file === "scanner.html") return "Crafting Scanner";
+    if (file === "crafting-stats.html") return "Crafting Stats";
     if (file === "storage-scanner.html") return "Storage Scanner";
     if (file === "council.html") return "Council Rankings";
     if (file === "council-collection.html") return "Council Collection";
@@ -186,6 +187,12 @@
     ensureSettingsNav(nav);
     ensureCouncilNav(nav);
     ensureTargetsNav(nav);
+    if(!nav.querySelector('a[href="crafting-stats.html"]')){
+      const link=document.createElement('a');link.href='crafting-stats.html';link.textContent='Crafting Stats';
+      if(fileForHref(location.pathname)==='crafting-stats.html')link.setAttribute('aria-current','page');
+      const scanner=nav.querySelector('a[href^="scanner.html"]');
+      if(scanner)scanner.after(link);
+    }
 
     const toggleWrap = document.createElement("div");
     toggleWrap.className = "site-nav-toggle-wrap";

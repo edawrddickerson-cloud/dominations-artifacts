@@ -17,13 +17,14 @@
   return loading;
  }
  function src(item,fallback=''){
-  const approved=asset(item?.artworkId);
-  return approved&&!failed.has(approved)?approved:fallback&&!failed.has(fallback)?fallback:local(item?.image);
+  const captured=local(item?.image),approved=asset(item?.artworkId);
+  return captured&&!failed.has(captured)?captured:approved&&!failed.has(approved)?approved:fallback&&!failed.has(fallback)?fallback:'';
  }
  function bind(node,item,fallback=''){
   if(!node)return;
   const image=src(item,fallback)||(item&&(item.type||item.id)?placeholder:'');
   node.dataset.localArtwork=local(item?.image);
+  node.dataset.fallbackArtwork=fallback;
   if(validId(item?.artworkId))node.dataset.artworkId=item.artworkId;else delete node.dataset.artworkId;
   node.hidden=!image;
   if(image){if(node.getAttribute('src')!==image)node.src=image;}else node.removeAttribute('src');
@@ -49,13 +50,13 @@
  const esc=value=>String(value||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  function html(item,className='',alt='',fallback=''){
   const image=src(item,fallback)||placeholder;
-  return '<img class="'+esc(className)+'" src="'+esc(image)+'" data-local-artwork="'+esc(local(item?.image))+'"'+(validId(item?.artworkId)?' data-artwork-id="'+esc(item.artworkId)+'"':'')+' alt="'+esc(alt)+'" loading="lazy" />';
+  return '<img class="'+esc(className)+'" src="'+esc(image)+'" data-local-artwork="'+esc(local(item?.image))+'" data-fallback-artwork="'+esc(fallback)+'"'+(validId(item?.artworkId)?' data-artwork-id="'+esc(item.artworkId)+'"':'')+' alt="'+esc(alt)+'" loading="lazy" />';
  }
  document.addEventListener('error',event=>{
   const node=event.target;if(node.tagName!=='IMG')return;
-  if(node.dataset.artworkId||node.dataset.localArtwork){failed.add(node.src);const fallback=local(node.dataset.localArtwork);if(fallback&&node.src!==fallback)node.src=fallback;else if(node.src!==placeholder)node.src=placeholder;else{node.hidden=true;node.removeAttribute('src');}}
+  if(node.dataset.localArtwork!==undefined){failed.add(node.src);const next=src({artworkId:node.dataset.artworkId,image:node.dataset.localArtwork},node.dataset.fallbackArtwork)||placeholder;if(node.src!==next)node.src=next;else{node.hidden=true;node.removeAttribute('src');}}
  },true);
- window.addEventListener('online',()=>{failed.clear();document.querySelectorAll('img[data-artwork-id]').forEach(node=>bind(node,{artworkId:node.dataset.artworkId,image:node.dataset.localArtwork}));});
+ window.addEventListener('online',()=>{failed.clear();document.querySelectorAll('img[data-local-artwork]').forEach(node=>bind(node,{artworkId:node.dataset.artworkId,image:node.dataset.localArtwork},node.dataset.fallbackArtwork));});
  window.DNArtwork={validId,asset,src,bind,html,match,load,local,enabled};
  // Descriptor loading failures leave local scanning and images intact.
  if(enabled())load().catch(()=>{});

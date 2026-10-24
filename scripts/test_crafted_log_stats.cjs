@@ -43,4 +43,15 @@ const legacy=restored.historyItems().map(({captureMethod,...item})=>item);
 assert.equal(S.analyze(legacy,{perk:'Damage',attempts:100,hall:'main'}).projected,null);
 assert.equal(S.analyze([...snapshot,snapshot[0]]).history.length,6,'duplicate canonical IDs cannot inflate a rate');
 collector.clear();assert.equal(S.analyze(collector.historyItems()).history.length,0);
+const artifact=(id,perks,values,hall='main')=>({id,hall,type:'Weapon',rows:perks.map((name,i)=>({name,value:values[i],known:true,hasPercent:true}))});
+const expanded=S.analyze([
+  artifact('a',['Damage','Damage','Damage','HP','HP'],[11,6,1,11,1]),
+  artifact('b',['Damage','Damage','Damage','Damage','HP'],[11,11,11,1,1]),
+  artifact('c',Array(5).fill('Damage'),[-11,11,11,11,11]),
+  artifact('d',Array(5).fill('Damage'),[3,3,3,3,3],'war')
+]);
+const damage=expanded.frequencies.find(row=>row.name==='Damage');
+assert.equal(damage.items,4);assert.equal(damage.rows,17);assert.equal(damage.values.find(bin=>bin.value===11).count,8);
+assert.equal(expanded.distributions.eleven[2].exact.hits,1);assert.equal(expanded.distributions.eleven[3].exact.hits,1);assert.equal(expanded.distributions.eleven[5].exact.hits,1);assert.equal(expanded.distributions.eleven[1].atLeast.total,3,'War is outside the 11% denominator');
+assert.equal(expanded.distributions.duplicates[0].exact.hits,0);assert.equal(expanded.distributions.duplicates[1].exact.hits,1);assert.equal(expanded.distributions.duplicates[2].exact.hits,1);assert.equal(expanded.distributions.duplicates[3].exact.hits,2);assert.equal(expanded.distributions.duplicates[0].atLeast.hits,4);
 console.log('Crafted log stats passed: automatic canonical records, 22 retries, best-read retention, independent identical crafts, corrections, incomplete/inferred evidence, positions, artifact/row denominators, input sources, context separation, Keep, exports, reload and clearing.');

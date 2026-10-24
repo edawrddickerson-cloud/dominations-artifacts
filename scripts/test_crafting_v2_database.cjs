@@ -2,7 +2,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),crypto=require('node:crypto');
 const {PGlite}=require('../data/temp/backend-tests/node_modules/@electric-sql/pglite');
 const db=new PGlite(),ids=Array.from({length:6},(_,i)=>'11111111-1111-4111-8111-'+String(i+1).padStart(12,'0'));
-const app={window:{}};vm.createContext(app);for(const f of ['data/artifact_stat_context','crafting-history','crafting-community'])vm.runInContext(fs.readFileSync('ui/'+f+'.js','utf8'),app);
+const app={window:{}};vm.createContext(app);for(const f of ['data/artifact_stat_context','crafting-history','crafted-log-stats','crafting-community'])vm.runInContext(fs.readFileSync('ui/'+f+'.js','utf8'),app);
 const S=app.window.DNCraftingCommunity;
 const names=['Armored Car Damage','Armored Car Hitpoints','Attack Helicopter Damage','Attack Helicopter Hitpoints','APC Hitpoints'];
 const evidence=(id,values=[11,11,6,1,1])=>({id,revision:1,writer:'device-a',deleted:false,observed_at:new Date().toISOString(),hall:'main',category:'weapon',event_id:null,exclusion:null,rows:names.map((perk,i)=>({perk,value:values[i]}))});
@@ -13,7 +13,7 @@ const denied=(fn,code='42501')=>assert.rejects(fn,error=>error.code===code);
 (async()=>{
   await db.exec("create role anon; create role authenticated; create role service_role bypassrls; create schema auth; create table auth.users(id uuid primary key); create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$; grant usage on schema auth to anon,authenticated,service_role; grant execute on function auth.uid() to anon,authenticated,service_role;");
   for(const id of ids)await db.query('insert into auth.users values($1)',[id]);
-  for(const file of ['202610180001_planner_backend.sql','202610220002_ocr_feedback.sql','202610230001_crafting_statistics_v2.sql','202610230002_crafting_starting_rules.sql','202610240001_community_first_contributor.sql','202610240003_remove_game_version.sql'])await db.exec(fs.readFileSync('supabase/migrations/'+file,'utf8'));
+  for(const file of ['202610180001_planner_backend.sql','202610220002_ocr_feedback.sql','202610230001_crafting_statistics_v2.sql','202610230002_crafting_starting_rules.sql','202610240001_community_first_contributor.sql','202610240003_remove_game_version.sql','202610250001_crafting_distributions.sql'])await db.exec(fs.readFileSync('supabase/migrations/'+file,'utf8'));
   await user(null,'anon');await denied(()=>call('planner_submit_crafting',[crypto.randomUUID(),payload([])]));await denied(()=>db.query('select * from public.planner_crafting_evidence'));
   assert.equal((await call('planner_crafting_summary')).status,'insufficient-sample');
   assert.equal((await call('planner_crafting_summary')).minimumContributors,1);
@@ -52,6 +52,32 @@ const denied=(fn,code='42501')=>assert.rejects(fn,error=>error.code===code);
   assert.equal((await call('planner_crafting_summary',['main','weapon','unknown'])).recorded,5);
   assert.equal((await call('planner_crafting_summary',['war'])).status,'insufficient-sample');
   assert(!JSON.stringify(report).includes('craft-'));assert(!JSON.stringify(report).includes(ids[0]));
+  // Compare every expanded aggregate against the client reference, including
+  // repeated positions, signed rolls, split groups and colliding account IDs.
+  const extra=[];
+  for(const n of [3,4,5]){
+    const item=evidence('repeat-'+n,Array(5).fill(1));
+    item.rows=item.rows.map((row,i)=>({...row,perk:i<n?names[0]:names[i],value:i<n?11:1}));extra.push(item);
+  }
+  const split=evidence('split',[11,11,11,11,11]);split.rows=split.rows.map((row,i)=>({...row,perk:i<2?names[0]:names[1]}));extra.push(split);
+  const signed=evidence('signed');signed.rows[0]={perk:'Enemy Air Defense Damage',value:-11};extra.push(signed);
+  const war=evidence('war',Array(5).fill(3));war.hall='war';war.rows=war.rows.map(row=>({...row,perk:'Heavy Tank Damage'}));extra.push(war);
+  await user(ids[0]);await call('planner_submit_crafting',[receipts[0].epoch,payload(extra)]);
+  const collision=evidence('repeat-5',Array(5).fill(6));await user(ids[1]);await call('planner_submit_crafting',[receipts[1].epoch,payload([collision])]);
+  await user(null,'anon');
+  const expanded=await call('planner_crafting_summary');
+  const reference=S.analyze([...records,...extra, {...collision,id:'account-b:'+collision.id}]);
+  for(const kind of ['eleven','duplicates'])for(let i=0;i<reference.distributions[kind].length;i++){
+    const actual=expanded.distributions[kind][i],expected=reference.distributions[kind][i];assert.equal(actual.count,expected.count);
+    for(const mode of ['exact','atLeast']){assert.equal(actual[mode].hits,expected[mode].hits);assert.equal(actual[mode].total,expected[mode].total);assert(Math.abs(actual[mode].rate-expected[mode].rate)<1e-12);}
+  }
+  const normalize=value=>JSON.parse(JSON.stringify(value)).sort((a,b)=>a.name.localeCompare(b.name));
+  assert.deepEqual(normalize(expanded.frequencies),normalize(reference.frequencies));
+  assert.equal(expanded.distributions.eleven[3].exact.hits,1);
+  assert.equal(expanded.distributions.duplicates[1].exact.hits,2,'a 2+3 split has largest group 3');
+  const warReport=await call('planner_crafting_summary',['war']);assert.equal(warReport.distributions.eleven[1].atLeast.total,0);assert.equal(warReport.distributions.duplicates[3].exact.hits,1);
+  const empty=await call('planner_crafting_summary',['main','pottery']);assert.equal(empty.status,'insufficient-sample');
+  assert(!JSON.stringify(expanded).includes('repeat-'));assert(!JSON.stringify(expanded).includes(ids[0]));
   await user(ids[0]);const epoch=receipts[0].epoch;
   const bad={...evidence('bad'),image:'data:image/png;base64,YQ=='};await denied(()=>call('planner_submit_crafting',[epoch,payload([bad])]),'22023');
   const sign=evidence('sign');sign.rows[0].value=-11;await denied(()=>call('planner_submit_crafting',[epoch,payload([sign])]),'22023');

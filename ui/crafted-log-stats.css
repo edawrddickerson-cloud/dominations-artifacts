@@ -11,6 +11,13 @@
 .crafted-log-stats dl { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: .4rem 1rem; }
 .crafted-log-stats dd { margin: 0; font-variant-numeric: tabular-nums; }
 .crafted-log-stats p:empty { display: none; }
+.crafting-stats-page { padding: 1rem; min-width: 0; }
+.page-crafting-stats #scanner-crafted-log { margin: 0; }
+.crafted-stats-search { display: grid; gap: .3rem; max-width: 24rem; margin-block: .8rem; }
+.crafted-stats-search input { background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: .5rem; font: inherit; min-width: 0; }
+.crafted-stats-sort { color: inherit; background: transparent; border: 0; padding: 0; font: inherit; font-weight: inherit; cursor: pointer; }
+.crafted-log-stats th[aria-sort="ascending"] .crafted-stats-sort::after { content: ' ↑'; }
+.crafted-log-stats th[aria-sort="descending"] .crafted-stats-sort::after { content: ' ↓'; }
 .page-scanner #scanner-log-storage-status:empty { display: none; }
 @media (max-width: 600px) {
   .crafted-stats-controls { align-items: stretch; }

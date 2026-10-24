@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <script src="navigation.js?v=20261025-crafting-stats"></script>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Artifacts · Crafting Stats</title>
+  <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
+  <link rel="stylesheet" href="scanner.css?v=20261023-stat-rating-label" />
+  <link rel="stylesheet" href="crafted-log-stats.css?v=20261025-distributions" />
+</head>
+<body class="page-crafting-stats">
+  <nav class="site-nav" aria-label="Pages">
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Artifacts</h2>
+      <a href="artifacts.html">Artifact Rankings</a>
+      <a href="collection.html">Crafted Collection</a>
+      <a href="totals.html">Active Totals</a>
+      <a href="scanner.html?v=2">Crafting Scanner</a>
+      <a href="crafting-stats.html" aria-current="page">Crafting Stats</a>
+      <a href="storage-scanner.html?v=2">Storage Scanner</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Council</h2>
+      <a href="council.html">Council Rankings</a>
+      <a href="council-collection.html">Collection</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Settings</h2>
+      <a href="config.html">Profiles</a>
+      <a href="ratings.html">Collection Targets</a>
+    </div>
+  </nav>
+  <div class="app-main">
+      <header class="top app-header">
+    <div class="top-inner"><h1>DomiNations Artifacts</h1></div>
+    <div class="header-controls" aria-label="Primary filters">
+      <div id="header-profile" class="header-profile"></div>
+    </div>
+  </header>
+    <main class="crafting-stats-page"><h2>Crafting Stats</h2><p><a class="btn" href="scanner.html?v=2">Crafting Scanner</a></p>
+    <section id="scanner-crafted-log" aria-label="Crafting statistics">
+    <details id="crafting-log-details"><summary>Crafted item log</summary>      <p id="scanner-log-storage-status" role="status"></p>
+      <p id="scanner-item-count" role="status"></p>
+      <details open><summary>Logged items and stats</summary><ol id="scanner-item-log" class="scanner-item-log"></ol></details>
+      <p id="scanner-collection-count" role="status"></p>
+      <div class="scanner-controls">
+        <button type="button" class="btn" id="scanner-collection-export">Export Full Item Log</button>
+        <button type="button" class="btn" id="scanner-collection-clear">Clear Item Log and Names</button>
+      </div>
+      <p id="scanner-collection-export-status" role="status" aria-live="polite"></p>
+      <details><summary>Scanner diagnostics</summary><p id="scanner-name-review-count"></p><ol id="scanner-name-review"></ol><pre id="scanner-collected-labels" style="white-space:pre-wrap"></pre><button type="button" class="btn" id="scanner-stat-evidence-export">Export Stat Evidence</button><p id="scanner-stat-evidence-status" role="status"></p></details>
+</details>
+    </section></main></div>
+  <script src="data/army_catalog.js?v=8"></script>
+  <script src="shared.js?v=20261019-rating-scale"></script>
+  <script src="data/artwork_ids.js?v=20261024-artwork"></script>
+  <script src="artwork-matcher.js?v=20261024-artwork"></script>
+  <script src="artwork.js?v=20261025-local-first"></script>
+  <script src="data/artifact_stat_context.js?v=1"></script>
+  <script src="artifact-stat-context.js?v=3"></script>
+  <script src="profiles-ui.js?v=20261025-crafting-stats"></script>
+  <script src="stored-artifacts.js?v=20261024-artwork"></script>
+  <script src="crafting-history.js?v=20261024-artwork"></script>
+  <script src="scanner-keep.js?v=20261025-stats-page"></script>
+  <script src="scanner-collection.js?v=20261025-stats-page"></script>
+  <script src="crafted-log-stats.js?v=20261025-distributions"></script>
+  <script src="crafting-stats-tables.js?v=20261025-distributions"></script>
+  <script src="crafted-log-stats-ui.js?v=20261025-distributions"></script>
+  <script src="services.js?v=20261025-distributions"></script>
+</body></html>

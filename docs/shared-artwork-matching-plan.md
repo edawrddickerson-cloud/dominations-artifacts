@@ -2,7 +2,7 @@
 
 Date: 2026-10-24
 
-Status: Implemented. See [Shared artifact artwork](shared-artwork.md) for implementation, release checks, maintenance and validation results.
+Status: Implemented. See [Shared artifact artwork](shared-artwork.md) for implementation, release checks, maintenance and validation results. The October 24 user correction supersedes the original display-priority requirement: always preserve and show the player's local capture first; shared artwork is a fallback for a missing or unloadable capture.
 
 The planner will match captured artifact artwork against an owner-maintained collection of approved game images entirely in the browser. Saved items will sync an approved artwork ID and display that reference image on every device. User captures, fingerprints and image embeddings will remain on the device.
 
@@ -16,7 +16,7 @@ When a capture has a confident, unambiguous visual match, the planner shows the 
 
 An unmatched or ambiguous capture receives no artwork ID. The scanner, Collection, staged inventory and history use the user's locally captured image when available. Show a category placeholder only when neither an approved image nor a local capture is available. Matching retries when a stronger crop or a newer reference catalog becomes available. Unknown artwork does not trigger an upload, a contribution prompt or a manual review queue on the server.
 
-Display priority is approved database image, then local captured image, then category placeholder. A successful match always replaces the displayed local capture with the approved image, without deleting the local capture. If the approved asset cannot load and is not cached, temporarily use the local capture and retry the approved asset later.
+Display priority is the player's local captured image, then approved artwork, then an existing catalog image, then category placeholder. A successful match stores an artwork ID alongside the preserved local capture and continues to display the capture. Shared artwork supplies the image on another browser without the capture, or when the capture cannot load.
 
 Local fallback images remain specific to the browser holding them. Another device can show the approved image from a synced artwork ID, but an unmatched item has no image there unless that browser already has a capture or obtains one through scanning or an explicit local backup import.
 
@@ -100,7 +100,7 @@ Use stable IDs and versioned image paths. Retain retired IDs as aliases or resol
 
 ## Phase 5 Render and migrate existing items
 
-Create one shared resolver across the scanner, Collection, staged inventory and crafting history. Resolve an approved artwork ID first; retain existing Legendary/Mythical catalog images as approved database images where already available. Only when no approved image can be resolved or loaded should the resolver use the local captured image, followed by a category placeholder. An invalid or unavailable ID must never become a user-controlled remote image URL. Local captured images retain the existing local image validation and never enter cloud serialization.
+Create one shared resolver across the scanner, Collection, staged inventory and crafting history. Resolve the player's local captured image first, then an approved artwork ID; retain existing Legendary/Mythical catalog images as further fallbacks where already available. Use a category placeholder when none can load. An invalid or unavailable ID must never become a user-controlled remote image URL. Local captured images retain the existing local image validation and never enter cloud serialization.
 
 Run local backfill against existing captured images in small batches after the catalog is available. Save only confident results, preserve item IDs and local images, and use ordinary account sync to publish the new artwork IDs. Check the current record before each write so a delayed backfill cannot overwrite newer edits, resurrect deleted items or cross account boundaries.
 
@@ -116,15 +116,15 @@ A fresh device can render existing synced artwork IDs immediately. An older clou
 | Scanner lifecycle | Stale results cannot change a later artifact, another profile or a stopped session |
 | Item identity | Shared artwork never merges physical copies, changes ownership or modifies stats and slots |
 | Migration | Backfill is resumable and preserves edits, local images, backups, history counts and deletions |
-| Rendering | Desktop and mobile checks verify approved-image priority, local fallback for unmatched items, placeholders only when both are absent, recovery after asset-load failure, and fresh-device behaviour across scanner, Collection, inventory and history |
+| Rendering | Checks verify local-capture priority even for matched items, shared fallback when local images are missing or broken, placeholders only when no image loads, recovery after image failure, and fresh-device behaviour across scanner, Collection, inventory and history |
 | Performance | Matching and catalog loading do not delay OCR, Keep, editing or account recovery |
 
 Extend the existing scanner collection, stored-artifact, history, workspace and backend checks where their contracts change. Run the existing focused scanner recognition, reading and capture checks plus browser fixtures for Keep, storage saving and log rendering. Test a fresh browser restoring account data and displaying reference artwork without importing any captured image.
 
 Release behind a feature flag after local acceptance. Publish approved assets and backend validation first, then the browser feature. Perform a real-game check before broad enablement. Implementation does not authorize production deployment or publication by itself.
 
-Rollback disables new matching and uses approved catalog images or cached references first, then local captured images, then category placeholders. Keep stored artwork IDs and existing local captures intact; do not remove approved assets still referenced by accounts.
+Rollback disables new matching and keeps local captured images first, then approved shared images, then category placeholders. Keep stored artwork IDs and existing local captures intact; do not remove approved assets still referenced by accounts.
 
 ## Definition of done
 
-A supported capture can acquire an approved artwork ID without reading its title. That ID survives Keep, Collection transfer, history reconciliation, backup and account restore. A fresh browser displays the approved image using only structured account data and shared assets. Matched items always prefer the approved image. Unmatched items display their local captured image when available, and a category placeholder otherwise. No user-captured image or visual descriptor is uploaded, and the shared collection changes only through the maintainer's publication workflow.
+A supported capture can acquire an approved artwork ID without reading its title. That ID survives Keep, Collection transfer, history reconciliation, backup and account restore. A fresh browser displays the approved image using only structured account data and shared assets. Every item prefers its preserved local captured image, including after matching. Items without a local capture use shared artwork when available, and a category placeholder otherwise. No user-captured image or visual descriptor is uploaded, and the shared collection changes only through the maintainer's publication workflow.

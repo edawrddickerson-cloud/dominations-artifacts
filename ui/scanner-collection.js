@@ -359,10 +359,10 @@
     const hallLabel=hall=>hall==='war'?'War':hall==='main'?'Main (Multiplayer)':'Hall unclear';
     if(data.labels) {
       const unknown=data.labels.filter(item=>!item.known);labelCount=data.labels.length;unknownCount=unknown.length;
-      list.textContent=unknown.map(item=>hallLabel(item.hall)+' · '+item.name+' ('+item.seenInScans+' reads)').join('\n') || 'No unknown perk labels.';
+      if(list)list.textContent=unknown.map(item=>hallLabel(item.hall)+' · '+item.name+' ('+item.seenInScans+' reads)').join('\n') || 'No unknown perk labels.';
     }
     if(data.nameReviews)renderNameReviews(data.nameReviews);
-    count.textContent=data.scanCount+' distinct reads · '+labelCount+' unique labels · '+unknownCount+' not in current perk settings'+(data.scanCount>=5000?' · Limit reached; export and clear.':'');
+    if(count)count.textContent=data.scanCount+' distinct reads · '+labelCount+' unique labels · '+unknownCount+' not in current perk settings'+(data.scanCount>=5000?' · Limit reached; export and clear.':'');
     const log=document.getElementById('scanner-item-log');
     if(log) {
       document.getElementById('scanner-item-count').textContent=data.itemCount+' items logged'+(data.itemCount>=5000?' · Limit reached; export and clear.':'');
@@ -457,7 +457,7 @@
   enabled?.addEventListener('change',()=>{if(enabled.checked)document.getElementById('scanner-read').click();});
   window.addEventListener?.('focus',()=>render({all:true}));
   window.addEventListener?.('storage',()=>render({all:true}));
-  document.getElementById('scanner-collection-clear').addEventListener('click',()=>{if(confirm('Clear the item log and names? Lifetime totals stay. Export first to keep images and details.')){collector.clear();afterChange(true);}});
+  document.getElementById('scanner-collection-clear')?.addEventListener('click',()=>{if(confirm('Clear the item log and names? Lifetime totals stay. Export first to keep images and details.')){collector.clear();afterChange(true);}});
   if(initialData)persist();
   render();
 })();

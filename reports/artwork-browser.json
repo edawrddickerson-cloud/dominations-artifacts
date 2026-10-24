@@ -225,10 +225,17 @@
     "approved asset never selects another identity art-a6a3bc15fe2004c4": true,
     "approved asset never selects another identity art-0c19660a714a7679": true,
     "approved asset never selects another identity art-7dc1aa006363e7fc": true,
-    "approved image takes priority": true,
+    "local capture takes priority over matched artwork": true,
+    "ID-only item uses approved fallback": true,
+    "local capture takes priority over catalog fallback": true,
     "unmatched uses local image": true,
     "unapproved URLs cannot become artwork": true,
-    "asset error uses local image": true,
+    "bound scanner image shows local capture": true,
+    "history and inventory markup shows local capture": true,
+    "broken local capture uses approved fallback": true,
+    "missing local and approved images use placeholder": true,
+    "recovery restores local capture first": true,
+    "catalog image is retained as final image fallback": true,
     "non-game image rejected 0": true,
     "non-game image rejected 1": true,
     "non-game image rejected 2": true,
@@ -249,7 +256,8 @@
     "late match cannot resurrect deletion": true,
     "profile switch rejects delayed artwork update": true,
     "profile switch cannot populate another collection": true,
-    "real Collection renders approved image before local capture": true,
+    "real Collection renders local capture before approved image": true,
+    "real Collection on fresh browser uses approved fallback": true,
     "real Collection renders unmatched local capture": true
   },
   "assets": {
@@ -261,10 +269,10 @@
     "matched": 54,
     "unknown": 27
   },
-  "p95Ms": 3.699999988079071,
-  "maxMs": 9,
+  "p95Ms": 3.300000000745058,
+  "maxMs": 8.899999998509884,
   "network": {
-    "requests": 214,
+    "requests": 213,
     "uploads": 0,
     "externalRequests": 0
   }

@@ -10,6 +10,7 @@
     "army.html",
     "artifacts.html",
     "scanner.html",
+    "crafting-stats.html",
     "storage-scanner.html",
     "collection.html",
     "totals.html",

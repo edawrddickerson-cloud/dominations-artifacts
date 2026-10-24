@@ -1,6 +1,6 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),crypto=require('node:crypto').webcrypto;
 const app={window:{},document:{getElementById:()=>null},Date,crypto,TextEncoder};vm.createContext(app);
-for(const file of ['data/artifact_stat_context','crafting-history','crafting-community','integration-core','scanner-collection','cloud-sync','research','crafting-result-context'])vm.runInContext(fs.readFileSync('ui/'+file+'.js','utf8'),app);
+for(const file of ['data/artifact_stat_context','crafting-history','crafted-log-stats','crafting-community','integration-core','scanner-collection','cloud-sync','research','crafting-result-context'])vm.runInContext(fs.readFileSync('ui/'+file+'.js','utf8'),app);
 const H=app.window.DNCraftingHistory,C=app.window.DNScannerCollectionCore,S=app.window.DNCraftingCommunity,I=app.window.DNIntegrationCore;
 const copy=v=>JSON.parse(JSON.stringify(v));
 const names=['Armored Car Damage','Armored Car Hitpoints','Attack Helicopter Damage','Attack Helicopter Hitpoints','APC Hitpoints'];
