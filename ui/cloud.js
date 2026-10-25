@@ -68,10 +68,10 @@
     await window.DNLocalBackupCore.restore({kind:'dominations-planner-backup',version:1,settings,records},localStorage,store);
   }
   function cloudError(name,error,responseStatus){
-      if(name==='planner_read_workspace' || name==='planner_save_workspace')try{window.DNTelemetry?.event('cloud_sync_failed',{reason:error.code==='40001'?'conflict':error.code==='42501'?'permission':'request'});}catch{}
+      if(name==='planner_read_workspace' || name.startsWith('planner_save_workspace'))try{window.DNTelemetry?.event('cloud_sync_failed',{reason:error.code==='40001'?'conflict':error.code==='42501'?'permission':'request'});}catch{}
       const code=/^[A-Z0-9]{2,12}$/.test(error?.code || '')?error.code:/abort|timeout/i.test(error?.name+' '+error?.message)?'TIMEOUT':responseStatus?'HTTP'+responseStatus:'NETWORK';
       const action=name==='planner_read_workspace'?'Loading account data':name.startsWith('planner_save_workspace')?'Saving account data':'The cloud request';
-      const message=code==='40001'?'Account data changed. Review the versions and retry.':code==='42501'?'Account permission changed. Sign in again and retry.':['TIMEOUT','57014'].includes(code)?action+' timed out ('+code+'). Retry when connected.':'The cloud request could not be completed ('+code+').';
+      const message=code==='40001'?'Account data changed. Review the versions and retry.':code==='42501'?'Account permission changed. Sign in again and retry.':code==='57014'?action+' timed out on the server (57014). Retry shortly.':code==='TIMEOUT'?action+' timed out. Retry when connected.':'The cloud request could not be completed ('+code+').';
       return Object.assign(Error(message+' Your local data is unchanged.'),{code,cause:error});
   }
   async function rpc(name,args={}) {

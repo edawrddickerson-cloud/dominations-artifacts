@@ -14,6 +14,8 @@ async function denied(fn,code='42501'){await assert.rejects(fn,error=>error.code
   await db.query('insert into auth.users values($1),($2)',[A,B]);
   await db.exec(fs.readFileSync('supabase/migrations/202610180001_planner_backend.sql','utf8'));
   await db.exec(fs.readFileSync('supabase/migrations/202610250007_workspace_read_serialization.sql','utf8'));
+  await db.exec(fs.readFileSync('supabase/migrations/202610240007_shared_artwork.sql','utf8'));
+  await db.exec(fs.readFileSync('supabase/migrations/202610250008_workspace_save_validation.sql','utf8'));
   await user(null,'anon');await denied(()=>call('planner_read_workspace'));await denied(()=>db.query('select * from public.planner_workspaces'));
   await user(A);assert.equal(await call('planner_read_workspace'),null);
   const operation=uuid(),saved=await call('planner_save_workspace',[0,operation,workspace(1)]);assert.equal(saved.revision,1);

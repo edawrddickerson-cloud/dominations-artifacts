@@ -32,7 +32,7 @@
     await Promise.all([script('cloud-sync.js?v=20261025-reviewed-choice'),script('research.js?v=20261023-automatic-v2')]);
     if(!window.DNStoredArtifacts)await script('stored-artifacts.js?v=20261025-image-recovery');
     if(!window.DNLocalBackupCore)await script('local-backup.js?v=3');
-    await script('cloud.js?v=20261025-image-recovery');
+    await script('cloud.js?v=20261025-save-timeout');
     await script('ocr-feedback.js?v=20261024-ocr-matching');
     await script('services-ui.js?v=20261025-reviewed-choice');
     if(document.body.classList.contains('page-crafting-stats')){

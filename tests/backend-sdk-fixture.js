@@ -38,6 +38,7 @@
         return {data:copy(backend.workspaces[filter.value] || null),error:null,status:200};
       }};},
     async rpc(name,args={}){
+      if(backend.rpcError?.name===name)return {data:null,error:{code:backend.rpcError.code}};
       if(backend.offline)return {data:null,error:{code:'503'}};
       const owner=backend.owner?.id;if(!owner)return {data:null,error:{code:'42501'}};
       if(name==='planner_read_workspace')return {data:copy(backend.workspaces[owner] || null),error:null};

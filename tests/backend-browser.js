@@ -79,6 +79,11 @@
   check('replacement commits an importable safety backup first',(await app.DNCloud.recovery())[0].local.kind==='dominations-planner-backup');
   await wait(()=>app.DNCloud.state().status==='synced','initial sync completion');
   check('linking choices disappear once the browser is saved',doc.querySelector('[data-cloud-choice]').hidden && doc.querySelector('[data-cloud-status]').textContent==='Saved to your account.');
+  const beforeServerTimeout=await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture()),revisionBeforeTimeout=backend.workspaces[owner].revision;
+  backend.rpcError={name:'planner_save_workspace_v2',code:'57014'};let timeoutError;
+  try{await app.DNCloud.rpc('planner_save_workspace_v2',{});}catch(error){timeoutError=error;}
+  delete backend.rpcError;
+  check('database timeout identifies the server and preserves both versions',timeoutError?.code==='57014'&&timeoutError.message.includes('timed out on the server')&&!timeoutError.message.includes('when connected')&&backend.workspaces[owner].revision===revisionBeforeTimeout&&(await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture()))===beforeServerTimeout);
   let savedHash=await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture());
   app.location.reload();
   await wait(()=>iframe.contentDocument!==doc && iframe.contentDocument.querySelector('[data-signin]'),'reload of the saved browser');doc=iframe.contentDocument;await app.DNServicesReady;
