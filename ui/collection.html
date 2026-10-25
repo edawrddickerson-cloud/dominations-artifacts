@@ -62,11 +62,13 @@
           </div>
         </details>
       </div>
+      <button type="button" class="btn" data-recover-images>Recover images</button><input type="file" accept="application/json,.json" data-image-backup hidden>
       <a class="btn btn-accent collection-scanner-link" href="storage-scanner.html?v=2"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 3H3v5M16 3h5v5M21 16v5h-5M8 21H3v-5M7 12h10" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" /></svg><span>Storage Scanner</span></a>
     </div>
   </section>
 
   <p id="error" class="error" hidden></p>
+  <p role="status" data-image-recovery-status></p>
 
   <div class="collection-layout">
     <section class="collection-list-panel" aria-label="Owned artifacts">
@@ -118,10 +120,12 @@
   <script src="artwork-matcher.js?v=20261024-artwork"></script>
   <script src="artwork.js?v=20261025-local-first"></script>
   <script src="profiles-ui.js?v=20261025-page-filters"></script>
-  <script src="stored-artifacts.js?v=20261024-artwork"></script>
+  <script src="local-artwork-recovery.js?v=20261025-image-recovery"></script>
+  <script src="stored-artifacts.js?v=20261025-image-recovery"></script>
   <script src="artifact-scoring.js?v=20261017-strategies-reroll"></script>
   <script src="collection.js?v=20261024-artwork"></script>
+  <script src="collection-image-recovery.js?v=20261025-image-recovery"></script>
 
-  <script src="services.js?v=20261025-probability-release"></script>
+  <script src="services.js?v=20261025-image-recovery"></script>
 </body>
 </html>

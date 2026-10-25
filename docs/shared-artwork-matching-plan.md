@@ -2,6 +2,18 @@
 
 Date: 2026-10-24
 
+## Image recovery correction — 25 October 2026
+
+An explicit first account link now preserves local captures when the selected account contains the same record/item identity. Choosing a different previously bound account does not carry its predecessor's images. Same-account application and startup can restore missing pixels from account-scoped local safety snapshots. Recovery fills only missing valid captures; it never replaces current captures, stats, ownership, settings, deleted items or another profile's same-named item.
+
+Collection has **Recover images**, accepting a full planner backup. It imports only matching missing image pixels for already-existing records. This is distinct from replacing planner data with Import Backup. Recovery uses stable record/item IDs, not names or equal perk rows. Source images remain local and the existing cloud sanitizer continues excluding pixels. `DNStoredArtifacts.recoverArtwork` updates only the image field in a guarded transaction, so a stale read cannot overwrite concurrent stat edits or recreate a deleted item.
+
+The live approved-ID registry and static assets remain the source for shared fallbacks. Historical backup captures can be matched locally against that reviewed catalog; only confidently matched approved IDs may be attached to existing account records. Ambiguous captures are retained for local recovery and never assigned a guessed shared image.
+
+`202610250007_workspace_read_serialization.sql` preserves the existing invoker/RLS read contract while constructing the response directly, avoiding repeated whole-document serialization on large histories. Its deployment rehearses response parity and account isolation and changes no account data or execute grants.
+
+Focused checks: `test_local_artwork_recovery.cjs`, `test_collection_image_recovery.cjs`, `test_cloud_choice_concurrency.cjs`, `run_backend_browser.js --summary`, `test_backend_database.cjs`, and the existing artwork/browser release checks.
+
 Status: Implemented. See [Shared artifact artwork](shared-artwork.md) for implementation, release checks, maintenance and validation results. The October 24 user correction supersedes the original display-priority requirement: always preserve and show the player's local capture first; shared artwork is a fallback for a missing or unloadable capture.
 
 The planner will match captured artifact artwork against an owner-maintained collection of approved game images entirely in the browser. Saved items will sync an approved artwork ID and display that reference image on every device. User captures, fingerprints and image embeddings will remain on the device.

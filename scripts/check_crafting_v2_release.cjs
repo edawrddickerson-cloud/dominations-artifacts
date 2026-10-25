@@ -5,7 +5,7 @@ if(!/^[a-f0-9]{7,40}$/i.test(commit || ''))throw Error('Supply --commit=HASH.');
 const origin='https://dominations-planner.ededed84.workers.dev';
 const files=['scanner.html','collection.html','strategies.css','crafting-stats.html','crafting-stats-tables.js','crafted-log-stats.css','navigation.js','scanner-session.js','profiles-ui.js','config.html','services.js','service-config.js','integration-core.js','cloud.js','cloud-sync.js','research.js','scanner-collection.js','scanner-reading.js','crafted-log-stats.js','crafted-log-stats-ui.js','crafting-history.js','crafting-community.js','crafting-community-ui.js','crafting-result-context.js','crafting-statistics.html','privacy.html','storage-scanner.html','storage-scanner.js','ocr-feedback.js','services-ui.js'];
 const changedAssets=cp.execFileSync('git',['diff-tree','--no-commit-id','--name-only','-r',commit],{encoding:'utf8'}).trim().split(/\r?\n/).filter(file=>file.startsWith('ui/')&&/\.(?:html|css|js|json)$/.test(file)).map(file=>file.slice(3));
-for(const file of [...changedAssets,'crafting-probability.js','crafting-probability-ui.js','data/crafting_probability_calibration.js'])if(!files.includes(file))files.push(file);
+for(const file of [...changedAssets,'crafting-probability.js','crafting-probability-ui.js','data/crafting_probability_calibration.js','local-artwork-recovery.js','collection-image-recovery.js'])if(!files.includes(file))files.push(file);
 (async()=>{
   const checks=[];let config,expectedConfig;
   for(const file of files){

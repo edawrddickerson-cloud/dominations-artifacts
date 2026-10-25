@@ -23,15 +23,16 @@
     if(!window.DNCraftingHistory)await script('crafting-history.js?v=20261024-artwork');
     await script('integration-core.js?v=20261024-artwork');
     await script('service-store.js?v=2');
+    await script('local-artwork-recovery.js?v=20261025-image-recovery');
     await script('telemetry.js?v=20261022-ocr-feedback');
     if(!window.DN_ARTIFACT_STAT_CONTEXT)await script('data/artifact_stat_context.js?v=1');
     if(!window.DNCraftedLogStats)await script('crafted-log-stats.js?v=20261025-tiers');
     await script('crafting-community.js?v=20261025-inferred');
     await script('crafting-result-context.js?v=1');
     await Promise.all([script('cloud-sync.js?v=20261025-reviewed-choice'),script('research.js?v=20261023-automatic-v2')]);
-    if(!window.DNStoredArtifacts)await script('stored-artifacts.js?v=23');
+    if(!window.DNStoredArtifacts)await script('stored-artifacts.js?v=20261025-image-recovery');
     if(!window.DNLocalBackupCore)await script('local-backup.js?v=3');
-    await script('cloud.js?v=20261025-direct-workspace-read');
+    await script('cloud.js?v=20261025-image-recovery');
     await script('ocr-feedback.js?v=20261024-ocr-matching');
     await script('services-ui.js?v=20261025-reviewed-choice');
     if(document.body.classList.contains('page-crafting-stats')){

@@ -187,6 +187,10 @@
   await wait(()=>app.DNCloud.state().status==='synced','saved state after choosing cloud');
   check('choosing account settings preserves reconciled craft history and reloads cleanly',(await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture()))===(await app.DNIntegrationCore.fingerprint(backend.workspaces[owner].data)) && JSON.parse(await app.DN.scannerLog.read()).items.length===2 && doc.querySelector('[data-cloud-choice]').hidden);
   check('the overwritten local conflict remains in an importable safety backup',(await app.DNCloud.recovery())[0].local.records.some(record=>record.items?.some(row=>row.id===item.id && row.name==='Local conflict version')));
+  const imagesBefore=await app.DNCloud.fullBackup(),owned=await app.DNStoredArtifacts.read('collection:main');
+  await app.DNServiceStore.put('cloud-recovery',[{owner,local:imagesBefore}]);delete owned.find(row=>row.id===item.id).image;await app.DNStoredArtifacts.write('collection:main',owned);
+  const noImageHash=await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture());await app.DNCloud.recoverLocalArtwork();
+  check('same-account safety snapshots restore lost local captures without cloud pixel changes',(await app.DNStoredArtifacts.read('collection:main')).find(row=>row.id===item.id).image===item.image&&(await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture()))===noImageHash);
   const other='22222222-2222-4222-8222-222222222222';backend.switchOwner(other);
   await wait(()=>app.DNCloud.user()?.id===other,'account change');await app.DNCloud.sync();
   check('another account cannot inherit this device’s upload permission',app.DNCloud.state().status==='unlinked' && !backend.workspaces[other]);

@@ -5,7 +5,7 @@
 (() => {
   'use strict';
   const C=window.DNIntegrationCore,config=window.DNServiceConfig,store=window.DNStoredArtifacts;
-  let client=null,currentUser=null,starting=null,timer=null,consentTask=Promise.resolve(),authGeneration=0;
+  let client=null,currentUser=null,starting=null,timer=null,consentTask=Promise.resolve(),authGeneration=0,artworkRecovery=null;
   const listeners=new Set();let message={status:'disabled'},authenticationError='';
   const configured=()=>C.cloudReady(config,location.origin);
   function announce(next) {message={...next,authError:authenticationError};for(const fn of listeners)try{fn({...message});}catch{}}
@@ -26,13 +26,30 @@
     const previous=await window.DNServiceStore.get('cloud-recovery') || [];
     await window.DNServiceStore.put('cloud-recovery',[value,...previous].slice(0,3));
   }
-  async function apply(workspace,{preserveArtwork}) {
+  function recoverLocalArtwork(){
+    if(artworkRecovery)return artworkRecovery;
+    const owner=currentUser?.id;
+    if(!owner||binding()?.owner!==owner||!window.DNLocalArtworkRecovery)return Promise.resolve(0);
+    const current=()=>currentUser?.id===owner&&binding()?.owner===owner;
+    artworkRecovery=(async()=>{
+      const sources=await window.DNServiceStore.get('cloud-recovery') || [],records=await store.readBackupRecords();
+      if(!current())return 0;
+      const result=window.DNLocalArtworkRecovery.recover(records,sources,{owner});
+      return store.recoverArtwork(result.patches,current);
+    })().catch(()=>0).finally(()=>{artworkRecovery=null;});return artworkRecovery;
+  }
+  async function apply(workspace,{preserveArtwork,owner=currentUser?.id,isCurrent=()=>currentUser?.id===owner}) {
     C.validate(workspace);
+    if(!isCurrent())throw Error('The signed-in account changed. Nothing was replaced.');
     const previous=await fullBackup(),settings=Object.fromEntries(Object.entries(previous.settings).filter(([key])=>!C.isSyncedSetting(key)));
     Object.assign(settings,workspace.settings);
     const art=new Map();
     if(preserveArtwork)for(const record of previous.records)for(const item of record.items || [])if(item.image)art.set(record.id+':'+item.id,item.image);
-    const records=workspace.records.map(record=>({id:record.id,items:record.items.map(item=>({...C.sanitizeItem(item),...(art.has(record.id+':'+item.id)?{image:art.get(record.id+':'+item.id)}:{})}))}));
+    let records=workspace.records.map(record=>({id:record.id,items:record.items.map(item=>({...C.sanitizeItem(item),...(art.has(record.id+':'+item.id)?{image:art.get(record.id+':'+item.id)}:{})}))}));
+    if(preserveArtwork&&window.DNLocalArtworkRecovery){
+      const sources=[{owner,local:previous},...await window.DNServiceStore.get('cloud-recovery') || []];
+      records=window.DNLocalArtworkRecovery.recover(records,sources,{owner}).records;
+    }
     // Keep this account's local diagnostic history. Never carry another account's
     // history into a newly adopted cloud workspace.
     const localLog=previous.records.find(record=>record.id==='crafting-log');
@@ -47,6 +64,7 @@
       log.scans=local?.scans || [];log.labels=local?.labels || [];
       records.push({id:'crafting-log',value:JSON.stringify(log)});
     }else if(preserveArtwork && localLog)records.push(localLog); // Old backups do not replace this account's history.
+    if(!isCurrent())throw Error('The signed-in account changed. Nothing was replaced.');
     await window.DNLocalBackupCore.restore({kind:'dominations-planner-backup',version:1,settings,records},localStorage,store);
   }
   function cloudError(name,error,responseStatus){
@@ -104,7 +122,7 @@
     currentUser=next;authGeneration++;clearTimeout(timer);
     engine.setOwner(next?.id);
     window.DNTelemetry?.setOwner(next?.id || null);
-    if(next){consentTask=syncConsent().catch(()=>{});schedule(0);}else announce({status:'signed-out'});
+    if(next){consentTask=syncConsent().catch(()=>{});schedule(0);setTimeout(recoverLocalArtwork,0);}else announce({status:'signed-out'});
     window.dispatchEvent(new CustomEvent('dn-account-changed',{detail:{signedIn:!!next}}));
   }
   async function start() {
@@ -157,7 +175,7 @@
     },
     async signOut(){if(!client)return;const {error}=await client.auth.signOut({scope:'local'});if(error)throw Error('Could not sign out. Try again.');setSession(null);},
     async exportAccount(){return {kind:'dominations-account-export',version:1,account:window.DNCloud.user(),exportedAt:new Date().toISOString(),data:await rpc('planner_export_account')};},
-    async recovery(){return await window.DNServiceStore.get('cloud-recovery') || [];},
+    async recovery(){return await window.DNServiceStore.get('cloud-recovery') || [];},recoverLocalArtwork,
     async deleteResearch(){await rpc('planner_delete_research');},
     async deleteAccount(){
       if(!client || !currentUser)throw Error('Sign in before deleting your account.');

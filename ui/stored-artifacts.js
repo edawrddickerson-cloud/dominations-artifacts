@@ -140,6 +140,25 @@
       transaction.onabort=transaction.onerror=()=>reject(transaction.error);
     });
   }
+  async function recoverArtwork(patches,isCurrent=()=>true){
+    const grouped=new Map();
+    for(const patch of patches || []){
+      if((patch.record!=='items'&&!/^collection:[^:]+$/.test(patch.record))||!window.DNLocalArtworkRecovery?.local(patch.image))continue;
+      if(!grouped.has(patch.record))grouped.set(patch.record,[]);grouped.get(patch.record).push(patch);
+    }
+    if(!grouped.size||!isCurrent())return 0;
+    const db=await open();let restored=0;const changed=new Set();
+    await new Promise((resolve,reject)=>{
+      const tx=db.transaction('inventory','readwrite'),store=tx.objectStore('inventory');
+      for(const [id,images] of grouped){const request=store.get(id);request.onsuccess=()=>{
+        if(!isCurrent()||!request.result?.items)return;const record=request.result;let dirty=false;
+        for(const patch of images){const item=record.items.find(item=>item.id===patch.id);if(!item||window.DNLocalArtworkRecovery.local(item.image))continue;item.image=patch.image;restored++;dirty=true;}
+        if(dirty){store.put(record);changed.add(id);}
+      };}
+      tx.oncomplete=resolve;tx.onabort=tx.onerror=()=>reject(tx.error);
+    });
+    for(const id of changed)announce(id);return restored;
+  }
   // Read only planner records for sync. Large diagnostic logs and artwork are
   // excluded by the transport serializer; the local database remains unchanged.
   async function readPlannerRecords(profileIds) {
@@ -636,6 +655,6 @@
     });
     return row;
   }
-  window.DNStoredArtifacts = {read, write, readBackupRecords, readPlannerRecords, restoreBackupRecords, accept, saveScan, keepCraft, passivePlan, passiveMerge, remove, update, identify, toRow, matchCatalog, markCatalogOwned, linkCatalogItem, catalogRows, reconcileCatalog, loadCatalog, useCatalog, collectionKey, impliedRange, tierBases, tierMetadata, craftingTier, inferStorageRow, backfillItem, merge,backfillArtwork,
+  window.DNStoredArtifacts = {read, write, readBackupRecords, readPlannerRecords, restoreBackupRecords, recoverArtwork, accept, saveScan, keepCraft, passivePlan, passiveMerge, remove, update, identify, toRow, matchCatalog, markCatalogOwned, linkCatalogItem, catalogRows, reconcileCatalog, loadCatalog, useCatalog, collectionKey, impliedRange, tierBases, tierMetadata, craftingTier, inferStorageRow, backfillItem, merge,backfillArtwork,
     newId:() => 'scan-' + crypto.randomUUID()};
 })();

@@ -144,7 +144,7 @@
           if(hash!==selected.remoteHash){const saved=await remote.write(id,revision,crypto.randomUUID(),data);revision=saved.revision;}
           if(!valid(id,generation))return state;
         }
-        await apply(data,{preserveArtwork:readBinding()?.owner===id});
+        await apply(data,{preserveArtwork:!readBinding()?.owner || readBinding().owner===id,owner:id,isCurrent:()=>valid(id,generation)});
         if(!valid(id,generation))return state;
         saveBinding({owner:id,revision,hash,savedAt:selected.row.updated_at || null});
         return publish({status:'synced',revision,reload:true});

@@ -13,6 +13,7 @@ async function denied(fn,code='42501'){await assert.rejects(fn,error=>error.code
   await db.exec("create role anon; create role authenticated; create role service_role bypassrls; create schema auth; create table auth.users(id uuid primary key); create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$; grant usage on schema auth to anon,authenticated,service_role; grant execute on function auth.uid() to anon,authenticated,service_role;");
   await db.query('insert into auth.users values($1),($2)',[A,B]);
   await db.exec(fs.readFileSync('supabase/migrations/202610180001_planner_backend.sql','utf8'));
+  await db.exec(fs.readFileSync('supabase/migrations/202610250007_workspace_read_serialization.sql','utf8'));
   await user(null,'anon');await denied(()=>call('planner_read_workspace'));await denied(()=>db.query('select * from public.planner_workspaces'));
   await user(A);assert.equal(await call('planner_read_workspace'),null);
   const operation=uuid(),saved=await call('planner_save_workspace',[0,operation,workspace(1)]);assert.equal(saved.revision,1);

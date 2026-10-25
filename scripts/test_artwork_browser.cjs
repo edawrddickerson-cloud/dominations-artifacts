@@ -82,6 +82,6 @@ browserRun(async({evaluate,events})=>{
  assert.ok(network.every(r=>r.method==='GET'&&r.url.startsWith('http://127.0.0.1:')),'No image or fingerprint uploads');
  assert.ok(!events.some(e=>e.method==='Runtime.exceptionThrown'),'No browser exceptions');
  report.network={requests:network.length,uploads:0,externalRequests:0};
- fs.writeFileSync('reports/artwork-browser.json',JSON.stringify(report,null,2)+'\n');
+ fs.writeFileSync(process.argv.includes('--private-report')?'data/temp/artwork-browser-current.json':'reports/artwork-browser.json',JSON.stringify(report,null,2)+'\n');
  console.log(JSON.stringify({passed:true,checks:Object.keys(report.checks).length,assets:report.assets,p95Ms:report.p95Ms,network:report.network}));
 }).catch(e=>{console.error(e);process.exitCode=1;});

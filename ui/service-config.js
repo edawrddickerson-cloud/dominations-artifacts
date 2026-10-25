@@ -1,7 +1,7 @@
 /* Public integration configuration. Never put privileged keys in ui/.
  * Empty project values keep all cloud/analytics connections disabled. */
 window.DNServiceConfig=Object.freeze({
-  build:'2026-10-25-crafting-probability',
+  build:'2026-10-25-image-recovery',
   // Local work and preview hosts stay out of production usage dashboards.
   environment:typeof location!=='undefined' && location.origin!=='https://dominations-planner.ededed84.workers.dev'?'development':'production',
   cloudEnabled:typeof location==='undefined' || location.origin==='https://dominations-planner.ededed84.workers.dev',

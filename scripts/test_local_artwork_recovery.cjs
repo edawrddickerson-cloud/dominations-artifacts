@@ -1,0 +1,12 @@
+const fs=require('node:fs'),vm=require('node:vm'),assert=require('node:assert/strict');
+const app={window:{}};vm.createContext(app);vm.runInContext(fs.readFileSync('ui/local-artwork-recovery.js','utf8'),app);const R=app.window.DNLocalArtworkRecovery;
+const first='data:image/jpeg;base64,YQ==',second='data:image/png;base64,Yg==',current=[{id:'collection:main',items:[{id:'owned',name:'Current name',rows:[{name:'Damage',value:11}]},{id:'preserved',image:second,rows:[]}]},{id:'collection:other',items:[{id:'owned',rows:[]}]},{id:'crafting-log',value:'private log'}];
+const source=(owner,image,record='collection:main')=>({owner,local:{kind:'dominations-planner-backup',version:1,settings:{'do-not-import':'old'},records:[{id:record,items:[{id:'owned',name:'Old name',image,rows:[{name:'Old damage',value:1}]},{id:'deleted',image},{id:'preserved',image}]}]}});
+const before=JSON.stringify(current),sources=[source('account',first),source('account',second),source('other',second)];
+const result=R.recover(current,sources,{owner:'account'});
+assert.equal(result.patches.length,1);assert.equal(result.records[0].items[0].image,first);assert.equal(result.records[0].items[0].name,'Current name');assert.equal(result.records[0].items[0].rows[0].value,11);assert.equal(result.records[0].items[1].image,second);assert.equal(result.records[0].items.length,2);assert.equal(result.records[1].items[0].image,undefined);assert.equal(JSON.stringify(current),before);
+assert.equal(R.recover(current,[source('other',first)],{owner:'account'}).patches.length,0);
+assert.equal(R.recover(current,[source('account','https://private.invalid/image')],{owner:'account'}).patches.length,0);
+assert.equal(R.recover(current,[source('account',first)]).patches.length,0);
+assert.equal(R.recover(result.records,sources,{owner:'account'}).patches.length,0);
+console.log('Local image recovery: stable identity, account/profile isolation, current-image priority, no resurrection, unchanged stats/settings and idempotency passed.');
