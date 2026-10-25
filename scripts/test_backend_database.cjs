@@ -16,12 +16,16 @@ async function denied(fn,code='42501'){await assert.rejects(fn,error=>error.code
   await user(null,'anon');await denied(()=>call('planner_read_workspace'));await denied(()=>db.query('select * from public.planner_workspaces'));
   await user(A);assert.equal(await call('planner_read_workspace'),null);
   const operation=uuid(),saved=await call('planner_save_workspace',[0,operation,workspace(1)]);assert.equal(saved.revision,1);
+  const direct=await db.query('select game_key,revision,operation_id,data,updated_at from public.planner_workspaces where owner_id=$1',[A]);
+  const normalized=value=>({...value,updated_at:new Date(value.updated_at).toISOString()});
+  assert.deepEqual(normalized(direct.rows[0]),normalized(saved),'owner-filtered direct read preserves the workspace RPC envelope');
   assert.equal((await call('planner_save_workspace',[0,operation,workspace(1)])).revision,1,'a repeated operation is idempotent');
   await denied(()=>call('planner_save_workspace',[0,uuid(),workspace(2)]),'40001');
   await denied(()=>db.query('insert into public.planner_workspaces(owner_id,revision,operation_id,data) values($1,1,$2,$3)',[B,uuid(),workspace(2)]));
   for(let revision=1;revision<6;revision++)await call('planner_save_workspace',[revision,uuid(),workspace(revision+1)]);
   assert.equal((await db.query('select count(*)::int as n from public.planner_workspace_history')).rows[0].n,3);
   await user(B);assert.equal(await call('planner_read_workspace'),null);
+  assert.equal((await db.query('select game_key,revision,operation_id,data,updated_at from public.planner_workspaces where owner_id=$1',[A])).rows.length,0,'the fast read cannot bypass RLS when its owner filter disagrees with the authenticated session');
   assert.equal((await db.query('select count(*)::int as n from public.planner_workspaces where owner_id=$1',[A])).rows[0].n,0,'RLS hides another account');
   await call('planner_save_workspace',[0,uuid(),workspace('B')]);
   assert.equal((await call('planner_export_account')).workspace.data.testValue,'B');

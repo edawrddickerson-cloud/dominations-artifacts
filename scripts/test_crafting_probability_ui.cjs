@@ -1,0 +1,46 @@
+const fs=require('node:fs'),assert=require('node:assert/strict');
+const {browserRun}=require('./artwork_browser.cjs');
+browserRun(async({evaluate,send})=>{
+ const checks=await evaluate(`(async()=>{
+  const checks=[],assert=(name,ok)=>{if(!ok)throw Error(name);checks.push(name);};
+  window.DNAppShell={accepts:()=>true,navigate:()=>true};
+  const frame=document.createElement('iframe');frame.id='scanner-view';frame.style='width:100%;height:1800px;border:0';document.body.style='margin:0';document.body.append(frame);window.probabilityFrame=frame;
+  const wait=async test=>{for(let i=0;i<800;i++){if(test())return;await new Promise(r=>setTimeout(r,25));}throw Error('Readiness timeout');};
+  frame.src='/ui/crafting-stats.html';await wait(()=>frame.contentWindow.DNCraftingProbabilityUI&&frame.contentWindow.DNScannerCollection);const w=frame.contentWindow,d=frame.contentDocument;await w.DNServicesReady;
+  const root=d.querySelector('#crafting-probability'),get=s=>root.querySelector('[data-probability-'+s+']'),change=(node,value)=>{node.value=value;node.dispatchEvent(new w.Event('change',{bubbles:true}));};
+  const records=Array.from({length:40},(_,i)=>({id:'probability-fixture-'+i,firstSeen:i<20?'2026-10-18T21:00:00.000Z':'2026-10-21T21:00:00.000Z',hall:'main',type:'Weapon',expectedRows:5,rows:(i<20?[11,11,6,1,1]:[11,6,1,1,1]).map((value,j)=>({name:j===0?'Heavy Infantry Damage':'Bomber Damage',value,known:true,hasPercent:true}))}));
+  await w.DNScannerCollection.reconcileHistory({version:2,items:records,ledger:{version:1,baseline:null,archived:[]}});await w.DNCraftingProbabilityUI.refresh();
+  assert('calculator precedes dashboard',!!(root.compareDocumentPosition(d.querySelector('#crafting-stats-dashboard'))&w.Node.DOCUMENT_POSITION_FOLLOWING));
+  const initial=get('chance').textContent;assert('three copies with Any tier uses five-row probability',initial==='5.79%');
+  assert('odds are bold above smaller percentage',get('odds').tagName==='STRONG'&&get('chance').tagName==='SPAN'&&get('odds').nextElementSibling===get('chance'));
+  assert('Weapon picker excludes Armor-only perks',![...root.querySelectorAll('.probability-perk-list input')].some(n=>n.value==='Invading Heavy Infantry Damage'));
+  const enemySpawn=root.querySelector('.probability-perk-list input[value="Enemy Defender Spawn Time"]');assert('Enemy Defender Spawn Time remains selectable without observations',enemySpawn&&!enemySpawn.disabled);enemySpawn.checked=true;enemySpawn.dispatchEvent(new w.Event('change',{bubbles:true}));assert('missing observations appear in result instead of disabling perks',get('status').textContent.includes('No sample: Enemy Defender Spawn Time'));enemySpawn.checked=false;enemySpawn.dispatchEvent(new w.Event('change',{bubbles:true}));
+  change(get('scenario'),'event');assert('event leaves Any-tier probability unchanged',get('chance').textContent===initial);
+  const requirement=root.querySelector('.probability-requirement');assert('Tier offers Any and Max only',[...requirement.querySelector('[data-tier]').options].map(o=>o.textContent).join('|')==='Any|Max');change(requirement.querySelector('[data-tier]'),'max');assert('Max for three copies is two top and one middle',requirement.querySelector('[data-tier-pattern]').textContent==='2 × 11% + 1 × 6%');const eventChance=parseFloat(get('chance').textContent);change(get('scenario'),'normal');assert('event tier distributions change tier-specific estimates',parseFloat(get('chance').textContent)<eventChance);
+  change(requirement.querySelector('[data-tier]'),'');change(requirement.querySelector('[data-match]'),'exact');assert('exactly excludes four and five copies',get('chance').textContent==='5.12%');
+  const input=requirement.querySelector('[data-count]');input.focus();input.value='2';input.dispatchEvent(new w.Event('input',{bubbles:true}));await w.DNCraftingProbabilityUI.refresh();assert('model refresh preserves focused count input',d.activeElement===input&&input.value==='2');
+  get('add').click();const second=root.querySelectorAll('.probability-requirement')[1];assert('empty requirements require perk selection',get('status').textContent.includes('Select a perk'));
+  second.querySelector('[data-remove]').click();
+  const details=requirement.querySelector('details');details.open=true;const search=details.querySelector('input[type=search]');search.value='Heavy Infantry Damage';search.dispatchEvent(new w.Event('input'));details.querySelector('[data-clear-perks]').click();details.querySelector('[data-select-visible]').click();assert('searchable group selection retains selected names',details.querySelectorAll('input:checked').length>=1);details.querySelector('[data-clear-perks]').click();const checkbox=[...details.querySelectorAll('input[type=checkbox]')].find(n=>n.value==='Heavy Infantry Damage');checkbox.checked=true;checkbox.dispatchEvent(new w.Event('change',{bubbles:true}));details.open=false;
+  const model=w.DNCraftingProbability.model(records,'main','Weapon');w.DNCloud.communityProbabilityModel=async()=>model;
+  d.querySelector('[data-stats-view=community]').click();await wait(()=>get('source').textContent==='Community'&&get('chance').textContent!=='—');assert('community selection uses aggregate model',get('sample').textContent.includes('40 artifacts'));
+  let finishOld;w.DNCloud.communityProbabilityModel=()=>new Promise(r=>finishOld=r);const old=w.DNCraftingProbabilityUI.refresh();await wait(()=>finishOld);w.DNCloud.communityProbabilityModel=async()=>({...model,artifacts:80});await w.DNCraftingProbabilityUI.refresh();finishOld(model);await old;assert('stale community responses cannot replace current estimates',get('sample').textContent.includes('80 artifacts'));
+  w.DNCloud.communityProbabilityModel=async()=>{throw Object.assign(Error('Missing endpoint'),{code:'PGRST202'});};w.DNCloud.communityReport=async()=>({recorded:model.artifacts,excluded:0,frequencies:model.perks});change(requirement.querySelector('[data-tier]'),'max');await w.DNCraftingProbabilityUI.refresh();assert('tier calculation works with existing community endpoint and historical profiles',get('chance').textContent!=='—'&&get('status').textContent.includes('Historical community tiers'));change(requirement.querySelector('[data-tier]'),'');
+  w.DNCloud.communityProbabilityModel=async()=>{throw Error('Unavailable');};await w.DNCraftingProbabilityUI.refresh();assert('unavailable community data clears previous estimates',get('chance').textContent==='—'&&get('status').textContent==='Community model unavailable');
+  d.querySelector('[data-stats-view=personal]').click();await wait(()=>get('chance').textContent!=='—');change(get('hall'),'war');await wait(()=>get('status').textContent==='Insufficient data');assert('War does not borrow Main samples',get('chance').textContent==='—');change(get('hall'),'main');await w.DNCraftingProbabilityUI.refresh();
+  const restored=[...root.querySelectorAll('.probability-perk-list input')].find(n=>n.value==='Heavy Infantry Damage');restored.checked=true;restored.dispatchEvent(new w.Event('change',{bubbles:true}));
+  input.value='3';input.dispatchEvent(new w.Event('input'));change(requirement.querySelector('[data-match]'),'atLeast');change(requirement.querySelector('[data-tier]'),'max');
+  w.localStorage.setItem('dn-crafting-probability-v1',JSON.stringify({hall:'main',category:'Weapon',scenario:'normal',requirements:[{perks:['Heavy Infantry Damage'],count:2,mode:'combined',match:'atLeast',tier:11},{perks:['Heavy Infantry Damage'],count:1,mode:'combined',match:'atLeast',tier:6}]}));
+  w.location.reload();await wait(()=>frame.contentDocument!==d&&frame.contentWindow.DNCraftingProbabilityUI&&frame.contentDocument.querySelector('[data-probability-chance]').textContent!=='—');
+  const reloaded=frame.contentDocument;assert('legacy two-high plus one-middle draft migrates to one Max requirement',reloaded.querySelectorAll('.probability-requirement').length===1&&reloaded.querySelector('[data-count]').value==='3'&&reloaded.querySelector('[data-tier]').value==='max'&&reloaded.querySelector('[data-tier-pattern]').textContent==='2 × 11% + 1 × 6%');
+  return checks;
+ })()`);
+ for(const width of [1440,390]){
+  await send('Emulation.setDeviceMetricsOverride',{width,height:1100,deviceScaleFactor:1,mobile:false});
+  assert(await evaluate(`(()=>{const d=probabilityFrame.contentDocument;return d.documentElement.scrollWidth<=probabilityFrame.clientWidth+1;})()`),'Page fits '+width);
+  assert(await evaluate(`(()=>{const d=probabilityFrame.contentDocument,picker=d.querySelector('.probability-perks');picker.open=true;const r=picker.querySelector('.probability-perk-menu').getBoundingClientRect();const fit=r.left>=0&&r.right<=probabilityFrame.clientWidth+1;picker.open=false;return fit;})()`),'Perk menu fits '+width);
+  await evaluate(`probabilityFrame.contentDocument.getElementById('crafting-probability').scrollIntoView({block:'start'});window.scrollTo(0,0);`);
+  fs.mkdirSync('data/temp/crafting-probability-previews',{recursive:true});const shot=await send('Page.captureScreenshot',{format:'png'});fs.writeFileSync('data/temp/crafting-probability-previews/'+width+'.png',Buffer.from(shot.data,'base64'));
+ }
+ console.log('Crafting probability UI: '+checks.length+' checks, desktop/mobile fit and screenshots passed.');
+}).catch(error=>{console.error(error);process.exitCode=1;});

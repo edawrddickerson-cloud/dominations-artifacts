@@ -102,7 +102,9 @@
   check('Cancel leaves both versions unchanged and stays dismissed',!versions.open && versions.hidden && backend.workspaces[owner].revision===revisionBeforeCancel && (await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture()))===savedHash);
   doc.querySelector('[data-review-versions]').click();
   check('cancelled comparison can be reopened',versions.open);
+  check('workspace reads use the owner-filtered RLS table projection',backend.workspaceReads.length>0&&backend.workspaceReads.every(read=>read.table==='planner_workspaces'&&read.filter.key==='owner_id'&&read.columns==='game_key,revision,operation_id,data,updated_at'));
   backend.workspaces[owner].revision++;
+  backend.workspaces[owner].data.records.find(record=>record.items.length).items[0].name='New account version';
   versions.querySelector('[data-use-local]').click();
   await wait(()=>versions.querySelector('[data-choice-error]').textContent.includes('changed'),'stale version warning');
   check('stale dialog cannot replace a changed account version',backend.workspaces[owner].revision===revisionBeforeCancel+1 && versions.open);

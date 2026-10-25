@@ -48,3 +48,28 @@
   .crafted-log-stats dl { grid-template-columns: 1fr; }
   .crafted-log-stats dd { margin-bottom: .5rem; }
 }
+.probability-heading { display:flex; align-items:center; flex-wrap:wrap; gap:.75rem; margin-bottom:1rem; }
+.probability-heading h3 { margin:0; flex:1; }
+.probability-heading > span, [data-probability-status], [data-probability-sample] { color:var(--muted); font-size:.8rem; }
+.probability-controls { display:flex; flex-wrap:wrap; gap:.75rem; margin-bottom:1rem; }
+#crafting-probability label { display:flex; flex-direction:column; gap:.3rem; min-width:0; font-size:.8rem; }
+#crafting-probability select, #crafting-probability input:not([type="checkbox"]) { min-width:0; max-width:100%; box-sizing:border-box; padding:.5rem; color:inherit; background:var(--panel); border:1px solid var(--line); border-radius:.4rem; font:inherit; }
+.probability-requirements { display:grid; gap:.75rem; margin-bottom:.75rem; }
+.probability-requirement { display:grid; grid-template-columns:minmax(12rem,1fr) 4.5rem 6.5rem 7rem 5rem auto; align-items:end; gap:.6rem; }
+.probability-perks { min-width:0; position:relative; }
+.probability-perks > summary { cursor:pointer; padding:.55rem; border:1px solid var(--line); border-radius:.4rem; overflow-wrap:anywhere; }
+.probability-perk-menu { position:absolute; top:100%; left:0; width:24rem; max-width:calc(100vw - 4rem); z-index:10; box-sizing:border-box; padding:.75rem; background:var(--panel); border:1px solid var(--line); box-shadow:0 .5rem 1.5rem #0006; border-radius:.5rem; }
+.probability-perk-menu > input { width:100%; }
+.probability-perk-actions { display:flex; gap:.5rem; margin:.5rem 0; }
+.probability-perk-list { max-height:16rem; overflow:auto; }
+#crafting-probability .probability-perk-list label { flex-direction:row; align-items:center; padding:.3rem 0; gap:.5rem; }
+#crafting-probability .probability-perk-list label[hidden] { display:none; }
+.probability-results { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:.75rem; margin-top:1rem; }
+.probability-results > div { display:flex; flex-direction:column; gap:.4rem; padding:1rem; background:var(--panel); border:1px solid var(--line); border-radius:.5rem; }
+.probability-results strong { font-size:1.5rem; overflow-wrap:anywhere; }
+.probability-results input { width:10rem; }
+.probability-requirement label:has([data-tier]) { position:relative; }
+[data-tier-pattern]:not(:empty) { position:absolute; top:100%; right:0; width:max-content; max-width:20rem; margin-top:.25rem; color:var(--muted); font-size:.7rem; }
+.probability-requirement:has([data-tier-pattern]:not(:empty)) { padding-bottom:1.25rem; }
+@media(max-width:900px) { .probability-requirement { grid-template-columns:repeat(4,minmax(0,1fr)); } .probability-perks { grid-column:1 / -1; } .probability-requirement > button { grid-column:1 / -1; justify-self:end; } }
+@media(max-width:480px) { .probability-results { grid-template-columns:1fr; } .probability-requirement { grid-template-columns:repeat(2,minmax(0,1fr)); } }

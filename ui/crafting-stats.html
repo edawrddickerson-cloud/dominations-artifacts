@@ -7,7 +7,7 @@
   <title>Artifacts · Crafting Stats</title>
   <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
   <link rel="stylesheet" href="scanner.css?v=20261023-stat-rating-label" />
-  <link rel="stylesheet" href="crafted-log-stats.css?v=20261025-page-filters" />
+  <link rel="stylesheet" href="crafted-log-stats.css?v=20261025-max-tiers" />
 </head>
 <body class="page-crafting-stats">
   <nav class="site-nav" aria-label="Pages">
@@ -45,6 +45,21 @@
       <details class="strategy-comparison-picker" data-stats-target-picker><summary>Collection Targets (All)</summary><div class="strategy-comparison-options" data-stats-target-options></div></details>
       <a class="btn btn-accent" href="scanner.html?v=2">Crafting Scanner</a>
     </div></section>
+    <section id="crafting-probability" class="crafted-log-stats" aria-label="Crafting probability calculator">
+      <div class="probability-heading"><h3>Crafting Probability</h3><span data-probability-source>Personal</span><button type="button" class="btn" data-probability-refresh>Refresh</button></div>
+      <div class="probability-controls">
+        <label>Hall<select data-probability-hall></select></label>
+        <label>Artifact<select data-probability-category></select></label>
+        <label>Crafting event<select data-probability-scenario><option value="normal">Outside event</option><option value="event">During event</option></select></label>
+      </div>
+      <div class="probability-requirements" data-probability-requirements></div>
+      <button type="button" class="btn" data-probability-add>Add requirement</button>
+      <div class="probability-results" aria-live="polite">
+        <div><span>Chance per artifact</span><strong data-probability-odds>—</strong><span data-probability-chance>—</span></div>
+        <div><label>Crafts planned<input type="number" min="1" max="1000000000" step="1" value="1" data-probability-attempts></label><strong data-probability-attempt-chance>—</strong><span>At least one match</span></div>
+      </div>
+      <p data-probability-sample></p><p role="status" data-probability-status></p>
+    </section>
     <div id="crafting-stats-dashboard" aria-label="Top-value roll frequencies"></div>
     <section id="scanner-crafted-log" aria-label="Crafting statistics">
     <details id="crafting-log-details"><summary>Crafted item log</summary>      <p id="scanner-log-storage-status" role="status"></p>
@@ -75,5 +90,10 @@
   <script src="crafting-purposes.js?v=20261022-target-breakdown"></script>
   <script src="crafting-stats-tables.js?v=20261025-page-filters"></script>
   <script src="crafted-log-stats-ui.js?v=20261025-page-filters"></script>
-  <script src="services.js?v=20261025-page-filters"></script>
+  <script src="data/crafted_perk_pools.js?v=1"></script>
+  <script src="crafting-community.js?v=20261025-inferred"></script>
+  <script src="crafting-probability.js?v=20261025-max-tiers"></script>
+  <script src="data/crafting_probability_calibration.js?v=20261025-historical-tiers"></script>
+  <script src="services.js?v=20261025-probability-release"></script>
+  <script src="crafting-probability-ui.js?v=20261025-max-tiers"></script>
 </body></html>

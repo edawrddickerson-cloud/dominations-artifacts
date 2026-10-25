@@ -13,7 +13,7 @@ const denied=(fn,code='42501')=>assert.rejects(fn,error=>error.code===code);
 (async()=>{
   await db.exec("create role anon; create role authenticated; create role service_role bypassrls; create schema auth; create table auth.users(id uuid primary key); create function auth.uid() returns uuid language sql stable as $$ select nullif(current_setting('request.jwt.claim.sub',true),'')::uuid $$; grant usage on schema auth to anon,authenticated,service_role; grant execute on function auth.uid() to anon,authenticated,service_role;");
   for(const id of ids)await db.query('insert into auth.users values($1)',[id]);
-  for(const file of ['202610180001_planner_backend.sql','202610220002_ocr_feedback.sql','202610230001_crafting_statistics_v2.sql','202610230002_crafting_starting_rules.sql','202610240001_community_first_contributor.sql','202610240003_remove_game_version.sql','202610250001_crafting_distributions.sql','202610250002_crafting_perk_repeats.sql','202610250003_crafting_inferred_evidence.sql','202610250004_crafting_complete_stat_rules.sql','202610250005_crafting_tier_frequencies.sql'])await db.exec(fs.readFileSync('supabase/migrations/'+file,'utf8'));
+  for(const file of ['202610180001_planner_backend.sql','202610220002_ocr_feedback.sql','202610230001_crafting_statistics_v2.sql','202610230002_crafting_starting_rules.sql','202610240001_community_first_contributor.sql','202610240003_remove_game_version.sql','202610250001_crafting_distributions.sql','202610250002_crafting_perk_repeats.sql','202610250003_crafting_inferred_evidence.sql','202610250004_crafting_complete_stat_rules.sql','202610250005_crafting_tier_frequencies.sql','202610250006_crafting_probability_model.sql'])await db.exec(fs.readFileSync('supabase/migrations/'+file,'utf8'));
   await user(null,'anon');await denied(()=>call('planner_submit_crafting',[crypto.randomUUID(),payload([])]));await denied(()=>db.query('select * from public.planner_crafting_evidence'));
   assert.equal((await call('planner_crafting_summary')).status,'insufficient-sample');
   assert.equal((await call('planner_crafting_summary')).minimumContributors,1);
@@ -41,6 +41,9 @@ const denied=(fn,code='42501')=>assert.rejects(fn,error=>error.code===code);
   await denied(()=>db.query('insert into public.planner_crafting_evidence(owner_id,id,revision,writer,deleted,data) values($1,$2,1,$3,false,$4)',[ids[0],'illegal','attacker',{}]));
   await user(null,'anon');const report=await call('planner_crafting_summary'),expected=S.analyze(records);
   assert.equal(report.recorded,5);assert.equal(report.excluded,1);
+  const probabilityModel=await call('planner_crafting_probability_model',['main','weapon']);
+  assert.equal(probabilityModel.artifacts,4);assert.equal(probabilityModel.rows,20);
+  assert(!JSON.stringify(probabilityModel).includes(ids[0]));assert(!JSON.stringify(probabilityModel).includes('craft-'));
   assert.equal(Object.hasOwn(report.contexts,'version'),false,'game versions are absent from reporting metadata');
   const legacy=await call('planner_crafting_report',['main','weapon',null,'obsolete-version']);
   assert.equal(legacy.recorded,report.recorded,'cached clients cannot split the sample by obsolete game-version data');

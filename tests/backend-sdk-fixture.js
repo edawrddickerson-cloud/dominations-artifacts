@@ -29,6 +29,14 @@
         backend.owner={id:'11111111-1111-4111-8111-111111111111',email:'tester@example.invalid',user_metadata:{preferred_username:'Test Commander'}};emit();return {data:{session:{user:backend.owner}},error:null};
       },
       async signOut(){backend.owner=null;emit();return {error:null};}},
+    from(table){let columns,filter;return {
+      select(value){columns=value;return this;},eq(key,value){filter={key,value};return this;},
+      async maybeSingle(){
+        backend.workspaceReads ||= [];backend.workspaceReads.push({table,columns,filter:copy(filter)});
+        if(backend.offline)return {data:null,error:{code:'503'},status:503};
+        if(table!=='planner_workspaces'||filter?.key!=='owner_id'||filter.value!==backend.owner?.id)return {data:null,error:null,status:200};
+        return {data:copy(backend.workspaces[filter.value] || null),error:null,status:200};
+      }};},
     async rpc(name,args={}){
       if(backend.offline)return {data:null,error:{code:'503'}};
       const owner=backend.owner?.id;if(!owner)return {data:null,error:{code:'42501'}};

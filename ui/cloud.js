@@ -49,16 +49,32 @@
     }else if(preserveArtwork && localLog)records.push(localLog); // Old backups do not replace this account's history.
     await window.DNLocalBackupCore.restore({kind:'dominations-planner-backup',version:1,settings,records},localStorage,store);
   }
+  function cloudError(name,error,responseStatus){
+      if(name==='planner_read_workspace' || name==='planner_save_workspace')try{window.DNTelemetry?.event('cloud_sync_failed',{reason:error.code==='40001'?'conflict':error.code==='42501'?'permission':'request'});}catch{}
+      const code=/^[A-Z0-9]{2,12}$/.test(error?.code || '')?error.code:/abort|timeout/i.test(error?.name+' '+error?.message)?'TIMEOUT':responseStatus?'HTTP'+responseStatus:'NETWORK';
+      const action=name==='planner_read_workspace'?'Loading account data':name.startsWith('planner_save_workspace')?'Saving account data':'The cloud request';
+      const message=code==='40001'?'Account data changed. Review the versions and retry.':code==='42501'?'Account permission changed. Sign in again and retry.':['TIMEOUT','57014'].includes(code)?action+' timed out ('+code+'). Retry when connected.':'The cloud request could not be completed ('+code+').';
+      return Object.assign(Error(message+' Your local data is unchanged.'),{code,cause:error});
+  }
   async function rpc(name,args={}) {
     if(!client || !currentUser)throw Error('Sign in before using account storage.');
-    try {
-      const result=await client.rpc(name,args);
-      if(result.error)throw result.error;
+    let responseStatus;
+    try {const result=await client.rpc(name,args);responseStatus=result.status;if(result.error)throw result.error;return result.data;}
+    catch(error){throw cloudError(name,error,responseStatus);}
+  }
+  async function readWorkspace(owner){
+    if(!client || !currentUser)throw Error('Sign in before using account storage.');
+    if(currentUser.id!==owner)throw Error('The signed-in account changed. Nothing was replaced.');
+    let responseStatus;
+    try{
+      // The same authenticated SELECT/RLS used by the invoker RPC, without its
+      // repeated whole-document to_jsonb/subtraction serialization. Filter the
+      // inspected owner explicitly, even if the SDK session changes mid-flight.
+      const result=await client.from('planner_workspaces').select('game_key,revision,operation_id,data,updated_at').eq('owner_id',owner).maybeSingle();
+      responseStatus=result.status;if(result.error)throw result.error;
+      if(currentUser?.id!==owner)throw Object.assign(Error('Account changed'),{code:'42501'});
       return result.data;
-    }catch(error) {
-      if(name==='planner_read_workspace' || name==='planner_save_workspace')try{window.DNTelemetry?.event('cloud_sync_failed',{reason:error.code==='40001'?'conflict':error.code==='42501'?'permission':'request'});}catch{}
-      throw Object.assign(Error('The cloud request could not be completed. Your local data is unchanged.'),{code:error?.code});
-    }
+    }catch(error){throw cloudError('planner_read_workspace',error,responseStatus);}
   }
   const engine=window.DNCloudSyncCore.create({capture,readBinding:binding,saveBinding,recover,apply,notify:announce,
     async applyHistory(log){
@@ -70,7 +86,7 @@
       await window.DN.scannerLog.write(JSON.stringify({...merged,scans:previous?.scans || [],labels:previous?.labels || []}));
     },
     async readLocalCraftsLogged(){try{return C.lifetimeCraftsLogged(JSON.parse(await window.DN.scannerLog.read() || 'null'));}catch{return null;}},
-    remote:{async read(){return rpc('planner_read_workspace');},async write(owner,revision,operation,data){return rpc('planner_save_workspace_v2',{p_owner:owner,p_expected_revision:revision,p_operation_id:operation,p_data:data});}}});
+    remote:{read:readWorkspace,async write(owner,revision,operation,data){return rpc('planner_save_workspace_v2',{p_owner:owner,p_expected_revision:revision,p_operation_id:operation,p_data:data});}}});
   function schedule(delay=2000) {
     clearTimeout(timer);if(!currentUser || !configured())return;
     timer=setTimeout(()=>{timer=null;engine.inspect().catch(()=>{});},delay);
@@ -100,7 +116,8 @@
       if(!config.supabasePublishableKey.startsWith('sb_publishable_'))throw Error('Use a browser-safe Supabase publishable key.');
       if(!window.supabase)await window.DNServiceLoader.script('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js');
       client=window.supabase.createClient(config.supabaseUrl,config.supabasePublishableKey,{auth:{persistSession:true,autoRefreshToken:true,flowType:'pkce',detectSessionInUrl:false},global:{fetch:async(url,options={})=>{
-        const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),15000);
+        const requestPath=String(url?.url || url).split('?')[0],workspaceTransfer=/\/rpc\/planner_(read_workspace|save_workspace(?:_v2)?)$/.test(requestPath)||/\/planner_workspaces$/.test(requestPath);
+        const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),workspaceTransfer?60000:15000);
         try{return await fetch(url,{...options,signal:options.signal || controller.signal,referrerPolicy:'no-referrer'});}finally{clearTimeout(timeout);}
       }}});
       client.auth.onAuthStateChange((event,session)=>{setTimeout(()=>setSession(session),0);});
@@ -122,6 +139,7 @@
   }
   window.DNCloud={configured,start,rpc,capture,fullBackup,user:()=>currentUser?{id:currentUser.id,email:currentUser.email,displayName:String(currentUser.user_metadata?.preferred_username || currentUser.user_metadata?.full_name || currentUser.user_metadata?.name || currentUser.email || 'Discord account').slice(0,100)}:null,state:()=>({...message}),
     async communityReport(args={}){await start();if(!client || !C.researchReady(config))throw Error('Unavailable');const result=await client.rpc('planner_crafting_summary',args);if(result.error)throw result.error;return result.data;},
+    async communityProbabilityModel(args={}){await start();if(!client || !C.researchReady(config))throw Error('Unavailable');const result=await client.rpc('planner_crafting_probability_model',args);if(result.error)throw result.error;return result.data;},
     subscribe(fn){listeners.add(fn);return ()=>listeners.delete(fn);},
     sync:()=>engine.inspect(),choose:(choice,expected)=>engine.choose(choice,expected),
     consentReady:()=>consentTask,

@@ -18,7 +18,7 @@
   versions.dataset.cloudChoice='';versions.setAttribute('aria-labelledby','cloud-choice-title');
   versions.innerHTML='<h2 id="cloud-choice-title">Choose your saved data</h2><div data-version-table></div>'+
     '<p>Includes all planner settings. Both versions are saved before replacement. Stop scanning and close other planner tabs first.</p>'+
-    '<div class="service-actions"><button type="button" class="btn" data-use-cloud>Use account data</button><button type="button" class="btn" data-use-local>Use browser data</button><button type="button" class="btn" data-cancel-choice>Cancel</button></div><p role="alert" data-choice-error></p>';
+    '<div class="service-actions"><button type="button" class="btn" data-use-cloud>Use account data</button><button type="button" class="btn" data-use-local>Use browser data</button><button type="button" class="btn" data-cancel-choice>Cancel</button></div><p role="status" data-choice-progress></p><p role="alert" data-choice-error></p>';
   document.body.appendChild(versions);
   const versionField=name=>versions.querySelector('[data-'+name+']');
   let displayed=null,dismissed=null,choiceBusy=false,choiceTimer=null;
@@ -41,7 +41,7 @@
     const state=cloud.state();
     if(!needsChoice(state) || choiceBusy)return;
     if(!force && dismissed===versionKey(state.comparison))return;
-    if(versions.open)return;
+    if(versions.open){if(versionKey(displayed)!==versionKey(state.comparison))fillVersions(state.comparison);return;}
     if(document.hidden || document.querySelector('dialog[open]')){choiceTimer=setTimeout(()=>showVersions(force),500);return;}
     fillVersions(state.comparison);versionField('choice-error').textContent='';versions.hidden=false;versions.showModal();
   }
@@ -51,10 +51,11 @@
   for(const [name,choice] of [['use-local','local'],['use-cloud','cloud']])versionField(name).addEventListener('click',async()=>{
     if(choiceBusy)return;
     const expected=displayed;choiceBusy=true;versionField('choice-error').textContent='';
+    versionField('choice-progress').textContent=choice==='cloud'?'Loading account data…':'Saving browser data…';
     for(const button of versions.querySelectorAll('button'))button.disabled=true;
     try{const result=await cloud.choose(choice,expected);dismissed=null;closeVersions();if(result.reload)location.reload();}
     catch(error){versionField('choice-error').textContent=error.message || 'Could not save. Both versions are unchanged.';if(cloud.state().comparison)fillVersions(cloud.state().comparison);}
-    finally{choiceBusy=false;for(const button of versions.querySelectorAll('button'))button.disabled=false;versionField('use-cloud').disabled=!displayed?.revision;}
+    finally{choiceBusy=false;versionField('choice-progress').textContent='';for(const button of versions.querySelectorAll('button'))button.disabled=false;versionField('use-cloud').disabled=!displayed?.revision;}
   });
   cloud.subscribe(state=>{if(!needsChoice(state)){clearTimeout(choiceTimer);if(!choiceBusy)closeVersions();}else showVersions();});
   showVersions();
