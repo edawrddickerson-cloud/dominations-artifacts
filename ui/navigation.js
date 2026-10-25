@@ -69,7 +69,7 @@
     document.documentElement.classList.add("app-embedded");
     const sheet = document.createElement("link");
     sheet.rel = "stylesheet";
-    sheet.href = "app-shell.css?v=20261022-fixed-header";
+    sheet.href = "app-shell.css?v=20261025-design";
     document.head.appendChild(sheet);
     document.addEventListener("click", event => {
       const link = event.target.closest?.("a[href]");

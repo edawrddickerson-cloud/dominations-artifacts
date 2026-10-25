@@ -16,7 +16,7 @@
 .council-ratings-table thead tr:first-child th:last-child { width: 4.5rem; }
 .council-ratings-table tbody th { position: static; z-index: auto; background: transparent; color: var(--text); font-size: .875rem; font-weight: 400; text-align: left; white-space: normal; overflow-wrap: anywhere; text-transform: none; letter-spacing: normal; }
 .council-ratings-table .rating-axis, .council-ratings-table input { display: block; width: 100%; min-width: 0; }
-.council-ratings-table .is-override input { border-color: var(--accent); }
+
 .council-ratings-table .council-rating-unavailable { color: var(--muted); text-align: center; }
 .council-ratings-table button:disabled { opacity: .4; cursor: default; }
 .council-ratings-table .th-sort { width: 100%; justify-content: center; }
@@ -90,16 +90,6 @@
   gap: 0.35rem;
 }
 
-.council-card-actions select {
-  padding: 0.3rem 0.45rem;
-  border: 1px solid var(--line);
-  border-radius: 4px;
-  background: var(--bg);
-  color: var(--text);
-  font: inherit;
-  font-size: 0.8rem;
-}
-
 .owned-rarity-badge {
   display: inline-block;
   margin-left: 0.35rem;
@@ -133,22 +123,6 @@
 .active-chip-text {
   flex: 1 1 auto;
   min-width: 0;
-}
-
-.active-chip button {
-  margin: 0;
-  padding: 0.2rem 0.45rem;
-  border: 1px solid var(--line);
-  border-radius: 3px;
-  background: var(--bg);
-  color: var(--muted);
-  font: inherit;
-  font-size: 0.75rem;
-  cursor: pointer;
-}
-
-.active-chip button:hover {
-  color: var(--text);
 }
 
 .totals-title {

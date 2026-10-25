@@ -1,7 +1,7 @@
 .crafted-log-stats { margin-block: .8rem; min-width: 0; }
 .crafted-stats-controls { display: flex; flex-wrap: wrap; align-items: end; gap: .65rem; margin-block: .8rem; }
 .crafted-stats-controls label { display: grid; gap: .3rem; min-width: 0; max-width: 100%; }
-.crafted-stats-controls input, .crafted-stats-controls select { box-sizing: border-box; max-width: 100%; padding: .4rem; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; font: inherit; }
+.crafted-stats-controls input, .crafted-stats-controls select { box-sizing: border-box; max-width: 100%; }
 .crafted-stats-controls input { width: 10rem; }
 .crafted-stats-controls select { max-width: 20rem; }
 .crafted-stats-scroll { overflow-x: auto; max-width: 100%; margin-block: .7rem; }
@@ -14,17 +14,16 @@
 .crafting-stats-page { padding: 1rem; min-width: 0; }
 .page-crafting-stats #scanner-crafted-log { margin: 0; }
 .crafted-stats-search { display: grid; gap: .3rem; max-width: 24rem; margin-block: .8rem; }
-.crafted-stats-search input { background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; padding: .5rem; font: inherit; min-width: 0; }
-.crafted-stats-sort { color: inherit; background: transparent; border: 0; padding: 0; font: inherit; font-weight: inherit; cursor: pointer; }
+.crafted-stats-search input { min-width: 0; }
+
 .crafting-stats-dashboard { margin-block: 1rem 1.5rem; }
 .crafting-dashboard-heading { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .6rem; }
-.crafting-dashboard-heading select { padding: .4rem; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; font: inherit; }
 .crafting-dashboard-cards { display: grid; grid-template-columns: repeat(auto-fit,minmax(9rem,1fr)); gap: .75rem; }
 .crafting-dashboard-card { display: flex; flex-direction: column; gap: .5rem; padding: .85rem 1rem; border: 1px solid var(--line); border-radius: 6px; background: var(--bg); font-variant-numeric: tabular-nums; }
 .crafting-dashboard-card strong { font-size: 1.8rem; }
 .crafting-dashboard-card > span { color: var(--muted); }
 .crafted-stats-target { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem; margin-block: .8rem; }
-.crafted-stats-target select { max-width: 100%; padding: .4rem; background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 4px; font: inherit; }
+.crafted-stats-target select { max-width: 100%; }
 .crafting-stat-values { white-space: nowrap; vertical-align: top; }
 .page-crafting-stats[data-stats-view="personal"] #crafting-community,
 .page-crafting-stats[data-stats-view="personal"] [data-dashboard="crafting-community"],
@@ -35,12 +34,12 @@
 .page-crafting-stats[data-stats-view="community"] [data-stats-controls="personal"] { display: none; }
 .crafting-view-filters { display: flex; flex-wrap: wrap; align-items: end; gap: .75rem 1rem; min-width: 0; max-width: 100%; }
 .crafting-view-filters > label { display: flex; flex-direction: column; gap: .35rem; font-size: .8rem; max-width: 100%; min-width: 0; }
-.crafting-view-filters select, .crafting-view-filters input { box-sizing: border-box; max-width: 20rem; padding: .45rem; color: inherit; background: var(--panel); border: 1px solid var(--line); border-radius: .4rem; font: inherit; min-width: 0; }
+.crafting-view-filters select, .crafting-view-filters input { box-sizing: border-box; max-width: 20rem; min-width: 0; }
 .crafting-view-filters .crafted-stats-search { margin: 0; }
 .crafting-stats-filters .strategy-comparison-options { left: 0; right: auto; }
 @media(max-width: 640px) { .crafting-stats-filters .strategy-comparison-options { left: 1rem; right: 1rem; } }
-.crafted-log-stats th[aria-sort="ascending"] .crafted-stats-sort::after { content: ' ↑'; }
-.crafted-log-stats th[aria-sort="descending"] .crafted-stats-sort::after { content: ' ↓'; }
+
+
 .page-scanner #scanner-log-storage-status:empty { display: none; }
 @media (max-width: 600px) {
   .crafted-stats-controls { align-items: stretch; }
@@ -53,12 +52,10 @@
 .probability-heading > span, [data-probability-status], [data-probability-sample] { color:var(--muted); font-size:.8rem; }
 .probability-controls { display:flex; flex-wrap:wrap; gap:.75rem; margin-bottom:1rem; }
 #crafting-probability label { display:flex; flex-direction:column; gap:.3rem; min-width:0; font-size:.8rem; }
-#crafting-probability select, #crafting-probability input:not([type="checkbox"]) { min-width:0; max-width:100%; box-sizing:border-box; padding:.5rem; color:inherit; background:var(--panel); border:1px solid var(--line); border-radius:.4rem; font:inherit; }
+#crafting-probability select, #crafting-probability input:not([type="checkbox"]) { min-width:0; max-width:100%; box-sizing:border-box; }
 .probability-requirements { display:grid; gap:.75rem; margin-bottom:.75rem; }
 .probability-requirement { display:grid; grid-template-columns:minmax(12rem,1fr) 4.5rem 6.5rem 7rem 5rem auto; align-items:end; gap:.6rem; }
 .probability-perks { min-width:0; position:relative; }
-.probability-perks > summary { cursor:pointer; padding:.55rem; border:1px solid var(--line); border-radius:.4rem; overflow-wrap:anywhere; }
-.probability-perk-menu { position:absolute; top:100%; left:0; width:24rem; max-width:calc(100vw - 4rem); z-index:10; box-sizing:border-box; padding:.75rem; background:var(--panel); border:1px solid var(--line); box-shadow:0 .5rem 1.5rem #0006; border-radius:.5rem; }
 .probability-perk-menu > input { width:100%; }
 .probability-perk-actions { display:flex; gap:.5rem; margin:.5rem 0; }
 .probability-perk-list { max-height:16rem; overflow:auto; }

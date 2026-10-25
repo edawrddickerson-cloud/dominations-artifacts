@@ -3,7 +3,7 @@
 (() => {
   'use strict';
   const config=window.DNServiceConfig,cloud=window.DNCloud,consent=window.DNConsent;
-  const sheet=document.createElement('link');sheet.rel='stylesheet';sheet.href='services.css?v=20261022-cloud-choice';document.head.appendChild(sheet);
+  const sheet=document.createElement('link');sheet.rel='stylesheet';sheet.href='services.css?v=20261025-design';document.head.appendChild(sheet);
   const text={disabled:'Cloud sync unavailable.',
     'signed-out':'Not signed in.',unlinked:'Choose which data to use.',
     synced:'Saved to your account.',upload:'Waiting to sync.',remote:'Newer account data available.',
@@ -120,7 +120,7 @@
   let banner;
   if(window.DNIntegrationCore.privacyReady(config) && config.posthogToken && !consent.get().decided) {
     banner=document.createElement('dialog');banner.className='profile-delete-dialog service-panel service-consent-banner';banner.setAttribute('aria-labelledby','sharing-title');banner.setAttribute('aria-describedby','sharing-request');
-    banner.innerHTML='<h2 id="sharing-title">A little help for everyone?</h2><p id="sharing-request">Would you help make the tool better for everyone? Sharing which features you use helps us decide what to improve next. Sharing scan errors and timings helps us find problems and make the scanner faster and more reliable.</p>'+privacyMarkup('banner');
+    banner.innerHTML='<h2 id="sharing-title">Optional sharing</h2><p id="sharing-request">Choose what to share. Change preferences in Profiles.</p>'+privacyMarkup('banner');
     banner.addEventListener('cancel',event=>{event.preventDefault();banner.querySelector('[data-reject-consent]').click();});
     let promptTimer=null;
     const show=()=>{

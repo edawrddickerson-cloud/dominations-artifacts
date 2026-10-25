@@ -9,12 +9,13 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
 <head>
   <meta charset="utf-8" />
   <script src="scanner-session-entry.js?v=20261022-fixed-header"></script>
-  <script src="navigation.js?v=20261025-crafting-stats"></script>
+  <script src="navigation.js?v=20261025-design"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts - Crafting Scanner</title>
-  <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
-  <link rel="stylesheet" href="scanner.css?v=20261023-stat-rating-label" />
-  <link rel="stylesheet" href="crafting-purposes.css?v=20261023-muted-red-targets" />
+  <link rel="stylesheet" href="styles.css?v=20261025-design" />
+  <link rel="stylesheet" href="scanner.css?v=20261025-design" />
+  <link rel="stylesheet" href="crafting-purposes.css?v=20261025-design" />
+  <script src="design-ui.js?v=20261025-design" defer></script>
 </head>
 <body class="page-scanner">
   <nav class="site-nav" aria-label="Pages">
@@ -37,7 +38,7 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
       <a href="ratings.html">Collection Targets</a>
     </div>
   </nav>
-  <div class="app-main scanner-main">
+  <div class="app-main scanner-main" role="main" id="main-content" tabindex="-1">
       <header class="top app-header">
     <div class="top-inner"><h1>DomiNations Artifacts</h1></div>
     <div class="header-controls" aria-label="Primary filters">
@@ -161,7 +162,7 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
     <section class="scanner-reading scanner-panel" aria-label="Artifact recognition and rating">
       <p id="scanner-profile-label" hidden></p>
       <p id="scanner-result-status" hidden>Loading perk settings…</p>
-      <div class="scanner-analysis-grid">
+      <div class="scanner-analysis-grid" role="region" aria-label="Scanned stats, artifact image and decision" tabindex="0">
         <div id="scanner-result"></div>
         <div class="scanner-decision-stack">
         <section id="scanner-benchmark" class="scanner-summary-card scanner-benchmark" aria-label="Crafting focus areas and keep indicator">
@@ -208,7 +209,7 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
   <script src="artwork.js?v=20261025-local-first"></script>
   <script src="data/artifact_stat_context.js?v=1"></script>
   <script src="artifact-stat-context.js?v=3"></script>
-  <script src="profiles-ui.js?v=20261025-page-filters"></script>
+  <script src="profiles-ui.js?v=20261025-design"></script>
   <script src="artifact-scoring.js?v=20261017-strategies-reroll"></script>
   <script src="stored-artifacts.js?v=20261025-image-recovery"></script>
   <script src="crafting-purposes.js?v=20261022-target-breakdown"></script>
@@ -227,6 +228,6 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
   <script src="scanner-reading.js?v=20261024-artwork"></script>
   <script src="scanner-profile.js?v=1"></script>
   <script src="scanner.js?v=20261022-image-refresh"></script>
-  <script src="services.js?v=20261025-image-recovery"></script>
+  <script src="services.js?v=20261025-design"></script>
 </body>
 </html>

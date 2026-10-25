@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <script src="navigation.js?v=20261025-crafting-stats"></script>
+  <script src="navigation.js?v=20261025-design"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Council Ratings</title>
-  <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
-  <link rel="stylesheet" href="council.css?v=20261022-shared-ratings" />
+  <link rel="stylesheet" href="styles.css?v=20261025-design" />
+  <link rel="stylesheet" href="council.css?v=20261025-design" />
+  <script src="design-ui.js?v=20261025-design" defer></script>
 </head>
 <body class="page-ratings page-council-ratings">
   <nav class="site-nav" aria-label="Pages">
@@ -24,7 +25,7 @@
       <a href="council-collection.html">Collection</a>
     </div>
   </nav>
-  <div class="app-main">
+  <div class="app-main" role="main" id="main-content" tabindex="-1">
   <header class="top app-header">
     <div class="top-inner"><h1>DomiNations Artifacts</h1></div>
     <div class="header-controls" aria-label="Primary filters">
@@ -62,10 +63,10 @@
 
   <script src="data/army_catalog.js?v=8"></script>
   <script src="shared.js?v=20261019-rating-scale"></script>
-  <script src="profiles-ui.js?v=20261025-page-filters"></script>
+  <script src="profiles-ui.js?v=20261025-design"></script>
   <script src="council-shared.js?v=20261022-shared-ratings"></script>
   <script src="council-ratings.js?v=20261022-shared-ratings"></script>
 
-  <script src="services.js?v=20261025-image-recovery"></script>
+  <script src="services.js?v=20261025-design"></script>
 </body>
 </html>

@@ -4,11 +4,12 @@
 <head>
   <meta charset="utf-8" />
   <script src="scanner-session-entry.js?v=20261022-fixed-header"></script>
-  <script src="navigation.js?v=20261025-crafting-stats"></script>
+  <script src="navigation.js?v=20261025-design"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts - Storage Scanner</title>
-  <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
-  <link rel="stylesheet" href="scanner.css?v=20261017-strategies-provisional-colours" />
+  <link rel="stylesheet" href="styles.css?v=20261025-design" />
+  <link rel="stylesheet" href="scanner.css?v=20261025-design" />
+  <script src="design-ui.js?v=20261025-design" defer></script>
 </head>
 <body class="page-scanner page-storage-scanner">
   <nav class="site-nav" aria-label="Pages">
@@ -31,7 +32,7 @@
       <a href="ratings.html">Collection Targets</a>
     </div>
   </nav>
-  <div class="app-main scanner-main">
+  <div class="app-main scanner-main" role="main" id="main-content" tabindex="-1">
       <header class="top app-header">
     <div class="top-inner"><h1>DomiNations Artifacts</h1></div>
     <div class="header-controls" aria-label="Primary filters">
@@ -175,7 +176,7 @@
   <script src="artwork.js?v=20261025-local-first"></script>
   <script src="data/artifact_stat_context.js?v=1"></script>
   <script src="artifact-stat-context.js?v=3"></script>
-  <script src="profiles-ui.js?v=20261025-page-filters"></script>
+  <script src="profiles-ui.js?v=20261025-design"></script>
   <script src="artifact-scoring.js?v=20261017-strategies-reroll"></script>
   <script src="vendor/tesseract/tesseract.min.js"></script>
   <script src="scanner-reroll-recognition.js?v=1"></script>
@@ -188,6 +189,6 @@
   <script src="scanner-reading.js?v=20261024-artwork"></script>
   <script src="scanner-profile.js?v=1"></script>
   <script src="scanner.js?v=20261018-services"></script>
-  <script src="services.js?v=20261025-image-recovery"></script>
+  <script src="services.js?v=20261025-design"></script>
 </body>
 </html>

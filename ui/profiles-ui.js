@@ -6,7 +6,7 @@
 
   const strategyStyles = document.createElement('link');
   strategyStyles.rel = 'stylesheet';
-  strategyStyles.href = 'strategies.css?v=20261025-page-filters';
+  strategyStyles.href = 'strategies.css?v=20261025-design';
   document.head.appendChild(strategyStyles);
 
   const NAV_COLLAPSED_KEY = "dn-nav-collapsed";

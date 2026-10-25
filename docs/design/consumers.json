@@ -1,0 +1,57 @@
+{
+  "routes": {
+    "scanner-session.html": "shell",
+    "artifacts.html": "browse",
+    "collection.html": "collection",
+    "ratings.html": "editor",
+    "totals.html": "totals",
+    "scanner.html": "live-scanner",
+    "storage-scanner.html": "storage-scanner",
+    "crafting-stats.html": "statistics",
+    "council.html": "browse",
+    "council-collection.html": "collection",
+    "council-ratings.html": "editor",
+    "config.html": "settings",
+    "privacy.html": "document",
+    "crafting-statistics.html": "document",
+    "index.html": "entry",
+    "army.html": "redirect"
+  },
+  "owners": {
+    "tokens": "ui/design-tokens.css",
+    "fields-buttons-segments-rating-inputs-tables-dialogs-pickers": "ui/components.css",
+    "picker-dismissal-placement-focus": "ui/design-ui.js",
+    "shell-layout": "ui/app-shell.css",
+    "page-and-domain-layout": "ui/styles.css and feature stylesheets",
+    "gallery": "tests/design/gallery.html",
+    "ownership-check": "scripts/check_design_system.cjs",
+    "rendered-check": "scripts/test_design_ui.cjs"
+  },
+  "exceptions": [
+    {
+      "file": "scanner.css",
+      "selector": ".storage-review input.is-unknown, .storage-review select.is-unknown, .storage-star.is-unknown",
+      "declarations": {
+        "border-color": "#e7b76d",
+        "box-shadow": "0 0 0 1px #e7b76d55"
+      },
+      "reason": "Unknown OCR fields use the existing domain warning treatment; colour does not affect qualification.",
+      "check": "node scripts/run_scanner_ocr_fixture.js --glance --viewport=1440x900 --summary"
+    },
+    {
+      "file": "scanner.css",
+      "selector": ".page-scanner .scanner-edit-row input.is-unknown, .page-scanner .scanner-edit-row select.is-unknown, .page-scanner #scanner-compare-type.is-unknown",
+      "declarations": {
+        "border-color": "#e7b76d",
+        "box-shadow": "0 0 0 1px #e7b76d55"
+      },
+      "reason": "Unknown OCR fields use the existing domain warning treatment; colour does not affect qualification.",
+      "check": "node scripts/run_scanner_ocr_fixture.js --glance --viewport=1440x900 --summary"
+    }
+  ],
+  "domainVariants": {
+    "scanner.css": "Five-stat/image grid, semantic stat/dice colours, compact live editing; at narrow widths a 7rem minimum name column with local keyboard-scrollable overflow.",
+    "styles.css": "Museum tiles, slot controls, level steppers and collection comparison geometry remain domain compositions.",
+    "council.css": "Rating matrix axes and council cards retain domain geometry; native fields and ordinary removal actions use shared primitives."
+  }
+}

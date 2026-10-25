@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <script src="navigation.js?v=20261025-crafting-stats"></script>
+  <script src="navigation.js?v=20261025-design"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts · Collection targets</title>
-  <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
-  <link rel="stylesheet" href="crafting-purposes.css?v=24" />
+  <link rel="stylesheet" href="styles.css?v=20261025-design" />
+  <link rel="stylesheet" href="crafting-purposes.css?v=20261025-design" />
+  <script src="design-ui.js?v=20261025-design" defer></script>
 </head>
 <body class="page-ratings">
   <nav class="site-nav" aria-label="Pages">
@@ -29,7 +30,7 @@
       <a href="ratings.html" aria-current="page">Collection Targets</a>
     </div>
   </nav>
-  <div class="app-main">
+  <div class="app-main" role="main" id="main-content" tabindex="-1">
   <header class="top app-header">
     <div class="top-inner"><h1>DomiNations Artifacts</h1></div>
     <div class="header-controls" aria-label="Primary filters">
@@ -68,7 +69,7 @@
   <p class="ratings-hint" id="ratings-profile-scope"></p>
   <p class="ratings-hint" id="ratings-artifact-scope" hidden></p>
   <p class="ratings-hint" id="ratings-hint">
-    Shared profile ratings are linked to your named collection targets above. Existing strategy overrides remain available in their own columns. Changes save automatically.
+    Ratings save automatically.
   </p>
 
   <div class="ratings-page-scroll" id="ratings-scroll">
@@ -91,13 +92,13 @@
   </dialog>
   <script src="data/army_catalog.js?v=8"></script>
   <script src="shared.js?v=20261019-rating-scale"></script>
-  <script src="profiles-ui.js?v=20261025-page-filters"></script>
+  <script src="profiles-ui.js?v=20261025-design"></script>
   <script src="data/crafted_perk_pools.js?v=20261018"></script>
   <script src="data/artifact_stat_context.js?v=1"></script>
   <script src="crafting-purposes.js?v=20261022-rating-labels"></script>
-  <script src="crafting-purpose-editor.js?v=20261022-target-description"></script>
+  <script src="crafting-purpose-editor.js?v=20261025-design"></script>
   <script src="ratings.js?v=20261020-advanced-ratings"></script>
 
-  <script src="services.js?v=20261025-image-recovery"></script>
+  <script src="services.js?v=20261025-design"></script>
 </body>
 </html>

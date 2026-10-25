@@ -2,11 +2,12 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <script src="navigation.js?v=20261025-crafting-stats"></script>
+  <script src="navigation.js?v=20261025-design"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts · Collection</title>
-  <link rel="stylesheet" href="styles.css?v=20261020-shared-header" />
-  <link rel="stylesheet" href="strategy-collection.css?v=20261018-master-layout" />
+  <link rel="stylesheet" href="styles.css?v=20261025-design" />
+  <link rel="stylesheet" href="strategy-collection.css?v=20261025-design" />
+  <script src="design-ui.js?v=20261025-design" defer></script>
 </head>
 <body class="page-collection">
   <nav class="site-nav" aria-label="Pages">
@@ -24,7 +25,7 @@
       <a href="council-collection.html">Collection</a>
     </div>
   </nav>
-  <div class="app-main">
+  <div class="app-main" role="main" id="main-content" tabindex="-1">
   <header class="top app-header">
     <div class="top-inner"><h1>DomiNations Artifacts</h1></div>
     <div class="header-controls" aria-label="Primary filters">
@@ -58,7 +59,6 @@
           <div class="collection-slot-filter-menu">
             <div class="collection-slot-filter-actions"><button type="button" class="btn" data-filter-action="all">Select all</button><button type="button" class="btn" data-filter-action="none">Clear</button></div>
             <div id="collection-slot-filter-options"></div>
-            <p class="collection-filter-note">Includes unused and Showcase items of each selected type.</p>
           </div>
         </details>
       </div>
@@ -119,13 +119,13 @@
   <script src="data/artwork_ids.js?v=20261024-artwork"></script>
   <script src="artwork-matcher.js?v=20261024-artwork"></script>
   <script src="artwork.js?v=20261025-local-first"></script>
-  <script src="profiles-ui.js?v=20261025-page-filters"></script>
+  <script src="profiles-ui.js?v=20261025-design"></script>
   <script src="local-artwork-recovery.js?v=20261025-image-recovery"></script>
   <script src="stored-artifacts.js?v=20261025-image-recovery"></script>
   <script src="artifact-scoring.js?v=20261017-strategies-reroll"></script>
   <script src="collection.js?v=20261024-artwork"></script>
   <script src="collection-image-recovery.js?v=20261025-image-recovery"></script>
 
-  <script src="services.js?v=20261025-image-recovery"></script>
+  <script src="services.js?v=20261025-design"></script>
 </body>
 </html>

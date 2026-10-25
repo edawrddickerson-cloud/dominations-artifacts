@@ -34,7 +34,7 @@
     if(!window.DNLocalBackupCore)await script('local-backup.js?v=3');
     await script('cloud.js?v=20261025-save-timeout');
     await script('ocr-feedback.js?v=20261024-ocr-matching');
-    await script('services-ui.js?v=20261025-reviewed-choice');
+    await script('services-ui.js?v=20261025-design');
     if(document.body.classList.contains('page-crafting-stats')){
       if(!window.DNCraftingStatsTables)await script('crafting-stats-tables.js?v=20261025-page-filters');
       await script('crafting-community-ui.js?v=20261025-page-filters');

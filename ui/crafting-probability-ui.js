@@ -105,7 +105,9 @@
   get('category').addEventListener('change',()=>{category=get('category').value;refresh();});
   get('scenario').addEventListener('change',()=>{scenario=get('scenario').value;render();});get('attempts').addEventListener('input',render);
   get('add').addEventListener('click',()=>{addRequirement({perks:[],count:1});render();});get('refresh').addEventListener('click',refresh);
-  document.querySelectorAll('[data-stats-view]').forEach(button=>button.addEventListener('click',refresh));
+  // The body also carries data-stats-view. Only the source buttons refresh;
+  // a body click would reset a checkbox before its native change event.
+  document.querySelectorAll('button[data-stats-view]').forEach(button=>button.addEventListener('click',refresh));
   window.addEventListener('dn-stats-hall-changed',()=>{const selected=window.DNCraftingStatsTables.hall();if(selected&&selected!==hall){get('hall').value=selected;get('hall').dispatchEvent(new Event('change'));}});
   function subscribe(){
     if(!subscribed&&window.DNScannerCollection){subscribed=true;window.DNScannerCollection.subscribe(()=>{if(source()==='personal')schedule();});}

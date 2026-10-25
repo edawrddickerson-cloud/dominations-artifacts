@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>DomiNations components</title>
+  <link rel="stylesheet" href="../../ui/styles.css?v=20261025-design">
+  <link rel="stylesheet" href="gallery.css">
+  <script src="../../ui/design-ui.js?v=20261025-design" defer></script>
+</head>
+<body>
+<main class="gallery">
+  <h1>Components</h1>
+  <section aria-labelledby="fields"><h2 id="fields">Fields</h2><div class="specimens">
+    <label>Category<select id="normal-field"><option>Attacking</option><option>Defensive</option><option>Economy</option></select></label>
+    <label>Compact<select class="ui-compact"><option>Main</option><option>War</option></select></label>
+    <label>Long value<select><option>Enemy Defender Spawn Time — Attacking and Defensive</option></select></label>
+    <label>Search<input type="search" placeholder="Search perks"></label>
+    <label>Disabled<select disabled><option>Unavailable</option></select></label>
+    <label>Invalid<input type="number" value="12" min="0" max="10" aria-invalid="true" aria-describedby="range-error"><span id="range-error">0–10</span></label>
+  </div></section>
+  <section><h2>Actions</h2><div class="actions"><button class="btn btn-primary">Save target</button><button class="btn">Cancel</button><button class="btn btn-quiet">Edit</button><button class="btn btn-danger">Delete artifact</button><button class="btn" disabled>Saving</button><button class="btn btn-small">Clear</button></div></section>
+  <section><h2>Selection</h2><div class="actions">
+    <div class="seg" role="group" aria-label="Hall"><button class="seg-btn" aria-pressed="true">Main</button><button class="seg-btn" aria-pressed="false">War</button></div>
+    <details class="strategy-comparison-picker"><summary>Collection Targets (0)</summary><div class="strategy-comparison-options"><label><input type="checkbox">Anti-bomber</label><label><input type="checkbox">Ground attack</label></div></details>
+    <details class="probability-perks"><summary>2 selected</summary><div class="probability-perk-menu"><label>Search perks<input type="search" aria-label="Search perks"></label><div class="probability-perk-list"><label><input type="checkbox" checked>Air Defense Damage</label><label><input type="checkbox" checked>Enemy Defender Spawn Time</label><label><input type="checkbox">All Resources Looted</label></div></div></details>
+    <details class="probability-perks"><summary>No matches</summary><div class="probability-perk-menu"><label>Search perks<input type="search" value="zzzz"></label></div></details>
+  </div></section>
+  <section><h2>Ratings</h2><div class="specimens">
+    <label class="rating-axis is-inherit">Inherited<input class="rating-input" type="number" min="0" max="10" placeholder="5" aria-label="Inherited rating"></label>
+    <label class="rating-axis is-override">Override<input class="rating-input" type="number" min="0" max="10" value="8" aria-label="Override rating"></label>
+    <label class="rating-axis is-override">Zero<input class="rating-input" type="number" min="0" max="10" value="0" aria-label="Zero rating"></label>
+    <label>Excluded<input type="checkbox" aria-label="Include stat"></label>
+  </div></section>
+  <section><h2>Data</h2><div class="gallery-scroll"><table><thead><tr><th scope="col" aria-sort="ascending"><button class="th-sort">Stat</button></th><th scope="col" class="th-numeric" aria-sort="descending"><button class="th-sort">Effect</button></th><th scope="col">Score</th><th scope="col">Observations</th></tr></thead><tbody>
+    <tr><th scope="row">Enemy Defender Spawn Time</th><td class="num">+11%</td><td class="num">~20</td><td class="num">12,345</td></tr>
+    <tr><th scope="row">Enemy Sabotage Duration</th><td class="num">−6%</td><td class="num">20 + 60</td><td class="num">0</td></tr>
+    <tr><th scope="row">Unknown</th><td class="num">—</td><td class="num">—</td><td class="num">—</td></tr>
+  </tbody></table></div><table><caption>Empty collection</caption><tbody><tr><td>No saved artifacts</td></tr></tbody></table></section>
+  <section><h2>Dialogs</h2><button class="btn" id="show-dialog">Delete artifact</button><dialog class="collection-delete-dialog" id="specimen-dialog" aria-labelledby="dialog-title"><form method="dialog"><h2 id="dialog-title">Delete artifact?</h2><p>Remove <strong>Sample artifact</strong> from the collection?</p><div class="collection-delete-actions"><button class="btn" value="cancel" autofocus>Cancel</button><button class="btn btn-danger" value="delete">Delete artifact</button></div></form></dialog></section>
+</main>
+<script>document.getElementById('show-dialog').addEventListener('click',()=>document.getElementById('specimen-dialog').showModal());</script>
+</body></html>

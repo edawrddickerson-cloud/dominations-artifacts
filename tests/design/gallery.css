@@ -1,0 +1,12 @@
+body { display: block; }
+.gallery { max-width: 76rem; margin: auto; padding: 1.5rem; }
+.gallery h1 { font-size: var(--type-title); }
+.gallery h2 { font-size: var(--type-section); }
+.gallery section { margin-block: 1.5rem; padding: 1rem; border: 1px solid var(--line); border-radius: var(--radius-panel); background: var(--panel); }
+.specimens { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); gap: 1rem; }
+.specimens label { display: grid; grid-template-columns: minmax(0, 1fr); align-content: start; gap: .5rem; min-width: 0; }
+.actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
+.actions details { position: relative; }
+.gallery-scroll { overflow: auto; }
+.gallery .num { text-align: right; }
+.gallery td, .gallery th { min-width: 5rem; }
