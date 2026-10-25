@@ -1,16 +1,16 @@
-/* Shared visual values. Contract: docs/design/system.md. */
+/* Slate: approved site theme. Contract: docs/design/system.md. */
 :root {
   color-scheme: dark;
-  --bg: #1a1d21;
-  --panel: #24282e;
-  --surface-raised: #2a2e34;
-  --line: #3a4048;
-  --control-edge: #77818f;
-  --text: #e8eaed;
-  --muted: #adb4be;
-  --accent: #c4a35a;
-  --accent-hover: #d4b46c;
-  --selected-bg: #363126;
+  --bg: #191e26;
+  --panel: #232b36;
+  --surface-raised: #2c3643;
+  --line: #3b4655;
+  --control-edge: #8793a4;
+  --text: #e8edf4;
+  --muted: #b1bdcc;
+  --accent: #d5b779;
+  --accent-hover: #e5cc98;
+  --selected-bg: #353329;
   --focus: #8bbcf2;
   --success: #a6f7ba;
   --success-bg: #124e29;
@@ -20,15 +20,15 @@
   --danger-edge: #cf7f89;
   --warning: #f2cb88;
   --warning-bg: #3a2818;
-  --unknown: #adb4be;
-  --disabled: #adb4be;
+  --unknown: #b1bdcc;
+  --disabled: #b1bdcc;
   --released: #3d7a5a;
   --uncertain: #f2cb88;
   --uncertain-bg: #3a2818;
   --collected: #2f6b52;
   --collected-bg: #1c3228;
   --collected-edge: #64c998;
-  --row-hover: #2c3138;
+  --row-hover: #2b3543;
   --font: "Segoe UI", "Candara", "Calibri", sans-serif;
   --mono: "Cascadia Mono", "Consolas", monospace;
   --type-title: 1.25rem;

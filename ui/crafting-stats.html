@@ -2,13 +2,13 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <script src="navigation.js?v=20261025-design"></script>
+  <script src="navigation.js?v=20261025-slate"></script>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts · Crafting Stats</title>
-  <link rel="stylesheet" href="styles.css?v=20261025-design" />
-  <link rel="stylesheet" href="scanner.css?v=20261025-design" />
-  <link rel="stylesheet" href="crafted-log-stats.css?v=20261025-design" />
-  <script src="design-ui.js?v=20261025-design" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20261025-slate" />
+  <link rel="stylesheet" href="scanner.css?v=20261025-slate" />
+  <link rel="stylesheet" href="crafted-log-stats.css?v=20261025-slate" />
+  <script src="design-ui.js?v=20261025-slate" defer></script>
 </head>
 <body class="page-crafting-stats">
   <nav class="site-nav" aria-label="Pages">
@@ -39,28 +39,38 @@
       <div id="header-profile" class="header-profile"></div>
     </div>
   </header>
-    <main class="crafting-stats-page"><h2>Crafting Stats</h2>
-    <section id="crafting-stats-page-filters" class="filters crafting-stats-filters" aria-label="Crafting statistics filters"><div class="filter-main">
-      <fieldset class="seg-field"><legend>View</legend><div class="seg" role="group" aria-label="Crafting statistics source"><button type="button" class="seg-btn is-active" data-stats-view="personal" aria-pressed="true">Personal</button><button type="button" class="seg-btn" data-stats-view="community" aria-pressed="false">Community</button></div></fieldset>
-      <fieldset class="seg-field"><legend>Hall</legend><div class="seg" role="group" aria-label="Hall"><button type="button" class="seg-btn is-active" data-stats-hall="main" aria-pressed="true">Main</button><button type="button" class="seg-btn" data-stats-hall="war" aria-pressed="false">War</button><button type="button" class="seg-btn" data-stats-hall="" aria-pressed="false">All</button></div></fieldset>
-      <details class="strategy-comparison-picker" data-stats-target-picker><summary>Collection Targets (All)</summary><div class="strategy-comparison-options" data-stats-target-options></div></details>
-      <a class="btn btn-accent" href="scanner.html?v=2">Crafting Scanner</a>
-    </div></section>
-    <section id="crafting-probability" class="crafted-log-stats" aria-label="Crafting probability calculator">
-      <div class="probability-heading"><h3>Crafting Probability</h3><span data-probability-source>Personal</span><button type="button" class="btn" data-probability-refresh>Refresh</button></div>
+    <main class="crafting-stats-page">
+    <h2>Crafting Stats</h2>
+    <div class="crafting-purpose-tabs" role="tablist" aria-label="Crafting views">
+      <button type="button" role="tab" id="stats-tab-personal" data-stats-view="personal" aria-selected="false" aria-controls="crafting-statistics-panel" tabindex="-1">Personal Stats</button>
+      <button type="button" role="tab" id="stats-tab-community" data-stats-view="community" aria-selected="true" aria-controls="crafting-statistics-panel" tabindex="0">Community Stats</button>
+      <button type="button" role="tab" id="stats-tab-probability" data-stats-view="probability" aria-selected="false" aria-controls="crafting-probability" tabindex="-1">Probability Calculator</button>
+    </div>
+    <section id="crafting-probability" class="crafted-log-stats" role="tabpanel" aria-labelledby="stats-tab-probability" hidden>
+      <div class="probability-heading"><h3>Probability calculator</h3><span data-probability-source>Community</span><button type="button" class="btn" data-probability-refresh>Refresh</button></div>
+      <div class="probability-workspace"><div class="probability-inputs">
       <div class="probability-controls">
+        <label>Data source<select data-probability-dataset><option value="community">Community</option><option value="personal">Personal</option></select></label>
         <label>Hall<select data-probability-hall></select></label>
         <label>Artifact<select data-probability-category></select></label>
         <label>Crafting event<select data-probability-scenario><option value="normal">Outside event</option><option value="event">During event</option></select></label>
       </div>
       <div class="probability-requirements" data-probability-requirements></div>
       <button type="button" class="btn" data-probability-add>Add requirement</button>
+      </div>
       <div class="probability-results" aria-live="polite">
         <div><span>Chance per artifact</span><strong data-probability-odds>—</strong><span data-probability-chance>—</span></div>
         <div><label>Crafts planned<input type="number" min="1" max="1000000000" step="1" value="1" data-probability-attempts></label><strong data-probability-attempt-chance>—</strong><span>At least one match</span></div>
       </div>
+      </div>
       <p data-probability-sample></p><p role="status" data-probability-status></p>
     </section>
+    <div id="crafting-statistics-panel" role="tabpanel" aria-labelledby="stats-tab-community">
+    <section id="crafting-stats-page-filters" class="filters crafting-stats-filters" aria-label="Crafting statistics filters"><div class="filter-main">
+      <fieldset class="seg-field"><legend>Hall</legend><div class="seg" role="group" aria-label="Hall"><button type="button" class="seg-btn is-active" data-stats-hall="main" aria-pressed="true">Main</button><button type="button" class="seg-btn" data-stats-hall="war" aria-pressed="false">War</button><button type="button" class="seg-btn" data-stats-hall="" aria-pressed="false">All</button></div></fieldset>
+      <details class="strategy-comparison-picker" data-stats-target-picker><summary>Collection Targets (All)</summary><div class="strategy-comparison-options" data-stats-target-options></div></details>
+      <a class="btn btn-accent" href="scanner.html?v=2">Crafting Scanner</a>
+    </div></section>
     <div id="crafting-stats-dashboard" aria-label="Top-value roll frequencies"></div>
     <section id="scanner-crafted-log" aria-label="Crafting statistics">
     <details id="crafting-log-details"><summary>Crafted item log</summary>      <p id="scanner-log-storage-status" role="status"></p>
@@ -74,7 +84,7 @@
       <p id="scanner-collection-export-status" role="status" aria-live="polite"></p>
       <details><summary>Scanner diagnostics</summary><p id="scanner-name-review-count"></p><ol id="scanner-name-review"></ol><pre id="scanner-collected-labels" style="white-space:pre-wrap"></pre><button type="button" class="btn" id="scanner-stat-evidence-export">Export Stat Evidence</button><p id="scanner-stat-evidence-status" role="status"></p></details>
 </details>
-    </section></main></div>
+    </section></div></main></div>
   <script src="data/army_catalog.js?v=8"></script>
   <script src="shared.js?v=20261019-rating-scale"></script>
   <script src="data/artwork_ids.js?v=20261024-artwork"></script>
@@ -82,7 +92,7 @@
   <script src="artwork.js?v=20261025-local-first"></script>
   <script src="data/artifact_stat_context.js?v=1"></script>
   <script src="artifact-stat-context.js?v=3"></script>
-  <script src="profiles-ui.js?v=20261025-design"></script>
+  <script src="profiles-ui.js?v=20261025-slate"></script>
   <script src="stored-artifacts.js?v=20261025-image-recovery"></script>
   <script src="crafting-history.js?v=20261024-artwork"></script>
   <script src="scanner-keep.js?v=20261025-stats-page"></script>
@@ -95,6 +105,6 @@
   <script src="crafting-community.js?v=20261025-inferred"></script>
   <script src="crafting-probability.js?v=20261025-max-tiers"></script>
   <script src="data/crafting_probability_calibration.js?v=20261025-historical-tiers"></script>
-  <script src="services.js?v=20261025-design"></script>
-  <script src="crafting-probability-ui.js?v=20261025-design"></script>
+  <script src="services.js?v=20261025-slate"></script>
+  <script src="crafting-probability-ui.js?v=20261025-slate"></script>
 </body></html>

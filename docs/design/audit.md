@@ -102,6 +102,10 @@ OAuth return is JavaScript (`auth-return.js`) associated with configuration, not
 - Select representative visual baselines after deterministic fixtures exist. Avoid freezing existing visual defects into accepted screenshots.
 - Verify the exact current check inventory and reconcile stale fixture instructions before expanding automation.
 
+## Slate selection
+
+The user selected Slate after reviewing the local style studies. It is now the application-wide palette and appearance contract, documented in `system.md`. The source findings above retain their original pre-migration evidence; old palette values in that evidence are historical, not defaults to copy.
+
 ## Migration follow-up
 
 The shared foundation/control migration now implements the owners and checks listed in `README.md` and `consumers.json`. The observations above remain the historical baseline. Do not cite the original missing-gallery or unrun-shell limitations as the current implementation state. Fresh results are recorded in the generated `data/temp/design-review/report.json` and the completion report. Full manual accessibility/zoom and user visual sign-off remain separate.

@@ -2,9 +2,17 @@
 
 25 October 2026. Shared foundations and primitives are applied to all styled first-party routes. This record covers the migration and its review artifacts; it does not claim full accessibility conformance.
 
+## Slate promotion
+
+Slate is the approved default on every page and in the persistent shell. The shared palette is registered in `consumers.json`; `design-tokens.css` owns its implementation. Flat surfaces and outlined selections replace the earlier page gradients and solid selection fills. Collection Targets uses the selected study's tabs, saved-row selection, framed editor toolbar and panel divider. Domain scoring, ownership and OCR colours retain their documented semantics.
+
+Fresh validation passed the **402-check** rendered matrix and regenerated **75 screenshots**. The 65 added checks verify the full registered Slate palette in both shell and content documents at all five viewport sizes. The ownership guard also passes; negative probes confirm it rejects page token overrides, legacy theme literals, changes that disagree with the registered palette and duplicated native-control styles.
+
+Focused checks passed for target drafts, collection comparisons/deletion, native number steppers, narrow shell navigation, scanner recognition/comparison/reading, provisional colours, inline scanner editing, desktop/narrow scanner geometry, probability controls and sharing dialogs. The updated project skill passed its validator. The pre-existing storage assertion and manual accessibility limits below remain documented separately.
+
 ## Rendered review
 
-`node scripts/test_design_ui.cjs --full` passed **337 checks** and generated **75 screenshots**. The matrix covers 1440×900, 1024×768, 768×1024, 390×844 and 320×800. It renders all eleven active content routes, both auxiliary documents and the component gallery, plus a populated scanner preview at each size. The persistent shell is included in active-page screenshots. Entry and Army remain compatibility/redirect routes and are classified in `consumers.json`.
+`node scripts/test_design_ui.cjs --full` passed **402 checks** (the original 337 interaction/layout checks plus 65 Slate palette checks) and generated **75 screenshots**. The matrix covers 1440×900, 1024×768, 768×1024, 390×844 and 320×800. It renders all eleven active content routes, both auxiliary documents and the component gallery, plus a populated scanner preview at each size. The persistent shell is included in active-page screenshots. Entry and Army remain compatibility/redirect routes and are classified in `consumers.json`.
 
 Review `data/temp/design-review/index.html`; select a viewport and open any screenshot at full size. Results are in `data/temp/design-review/report.json`. These ignored artifacts can be regenerated. The local preview serves the live app at `/ui/ratings.html` and components at `/tests/design/gallery.html`.
 
@@ -37,6 +45,8 @@ Two old browser wrappers were repaired without relaxing their assertions: collec
 The expanded picker checks also found and fixed a real probability interaction defect: `[data-stats-view]` matched the body as well as the source buttons. Every checkbox click refreshed the calculator before its native change event saved the selection. The handler now targets `button[data-stats-view]`; real click, search, no-match and selection-retention checks cover the correction.
 
 ## Pre-existing failure and manual limits
+
+Crafting Stats layout follow-up: Personal Stats, Community Stats and Probability Calculator now have separate views, using Collection Targets' framed tabs moved into the shared component owner. Community opens by default. The calculator has an independent Personal/Community data-source select and retains inputs across switches. `node scripts/check_design_system.cjs`, `node scripts/test_crafting_probability_ui.cjs` and `node scripts/test_crafting_stats_page.cjs` passed, including 30 statistics behavior checks and keyboard tab navigation. The calculator fixture checks dropdown text fit and Max-tier alignment at 1440, 1024, 768, 390 and 320px. `node scripts/test_design_ui.cjs --full` passed 397 checks with 75 screenshots; a 320px follow-up passed 81 checks. `node scripts/test_crafting_purposes_ui.js --summary` passed with zero external requests and browser errors. At 320px tabs and calculator requirement fields stack to retain full text. Desktop and narrow screenshots were visually reviewed. Remote services were blocked; live community data was not validated.
 
 `node scripts/run_scanner_ocr_fixture.js --storage-layout --summary` still fails its **“unknown editable fields have amber borders”** assertion. The same assertion was reproduced while serving all original first-party HTML, JavaScript and CSS directly from Git HEAD in the isolated harness. The missing state is the tier selector's `is-unknown` class; the fields marked unknown retain their amber borders. This migration does not alter storage inference/normalisation or weaken the assertion.
 

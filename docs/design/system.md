@@ -4,11 +4,21 @@ Status: governing design contract, 25 October 2026. Shared foundations and primi
 
 ## Direction and existing strengths
 
-Keep the existing dark, gold-accented, compact planning interface. The artifact artwork, museum slots, table-first comparison, persistent navigation, Main/War context and profile controls already give the application an identity. Improve their consistency rather than replacing them with a new visual theme or a frontend framework.
+Slate is the approved default across the entire application: cool graphite canvas/panels, soft gold accents, flat surfaces and outlined selections. Use this theme for all future UI work. The artifact artwork, museum slots, table-first comparison, persistent navigation, Main/War context and profile controls already give the application an identity. Carry these strengths through Slate with the existing frontend architecture.
 
 Use the same vocabulary, control treatment and hierarchy across pages. Give different tasks appropriate compositions: an inventory, a ratings editor and a live scanner need different layouts. Consistency means shared parts and predictable behaviour, not identical page templates.
 
 Keep visible copy to names, facts, counts, statuses and necessary actions. Do not add marketing text, instructional introductions or implementation explanations to application pages. These design documents are developer documentation, not proposed UI copy.
+
+## Slate appearance
+
+Slate is implemented in the shared owners, not behind a page attribute or a theme switch. The registry records the approved palette and asset version; the ownership check rejects competing page palette definitions. All first-party routes load the same version through `styles.css`, including shell/iframe contexts and auxiliary documents.
+
+Use flat `--panel` surfaces for toolbars, cards, settings sections and dialogs, and `--surface-raised` for headers/selected controls. Borders and separators use `--line`; native fields and interactive boundaries use `--control-edge`. Gold is an emphasis and selection cue. Keep solid gold for primary actions; navigation, segments and category tabs indicate selection with a raised surface and gold outline/edge/text. `.btn-choice` provides the flat saved-row selection variant with explicit `aria-pressed` state. Its selected background is `--selected-bg: #353329`.
+
+Collection Targets keeps the approved Slate composition: framed category tabs, flat saved-target rows, a subtle divider below the saved list, a framed name/action toolbar, neutral section headings, and a dashed divider between selection and rating panels. Narrow views stack the panels and move that divider to the top. Other pages apply the same surface/selection vocabulary to their existing compositions; do not copy this editor layout onto scanners or collections.
+
+Avoid decorative brown/teal page gradients and local neutral palettes. Reserve shadows for overlays. Ownership/active equipment, signed effects, OCR uncertainty, stat tiers and scanner Keep/Discard remain distinct domain states with their documented colours. Theme work must not recolour these states into generic gold selection.
 
 ## Foundations
 
@@ -16,12 +26,12 @@ The values below are implemented in `ui/design-tokens.css`. Use these tokens rat
 
 | Role | Shared value / rule |
 |---|---|
-| Canvas | Existing `--bg: #1a1d21` |
-| Surface | Existing `--panel: #24282e` |
-| Raised surface | Existing table-header tone `#2a2e34` |
-| Borders | `--line: #3a4048` for separators; `--control-edge: #77818f` for interactive boundaries |
-| Primary / secondary text | `--text: #e8eaed`, `--muted: #adb4be` |
-| Accent / selection | Existing `--accent: #c4a35a`; selection also uses pressed/checked state or an edge |
+| Canvas | `--bg: #191e26` |
+| Surface | `--panel: #232b36` |
+| Raised surface | `--surface-raised: #2c3643` |
+| Borders | `--line: #3b4655` for separators; `--control-edge: #8793a4` for interactive boundaries |
+| Primary / secondary text | `--text: #e8edf4`, `--muted: #b1bdcc` |
+| Accent / selection | `--accent: #d5b779`; selection also uses pressed/checked state or an edge |
 | Keyboard focus | `--focus: #8bbcf2`, 2px outline with visible offset; do not replace it with colour change alone |
 | Fonts | Existing Segoe UI stack; tabular numerals for comparable numeric values; mono only for diagnostic identifiers |
 | Type roles | Page title 1.25rem; section title 1rem; body/control .875rem; dense table .8125rem; metadata .75rem |
@@ -42,7 +52,7 @@ Every content document has one `main` landmark (native or equivalent role), a me
 
 ## Component contracts
 
-The shared owner is `ui/components.css`, loaded by `ui/styles.css`. Public classes include `.btn`, `.btn-primary`, `.btn-accent`, `.btn-quiet`, `.btn-danger`, `.btn-small`, `.btn-prominent`, `.ui-compact`, `.seg`, `.seg-btn`, `.rating-input`, `.th-sort` (including statistics? `.crafted-stats-sort` alias) and `.ui-document`. Native fields use element selectors. Existing picker classes are supported by the same owner to avoid rebuilding stateful consumer DOM. `ui/design-ui.js` owns presentation-only dismissal, focus return and viewport placement.
+The shared owner is `ui/components.css`, loaded by `ui/styles.css`. Public classes include `.btn`, `.btn-primary`, `.btn-accent`, `.btn-quiet`, `.btn-choice`, `.btn-danger`, `.btn-small`, `.btn-prominent`, `.ui-compact`, `.seg`, `.seg-btn`, `.rating-input`, `.th-sort` (including the statistics `.crafted-stats-sort` alias) and `.ui-document`. Native fields use element selectors. Existing picker classes are supported by the same owner to avoid rebuilding stateful consumer DOM. `ui/design-ui.js` owns presentation-only dismissal, focus return and viewport placement.
 
 | Component | Shared contract | Permitted variants |
 |---|---|---|
@@ -50,7 +60,7 @@ The shared owner is `ui/components.css`, loaded by `ui/styles.css`. Public class
 | Single select | Label + current value; native `select` by default; shared closed-control styling | Short fixed choices; searchable single-choice picker only when long lists justify it |
 | Multiple-choice picker | Shared trigger, selected summary, checkbox rows, optional search and bulk actions | Flat or grouped options; group membership retains domain rules |
 | Action menu | Actions rendered as buttons/links; commands do not appear as a selected value | Small contextual menu |
-| Button | Shared height, padding, font and focus; loading does not change width | Primary, secondary, quiet, danger; compact size |
+| Button | Shared height, padding, font and focus; loading does not change width | Primary, secondary, quiet, danger; flat choice with `aria-pressed`; compact size |
 | Segmented control | Visible bounded set with explicit state | Single-choice group or independently pressed toggles, based on actual semantics |
 | Tabs | One active panel, stable labels, appropriate keyboard semantics | Category and statistics tabs; never infer a save operation from tab switching |
 | Checkbox / switch | Checkbox for inclusion; switch for immediate on/off settings; accessible label and state | Dense checkbox row |
@@ -101,6 +111,8 @@ Use Collection Target for the current saved target entity. Keep Strategy and Pur
 Keep a single persistent shell owning navigation, global profile and context controls. Embedded documents own page content. Use the existing allowlist/routing model and preserve current links, history, capture lifetime and OAuth handoff.
 
 For browsing pages, use a compact filter toolbar, result count and main table/cards. For editors, use a target/list context and an editing panel with explicit save actions where required. For collection pages, retain museum slots and artwork before detail/comparison. For statistics, keep calculator, context, results and evidence hierarchy. For scanner pages, retain their specialised live workspace.
+
+Crafting Stats uses the same framed three-column tabs as Collection Targets: Personal Stats, Community Stats and Probability Calculator. Below 361px the shared tabs stack to preserve full names. Community Stats opens by default; only the selected view is visible. Tabs support ArrowLeft/ArrowRight, Home/End and a single tab stop. Statistics filters and distributions belong to the statistics views. The calculator has an independent Personal/Community data-source select and retains its inputs across tab switches. Inputs and odds sit side by side when space allows; requirements wrap before control text clips, with tier patterns below aligned fields. Tab appearance and geometry live in `components.css`; page styles own calculator composition.
 
 Use content-driven wrapping with shared initial breakpoint tiers at 900px and 640px. Existing 480/600px rules need review, not blind deletion. Test 1440×900, 1024×768, 768×1024 and 390×844 plus zoom. Narrow layouts stack toolbars and optional panels, allow table-local horizontal scrolling and keep actions reachable. Do not hide required columns or reverse scanner image/stat ordering without an explicit requirement change. The scanner's five-stat/image row and compact decision layout are protected constraints. At phone widths, keep a 7rem minimum stat-name column, a smaller image alongside it, and local keyboard-scrollable overflow when the combined columns need more than the available width. Preserve all five rows and their order.
 

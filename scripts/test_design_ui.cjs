@@ -4,6 +4,7 @@ const {spawn} = require('node:child_process');
 const root = path.resolve(__dirname, '..');
 const out = path.join(root, 'data/temp/design-review');
 const routes = ['artifacts','collection','ratings','totals','scanner','storage-scanner','crafting-stats','council','council-collection','council-ratings','config','privacy','crafting-statistics'];
+const theme=JSON.parse(fs.readFileSync(path.join(root,'docs/design/consumers.json'),'utf8')).theme;
 const viewport = process.argv.find(arg=>arg.startsWith('--viewport='))?.slice(11);
 if(viewport&&!/^\d{3,4}x\d{3,4}$/.test(viewport))throw Error('Invalid viewport');
 const sizes = viewport ? [viewport.split('x').map(Number)] : process.argv.includes('--full') ? [[1440,900],[1024,768],[768,1024],[390,844],[320,800]] : [[1440,900],[390,844]];
@@ -53,6 +54,8 @@ async function main(){
         check(route+' '+width+' main landmark',result.main===1,result);
         check(route+' '+width+' local overflow',!result.overflow&&!result.shellOverflow,result);
         check(route+' '+width+' shared tokens',result.tokens.trim()==='2.25rem');
+        const palette=await evaluate(`(()=>{const d=${embedded?"document.getElementById('scanner-view').contentDocument":"document"},styles=d.defaultView.getComputedStyle(d.documentElement),shell=getComputedStyle(document.documentElement),names=${JSON.stringify(Object.keys(theme.tokens))};return {content:Object.fromEntries(names.map(name=>[name,styles.getPropertyValue('--'+name).trim()])),shell:Object.fromEntries(names.map(name=>[name,shell.getPropertyValue('--'+name).trim()]))};})()`);
+        check(route+' '+width+' Slate theme in shell/content',Object.entries(theme.tokens).every(([name,value])=>palette.content[name]===value&&palette.shell[name]===value),palette);
         check(route+' '+width+' shared field radius',result.fields.every(f=>f.radius==='4px'),result.fields);
         await capture(route,width);
         // Exercise real custom picker consumers without changing their selections.

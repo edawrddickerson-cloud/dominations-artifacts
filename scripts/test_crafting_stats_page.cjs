@@ -9,6 +9,18 @@ browserRun(async({evaluate,send})=>{
   const wait=async test=>{for(let i=0;i<800;i++){if(test())return;await new Promise(ok=>setTimeout(ok,25));}throw Error('Page readiness timeout');};
   frame.src='/ui/crafting-stats.html';await wait(()=>frame.contentWindow.DNScannerCollection&&frame.contentDocument.querySelector('#crafted-log-stats'));
   const w=frame.contentWindow,d=frame.contentDocument;await w.DNServicesReady;await wait(()=>d.querySelector('#crafting-community'));
+  assert('community list opens by default',d.body.dataset.statsView==='community'&&d.querySelector('#crafting-community').getClientRects().length>0);
+  const tabs=[...d.querySelectorAll('[role="tab"]')],panel=d.querySelector('#crafting-statistics-panel'),calculator=d.querySelector('#crafting-probability');
+  assert('three views use Collection Targets tabs',tabs.length===3&&tabs.every(tab=>tab.closest('.crafting-purpose-tabs'))&&calculator.hidden&&!panel.hidden);
+  tabs[2].click();assert('calculator tab hides statistics',!calculator.hidden&&panel.hidden&&tabs[2].getAttribute('aria-selected')==='true');
+  calculator.querySelector('[data-probability-attempts]').value='17';
+  tabs[2].dispatchEvent(new w.KeyboardEvent('keydown',{key:'Home',bubbles:true}));
+  assert('Home selects personal statistics and moves focus',d.activeElement===tabs[0]&&calculator.hidden&&!panel.hidden&&d.body.dataset.statsView==='personal');
+  tabs[0].dispatchEvent(new w.KeyboardEvent('keydown',{key:'ArrowRight',bubbles:true}));
+  assert('ArrowRight selects community statistics',d.activeElement===tabs[1]&&d.body.dataset.statsView==='community'&&tabs.filter(tab=>tab.tabIndex===0).length===1);
+  tabs[1].dispatchEvent(new w.KeyboardEvent('keydown',{key:'End',bubbles:true}));
+  assert('calculator retains inputs across tabs',!calculator.hidden&&calculator.querySelector('[data-probability-attempts]').value==='17');
+  d.querySelector('button[data-stats-view="personal"]').click();
   assert('dedicated page contains personal, community and log sections',d.querySelector('#crafted-log-stats')&&d.querySelector('#crafting-community')&&d.querySelector('#scanner-item-log'));
   assert('stats page has one active navigation link',d.querySelectorAll('.site-nav a[aria-current="page"]').length===1&&d.querySelector('.site-nav a[aria-current="page"]').getAttribute('href')==='crafting-stats.html');
   const names=['Armored Car Damage','Armored Car Hitpoints','Attack Helicopter Damage','Attack Helicopter Hitpoints','APC Hitpoints'];
@@ -34,7 +46,7 @@ browserRun(async({evaluate,send})=>{
   const data=w.DNCraftingCommunity.analyze(records.map(item=>w.DNCraftingCommunity.encode(item)));data.status='ready';data.updatedAt=new Date().toISOString();
   let args;w.DNCloud.communityReport=async value=>{args=value;return data;};
   const community=d.querySelector('#crafting-community');await wait(()=>!d.querySelector('[data-community-refresh]').disabled);d.querySelector('[data-community-refresh]').click();await new Promise(ok=>setTimeout(ok,0));
-  d.querySelector('[data-stats-view="community"]').click();
+  d.querySelector('button[data-stats-view="community"]').click();
   assert('toggle switches the dashboard and table together',community.getClientRects().length>0&&!personal.getClientRects().length&&d.querySelector('[data-dashboard="crafting-community"]').getClientRects().length>0&&!board.getClientRects().length);
   const communityDamage=[...community.querySelector('[data-community-frequency]').rows].find(row=>row.cells[0].textContent===names[0]);
   assert('community uses the same tier frequencies',communityDamage.cells[5].textContent==='0.0%'&&communityDamage.cells[6].textContent==='0.0%'&&communityDamage.cells[7].textContent==='100.0%');
@@ -44,7 +56,7 @@ browserRun(async({evaluate,send})=>{
   const target=w.DNCraftingPurposes.saveCustom({label:'Priority stats',category:'attacking',perks:[names[0]]});w.DNCraftingPurposes.setRating(names[0],9);
   const targetFilter=d.querySelector('[data-stats-target][value="'+target+'"]');targetFilter.click();await wait(()=>community.querySelector('[data-community-frequency]').rows[0].cells[1].textContent==='9');
   assert('target filter uses saved membership and shared rating',community.querySelector('[data-community-frequency]').rows.length===1&&community.querySelector('[data-community-frequency]').rows[0].cells[0].textContent===names[0]);
-  d.querySelector('[data-stats-view="personal"]').click();assert('target filter applies to both views',frequencies.rows.length===1&&frequencies.rows[0].cells[1].textContent==='9');
+  d.querySelector('button[data-stats-view="personal"]').click();assert('target filter applies to both views',frequencies.rows.length===1&&frequencies.rows[0].cells[1].textContent==='9');
   targetFilter.click();
   const otherTarget=w.DNCraftingPurposes.saveCustom({label:'Helicopter stats',category:'attacking',perks:[names[2]]}),picker=d.querySelector('[data-stats-target-picker]');
   picker.querySelector('[value="'+target+'"]').click();picker.querySelector('[value="'+otherTarget+'"]').click();
@@ -63,7 +75,7 @@ browserRun(async({evaluate,send})=>{
  })()`);
  for(const width of [1440,390]){
   await send('Emulation.setDeviceMetricsOverride',{width,height:1000,deviceScaleFactor:1,mobile:false});
-  const fit=await evaluate(`(()=>{const d=__statsFrame.contentDocument;return d.documentElement.scrollWidth<=__statsFrame.clientWidth+1&&[...d.querySelectorAll('input,select')].filter(n=>n.getClientRects().length).every(n=>n.getBoundingClientRect().right<=__statsFrame.clientWidth+1);})()`);
+  const fit=await evaluate(`(()=>{const d=__statsFrame.contentDocument;return d.documentElement.scrollWidth<=__statsFrame.clientWidth+1&&[...d.querySelectorAll('input,select')].filter(n=>n.checkVisibility()).every(n=>n.getBoundingClientRect().right<=__statsFrame.clientWidth+1);})()`);
   assert(fit,'Stats controls fit '+width);
   const menuFits=await evaluate(`(()=>{const d=__statsFrame.contentDocument,picker=d.querySelector('[data-stats-target-picker]');picker.open=true;const menu=picker.querySelector('.strategy-comparison-options'),rect=menu.getBoundingClientRect(),label=menu.querySelector('label'),fits=rect.left>=0&&rect.right<=__statsFrame.clientWidth+1&&__statsFrame.contentWindow.getComputedStyle(label).flexDirection==='row';picker.open=false;return fits;})()`);
   assert(menuFits,'Collection Targets menu fits '+width+' with inline checkboxes');

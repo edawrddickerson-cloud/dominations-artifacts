@@ -50,8 +50,26 @@
     }
   ],
   "domainVariants": {
+    "crafted-log-stats.css": "Personal Stats, Community Stats and Probability Calculator use the shared Collection Targets tab family; responsive calculator input/result columns and aligned requirement fields use shared controls.",
     "scanner.css": "Five-stat/image grid, semantic stat/dice colours, compact live editing; at narrow widths a 7rem minimum name column with local keyboard-scrollable overflow.",
     "styles.css": "Museum tiles, slot controls, level steppers and collection comparison geometry remain domain compositions.",
     "council.css": "Rating matrix axes and council cards retain domain geometry; native fields and ordinary removal actions use shared primitives."
+  },
+  "assetVersion": "20261025-slate",
+  "theme": {
+    "name": "Slate",
+    "tokens": {
+      "bg": "#191e26",
+      "panel": "#232b36",
+      "surface-raised": "#2c3643",
+      "line": "#3b4655",
+      "control-edge": "#8793a4",
+      "text": "#e8edf4",
+      "muted": "#b1bdcc",
+      "accent": "#d5b779",
+      "accent-hover": "#e5cc98",
+      "selected-bg": "#353329",
+      "row-hover": "#2b3543"
+    }
   }
 }

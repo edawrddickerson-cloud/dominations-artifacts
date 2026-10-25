@@ -7,9 +7,10 @@
   let saved;try{saved=JSON.parse(localStorage.getItem(key));}catch{}
   let hall=['main','war'].includes(saved?.hall)?saved.hall:'main',category=P.categories[hall].includes(saved?.category)?saved.category:'Weapon';
   let scenario=saved?.scenario==='event'?'event':'normal',requirements=[],data=null,generation=0,timer,subscribed=false,researchSubscribed=false;
-  const source=()=>document.body.dataset.statsView==='community'?'community':'personal';
+  get('dataset').value=saved?.dataset==='personal'?'personal':'community';
+  const source=()=>get('dataset').value;
   const status=text=>{get('status').textContent=text;};
-  function save(){try{localStorage.setItem(key,JSON.stringify({version:1,hall,category,scenario,attempts:get('attempts').value,requirements:requirements.map(r=>r.value)}));}catch{}}
+  function save(){try{localStorage.setItem(key,JSON.stringify({version:1,hall,category,scenario,dataset:source(),attempts:get('attempts').value,requirements:requirements.map(r=>r.value)}));}catch{}}
   function options(select,entries,value){select.replaceChildren(...entries.map(([value,label])=>new Option(label,value)));select.value=value;}
   options(get('hall'),[['main','Main'],['war','War']],hall);
   options(get('category'),P.categories[hall].map(v=>[v,v]),category);get('scenario').value=scenario;
@@ -105,9 +106,8 @@
   get('category').addEventListener('change',()=>{category=get('category').value;refresh();});
   get('scenario').addEventListener('change',()=>{scenario=get('scenario').value;render();});get('attempts').addEventListener('input',render);
   get('add').addEventListener('click',()=>{addRequirement({perks:[],count:1});render();});get('refresh').addEventListener('click',refresh);
-  // The body also carries data-stats-view. Only the source buttons refresh;
-  // a body click would reset a checkbox before its native change event.
-  document.querySelectorAll('button[data-stats-view]').forEach(button=>button.addEventListener('click',refresh));
+  // Calculator data source is independent of the statistics view tabs.
+  get('dataset').addEventListener('change',refresh);
   window.addEventListener('dn-stats-hall-changed',()=>{const selected=window.DNCraftingStatsTables.hall();if(selected&&selected!==hall){get('hall').value=selected;get('hall').dispatchEvent(new Event('change'));}});
   function subscribe(){
     if(!subscribed&&window.DNScannerCollection){subscribed=true;window.DNScannerCollection.subscribe(()=>{if(source()==='personal')schedule();});}

@@ -4,6 +4,12 @@
 
 This is the governing design pack and its migration record. Start with the [design specification](system.md), [consumer/exception registry](consumers.json) and [project skill](../../.agents/skills/dominations-ui/SKILL.md). The [original audit](audit.md) records the source baseline; the phases below retain the rationale for the migration.
 
+## Slate default
+
+Slate was selected from the Collection Targets style studies and promoted to the shared theme for every page. The palette lives in `ui/design-tokens.css`; flat selection variants live in `ui/components.css`; editor composition stays in `ui/crafting-purposes.css`. The specification, project skill, root agent instructions and consumer registry define Slate as the norm for future changes. Do not load the experimental variants stylesheet in the app.
+
+The ownership guard validates the registered palette, shared asset version and absence of page palette overrides. The rendered matrix verifies the Slate tokens in both shell and content documents for every content/auxiliary route, as well as the existing responsive and interaction checks.
+
 ## Implemented baseline and review
 
 See [migration verification](verification.md) for fresh results, the known pre-existing storage assertion and remaining manual checks.
@@ -31,7 +37,7 @@ The pack must cover both appearance and behaviour. Matching select borders is in
 | Artifact | Purpose | Status |
 |---|---|---|
 | Audit and consumer inventory | Evidence, best existing patterns, gaps and affected pages | Initial source audit in this pack; rendered sample coverage recorded separately |
-| Design specification | Foundations, control selection, data semantics, responsive compositions, exceptions | Proposed baseline in this pack |
+| Design specification | Foundations, control selection, data semantics, responsive compositions, exceptions | Governing Slate specification |
 | Repository skill and agent entry point | Make future work consult the same rules | Included in this pack |
 | Runtime token and component owners | One source for colours, type, spacing, states and shared behaviours | Implemented; `ui/design-tokens.css`, `ui/components.css`, `ui/design-ui.js` |
 | Local component gallery | Render actual shared controls and representative states | Implemented; `tests/design/gallery.html` |

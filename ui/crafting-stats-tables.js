@@ -83,10 +83,25 @@
   const hallButtons=[...document.querySelectorAll('button[data-stats-hall]')];
   for(const button of hallButtons)button.addEventListener('click',()=>{selectedHall=button.dataset.statsHall;for(const option of hallButtons){const active=option===button;option.classList.toggle('is-active',active);option.setAttribute('aria-pressed',String(active));}window.dispatchEvent(new Event('dn-stats-hall-changed'));});
   if(viewButtons.length){
-    document.body.dataset.statsView='personal';
-    for(const button of viewButtons)button.addEventListener('click',()=>{
-      document.body.dataset.statsView=button.dataset.statsView;
-      for(const option of viewButtons){const active=option===button;option.classList.toggle('is-active',active);option.setAttribute('aria-pressed',String(active));}
-    });
+    document.body.dataset.statsView='community';
+    function selectView(button){
+      const calculator=button.dataset.statsView==='probability';
+      if(!calculator)document.body.dataset.statsView=button.dataset.statsView;
+      document.getElementById('crafting-probability').hidden=!calculator;
+      const statistics=document.getElementById('crafting-statistics-panel');
+      statistics.hidden=calculator;
+      if(!calculator)statistics.setAttribute('aria-labelledby',button.id);
+      for(const option of viewButtons){const active=option===button;option.setAttribute('aria-selected',String(active));option.tabIndex=active?0:-1;}
+      document.querySelectorAll('.probability-perks[open],.strategy-comparison-picker[open]').forEach(picker=>{picker.open=false;});
+    }
+    for(const button of viewButtons){
+      button.addEventListener('click',()=>selectView(button));
+      button.addEventListener('keydown',event=>{
+        if(!['ArrowLeft','ArrowRight','Home','End'].includes(event.key))return;
+        event.preventDefault();
+        const index=event.key==='Home'?0:event.key==='End'?viewButtons.length-1:(viewButtons.indexOf(button)+(event.key==='ArrowRight'?1:-1)+viewButtons.length)%viewButtons.length;
+        selectView(viewButtons[index]);viewButtons[index].focus();
+      });
+    }
   }
 })();

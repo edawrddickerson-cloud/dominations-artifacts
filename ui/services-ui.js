@@ -3,7 +3,7 @@
 (() => {
   'use strict';
   const config=window.DNServiceConfig,cloud=window.DNCloud,consent=window.DNConsent;
-  const sheet=document.createElement('link');sheet.rel='stylesheet';sheet.href='services.css?v=20261025-design';document.head.appendChild(sheet);
+  const sheet=document.createElement('link');sheet.rel='stylesheet';sheet.href='services.css?v=20261025-slate';document.head.appendChild(sheet);
   const text={disabled:'Cloud sync unavailable.',
     'signed-out':'Not signed in.',unlinked:'Choose which data to use.',
     synced:'Saved to your account.',upload:'Waiting to sync.',remote:'Newer account data available.',

@@ -1,0 +1,80 @@
+/* Preview-only studies. Production owners remain ui/design-tokens.css and ui/components.css. */
+html[data-target-style="bronze"] {
+  --bg: #1e1c19;
+  --panel: #292620;
+  --surface-raised: #322d25;
+  --line: #484035;
+  --control-edge: #948674;
+  --text: #efe9de;
+  --muted: #bfb5a6;
+  --accent: #d1af68;
+  --accent-hover: #e2c589;
+  --selected-bg: #3a3020;
+  --row-hover: #332e26;
+}
+html[data-target-style="bronze"] .crafting-purpose-tabs { gap: 1rem; border-bottom: 1px solid var(--line); }
+html[data-target-style="bronze"] .crafting-purpose-tabs > button { border: 0; border-bottom: 3px solid transparent; border-radius: 0; background: transparent; color: var(--muted); }
+html[data-target-style="bronze"] .crafting-purpose-tabs > button[aria-selected="true"] { border-bottom-color: var(--accent); background: linear-gradient(0deg, var(--selected-bg), transparent); color: var(--accent); }
+html[data-target-style="bronze"] .purpose-saved-toolbar { padding: 1rem; background: var(--panel); border: 1px solid var(--line); border-top: 2px solid var(--accent); border-radius: var(--radius-panel); }
+html[data-target-style="bronze"] .purpose-saved-table th { background: var(--surface-raised); }
+html[data-target-style="bronze"] .purpose-editor-heading { margin-block: 1.25rem; }
+html[data-target-style="bronze"] .crafting-purpose-selection,
+html[data-target-style="bronze"] .crafting-purpose-configuration { padding: 1rem; border: 1px solid var(--line); border-radius: var(--radius-panel); background: var(--panel); }
+html[data-target-style="bronze"] .crafting-purpose-layout { gap: 1rem; }
+html[data-target-style="bronze"] .purpose-troop-group:first-child { border-top: 0; }
+html[data-target-style="bronze"] .purpose-stat-group h4 { font-weight: 650; letter-spacing: .025em; }
+
+html[data-target-style="slate"] {
+  --bg: #191e26;
+  --panel: #232b36;
+  --surface-raised: #2c3643;
+  --line: #3b4655;
+  --control-edge: #8793a4;
+  --text: #e8edf4;
+  --muted: #b1bdcc;
+  --accent: #d5b779;
+  --accent-hover: #e5cc98;
+  --selected-bg: #353329;
+  --row-hover: #2b3543;
+}
+html[data-target-style="slate"] .crafting-purpose-tabs { gap: .25rem; padding: .25rem; background: var(--panel); border: 1px solid var(--line); border-radius: var(--radius-panel); }
+html[data-target-style="slate"] .crafting-purpose-tabs > button { border-color: transparent; background: transparent; font-weight: 600; }
+html[data-target-style="slate"] .crafting-purpose-tabs > button[aria-selected="true"] { background: var(--surface-raised); border-color: var(--accent); color: var(--accent); }
+html[data-target-style="slate"] .purpose-saved-toolbar { padding-block: .5rem 1rem; border-bottom: 1px solid var(--line); }
+html[data-target-style="slate"] .purpose-saved-table th { background: transparent; color: var(--muted); }
+html[data-target-style="slate"] .purpose-saved-choice button { border-color: transparent; background: transparent; }
+html[data-target-style="slate"] .purpose-saved-choice button[aria-pressed="true"] { border-color: var(--accent); background: var(--selected-bg); }
+html[data-target-style="slate"] .purpose-editor-heading { padding: 1rem; margin-bottom: 1rem; border: 1px solid var(--line); border-radius: var(--radius-panel); background: var(--panel); }
+html[data-target-style="slate"] .crafting-purpose-configuration { border-left-style: dashed; }
+html[data-target-style="slate"] .purpose-stat-group h4 { color: var(--text); }
+html[data-target-style="slate"] .purpose-stat-row { border-top-color: var(--line); }
+
+html[data-target-style="workbench"] .crafting-workspace,
+html[data-target-style="workbench"] [data-crafting-purposes] { max-width: none; }
+html[data-target-style="workbench"] .crafting-workspace { padding-inline: 1rem; }
+html[data-target-style="workbench"] .crafting-purpose-tabs { gap: .375rem; margin-block: .75rem; }
+html[data-target-style="workbench"] .crafting-purpose-tabs > button { min-height: 2.5rem; padding: .5rem; font-size: var(--type-body); border-radius: var(--radius-control); }
+html[data-target-style="workbench"] .purpose-saved-toolbar { padding: .625rem; margin-block: .5rem .75rem; border: 1px solid var(--line); border-left: 3px solid var(--accent); border-radius: var(--radius-control); background: var(--panel); }
+html[data-target-style="workbench"] .purpose-saved-table th,
+html[data-target-style="workbench"] .purpose-saved-table td { padding-block: .375rem; }
+html[data-target-style="workbench"] .purpose-new-button { min-height: var(--control-height); padding: .5rem .75rem; font-size: var(--type-body); }
+html[data-target-style="workbench"] .purpose-editor-heading { margin-block: .75rem; }
+html[data-target-style="workbench"] .crafting-purpose-layout { gap: 1.25rem; }
+html[data-target-style="workbench"] .crafting-purpose-configuration { padding-left: 1.25rem; }
+html[data-target-style="workbench"] .purpose-weight-list { max-height: 40rem; }
+html[data-target-style="workbench"] .purpose-weight-list label { padding-block: .25rem; }
+html[data-target-style="workbench"] .crafting-purpose-options,
+html[data-target-style="workbench"] .purpose-troop-options { row-gap: .375rem; }
+html[data-target-style="workbench"] .purpose-troop-group { padding-block: .5rem .25rem; }
+
+@media (max-width: 900px) {
+  html[data-target-style="slate"] .crafting-purpose-configuration { border-left: 0; border-top: 1px dashed var(--line); }
+  html[data-target-style="workbench"] .crafting-purpose-configuration { padding-left: 0; }
+}
+@media (max-width: 600px) {
+  html[data-target-style="bronze"] .crafting-purpose-tabs { gap: .25rem; }
+  html[data-target-style="bronze"] .purpose-saved-toolbar,
+  html[data-target-style="bronze"] .crafting-purpose-selection,
+  html[data-target-style="bronze"] .crafting-purpose-configuration,
+  html[data-target-style="slate"] .purpose-editor-heading { padding: .75rem; }
+}

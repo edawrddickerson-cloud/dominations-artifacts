@@ -328,7 +328,7 @@
 .scanner-keep .btn { width:100%; min-width:0; padding:.45rem .3rem; font-size:.85rem; font-weight:700; white-space:normal; overflow-wrap:anywhere; }
 .scanner-keep p { margin:0; font-size:.8rem; }
 .scanner-benchmark { display:grid; grid-template-columns:minmax(0,1fr) minmax(4.75rem,.2fr); grid-template-rows:max-content minmax(0,1fr); padding:0; overflow:hidden; }
-.scanner-focus-areas { grid-column:1; grid-row:1/span 2; --focus-connector:1.5rem; min-width:0; padding:.45rem var(--focus-connector) .45rem .65rem; background:#202c31; color:var(--text); }
+.scanner-focus-areas { grid-column:1; grid-row:1/span 2; --focus-connector:1.5rem; min-width:0; padding:.45rem var(--focus-connector) .45rem .65rem; background:var(--panel); color:var(--text); }
 .scanner-benchmark .scanner-item-score { grid-column:2; grid-row:2; display:flex; flex-direction:column; align-items:center; justify-content:center; align-self:stretch; gap:.5rem; padding:.65rem .35rem; border-left:2px solid currentColor; }
 .scanner-decision-state { font-size:clamp(.85rem,1.7vw,1.5rem); font-weight:900; line-height:1.1; }
 .scanner-benchmark .scanner-item-score .scanner-summary-number { font-size:1.5rem; }
