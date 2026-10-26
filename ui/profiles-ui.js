@@ -192,9 +192,14 @@
     if(!nav.querySelector('a[href="crafting-stats.html"]')){
       const link=document.createElement('a');link.href='crafting-stats.html';link.textContent='Crafting Stats';
       if(fileForHref(location.pathname)==='crafting-stats.html')link.setAttribute('aria-current','page');
-      const scanner=nav.querySelector('a[href^="scanner.html"]');
+      const scanner=nav.querySelector('a[href^="storage-scanner.html"]');
       if(scanner)scanner.after(link);
     }
+    const storageScanner=nav.querySelector('a[href^="storage-scanner.html"]');
+    const totals=nav.querySelector('a[href="totals.html"]');
+    const craftingStats=nav.querySelector('a[href="crafting-stats.html"]');
+    if(storageScanner && totals)storageScanner.after(totals);
+    if(craftingStats && (totals || storageScanner))(totals || storageScanner).after(craftingStats);
 
     const toggleWrap = document.createElement("div");
     toggleWrap.className = "site-nav-toggle-wrap";

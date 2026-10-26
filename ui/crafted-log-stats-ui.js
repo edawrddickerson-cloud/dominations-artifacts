@@ -8,8 +8,7 @@
     const anchor=document.getElementById('scanner-crafted-log');
     if(!source || !core || !anchor || document.getElementById('crafted-log-stats'))return;
     const root=document.createElement('section');root.id='crafted-log-stats';root.className='crafted-log-stats';root.setAttribute('aria-label','Personal crafting statistics');
-    root.innerHTML=`<p data-stats-count></p>
-      <div class="crafted-stats-controls">
+    root.innerHTML=`<div class="crafted-stats-controls">
         <label>Category <select data-stat-filter="category"><option value="">All categories</option></select></label>
         <label>Perk position <select data-stat-filter="position"><option value="">All positions</option>${[1,2,3,4,5,6].map(n=>'<option value="'+n+'">'+n+'</option>').join('')}</select></label>
       </div>
@@ -18,7 +17,7 @@
     const controls=window.DNCraftingStatsTables.pageControls(root,'personal');
     window.DNCraftingStatsTables.dashboard(root,'Personal · top-value rolls');
     const frequency=window.DNCraftingStatsTables.frequency(root.querySelector('[data-stat-frequency]'));
-    const get=name=>root.querySelector('[data-'+name+']'),filter={excludeManual:true,hall:window.DNCraftingStatsTables.hall()};
+    const filter={excludeManual:true,hall:window.DNCraftingStatsTables.hall()};
     function options(select,entries) {
       const signature=JSON.stringify(entries);if(select.dataset.options===signature)return;
       const previous=select.value,first=select.options[0].cloneNode(true);select.replaceChildren(first);
@@ -29,7 +28,6 @@
       const items=source.historyItems();
       options(controls.querySelector('[data-stat-filter="category"]'),[...new Set(items.map(i=>i.type).filter(Boolean))].sort().map(v=>[v,v]));
       const data=core.analyze(items,filter);
-      get('stats-count').textContent=data.history.length+' logged · '+data.kept+' collected · '+data.total+' eligible · '+data.excluded+' excluded · '+data.inferred+' inferred';
       frequency.update(data.frequencies,data.total,filter.hall);
       window.DNCraftingStatsTables.renderDistributions(root,data.distributions,filter.hall);
     }

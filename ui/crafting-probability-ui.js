@@ -9,7 +9,7 @@
   let scenario=saved?.scenario==='event'?'event':'normal',requirements=[],data=null,generation=0,timer,subscribed=false,researchSubscribed=false;
   get('dataset').value=saved?.dataset==='personal'?'personal':'community';
   const source=()=>get('dataset').value;
-  const status=text=>{get('status').textContent=text;};
+  const status=text=>{get('status').textContent=text;get('status').hidden=!text;};
   function save(){try{localStorage.setItem(key,JSON.stringify({version:1,hall,category,scenario,dataset:source(),attempts:get('attempts').value,requirements:requirements.map(r=>r.value)}));}catch{}}
   function options(select,entries,value){select.replaceChildren(...entries.map(([value,label])=>new Option(label,value)));select.value=value;}
   options(get('hall'),[['main','Main'],['war','War']],hall);
@@ -30,8 +30,8 @@
       get('chance').textContent=formatPercent(result.probability);
       get('odds').textContent=result.oneIn?'≈ 1 in '+Number(result.oneIn.toPrecision(3)).toLocaleString():'No matching outcome';
       get('attempt-chance').textContent=formatPercent(result.attemptChance);
-      get('sample').textContent=result.artifacts.toLocaleString()+' artifacts · '+result.selectedRows.toLocaleString()+' selected perk rows'+(result.usesTiers?' · '+result.tierArtifacts.toLocaleString()+' tier-sample artifacts':'');
-      status('Model estimate · Independent perk rolls'+(result.lowSample?' · Low sample':'')+(result.usesTiers?' · Max 2 per perk/tier · Inferred event periods':'')+(result.historicalTiers?' · Historical community tiers':''));
+      get('sample').textContent=(source()==='personal'?'Personal':'Community')+' sample · '+result.artifacts.toLocaleString()+' artifacts';
+      status(result.lowSample?'Low sample':'');
     }catch(error){status(error.message);}
   }
   function allNames(){

@@ -27,6 +27,7 @@ browserRun(async({evaluate,send})=>{
   for(const n of [2,3,4,5])w.DNScannerCollection.recordItem({valid:true,hall:'main',artifact:{type:'Weapon'},rows:names.map((name,i)=>({name:i<n?names[0]:name,value:i<n?11:1,known:true,hasPercent:true,level:1}))},'stats-'+n,{continuous:true,newEncounter:true,encounterId:'stats-'+n,captureMethod:'live-capture',identityEvidence:'observed-transition'});
   await w.DNScannerCollection.flush();
   const personal=d.querySelector('#crafted-log-stats'),frequencies=personal.querySelector('[data-stat-frequency]');
+  assert('personal statistics omit diagnostic summary copy',!personal.querySelector('[data-stats-count]'));
   assert('stats views are permanent lists without disclosure controls',personal.tagName==='SECTION'&&d.querySelector('#crafting-community').tagName==='SECTION'&&!d.querySelector('#crafted-log-stats > summary,#crafting-community > summary'));
   const damageRow=[...frequencies.rows].find(row=>row.cells[0].textContent===names[0]);
   assert('Main tier columns contain row frequencies only',damageRow.cells[5].textContent==='0.0%'&&damageRow.cells[6].textContent==='0.0%'&&damageRow.cells[7].textContent==='100.0%'&&[...frequencies.closest('table').querySelectorAll('th')].slice(5,8).map(th=>th.textContent).join('|')==='1%|6%|11%');
@@ -46,6 +47,7 @@ browserRun(async({evaluate,send})=>{
   const data=w.DNCraftingCommunity.analyze(records.map(item=>w.DNCraftingCommunity.encode(item)));data.status='ready';data.updatedAt=new Date().toISOString();
   let args;w.DNCloud.communityReport=async value=>{args=value;return data;};
   const community=d.querySelector('#crafting-community');await wait(()=>!d.querySelector('[data-community-refresh]').disabled);d.querySelector('[data-community-refresh]').click();await new Promise(ok=>setTimeout(ok,0));
+  assert('community statistics omit update timestamps and exclusion diagnostics',!community.querySelector('[data-community-count],[data-community-exclusions]')&&community.querySelector('[data-community-status]').hidden&&!community.querySelector('[data-community-status]').textContent);
   d.querySelector('button[data-stats-view="community"]').click();
   assert('toggle switches the dashboard and table together',community.getClientRects().length>0&&!personal.getClientRects().length&&d.querySelector('[data-dashboard="crafting-community"]').getClientRects().length>0&&!board.getClientRects().length);
   const communityDamage=[...community.querySelector('[data-community-frequency]').rows].find(row=>row.cells[0].textContent===names[0]);
@@ -68,8 +70,8 @@ browserRun(async({evaluate,send})=>{
   w.DNScannerCollection.recordItem(inferred,'inferred',options('inferred'));
   const manual=structuredClone(inferred);manual.rows[0].valueSource='manual';w.DNScannerCollection.recordItem(manual,'manual',options('manual'));
   const incomplete=structuredClone(inferred);incomplete.rows[1].value=null;w.DNScannerCollection.recordItem(incomplete,'incomplete',options('incomplete'));await w.DNScannerCollection.flush();
-  const sample=personal.querySelector('[data-stats-count]').textContent;
-  assert('complete inferred and image records count, manual and incomplete stats do not',sample.includes('7 logged')&&sample.includes('5 eligible')&&sample.includes('2 excluded'));
+  const sample=w.DNCraftedLogStats.analyze(w.DNScannerCollection.historyItems(),{excludeManual:true,hall:'main'});
+  assert('complete inferred and image records count, manual and incomplete stats do not',sample.history.length===7&&sample.total===5&&sample.excluded===2);
   window.__statsFrame=frame;
   return checks;
  })()`);

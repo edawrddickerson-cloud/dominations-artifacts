@@ -5,6 +5,9 @@
   const view=()=>frame().contentWindow,doc=()=>frame().contentDocument;
   await wait(()=>document.querySelector('.site-nav [aria-current="page"]')&&doc().querySelector('#tbody tr'));
   const nav=document.querySelector('.site-nav'),firstLink=nav.querySelector('a'),collapse=nav.querySelector('#nav-collapse-btn');
+  const artifactLinks=[...nav.querySelectorAll('a')].map(link=>new URL(link.href).pathname.split('/').pop().replace(/\.html$/,''));
+  const storageIndex=artifactLinks.indexOf('storage-scanner');
+  check('Active Totals and Crafting Stats follow Storage Scanner',storageIndex>=0&&artifactLinks[storageIndex+1]==='totals'&&artifactLinks[storageIndex+2]==='crafting-stats');
   const header=document.getElementById('app-shell-header'),profilePicker=header.querySelector('#profile-select');
   const headerIdentity=()=>document.getElementById('app-shell-header')===header&&header.querySelector('#profile-select')===profilePicker;
   const sidebarIdentity=()=>document===rootDocument&&document.querySelector('.site-nav')===nav&&nav.querySelector('a')===firstLink;
