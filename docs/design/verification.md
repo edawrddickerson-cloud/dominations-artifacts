@@ -2,6 +2,12 @@
 
 25 October 2026. Shared foundations and primitives are applied to all styled first-party routes. This record covers the migration and its review artifacts; it does not claim full accessibility conformance.
 
+## Crafted-only rare presets and columns — 27 October 2026
+
+Corrected preset generation to use the union of positive ordinary hall/type evidence in the existing crafted pools, instead of all 201 metadata stat identities. Named-only/unclassified effects such as Airstrip Troop Damage and Barracks Troop Damage no longer create presets. Individual presets cover the evidenced ordinary stats; combined unit presets require both damage and hitpoints and explicitly label that combination. Rare qualification and inline rare scoring intersect the current hall/type pool. Ordinary target scoring, OCR and rerolls retain their existing behaviour. Source pools remain incomplete and do not prove excluded effects impossible.
+
+Matching lines now occupies one dedicated desktop column across every row; Stats occupies the next, with an empty third cell for individual-stat presets. Narrow views stack separately labelled groups. Updated the gallery to render this exact composition. Passed: craft-pool generation/fixture checks, crafted preset coverage and exclusions, per-hall/type qualification and inline scores, normal targets and migration, desktop/390px page checks, inline ratings, pinned focus, required scanner unit checks, provisional colours, standalone glance, probability and ownership checks. One parallel glance run raced its existing asynchronous correction-control creation; the unchanged fixture passed when rerun alone. The focused five-width and 200% text review passed 122 checks with 30 screenshots; desktop/320px screenshots were visually reviewed.
+
 ## Rare-card families — 26 October 2026
 
 Rare Cards now includes an individual preset for every canonical stat alongside the combined unit HP/damage presets, grouped into Attacking, Defensive and Economy. Each family's Off all action is an atomic profile settings update that preserves other families, unit modes, normal collection targets and focus. The scanner aggregates overlapping matches into one Rare Card row; individual stats use the same weighted top-two and probability model. Existing unit choices migrate without resetting opt-outs; explicitly all-off setups remain off.

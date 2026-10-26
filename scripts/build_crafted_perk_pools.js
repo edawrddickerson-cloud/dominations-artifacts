@@ -1,5 +1,6 @@
-/* Positive category evidence for the ratings view only. Never constrains OCR,
- * rerolls or scoring, and never derives ordinary pools from named artifacts. */
+/* Positive category evidence for ratings and opt-in rare crafting presets.
+ * Never constrains OCR, rerolls or general target scoring, and never derives
+ * ordinary pools from named artifacts. */
 'use strict';
 const fs = require('node:fs'), path = require('node:path'), crypto = require('node:crypto');
 const root = path.resolve(__dirname, '..');

@@ -53,7 +53,7 @@
     }
   ],
   "domainVariants": {
-    "crafting-purposes.css": "Rare Cards groups unit and individual-stat presets into Attacking, Defensive and Economy with shared Off all actions. Rows compose shared seg-equal count controls and optional unit stat mode; groups stack below 901px and preserve full labels. scripts/test_design_ui.cjs measures rendered text bounds through 320px; test_crafting_purposes_ui.js checks bulk-family scope and focus.",
+    "crafting-purposes.css": "Rare Cards groups evidenced ordinary-crafted unit/stat presets by target category with shared Off all actions. Rows keep dedicated name, Matching lines and Stats columns; absent stat modes leave an empty third cell. Groups stack below 901px without truncation. scripts/test_design_ui.cjs checks column alignment and text bounds through 320px; test_crafting_purposes_ui.js checks craftable-only membership, bulk scope and focus.",
     "crafted-log-stats.css": "Personal Stats, Community Stats and Probability Calculator use the shared Collection Targets tab family; responsive calculator input/result columns and aligned requirement fields use shared controls.",
     "scanner.css": "Five-stat/image grid, semantic stat/dice colours, compact live editing; at narrow widths a 7rem minimum name column with local keyboard-scrollable overflow.",
     "styles.css": "Museum tiles, slot controls, level steppers and collection comparison geometry remain domain compositions.",

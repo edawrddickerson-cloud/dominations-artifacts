@@ -6,7 +6,7 @@ const context={structuredClone,CustomEvent:class{constructor(type){this.type=typ
   dispatchEvent(event){for(const fn of listeners.get(event.type)||[])fn(event);}
 },document:{getElementById:()=>null,querySelector:()=>null},localStorage:{getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,String(value)),removeItem:key=>values.delete(key)}};
 vm.createContext(context);
-for(const file of ['data/army_catalog.js','shared.js','data/artifact_stat_context.js','artifact-scoring.js','stored-artifacts.js','scanner-comparison.js','crafting-purposes.js'])vm.runInContext(fs.readFileSync('ui/'+file,'utf8'),context);
+for(const file of ['data/army_catalog.js','shared.js','data/artifact_stat_context.js','data/crafted_perk_pools.js','artifact-scoring.js','stored-artifacts.js','scanner-comparison.js','crafting-purposes.js'])vm.runInContext(fs.readFileSync('ui/'+file,'utf8'),context);
 const {DN,DNCraftingPurposes:service,DNStoredArtifacts:store}=context.window;
 const metadata=context.window.DN_ARTIFACT_STAT_CONTEXT.stats;
 service.setDefaults(Object.fromEntries(Object.keys(metadata).map(name=>[name,{offensive:5,defensive:5}])));
@@ -272,22 +272,37 @@ service.setRareCard(rareId,0);assert.ok(!rareEval(4).hit);
 assert.ok(!Object.hasOwn(service.settings().rareCards,rareId),'an explicitly disabled preset stays off after reload');
 const statPresets=service.rareDefinitions.filter(preset=>preset.kind==='stat');
 assert.equal(new Set(service.rareDefinitions.map(preset=>preset.id)).size,service.rareDefinitions.length,'preset IDs are unique across unit and stat patterns');
-assert.equal(statPresets.length,Object.keys(metadata).length,'every canonical stat has exactly one individual preset');
-assert.equal(new Set(statPresets.flatMap(preset=>[...preset.stats])).size,Object.keys(metadata).length);
+const craftPools=context.window.DN_CRAFTED_PERK_POOLS.pools;
+const craftable=new Set(Object.values(craftPools).flatMap(types=>Object.values(types).flatMap(pool=>Object.keys(pool))));
+assert.equal(statPresets.length,craftable.size,'every evidenced craftable stat has exactly one individual preset');
+assert.equal(new Set(statPresets.flatMap(preset=>[...preset.stats])).size,craftable.size);
+assert.ok(statPresets.every(preset=>craftable.has(preset.label)),'named-artifact metadata alone cannot create a crafting preset');
+for(const name of ['Airstrip Troop Damage','Barracks Troop Damage','Fighter','University Research Time'])assert.ok(!statPresets.some(preset=>preset.label===name),name+' has no positive ordinary type evidence');
+assert.ok(statPresets.some(preset=>preset.label==='Fighter Damage'));
+assert.ok(statPresets.some(preset=>preset.label==='Fighter Hitpoints'));
+for(const preset of service.rareDefinitions.filter(preset=>preset.kind==='unit'))assert.ok([...preset.stats].every(name=>craftable.has(name)));
 for(const preset of statPresets){assert.equal(preset.stats.size,1);assert.equal(preset.category,service.categoryFor(preset.label));}
 const statCraft=(name,count=3)=>craft(Array.from({length:5},(_,i)=>i<count?row(name,[11,6,1,11][i]):filler()));
-for(const [name,type] of [['Barracks Troop Damage','Weapon'],['Tower Damage','Armor'],['All Resources Looted','Jewelry']]) {
+for(const [name,type] of [['Heavy Infantry Damage','Weapon'],['Tower Damage','Pottery'],['All Resources Looted','Jewelry']]) {
   const preset=statPresets.find(p=>p.label===name);service.setRareCard(preset.id,3);
   const value=statCraft(name),options={type,hall:'main',owned:[],selected:[preset.id]};
   const hit=service.evaluate(value,options)[0];
   assert.ok(hit.hit,name+' qualifies three repeated lines');assert.equal(hit.mode,'stat');assert.equal(hit.perks.join(','),name);
   assert.ok(!service.evaluate(statCraft(name,2),options)[0].hit,'two lines do not qualify');
+  const otherType=type==='Weapon'?'Jewelry':'Weapon';
+  assert.ok(!service.evaluate(value,{...options,type:otherType})[0].hit,'a stat cannot qualify on an unsupported artifact type');
+  assert.equal(service.scoringOptions(preset.id,{}, {hall:'main',type:otherType}).ratingOf(name,service.axisFor(name)),0,'inline scoring also respects the type pool');
   options.owned=[owned('stat-first',value.rows,type),owned('stat-second',value.rows,type)];
   assert.equal(service.evaluate(value,options)[0].status,'owned','stat presets also reject owned ties');
   assert.ok(service.evaluate(statCraft(name,4),options)[0].hit,'a fourth matching line improves the top two');
   service.setRareCard(preset.id,4);assert.ok(!service.evaluate(value,options)[0].hit,'4× only applies to individual stats');
   assert.throws(()=>service.setRareMode(preset.id,'damage'),'individual stats cannot acquire an unrelated unit mode');
 }
+const fighter=service.rareDefinitions.find(preset=>preset.id==='rare-fighter');
+service.setRareCard(fighter.id,3);
+const fighterCraft=statCraft('Fighter Damage');
+assert.ok(service.evaluate(fighterCraft,{type:'Weapon',hall:'main',owned:[],selected:[fighter.id]})[0].hit,'Fighter is a combined unit preset for evidenced damage/hitpoint stats');
+assert.ok(!service.evaluate({...fighterCraft,hall:'war'},{type:'Weapon',hall:'war',owned:[],selected:[fighter.id]})[0].hit,'Main evidence cannot invent War availability');
 const beforeFamily=service.settings();
 let familyNotifications=0;context.window.addEventListener('dn-crafting-purposes-changed',()=>familyNotifications++);
 service.disableRareFamily('defensive');

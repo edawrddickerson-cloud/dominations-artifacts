@@ -66,10 +66,11 @@
 .purpose-rare-list { display:grid; gap:.5rem; }
 .purpose-rare-family { margin-bottom:1.5rem; }
 .purpose-rare-family-heading { display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
-.purpose-rare-row { display:grid; grid-template-columns:minmax(12rem,1fr) auto auto; align-items:center; gap:1rem; padding:.75rem 0; border-bottom:1px solid var(--line); }
-.purpose-rare-stat { grid-template-columns:minmax(12rem,1fr) auto; }
+.purpose-rare-row { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,18rem) minmax(0,20rem); align-items:center; gap:1rem; padding:.75rem 0; border-bottom:1px solid var(--line); }
+.purpose-rare-row [data-rare-column="count"] { grid-column:2; }
+.purpose-rare-row [data-rare-column="mode"], .purpose-rare-stat-empty { grid-column:3; }
 .purpose-rare-name { margin:0; font-size:1rem; overflow-wrap:anywhere; }
-@media(max-width:900px) { .purpose-rare-row { grid-template-columns:1fr; gap:.5rem; } }
+@media(max-width:900px) { .purpose-rare-row { grid-template-columns:1fr; gap:.5rem; } .purpose-rare-row [data-rare-column] { grid-column:auto; } .purpose-rare-stat-empty { display:none; } }
 .purpose-saved-choice button { max-width:100%; text-align:left; white-space:normal; overflow-wrap:anywhere; }
 .purpose-editor-heading { display:flex; flex-wrap:wrap; gap:.75rem 1rem; align-items:flex-end; padding:1rem; margin-bottom:1rem; border:1px solid var(--line); border-radius:var(--radius-panel); background:var(--panel); }
 .purpose-editor-heading > label { display:grid; gap:.35rem; flex:1; min-width:min(100%,15rem); }

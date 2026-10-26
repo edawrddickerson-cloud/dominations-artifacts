@@ -302,6 +302,9 @@
   tab('rare');
   const rareCount=value=>doc().querySelector('[data-rare-count="rare-invading-bomber"][data-value="'+value+'"]');
   const rareMode=value=>doc().querySelector('[data-rare-mode="rare-invading-bomber"][data-value="'+value+'"]');
+  check('Rare presets exclude unsupported catalogue stats and explain combined unit labels',!doc().querySelector('[data-rare-count="rare-stat-airstrip-troop-damage"]')&&!doc().querySelector('[data-rare-count="rare-stat-barracks-troop-damage"]')&&doc().querySelector('[data-rare-count="rare-fighter"]').closest('.purpose-rare-row').querySelector('h4').textContent==='Fighter · Damage / Hitpoints');
+  const alignedColumns=kind=>{const positions=[...doc().querySelectorAll('[data-rare-column="'+kind+'"]')].map(field=>field.getBoundingClientRect().left);return Math.max(...positions)-Math.min(...positions)<1;};
+  check('Matching lines and Stats retain dedicated desktop columns',win().innerWidth<=900 || alignedColumns('count')&&alignedColumns('mode'));
   check('Rare cards offer three count segments including Off and three stat segments',doc().querySelectorAll('[data-rare-count="rare-invading-bomber"]').length===3&&rareCount(0).textContent==='Off'&&doc().querySelectorAll('[data-rare-mode="rare-invading-bomber"]').length===3&&rareMode('all').getAttribute('aria-pressed')==='true');
   rareCount(3).click();
   check('Rare choices save immediately and retain focus',service().settings().rareCards['rare-invading-bomber']===3 && doc().activeElement.dataset.rareCount==='rare-invading-bomber');

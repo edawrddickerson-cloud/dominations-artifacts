@@ -430,7 +430,7 @@
     finally {if(ticket===request){loading=false;render();}}
   }
   window.DNScannerComparison={identification,
-    scoringContext(){return targetFocus?{...targetFocus,automatic:!manualTarget,options:window.DNCraftingPurposes?.scoringOptions(targetFocus.id,options)}:null;},
+    scoringContext(){return targetFocus?{...targetFocus,automatic:!manualTarget,options:window.DNCraftingPurposes?.scoringOptions(targetFocus.id,options,{hall:hall.value,type:type.value})}:null;},
     focusTarget(id){if(targetResults.some(item=>item.id===id)){manualTarget=id;render();}},
     automaticTarget(){manualTarget=null;render();},
     update(result,isConfirmed,opts,state={}){

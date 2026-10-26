@@ -7,6 +7,10 @@
   const key = 'dn-crafting-purposes';
   const metadata = window.DN_ARTIFACT_STAT_CONTEXT?.stats || {};
   const names = Object.keys(metadata);
+  // The full catalogue includes named-only and unclassified effects. Rare
+  // crafting presets require positive ordinary hall/type evidence instead.
+  const craftedPools=window.DN_CRAFTED_PERK_POOLS?.pools || {};
+  const craftedNames=new Set(Object.values(craftedPools).flatMap(types=>Object.values(types).flatMap(pool=>Object.keys(pool))).filter(name=>metadata[name]));
   const slug = name => name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/-$/, '');
   const aircraft = new Set(['Fighter', 'Bomber', 'Transport', 'Recon', 'Attack Helicopter', 'Tactical Helicopter']);
   const airDefence = ['Air Defense Damage', 'Air Defense Hitpoints'];
@@ -67,15 +71,15 @@
   const categories = ['attacking','defensive','economy'];
   // Keep combined unit presets and offer every canonical stat independently.
   const rareDefinitions = DN.ARMY_UNIT_FAMILIES.flatMap(unit => [false,true].map(invading => {
-    const stats = new Set(names.filter(name => {
+    const stats = new Set([...craftedNames].filter(name => {
       const scope = DN.perkArmyScope(name.replace(/^Invading /, ''));
       return /^Invading /.test(name) === invading && !/^Enemy /.test(name) &&
         ['damage','hp','combined'].includes(metadata[name].kind) && scope?.kind === 'unit' && scope.unit === unit;
     }));
     return {id:'rare-'+(invading?'invading-':'')+slug(unit),label:(invading?'Invading ':'')+unit,
       stats,rare:true,kind:'unit',category:invading?'defensive':'attacking',addOns:{}};
-  })).filter(entry => entry.stats.size);
-  rareDefinitions.push(...names.map(name=>({id:'rare-stat-'+slug(name),label:name,stats:new Set([name]),
+  })).filter(entry => [...entry.stats].some(name=>metadata[name].kind==='damage') && [...entry.stats].some(name=>metadata[name].kind==='hp'));
+  rareDefinitions.push(...[...craftedNames].map(name=>({id:'rare-stat-'+slug(name),label:name,stats:new Set([name]),
     rare:true,kind:'stat',category:categoryFor(name),addOns:{}})));
   const rareById = new Map(rareDefinitions.map(entry => [entry.id,entry]));
   const definitionFor = (id,state) => {
@@ -336,6 +340,11 @@
   }
   const hallName = value => String(value).toLowerCase() === 'war' ? 'war' : 'main';
   const typeName = value => String(value || '').replace(/^war[ -]/i, '').toLowerCase().replace('jewellery', 'jewelry');
+  function craftingPurpose(purpose,hall,type) {
+    if(!purpose?.rare)return purpose;
+    const pools=craftedPools[hallName(hall)] || {},category=Object.keys(pools).find(value=>typeName(value)===typeName(type)),pool=pools[category] || {};
+    return {...purpose,stats:new Set([...purpose.stats].filter(name=>Object.hasOwn(pool,name)))};
+  }
   function scoreRows(rows, purpose) {
     return rows.reduce((sum, row) => {
       const weight = sharedRating(row.name);
@@ -366,7 +375,7 @@
     });
     uncertain ||= rows.length !== 5 || !!result?.partial || !!result?.provisional;
     return selected.filter(id => definitionFor(id,state)).map(id => {
-      const purpose = definitionFor(id,state);
+      const purpose = craftingPurpose(definitionFor(id,state),normalizedHall,normalizedType);
       const score = readable ? scoreRows(potentialRows, purpose) : null;
       const lines = potentialRows.filter(row => purpose.stats.has(row.name) && (purpose.rare || sharedRating(row.name) > 0)).length;
       const effectiveWeights = [...purpose.stats].sort().map(name => [name, sharedRating(name)]);
@@ -407,8 +416,9 @@
     });
   }
 
-  function scoringOptions(id,base) {
-    settings();const purpose=definitionFor(id);if(!purpose || !base)return null;
+  function scoringOptions(id,base,context) {
+    settings();let purpose=definitionFor(id);if(!purpose || !base)return null;
+    if(context)purpose=craftingPurpose(purpose,context.hall,context.type);
     return {...base,targetScoring:true,prefSortAxes:{offensive:true,defensive:true},
       ratingOf:(name,axis)=>purpose.stats.has(name) && axisFor(name)===axis?sharedRating(name):0};
   }
