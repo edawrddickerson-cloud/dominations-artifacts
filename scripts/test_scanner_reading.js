@@ -27,6 +27,7 @@ async function harness({storage=false,speculation=false,workerWarm=true}={}) {
   elements.hall.value='main';
   elements.auto.checked=false;elements.rows.value='5';elements.layout.value='gold';
   const window=element(),keepStates=[];
+  window.dispatchEvent=event=>window.fire(event.type,event);
   if(storage){window.DNStorageRecognition={inspect:()=>({expectedRows:5,hall:'main'})};window.DNStorageScanner={update:(result,confirmed,state)=>keepStates.push({result,confirmed,...state})};}
   const canvas=()=>{
     if(speculation){
@@ -38,7 +39,7 @@ async function harness({storage=false,speculation=false,workerWarm=true}={}) {
     }
     return {width:1920,height:1080,pixel:0,getContext(){let source,coords;return {clearRect(){},drawImage(value,...rect){source=value;coords=rect;},putImageData(){},getImageData(){const data=new Uint8ClampedArray(96*64*4).fill(source?.pixel||0);if(source?.rgb)for(let i=0;i<data.length;i+=4)data.set([...source.rgb,255],i);if(source?.jitter)data.fill(255,(source.jitterOffset || 0)*4,((source.jitterOffset || 0)+source.jitter)*4);if(source?.artworkPixel && coords?.[0]===0)data.fill(source.artworkPixel,0,data.length/4);return {data};}};}};
   };
-  const context={window,localStorage:{getItem:key=>store.get(key)??null,setItem:(key,value)=>store.set(key,value),removeItem:key=>store.delete(key)},
+  const context={window,Event,localStorage:{getItem:key=>store.get(key)??null,setItem:(key,value)=>store.set(key,value),removeItem:key=>store.delete(key)},
     document:{getElementById:id=>elements[id.replace('scanner-','')],createElement:canvas},performance:{now:()=>now},
     setTimeout(fn,delay=0){const id=++nextTimer;timers.set(id,{fn,due:now+delay});return id;},clearTimeout(id){timers.delete(id);},
     // Fix this fixture's troop weight so lifecycle assertions remain stable
@@ -62,9 +63,12 @@ function parsed(name='Heavy Tank Damage',value=10){return {valid:true,warnings:[
 function edits(e,rows){e.correct.editRows=rows.map(({name,value,base,max,level,unlocked,tier})=>({querySelector(selector){return {value:selector.includes('name')?name:selector.endsWith('-base')?String(base??''):selector.endsWith('-max')?String(max??''):selector.endsWith('-level')?String(level??''):selector.endsWith('-tier')?String(tier??''):selector.endsWith('-unlocked')?String(unlocked??''):String(value??'')};}}));}
 async function main(){
   const h=await harness(),{e,reader,DN}=h;
+  let successfulScans=0;h.window.addEventListener('dn-successful-scan',()=>successfulScans++);
   const source=h.canvas();reader.update(source,{session:1,current:true});
   e.read.fire('click');assert.equal(h.jobs.length,1);assert.equal(h.jobs[0].options.expectedRows,5);
   h.jobs[0].resolve(parsed());await flush();
+  assert.equal(successfulScans,1,'the first successful scan signals the prompt without loading telemetry');
+  assert.equal(h.window.DNSuccessfulScan,true,'a local success bit survives until account controls mount');
   assert.equal(h.comparisons.at(-1).confirmed,true,'current confirmed stats are eligible for the comparison flag');
   assert.equal(h.collector.summary().itemCount,1);
   assert.equal(h.batches.length,1,'one completed read records evidence and item as one batch');

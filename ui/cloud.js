@@ -80,7 +80,7 @@
     try {const result=await client.rpc(name,args);responseStatus=result.status;if(result.error)throw result.error;return result.data;}
     catch(error){throw cloudError(name,error,responseStatus);}
   }
-  async function readWorkspace(owner){
+  async function readWorkspace(owner,{metadataOnly=false}={}){
     if(!client || !currentUser)throw Error('Sign in before using account storage.');
     if(currentUser.id!==owner)throw Error('The signed-in account changed. Nothing was replaced.');
     let responseStatus;
@@ -88,7 +88,8 @@
       // The same authenticated SELECT/RLS used by the invoker RPC, without its
       // repeated whole-document to_jsonb/subtraction serialization. Filter the
       // inspected owner explicitly, even if the SDK session changes mid-flight.
-      const result=await client.from('planner_workspaces').select('game_key,revision,operation_id,data,updated_at').eq('owner_id',owner).maybeSingle();
+      const columns=metadataOnly?'game_key,revision,operation_id,updated_at':'game_key,revision,operation_id,data,updated_at';
+      const result=await client.from('planner_workspaces').select(columns).eq('owner_id',owner).maybeSingle();
       responseStatus=result.status;if(result.error)throw result.error;
       if(currentUser?.id!==owner)throw Object.assign(Error('Account changed'),{code:'42501'});
       return result.data;
@@ -104,7 +105,7 @@
       await window.DN.scannerLog.write(JSON.stringify({...merged,scans:previous?.scans || [],labels:previous?.labels || []}));
     },
     async readLocalCraftsLogged(){try{return C.lifetimeCraftsLogged(JSON.parse(await window.DN.scannerLog.read() || 'null'));}catch{return null;}},
-    remote:{read:readWorkspace,async write(owner,revision,operation,data){return rpc('planner_save_workspace_v2',{p_owner:owner,p_expected_revision:revision,p_operation_id:operation,p_data:data});}}});
+    remote:{read:readWorkspace,readMetadata:owner=>readWorkspace(owner,{metadataOnly:true}),async write(owner,revision,operation,data){return rpc('planner_save_workspace_v2',{p_owner:owner,p_expected_revision:revision,p_operation_id:operation,p_data:data});}}});
   function schedule(delay=2000) {
     clearTimeout(timer);if(!currentUser || !configured())return;
     timer=setTimeout(()=>{timer=null;engine.inspect().catch(()=>{});},delay);

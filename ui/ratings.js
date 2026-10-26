@@ -224,8 +224,8 @@
       }
 
       const [mapRes, defRes] = await Promise.all([
-        fetch(MAPPING_URL, { cache: "no-store" }),
-        fetch(DEFAULTS_URL, { cache: "no-store" }),
+        fetch(MAPPING_URL),
+        fetch(DEFAULTS_URL),
       ]);
       if (!defRes.ok) throw new Error(`HTTP ${defRes.status} loading ${DEFAULTS_URL}`);
       const canonPerk = DN.makeCanonPerk(

@@ -23,7 +23,7 @@
   const sharing=doc.querySelector('.service-consent-banner'),bounds=sharing.getBoundingClientRect();
   check('Sharing choices start unchecked', [...sharing.querySelectorAll('input')].every(input=>!input.checked));
   check('Sharing prompt uses a centred themed modal',sharing.matches(':modal') && sharing.classList.contains('profile-delete-dialog') && Math.abs(bounds.x+bounds.width/2-doc.documentElement.clientWidth/2)<2 && Math.abs(bounds.y+bounds.height/2-app.innerHeight/2)<2 && bounds.height<=app.innerHeight);
-  check('Sharing prompt uses friendly copy and a clear decline option',sharing.textContent.includes('A little help for everyone?') && sharing.textContent.includes('No screenshots or full scan text.') && sharing.querySelector('[data-reject-consent]').textContent==='No thanks');
+  check('Sharing prompt uses concise copy and a clear decline option',sharing.querySelector('h2').textContent==='Optional sharing' && sharing.textContent.includes('No screenshots or full scan text.') && sharing.querySelector('[data-reject-consent]').textContent==='No thanks');
   check('No telemetry is sent while asking for consent',backend.telemetry.length===0);
   if(window.DNPreviewSharing)return {passed:true,ui:checks};
   doc.querySelector('.service-consent-banner [data-consent="diagnostics"]').click();
@@ -85,10 +85,13 @@
   delete backend.rpcError;
   check('database timeout identifies the server and preserves both versions',timeoutError?.code==='57014'&&timeoutError.message.includes('timed out on the server')&&!timeoutError.message.includes('when connected')&&backend.workspaces[owner].revision===revisionBeforeTimeout&&(await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture()))===beforeServerTimeout);
   let savedHash=await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture());
+  const readsBeforeReload=backend.workspaceReads.length;
   app.location.reload();
   await wait(()=>iframe.contentDocument!==doc && iframe.contentDocument.querySelector('[data-signin]'),'reload of the saved browser');doc=iframe.contentDocument;await app.DNServicesReady;
   await wait(()=>app.DNCloud.state().status==='synced','saved state after reload');
   check('a real page reload retains the linked workspace and saved status',(await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture()))===savedHash && doc.querySelector('[data-cloud-choice]').hidden);
+  const reloadReads=backend.workspaceReads.slice(readsBeforeReload);
+  check('an unchanged saved workspace reload reads metadata without downloading its document',reloadReads.length>0&&reloadReads.every(read=>read.columns==='game_key,revision,operation_id,updated_at'));
 
   await app.DN.scannerLog.write(JSON.stringify({version:2,items:[],scans:[],labels:[],lifetimeStatistics:{version:1,archived:{logged:300,kept:12,main:200,war:100,threeUnlocked:4}}}));
   savedHash=await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture());
@@ -107,7 +110,7 @@
   check('Cancel leaves both versions unchanged and stays dismissed',!versions.open && versions.hidden && backend.workspaces[owner].revision===revisionBeforeCancel && (await app.DNIntegrationCore.fingerprint(await app.DNCloud.capture()))===savedHash);
   doc.querySelector('[data-review-versions]').click();
   check('cancelled comparison can be reopened',versions.open);
-  check('workspace reads use the owner-filtered RLS table projection',backend.workspaceReads.length>0&&backend.workspaceReads.every(read=>read.table==='planner_workspaces'&&read.filter.key==='owner_id'&&read.columns==='game_key,revision,operation_id,data,updated_at'));
+  check('workspace reads use owner-filtered metadata and full RLS table projections',backend.workspaceReads.length>0&&backend.workspaceReads.some(read=>read.columns==='game_key,revision,operation_id,updated_at')&&backend.workspaceReads.every(read=>read.table==='planner_workspaces'&&read.filter.key==='owner_id'&&['game_key,revision,operation_id,updated_at','game_key,revision,operation_id,data,updated_at'].includes(read.columns)));
   backend.workspaces[owner].revision++;
   backend.workspaces[owner].data.records.find(record=>record.items.length).items[0].name='New account version';
   versions.querySelector('[data-use-local]').click();

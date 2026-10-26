@@ -5,11 +5,11 @@
 (() => {
   'use strict';
   const C=window.DNIntegrationCore,config=window.DNServiceConfig;
-  const listeners=new Set(),pending=new Set(),requests=new Set(),attempts=new Map(),seen=new Set();
+  const pending=new Set(),requests=new Set(),attempts=new Map(),seen=new Set();
   // Local UI timing only; never sends or stores scan data before consent.
   const successfulScanListeners=new Set();
   let successfulScan=false;
-  let preferences=C.consent(localStorage),owner=null,lastActivity=0,activeSince=0,lastTick=Date.now();
+  let preferences=window.DNConsent.get(),owner=window.DNCloud?.user()?.id || null,lastActivity=0,activeSince=0,lastTick=Date.now();
   const page=(location.pathname.split('/').pop() || '').replace('.html','');
   const pages=new Set(['army','artifacts','collection','totals','ratings','council','council-collection','council-ratings','config','scanner','storage-scanner']);
   const definitions={
@@ -92,11 +92,9 @@
   }
   function changed(next) {
     cancelPending();preferences=next;lastActivity=0;activeSince=0;lastTick=Date.now();
-    for(const listener of listeners)try{listener({...preferences})?.catch?.(()=>{});}catch{}
     if(preferences.analytics)event('$pageview');
   }
-  window.DNConsent={get:()=>({...preferences}),set(value){if((value.analytics || value.diagnostics || value.research || value.ocrFeedback) && !C.privacyReady(config))throw Error('Optional sharing is not available in this version.');if(value.research && !C.researchReady(config))throw Error('Research sharing is not available in this version.');if(value.ocrFeedback && !C.ocrFeedbackReady(config))throw Error('OCR feedback is not available in this version.');const next=C.setConsent(localStorage,value);changed(next);return next;},subscribe(fn){listeners.add(fn);return ()=>listeners.delete(fn);}};
-  window.addEventListener('storage',e=>{if(e.key==='dn_service_consent')changed(C.consent(localStorage));});
+  window.DNConsent.subscribe(changed);
   function milestone(step) {
     if(!permitted('onboarding_step_completed'))return;
     const values=storageRead('dn_telemetry_milestones') || {};
@@ -121,6 +119,7 @@
       inferred_count:info.inferredCount,corrected_count:info.correctedCount || 0,sample_rate:config.diagnosticsSampleRate});
   }
   function scannerResult(result,{source,encounterId,corrected=false}) {
+    if(result?.valid && !window.DNSuccessfulScan){window.DNSuccessfulScan=true;window.dispatchEvent?.(new Event('dn-successful-scan'));}
     if(result?.valid && !successfulScan){
       successfulScan=true;
       for(const listener of successfulScanListeners)try{listener();}catch{}

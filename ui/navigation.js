@@ -23,6 +23,15 @@
     "crafting-statistics.html",
   ]);
   const file = location.pathname.split("/").pop() || "";
+  // Follow the serving document's URL style. Local directory/file previews
+  // retain explicit HTML paths; clean-URL hosts never need an HTML redirect.
+  const cleanURLs = /^https?:$/.test(location.protocol) && !file.endsWith(".html") &&
+    (!!file || !["localhost", "127.0.0.1", "[::1]"].includes(location.hostname));
+  function documentURL(value) {
+    const url = new URL(value, location.href);
+    if (cleanURLs) url.pathname = url.pathname.replace(/\.html$/, "");
+    return url;
+  }
 
   if (!file || file === "index" || file === "index.html") {
     let destination = "ratings.html";
@@ -32,7 +41,7 @@
     } catch {
       // Browsers with storage disabled still open the default page.
     }
-    const destinationUrl = new URL(destination + location.search + location.hash, location.href);
+    const destinationUrl = documentURL(destination + location.search + location.hash);
     if (destination === "scanner.html" || destination === "storage-scanner.html") {
       destinationUrl.searchParams.set("v", "2");
     }
@@ -47,7 +56,7 @@
   if (window.top === window && !window.DNShellRedirecting) {
     const openShell = () => {
       window.DNShellRedirecting = true;
-      const host = new URL("scanner-session.html", location.href);
+      const host = documentURL("scanner-session.html");
       host.searchParams.set("v", "20261022-fixed-header");
       host.searchParams.set("page", location.pathname + location.search + location.hash);
       location.replace(host.href);

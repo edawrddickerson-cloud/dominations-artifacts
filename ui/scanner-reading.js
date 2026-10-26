@@ -41,6 +41,8 @@
   const serviceSource=storage?'storage':'crafting';
   function observeServices(value,options={}) {
     const context={source:serviceSource,captureMethod:liveCapture?'live-capture':'local-image',encounterId:JSON.stringify([session,itemId]),expectedRows:rowCount(),...options};
+    // The sharing prompt needs only a local success bit, even without analytics.
+    if(value?.valid && !window.DNSuccessfulScan){window.DNSuccessfulScan=true;window.dispatchEvent(new Event('dn-successful-scan'));}
     try{window.DNTelemetry?.scannerResult(value,context);}catch{}
   }
   const rowCount=()=>Number(el.rows.value)===6?6:5;
@@ -982,7 +984,7 @@
   score();
   (async()=>{
     try {
-      const [mapping,defaults]=await Promise.all([fetch("./data/perk_name_mapping.csv",{cache:"no-store"}),fetch("./data/perk_rating_defaults.json",{cache:"no-store"})]);
+      const [mapping,defaults]=await Promise.all([fetch("./data/perk_name_mapping.csv"),fetch("./data/perk_rating_defaults.json")]);
       if(!mapping.ok || !defaults.ok)throw new Error("ratings unavailable");
       canonPerk=DN.makeCanonPerk(DN.parseMappingCsv(await mapping.text()));factory=await defaults.json();names=Object.keys(factory);
       window.DNCraftingPurposes?.setDefaults(factory, canonPerk);

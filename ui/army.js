@@ -172,7 +172,7 @@
   async function load() {
     resetDraft();
     try {
-      const [defaultsResponse, mappingResponse, response] = await Promise.all([fetch('./data/perk_rating_defaults.json', {cache:'no-store'}), fetch('./data/perk_name_mapping.csv'), fetch('./data/army_unit_images.json')]);
+      const [defaultsResponse, mappingResponse, response] = await Promise.all([fetch('./data/perk_rating_defaults.json'), fetch('./data/perk_name_mapping.csv'), fetch('./data/army_unit_images.json')]);
       if (!defaultsResponse.ok) throw new Error('Could not load perk defaults. Reload to retry.');
       canonicalizePerk = DN.makeCanonPerk(mappingResponse.ok ? DN.parseMappingCsv(await mappingResponse.text()) : {});
       factoryDefaults = Object.fromEntries(Object.entries(await defaultsResponse.json()).map(([name, value]) => [canonicalizePerk(name), value]));

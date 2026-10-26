@@ -72,7 +72,7 @@ async function smoke(config,api){
     document:{hidden:false,addEventListener(){}},location:{pathname:'/config.html',origin:'http://127.0.0.1:8765'},navigator:{onLine:true,userAgent:'SyntheticSetupCheck'},innerWidth:1440,
     crypto:crypto.webcrypto,Date,TextEncoder,URL,AbortController,Error,setTimeout,clearTimeout,setInterval:fn=>intervals.push(fn),
     fetch(url,options){const payload=JSON.parse(options.body);sent.push({id:payload.properties.$insert_id,event:payload.event});const request=fetch(url,{...options,headers:{...options.headers,Origin:'http://127.0.0.1:8765'},redirect:'error'}).then(response=>{const cors=response.headers.get('Access-Control-Allow-Origin');receipts.push({httpStatus:response.status,corsAllowed:cors==='*' || cors==='http://127.0.0.1:8765'});if(!response.ok)throw Error('PostHog ingestion rejected the test request.');return true;});pending.push(request);return request;}};
-  vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'ui/integration-core.js'),'utf8'),context);vm.runInContext(fs.readFileSync(path.join(root,'ui/telemetry.js'),'utf8'),context);
+  vm.createContext(context);vm.runInContext(fs.readFileSync(path.join(root,'ui/integration-core.js'),'utf8'),context);vm.runInContext(fs.readFileSync(path.join(root,'ui/consent.js'),'utf8'),context);vm.runInContext(fs.readFileSync(path.join(root,'ui/telemetry.js'),'utf8'),context);
   // Explicit operator-requested synthetic check; no personal browser/account data.
   context.window.DNConsent.set({analytics:true});context.window.DNTelemetry.event('feature_used',{feature:'setup-check'},true);
   await new Promise(resolve=>setTimeout(resolve,100));

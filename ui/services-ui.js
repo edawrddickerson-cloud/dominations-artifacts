@@ -128,9 +128,11 @@
       document.body.appendChild(banner);
       banner.showModal();
     };
-    const stopWaiting=window.DNTelemetry.onSuccessfulScan(()=>{promptTimer=setTimeout(show,1200);});
+    const scanned=()=>{window.removeEventListener('dn-successful-scan',scanned);promptTimer=setTimeout(show,1200);};
+    window.addEventListener('dn-successful-scan',scanned,{once:true});
+    if(window.DNSuccessfulScan)scanned();
     const unwire=wirePrivacy(banner),unsubscribe=consent.subscribe(value=>{
-      if(promptTimer!==null)clearTimeout(promptTimer);stopWaiting();
+      if(promptTimer!==null)clearTimeout(promptTimer);window.removeEventListener('dn-successful-scan',scanned);
       if(banner.open)banner.close();banner.remove();unwire();unsubscribe();
     });
   }
@@ -162,7 +164,7 @@
       for(const button of root.querySelectorAll('button:not([data-save-consent]):not([data-reject-consent])'))button.disabled=busy;
       get('privacy-contact').textContent=config.privacyContact?'Privacy contact: '+config.privacyContact:'';
       get('retention').textContent=window.DNIntegrationCore.privacyReady(config)?'Analysis history: feature use '+config.analyticsRetentionDays+' days; scanner reliability '+config.diagnosticsRetentionDays+' days. This is not a deletion deadline.'+(window.DNIntegrationCore.researchReady(config)?' Research retention: '+config.researchRetentionDays+' days.':''):'';
-      const analyticsId=window.DNTelemetry.analyticsId();get('analytics-id').textContent=analyticsId?'Analytics reference: '+analyticsId:'';
+      const analyticsId=window.DNTelemetry?.analyticsId();get('analytics-id').textContent=analyticsId?'Analytics reference: '+analyticsId:'';
     }
     get('signin').addEventListener('click',()=>run(()=>cloud.signInWithDiscord()));
     get('sync').addEventListener('click',()=>run(()=>cloud.sync()));
@@ -187,7 +189,7 @@
       if(!confirm('Delete this account’s OCR feedback?'))return;
       consent.set({...consent.get(),ocrFeedback:false});await window.DNOCRFeedback.remove();get('account-action-status').textContent='OCR feedback deleted.';
     }));
-    cloud.subscribe(refresh);consent.subscribe(refresh);refresh();
+    cloud.subscribe(refresh);consent.subscribe(refresh);window.DNTelemetryReady?.then(refresh);refresh();
     if(location.hash==='#account-privacy')root.scrollIntoView({block:'start'});
   }
 })();

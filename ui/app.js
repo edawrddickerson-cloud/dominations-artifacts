@@ -1276,10 +1276,10 @@
   async function load() {
     try {
       const [artRes, mapRes, defRes, imgRes] = await Promise.all([
-        fetch(DATA_URL, { cache: "no-store" }),
-        fetch(MAPPING_URL, { cache: "no-store" }),
-        fetch(DEFAULTS_URL, { cache: "no-store" }),
-        fetch(IMAGES_URL, { cache: "no-store" }),
+        fetch(DATA_URL),
+        fetch(MAPPING_URL),
+        fetch(DEFAULTS_URL),
+        fetch(IMAGES_URL),
       ]);
       if (!artRes.ok) throw new Error(`HTTP ${artRes.status} loading ${DATA_URL}`);
       const data = await artRes.json();

@@ -66,7 +66,7 @@
     return catalog;
   }
   function loadCatalog() {
-    if(!catalogPromise)catalogPromise=fetch('./data/artifacts.json',{cache:'no-store'}).then(response=>{
+    if(!catalogPromise)catalogPromise=fetch('./data/artifacts.json').then(response=>{
       if(!response.ok)throw new Error('Could not load artifact names.');return response.json();
     }).then(useCatalog).catch(error=>{catalogPromise=null;throw error;});
     return catalogPromise;

@@ -780,11 +780,11 @@
   async function load() {
     try {
       const [dataRes, defRes, imgRes, mapRes, artifactDefRes] = await Promise.all([
-        fetch(DATA_URL, { cache: "no-store" }),
-        fetch(DEFAULTS_URL, { cache: "no-store" }),
-        fetch(IMAGES_URL, { cache: "no-store" }),
-        fetch(MAPPING_URL, { cache: "no-store" }),
-        fetch("./data/perk_rating_defaults.json", { cache: "no-store" }),
+        fetch(DATA_URL),
+        fetch(DEFAULTS_URL),
+        fetch(IMAGES_URL),
+        fetch(MAPPING_URL),
+        fetch("./data/perk_rating_defaults.json"),
       ]);
       if (!dataRes.ok) throw new Error(`HTTP ${dataRes.status} loading ${DATA_URL}`);
       if (!defRes.ok) throw new Error(`HTTP ${defRes.status} loading ${DEFAULTS_URL}`);

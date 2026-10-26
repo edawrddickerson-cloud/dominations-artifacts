@@ -66,6 +66,14 @@
   check('Council ratings opens through the side menu',sidebarIdentity()&&!!doc().getElementById('ratings-q'));
   await open('privacy.html');check('Privacy opens inside the persistent shell',sidebarIdentity()&&!!doc().querySelector('.ui-document'));
   await open('crafting-statistics.html');check('Statistics methods opens inside the persistent shell',sidebarIdentity()&&!!doc().querySelector('.ui-document'));
+  await open('config.html');
+  check('Shell accepts both route spellings',DNAppShell.accepts('config')&&DNAppShell.accepts('config'+'.ht'+'ml'));
+  check('Shell rejects external and non-page routes',!DNAppShell.accepts('https://outside.example/config')&&!DNAppShell.accepts('../config')&&!DNAppShell.accepts('services.js')&&!DNAppShell.accepts('nested/config'));
+  previous=doc();
+  await DNAppShell.navigate('config'+'.ht'+'ml?view=accounts#account-privacy');await ready('config.html',previous);
+  check('Navigation preserves query and hash in shell and content',location.search==='?view=accounts'&&location.hash==='#account-privacy'&&view().location.search===location.search&&view().location.hash===location.hash);
+  const hashDocument=doc();await DNAppShell.navigate('config?view=accounts#profiles');
+  check('Hash navigation keeps the current document',doc()===hashDocument&&location.hash==='#profiles'&&view().location.hash==='#profiles');
   await open('ratings.html');
   const originalProfile=view().DN.activeProfileId();
   const headerBounds=header.getBoundingClientRect();view().scrollTo(0,350);

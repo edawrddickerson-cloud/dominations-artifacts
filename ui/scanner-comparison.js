@@ -415,7 +415,7 @@
   async function refresh() {
     const ticket=++request,profile=DN.activeProfileId();loading=true;error='';render();
     try {
-      if(!cataloguePromise)cataloguePromise=fetch('./data/artifacts.json',{cache:'no-store'}).then(async response=>{if(!response.ok)throw new Error('catalogue unavailable');const data=await response.json();if(!Array.isArray(data))throw new Error('invalid catalogue');return data;}).catch(reason=>{cataloguePromise=null;throw reason;});
+      if(!cataloguePromise)cataloguePromise=fetch('./data/artifacts.json').then(async response=>{if(!response.ok)throw new Error('catalogue unavailable');const data=await response.json();if(!Array.isArray(data))throw new Error('invalid catalogue');return data;}).catch(reason=>{cataloguePromise=null;throw reason;});
       const [catalogue,scans,inventory]=await Promise.all([cataloguePromise,window.DNStoredArtifacts.read('collection:'+profile),window.DNStoredArtifacts.read('items')]);
       if(ticket!==request || profile!==DN.activeProfileId())return;
       const collected=DN.loadCollected(),rows=new Map();

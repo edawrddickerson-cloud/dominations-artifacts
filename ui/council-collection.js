@@ -383,8 +383,8 @@
   async function load() {
     try {
       const [res, imgRes] = await Promise.all([
-        fetch(DATA_URL, { cache: "no-store" }),
-        fetch(IMAGES_URL, { cache: "no-store" }),
+        fetch(DATA_URL),
+        fetch(IMAGES_URL),
       ]);
       if (!res.ok) throw new Error(`HTTP ${res.status} loading ${DATA_URL}`);
       const data = await res.json();

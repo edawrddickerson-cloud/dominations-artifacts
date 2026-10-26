@@ -99,7 +99,7 @@
 
   async function load() {
     try {
-      const [data, mapping] = await Promise.all([fetch('./data/artifacts.json', {cache:'no-store'}), fetch('./data/perk_name_mapping.csv', {cache:'no-store'})]);
+      const [data, mapping] = await Promise.all([fetch('./data/artifacts.json'), fetch('./data/perk_name_mapping.csv')]);
       if (!data.ok || !mapping.ok) throw new Error('Could not load artifact data.');
       rows = (await data.json()).filter(row => row.artifact_id !== 'leftwich-trophy-legendary');
       await window.DNStoredArtifacts.reconcileCatalog(rows);

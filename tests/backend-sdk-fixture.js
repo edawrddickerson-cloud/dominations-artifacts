@@ -35,7 +35,8 @@
         backend.workspaceReads ||= [];backend.workspaceReads.push({table,columns,filter:copy(filter)});
         if(backend.offline)return {data:null,error:{code:'503'},status:503};
         if(table!=='planner_workspaces'||filter?.key!=='owner_id'||filter.value!==backend.owner?.id)return {data:null,error:null,status:200};
-        return {data:copy(backend.workspaces[filter.value] || null),error:null,status:200};
+        const row=backend.workspaces[filter.value];
+        return {data:row?copy(Object.fromEntries(columns.split(',').map(key=>[key,row[key]]))):null,error:null,status:200};
       }};},
     async rpc(name,args={}){
       if(backend.rpcError?.name===name)return {data:null,error:{code:backend.rpcError.code}};
@@ -47,7 +48,7 @@
         const current=backend.workspaces[owner];
         if(current?.operation_id===args.p_operation_id)return {data:copy(current),error:null};
         if((current?.revision || 0)!==args.p_expected_revision)return {data:null,error:{code:'40001'}};
-        const next={revision:args.p_expected_revision+1,operation_id:args.p_operation_id,data:copy(args.p_data)};backend.workspaces[owner]=next;
+        const next={game_key:'dominations',revision:args.p_expected_revision+1,operation_id:args.p_operation_id,updated_at:new Date().toISOString(),data:copy(args.p_data)};backend.workspaces[owner]=next;
         if(backend.loseResponse){backend.loseResponse=false;return {data:null,error:{code:'503'}};}
         return {data:copy(next),error:null};
       }

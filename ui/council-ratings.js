@@ -152,7 +152,7 @@
   async function load() {
     try {
       const urls = ["councilors.json", "council_stat_rating_defaults.json", "perk_rating_defaults.json", "perk_name_mapping.csv"];
-      const responses = await Promise.all(urls.map(url => fetch("./data/" + url, {cache: "no-store"})));
+      const responses = await Promise.all(urls.map(url => fetch("./data/" + url)));
       responses.forEach((res, i) => { if (!res.ok) throw new Error(`HTTP ${res.status} loading ${urls[i]}`); });
       const [data, councilDefaults, artifactDefaults, mapping] = await Promise.all(responses.map((res, i) => i === 3 ? res.text() : res.json()));
       const canon = DN.makeCanonPerk(DN.parseMappingCsv(mapping));

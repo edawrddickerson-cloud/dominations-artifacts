@@ -19,7 +19,9 @@
   await wait(()=>Object.values(backend.ocrSamples?.[owner] || {}).length===1,'automatic feedback');
   const sample=Object.values(backend.ocrSamples[owner])[0];
   check('opt-in automatically sends compact OCR feedback without analytics',sample.observed_text==='Poman der' && !DNConsent.get().analytics && backend.telemetry.length===0 && !JSON.stringify(sample).includes('image'));
-  const name=document.querySelector('[data-log-name]');name.value='Pomander Watch';name.dispatchEvent(new Event('input',{bubbles:true}));name.dispatchEvent(new FocusEvent('focusout',{bubbles:true}));
+  // Corrections now use the canonical item API; the paired scanners fixture
+  // exercises both live inline editors instead of the retired log-name input.
+  DNScannerCollection.setName(DNScannerCollection.historyItems()[0].id,'Pomander Watch');
   await wait(()=>Object.values(backend.ocrSamples[owner])[0].corrected_name==='Pomander Watch','corrected name upload');
   check('manual name correction revises the same feedback record',Object.keys(backend.ocrSamples[owner]).length===1 && Object.values(backend.ocrSamples[owner])[0].id===sample.id);
   box.checked=false;box.dispatchEvent(new frame.contentWindow.Event('change'));save.click();

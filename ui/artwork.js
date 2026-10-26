@@ -10,7 +10,7 @@
  let loading,catalog;const results=new Map(),failed=new Set();
  const enabled=()=>window.DNServiceConfig?.artworkMatchingEnabled!==false;
  function load(){
-  if(!loading)loading=fetch(new URL('data/artwork_catalog.json',base),{cache:'no-cache'}).then(r=>{if(!r.ok)throw Error('Artwork catalog unavailable.');return r.json();}).then(data=>{
+  if(!loading)loading=fetch(new URL('data/artwork_catalog.json',base)).then(r=>{if(!r.ok)throw Error('Artwork catalog unavailable.');return r.json();}).then(data=>{
    if(data.version!==1||data.descriptorVersion!==window.DNArtworkMatcher.VERSION||data.entries.length!==ids.size||data.entries.some(e=>!validId(e.id)||e.file!==e.id+'.jpg'||!Array.isArray(e.examples)))throw Error('Invalid artwork catalog.');
    catalog=data;return data;
   }).catch(error=>{loading=null;throw error;});

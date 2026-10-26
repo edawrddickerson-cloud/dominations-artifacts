@@ -4,6 +4,9 @@
   let frame = document.getElementById('scanner-view');
   const main = document.querySelector('.app-shell-main');
   const directory = location.pathname.slice(0, location.pathname.lastIndexOf('/') + 1);
+  // Capture the serving style before shell history adopts a content-page URL.
+  // Static HTML previews keep .html; Workers' clean URLs stay extensionless.
+  const cleanURLs = /^https?:$/.test(location.protocol) && !location.pathname.endsWith('.html');
   const pages = new Set(['ratings.html','artifacts.html','collection.html','totals.html','scanner.html','crafting-stats.html','storage-scanner.html','council.html','council-collection.html','council-ratings.html','config.html','privacy.html','crafting-statistics.html']);
   let stream = null, nav = null, checking = false, restoring = null;
   let currentURL, currentIndex = 0;
@@ -67,7 +70,9 @@
     const url = new URL(value, location.href);
     let file = url.pathname.slice(directory.length);
     if (!file.endsWith('.html')) file += '.html';
-    return url.origin === location.origin && url.pathname.startsWith(directory) && pages.has(file) ? url : null;
+    if (url.origin !== location.origin || !url.pathname.startsWith(directory) || !pages.has(file)) return null;
+    url.pathname = directory + (cleanURLs ? file.slice(0, -5) : file);
+    return url;
   }
   function fileOf(url) {
     const file = url.pathname.split('/').pop();
@@ -191,7 +196,7 @@
     navigate(link.href);
   }
   document.addEventListener('click', clicked);
-  const initial = pageURL(new URL(location.href).searchParams.get('page') || 'ratings.html') || new URL('ratings.html', location.href);
+  const initial = pageURL(new URL(location.href).searchParams.get('page') || 'ratings.html') || pageURL('ratings.html');
   writeHistory(initial, false);
   try { setCollapsed(localStorage.getItem('dn-nav-collapsed') === '1'); } catch { setCollapsed(false); }
   function mounted(event) {
@@ -205,6 +210,11 @@
       const source = child.document.querySelector('.site-nav');
       if (!source) return;
       nav = source.cloneNode(true);
+      // Canonical hrefs also cover open-in-new-tab and copied navigation links.
+      for (const link of nav.querySelectorAll('a[href]')) {
+        const target = pageURL(link.href);
+        if (target && cleanURLs) link.setAttribute('href', target.pathname.slice(directory.length) + target.search + target.hash);
+      }
       document.body.insertBefore(nav, main);
       nav.querySelector('#nav-collapse-btn')?.addEventListener('click', () => setCollapsed(!document.body.classList.contains('nav-collapsed')));
       setCollapsed(document.body.classList.contains('nav-collapsed'));

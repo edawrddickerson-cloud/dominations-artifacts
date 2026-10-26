@@ -6,7 +6,7 @@
   'use strict';
   function create({capture,remote,readBinding,saveBinding,recover,apply,applyHistory,readLocalCraftsLogged=async()=>null,notify=()=>{}}) {
     const C=window.DNIntegrationCore;
-    let owner=null,epoch=0,running=false,choicePending=false,state={status:'signed-out'},latest=null;
+    let owner=null,epoch=0,running=false,choicePending=false,state={status:'signed-out'},latest=null,cached=null;
     const idleWaiters=[];
     function release(){running=false;for(const resolve of idleWaiters.splice(0))resolve();}
     const idle=()=>running?new Promise(resolve=>idleWaiters.push(resolve)):Promise.resolve();
@@ -29,23 +29,50 @@
     const publish=next=>{state={...next,comparison:comparison()};notify({...state});return state;};
     const valid=(id,generation)=>owner===id && epoch===generation;
     const planner=value=>{const {craftingLog,...rest}=value;return rest;};
+    const sameVersion=(a,b)=>a && b && a.revision===b.revision && a.operation_id===b.operation_id && a.updated_at===b.updated_at && a.game_key===b.game_key;
+    const bound=(id,row,hash)=>({owner:id,revision:row.revision,operation:row.operation_id,hash,savedAt:row.updated_at || null});
+    async function readRemote(id,generation,local,localHash) {
+      if(remote.readMetadata) {
+        const metadata=await remote.readMetadata(id);
+        if(!valid(id,generation))return {};
+        if(!metadata){cached=null;return {row:null,remoteHash:null};}
+        if(cached && sameVersion(metadata,cached.row))return {row:cached.row,remoteHash:cached.hash};
+        // A verified binding can reuse the current capture after a page reload.
+        // Revision equality alone says nothing about unsaved browser edits.
+        const binding=readBinding();
+        if(local && binding?.owner===id && !binding.pending && binding.hash===localHash &&
+          Number.isSafeInteger(metadata.revision) && metadata.revision>0 && metadata.game_key===local.game &&
+          binding.revision===metadata.revision && binding.operation && binding.operation===metadata.operation_id && binding.savedAt===metadata.updated_at) {
+          const row={...metadata,data:local};cached={row,hash:localHash};return {row,remoteHash:localHash};
+        }
+      }
+      // The full read is authoritative even if it advanced after the metadata
+      // request. Writes still use its revision for the server's atomic check.
+      const row=await remote.read(id);
+      if(!valid(id,generation))return {};
+      if(row)C.validate(row.data);
+      const remoteHash=row?await C.fingerprint(row.data):null;
+      if(!valid(id,generation))return {};
+      cached=row?{row,hash:remoteHash}:null;
+      return {row,remoteHash};
+    }
     async function inspect({automatic=true,forChoice=false}={}) {
       if(running || choicePending && !forChoice || !owner)return state;
       const id=owner,generation=epoch;running=true;
       try {
-        const local=C.validate(await capture()),localHash=await C.fingerprint(local),row=await remote.read(id);
+        const local=C.validate(await capture()),localHash=await C.fingerprint(local);
         if(!valid(id,generation))return state;
-        if(row)C.validate(row.data);
-        const remoteHash=row?await C.fingerprint(row.data):null;
+        const {row,remoteHash}=await readRemote(id,generation,local,localHash);
+        if(!valid(id,generation))return state;
         const localPlannerHash=await C.fingerprint(planner(local));
         const localCraftsLogged=await readLocalCraftsLogged();
         if(!valid(id,generation))return state;
         let binding=readBinding();
         if(binding?.owner===id && binding.pending?.operation===row?.operation_id && binding.pending?.hash===remoteHash) {
-          binding={owner:id,revision:row.revision,hash:remoteHash,savedAt:row.updated_at || null};saveBinding(binding);
+          binding=bound(id,row,remoteHash);saveBinding(binding);
         }
         latest={local,localHash,localPlannerHash,row,remoteHash,localCraftsLogged};
-        if(automatic && applyHistory && binding?.owner===id && row && local.craftingLog && row.data.craftingLog) {
+        if(automatic && applyHistory && binding?.owner===id && row && localHash!==remoteHash && local.craftingLog && row.data.craftingLog) {
           const withoutHistory=value=>{const {craftingLog,...rest}=value;return C.canonical(rest);};
           if(withoutHistory(local)===withoutHistory(row.data)) {
             const merged=window.DNCraftingHistory.project(window.DNCraftingHistory.reconcile(local.craftingLog,row.data.craftingLog));
@@ -60,7 +87,8 @@
               saveBinding({...binding,owner:id,pending:{operation,hash}});
               const saved=await remote.write(id,row.revision,operation,combined);
               if(!valid(id,generation))return state;
-              saveBinding({owner:id,revision:saved.revision,hash,savedAt:saved.updated_at || null});
+              saveBinding(bound(id,saved,hash));
+              cached={row:{...saved,data:combined},hash};
               latest={local:combined,localHash:hash,localPlannerHash,row:{...saved,data:combined},remoteHash:hash,localCraftsLogged:window.DNCraftingHistory.totals(combined.craftingLog).logged};
               return publish({status:'synced',revision:saved.revision});
             }
@@ -68,7 +96,7 @@
         }
         const status=C.decision({boundOwner:binding?.owner,owner:id,baseHash:binding?.hash,localHash,remoteHash});
         if(status==='synced') {
-          saveBinding({owner:id,revision:row.revision,hash:remoteHash,savedAt:row.updated_at || binding?.savedAt || null});
+          saveBinding({...bound(id,row,remoteHash),savedAt:row.updated_at || binding?.savedAt || null});
           return publish({status,revision:row.revision});
         }
         // Only a missing workspace is empty. Zero artifacts never authorizes
@@ -86,7 +114,8 @@
           saveBinding({...binding,owner:id,pending:{operation,hash:localHash}});
           const saved=await remote.write(id,row?.revision || 0,operation,local);
           if(!valid(id,generation))return state;
-          saveBinding({owner:id,revision:saved.revision,hash:localHash,savedAt:saved.updated_at || new Date().toISOString()});
+          saveBinding({...bound(id,saved,localHash),savedAt:saved.updated_at || new Date().toISOString()});
+          cached={row:{...saved,data:local},hash:localHash};
           return publish({status:'synced',revision:saved.revision});
         }
         return publish({status,revision:row?.revision || 0});
@@ -127,33 +156,35 @@
           if(!valid(id,generation))return state;
           if(applyHistory && data.craftingLog)await applyHistory(data.craftingLog);
           if(!valid(id,generation))return state;
-          saveBinding({owner:id,revision:saved.revision,hash,savedAt:saved.updated_at || new Date().toISOString()});
+          saveBinding({...bound(id,saved,hash),savedAt:saved.updated_at || new Date().toISOString()});
+          cached={row:{...saved,data},hash};
           return publish({status:'synced',revision:saved.revision});
         }
         // Recheck the remote revision too; never apply a choice from a stale dialog.
-        const current=await remote.read(id);
-        if(!current || current.revision!==selected.row.revision && await C.fingerprint(current.data)!==selected.remoteHash)throw Object.assign(Error('The cloud version changed. Review it again.'),{code:'409'});
+        const {row:current,remoteHash:currentHash}=await readRemote(id,generation);
         if(!valid(id,generation))throw Error('The signed-in account changed. Nothing was replaced.');
+        if(!current || currentHash!==selected.remoteHash)throw Object.assign(Error('The cloud version changed. Review it again.'),{code:'409'});
         if(await C.fingerprint(await capture())!==selected.localHash)throw Error('Local data changed. Stop scanning and review the versions again.');
         if(!valid(id,generation))throw Error('The signed-in account changed. Nothing was replaced.');
-        let data=selected.row.data,revision=current.revision,hash=selected.remoteHash;
+        let data=selected.row.data,row=current,revision=current.revision,hash=selected.remoteHash;
         if(readBinding()?.owner===id && data.craftingLog && selected.local.craftingLog) {
           data={...data,craftingLog:window.DNCraftingHistory.project(window.DNCraftingHistory.reconcile(selected.local.craftingLog,data.craftingLog,{baselineChoice:'cloud'}))};
           hash=await C.fingerprint(data);
           if(!valid(id,generation))return state;
-          if(hash!==selected.remoteHash){const saved=await remote.write(id,revision,crypto.randomUUID(),data);revision=saved.revision;}
+          if(hash!==selected.remoteHash){const saved=await remote.write(id,revision,crypto.randomUUID(),data);row=saved;revision=saved.revision;}
           if(!valid(id,generation))return state;
         }
         await apply(data,{preserveArtwork:!readBinding()?.owner || readBinding().owner===id,owner:id,isCurrent:()=>valid(id,generation)});
         if(!valid(id,generation))return state;
-        saveBinding({owner:id,revision,hash,savedAt:selected.row.updated_at || null});
+        saveBinding(bound(id,row,hash));
+        cached={row:{...row,data},hash};
         return publish({status:'synced',revision,reload:true});
       }catch(error) {
         if(valid(id,generation))publish({status:error?.code==='409'?'conflict':'error',error:error.message});
         throw error;
       }finally{choicePending=false;release();}
     }
-    return {inspect,choose,state:()=>({...state}),setOwner(id){owner=id || null;epoch++;latest=null;return publish({status:owner?'unlinked':'signed-out'});}};
+    return {inspect,choose,state:()=>({...state}),setOwner(id){owner=id || null;epoch++;latest=null;cached=null;return publish({status:owner?'unlinked':'signed-out'});}};
   }
   window.DNCloudSyncCore={create};
 })();

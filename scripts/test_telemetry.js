@@ -8,7 +8,14 @@ const context={window:{DNServiceConfig:{privacyReady:true,privacyContact:'privac
   localStorage:storage,crypto,Date:Clock,TextEncoder,URL,AbortController,Error,console,
   setTimeout:(fn,delay)=>{timers.set(++nextTimer,{fn,delay});return nextTimer;},clearTimeout:id=>timers.delete(id),setInterval:fn=>intervals.push(fn),
   fetch:async(url,options)=>{sent.push({url,payload:JSON.parse(options.body),options});return {};}};
-vm.createContext(context);vm.runInContext(fs.readFileSync('ui/integration-core.js','utf8'),context);vm.runInContext(fs.readFileSync('ui/telemetry.js','utf8'),context);
+vm.createContext(context);vm.runInContext(fs.readFileSync('ui/integration-core.js','utf8'),context);vm.runInContext(fs.readFileSync('ui/consent.js','utf8'),context);vm.runInContext(fs.readFileSync('ui/telemetry.js','utf8'),context);
+// Consent remains functional before analytics, including after a failed download.
+const isolatedValues=new Map([['dn_telemetry_id','old'],['dn_telemetry_session','old']]);
+const isolated={window:{DNIntegrationCore:context.window.DNIntegrationCore,DNServiceConfig:context.window.DNServiceConfig,addEventListener(){}},
+  localStorage:{getItem:key=>isolatedValues.get(key)??null,setItem:(key,value)=>isolatedValues.set(key,value),removeItem:key=>isolatedValues.delete(key)}};
+vm.runInNewContext(fs.readFileSync('ui/consent.js','utf8'),isolated);isolated.window.DNConsent.set({});
+assert.equal(isolatedValues.has('dn_telemetry_id'),false,'revocation clears identifiers without telemetry');
+assert.equal(isolatedValues.has('dn_telemetry_session'),false,'revocation clears sessions without telemetry');
 const {DNConsent:consent,DNTelemetry:telemetry}=context.window;
 async function flush(){for(const [id,timer] of [...timers])if(timer.delay===0){timers.delete(id);timer.fn();}await Promise.resolve();await Promise.resolve();await Promise.resolve();}
 (async()=>{
