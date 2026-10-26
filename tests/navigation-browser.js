@@ -8,6 +8,9 @@
   const artifactLinks=[...nav.querySelectorAll('a')].map(link=>new URL(link.href).pathname.split('/').pop().replace(/\.html$/,''));
   const storageIndex=artifactLinks.indexOf('storage-scanner');
   check('Active Totals and Crafting Stats follow Storage Scanner',storageIndex>=0&&artifactLinks[storageIndex+1]==='totals'&&artifactLinks[storageIndex+2]==='crafting-stats');
+  const planning=nav.querySelector('[data-nav-targets]');
+  check('Artifact Rankings belongs to Planning',!!planning.querySelector('a[href^="artifacts"]')&&!!planning.querySelector('a[href^="ratings"]'));
+  check('Privacy has no sidebar entry',!nav.querySelector('a[href^="privacy"]'));
   const header=document.getElementById('app-shell-header'),profilePicker=header.querySelector('#profile-select');
   const headerIdentity=()=>document.getElementById('app-shell-header')===header&&header.querySelector('#profile-select')===profilePicker;
   const sidebarIdentity=()=>document===rootDocument&&document.querySelector('.site-nav')===nav&&nav.querySelector('a')===firstLink;
@@ -67,7 +70,13 @@
   check('Council stat names do not duplicate side-menu navigation',!doc().querySelector('main a[href*=".html"],.perk-name a[href]'));
   await open('council-ratings.html');
   check('Council ratings opens through the side menu',sidebarIdentity()&&!!doc().getElementById('ratings-q'));
-  await open('privacy.html');check('Privacy opens inside the persistent shell',sidebarIdentity()&&!!doc().querySelector('.ui-document'));
+  await open('config.html');await view().DNServicesReady;
+  const privacyDetails=doc().querySelector('[data-privacy-details]');privacyDetails.open=true;
+  const privacyLink=privacyDetails.querySelector('[data-privacy-link]');
+  check('Privacy is linked from Data and privacy details',privacyLink.textContent==='Privacy');
+  previous=doc();privacyLink.click();
+  await wait(()=>doc()!==previous&&view().location.pathname.endsWith('/privacy.html')&&doc().querySelector('.ui-document'));
+  check('Privacy opens in the shell without a sidebar entry',sidebarIdentity()&&!nav.querySelector('a[href^="privacy"]')&&!doc().querySelector('.site-nav a[href^="privacy"]'));
   await open('crafting-statistics.html');check('Statistics methods opens inside the persistent shell',sidebarIdentity()&&!!doc().querySelector('.ui-document'));
   await open('config.html');
   check('Shell accepts both route spellings',DNAppShell.accepts('config')&&DNAppShell.accepts('config'+'.ht'+'ml'));

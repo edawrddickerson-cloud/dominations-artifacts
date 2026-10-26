@@ -143,7 +143,7 @@
       '<div class="service-actions" data-signed-in hidden><button type="button" class="btn" data-sync>Sync now</button><button type="button" class="btn" data-export-account>Export account data</button></div>'+
       '<div class="service-actions" data-cloud-review hidden><button type="button" class="btn" data-review-versions>Choose saved data</button></div>'+
       '<div class="service-actions"><button type="button" class="btn" data-download-recovery>Show safety backups</button></div><div data-recovery-list></div><p role="status" data-account-action-status></p>'+
-      privacyMarkup('settings')+'<details data-privacy-details><summary>Data & privacy details</summary><p data-privacy-contact></p><p data-retention></p><p data-analytics-id></p></details>'+
+      privacyMarkup('settings')+'<details data-privacy-details><summary>Data & privacy details</summary><p><a href="privacy.html" data-privacy-link>Privacy</a></p><p data-privacy-contact></p><p data-retention></p><p data-analytics-id></p></details>'+
       '<details data-delete-options hidden><summary>Delete data or account</summary><p>Deletes cloud collections, settings, research and OCR feedback. Analytics deletion is requested separately. Local data stays on this device. Export a backup first.</p><div class="service-actions"><button type="button" class="btn" data-delete-research>Delete contributed research</button><button type="button" class="btn" data-delete-ocr hidden>Delete OCR feedback</button><button type="button" class="btn" data-delete-account>Delete account</button></div></details>';
     document.querySelector('.app-main').appendChild(root);wirePrivacy(root);
     const get=name=>root.querySelector('[data-'+name+']');let busy=false;

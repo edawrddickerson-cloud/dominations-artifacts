@@ -140,7 +140,7 @@
     }
 
     ensureLink("config.html", "Profiles");
-    ensureLink("privacy.html", "Privacy");
+    for(const link of nav.querySelectorAll('a[href]'))if(['privacy','privacy.html'].includes(fileForHref(link.getAttribute('href'))))link.remove();
     ensureLink("crafting-statistics.html", "Statistics Methods");
   }
 
@@ -176,6 +176,8 @@
       if (fileForHref(location.pathname) === "ratings.html") link.setAttribute("aria-current", "page");
     }
     section.appendChild(link);
+    const rankings=nav.querySelector('a[href="artifacts.html"]');
+    if(rankings)section.appendChild(rankings);
     nav.insertBefore(section, nav.firstChild);
   }
 

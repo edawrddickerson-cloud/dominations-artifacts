@@ -22,7 +22,7 @@
     "fields-buttons-segments-rating-inputs-tables-dialogs-pickers": "ui/components.css",
     "picker-dismissal-placement-focus": "ui/design-ui.js",
     "shell-layout": "ui/app-shell.css",
-    "page-navigation": "ui/profiles-ui.js side menu; ui/navigation.js and ui/scanner-session.js include privacy and methodology documents. Page content has no first-party page links.",
+    "page-navigation": "ui/profiles-ui.js side menu; Planning contains Collection Targets and Artifact Rankings. Privacy has no side-menu entry: ui/services-ui.js links it only from Data & privacy details. ui/navigation.js and ui/scanner-session.js retain privacy and methodology document routing.",
     "page-and-domain-layout": "ui/styles.css and feature stylesheets",
     "gallery": "tests/design/gallery.html",
     "target-view-tabs": "ui/components.css .crafting-purpose-tabs-five; ui/crafting-purpose-editor.js; ui/ratings.html #rating-defaults-panel; tests/design/gallery.html; scripts/test_crafting_purposes_ui.js and scripts/test_design_ui.cjs",
