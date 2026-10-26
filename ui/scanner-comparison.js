@@ -347,13 +347,20 @@
     flag.hidden=true;
     const result=confirmed && latest?{...latest,rows:captureResult?.rows || latest.rows}:null;
     const available=!error && loadedProfile===DN.activeProfileId() && (!loading || loadedProfile===DN.activeProfileId());
-    const results=service && state.selected.length?service.evaluate(result,{...state,type:type.value,hall:hall.value,owned,canonPerk:options?.canonPerk,available}):[];
+    const rareIds=Object.keys(state.rareCards || {}),selected=[...state.selected,...rareIds];
+    const evaluate=(value,ready=available)=>service && selected.length?service.evaluate(value,{...state,selected,type:type.value,hall:hall.value,owned,canonPerk:options?.canonPerk,available:!!value && ready}):[];
+    const allResults=evaluate(result);
+    const rareResults=allResults.filter(item=>item.rare);
+    const bestRare=[...rareResults].sort((a,b)=>Number(b.hit)-Number(a.hit)||
+      Number(b.lines>=b.requiredLines)-Number(a.lines>=a.requiredLines)||(b.score||0)-(a.score||0)||b.lines-a.lines)[0];
+    const results=allResults.filter(item=>!item.rare);
+    if(bestRare)results.push({...bestRare,label:'Single Unit Rare Card'});
     if(focusProfile!==DN.activeProfileId())manualTarget=null;
     focusProfile=DN.activeProfileId();
     // Retained readings remain inspectable while capture is paused. Their
     // contributions never turn the separate live qualification state green.
-    const retained=!result && captureResult && service?service.evaluate(captureResult,{...state,type:type.value,hall:hall.value,owned,canonPerk:options?.canonPerk,available:false}):null;
-    targetResults=retained?results.map((item,index)=>({...item,score:retained[index]?.score ?? null,contributions:retained[index]?.contributions || []})):results;
+    const retained=!result && captureResult && service?evaluate(captureResult,false):null;
+    targetResults=retained?allResults.map(item=>{const prior=retained.find(entry=>entry.id===item.id);return {...item,score:prior?.score ?? null,contributions:prior?.contributions || []};}):allResults;
     if(!targetResults.some(item=>item.id===manualTarget))manualTarget=null;
     targetFocus=selectTargetFocus(targetResults,manualTarget);
     const notification=JSON.stringify([focusProfile,targetFocus?.id || null]);
@@ -370,7 +377,7 @@
       return '<li '+attribute+' class="'+(hit?'purpose-hit':'purpose-miss')+'">'+(attribute.startsWith('data-purpose-result=')?'<button type="button" class="scanner-target-rating-open" aria-pressed="false">'+content+'</button>':content)+'</li>';
     };
     let lines=results.map(item=>row(item.label,item.threshold!==null?'> '+item.threshold:item.score!==null?'Open slot':'—',item.score===null?'—':(item.uncertain?'~':'')+item.score,item.hit,'data-purpose-result="'+DN.esc(item.id)+'"')).join('');
-    if(!state.selected.length){
+    if(!selected.length){
       const strategies=[...(options?.strategyOptions || [])];
       if(options && !strategies.some(strategy=>strategy.id===options.strategyId))strategies.unshift({id:options.strategyId,name:options.strategyName || 'Active strategy',options});
       lines=strategies.map(strategy=>{
@@ -380,13 +387,16 @@
         return row(strategy.name,item?.threshold===null?'Open slot':Number.isFinite(item?.threshold)?'≥ '+item.threshold:'—',Number.isFinite(item?.score)?(item.provisional?'~':'')+item.score:'—',hit,'data-strategy-focus');
       }).join('');
     }
-    panel.innerHTML='<div class="scanner-focus-heading" aria-hidden="true"><span>Collection Targets</span><span>Target</span><span>Score</span></div><ul>'+lines+row('3 Unlocked Rows','= 3',Number.isFinite(count)?count:'—',keeper,'data-unlocked-focus')+'</ul>';
+    const rareDetail=bestRare && bestRare.lines>=bestRare.requiredLines?bestRare.label+' · '+bestRare.lines+'×'+(bestRare.mode==='damage'?' · Damage':bestRare.mode==='hp'?' · Hitpoints':'')+(bestRare.hit?' · Top two':' · '+(bestRare.status==='owned'?'No improvement':'Unverified')):'';
+    panel.innerHTML='<div class="scanner-focus-heading" aria-hidden="true"><span>Collection Targets</span><span>Target</span><span>Score</span></div><ul>'+lines+row('3 Unlocked Rows','= 3',Number.isFinite(count)?count:'—',keeper,'data-unlocked-focus')+'</ul>'+
+      (rareDetail?'<p data-rare-card-detail>'+DN.esc(rareDetail)+'</p><p data-rare-card-rarity role="status"></p>':'');
+    if(rareDetail)window.DNScannerRareCards?.render(bestRare,{hall:hall.value,type:type.value});
     for(const node of panel.querySelectorAll('[data-purpose-result]')){
-      const focused=node.dataset.purposeResult===targetFocus?.id;
+      const focused=node.dataset.purposeResult===targetFocus?.id || targetFocus?.rare && node.dataset.purposeResult===bestRare?.id;
       node.classList.toggle('is-score-focus',focused);node.querySelector('button')?.setAttribute('aria-pressed',String(focused));
     }
     window.DNScannerTargetRatings?.refresh({rows:captureResult?.rows || [],canonPerk:options?.canonPerk});
-    if(!state.selected.length){
+    if(!selected.length){
       if(focusHit){benchmark.classList.remove('is-unknown','is-below-cutoff');benchmark.classList.add('is-top-two');}
       document.getElementById('scanner-decision-state').textContent=keeper || focusHit?'Keep':'Discard';
       return;

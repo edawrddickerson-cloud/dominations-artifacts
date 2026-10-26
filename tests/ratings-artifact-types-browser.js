@@ -2,7 +2,7 @@
   const checks = [], check = (name, passed) => { checks.push({name, passed: !!passed}); if (!passed) throw Error(name); };
   const waitFor = async fn => { for (let i = 0; i < 200; i++) { if (fn()) return; await new Promise(resolve => setTimeout(resolve, 25)); } throw Error('Timed out waiting for ratings'); };
   await waitFor(() => document.querySelector('[data-layer="strategy"]'));
-  document.getElementById('advanced-ratings').open=true;
+  document.querySelector('[data-crafting-tab="ratings"]').click();
   const DN = window.DN, selector = document.getElementById('ratings-group-by');
   document.getElementById('header-main').click();
   const before = JSON.stringify(DN.loadStrategies());

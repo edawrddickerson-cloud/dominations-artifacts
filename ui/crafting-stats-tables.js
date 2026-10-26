@@ -7,7 +7,7 @@
   let selectedHall='main';
   function pageControls(root,view){
     const controls=root.querySelector('.crafted-stats-controls'),target=document.querySelector('#crafting-stats-page-filters .filter-main');
-    if(controls && target){controls.dataset.statsControls=view;controls.className='crafting-view-filters';target.insertBefore(controls,target.querySelector(':scope > a.btn'));}
+    if(controls && target){controls.dataset.statsControls=view;controls.className='crafting-view-filters';target.append(controls);}
     return controls;
   }
   function dashboard(root,label){

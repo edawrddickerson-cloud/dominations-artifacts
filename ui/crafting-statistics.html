@@ -1,9 +1,29 @@
 <!doctype html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Crafting statistics methods</title><link rel="stylesheet" href="styles.css?v=20261025-slate">  <script src="design-ui.js?v=20261025-slate" defer></script>
+<html lang="en"><head><script src="navigation.js?v=20261025-slate"></script><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Crafting statistics methods</title><link rel="stylesheet" href="styles.css?v=20261025-slate">  <script src="design-ui.js?v=20261025-slate" defer></script>
 </head>
-<body><main class="service-panel ui-document">
+<body><nav class="site-nav" aria-label="Pages">
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Artifacts</h2>
+      <a href="artifacts.html">Artifact Rankings</a>
+      <a href="collection.html">Crafted Collection</a>
+      <a href="totals.html">Active Totals</a>
+      <a href="scanner.html?v=2">Crafting Scanner</a>
+      <a href="crafting-stats.html">Crafting Stats</a>
+      <a href="storage-scanner.html?v=2">Storage Scanner</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Council</h2>
+      <a href="council.html">Council Rankings</a>
+      <a href="council-collection.html">Collection</a>
+    </div>
+    <div class="site-nav-section">
+      <h2 class="site-nav-label">Settings</h2>
+      <a href="config.html">Profiles</a>
+      <a href="ratings.html">Collection Targets</a>
+    </div>
+  </nav><div class="app-main"><header class="top app-header"><div class="top-inner"><h1>DomiNations Artifacts</h1></div><div class="header-controls" aria-label="Profile"><div id="header-profile" class="header-profile"></div></div></header><main class="service-panel ui-document">
 <h1>Crafting statistics methods</h1>
-<p><a href="crafting-stats.html">Crafting Stats</a></p>
+<p>Crafting Stats</p>
 <h2>Observed sample frequencies</h2>
 <dl>
 <dt>Crafts recorded</dt><dd>Contributed encounters, including incomplete and unkept records; cleared records excluded.</dd>
@@ -25,5 +45,5 @@
 </dl>
 <h2>Sampling limits</h2>
 <ul><li>Opt-in scanner sample; missed crafts, revisits and OCR errors remain possible.</li><li>Encounter transitions do not prove a new craft. Separate identical encounters retain separate IDs.</li><li>Excluded incomplete reads and unsupported ranges can bias frequencies.</li><li>Rows within an artifact and crafts from one account can be correlated.</li><li>Confidence intervals exclude selection bias and recognition error.</li><li>Observed frequencies are not established game probabilities.</li></ul>
-<h2>Data</h2><dl><dt>Private account backup</dt><dd>Canonical history and counter ledger, independent of sharing consent. Artwork remains local.</dd><dt>Contribution retention</dt><dd>730 days from observation; withdrawal deletes contributions on reconnect.</dd><dt>Consent receipts</dt><dd>Minimal revocation receipts retained until account deletion.</dd><dt>Exports and deletion</dt><dd><a href="config.html#account-privacy">Account &amp; privacy</a></dd></dl>
-</main></body></html>
+<h2>Data</h2><dl><dt>Private account backup</dt><dd>Canonical history and counter ledger, independent of sharing consent. Artwork remains local.</dd><dt>Contribution retention</dt><dd>730 days from observation; withdrawal deletes contributions on reconnect.</dd><dt>Consent receipts</dt><dd>Minimal revocation receipts retained until account deletion.</dd><dt>Exports and deletion</dt><dd>Account &amp; privacy</dd></dl>
+</main></div><script src="data/army_catalog.js?v=8"></script><script src="shared.js?v=20261019-rating-scale"></script><script src="profiles-ui.js?v=20261025-slate"></script></body></html>

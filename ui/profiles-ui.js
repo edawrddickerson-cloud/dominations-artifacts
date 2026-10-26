@@ -140,6 +140,8 @@
     }
 
     ensureLink("config.html", "Profiles");
+    ensureLink("privacy.html", "Privacy");
+    ensureLink("crafting-statistics.html", "Statistics Methods");
   }
 
   function ensureCouncilNav(nav) {

@@ -60,7 +60,7 @@ browserRun(async({evaluate})=>{
   refresh.click();resolveReport({status:'empty'});await new Promise(ok=>setTimeout(ok,0));
   assert('confirmed empty report clears stale results',document.querySelector('[data-community-expanded]').hidden&&!count.textContent&&exclusions.hidden&&status.textContent==='No crafts recorded');
   user=null;cloudListeners.forEach(fn=>fn({status:'signed-out'}));
-  assert('signed-out sharing offers a concise sign-in action',share.disabled&&!document.querySelector('[data-community-signin]').hidden);
+  assert('signed-out sharing names Profiles without a page link',share.disabled&&!document.querySelector('[data-community-signin]').hidden&&document.querySelector('[data-community-signin]').tagName==='SPAN');
   return checks;
  })()`);
  assert(result.length>=13);console.log('Sharing UI passed: '+result.length+' browser checks.');

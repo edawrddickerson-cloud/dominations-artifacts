@@ -78,7 +78,7 @@
       const sourceRow = source => `<li><span>${DN.esc(source.name)}<small>${DN.esc(source.role)}</small></span><b>${percent(source.value)}</b></li>`;
       return `<article class="active-total"><header><h3>${DN.esc(total.name)}</h3><strong class="${tone}">${percent(total.value)}</strong></header>` +
         '<div class="active-total-sources"><ul aria-label="Contributing artifacts">' + total.sources.map(sourceRow).join('') + '</ul></div></article>';
-    }).join('') : `<p class="totals-empty">${query ? 'No stats match your search.' : 'No active bonuses in this hall. Assign artifacts in <a href="collection.html">Collection</a> to build your totals.'}</p>`;
+    }).join('') : `<p class="totals-empty">${query ? 'No stats match your search.' : 'No active bonuses in this hall.'}</p>`;
   }
 
   async function refresh() {

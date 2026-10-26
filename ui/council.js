@@ -275,7 +275,7 @@
         scoreMode === "maxrow" && scores && i === scores.bestIndex ? " is-best-line" : "";
       return (
         `<div class="perk-row${highlight}${best}">` +
-        `<span class="perk-name">${line.name ? `<a class="council-stat-link" href="council-ratings.html?stat=${C.esc(encodeURIComponent(line.name))}" title="Edit ${C.esc(line.name)} ratings">${C.esc(line.name)}</a>` : C.blankSpan(C.BLANK)}</span>` +
+        `<span class="perk-name">${line.name ? C.esc(line.name) : C.blankSpan(C.BLANK)}</span>` +
         `<span class="perk-vals"><span class="perk-val-main">${
           line.value ? C.esc(line.value) : C.blankSpan(C.BLANK)
         }</span></span>` +

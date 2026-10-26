@@ -1,0 +1,48 @@
+{
+  "university_lines": 22,
+  "university_skills": 304,
+  "university_research_levels": 8443,
+  "library_lines": 5,
+  "library_topics": 116,
+  "library_chapters": 564,
+  "university_by_study": {
+    "Foundational Study": 100,
+    "Higher Education Study": 95,
+    "Strike Study": 109
+  },
+  "university_by_line": {
+    "Leonardo da Vinci": 11,
+    "Emperor Haile Selassie": 12,
+    "Hannibal Barca": 12,
+    "Sally Ride": 11,
+    "Harriet Tubman": 13,
+    "Empress Wu Zetian": 12,
+    "Sun Tzu": 11,
+    "Nikola Tesla": 12,
+    "Ransom E. Olds": 12,
+    "Barracks": 31,
+    "Catherine the Great": 11,
+    "Towers": 22,
+    "Factory": 25,
+    "Defenders": 17,
+    "Airstrip": 14,
+    "King Sejong": 11,
+    "Sultan Saladin": 11,
+    "Suleiman the Magnificent": 11,
+    "Emperor Moctezuma": 11,
+    "Mansa Musa": 11,
+    "Chief Hiawatha": 11,
+    "Amelia Earhart": 12
+  },
+  "library_by_line": {
+    "Archaeology": 9,
+    "Basic Economics": 9,
+    "League of Nations": 9,
+    "State of Defense": 13,
+    "Through the Ages": 76
+  },
+  "missing_age_gates": 0,
+  "missing_effects": 0,
+  "issues": 15,
+  "conflicting_age_topics": 9
+}

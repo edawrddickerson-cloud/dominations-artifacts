@@ -65,6 +65,24 @@
   ];
   const retiredById = new Map(retiredDefaults.map(purpose=>[purpose.id,purpose]));
   const categories = ['attacking','defensive','economy'];
+  // Rare cards intentionally include only the named unit's HP/damage lines.
+  // Broader troop buffs, linked units and building debuffs are normal targets.
+  const rareDefinitions = DN.ARMY_UNIT_FAMILIES.flatMap(unit => [false,true].map(invading => {
+    const stats = new Set(names.filter(name => {
+      const scope = DN.perkArmyScope(name.replace(/^Invading /, ''));
+      return /^Invading /.test(name) === invading && !/^Enemy /.test(name) &&
+        ['damage','hp','combined'].includes(metadata[name].kind) && scope?.kind === 'unit' && scope.unit === unit;
+    }));
+    return {id:'rare-'+(invading?'invading-':'')+slug(unit),label:(invading?'Invading ':'')+unit,
+      stats,rare:true,addOns:{}};
+  })).filter(entry => entry.stats.size);
+  const rareById = new Map(rareDefinitions.map(entry => [entry.id,entry]));
+  const definitionFor = (id,state) => {
+    if(byId.has(id))return byId.get(id);
+    const preset=rareById.get(id);if(!preset)return null;
+    const mode=(state || settings()).rareModes[id] || 'all';
+    return {...preset,mode,stats:new Set([...preset.stats].filter(name=>mode==='all' || metadata[name].kind===mode || metadata[name].kind==='combined'))};
+  };
   const definitions = [], byId = new Map();
   let factoryDefaults = {}, ratingLayers = {global:{},profile:{}};
   const validWeight = value => Number.isInteger(value) && value >= 0 && value <= 10;
@@ -196,7 +214,10 @@
     const selected=legacySelected.filter(id=>seen.has(id));if(combined)selected.unshift(combined.id);
     selected.push(...importedArmies);
     const activeId=seen.has(raw?.activeId)?raw.activeId:selected[0]||entries[0]?.id||null;
-    const state={version:6,selected,activeId,customPurposes:entries};
+    const rareDefaults=Object.fromEntries(rareDefinitions.map(preset=>[preset.id,3]));
+    const rareCards=Object.fromEntries(Object.entries(raw?.rareCards ?? rareDefaults).filter(([id,count])=>rareById.has(id) && [3,4].includes(count)));
+    const rareModes=Object.fromEntries(Object.entries(raw?.rareModes || {}).filter(([id,mode])=>rareById.has(id) && ['all','damage','hp'].includes(mode)));
+    const state={version:6,selected,activeId,customPurposes:entries,rareCards,rareModes};
     if(raw?.legacyPurposeRatings)state.legacyPurposeRatings=raw.legacyPurposeRatings;
     if(raw?.legacySelections)state.legacySelections=raw.legacySelections;
     if(raw?.legacyTargets)state.legacyTargets=raw.legacyTargets;
@@ -262,6 +283,16 @@
     const state=settings();if(!byId.has(id))return;
     state.selected=enabled?[...new Set([...state.selected,id])]:state.selected.filter(value=>value!==id);save(state);
   }
+  function setRareCard(id,count) {
+    if(!rareById.has(id) || ![0,3,4].includes(count))throw Error('Choose Off, 4× only or 3× and 4×.');
+    const state=settings();
+    if(count)state.rareCards[id]=count;else delete state.rareCards[id];
+    save(state);
+  }
+  function setRareMode(id,mode) {
+    if(!rareById.has(id) || !['all','damage','hp'].includes(mode))throw Error('Choose Damage & HP, Damage or Hitpoints.');
+    const state=settings();state.rareModes[id]=mode;save(state);
+  }
   function setActive(id) {
     const state=settings();if(id!==null&&!byId.has(id))return;
     state.activeId=id;save(state);
@@ -276,7 +307,7 @@
     }
     DN.saveProfilePerkOverrides(DN.activeProfileId(),profile);
   }
-  function configure(id,patch) {settings();const purpose=byId.get(id);if(!purpose)throw Error('Choose a saved target.');updateRatings(patch.weights||{},purpose.stats);}
+  function configure(id,patch) {settings();const purpose=definitionFor(id);if(!purpose)throw Error('Choose a saved target.');updateRatings(patch.weights||{},purpose.stats);}
   function setRating(name,value) {updateRatings({[name]:value},new Set(names));}
   function ratingRows(id,perks) {
     return [...new Set(perks)].sort((a,b)=>a.localeCompare(b)).map(name=>{
@@ -302,7 +333,7 @@
   let cachedOwned, cachedCanon;
   const benchmarks = new Map();
   function evaluate(result, {type, hall, owned, canonPerk = name => name, available = true, selected}) {
-    settings();
+    const state=settings();
     const core = window.DNScannerComparisonCore;
     const normalizedType = typeName(type), normalizedHall = hallName(hall);
     if (cachedOwned !== owned || cachedCanon !== canonPerk) { benchmarks.clear(); cachedOwned = owned; cachedCanon = canonPerk; }
@@ -322,10 +353,10 @@
       return {name, value: Math.abs(row.value) + 9};
     });
     uncertain ||= rows.length !== 5 || !!result?.partial || !!result?.provisional;
-    return selected.filter(id => byId.has(id)).map(id => {
-      const purpose = byId.get(id);
+    return selected.filter(id => definitionFor(id,state)).map(id => {
+      const purpose = definitionFor(id,state);
       const score = readable ? scoreRows(potentialRows, purpose) : null;
-      const lines = potentialRows.filter(row => purpose.stats.has(row.name) && sharedRating(row.name) > 0).length;
+      const lines = potentialRows.filter(row => purpose.stats.has(row.name) && (purpose.rare || sharedRating(row.name) > 0)).length;
       const effectiveWeights = [...purpose.stats].sort().map(name => [name, sharedRating(name)]);
       const cacheKey = JSON.stringify([id, normalizedHall, normalizedType, effectiveWeights]);
       if (validCategory && !benchmarks.has(cacheKey)) {
@@ -348,7 +379,9 @@
       const benchmark = benchmarks.get(cacheKey) || {candidates: [], incomplete: 0};
       const threshold = benchmark.candidates[1]?.score ?? null;
       const missingSources=sourceIssues(purpose);
+      const requiredLines=purpose.rare ? state.rareCards[id] : null;
       let status = !result || score === null ? 'waiting' : !validCategory ? 'category' : !available || missingSources.length ? 'unavailable' :
+        purpose.rare && (!requiredLines || lines < requiredLines || uncertain) ? 'pattern' :
         score <= 0 ? 'irrelevant' : threshold !== null && score <= threshold ? 'owned' :
         benchmark.incomplete ? 'review' : threshold === null ? 'vacancy' : 'better';
       const contributions=rows.slice(0,5).map((row,index)=>{
@@ -356,20 +389,20 @@
         return {name,included,weight:included?sharedRating(name):null,score:included && usable?potentialRows[index].value*sharedRating(name):null,
           uncertain:!!row.assumed || !!row.inferred || !!row.inferredFields?.length};
       });
-      return {id, label: purpose.label, score, contributions, lines, threshold, best: benchmark.candidates[0]?.score ?? null,
+      return {id, label: purpose.label, rare:!!purpose.rare, mode:purpose.mode, perks:purpose.rare?[...purpose.stats]:undefined, requiredLines, score, contributions, lines, threshold, best: benchmark.candidates[0]?.score ?? null,
         count: benchmark.candidates.length, incomplete: benchmark.incomplete, uncertain, status, missingSources,
         hit: status === 'vacancy' || status === 'better'};
     });
   }
 
   function scoringOptions(id,base) {
-    settings();const purpose=byId.get(id);if(!purpose || !base)return null;
+    settings();const purpose=definitionFor(id);if(!purpose || !base)return null;
     return {...base,targetScoring:true,prefSortAxes:{offensive:true,defensive:true},
       ratingOf:(name,axis)=>purpose.stats.has(name) && axisFor(name)===axis?sharedRating(name):0};
   }
 
   window.DNCraftingPurposes={get definitions(){settings();return definitions;},get choices(){return choices;},settings,saveCustom,saveCustoms,removeCustom,configure,setRating,selectPurpose,setActive,candidatePerks,includedPerks,baseCandidatePerks,baseIncludedPerks,primaryCategory,sourceIssues,axisFor,categoryFor,ratingRows,evaluate,renderGrouped,
-    ratingOf:sharedRating,scoringOptions,
+    ratingOf:sharedRating,scoringOptions,rareDefinitions,setRareCard,setRareMode,
     editCustom:id=>window.DNCraftingPurposeEditor?.edit(id),
     setDefaults(defaults,canonPerk=name=>name){factoryDefaults=Object.fromEntries(Object.entries(defaults).map(([name,entry])=>[canonPerk(name),entry]));benchmarks.clear();window.dispatchEvent(new CustomEvent('dn-crafting-purposes-changed'));}
   };

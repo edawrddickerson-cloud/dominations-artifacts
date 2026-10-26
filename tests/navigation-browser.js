@@ -19,6 +19,8 @@
     'totals.html':()=>view().DN,
     'scanner.html':()=>view().DNScannerReading&&doc().querySelector('#scanner-connect'),
     'storage-scanner.html':()=>view().DNScannerReading&&doc().querySelector('#scanner-connect'),
+    'privacy.html':()=>doc().querySelector('.ui-document'),
+    'crafting-statistics.html':()=>doc().querySelector('.ui-document'),
   };
   async function ready(page,previous) {
     await wait(()=>view().location.pathname.endsWith('/'+page)&&doc()!==previous&&doc().readyState==='complete'&&readiness[page]());
@@ -58,9 +60,12 @@
   check('Browser Back updates only the main page',sidebarIdentity());
   previous=doc();history.forward();await ready('council-ratings.html',previous);
   check('Browser Forward updates only the main page',sidebarIdentity());
-  // Direct links in the page use the same persistent shell.
-  await open('council.html');previous=doc();const statLink=doc().querySelector('.council-stat-link'),stat=new URL(statLink.href).searchParams.get('stat');statLink.click();await ready('council-ratings.html',previous);
-  check('Stat links retain the shell and their query',sidebarIdentity()&&new URL(location.href).searchParams.get('stat')===stat&&doc().getElementById('ratings-q').value===stat);
+  await open('council.html');
+  check('Council stat names do not duplicate side-menu navigation',!doc().querySelector('main a[href*=".html"],.perk-name a[href]'));
+  await open('council-ratings.html');
+  check('Council ratings opens through the side menu',sidebarIdentity()&&!!doc().getElementById('ratings-q'));
+  await open('privacy.html');check('Privacy opens inside the persistent shell',sidebarIdentity()&&!!doc().querySelector('.ui-document'));
+  await open('crafting-statistics.html');check('Statistics methods opens inside the persistent shell',sidebarIdentity()&&!!doc().querySelector('.ui-document'));
   await open('ratings.html');
   const originalProfile=view().DN.activeProfileId();
   const headerBounds=header.getBoundingClientRect();view().scrollTo(0,350);

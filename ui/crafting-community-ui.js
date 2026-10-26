@@ -7,9 +7,8 @@
   root.innerHTML='<div class="crafted-stats-controls">'+
     '<label>Category <select data-community="category"><option value="">All</option>'+['weapon','armor','jewelry','pottery','equipment','unknown'].map(v=>'<option value="'+v+'">'+v[0].toUpperCase()+v.slice(1)+'</option>').join('')+'</select></label>'+
     '<label>Event <select data-community="event"><option value="">All</option><option value="unknown">Unknown</option></select></label>'+
-    '<button type="button" class="btn" data-community-refresh>Refresh</button></div><p data-community-opt-in><label><input type="checkbox" data-community-share> Share crafted stats</label> <a href="config.html#account-privacy" data-community-signin hidden>Sign in to share</a></p><p role="status" data-community-sharing></p><p role="status" data-community-status></p><p data-community-count></p><dl data-community-exclusions hidden></dl>'+
-    '<div data-community-expanded hidden><div class="crafted-stats-scroll"><table><thead><tr><th>Perk</th><th>Rating</th><th>Items</th><th>Item frequency</th><th>Rows</th><th>1%</th><th>6%</th><th>11%</th><th>Copies per artifact · all positions</th></tr></thead><tbody data-community-frequency></tbody></table></div></div>'+
-    '<p><a href="crafting-statistics.html">Methods and sampling limits</a></p>';
+    '<button type="button" class="btn" data-community-refresh>Refresh</button></div><p data-community-opt-in><label><input type="checkbox" data-community-share> Share crafted stats</label> <span data-community-signin hidden>Sign in through Profiles to share</span></p><p role="status" data-community-sharing></p><p role="status" data-community-status></p><p data-community-count></p><dl data-community-exclusions hidden></dl>'+
+    '<div data-community-expanded hidden><div class="crafted-stats-scroll"><table><thead><tr><th>Perk</th><th>Rating</th><th>Items</th><th>Item frequency</th><th>Rows</th><th>1%</th><th>6%</th><th>11%</th><th>Copies per artifact · all positions</th></tr></thead><tbody data-community-frequency></tbody></table></div></div>';
   const log=anchor.querySelector('#crafting-log-details');if(log)log.before(root);else anchor.append(root);
   const controls=window.DNCraftingStatsTables.pageControls(root,'community');
   const frequency=window.DNCraftingStatsTables.frequency(root.querySelector('[data-community-frequency]'));

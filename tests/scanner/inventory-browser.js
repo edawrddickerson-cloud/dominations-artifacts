@@ -121,7 +121,7 @@
   await wait(()=>totalsFrame.contentDocument?.querySelector('.active-total'));
   const totalsText=()=>totalsFrame.contentDocument.getElementById('totals-list').textContent;
   check('dedicated totals include captured unlocked stats',totalsText().includes('+26%') && !totalsText().includes('Invading Generals'));
-  check('filters show scanner button without blurb or value toggles',!!doc.querySelector('.collection-controls a.collection-scanner-link[href^="storage-scanner.html"]') && !doc.getElementById('mode-max') && !doc.querySelector('.collection-hint'));
+  check('filters use side-menu navigation without scanner shortcut or value toggles',!doc.querySelector('.collection-controls a[href*=".html"]') && !doc.getElementById('mode-max') && !doc.querySelector('.collection-hint'));
   check('perk metadata hidden',!doc.getElementById('collection-list').textContent.includes('Max ') && !doc.getElementById('collection-list').textContent.includes('Unlocked'));
   check('every stat has a value editor',doc.querySelectorAll('#collection-list .collection-perk-value').length===10);
   check('every stat has minus and plus buttons',doc.querySelectorAll('#collection-list [data-action="lvl"]').length===20);

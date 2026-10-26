@@ -131,7 +131,7 @@
     targetPicker.querySelector('summary').textContent = `Collection targets (${selectedTargets.length})`;
     targetPicker.querySelector('.strategy-comparison-options').innerHTML = rankingTargets.length
       ? rankingTargets.map(target => `<label><input type="checkbox" data-ranking-target value="${esc(target.id)}"${ids.includes(target.id) ? ' checked' : ''}/> ${esc(target.label)}</label>`).join('')
-      : '<a href="ratings.html#crafting-purposes">Create target</a>';
+      : '<span class="ui-picker-empty">No collection targets</span>';
     if (sortState.key.startsWith('target:') && !selectedTargets.some(target => 'target:' + target.id === sortState.key)) {
       sortState = {key: resolvePrefSortKey('preference'), dir: -1};
     }

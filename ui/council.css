@@ -1,7 +1,5 @@
 /* Council-specific layout overrides (shared chrome lives in styles.css). */
 
-.council-stat-link { color: inherit; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: .2em; }
-.council-stat-link:hover, .council-stat-link:focus-visible { color: var(--accent); }
 .page-council-ratings #ratings-grid { width: min(100%, 60rem); min-width: 36rem; }
 /* Keep absolute screen-reader labels inside the horizontal scroll region. */
 .page-council-ratings .ratings-page-scroll { position: relative; }

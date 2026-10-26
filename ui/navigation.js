@@ -19,6 +19,8 @@
     "ratings.html",
     "council-ratings.html",
     "config.html",
+    "privacy.html",
+    "crafting-statistics.html",
   ]);
   const file = location.pathname.split("/").pop() || "";
 

@@ -18,6 +18,8 @@ All 16 first-party routes are classified in `consumers.json`. All styled documen
 
 Native field appearances, buttons/segments, picker surfaces/triggers, rating inputs, basic tables and dialogs have shared owners. Migrated local field appearances were removed. Local scanner geometry, stat/reroll colours, collection artwork/layouts and rating grids retain their domain behaviour. Shared helpers never decide selection/save state. Two unknown-OCR field appearance exceptions are recorded in the registry with their checks.
 
+First-party page links live in the side menu. Content shortcuts, linked stat names and empty-state navigation have been removed; Privacy and Statistics Methods now use the persistent shell and side-menu routes. Downloads, external references, contact links and entry/legacy redirect fallbacks remain available.
+
 `tests/design/gallery.html` imports production components and demonstrates fields, density, long values, invalid/disabled controls, selection pickers, inherited/override/zero ratings, numeric states, empty data and native dialogs. It stays outside deployed `ui/` assets.
 
 Run `node scripts/check_design_system.cjs` to check route coverage, foundation loading, measured token contrast and competing native-field/picker declarations. Exceptions name the exact selector, property values, domain reason and check. Add a shared variant instead of broadening exceptions for ordinary controls.
@@ -115,6 +117,8 @@ Add repeatable local gallery snapshots and a small set of representative page ba
 Completion gate: adding a component variant requires its specification, gallery state and affected verification together; a new page must name its recipe and shared components; every permitted exception has a reason and a check. No migrated page redefines base control appearance without an explicit variant.
 
 ## Validation mapping
+
+Control labels must be fully visible, including all toggle segments and native selected values. Follow the specification's Full control labels contract: measure rendered text bounds at every supported width and 200% text scaling. No-ellipsis CSS and page-overflow checks alone cannot prove text fits. New/changed bounded choices must add the longest labels and all states to the gallery and relevant browser checks; widen, wrap or reflow controls when text does not fit.
 
 The commands below were identified in the repository; run only the relevant set during implementation and follow `ui/AGENTS.md` when its requirements are broader. The numeric-input row invokes its existing browser wrapper, including real native stepper/keyboard checks. Documentation-only changes do not require replaying OCR fixtures.
 

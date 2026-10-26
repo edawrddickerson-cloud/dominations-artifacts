@@ -92,8 +92,9 @@
   const state=rw.DNCouncil.loadUi();
   const statKeys=[...rd.querySelectorAll('#tbody tr[data-id]')].map(r=>rw.DNCouncil.bonusesOf(data.find(item=>item.id===r.dataset.id),state.mode,state.rarity).map(b=>b.stat+' '+b.value).join('; ').toLowerCase());
   check('Stats sort follows names and bonuses',statKeys.every((n,i)=>i===0||statKeys[i-1]<=n));
-  const deep=await frame(rd.querySelector('.council-stat-link').href,d=>d.querySelector('input[data-layer="council"]'));
-  check('Stat links open a filtered Council rating',deep.contentDocument.getElementById('ratings-q').value===new URL(deep.src).searchParams.get('stat')&&deep.contentDocument.querySelectorAll('tr[data-stat]').length===1);deep.remove();
+  check('Council stat names are plain text',!rd.querySelector('.council-stat-link'));
+  const deep=await frame('/ui/council-ratings.html?stat='+encodeURIComponent(rd.querySelector('.perk-name').textContent.trim()),d=>d.querySelector('input[data-layer="council"]'));
+  check('Existing deep URLs still open a filtered Council rating',deep.contentDocument.getElementById('ratings-q').value===new URL(deep.src).searchParams.get('stat')&&deep.contentDocument.querySelectorAll('tr[data-stat]').length===1);deep.remove();
   const rankingsBefore=rd.querySelector('#tbody').textContent;
   const other=artifact.contentWindow.DN,bag=other.loadProfilePerkOverrides(other.activeProfileId());bag[name]={offensive:-7,defensive:6};
   other.saveProfilePerkOverrides(other.activeProfileId(),bag);

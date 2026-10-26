@@ -322,7 +322,7 @@
     const list = filteredRows();
     if (!ownedN) {
       el.list.innerHTML =
-        `<p class="collection-empty">No owned councilors for ${C.esc(modeLabel)} yet. Mark Own on the <a href="council.html">Council Priority</a> page while ${C.esc(modeLabel)} is selected.</p>`;
+        `<p class="collection-empty">No owned councilors for ${C.esc(modeLabel)}</p>`;
     } else if (!list.length) {
       el.list.innerHTML = `<p class="collection-empty">No owned councilors match these filters.</p>`;
     } else {

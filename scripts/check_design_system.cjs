@@ -3,6 +3,9 @@ const fs = require('node:fs'), path = require('node:path');
 const root = path.resolve(__dirname, '..'), ui = path.join(root,'ui');
 const manifest = JSON.parse(fs.readFileSync(path.join(root,'docs/design/consumers.json'),'utf8'));
 const failures = [];
+for(const rule of rules(fs.readFileSync(path.join(ui,'components.css'),'utf8'))){
+  if(/select|\.seg|\.btn/.test(rule.selector)&&rule.declarations.some(([property,value])=>property==='text-overflow'&&value==='ellipsis'))failures.push('Shared controls must display full labels; allocate width, wrap or reflow instead of ellipsis: '+rule.selector);
+}
 const themeLiterals=new Set([...Object.values(manifest.theme.tokens),'#1a1d21','#24282e','#2a2e34','#3a4048','#c4a35a']);
 function rules(source) {
   const result=[];let token='',quote='',comment=false,depth=0,selector='';

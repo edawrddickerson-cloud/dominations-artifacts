@@ -1,0 +1,160 @@
+[
+  {
+    "id": "client-dp-stateofdefense-e",
+    "issue": "Fandom index and supplemental Library level disagree",
+    "fandom": {
+      "name": "Protector",
+      "building_level": 6,
+      "age": "Industrial Age",
+      "line": "State of Defensive"
+    },
+    "supplemental_level": 2,
+    "action": "Conservative Fandom age retained; exclude from automatic availability recommendations until reviewed"
+  },
+  {
+    "id": "client-dp-stateofdefense-f",
+    "issue": "Fandom index and supplemental Library level disagree",
+    "fandom": {
+      "name": "Safeguard",
+      "building_level": 6,
+      "age": "Industrial Age",
+      "line": "State of Defensive"
+    },
+    "supplemental_level": 2,
+    "action": "Conservative Fandom age retained; exclude from automatic availability recommendations until reviewed"
+  },
+  {
+    "id": "client-dp-stateofdefense-g",
+    "issue": "Fandom index and supplemental Library level disagree",
+    "fandom": {
+      "name": "Disruption",
+      "building_level": 6,
+      "age": "Industrial Age",
+      "line": "State of Defensive"
+    },
+    "supplemental_level": 2,
+    "action": "Conservative Fandom age retained; exclude from automatic availability recommendations until reviewed"
+  },
+  {
+    "id": "client-dp-stateofdefense-h",
+    "issue": "Fandom index and supplemental Library level disagree",
+    "fandom": {
+      "name": "Stronghold",
+      "building_level": 6,
+      "age": "Industrial Age",
+      "line": "State of Defensive"
+    },
+    "supplemental_level": 2,
+    "action": "Conservative Fandom age retained; exclude from automatic availability recommendations until reviewed"
+  },
+  {
+    "id": "client-dp-stateofdefense-w",
+    "issue": "Fandom index and supplemental Library level disagree",
+    "fandom": {
+      "name": "Battle Stations",
+      "building_level": 13,
+      "age": "Space Age",
+      "line": "State of Defensive"
+    },
+    "supplemental_level": 3,
+    "action": "Conservative Fandom age retained; exclude from automatic availability recommendations until reviewed"
+  },
+  {
+    "id": "client-dp-stateofdefense-x",
+    "issue": "Fandom index and supplemental Library level disagree",
+    "fandom": {
+      "name": "Fortify",
+      "building_level": 13,
+      "age": "Space Age",
+      "line": "State of Defensive"
+    },
+    "supplemental_level": 3,
+    "action": "Conservative Fandom age retained; exclude from automatic availability recommendations until reviewed"
+  },
+  {
+    "id": "client-dp-stateofdefense-y",
+    "issue": "Fandom index and supplemental Library level disagree",
+    "fandom": {
+      "name": "Early Preparation",
+      "building_level": 13,
+      "age": "Space Age",
+      "line": "State of Defensive"
+    },
+    "supplemental_level": 3,
+    "action": "Conservative Fandom age retained; exclude from automatic availability recommendations until reviewed"
+  },
+  {
+    "id": "client-dp-stateofdefense-z",
+    "issue": "Fandom index and supplemental Library level disagree",
+    "fandom": {
+      "name": "Blackout",
+      "building_level": 13,
+      "age": "Space Age",
+      "line": "State of Defensive"
+    },
+    "supplemental_level": 3,
+    "action": "Conservative Fandom age retained; exclude from automatic availability recommendations until reviewed"
+  },
+  {
+    "id": "client-university-skill-12-800",
+    "issue": "Fandom and supplemental reference disagree on level gate or maximum",
+    "fandom": {
+      "url": "https://dominations.fandom.com/wiki/Hannibal_Barca",
+      "name": "Mercenary Damage",
+      "university_level": 1,
+      "effect_per_level": "+3% damage of Mercenary",
+      "levels": 5,
+      "requirements": "None"
+    },
+    "supplemental_level": 2,
+    "supplemental_max": 5
+  },
+  {
+    "id": "client-university-skill-12-801",
+    "issue": "Fandom and supplemental reference disagree on level gate or maximum",
+    "fandom": {
+      "url": "https://dominations.fandom.com/wiki/Hannibal_Barca",
+      "name": "Mysterious Fragments Increase",
+      "university_level": 1,
+      "effect_per_level": "+3% Mysterious Fragments received in battle",
+      "levels": 5,
+      "requirements": "None"
+    },
+    "supplemental_level": 2,
+    "supplemental_max": 5
+  },
+  {
+    "id": "client-university-skill-17-1307",
+    "issue": "Fandom and supplemental reference disagree on level gate or maximum",
+    "fandom": {
+      "url": "https://dominations.fandom.com/wiki/Nikola_Tesla",
+      "name": "Recon Deployment Cooldown",
+      "university_level": 11,
+      "effect_per_level": "Reduces the deployment cooldown of Recons by 1s",
+      "levels": 5,
+      "requirements": "G.C,I. Radar Building Limit Level 1"
+    },
+    "supplemental_level": 11,
+    "supplemental_max": 3
+  },
+  {
+    "id": "client-capstone-archaeology",
+    "issue": "Raw Library 1 gate alone is insufficient: bookcase completion raises earliest age",
+    "minimum_age": "Industrial Age"
+  },
+  {
+    "id": "client-capstone-basiceconomics",
+    "issue": "Raw Library 1 gate alone is insufficient: bookcase completion raises earliest age",
+    "minimum_age": "Enlightenment Age"
+  },
+  {
+    "id": "client-capstone-leagueofnations",
+    "issue": "Raw Library 1 gate alone is insufficient: bookcase completion raises earliest age",
+    "minimum_age": "Global Age"
+  },
+  {
+    "id": "client-capstone-stateofdefense",
+    "issue": "Raw Library 1 gate alone is insufficient: bookcase completion raises earliest age",
+    "minimum_age": "Space Age"
+  }
+]

@@ -22,8 +22,11 @@
     "fields-buttons-segments-rating-inputs-tables-dialogs-pickers": "ui/components.css",
     "picker-dismissal-placement-focus": "ui/design-ui.js",
     "shell-layout": "ui/app-shell.css",
+    "page-navigation": "ui/profiles-ui.js side menu; ui/navigation.js and ui/scanner-session.js include privacy and methodology documents. Page content has no first-party page links.",
     "page-and-domain-layout": "ui/styles.css and feature stylesheets",
     "gallery": "tests/design/gallery.html",
+    "target-view-tabs": "ui/components.css .crafting-purpose-tabs-five; ui/crafting-purpose-editor.js; ui/ratings.html #rating-defaults-panel; tests/design/gallery.html; scripts/test_crafting_purposes_ui.js and scripts/test_design_ui.cjs",
+    "full-label-segments": "ui/components.css .seg-equal; ui/crafting-purpose-editor.js; tests/design/gallery.html; scripts/test_design_ui.cjs rendered text bounds at every width and 200% text size",
     "ownership-check": "scripts/check_design_system.cjs",
     "rendered-check": "scripts/test_design_ui.cjs"
   },
@@ -50,6 +53,7 @@
     }
   ],
   "domainVariants": {
+    "crafting-purposes.css": "Single-unit rare preset rows compose two shared seg-equal groups for count and stat mode; groups stack below 901px and preserve full labels. scripts/test_design_ui.cjs measures rendered text bounds through 320px.",
     "crafted-log-stats.css": "Personal Stats, Community Stats and Probability Calculator use the shared Collection Targets tab family; responsive calculator input/result columns and aligned requirement fields use shared controls.",
     "scanner.css": "Five-stat/image grid, semantic stat/dice colours, compact live editing; at narrow widths a 7rem minimum name column with local keyboard-scrollable overflow.",
     "styles.css": "Museum tiles, slot controls, level steppers and collection comparison geometry remain domain compositions.",

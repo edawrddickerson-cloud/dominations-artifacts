@@ -18,6 +18,12 @@ Use flat `--panel` surfaces for toolbars, cards, settings sections and dialogs, 
 
 Collection Targets keeps the approved Slate composition: framed category tabs, flat saved-target rows, a subtle divider below the saved list, a framed name/action toolbar, neutral section headings, and a dashed divider between selection and rating panels. Narrow views stack the panels and move that divider to the top. Other pages apply the same surface/selection vocabulary to their existing compositions; do not copy this editor layout onto scanners or collections.
 
+Collection Targets has five views: Attacking, Defensive, Economy, Single Unit Rare Cards and Rating Defaults. The shared `.crafting-purpose-tabs-five` variant uses five columns, three below 901px, two below 641px and one below 361px; full labels wrap. Rating Defaults replaces the former Advanced ratings disclosure and owns the existing global/group/profile/strategy rating controls. Its DOM stays mounted across tab switches to retain filters and editing state. Only the selected view is visible. All five tabs support arrows, Home/End and one tab stop; category drafts survive every view switch.
+
+Blank and newly added Attacking target drafts start with Include All Enemy Building & Defender Debuffs checked. Users may uncheck it; that choice survives tab switches and explicit saves. Existing saved targets retain their selections. Defensive and Economy draft defaults are unchanged. Initial defaults are part of the clean draft baseline and do not create an unsaved-change warning by themselves.
+
+Each rare-card unit has two shared `.seg.seg-equal` controls: Matching lines (3× and 4× / 4× only / Off) and Stats (Damage & HP / Damage / Hitpoints). Defaults are 3× and 4× with Damage & HP. These profile settings save immediately; category target drafts retain their explicit-save lifecycle. The scanner combines enabled presets into one Single Unit Rare Card decision row, with strict owned top-two comparison for the matching unit, stat mode, hall and artifact type. Rarity uses the same stat mode in the Crafting Stats independent perk-roll model and labels its personal sample; insufficient data remains explicit.
+
 Avoid decorative brown/teal page gradients and local neutral palettes. Reserve shadows for overlays. Ownership/active equipment, signed effects, OCR uncertainty, stat tiers and scanner Keep/Discard remain distinct domain states with their documented colours. Theme work must not recolour these states into generic gold selection.
 
 ## Foundations
@@ -51,6 +57,14 @@ At 200% text scaling, keep controls and actions usable without clipped text. At 
 Every content document has one `main` landmark (native or equivalent role), a meaningful title and labelled sections; the persistent shell owns navigation and its skip-to-content action. Keep heading levels meaningful within each document. Keyboard users can reach and operate every control, see focus without it being hidden by sticky regions, dismiss pickers with Escape, and return from dialogs to their invoker. Disabled/invalid/loading/unknown/selected states must remain distinguishable beyond colour alone. Manual screen-reader, browser-native select popup and full zoom checks remain required for a conformance claim.
 
 ## Component contracts
+
+### Full control labels — required
+
+Always display complete option labels and selected values. Never use ellipsis, clipped text, line clamping or title-only disclosure to compensate for a control that is too narrow. This applies to native selects, segmented controls, buttons, tabs and picker triggers, including every side of a toggle. Allocate width from the longest option, including padding, borders and the native select arrow. If a complete native selected value cannot fit, reflow its container or use visible segmented choices; simply removing ellipsis does not fix clipping. Segments may wrap their labels and grow vertically while keeping every choice visible.
+
+Verify real rendered text bounds, not only document overflow or CSS widths, at 1440, 1024, 768, 390 and 320px and with 200% text scaling. Exercise every label and selection, including disabled/off states and long names. The design guard rejects ellipsis in shared control primitives; the rendered review checks actual rare-toggle text bounds and focus. A screenshot with clipped control text fails review even if automated overflow checks pass.
+
+The shared `.seg-equal` variant gives each choice an equal grid column, permits full-label wrapping and preserves `.seg-btn` appearance, pressed state and keyboard focus. Use it for visible two/three-way choices. Domain CSS may stack the groups, but must not truncate the individual labels.
 
 The shared owner is `ui/components.css`, loaded by `ui/styles.css`. Public classes include `.btn`, `.btn-primary`, `.btn-accent`, `.btn-quiet`, `.btn-choice`, `.btn-danger`, `.btn-small`, `.btn-prominent`, `.ui-compact`, `.seg`, `.seg-btn`, `.rating-input`, `.th-sort` (including the statistics `.crafted-stats-sort` alias) and `.ui-document`. Native fields use element selectors. Existing picker classes are supported by the same owner to avoid rebuilding stateful consumer DOM. `ui/design-ui.js` owns presentation-only dismissal, focus return and viewport placement.
 
@@ -108,7 +122,7 @@ Use Collection Target for the current saved target entity. Keep Strategy and Pur
 
 ### Page composition and responsive behaviour
 
-Keep a single persistent shell owning navigation, global profile and context controls. Embedded documents own page content. Use the existing allowlist/routing model and preserve current links, history, capture lifetime and OAuth handoff.
+Keep a single persistent shell owning navigation, global profile and context controls. Embedded documents own page content. First-party page navigation belongs in the side menu, including Privacy and Statistics Methods. Do not repeat page links or navigation buttons inside page content, dialogs, notices, pickers or empty states; stat names remain plain text. Keep download actions, external references, contact links and entry/legacy redirect fallbacks. Use the existing allowlist/routing model and preserve history, capture lifetime and OAuth handoff. Privacy and methodology documents use the same shell so their side-menu routes remain reachable.
 
 For browsing pages, use a compact filter toolbar, result count and main table/cards. For editors, use a target/list context and an editing panel with explicit save actions where required. For collection pages, retain museum slots and artwork before detail/comparison. For statistics, keep calculator, context, results and evidence hierarchy. For scanner pages, retain their specialised live workspace.
 

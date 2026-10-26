@@ -4,6 +4,9 @@
   const root=document.querySelector('[data-crafting-purposes]'),service=window.DNCraftingPurposes,DN=window.DN;
   if(!root||!service)return;
   const categories=[['attacking','Attacking'],['defensive','Defensive'],['economy','Economy']];
+  const tabs=[...categories,['rare','Single Unit Rare Cards'],['ratings','Rating Defaults']];
+  let rareView=location.hash==='#rare';
+  let ratingsView=location.hash==='#ratings';
   const drafts=new Map();
   const statOrders=new Map();
   let savingRating=false,savingTargets=false,renderedKey=null;
@@ -12,7 +15,7 @@
   let category=requestedCategory||'attacking';
   let statSort=DN.lsGet('dn-target-stat-sort')||'name';
   if(!['name','name-desc','rating-desc','rating-asc'].includes(statSort))statSort='name';
-  const fresh=()=>({id:null,label:'',category,selections:[],perks:[],excludedPerks:[],addOns:{}});
+  const fresh=(targetCategory=category)=>({id:null,label:'',category:targetCategory,selections:targetCategory==='attacking'?['attack-enemy-buildings']:[],perks:[],excludedPerks:[],addOns:{}});
   const dirty=()=>draft && JSON.stringify(draft)!==baseline;
   const firstId=(state,category)=>state.customPurposes.find(purpose=>purpose.category===category)?.id||null;
   const orderKey=()=>profileId+':'+category+':'+(draft.id||'new');
@@ -38,6 +41,12 @@
   function setStatus(message) {status=message;const node=root.querySelector('[data-purpose-settings-status]');if(node){node.textContent=message;node.hidden=!message;}}
   function unsavedStatus() {setStatus(dirty()?'Unsaved target changes. Save this target to update the scanner.':'');}
   function switchCategory(next) {
+    if(['rare','ratings'].includes(next) || (rareView || ratingsView) && next===category){
+      rareView=next==='rare';ratingsView=next==='ratings';history.replaceState(null,'','#'+next);render();
+      root.querySelector('[data-crafting-tab="'+next+'"]').focus();return;
+    }
+    rareView=false;
+    ratingsView=false;
     if(next===category)return;
     drafts.set(profileId+':'+category,{draft,baseline});
     category=next;
@@ -72,9 +81,12 @@
     const focusedPerk=root.contains(document.activeElement)&&document.activeElement.matches('[data-purpose-weight]')?document.activeElement.dataset.perk:null;
     const state=service.settings();ensureDraft(state);
     const sameTarget=renderedKey===orderKey();
+    const activeTab=ratingsView?'ratings':rareView?'rare':category;
+    document.getElementById('rating-defaults-panel').hidden=!ratingsView;
     root.innerHTML=
-      '<div class="crafting-purpose-tabs" role="tablist" aria-label="Target selections">'+categories.map(([id,label])=>'<button type="button" id="crafting-tab-'+id+'" role="tab" aria-selected="'+(category===id)+'" aria-controls="purpose-section-panel" tabindex="'+(category===id?'0':'-1')+'" data-crafting-tab="'+id+'">'+label+'</button>').join('')+'</div>'+
-      '<div id="purpose-section-panel" role="tabpanel" aria-labelledby="crafting-tab-'+category+'">'+
+      '<div class="crafting-purpose-tabs crafting-purpose-tabs-five" role="tablist" aria-label="Target selections">'+tabs.map(([id,label])=>'<button type="button" id="crafting-tab-'+id+'" role="tab" aria-selected="'+(activeTab===id)+'" aria-controls="'+(id==='ratings'?'rating-defaults-panel':'purpose-section-panel')+'" tabindex="'+(activeTab===id?'0':'-1')+'" data-crafting-tab="'+id+'">'+label+'</button>').join('')+'</div>'+
+      '<div id="purpose-section-panel" role="tabpanel" aria-labelledby="crafting-tab-'+(rareView?'rare':category)+'"'+(ratingsView?' hidden':'')+'>'+
+      (ratingsView?'':rareView?renderRareCards(state):
       '<div class="purpose-saved-toolbar"><div class="purpose-saved-list"><table class="purpose-saved-table"><thead><tr><th scope="col">Target</th><th scope="col">Flag in crafting scanner</th></tr></thead><tbody>'+state.customPurposes.filter(purpose=>purpose.category===category).map(purpose=>'<tr class="purpose-saved-choice"><td><button type="button" class="btn btn-choice" data-purpose-edit="'+purpose.id+'" aria-pressed="'+(purpose.id===draft.id)+'">'+DN.esc(purpose.label)+'</button></td><td><input type="checkbox" data-purpose-enabled="'+purpose.id+'"'+(state.selected.includes(purpose.id)?' checked':'')+' aria-label="'+DN.esc('Flag '+purpose.label+' in crafting scanner')+'" /></td></tr>').join('')+'</tbody></table></div>'+
       '<div class="purpose-new-action"><button type="button" class="btn btn-primary btn-prominent purpose-new-button" data-purpose-new><span aria-hidden="true">+</span> Add target</button></div></div>'+
       '<div class="purpose-editor-heading"><label>Target name <input type="text" maxlength="60" data-purpose-name placeholder="For example, General defence or Anti-bomber" /></label>'+
@@ -82,7 +94,8 @@
       '<p data-purpose-settings-status role="status"></p><div class="crafting-purpose-layout"><div class="crafting-purpose-selection">'+
       '<div id="purpose-selection-panel">'+
       '<div class="crafting-purpose-options">'+renderChoices()+'</div>'+renderSources(state)+'</div></div>'+
-      '<aside class="crafting-purpose-configuration" aria-labelledby="purpose-configuration-title"><div class="purpose-config-heading"><h3 id="purpose-configuration-title"><button type="button" data-purpose-sort-column="name">Target settings <span aria-hidden="true"></span></button></h3><h3><button type="button" data-purpose-sort-column="rating">Rating <span aria-hidden="true"></span></button></h3></div><div class="purpose-weight-list purpose-combined-list" data-purpose-config-list></div></aside></div></div>';
+      '<aside class="crafting-purpose-configuration" aria-labelledby="purpose-configuration-title"><div class="purpose-config-heading"><h3 id="purpose-configuration-title"><button type="button" data-purpose-sort-column="name">Target settings <span aria-hidden="true"></span></button></h3><h3><button type="button" data-purpose-sort-column="rating">Rating <span aria-hidden="true"></span></button></h3></div><div class="purpose-weight-list purpose-combined-list" data-purpose-config-list></div></aside></div>')+'</div>';
+    if(rareView || ratingsView)return;
     root.querySelector('[data-purpose-name]').value=draft.label;
     renderConfiguration();setStatus(status||(dirty()?'Unsaved target changes. Save this target to update the scanner.':''));
     if(sameTarget) {
@@ -90,6 +103,13 @@
       root.querySelector('[data-purpose-config-list]').scrollTop=previousScroll;
     }
     renderedKey=orderKey();
+  }
+  function renderRareCards(state) {
+    const segments=(preset,kind,label,options,current)=>'<fieldset class="seg-field"><legend>'+label+'</legend><div class="seg seg-equal" role="group" aria-label="'+DN.esc(preset.label+' '+label)+'">'+options.map(([value,text])=>'<button type="button" class="seg-btn" data-rare-'+kind+'="'+preset.id+'" data-value="'+value+'" aria-pressed="'+(value===current)+'">'+text+'</button>').join('')+'</div></fieldset>';
+    return '<div class="purpose-rare-list">'+service.rareDefinitions.map(preset=>
+      '<section class="purpose-rare-row" aria-label="'+DN.esc(preset.label)+'"><h3 class="purpose-rare-name">'+DN.esc(preset.label)+'</h3>'+
+      segments(preset,'count','Matching lines',[[3,'3× and 4×'],[4,'4× only'],[0,'Off']],state.rareCards[preset.id]||0)+
+      segments(preset,'mode','Stats',[['all','Damage &amp; HP'],['damage','Damage'],['hp','Hitpoints']],state.rareModes[preset.id]||'all')+'</section>').join('')+'</div>';
   }
   function renderConfiguration(sortNow=false) {
     const container=root.querySelector('[data-purpose-config-list]');if(!container)return;
@@ -182,7 +202,7 @@
           }else {
             const state=service.settings();
             for(const [key,value] of pending) {
-              const saved=state.customPurposes.find(entry=>entry.id===value.draft.id)||{id:null,label:'',category:value.draft.category,selections:[],perks:[],excludedPerks:[],addOns:{}};
+              const saved=state.customPurposes.find(entry=>entry.id===value.draft.id)||fresh(value.draft.category);
               drafts.set(key,{draft:structuredClone(saved),baseline:JSON.stringify(saved)});
             }
           }
@@ -205,7 +225,7 @@
   async function edit(id) {
     if(dirty()&&!await resolveUnsaved(false))return;
     const state=service.settings();if(!state.customPurposes.some(purpose=>purpose.id===id))return;
-    loadDraft(state,id);history.replaceState(null,'','#'+category);service.setActive(id);render();root.scrollIntoView({block:'start'});
+    rareView=false;ratingsView=false;loadDraft(state,id);history.replaceState(null,'','#'+category);service.setActive(id);render();root.scrollIntoView({block:'start'});
   }
   root.addEventListener('input',event=>{
     if(event.target.matches('[data-purpose-name]')){draft.label=event.target.value;unsavedStatus();}
@@ -242,6 +262,11 @@
   });
   root.addEventListener('click',async event=>{
     const target=event.target.closest('button');if(!target)return;
+    if(target.matches('[data-rare-count],[data-rare-mode]')){
+      const kind=target.hasAttribute('data-rare-count')?'count':'mode',id=target.getAttribute('data-rare-'+kind),value=target.dataset.value;
+      if(kind==='count')service.setRareCard(id,Number(value));else service.setRareMode(id,value);
+      root.querySelector('[data-rare-'+kind+'="'+id+'"][data-value="'+value+'"]').focus({preventScroll:true});return;
+    }
     if(target.matches('[data-purpose-sort-column]')) {
       statSort=target.dataset.purposeSortColumn==='name'?(statSort==='name'?'name-desc':'name'):(statSort==='rating-desc'?'rating-asc':'rating-desc');
       DN.lsSet('dn-target-stat-sort',statSort);renderConfiguration(true);return;
@@ -261,8 +286,8 @@
   });
   root.addEventListener('keydown',event=>{
     const tab=event.target.closest('[data-crafting-tab]');if(!tab)return;
-    const index=categories.findIndex(([id])=>id===category),next=event.key==='ArrowRight'?(index+1)%3:event.key==='ArrowLeft'?(index+2)%3:event.key==='Home'?0:event.key==='End'?2:-1;
-    if(next<0)return;event.preventDefault();root.querySelector('[data-crafting-tab="'+categories[next][0]+'"]').click();
+    const index=tabs.findIndex(([id])=>id===(ratingsView?'ratings':rareView?'rare':category)),next=event.key==='ArrowRight'?(index+1)%tabs.length:event.key==='ArrowLeft'?(index+tabs.length-1)%tabs.length:event.key==='Home'?0:event.key==='End'?tabs.length-1:-1;
+    if(next<0)return;event.preventDefault();root.querySelector('[data-crafting-tab="'+tabs[next][0]+'"]').click();
   });
   window.DNCraftingPurposeEditor={edit,canLeave:()=>resolveUnsaved(true)};
   document.addEventListener('click',async event=>{
@@ -274,7 +299,7 @@
     if(await resolveUnsaved())location.assign(url.href);
   },true);
   window.addEventListener('beforeunload',event=>{if(pendingDrafts().length){event.preventDefault();event.returnValue='';}});
-  window.addEventListener('hashchange',()=>{if(categories.some(([id])=>location.hash==='#'+id))switchCategory(location.hash.slice(1));});
+  window.addEventListener('hashchange',()=>{if(tabs.some(([id])=>location.hash==='#'+id))switchCategory(location.hash.slice(1));});
   for(const event of ['dn-crafting-purposes-changed','focus','storage'])window.addEventListener(event,render);
   for(const id of ['header-main','header-war'])document.getElementById(id)?.addEventListener('click',render);
   render();

@@ -4,7 +4,7 @@
   let frame = document.getElementById('scanner-view');
   const main = document.querySelector('.app-shell-main');
   const directory = location.pathname.slice(0, location.pathname.lastIndexOf('/') + 1);
-  const pages = new Set(['ratings.html','artifacts.html','collection.html','totals.html','scanner.html','crafting-stats.html','storage-scanner.html','council.html','council-collection.html','council-ratings.html','config.html']);
+  const pages = new Set(['ratings.html','artifacts.html','collection.html','totals.html','scanner.html','crafting-stats.html','storage-scanner.html','council.html','council-collection.html','council-ratings.html','config.html','privacy.html','crafting-statistics.html']);
   let stream = null, nav = null, checking = false, restoring = null;
   let currentURL, currentIndex = 0;
   let header = null, headerObserver = null;

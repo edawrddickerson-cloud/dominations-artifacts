@@ -1764,8 +1764,6 @@ body.page-council-collection .app-main {
 .card-perks .stat-tier-blue { --stat-tier-text:#69cfeb; }
 .card-perks li[class*="stat-tier-"] .perk-name,
 .card-perks li[class*="stat-tier-"] .collection-perk-value { color:var(--stat-tier-text); }
-.collection-scanner-link { display:inline-flex; align-items:center; gap:.5rem; margin-left:auto; padding:.55rem .9rem; text-decoration:none; }
-.collection-scanner-link svg { width:1.15rem; height:1.15rem; flex:none; }
 .museum-workspace .museum-type-exhibits { display:block; }
 .museum-tile.is-highlighted { outline:2px solid var(--accent); }
 @media(max-width:1000px) { .museum-workspace { grid-template-columns:1fr; } .museum-inspector { position:static; } }
@@ -2408,7 +2406,6 @@ body.page-collection .app-main { height:auto; min-height:100vh; overflow:visible
 .active-total li small { display:inline; margin-left:.4rem; color:var(--muted); }
 .active-total li b { flex:none; font-variant-numeric:tabular-nums; }
 .active-totals-grid > .totals-empty { grid-column:1/-1; }
-.active-totals-grid .totals-empty a { color:var(--accent); }
 @media(max-width:650px) { .active-totals-page { padding:1rem; } .active-totals-heading .filter-control { width:100%; } }
 @media(max-width:800px) { .active-total { grid-template-columns:minmax(0,1fr); gap:.3rem; } .active-total-sources { border-left:0; border-top:1px solid var(--line); padding:.25rem 0 0; } }
 

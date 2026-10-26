@@ -66,8 +66,7 @@
       '<label><input type="checkbox" data-consent="diagnostics" id="'+prefix+'-diagnostics"><span><strong>Improve scanner reliability</strong><small>Share errors and scan performance.</small></span></label>'+
       '<label><input type="checkbox" data-consent="ocrFeedback" id="'+prefix+'-ocr-feedback"><span><strong>Improve OCR matching</strong><small>OCR names and corrections ? Sign-in required</small></span></label>'+
       '<label><input type="checkbox" data-consent="research" id="'+prefix+'-research"><span><strong>Contribute crafting research</strong><small>Structured craft records. No images.</small></span></label>'+
-      '</fieldset><p class="service-sharing-facts">No screenshots or full scan text.'+(prompt?' Sharing is optional.':'')+' <a href="privacy.html">Privacy details</a></p>'+
-      (prompt?'<p class="service-sharing-settings">Change anytime in <a href="config.html#account-privacy">Profiles → Account & Privacy</a>.</p>':'')+
+      '</fieldset><p class="service-sharing-facts">No screenshots or full scan text.'+(prompt?' Sharing is optional.':'')+'</p>'+
       '<div class="service-actions"><button type="button" class="btn'+(prompt?' profile-delete-confirm':'')+'" data-save-consent>'+(prompt?'Share selected data':'Save preferences')+'</button><button type="button" class="btn" data-reject-consent>'+(prompt?'No thanks':'Turn off sharing')+'</button></div><p class="service-privacy-status" role="status" aria-live="polite" aria-atomic="true" data-privacy-status></p><p data-ocr-status role="status" aria-live="polite"></p>';
   }
   function privacySummary(value) {
@@ -76,7 +75,7 @@
   function showPrivacyNotice(message) {
     document.querySelector('.service-consent-notice')?.remove();
     const notice=document.createElement('aside');notice.className='service-panel service-consent-notice';notice.setAttribute('role','status');notice.textContent=message+' ';
-    const link=document.createElement('a');link.href='config.html#account-privacy';link.textContent='Change preferences';notice.appendChild(link);document.body.appendChild(notice);setTimeout(()=>notice.remove(),6000);
+    document.body.appendChild(notice);setTimeout(()=>notice.remove(),6000);
   }
   function wirePrivacy(root) {
     const inputs=[...root.querySelectorAll('[data-consent]')],save=root.querySelector('[data-save-consent]'),status=root.querySelector('[data-privacy-status]');

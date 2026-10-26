@@ -1,0 +1,4503 @@
+{
+  "checked_date": "2026-10-25",
+  "source_method": "Fandom search-index table extracts; direct pages/API returned HTTP 403/402",
+  "pages": [
+    {
+      "name": "Mansa Musa",
+      "url": "https://dominations.fandom.com/wiki/Mansa_Musa",
+      "type": "university",
+      "rows": [
+        [
+          "1",
+          "Raider Damage",
+          "+6% to Raider troops damage",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "1",
+          "Gold Skill Research Cost (I)",
+          "Reduce 3% gold skill research cost in university",
+          "5",
+          "None"
+        ],
+        [
+          "1",
+          "DOMINATION Gold Bonus",
+          "+5% increased of gold gained from Multiplayer Battle DOMINATION bonus.",
+          "5",
+          "Raider Damage Level 1, Gold Skill Research Cost (I) Level 1",
+          ""
+        ],
+        [
+          "1",
+          "Caravan Upgrade Cost",
+          "-2% Caravan upgrade cost",
+          "5",
+          "DOMINATION Gold Bonus Level 1",
+          ""
+        ],
+        [
+          "1",
+          "Gold Skill Research Time (I)",
+          "Reduce 3% gold skill research time in university",
+          "5",
+          "DOMINATION Gold Bonus Level 1",
+          ""
+        ],
+        [
+          "1",
+          "Market Upgrade Cost",
+          "-2% Market upgrade cost",
+          "5",
+          "DOMINATION Gold Bonus Level 1",
+          ""
+        ],
+        [
+          "1",
+          "Gold Skill Research Cost (II)",
+          "-3% gold skill research cost in university",
+          "5",
+          "Gold Skill Research Time (I) Level 1",
+          ""
+        ],
+        [
+          "1",
+          "Supply Vehicle Healing",
+          "+6% healing rates of Supply Vehicle troops",
+          "5",
+          "Gold Skill Research Time (I) Level 1"
+        ],
+        [
+          "1",
+          "Road Gold Income",
+          "+5% gold income gained from Roads",
+          "5",
+          "Gold Skill Research Cost (II) Level 1",
+          ""
+        ],
+        [
+          "1",
+          "Gold Skill Research Time (II)",
+          "-3% gold skill research time in university",
+          "5",
+          "Supply Vehicle Healing Level 1"
+        ],
+        [
+          "2",
+          "Golden Pilgrimage",
+          "University Skills with gold costs require 1 less Citizen to Research",
+          "1",
+          "Total Skills Level 50",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Empress Wu Zetian",
+      "url": "https://dominations.fandom.com/wiki/Empress_Wu_Zetian",
+      "type": "university",
+      "rows": [
+        [
+          "2",
+          "Wonder Hitpoints",
+          "Increases Hitpoints of Wonders by 3%",
+          "10",
+          "None",
+          ""
+        ],
+        [
+          "2",
+          "Museum Artifact Unlock Time",
+          "Decreases time to unlock Museum Artifacts by 3%",
+          "10",
+          "None",
+          ""
+        ],
+        [
+          "3",
+          "Tea Chance",
+          "Increase chances of finding Tea form multiplayer victories by 2%",
+          "10",
+          "Wonder Hipoints Level 3"
+        ],
+        [
+          "4",
+          "Forest Defenders",
+          "Additional hidden defenders will come from the Forest.",
+          "5",
+          "Tea Chance Level 1",
+          ""
+        ],
+        [
+          "4",
+          "Forest Expansion Reduce Citizens",
+          "Reduces the number of citizens required to clear Forest expansions by 1",
+          "1",
+          "Tea Chance Level 1",
+          ""
+        ],
+        [
+          "4",
+          "Forest Expansion Reduce Cost",
+          "Reduces the cost of clearing Forest expansions by 3%",
+          "10",
+          "Tea Chance Level 1",
+          ""
+        ],
+        [
+          "5",
+          "Mercenary Camp Capacity",
+          "Increase the number of Mercenaries able to be recruited by 1",
+          "1",
+          "Forest Defenders Level 5"
+        ],
+        [
+          "6",
+          "Factory APC Upgrade Cost",
+          "Decreases the cost of upgrading APCs by 2%",
+          "10",
+          "Mercenary Camp Capacity Level 1",
+          ""
+        ],
+        [
+          "6",
+          "Factory APC Troop Damage",
+          "Increases the damage of troops deployed from the APC by 3%",
+          "10",
+          "Mercenary Camp Capacity Level 1",
+          ""
+        ],
+        [
+          "6",
+          "Factory APC Upgrade Time",
+          "Decreases the time to upgrade APC troops by 3%",
+          "10",
+          "Factory APC Upgrade Cost Level 3",
+          ""
+        ],
+        [
+          "6",
+          "Factory APC Troop Units",
+          "Increases the number of troops deployed from the APC by 1",
+          "3",
+          "Factory APC Troop Damage Level 3",
+          ""
+        ],
+        [
+          "6",
+          "The Great Expansion",
+          "10% Faster Library Research",
+          "1",
+          "Total Skill Levels 80",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Chief Hiawatha",
+      "url": "https://dominations.fandom.com/wiki/Chief_Hiawatha",
+      "type": "university",
+      "rows": [
+        [
+          "1",
+          "Loot Blessing Bonus (I)",
+          "Loot Blessing effect +1%",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "1",
+          "Food Skill Research Time (I)",
+          "Reduce 3% food skill research time in university",
+          "5",
+          "None"
+        ],
+        [
+          "1",
+          "Wall Bastion & Gate Upgrade Cost (I)",
+          "-1% Wall Bastion and Gate upgrade cost",
+          "5",
+          "Loot Blessing Bonus (I) Level 1",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Catherine the Great",
+      "url": "https://dominations.fandom.com/wiki/Catherine_the_Great",
+      "type": "university",
+      "rows": [
+        [
+          "1",
+          "Heavy Infantry Damage",
+          "+3% Heavy Infantry damage",
+          "10",
+          "None",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Sultan Saladin",
+      "url": "https://dominations.fandom.com/wiki/Sultan_Saladin",
+      "type": "university",
+      "rows": [
+        [
+          "2",
+          "Tower Blessing Bonus",
+          "+1% effectiveness of Tower Blessings",
+          "10",
+          "None",
+          ""
+        ],
+        [
+          "2",
+          "Fortification Blessing Bonus",
+          "+1% of Fortification Blessing",
+          "10",
+          "None"
+        ],
+        [
+          "3",
+          "Heavy Cavalry Defender Damage",
+          "+3% damage dealt by Stables and Tank Depots defenders",
+          "10",
+          "Tower Blessing Bonus Level 5",
+          ""
+        ],
+        [
+          "3",
+          "Heavy Cavalry Defender Hitpoints",
+          "+3% hitpoints for Stables and Tank Depots defenders",
+          "10",
+          "Fortification Blessing Bonus Level 5"
+        ]
+      ]
+    },
+    {
+      "name": "Amelia Earhart",
+      "url": "https://dominations.fandom.com/wiki/Amelia_Earhart",
+      "type": "university",
+      "rows": [
+        [
+          "4",
+          "Oil Production",
+          "Increases production of Oil Wells by 4%.",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "4",
+          "S.A.M. Battery Damage",
+          "Increase damage of S.A.M. Battery traps by 6%.",
+          "5",
+          "None"
+        ],
+        [
+          "4",
+          "Fighter MK Damage",
+          "Increase damage of Fighters aircraft by 3%",
+          "10",
+          "None",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "King Sejong",
+      "url": "https://dominations.fandom.com/wiki/King_Sejong",
+      "type": "university",
+      "rows": [
+        [
+          "1",
+          "Tower Damage",
+          "+3% damage dealt by Towers",
+          "10",
+          "None",
+          ""
+        ],
+        [
+          "1",
+          "Tower Upgrade Cost",
+          "-1% build and upgrade resource cost of Towers",
+          "10",
+          "None"
+        ],
+        [
+          "1",
+          "Tower Hitpoints",
+          "+3% hitpoints for Towers",
+          "10",
+          "None"
+        ],
+        [
+          "2",
+          "Ranged Infantry Damage",
+          "+3% Ranged Infantry damage",
+          "10",
+          "Tower Damage Level 5 Tower Upgrade Cost Level 5",
+          ""
+        ],
+        [
+          "2",
+          "Ranged Infantry Hitpoints",
+          "+3% Ranged Infantry hitpoints",
+          "10",
+          "Tower Hitpoints Level 5 Tower Upgrade Cost Level 5"
+        ],
+        [
+          "3",
+          "Protect Duration",
+          "+3% duration of Protect Tactic",
+          "10",
+          "Ranged Infantry Damage Level 5 Ranged Infantry Hitpoints Level 5",
+          ""
+        ],
+        [
+          "4",
+          "Castle Hitpoints",
+          "+3% Castle hitpoints",
+          "10",
+          "Protect Duration Level 5",
+          ""
+        ],
+        [
+          "4",
+          "Porcelain Chance",
+          "+1% chance of finding porcelain from multiplayer victories",
+          "10",
+          "Protect Duration Level 5"
+        ],
+        [
+          "4",
+          "Library Hitpoints",
+          "+5% Library hitpoints",
+          "10",
+          "Protect Duration Level 5",
+          ""
+        ],
+        [
+          "5",
+          "Army Library Tech Cost",
+          "-2% resource cost to Army Technologies at the Library",
+          "10",
+          "Castle Hitpoints Level 5 Porcelain Chance Level 5 Library Hitpoints Level 5",
+          ""
+        ],
+        [
+          "5",
+          "Hall of Worthies",
+          "University Skills require 1 less Citizen to Research",
+          "1",
+          "Total Skills Level 100",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Leonardo da Vinci",
+      "url": "https://dominations.fandom.com/wiki/Leonardo_da_Vinci",
+      "type": "university",
+      "rows": [
+        [
+          "1",
+          "Mortar Damage",
+          "+3% Catapult and Mortar Damage",
+          "10",
+          "None",
+          ""
+        ],
+        [
+          "1",
+          "Mortar Upgrade Cost",
+          "-2% Catapult and Mortar build and upgrade cost",
+          "10",
+          "None"
+        ],
+        [
+          "1",
+          "Mortar Hitpoints",
+          "+3% Catapult and Mortar hitpoints",
+          "10",
+          "None"
+        ],
+        [
+          "2",
+          "Marble Chance",
+          "+1% chance of finding Marble from multiplayer victories",
+          "10",
+          "Mortar Damage Level 5 Mortar Upgrade Cost Level 5",
+          ""
+        ],
+        [
+          "2",
+          "University Hitpoints",
+          "+5% University Hitpoints",
+          "10",
+          "Mortar Hitpoints Level 5 Mortar Upgrade Cost Level 5",
+          ""
+        ],
+        [
+          "3",
+          "Ranged Siege Damage",
+          "+3% damage of Ranged Siege troops",
+          "10",
+          "Marble Chance Level 5",
+          ""
+        ],
+        [
+          "3",
+          "Ranged Siege Hitpoints",
+          "+3% hitpoints of Ranged Siege troops",
+          "10",
+          "University Hitpoints Level 5"
+        ],
+        [
+          "4",
+          "Sabotage Duration",
+          "+3% Sabotage duration",
+          "10",
+          "Ranged Siege Damage Level 5 Ranged Siege Hitpoints Level 5",
+          ""
+        ],
+        [
+          "5",
+          "Heavy Tank Damage",
+          "+3% Heavy Tank damage",
+          "10",
+          "Sabotage Duration Level 5",
+          ""
+        ],
+        [
+          "5",
+          "Heavy Tank Hitpoints",
+          "+3% Heavy Tank hitpoints",
+          "10",
+          "Sabotage Duration Level 5",
+          ""
+        ],
+        [
+          "5",
+          "Polymath",
+          "Reduce University Research Time by 10%",
+          "1",
+          "Total Skills Level 100",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Catherine the Great",
+      "url": "https://dominations.fandom.com/wiki/Catherine_the_Great",
+      "type": "university",
+      "rows": [
+        [
+          "1",
+          "Heavy Infantry Damage",
+          "+3% Heavy Infantry damage",
+          "10",
+          "None",
+          ""
+        ],
+        [
+          "1",
+          "Heavy Infantry Hitpoints",
+          "+3% Heavy Infantry hitpoints",
+          "10",
+          "None"
+        ],
+        [
+          "2",
+          "Heavy Infantry Defender Damage",
+          "+3% Heavy Infantry Defender damage",
+          "10",
+          "Heavy Infantry Damage Level 5",
+          ""
+        ],
+        [
+          "2",
+          "Garrison Hitpoints",
+          "+3% Garrison hitpoints",
+          "10",
+          "Heavy Infantry Damage Level 3 Heavy Infantry Hitpoints Level 3",
+          ""
+        ],
+        [
+          "2",
+          "Heavy Infantry Defender Hitpoints",
+          "+3% Heavy Infantry Defender hitpoints",
+          "10",
+          "Heavy Infantry Hitpoints Level 5",
+          ""
+        ],
+        [
+          "3",
+          "Garrison Upgrade Cost",
+          "-1% Garrison build and upgrade resource cost",
+          "10",
+          "Garrison Defender Damage Level 5 Garrison Hitpoints Level 3",
+          ""
+        ],
+        [
+          "3",
+          "Town Center Upgrade Cost",
+          "-3% Town Center upgrade cost",
+          "10",
+          "Garrison Defender Hitpoints Level 5 Garrison Hitpoints Level 3",
+          ""
+        ],
+        [
+          "4",
+          "Town Center Hitpoints",
+          "+3% Town Center hitpoints",
+          "10",
+          "Garrison Upgrade Cost Level 5 Town Center Upgrade Cost Level 5",
+          ""
+        ],
+        [
+          "5",
+          "General Recovery Time",
+          "-2% General Recovery Cooldown",
+          "10",
+          "Town Center Hitpoints Level 5",
+          ""
+        ],
+        [
+          "5",
+          "Economic Library Tech Cost",
+          "-2% resource cost to economic Technologies",
+          "10",
+          "Town Center Hitpoints Level 5",
+          ""
+        ],
+        [
+          "5",
+          "Coup d'etat",
+          "-50% cost of Revolution",
+          "1",
+          "Total Skill Level 100",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Sally Ride",
+      "url": "https://dominations.fandom.com/wiki/Sally_Ride",
+      "type": "university",
+      "rows": [
+        [
+          "3",
+          "Machine Gun Infantry Damage",
+          "+3% damage of Machine Gun Infantry",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "3",
+          "DOMINATION Oil Bonus",
+          "+3% increased of Oil gained from Multiplayer Battle DOMINATION bonus",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "3",
+          "Factory Hitpoints",
+          "+3% on Factory Hitpoints",
+          "5",
+          "Machine Gun Infantry Damage Level 1 DOMINATION Oil Bonus Level 1",
+          ""
+        ],
+        [
+          "4",
+          "Commandos Hitpoints",
+          "+3% on Commandos Hitpoints",
+          "10",
+          "Factory Hitpoints Level 3",
+          ""
+        ],
+        [
+          "4",
+          "Alliance Gate Troop Capacity",
+          "Increases Donated Troops Cap by 5",
+          "4",
+          "Factory Hitpoints Level 3",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Chief Hiawatha",
+      "url": "https://dominations.fandom.com/wiki/Chief_Hiawatha",
+      "type": "university",
+      "rows": [
+        [
+          "1",
+          "Loot Blessing Bonus (I)",
+          "Loot Blessing effect +1%",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "1",
+          "Food Skill Research Time (I)",
+          "Reduce 3% food skill research time in university",
+          "5",
+          "None"
+        ],
+        [
+          "1",
+          "Wall Bastion & Gate Upgrade Cost (I)",
+          "-1% Wall Bastion and Gate upgrade cost",
+          "5",
+          "Loot Blessing Bonus (I) Level 1",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Sultan Saladin",
+      "url": "https://dominations.fandom.com/wiki/Sultan_Saladin",
+      "type": "university",
+      "rows": [
+        [
+          "2",
+          "Tower Blessing Bonus",
+          "+1% effectiveness of Tower Blessings",
+          "10",
+          "None",
+          ""
+        ],
+        [
+          "2",
+          "Fortification Blessing Bonus",
+          "+1% of Fortification Blessing",
+          "10",
+          "None"
+        ],
+        [
+          "3",
+          "Heavy Cavalry Defender Damage",
+          "+3% damage dealt by Stables and Tank Depots defenders",
+          "10",
+          "Tower Blessing Bonus Level 5",
+          ""
+        ],
+        [
+          "3",
+          "Heavy Cavalry Defender Hitpoints",
+          "+3% hitpoints for Stables and Tank Depots defenders",
+          "10",
+          "Fortification Blessing Bonus Level 5"
+        ]
+      ]
+    },
+    {
+      "name": "Amelia Earhart",
+      "url": "https://dominations.fandom.com/wiki/Amelia_Earhart",
+      "type": "university",
+      "rows": [
+        [
+          "4",
+          "Oil Production",
+          "Increases production of Oil Wells by 4%.",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "4",
+          "S.A.M. Battery Damage",
+          "Increase damage of S.A.M. Battery traps by 6%.",
+          "5",
+          "None"
+        ],
+        [
+          "4",
+          "Fighter MK Damage",
+          "Increase damage of Fighters aircraft by 3%",
+          "10",
+          "None",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Sultan Saladin",
+      "url": "https://dominations.fandom.com/wiki/Sultan_Saladin",
+      "type": "university",
+      "rows": [
+        [
+          "2",
+          "Tower Blessing Bonus",
+          "+1% effectiveness of Tower Blessings",
+          "10",
+          "None",
+          ""
+        ],
+        [
+          "2",
+          "Fortification Blessing Bonus",
+          "+1% of Fortification Blessing",
+          "10",
+          "None"
+        ],
+        [
+          "3",
+          "Heavy Cavalry Defender Damage",
+          "+3% damage dealt by Stables and Tank Depots defenders",
+          "10",
+          "Tower Blessing Bonus Level 5",
+          ""
+        ],
+        [
+          "3",
+          "Heavy Cavalry Defender Hitpoints",
+          "+3% hitpoints for Stables and Tank Depots defenders",
+          "10",
+          "Fortification Blessing Bonus Level 5"
+        ],
+        [
+          "3",
+          "Stable Upgrade Cost",
+          "-1% cost to upgrade Stables and Tank Depots",
+          "10",
+          "Stable Defender Damage Level 5",
+          ""
+        ],
+        [
+          "3",
+          "Stable Hitpoints",
+          "+5% hitpoints for Stables and Tank Depots",
+          "10",
+          "Stable Defender Hitpoints Level 5"
+        ],
+        [
+          "4",
+          "Heavy Cavalry Damage",
+          "+3% damage of Heavy Cavalry",
+          "10",
+          "Stable Upgrade Cost Level 5",
+          ""
+        ],
+        [
+          "4",
+          "Wall, Bastion & Gate Hitpoints",
+          "+3% Gate, Bastion and Wall hitpoints",
+          "10",
+          "Stable Upgrade Cost Level 5 Stable Hitpoints Level 5",
+          ""
+        ],
+        [
+          "4",
+          "Heavy Cavalry Hitpoints",
+          "+3% hitpoints of Heavy Cavalry",
+          "10",
+          "Stable Hitpoints Level 5",
+          ""
+        ],
+        [
+          "5",
+          "Defensive Library Tech Cost",
+          "-2% resource cost of Defensive Technologies at the library",
+          "10",
+          "Heavy Cavalry Damage Level 5 Wall, Bastion & Gate Hitpoints Level 5 Heavy Cavalry Hitpoints Level 5",
+          ""
+        ],
+        [
+          "5",
+          "Hold the Gates",
+          "+25% faster spawn of Garrisons and Stables / Tank Depots Defenders",
+          "1",
+          "Total Skills Level 100",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Suleiman the Magnificent",
+      "url": "https://dominations.fandom.com/wiki/Suleiman_the_Magnificent",
+      "type": "university",
+      "rows": [
+        [
+          "2",
+          "Mortar Infantry Damage",
+          "+3% damage of Mortar Infantry troops",
+          "10",
+          "None",
+          ""
+        ],
+        [
+          "2",
+          "Mortar Infantry Hitpoints",
+          "+3% hitpoints for Mortar Infantry troops",
+          "10",
+          "None"
+        ],
+        [
+          "2",
+          "Demolition Damage",
+          "+1% damage dealt by the Demolition Tactic",
+          "10",
+          "Mortar Infantry Damage Level 5 Mortar Infantry Hitpoints Level 5"
+        ],
+        [
+          "3",
+          "Weapon Blessing Bonus",
+          "+1% effecti-veness of Weapon Blessing",
+          "10",
+          "Demolition Damage Level 5",
+          ""
+        ],
+        [
+          "3",
+          "Temple Hitpoints",
+          "+5% Temple Hitpoints",
+          "10",
+          "Demolition Damage Level 5"
+        ],
+        [
+          "4",
+          "Cannon Tower Damage",
+          "+5% damage dealt by Ballista Towers, Cannon Towers and Anti-Tank Guns",
+          "10",
+          "Weapon Blessing Bonus Level 5",
+          ""
+        ],
+        [
+          "4",
+          "Cannon Tower Upgrade Cost",
+          "-2% build and upgrade cost for Ballista Towers, Cannon Towers and Anti-Tank Guns",
+          "10",
+          "Weapon Blessing Bonus Level 5 Temple Hitpoints Level 5"
+        ],
+        [
+          "4",
+          "Cannon Tower Hitpoints",
+          "+3% hitpoints for Ballista Towers, Cannon Towers and Anti-Tank Guns",
+          "10",
+          "Temple Hitpoints Level 5"
+        ],
+        [
+          "5",
+          "Scroll Chance",
+          "+1% chance of finding Scrolls from multiplayer victories",
+          "10",
+          "Cannon Tower Damage Level 5 Cannon Tower Upgrade Cost Level 5",
+          ""
+        ],
+        [
+          "5",
+          "General Upgrade Cost",
+          "-1% General upgrade resource cost",
+          "10",
+          "Cannon Tower Hitpoints Level 5 Cannon Tower Upgrade Cost Level 5",
+          ""
+        ],
+        [
+          "5",
+          "The Lawgiver",
+          "-30% Wonder Power cooldown",
+          "1",
+          "Total Skill Level 100",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Hannibal Barca",
+      "url": "https://dominations.fandom.com/wiki/Hannibal_Barca",
+      "type": "university",
+      "rows": [
+        [
+          "1",
+          "Mercenary Damage",
+          "+3% damage of Mercenary",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "1",
+          "Mysterious Fragments Increase",
+          "+3% Mysterious Fragments received in battle",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "2",
+          "War Academy Tactics Upgrade Cost",
+          "-3% cost of upgrading war Tactics",
+          "5",
+          "Mercenary Damage Level 3",
+          ""
+        ],
+        [
+          "2",
+          "War Academy Tactics Training Cost",
+          "-3% cost of training war Tactics",
+          "5",
+          "Mercenary Damage Level 1 Mysterious Fragments Increase Level 1",
+          ""
+        ],
+        [
+          "2",
+          "War Academy Tactics Upgrade Time",
+          "-3% the time of upgrading war Tactics",
+          "5",
+          "Mysterious Fragments Increase Level 3",
+          ""
+        ],
+        [
+          "3",
+          "Fort Reduce Citizens",
+          "-1 number of citizens required to upgrade this building",
+          "1",
+          "War Academy Tactics Upgrade Cost Level 3 War Academy Tactics Training Cost Level 1",
+          ""
+        ],
+        [
+          "3",
+          "War Academy Reduce Citizens",
+          "-1 number of citizens required to upgrade this building",
+          "1",
+          "War Academy Tactics Upgrade Time Level 3 War Academy Tactics Training Cost Level 1",
+          ""
+        ],
+        [
+          "3",
+          "Fort General Upgrade Time",
+          "-6% the time of upgrading Generals",
+          "5",
+          "Fort Reduce Citizens Level 1 War Academy Reduce Citizens Level 1",
+          ""
+        ],
+        [
+          "3",
+          "Fort General Upgrade Cost",
+          "-3% resource cost of upgrading Generals",
+          "10",
+          "Fort General Upgrade Time Level 3",
+          ""
+        ],
+        [
+          "3",
+          "Mercenary Hitpoints",
+          "+3% hitpoints of Mercenary troops",
+          "10",
+          "Fort General Upgrade Time Level 3",
+          ""
+        ],
+        [
+          "4",
+          "Fort General Hitpoints",
+          "+6% the hitpoints of all Generals",
+          "5",
+          "Fort General Upgrade Cost Level 3 Mercenary Hitpoints Level 3",
+          ""
+        ],
+        [
+          "4",
+          "The Ultimate Tactician",
+          "Unlocks Hannibal at a Level 21",
+          "1",
+          "Total Skill Level 57",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Chief Hiawatha",
+      "url": "https://dominations.fandom.com/wiki/Chief_Hiawatha",
+      "type": "university",
+      "rows": [
+        [
+          "1",
+          "Loot Blessing Bonus (I)",
+          "Loot Blessing effect +1%",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "1",
+          "Food Skill Research Time (I)",
+          "Reduce 3% food skill research time in university",
+          "5",
+          "None"
+        ],
+        [
+          "1",
+          "Wall Bastion & Gate Upgrade Cost (I)",
+          "-1% Wall Bastion and Gate upgrade cost",
+          "5",
+          "Loot Blessing Bonus (I) Level 1",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Emperor Haile Selassie",
+      "url": "https://dominations.fandom.com/wiki/Emperor_Haile_Selassie",
+      "type": "university",
+      "rows": [
+        [
+          "5",
+          "Decoy Hitpoints",
+          "Increase hitpoints of Decoy by 6%.",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "5",
+          "Supply Vehicle Hitpoints",
+          "Increase hitpoints of Supply Vehicles by 6%.",
+          "5",
+          "None"
+        ],
+        [
+          "5",
+          "Machine Gun (Building) Damage",
+          "Increase damage of Machine Gun (Building) by 6%",
+          "5",
+          "Decoy Hitpoints 3",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Mansa Musa",
+      "url": "https://dominations.fandom.com/wiki/Mansa_Musa",
+      "type": "university",
+      "rows": [
+        [
+          "1",
+          "Raider Damage",
+          "+6% to Raider troops damage",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "1",
+          "Gold Skill Research Cost (I)",
+          "Reduce 3% gold skill research cost in university",
+          "5",
+          "None"
+        ],
+        [
+          "1",
+          "DOMINATION Gold Bonus",
+          "+5% increased of gold gained from Multiplayer Battle DOMINATION bonus.",
+          "5",
+          "Raider Damage Level 1, Gold Skill Research Cost (I) Level 1",
+          ""
+        ],
+        [
+          "1",
+          "Caravan Upgrade Cost",
+          "-2% Caravan upgrade cost",
+          "5",
+          "DOMINATION Gold Bonus Level 1",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Amelia Earhart",
+      "url": "https://dominations.fandom.com/wiki/Amelia_Earhart",
+      "type": "university",
+      "rows": [
+        [
+          "4",
+          "Oil Production",
+          "Increases production of Oil Wells by 4%.",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "4",
+          "S.A.M. Battery Damage",
+          "Increase damage of S.A.M. Battery traps by 6%.",
+          "5",
+          "None"
+        ],
+        [
+          "4",
+          "Fighter MK Damage",
+          "Increase damage of Fighters aircraft by 3%",
+          "10",
+          "None",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Catherine the Great",
+      "url": "https://dominations.fandom.com/wiki/Catherine_the_Great",
+      "type": "university",
+      "rows": [
+        [
+          "1",
+          "Heavy Infantry Damage",
+          "+3% Heavy Infantry damage",
+          "10",
+          "None",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Emperor Haile Selassie",
+      "url": "https://dominations.fandom.com/wiki/Emperor_Haile_Selassie",
+      "type": "university",
+      "rows": [
+        [
+          "5",
+          "Decoy Hitpoints",
+          "Increase hitpoints of Decoy by 6%.",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "5",
+          "Supply Vehicle Hitpoints",
+          "Increase hitpoints of Supply Vehicles by 6%.",
+          "5",
+          "None"
+        ],
+        [
+          "5",
+          "Machine Gun (Building) Damage",
+          "Increase damage of Machine Gun (Building) by 6%",
+          "5",
+          "Decoy Hitpoints 3",
+          ""
+        ],
+        [
+          "5",
+          "Machine Gun (Building) Upgrade Cost",
+          "Decrease upgrade costs of Machine Gun (Building) by 4%.",
+          "5",
+          "Decoy Hitpoints 1 Supply Vehicle Hitpoints 1",
+          ""
+        ],
+        [
+          "5",
+          "Machine Gun (Building) Hitpoints",
+          "Increase hitpoints of Machine Gun (Building) by 6%.",
+          "5",
+          "Supply Vehicle Hitpoints 3",
+          ""
+        ],
+        [
+          "6",
+          "Bazooka Damage",
+          "Increase damage of Bazooka by 6%.",
+          "5",
+          "Redoubt Damage 3 Redoubt Upgrade Cost 1",
+          ""
+        ],
+        [
+          "6",
+          "Bazooka Hitpoints",
+          "Increase hitpoints of Bazooka by 6%",
+          "5",
+          "Redoubt Upgrade Cost 1 Redoubt Hitpoints 3"
+        ],
+        [
+          "6",
+          "Heavy Tanks Defender Damage",
+          "Increase damage of Heavy Tanks Defenders by 3%.",
+          "10",
+          "Bazooka Damage 3",
+          ""
+        ],
+        [
+          "6",
+          "Heavy Tanks Defender Hitpoints",
+          "Increase hitpoints of Heavy Tanks Defenders by 3%.",
+          "10",
+          "Bazooka Hitpoints 3"
+        ],
+        [
+          "7",
+          "Coalition Troop Damage",
+          "Increase damage of Coalitions by 3%.",
+          "10",
+          "Bunker Defender Damage 3",
+          ""
+        ],
+        [
+          "7",
+          "Coalition Troop Hitpoints",
+          "Increase hitpoints of Coalitions by 3%.",
+          "10",
+          "Bunker Defender Hitpoints 3"
+        ],
+        [
+          "7",
+          "Lion of Judah",
+          "Unlocks Rocket Arsenal",
+          "1",
+          "Total Skill Levels 75",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Amelia Earhart",
+      "url": "https://dominations.fandom.com/wiki/Amelia_Earhart",
+      "type": "university",
+      "rows": [
+        [
+          "4",
+          "Oil Production",
+          "Increases production of Oil Wells by 4%.",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "4",
+          "S.A.M. Battery Damage",
+          "Increase damage of S.A.M. Battery traps by 6%.",
+          "5",
+          "None"
+        ],
+        [
+          "4",
+          "Fighter MK Damage",
+          "Increase damage of Fighters aircraft by 3%",
+          "10",
+          "None",
+          ""
+        ],
+        [
+          "5",
+          "Aircraft Upgrade Cost",
+          "Decrease upgrade resource costs for Aircraft by 5%.",
+          "5",
+          "Oil Production Level 1 S.A.M. Battery Damage Level 2 Biplane MK Damage Level 3",
+          ""
+        ],
+        [
+          "5",
+          "Air Defense Damage",
+          "Increase damage dealt by Air Defenses by 6%.",
+          "5",
+          "Aircraft Upgrade Cost Level 3",
+          ""
+        ],
+        [
+          "5",
+          "Bomber Mk Damage",
+          "Increase damage of Bombers aircraft by 3%.",
+          "10",
+          "Aircraft Upgrade Cost Level 4",
+          ""
+        ],
+        [
+          "5",
+          "Air Defense Hitpoints",
+          "Increase hitpoints for Air Defenses by 6%",
+          "5",
+          "Aircraft Upgrade Cost Level 5",
+          ""
+        ],
+        [
+          "6",
+          "Paratrooper Damage",
+          "Increase Damage of Paratroopers by 3%.",
+          "10",
+          "Air Defense Damage Level 3 Zeppelin Mk Damage Level 2",
+          ""
+        ],
+        [
+          "6",
+          "Transport Mk Hitpoints",
+          "Increase hit points of Transports aircraft by 3%.",
+          "10",
+          "Zeppelin Mk Damage Level 2 Air Defense Hitpoints Level 3"
+        ],
+        [
+          "6",
+          "Fighter Mk Hitpoints",
+          "Increase hit points of Fighters aircraft by 6%.",
+          "5",
+          "Paratroop Damage Level 3",
+          ""
+        ],
+        [
+          "6",
+          "Bomber Mk Hitpoints",
+          "Increase hit points of Bombers aircraft by 6%.",
+          "5",
+          "Transport Mk Hitpoints level 3"
+        ],
+        [
+          "6",
+          "The Ninety Nines",
+          "Increase Airstrip Capacity by 1.",
+          "1",
+          "Total Skill Levels 75",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Empress Wu Zetian",
+      "url": "https://dominations.fandom.com/wiki/Empress_Wu_Zetian",
+      "type": "university",
+      "rows": [
+        [
+          "2",
+          "Wonder Hitpoints",
+          "Increases Hitpoints of Wonders by 3%",
+          "10",
+          "None",
+          ""
+        ],
+        [
+          "2",
+          "Museum Artifact Unlock Time",
+          "Decreases time to unlock Museum Artifacts by 3%",
+          "10",
+          "None",
+          ""
+        ],
+        [
+          "3",
+          "Tea Chance",
+          "Increase chances of finding Tea form multiplayer victories by 2%",
+          "10",
+          "Wonder Hipoints Level 3"
+        ],
+        [
+          "4",
+          "Forest Defenders",
+          "Additional hidden defenders will come from the Forest.",
+          "5",
+          "Tea Chance Level 1",
+          ""
+        ],
+        [
+          "4",
+          "Forest Expansion Reduce Citizens",
+          "Reduces the number of citizens required to clear Forest expansions by 1",
+          "1",
+          "Tea Chance Level 1",
+          ""
+        ],
+        [
+          "4",
+          "Forest Expansion Reduce Cost",
+          "Reduces the cost of clearing Forest expansions by 3%",
+          "10",
+          "Tea Chance Level 1",
+          ""
+        ],
+        [
+          "5",
+          "Mercenary Camp Capacity",
+          "Increase the number of Mercenaries able to be recruited by 1",
+          "1",
+          "Forest Defenders Level 5"
+        ],
+        [
+          "6",
+          "Factory APC Upgrade Cost",
+          "Decreases the cost of upgrading APCs by 2%",
+          "10",
+          "Mercenary Camp Capacity Level 1",
+          ""
+        ],
+        [
+          "6",
+          "Factory APC Troop Damage",
+          "Increases the damage of troops deployed from the APC by 3%",
+          "10",
+          "Mercenary Camp Capacity Level 1",
+          ""
+        ],
+        [
+          "6",
+          "Factory APC Upgrade Time",
+          "Decreases the time to upgrade APC troops by 3%",
+          "10",
+          "Factory APC Upgrade Cost Level 3",
+          ""
+        ],
+        [
+          "6",
+          "Factory APC Troop Units",
+          "Increases the number of troops deployed from the APC by 1",
+          "3",
+          "Factory APC Troop Damage Level 3",
+          ""
+        ],
+        [
+          "6",
+          "The Great Expansion",
+          "10% Faster Library Research",
+          "1",
+          "Total Skill Levels 80",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Sun Tzu",
+      "url": "https://dominations.fandom.com/wiki/Sun_Tzu",
+      "type": "university",
+      "rows": [
+        [
+          "7",
+          "MRL Damage",
+          "Increase damage of MRL by 3%.",
+          "10",
+          "None",
+          ""
+        ],
+        [
+          "7",
+          "MRL Hitpoints",
+          "Increase hitpoints of MRL by 3%.",
+          "10",
+          "None"
+        ],
+        [
+          "8",
+          "Troop Capacity",
+          "Increase troop capacity by 3",
+          "5",
+          "MRL Damage 3 MRL Hitpoints 3",
+          ""
+        ],
+        [
+          "9",
+          "Recon Scan Damage Bonus",
+          "Increase scan damage bonus of Recon aircraft",
+          "10",
+          "Troop Capacity Level 1",
+          ""
+        ],
+        [
+          "9",
+          "Recon Hitpoints",
+          "Increase hitpoints of Recon",
+          "10",
+          "Troop Capacity Level 1"
+        ],
+        [
+          "10",
+          "The Art of War",
+          "Unlock Sun Tzu Ability.",
+          "1",
+          "Recon damage 3 Recon hitpoints 3",
+          ""
+        ],
+        [
+          "10",
+          "Sun Tzu Damage",
+          "Increases the damage of General Sun Tzu",
+          "10",
+          "The Art of War level 1",
+          ""
+        ],
+        [
+          "10",
+          "Sun Tzu Hitpoints",
+          "Increases the hitpoints of General Sun Tzu",
+          "10",
+          "The Art of War level 1"
+        ],
+        [
+          "10",
+          "Sun Tzu Attack Speed",
+          "Increases the attack speed of General Sun Tzu",
+          "10",
+          "The Art of War level 1"
+        ],
+        [
+          "10",
+          "War Tactic Capacity",
+          "Increases war tactic capacity by 1",
+          "1",
+          "Sun Tzu Damage level 3 Sun Tzu Hitpoints level 3 Sun Tzu Attack Speed level 3",
+          ""
+        ],
+        [
+          "10",
+          "The Army on the March",
+          "Improves Art of War",
+          "1",
+          "Total skill levels 77",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Emperor Moctezuma",
+      "url": "https://dominations.fandom.com/wiki/Emperor_Moctezuma",
+      "type": "university",
+      "rows": [
+        [
+          "2",
+          "Hunting Time",
+          "Decrease time to harvest hunted animals by +18%",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "2",
+          "Mining & Gathering Time",
+          "Decrease time to harvest from Fruit Trees and Gold Mines by +18%",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "2",
+          "Hunting Food & Gold Yield",
+          "+20% food and gold gained from hunting",
+          "5",
+          "Hunting Time Level 3",
+          ""
+        ],
+        [
+          "2",
+          "Mining & Gathering Yield",
+          "+20% resources gained from Fruit Trees and Gold Mines",
+          "5",
+          "Mining & Gathering Time Level 3",
+          ""
+        ],
+        [
+          "2",
+          "Farm Production",
+          "+10% Farm Production",
+          "5",
+          "Hunting Food & Gold Yield Level 1",
+          ""
+        ],
+        [
+          "2",
+          "Expansion Time",
+          "Decreases time to clear forests by 6%",
+          "5",
+          "Hunting Food & Gold Yield Level 3, Mining & Gathering Yield Level 3",
+          ""
+        ],
+        [
+          "2",
+          "Caravan Production",
+          "+10% Caravan income",
+          "5",
+          "Mining & Gathering Yield Level 1",
+          ""
+        ],
+        [
+          "3",
+          "Oil Well Capacity",
+          "+5% storage capacity of Oil Wells",
+          "10",
+          "Expansion Time Level 3",
+          ""
+        ],
+        [
+          "3",
+          "Vault Capacity",
+          "+7% Food, Gold, and Oil storage capacity in the Vault",
+          "10",
+          "Expansion Time Level 3",
+          ""
+        ],
+        [
+          "3",
+          "Coalition Power",
+          "Increases the power of Coalitions by 6%",
+          "5",
+          "Oil Well Capacity Level 3 Vault Capacity Level 3",
+          ""
+        ],
+        [
+          "4",
+          "Triple Alliance",
+          "Provides 1 additional random National Trade Good whenever you gain at least 1 National Trade Good from battle",
+          "1",
+          "Total Skills Level 60",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Nikola Tesla",
+      "url": "https://dominations.fandom.com/wiki/Nikola_Tesla",
+      "type": "university",
+      "rows": [
+        [
+          "11",
+          "Directive Research Cost",
+          "Decreases the cost to upgrade Directives by 3%",
+          "5",
+          "None",
+          ""
+        ]
+      ]
+    },
+    {
+      "name": "Nikola Tesla",
+      "url": "https://dominations.fandom.com/wiki/Nikola_Tesla",
+      "type": "university",
+      "rows": [
+        [
+          "11",
+          "Directive Research Cost",
+          "Decreases the cost to upgrade Directives by 3%",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "11",
+          "Directive Research Time",
+          "Decrease the time to upgrade Directives by 3%",
+          "5",
+          "None",
+          ""
+        ],
+        [
+          "11",
+          "Drone Movement Speed",
+          "Increases the movement speed of Offensive and Defensive Drones by 6%",
+          "5",
+          "Directive Research Cost Level 1"
+        ],
+        [
+          "11",
+          "Attack Helicopter Damage",
+          "Increases the damage of Attack Helicopters by 3%",
+          "5",
+          "Drone Movement Speed Level 1",
+          ""
+        ],
+        [
+          "11",
+          "Attack Helicopter Hitpoints",
+          "Increases the hitpoints of Attack Helicopters by 4%",
+          "5",
+          "Drone Movement Speed Level 1",
+          ""
+        ],
+        [
+          "11",
+          "APC Deployment Speed",
+          "Increases the deployment speed of APCs by 2%",
+          "5",
+          "Drone Movement Speed Level 1",
+          ""
+        ],
+        [
+          "11",
+          "G.C.I. Radar Building Limit",
+          "Increases the amount of G.C.I. Radars you can have by 1.",
+          "1",
+          "Attack Helicopter Damage Level 1"
+        ],
+        [
+          "11",
+          "Recon Deployment Cooldown",
+          "Reduces the deployment cooldown of Recons by 1s",
+          "5",
+          "G.C,I. Radar Building Limit Level 1",
+          ""
+        ],
+        [
+          "11",
+          "Generals Attack Speed",
+          "Increases the attack speed of Generals by 1%",
+          "5",
+          "G.C.I. Radar Building Limit",
+          ""
+        ],
+        [
+          "11",
+          "Reroute Cooldown",
+          "Reduces the cooldown of Reroute by 1s",
+          "5",
+          "Recon Deployment Cooldown Level 1",
+          ""
+        ],
+        [
+          "11",
+          "Drone Command Hitpoints",
+          "Increases the hitpoints of the Drone Command by 3%",
+          "10",
+          "Generals Attack Speed Level 1",
+          ""
+        ],
+        [
+          "11",
+          "Tesla's Innovations",
+          "Every 7 days, you can claim a chest containing a Charged Directive from the Drone Command.",
+          "1",
+          "Total Skill Levels 54",
+          ""
+        ]
+      ],
+      "requirements": null
+    },
+    {
+      "name": "Dividend Returns (Technology)",
+      "url": "https://dominations.fandom.com/wiki/Dividend_Returns_%28Technology%29",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "150,000",
+          "5d",
+          "2,300",
+          "Drone Train Cost -25%"
+        ],
+        [
+          "2",
+          "200,000",
+          "10d",
+          "8,000",
+          "Directive Research Cost -10%"
+        ],
+        [
+          "3",
+          "20,000,000",
+          "12d12h",
+          "9,000",
+          "Oil Well Storage Size +10%"
+        ],
+        [
+          "4",
+          "25,000,000",
+          "15d",
+          "10,000",
+          "Directive Research Time -10%"
+        ],
+        [
+          "5",
+          "335,000",
+          "20d",
+          "11,000",
+          "Armory Research Time -5%"
+        ]
+      ],
+      "requirements": "* Library Level 16\n  * Chapter 1 of Orders of Council"
+    },
+    {
+      "name": "Pottery",
+      "url": "https://dominations.fandom.com/wiki/Pottery",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "50,000",
+          "4h",
+          "520",
+          "Increases resources from Fruit Trees and Gold Mines by 5%"
+        ],
+        [
+          "2",
+          "100,000",
+          "12h",
+          "760",
+          "Increases chance of finding Cider and Metal by 10%"
+        ],
+        [
+          "3",
+          "200,000",
+          "1d",
+          "1,115",
+          "Increases Fruit Tree limit by 2"
+        ],
+        [
+          "4",
+          "400,000",
+          "1d 12h",
+          "2,301",
+          "+20% Resources from Fruit Trees and Gold Mines"
+        ],
+        [
+          "5",
+          "800,000",
+          "3d",
+          "3,370",
+          "+2 Fruit Tree limit"
+        ]
+      ],
+      "requirements": "* Library Level 1"
+    },
+    {
+      "name": "Reinforcements",
+      "url": "https://dominations.fandom.com/wiki/Reinforcements",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "50,000",
+          "4h",
+          "520",
+          "2 Hidden defenders come from the Forest."
+        ],
+        [
+          "2",
+          "100,000",
+          "12h",
+          "760",
+          "Increases defender attack by 10%."
+        ],
+        [
+          "3",
+          "200,000",
+          "1d",
+          "1,115",
+          "2 More hidden defenders come from the Forest."
+        ],
+        [
+          "4",
+          "400,000",
+          "1d 12h",
+          "2,301",
+          "+10% Defender health."
+        ],
+        [
+          "5",
+          "800,000",
+          "3d",
+          "3,370",
+          "+10% Defender attack."
+        ]
+      ],
+      "requirements": "* Library Level 1"
+    },
+    {
+      "name": "Free Companies",
+      "url": "https://dominations.fandom.com/wiki/Free_Companies",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "50,000",
+          "4h",
+          "520",
+          "Increases Mercenary health by 10%"
+        ],
+        [
+          "2",
+          "100,000",
+          "12h",
+          "760",
+          "Increases Mercenary attack strength by 10%"
+        ],
+        [
+          "3",
+          "200,000",
+          "1d",
+          "1,115",
+          "Increases Mercenary army limit by 1"
+        ],
+        [
+          "4",
+          "400,000",
+          "1d 12h",
+          "2,301",
+          "Increases Mercenary attack strength by 20%"
+        ],
+        [
+          "5",
+          "800,000",
+          "3d",
+          "3,370",
+          "Increases Mercenary health by 10%"
+        ]
+      ],
+      "requirements": "* Library Level 1"
+    },
+    {
+      "name": "Roadways",
+      "url": "https://dominations.fandom.com/wiki/Roadways",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "50,000",
+          "4h",
+          "520",
+          "Increases Road limit by 5"
+        ],
+        [
+          "2",
+          "100,000",
+          "12h",
+          "760",
+          "Increases Road income by 10%"
+        ],
+        [
+          "3",
+          "200,000",
+          "1d",
+          "1,115",
+          "Increases Road limit by 5"
+        ],
+        [
+          "4",
+          "400,000",
+          "1d 12h",
+          "2,301",
+          "+20% Road health bonus for Town Center"
+        ],
+        [
+          "5",
+          "800,000",
+          "3d",
+          "3,370",
+          "Increases Road income by 10%"
+        ]
+      ],
+      "requirements": "* Library Level 1"
+    },
+    {
+      "name": "Exploration",
+      "url": "https://dominations.fandom.com/wiki/Exploration",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "200,000",
+          "4h",
+          "520",
+          "Gives a 10% refund upon clearing Forests"
+        ],
+        [
+          "2",
+          "400,000",
+          "12h",
+          "760",
+          "Decreases cost of debris clearing by 50%"
+        ],
+        [
+          "3",
+          "600,000",
+          "1d",
+          "1,115",
+          "Have a 5% chance to find an animal when clearing debris."
+        ],
+        [
+          "4",
+          "800,000",
+          "1d 12h",
+          "2,301",
+          "+10% chance to find an animal when clearing debris"
+        ],
+        [
+          "5",
+          "1,600,000",
+          "3d",
+          "3,370",
+          "+1 Gold Mine"
+        ]
+      ],
+      "requirements": "* Library Level 1\n  * Chapter 1 of Pottery or Roadways"
+    },
+    {
+      "name": "Machinery",
+      "url": "https://dominations.fandom.com/wiki/Machinery",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "200,000",
+          "4h",
+          "520",
+          "Increases Catapult attack by 20%"
+        ],
+        [
+          "2",
+          "400,000",
+          "12h",
+          "760",
+          "Increases Catapult health by 10%"
+        ],
+        [
+          "3",
+          "600,000",
+          "1d",
+          "1,115",
+          "Increases Catapult limit by 1"
+        ],
+        [
+          "4",
+          "800,000",
+          "1d 12h",
+          "2,301",
+          "Increases Catapult health by 10%"
+        ],
+        [
+          "5",
+          "1,600,000",
+          "3d",
+          "3,370",
+          "Increases Catapult fire rate by 10%"
+        ]
+      ],
+      "requirements": "* Library Level 1\n  * Chapter 1 of Reinforcements"
+    },
+    {
+      "name": "Watch Towers",
+      "url": "https://dominations.fandom.com/wiki/Watch_Towers",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "200,000",
+          "4h",
+          "520",
+          "Increases Tower limit by 1"
+        ],
+        [
+          "2",
+          "400,000",
+          "12h",
+          "760",
+          "Increases Tower health by 20%"
+        ],
+        [
+          "3",
+          "600,000",
+          "1d",
+          "1,115",
+          "Increases Tower attack by 10%"
+        ],
+        [
+          "4",
+          "800,000",
+          "1d 12h",
+          "2,301",
+          "Increases Tower limit by 1"
+        ],
+        [
+          "5",
+          "1,600,000",
+          "3d",
+          "3,370",
+          "Increases Tower attack by 10%"
+        ]
+      ],
+      "requirements": "* Library Level 1\n  * Chapter 1 of Reinforcements"
+    },
+    {
+      "name": "State of Defensive Capstone",
+      "url": "https://dominations.fandom.com/wiki/State_of_Defensive_Capstone",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "300,000",
+          "12d",
+          "5,780",
+          "+1 Bunker"
+        ]
+      ],
+      "requirements": "* Completed Bookcase"
+    },
+    {
+      "name": "Archives",
+      "url": "https://dominations.fandom.com/wiki/Archives",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "9,000",
+          "4h",
+          "520",
+          "+2 Museum Storage"
+        ],
+        [
+          "2",
+          "18,000",
+          "1d",
+          "760",
+          "+2 Museum Storage"
+        ],
+        [
+          "3",
+          "27,000",
+          "2d",
+          "1,115",
+          "+2 Museum Storage"
+        ],
+        [
+          "4",
+          "36,000",
+          "3d",
+          "3,370",
+          "+2 Museum Storage"
+        ],
+        [
+          "5",
+          "54,000",
+          "5d",
+          "4,465",
+          "+2 Museum Storage"
+        ]
+      ],
+      "requirements": "* Library Level 5"
+    },
+    {
+      "name": "Excavation",
+      "url": "https://dominations.fandom.com/wiki/Excavation",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "800,000",
+          "4h",
+          "520",
+          "+10% more Mysterious Fragments from winning battles"
+        ],
+        [
+          "2",
+          "1,600,000",
+          "1d",
+          "760",
+          "+10% more Mysterious Fragments from winning battles"
+        ],
+        [
+          "3",
+          "2,400,000",
+          "2d",
+          "1,115",
+          "+10% more Mysterious Fragments from winning battles"
+        ],
+        [
+          "4",
+          "3,200,000",
+          "3d",
+          "3,370",
+          "+10% more Mysterious Fragments from winning battles"
+        ],
+        [
+          "5",
+          "4,800,000",
+          "5d",
+          "4,465",
+          "+10% more Mysterious Fragments from winning battles"
+        ]
+      ],
+      "requirements": "* Library Level 5"
+    },
+    {
+      "name": "Early Preparation (Technology)",
+      "url": "https://dominations.fandom.com/wiki/Early_Preparation_%28Technology%29",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "12,000",
+          "3d",
+          "520",
+          "+10% S.A.M. Battery Damage"
+        ],
+        [
+          "2",
+          "24,000",
+          "5d",
+          "760",
+          "+10% Claymore Damage"
+        ],
+        [
+          "3",
+          "36,000",
+          "6d",
+          "1,115",
+          "+10% Armored Ambush Trap Damage"
+        ],
+        [
+          "4",
+          "48,000",
+          "8d",
+          "2,647",
+          "+10% Caltrops Damage Reduction"
+        ],
+        [
+          "5",
+          "72,000",
+          "10d",
+          "3,935",
+          "+1 Armored Ambush Trap Limit"
+        ]
+      ],
+      "requirements": "* Library (Enlightenment or Gunpowder Age (specific unknown)) -- means Armored Ambush Trap available before Digital Age\n  * Chapter 1 of Stronghold (Technology)"
+    },
+    {
+      "name": "Resistance",
+      "url": "https://dominations.fandom.com/wiki/Resistance",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "1,300,000",
+          "8h",
+          "1,010",
+          "Barracks produce Heavy Infantry when destroyed"
+        ],
+        [
+          "2",
+          "2,600,000",
+          "3d",
+          "3,370",
+          "War Academy produces Heavy Cavalry when destroyed"
+        ],
+        [
+          "3",
+          "3,900,000",
+          "6d",
+          "4,935",
+          "Armory produces Nations unique unit when destroyed"
+        ],
+        [
+          "4",
+          "5,200,000",
+          "8d",
+          "5,780",
+          "Factory produces a Heavy Tank when destroyed"
+        ],
+        [
+          "5",
+          "7,800,000",
+          "12d",
+          "7,225",
+          "Mercenary Camp produces a Flammpanzer when destroyed"
+        ]
+      ],
+      "requirements": "* Library Level 8\n  * Chapter 1 of Negotiations or Air Defense"
+    },
+    {
+      "name": "Fortification",
+      "url": "https://dominations.fandom.com/wiki/Fortification",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "400,000",
+          "4h",
+          "520",
+          "Increases Garrison health by 20%"
+        ],
+        [
+          "2",
+          "800,000",
+          "12h",
+          "760",
+          "Increases Garrison defender attack by 10%"
+        ],
+        [
+          "3",
+          "1,200,000",
+          "1d",
+          "1,115",
+          "Increases Garrison limit by 1"
+        ],
+        [
+          "4",
+          "1,600,000",
+          "1d 12h",
+          "2,301",
+          "+10% Garrison defender health"
+        ],
+        [
+          "5",
+          "3,200,000",
+          "3d",
+          "3,370",
+          "-50% Garrison first wave spawn time"
+        ]
+      ],
+      "requirements": "* Library Level 3\n  * Chapter 1 of Ramparts"
+    },
+    {
+      "name": "Zeal",
+      "url": "https://dominations.fandom.com/wiki/Zeal",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "400,000",
+          "4h",
+          "520",
+          "Increases Blessing power by an additional 10%"
+        ],
+        [
+          "2",
+          "800,000",
+          "12h",
+          "760",
+          "Increases timed Blessing duration by 50%"
+        ],
+        [
+          "3",
+          "1,200,000",
+          "1d",
+          "1,115",
+          "Unlocks a Blessing that calls 4 hidden defenders from the forest."
+        ],
+        [
+          "4",
+          "1,600,000",
+          "1d 12h",
+          "2,301",
+          "Unlock a Blessing that speeds up Tactics training"
+        ],
+        [
+          "5",
+          "3,200,000",
+          "3d",
+          "3,370",
+          "Unlock a Blessing that rearms traps triggered in battle"
+        ]
+      ],
+      "requirements": "* Library Level 3\n  * Chapter 1 of Crop Rotation or Commerce"
+    },
+    {
+      "name": "Chivalry",
+      "url": "https://dominations.fandom.com/wiki/Chivalry",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "300,000",
+          "4h",
+          "520",
+          "Increases Heavy Cavalry health by 10%"
+        ],
+        [
+          "2",
+          "600,000",
+          "12h",
+          "760",
+          "Increases Ranged Siege attack by 10%"
+        ],
+        [
+          "3",
+          "900,000",
+          "1d",
+          "1,115",
+          "Increases Supply Vehicles healing by 10%"
+        ],
+        [
+          "4",
+          "1,200,000",
+          "1d 12h",
+          "2,301",
+          "+10% Heavy Cavalry attack"
+        ],
+        [
+          "5",
+          "2,400,000",
+          "3d",
+          "3,370",
+          "Increases Supply Vehicles healing by 10%"
+        ]
+      ],
+      "requirements": "* Library Level 2\n  * Chapter 1 of Cast Iron"
+    },
+    {
+      "name": "Free Companies",
+      "url": "https://dominations.fandom.com/wiki/Free_Companies",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "50,000",
+          "4h",
+          "520",
+          "Increases Mercenary health by 10%"
+        ],
+        [
+          "2",
+          "100,000",
+          "12h",
+          "760",
+          "Increases Mercenary attack strength by 10%"
+        ],
+        [
+          "3",
+          "200,000",
+          "1d",
+          "1,115",
+          "Increases Mercenary army limit by 1"
+        ],
+        [
+          "4",
+          "400,000",
+          "1d 12h",
+          "2,301",
+          "Increases Mercenary attack strength by 20%"
+        ],
+        [
+          "5",
+          "800,000",
+          "3d",
+          "3,370",
+          "Increases Mercenary health by 10%"
+        ]
+      ],
+      "requirements": "* Library Level 1"
+    },
+    {
+      "name": "Early Preparation (Technology)",
+      "url": "https://dominations.fandom.com/wiki/Early_Preparation_%28Technology%29",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "12,000",
+          "3d",
+          "520",
+          "+10% S.A.M. Battery Damage"
+        ],
+        [
+          "2",
+          "24,000",
+          "5d",
+          "760",
+          "+10% Claymore Damage"
+        ],
+        [
+          "3",
+          "36,000",
+          "6d",
+          "1,115",
+          "+10% Armored Ambush Trap Damage"
+        ],
+        [
+          "4",
+          "48,000",
+          "8d",
+          "2,647",
+          "+10% Caltrops Damage Reduction"
+        ],
+        [
+          "5",
+          "72,000",
+          "10d",
+          "3,935",
+          "+1 Armored Ambush Trap Limit"
+        ]
+      ],
+      "requirements": "* Library (Enlightenment or Gunpowder Age (specific unknown)) -- means Armored Ambush Trap available before Digital Age\n  * Chapter 1 of Stronghold (Technology)"
+    },
+    {
+      "name": "Intellectual Integrity",
+      "url": "https://dominations.fandom.com/wiki/Intellectual_Integrity",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "12,000",
+          "1d 12h",
+          "875",
+          "University Research Cost -4%"
+        ],
+        [
+          "2",
+          "24,000",
+          "2d",
+          "1,245",
+          "University Research Time -4%"
+        ],
+        [
+          "3",
+          "36,000",
+          "2d 12h",
+          "3,500",
+          "Library Research Cost -4%"
+        ],
+        [
+          "4",
+          "48,000",
+          "3d",
+          "4,695",
+          "Library Research Time -4%"
+        ],
+        [
+          "5",
+          "62,000",
+          "4d 12h",
+          "6,000",
+          "Blacksmith Research Time & Cost -6%"
+        ]
+      ],
+      "requirements": "* Library Level 5\n  * Chapter 1 of Lightweight Traps"
+    },
+    {
+      "name": "Trenches",
+      "url": "https://dominations.fandom.com/wiki/Trenches",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "1,000,000",
+          "4h",
+          "520",
+          "+10% Wall health in World War battles"
+        ],
+        [
+          "2",
+          "2,000,000",
+          "1d 12h",
+          "760",
+          "+10% Gate health in World War battles"
+        ],
+        [
+          "3",
+          "3,000,000",
+          "3d",
+          "1,115",
+          "+10% Bastion health in World War battles"
+        ],
+        [
+          "4",
+          "4,000,000",
+          "4 d",
+          "3,947",
+          "+10% Trap damage in World War battles"
+        ],
+        [
+          "5",
+          "6,000,000",
+          "6d",
+          "4,935",
+          "+10% Town Center health in World War battles"
+        ]
+      ],
+      "requirements": "* Library Level 6"
+    },
+    {
+      "name": "Archives",
+      "url": "https://dominations.fandom.com/wiki/Archives",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "9,000",
+          "4h",
+          "520",
+          "+2 Museum Storage"
+        ],
+        [
+          "2",
+          "18,000",
+          "1d",
+          "760",
+          "+2 Museum Storage"
+        ],
+        [
+          "3",
+          "27,000",
+          "2d",
+          "1,115",
+          "+2 Museum Storage"
+        ],
+        [
+          "4",
+          "36,000",
+          "3d",
+          "3,370",
+          "+2 Museum Storage"
+        ],
+        [
+          "5",
+          "54,000",
+          "5d",
+          "4,465",
+          "+2 Museum Storage"
+        ]
+      ],
+      "requirements": "* Library Level 5"
+    },
+    {
+      "name": "Exploration",
+      "url": "https://dominations.fandom.com/wiki/Exploration",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "200,000",
+          "4h",
+          "520",
+          "Gives a 10% refund upon clearing Forests"
+        ],
+        [
+          "2",
+          "400,000",
+          "12h",
+          "760",
+          "Decreases cost of debris clearing by 50%"
+        ],
+        [
+          "3",
+          "600,000",
+          "1d",
+          "1,115",
+          "Have a 5% chance to find an animal when clearing debris."
+        ],
+        [
+          "4",
+          "800,000",
+          "1d 12h",
+          "2,301",
+          "+10% chance to find an animal when clearing debris"
+        ],
+        [
+          "5",
+          "1,600,000",
+          "3d",
+          "3,370",
+          "+1 Gold Mine"
+        ]
+      ],
+      "requirements": "* Library Level 1\n  * Chapter 1 of Pottery or Roadways"
+    },
+    {
+      "name": "Drilling",
+      "url": "https://dominations.fandom.com/wiki/Drilling",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "1,000,000",
+          "4h",
+          "520",
+          "Increases Oil Well and Refinery health by 40%"
+        ],
+        [
+          "2",
+          "2,000,000",
+          "1d 12h",
+          "760",
+          "Increases Oil Well production by 10%"
+        ],
+        [
+          "3",
+          "3,000,000",
+          "3d",
+          "1,115",
+          "Increases Oil Well limit by 1"
+        ],
+        [
+          "4",
+          "4,000,000",
+          "4d",
+          "3,947",
+          "+20% Oil gained from Oil Seeps"
+        ],
+        [
+          "5",
+          "6,000,000",
+          "6d",
+          "4,935",
+          "Increases Oil Well production by 10%"
+        ]
+      ],
+      "requirements": "* Library Level 6\n  * Chapter 1 of Banking"
+    },
+    {
+      "name": "Citadels",
+      "url": "https://dominations.fandom.com/wiki/Citadels",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "800,000",
+          "4h",
+          "520",
+          "Increases Ballista Tower health by 20%"
+        ],
+        [
+          "2",
+          "1,600,000",
+          "1d",
+          "760",
+          "Increases Redoubt health by 20%"
+        ],
+        [
+          "3",
+          "2,400,000",
+          "2d",
+          "1,115",
+          "Increases Castle health by 20%"
+        ],
+        [
+          "4",
+          "3,200,000",
+          "3d",
+          "3,369",
+          "+20% Redoubt attack"
+        ],
+        [
+          "5",
+          "4,800,000",
+          "5d",
+          "4,465",
+          "Increases Ballista Tower attack faster by 10%"
+        ]
+      ],
+      "requirements": "* Library Level 5\n  * Chapter 1 of Partisans or Engineering"
+    },
+    {
+      "name": "State of Defensive Capstone",
+      "url": "https://dominations.fandom.com/wiki/State_of_Defensive_Capstone",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "300,000",
+          "12d",
+          "5,780",
+          "+1 Bunker"
+        ]
+      ],
+      "requirements": "* Completed Bookcase"
+    },
+    {
+      "name": "Zeal",
+      "url": "https://dominations.fandom.com/wiki/Zeal",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "400,000",
+          "4h",
+          "520",
+          "Increases Blessing power by an additional 10%"
+        ],
+        [
+          "2",
+          "800,000",
+          "12h",
+          "760",
+          "Increases timed Blessing duration by 50%"
+        ],
+        [
+          "3",
+          "1,200,000",
+          "1d",
+          "1,115",
+          "Unlocks a Blessing that calls 4 hidden defenders from the forest."
+        ],
+        [
+          "4",
+          "1,600,000",
+          "1d 12h",
+          "2,301",
+          "Unlock a Blessing that speeds up Tactics training"
+        ],
+        [
+          "5",
+          "3,200,000",
+          "3d",
+          "3,370",
+          "Unlock a Blessing that rearms traps triggered in battle"
+        ]
+      ],
+      "requirements": "* Library Level 3\n  * Chapter 1 of Crop Rotation or Commerce"
+    },
+    {
+      "name": "Chivalry",
+      "url": "https://dominations.fandom.com/wiki/Chivalry",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "300,000",
+          "4h",
+          "520",
+          "Increases Heavy Cavalry health by 10%"
+        ],
+        [
+          "2",
+          "600,000",
+          "12h",
+          "760",
+          "Increases Ranged Siege attack by 10%"
+        ],
+        [
+          "3",
+          "900,000",
+          "1d",
+          "1,115",
+          "Increases Supply Vehicles healing by 10%"
+        ],
+        [
+          "4",
+          "1,200,000",
+          "1d 12h",
+          "2,301",
+          "+10% Heavy Cavalry attack"
+        ],
+        [
+          "5",
+          "2,400,000",
+          "3d",
+          "3,370",
+          "Increases Supply Vehicles healing by 10%"
+        ]
+      ],
+      "requirements": "* Library Level 2\n  * Chapter 1 of Cast Iron"
+    },
+    {
+      "name": "Fortification",
+      "url": "https://dominations.fandom.com/wiki/Fortification",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "400,000",
+          "4h",
+          "520",
+          "Increases Garrison health by 20%"
+        ],
+        [
+          "2",
+          "800,000",
+          "12h",
+          "760",
+          "Increases Garrison defender attack by 10%"
+        ],
+        [
+          "3",
+          "1,200,000",
+          "1d",
+          "1,115",
+          "Increases Garrison limit by 1"
+        ],
+        [
+          "4",
+          "1,600,000",
+          "1d 12h",
+          "2,301",
+          "+10% Garrison defender health"
+        ],
+        [
+          "5",
+          "3,200,000",
+          "3d",
+          "3,370",
+          "-50% Garrison first wave spawn time"
+        ]
+      ],
+      "requirements": "* Library Level 3\n  * Chapter 1 of Ramparts"
+    },
+    {
+      "name": "Battle Tactics",
+      "url": "https://dominations.fandom.com/wiki/Battle_Tactics",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "400,000",
+          "4h",
+          "520",
+          "Increases duration of War Tactics by 20%"
+        ],
+        [
+          "2",
+          "800,000",
+          "12h",
+          "760",
+          "Increases damage and healing of tactics by 10%"
+        ],
+        [
+          "3",
+          "1,200,000",
+          "1d",
+          "1,115",
+          "Increases War Tactics capacity by 1"
+        ],
+        [
+          "4",
+          "1,600,000",
+          "1d 12h",
+          "2,301",
+          "+1 Traitor gained from Betrayal"
+        ],
+        [
+          "5",
+          "3,200,000",
+          "3d",
+          "3,370",
+          "+20% hitpoints to Decoys"
+        ]
+      ],
+      "requirements": "* Library Level 3\n  * Chapter 1 of Chivalry"
+    },
+    {
+      "name": "Engineering",
+      "url": "https://dominations.fandom.com/wiki/Engineering",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "500,000",
+          "4h",
+          "520",
+          "Increases Caltrops limit by 1"
+        ],
+        [
+          "2",
+          "1,000,000",
+          "12h",
+          "760",
+          "Increases Spike Trap limit by 1"
+        ],
+        [
+          "3",
+          "1,500,000",
+          "1d",
+          "1,115",
+          "Increases Ambush Trap limit by 1"
+        ],
+        [
+          "4",
+          "2,000,000",
+          "2d 8h",
+          "2,301",
+          "+1 Spike Trap limit"
+        ],
+        [
+          "5",
+          "4,000,000",
+          "3d",
+          "3,370",
+          "Increases Caltrops limit by 1"
+        ]
+      ],
+      "requirements": "* Library Level 4\n  * Chapter 1 of Fortification"
+    },
+    {
+      "name": "Partisans",
+      "url": "https://dominations.fandom.com/wiki/Partisans",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "500,000",
+          "4h",
+          "520",
+          "Adds 4 defenders from Town Center"
+        ],
+        [
+          "2",
+          "1,000,000",
+          "12h",
+          "760",
+          "Increases defender health by 20%"
+        ],
+        [
+          "3",
+          "1,500,000",
+          "1d",
+          "1,115",
+          "Adds 4 more defenders from Town Center"
+        ],
+        [
+          "4",
+          "2,000,000",
+          "1d 12h",
+          "2,301",
+          "Increases defender attack by 10%"
+        ],
+        [
+          "5",
+          "4,000,000",
+          "3d",
+          "3,370",
+          "-50% Stable first wave spawn time"
+        ]
+      ],
+      "requirements": "* Library Level 4\n  * Chapter 1 of Fortification"
+    },
+    {
+      "name": "Ballistics",
+      "url": "https://dominations.fandom.com/wiki/Ballistics",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "400,000",
+          "4h",
+          "520",
+          "Increases Wall Breachers health by 10%"
+        ],
+        [
+          "2",
+          "800,000",
+          "12h",
+          "760",
+          "Decreases Ranged Siege troop space by 1"
+        ],
+        [
+          "3",
+          "1,200,000",
+          "1d",
+          "1,115",
+          "Decreases Supply Vehicles troop space by 1"
+        ],
+        [
+          "4",
+          "1,600,000",
+          "1d 12h",
+          "2,301",
+          "+30% Wall Breachers attack"
+        ],
+        [
+          "5",
+          "3,200,000",
+          "3d",
+          "3,370",
+          "Ranged Siege attacks +10% faster"
+        ]
+      ],
+      "requirements": "* Library Level 3\n  * Chapter 1 of Chivalry"
+    },
+    {
+      "name": "Trenches",
+      "url": "https://dominations.fandom.com/wiki/Trenches",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "1,000,000",
+          "4h",
+          "520",
+          "+10% Wall health in World War battles"
+        ],
+        [
+          "2",
+          "2,000,000",
+          "1d 12h",
+          "760",
+          "+10% Gate health in World War battles"
+        ],
+        [
+          "3",
+          "3,000,000",
+          "3d",
+          "1,115",
+          "+10% Bastion health in World War battles"
+        ],
+        [
+          "4",
+          "4,000,000",
+          "4 d",
+          "3,947",
+          "+10% Trap damage in World War battles"
+        ],
+        [
+          "5",
+          "6,000,000",
+          "6d",
+          "4,935",
+          "+10% Town Center health in World War battles"
+        ]
+      ],
+      "requirements": "* Library Level 6"
+    },
+    {
+      "name": "State of Defensive Capstone",
+      "url": "https://dominations.fandom.com/wiki/State_of_Defensive_Capstone",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "300,000",
+          "12d",
+          "5,780",
+          "+1 Bunker"
+        ]
+      ],
+      "requirements": "* Completed Bookcase"
+    },
+    {
+      "name": "Free Companies",
+      "url": "https://dominations.fandom.com/wiki/Free_Companies",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "50,000",
+          "4h",
+          "520",
+          "Increases Mercenary health by 10%"
+        ],
+        [
+          "2",
+          "100,000",
+          "12h",
+          "760",
+          "Increases Mercenary attack strength by 10%"
+        ],
+        [
+          "3",
+          "200,000",
+          "1d",
+          "1,115",
+          "Increases Mercenary army limit by 1"
+        ],
+        [
+          "4",
+          "400,000",
+          "1d 12h",
+          "2,301",
+          "Increases Mercenary attack strength by 20%"
+        ],
+        [
+          "5",
+          "800,000",
+          "3d",
+          "3,370",
+          "Increases Mercenary health by 10%"
+        ]
+      ],
+      "requirements": "* Library Level 1"
+    },
+    {
+      "name": "Stronghold (Technology)",
+      "url": "https://dominations.fandom.com/wiki/Stronghold_%28Technology%29",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "200,000",
+          "1d",
+          "520",
+          "+5% Stronghold Damage"
+        ],
+        [
+          "2",
+          "400,000",
+          "2d",
+          "760",
+          "+5% Stronghold Health"
+        ],
+        [
+          "3",
+          "800,000",
+          "3d",
+          "1,115",
+          "+7% Stronghold Damage"
+        ],
+        [
+          "4",
+          "1,600,000",
+          "4d",
+          "2,647",
+          "+7% Stronghold Health"
+        ],
+        [
+          "5",
+          "3,000,000",
+          "6d",
+          "3,935",
+          "+10% Stronghold Damage"
+        ]
+      ],
+      "requirements": "* Library Level 6\n  * Chapter 1 of Bulwark (Technology)"
+    },
+    {
+      "name": "Early Preparation (Technology)",
+      "url": "https://dominations.fandom.com/wiki/Early_Preparation_%28Technology%29",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "12,000",
+          "3d",
+          "520",
+          "+10% S.A.M. Battery Damage"
+        ],
+        [
+          "2",
+          "24,000",
+          "5d",
+          "760",
+          "+10% Claymore Damage"
+        ],
+        [
+          "3",
+          "36,000",
+          "6d",
+          "1,115",
+          "+10% Armored Ambush Trap Damage"
+        ],
+        [
+          "4",
+          "48,000",
+          "8d",
+          "2,647",
+          "+10% Caltrops Damage Reduction"
+        ],
+        [
+          "5",
+          "72,000",
+          "10d",
+          "3,935",
+          "+1 Armored Ambush Trap Limit"
+        ]
+      ],
+      "requirements": "* Library (Enlightenment or Gunpowder Age (specific unknown)) -- means Armored Ambush Trap available before Digital Age\n  * Chapter 1 of Stronghold (Technology)"
+    },
+    {
+      "name": "Partisans",
+      "url": "https://dominations.fandom.com/wiki/Partisans",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "500,000",
+          "4h",
+          "520",
+          "Adds 4 defenders from Town Center"
+        ],
+        [
+          "2",
+          "1,000,000",
+          "12h",
+          "760",
+          "Increases defender health by 20%"
+        ],
+        [
+          "3",
+          "1,500,000",
+          "1d",
+          "1,115",
+          "Adds 4 more defenders from Town Center"
+        ],
+        [
+          "4",
+          "2,000,000",
+          "1d 12h",
+          "2,301",
+          "Increases defender attack by 10%"
+        ],
+        [
+          "5",
+          "4,000,000",
+          "3d",
+          "3,370",
+          "-50% Stable first wave spawn time"
+        ]
+      ],
+      "requirements": "* Library Level 4\n  * Chapter 1 of Fortification"
+    },
+    {
+      "name": "Ballistics",
+      "url": "https://dominations.fandom.com/wiki/Ballistics",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "400,000",
+          "4h",
+          "520",
+          "Increases Wall Breachers health by 10%"
+        ],
+        [
+          "2",
+          "800,000",
+          "12h",
+          "760",
+          "Decreases Ranged Siege troop space by 1"
+        ],
+        [
+          "3",
+          "1,200,000",
+          "1d",
+          "1,115",
+          "Decreases Supply Vehicles troop space by 1"
+        ],
+        [
+          "4",
+          "1,600,000",
+          "1d 12h",
+          "2,301",
+          "+30% Wall Breachers attack"
+        ],
+        [
+          "5",
+          "3,200,000",
+          "3d",
+          "3,370",
+          "Ranged Siege attacks +10% faster"
+        ]
+      ],
+      "requirements": "* Library Level 3\n  * Chapter 1 of Chivalry"
+    },
+    {
+      "name": "Engineering",
+      "url": "https://dominations.fandom.com/wiki/Engineering",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "500,000",
+          "4h",
+          "520",
+          "Increases Caltrops limit by 1"
+        ],
+        [
+          "2",
+          "1,000,000",
+          "12h",
+          "760",
+          "Increases Spike Trap limit by 1"
+        ],
+        [
+          "3",
+          "1,500,000",
+          "1d",
+          "1,115",
+          "Increases Ambush Trap limit by 1"
+        ],
+        [
+          "4",
+          "2,000,000",
+          "2d 8h",
+          "2,301",
+          "+1 Spike Trap limit"
+        ],
+        [
+          "5",
+          "4,000,000",
+          "3d",
+          "3,370",
+          "Increases Caltrops limit by 1"
+        ]
+      ],
+      "requirements": "* Library Level 4\n  * Chapter 1 of Fortification"
+    },
+    {
+      "name": "Offensive Ballistics",
+      "url": "https://dominations.fandom.com/wiki/Offensive_Ballistics",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "12,000,000",
+          "1d",
+          "1,700",
+          "-15% Missile Silo Upgrade cost"
+        ],
+        [
+          "2",
+          "13,000,000",
+          "5d 12h",
+          "5,000",
+          "+20% Offensive Missile Silo Launch Damage"
+        ],
+        [
+          "3",
+          "14,000,000",
+          "9d",
+          "6,000",
+          "-50% Offensive Missile Silo Launch Cooldown"
+        ],
+        [
+          "4",
+          "15,000,000",
+          "11d",
+          "7,000",
+          "Reduces Missile Silo Upgrade cost by 15%"
+        ],
+        [
+          "5",
+          "250,000",
+          "16d",
+          "8,000",
+          "+1 Offensive Missile Silo Target"
+        ]
+      ],
+      "requirements": "* Library Level 13\n  * Chapter 1 of Advanced Ballistics"
+    },
+    {
+      "name": "Banking",
+      "url": "https://dominations.fandom.com/wiki/Banking",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "800,000",
+          "4h",
+          "520",
+          "Increases Trade Goods storage by 2"
+        ],
+        [
+          "2",
+          "1,600,000",
+          "1d",
+          "760",
+          "Increases Diamond chance by 20% for 3 or 4 star wins"
+        ],
+        [
+          "3",
+          "2,400,000",
+          "2d",
+          "1,115",
+          "Increases Trade Goods storage by 2"
+        ],
+        [
+          "4",
+          "3,200,000",
+          "3d",
+          "3,369",
+          "+40% Storehouse health"
+        ],
+        [
+          "5",
+          "4,800,000",
+          "5d",
+          "4,465",
+          "Increases Trade Goods storage by 2"
+        ]
+      ],
+      "requirements": "* Library Level 5\n  * Chapter 1 of Hounds"
+    },
+    {
+      "name": "Reconnaissance Aircraft",
+      "url": "https://dominations.fandom.com/wiki/Reconnaissance_Aircraft",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "75,000",
+          "1d 16h",
+          "1,900",
+          "+5% to Recons scan damage bonus"
+        ],
+        [
+          "2",
+          "110,000",
+          "5d 2h",
+          "6,000",
+          "+25% to Aircraft flight speed"
+        ],
+        [
+          "3",
+          "175,000",
+          "7d 21h",
+          "7,000",
+          "+5% to Recons scan damage bonus"
+        ],
+        [
+          "4",
+          "250,000",
+          "10d 4h",
+          "8,000",
+          "Reduces the deployment cooldown of Recons and Transports Aircraft by 10%"
+        ],
+        [
+          "5",
+          "280,000",
+          "14d 10h",
+          "9,000",
+          "Recons gains Stealth on its first run"
+        ]
+      ],
+      "requirements": "* Library Level 14\n  * Chapter 1 of Offensive Ballistics"
+    },
+    {
+      "name": "Archives",
+      "url": "https://dominations.fandom.com/wiki/Archives",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "9,000",
+          "4h",
+          "520",
+          "+2 Museum Storage"
+        ],
+        [
+          "2",
+          "18,000",
+          "1d",
+          "760",
+          "+2 Museum Storage"
+        ],
+        [
+          "3",
+          "27,000",
+          "2d",
+          "1,115",
+          "+2 Museum Storage"
+        ],
+        [
+          "4",
+          "36,000",
+          "3d",
+          "3,370",
+          "+2 Museum Storage"
+        ],
+        [
+          "5",
+          "54,000",
+          "5d",
+          "4,465",
+          "+2 Museum Storage"
+        ]
+      ],
+      "requirements": "* Library Level 5"
+    },
+    {
+      "name": "Early Preparation (Technology)",
+      "url": "https://dominations.fandom.com/wiki/Early_Preparation_%28Technology%29",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "12,000",
+          "3d",
+          "520",
+          "+10% S.A.M. Battery Damage"
+        ],
+        [
+          "2",
+          "24,000",
+          "5d",
+          "760",
+          "+10% Claymore Damage"
+        ],
+        [
+          "3",
+          "36,000",
+          "6d",
+          "1,115",
+          "+10% Armored Ambush Trap Damage"
+        ],
+        [
+          "4",
+          "48,000",
+          "8d",
+          "2,647",
+          "+10% Caltrops Damage Reduction"
+        ],
+        [
+          "5",
+          "72,000",
+          "10d",
+          "3,935",
+          "+1 Armored Ambush Trap Limit"
+        ]
+      ],
+      "requirements": "* Library (Enlightenment or Gunpowder Age (specific unknown)) -- means Armored Ambush Trap available before Digital Age\n  * Chapter 1 of Stronghold (Technology)"
+    },
+    {
+      "name": "Free Companies",
+      "url": "https://dominations.fandom.com/wiki/Free_Companies",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "50,000",
+          "4h",
+          "520",
+          "Increases Mercenary health by 10%"
+        ],
+        [
+          "2",
+          "100,000",
+          "12h",
+          "760",
+          "Increases Mercenary attack strength by 10%"
+        ],
+        [
+          "3",
+          "200,000",
+          "1d",
+          "1,115",
+          "Increases Mercenary army limit by 1"
+        ],
+        [
+          "4",
+          "400,000",
+          "1d 12h",
+          "2,301",
+          "Increases Mercenary attack strength by 20%"
+        ],
+        [
+          "5",
+          "800,000",
+          "3d",
+          "3,370",
+          "Increases Mercenary health by 10%"
+        ]
+      ],
+      "requirements": "* Library Level 1"
+    },
+    {
+      "name": "Citadels",
+      "url": "https://dominations.fandom.com/wiki/Citadels",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "800,000",
+          "4h",
+          "520",
+          "Increases Ballista Tower health by 20%"
+        ],
+        [
+          "2",
+          "1,600,000",
+          "1d",
+          "760",
+          "Increases Redoubt health by 20%"
+        ],
+        [
+          "3",
+          "2,400,000",
+          "2d",
+          "1,115",
+          "Increases Castle health by 20%"
+        ],
+        [
+          "4",
+          "3,200,000",
+          "3d",
+          "3,369",
+          "+20% Redoubt attack"
+        ],
+        [
+          "5",
+          "4,800,000",
+          "5d",
+          "4,465",
+          "Increases Ballista Tower attack faster by 10%"
+        ]
+      ],
+      "requirements": "* Library Level 5\n  * Chapter 1 of Partisans or Engineering"
+    },
+    {
+      "name": "Excavation",
+      "url": "https://dominations.fandom.com/wiki/Excavation",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "800,000",
+          "4h",
+          "520",
+          "+10% more Mysterious Fragments from winning battles"
+        ],
+        [
+          "2",
+          "1,600,000",
+          "1d",
+          "760",
+          "+10% more Mysterious Fragments from winning battles"
+        ],
+        [
+          "3",
+          "2,400,000",
+          "2d",
+          "1,115",
+          "+10% more Mysterious Fragments from winning battles"
+        ],
+        [
+          "4",
+          "3,200,000",
+          "3d",
+          "3,370",
+          "+10% more Mysterious Fragments from winning battles"
+        ],
+        [
+          "5",
+          "4,800,000",
+          "5d",
+          "4,465",
+          "+10% more Mysterious Fragments from winning battles"
+        ]
+      ],
+      "requirements": "* Library Level 5"
+    },
+    {
+      "name": "Exploration",
+      "url": "https://dominations.fandom.com/wiki/Exploration",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "200,000",
+          "4h",
+          "520",
+          "Gives a 10% refund upon clearing Forests"
+        ],
+        [
+          "2",
+          "400,000",
+          "12h",
+          "760",
+          "Decreases cost of debris clearing by 50%"
+        ],
+        [
+          "3",
+          "600,000",
+          "1d",
+          "1,115",
+          "Have a 5% chance to find an animal when clearing debris."
+        ],
+        [
+          "4",
+          "800,000",
+          "1d 12h",
+          "2,301",
+          "+10% chance to find an animal when clearing debris"
+        ],
+        [
+          "5",
+          "1,600,000",
+          "3d",
+          "3,370",
+          "+1 Gold Mine"
+        ]
+      ],
+      "requirements": "* Library Level 1\n  * Chapter 1 of Pottery or Roadways"
+    },
+    {
+      "name": "Leadership",
+      "url": "https://dominations.fandom.com/wiki/Leadership",
+      "type": "library",
+      "rows": [
+        [
+          "1",
+          "12,000",
+          "4h",
+          "520",
+          "Increases Generals' health by 10%"
+        ],
+        [
+          "2",
+          "24,000",
+          "1d",
+          "760",
+          "Gives Generals a defender retinue (3) on defense"
+        ],
+        [
+          "3",
+          "36,000",
+          "2d",
+          "1,115",
+          "Train a second General for battle or defense"
+        ],
+        [
+          "4",
+          "48,000",
+          "3d",
+          "3,369",
+          "Increases Generals' attack by 10%"
+        ],
+        [
+          "5",
+          "72,000",
+          "5d",
+          "4,465",
+          "+15% General attack against other Generals ( 7 times DPS instead of 6 )"
+        ]
+      ],
+      "requirements": "* Library Level 5\n  * Chapter 1 of Banners"
+    }
+  ],
+  "library_manifest": [
+    {
+      "name": "Pottery",
+      "building_level": 1,
+      "age": "Classical Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Roadways",
+      "building_level": 1,
+      "age": "Classical Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Reinforcements",
+      "building_level": 1,
+      "age": "Classical Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Free Companies",
+      "building_level": 1,
+      "age": "Classical Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Exploration",
+      "building_level": 1,
+      "age": "Classical Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Watch Towers",
+      "building_level": 1,
+      "age": "Classical Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Machinery",
+      "building_level": 1,
+      "age": "Classical Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Cast Iron",
+      "building_level": 1,
+      "age": "Classical Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Crop Rotation",
+      "building_level": 2,
+      "age": "Medieval Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Commerce",
+      "building_level": 2,
+      "age": "Medieval Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Ramparts",
+      "building_level": 2,
+      "age": "Medieval Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Chivalry",
+      "building_level": 2,
+      "age": "Medieval Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Zeal",
+      "building_level": 3,
+      "age": "Medieval Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Fortification",
+      "building_level": 3,
+      "age": "Medieval Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Battle Tactics",
+      "building_level": 3,
+      "age": "Medieval Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Ballistics",
+      "building_level": 3,
+      "age": "Medieval Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Hounds",
+      "building_level": 4,
+      "age": "Gunpowder Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Partisans",
+      "building_level": 4,
+      "age": "Gunpowder Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Engineering",
+      "building_level": 4,
+      "age": "Gunpowder Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Banners",
+      "building_level": 4,
+      "age": "Gunpowder Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Banking",
+      "building_level": 5,
+      "age": "Enlightenment Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Citadels",
+      "building_level": 5,
+      "age": "Enlightenment Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Standing Army",
+      "building_level": 5,
+      "age": "Enlightenment Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Leadership",
+      "building_level": 5,
+      "age": "Enlightenment Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Drilling",
+      "building_level": 6,
+      "age": "Industrial Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Savings",
+      "building_level": 6,
+      "age": "Industrial Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Nationalism",
+      "building_level": 6,
+      "age": "Industrial Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Heavy Weaponry",
+      "building_level": 6,
+      "age": "Industrial Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Internationalism",
+      "building_level": 7,
+      "age": "Industrial Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Negotiations",
+      "building_level": 7,
+      "age": "Industrial Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Air Defense",
+      "building_level": 7,
+      "age": "Industrial Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Aviation",
+      "building_level": 7,
+      "age": "Industrial Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Heritage",
+      "building_level": 8,
+      "age": "Global Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Command",
+      "building_level": 8,
+      "age": "Global Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Warfare",
+      "building_level": 8,
+      "age": "Global Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Resistance",
+      "building_level": 8,
+      "age": "Global Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Shipping",
+      "building_level": 9,
+      "age": "Global Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Spoils of War",
+      "building_level": 9,
+      "age": "Global Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Deception",
+      "building_level": 9,
+      "age": "Global Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "High Explosives",
+      "building_level": 9,
+      "age": "Global Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Computing",
+      "building_level": 10,
+      "age": "Atomic Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Radar",
+      "building_level": 10,
+      "age": "Atomic Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Monuments",
+      "building_level": 10,
+      "age": "Atomic Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Elite Paratroopers",
+      "building_level": 10,
+      "age": "Atomic Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "War Reparations",
+      "building_level": 11,
+      "age": "Atomic Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Sentries",
+      "building_level": 11,
+      "age": "Atomic Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Mobile Forces",
+      "building_level": 11,
+      "age": "Atomic Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Rotorcraft",
+      "building_level": 11,
+      "age": "Atomic Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Industrial Plastics",
+      "building_level": 12,
+      "age": "Cold War Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Economic Stimulus",
+      "building_level": 12,
+      "age": "Cold War Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Rocketry",
+      "building_level": 12,
+      "age": "Cold War Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Advanced Ballistics",
+      "building_level": 12,
+      "age": "Cold War Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Microprocessor",
+      "building_level": 13,
+      "age": "Space Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Paleontology",
+      "building_level": 13,
+      "age": "Space Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Anti-aircraft",
+      "building_level": 13,
+      "age": "Space Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Offensive Ballistics",
+      "building_level": 13,
+      "age": "Space Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Economic Prosperity",
+      "building_level": 14,
+      "age": "Digital Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Palisades",
+      "building_level": 14,
+      "age": "Digital Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Tactical Defenses",
+      "building_level": 14,
+      "age": "Digital Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Reconnaissance Aircraft",
+      "building_level": 14,
+      "age": "Digital Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Orders of Council",
+      "building_level": 15,
+      "age": "Information Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Aerial Interception",
+      "building_level": 15,
+      "age": "Information Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Counter Offensive",
+      "building_level": 15,
+      "age": "Information Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Assault Battalion",
+      "building_level": 15,
+      "age": "Information Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Dividend Returns",
+      "building_level": 16,
+      "age": "Drone Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Exalted Benefactions",
+      "building_level": 16,
+      "age": "Drone Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Commanding Defense",
+      "building_level": 16,
+      "age": "Drone Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Commanding Offense",
+      "building_level": 16,
+      "age": "Drone Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Compartmentalized Production",
+      "building_level": 17,
+      "age": "Automation Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Fully Loaded Defense",
+      "building_level": 17,
+      "age": "Automation Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Fully Loaded Offense",
+      "building_level": 17,
+      "age": "Automation Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Assault Force Optimization",
+      "building_level": 17,
+      "age": "Automation Age",
+      "line": "Through the Ages"
+    },
+    {
+      "name": "Advanced Reconstruction",
+      "building_level": 5,
+      "age": "Enlightenment Age",
+      "line": "Archaeology"
+    },
+    {
+      "name": "Renovations",
+      "building_level": 5,
+      "age": "Enlightenment Age",
+      "line": "Archaeology"
+    },
+    {
+      "name": "Archives",
+      "building_level": 5,
+      "age": "Enlightenment Age",
+      "line": "Archaeology"
+    },
+    {
+      "name": "Excavation",
+      "building_level": 5,
+      "age": "Enlightenment Age",
+      "line": "Archaeology"
+    },
+    {
+      "name": "Curation",
+      "building_level": 7,
+      "age": "Industrial Age",
+      "line": "Archaeology"
+    },
+    {
+      "name": "Restoration Efficiency",
+      "building_level": 7,
+      "age": "Industrial Age",
+      "line": "Archaeology"
+    },
+    {
+      "name": "Endowments",
+      "building_level": 7,
+      "age": "Industrial Age",
+      "line": "Archaeology"
+    },
+    {
+      "name": "Private Collections",
+      "building_level": 7,
+      "age": "Industrial Age",
+      "line": "Archaeology"
+    },
+    {
+      "name": "Archaeology Capstone",
+      "building_level": 7,
+      "age": "Industrial Age",
+      "line": "Archaeology"
+    },
+    {
+      "name": "Parliamentary Proceedings",
+      "building_level": 6,
+      "age": "Industrial Age",
+      "line": "League of Nations"
+    },
+    {
+      "name": "Coalition Forces",
+      "building_level": 6,
+      "age": "Industrial Age",
+      "line": "League of Nations"
+    },
+    {
+      "name": "Defense Planning",
+      "building_level": 6,
+      "age": "Industrial Age",
+      "line": "League of Nations"
+    },
+    {
+      "name": "Trenches",
+      "building_level": 6,
+      "age": "Industrial Age",
+      "line": "League of Nations"
+    },
+    {
+      "name": "Strategic Reserves",
+      "building_level": 8,
+      "age": "Global Age",
+      "line": "League of Nations"
+    },
+    {
+      "name": "Guided Missiles",
+      "building_level": 8,
+      "age": "Global Age",
+      "line": "League of Nations"
+    },
+    {
+      "name": "Armored Division",
+      "building_level": 8,
+      "age": "Global Age",
+      "line": "League of Nations"
+    },
+    {
+      "name": "Payloads",
+      "building_level": 8,
+      "age": "Global Age",
+      "line": "League of Nations"
+    },
+    {
+      "name": "League of Nations Capstone",
+      "building_level": 8,
+      "age": "Global Age",
+      "line": "League of Nations"
+    },
+    {
+      "name": "Tower Defense",
+      "building_level": 1,
+      "age": "Classical Age",
+      "line": "State of Defensive"
+    },
+    {
+      "name": "Mortars",
+      "building_level": 1,
+      "age": "Classical Age",
+      "line": "State of Defensive"
+    },
+    {
+      "name": "Bulwark",
+      "building_level": 1,
+      "age": "Classical Age",
+      "line": "State of Defensive"
+    },
+    {
+      "name": "Sally Forth",
+      "building_level": 1,
+      "age": "Classical Age",
+      "line": "State of Defensive"
+    },
+    {
+      "name": "Protector",
+      "building_level": 6,
+      "age": "Industrial Age",
+      "line": "State of Defensive"
+    },
+    {
+      "name": "Safeguard",
+      "building_level": 6,
+      "age": "Industrial Age",
+      "line": "State of Defensive"
+    },
+    {
+      "name": "Disruption",
+      "building_level": 6,
+      "age": "Industrial Age",
+      "line": "State of Defensive"
+    },
+    {
+      "name": "Stronghold",
+      "building_level": 6,
+      "age": "Industrial Age",
+      "line": "State of Defensive"
+    },
+    {
+      "name": "Battle Stations",
+      "building_level": 13,
+      "age": "Space Age",
+      "line": "State of Defensive"
+    },
+    {
+      "name": "Fortify",
+      "building_level": 13,
+      "age": "Space Age",
+      "line": "State of Defensive"
+    },
+    {
+      "name": "Early Preparation",
+      "building_level": 13,
+      "age": "Space Age",
+      "line": "State of Defensive"
+    },
+    {
+      "name": "Blackout",
+      "building_level": 13,
+      "age": "Space Age",
+      "line": "State of Defensive"
+    },
+    {
+      "name": "State of Defensive Capstone",
+      "building_level": 13,
+      "age": "Space Age",
+      "line": "State of Defensive"
+    },
+    {
+      "name": "Capacious Caravans",
+      "building_level": 5,
+      "age": "Enlightenment Age",
+      "line": "Basic Economics"
+    },
+    {
+      "name": "Food Stores",
+      "building_level": 5,
+      "age": "Enlightenment Age",
+      "line": "Basic Economics"
+    },
+    {
+      "name": "Barricades",
+      "building_level": 5,
+      "age": "Enlightenment Age",
+      "line": "Basic Economics"
+    },
+    {
+      "name": "Lightweight Traps",
+      "building_level": 5,
+      "age": "Enlightenment Age",
+      "line": "Basic Economics"
+    },
+    {
+      "name": "Advanced Drilling",
+      "building_level": 5,
+      "age": "Enlightenment Age",
+      "line": "Basic Economics"
+    },
+    {
+      "name": "Construction Effort",
+      "building_level": 5,
+      "age": "Enlightenment Age",
+      "line": "Basic Economics"
+    },
+    {
+      "name": "Intellectual Integrity",
+      "building_level": 5,
+      "age": "Enlightenment Age",
+      "line": "Basic Economics"
+    },
+    {
+      "name": "Direct Donation",
+      "building_level": 5,
+      "age": "Enlightenment Age",
+      "line": "Basic Economics"
+    },
+    {
+      "name": "Labor Efficiency Capstone",
+      "building_level": 5,
+      "age": "Enlightenment Age",
+      "line": "Basic Economics"
+    }
+  ]
+}

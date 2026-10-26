@@ -43,12 +43,8 @@
   <section id="crafting-purposes" class="crafting-workspace" aria-label="Collection targets">
     <h2 class="panel-title">Collection targets</h2>
     <div data-crafting-purposes></div>
-  </section>
-
   <p id="error" class="error" hidden></p>
-  <details id="advanced-ratings" class="advanced-ratings">
-    <summary>Advanced ratings</summary>
-    <p class="ratings-hint">Global defaults, group ratings and existing strategy overrides. Your collection targets use the same shared profile ratings.</p>
+  <section id="rating-defaults-panel" role="tabpanel" aria-labelledby="crafting-tab-ratings" hidden>
   <section class="filters ratings-page-controls" aria-label="Ratings controls">
     <div class="filter-main">
       <label class="filter-control">
@@ -75,7 +71,8 @@
   <div class="ratings-page-scroll" id="ratings-scroll">
     <div class="ratings-page-grid" id="ratings-grid" style="--ratings-groups: 1"></div>
   </div>
-  </details>
+  </section>
+  </section>
   </div>
 
   <dialog id="target-unsaved-dialog" class="profile-delete-dialog" aria-labelledby="target-unsaved-title" aria-describedby="target-unsaved-description">
@@ -95,8 +92,8 @@
   <script src="profiles-ui.js?v=20261025-slate"></script>
   <script src="data/crafted_perk_pools.js?v=20261018"></script>
   <script src="data/artifact_stat_context.js?v=1"></script>
-  <script src="crafting-purposes.js?v=20261022-rating-labels"></script>
-  <script src="crafting-purpose-editor.js?v=20261025-slate"></script>
+  <script src="crafting-purposes.js?v=20261026-rare-toggles"></script>
+  <script src="crafting-purpose-editor.js?v=20261026-default-enemy-debuffs"></script>
   <script src="ratings.js?v=20261020-advanced-ratings"></script>
 
   <script src="services.js?v=20261025-slate"></script>

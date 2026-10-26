@@ -30,7 +30,6 @@
 .service-preferences input { width:1.1rem; height:1.1rem; flex-shrink:0; accent-color:var(--accent); }
 .service-preferences strong,.service-preferences small { display:block; }
 .service-preferences small { color:var(--muted); line-height:1.5; margin-top:.2rem; font-size:.85rem; }
-.service-panel .service-sharing-settings { margin-top:.5rem; font-size:.85rem; }
 .service-consent-banner .service-actions { margin:1.25rem 0 0; }
 .service-privacy-status:empty { display:none; }
 .service-research { max-width:none; }
