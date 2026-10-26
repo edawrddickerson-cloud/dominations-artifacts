@@ -8,7 +8,7 @@
   const wait=async fn=>{const until=performance.now()+15000;while(!fn()){if(performance.now()>until)throw new Error('Timed out: '+get('result-status').textContent+' / total '+get('item-total').textContent+' / cutoff '+get('benchmark-value').textContent+' / '+get('comparison').textContent+' / axes '+get('off').checked+','+get('def').checked);await new Promise(resolve=>setTimeout(resolve,25));}};
   await wait(()=>get('names').children.length && window.DNStoredArtifacts && window.DNScannerComparisonCore);
   // Isolate general comparison display; rare patterns have their own fixture.
-  for(const preset of DNCraftingPurposes.rareDefinitions)DNCraftingPurposes.setRareCard(preset.id,0);
+  for(const family of ['attacking','defensive','economy'])DNCraftingPurposes.disableRareFamily(family);
   // Exercise the active-strategy summary independently of the strategy table.
   DN.comparisonStrategies=()=>[];
   const bounds=element=>{const rect=element.getBoundingClientRect();return {top:rect.top,bottom:rect.bottom,left:rect.left,right:rect.right};};

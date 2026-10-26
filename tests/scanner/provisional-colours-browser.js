@@ -7,7 +7,7 @@
   async function wait(test){const end=performance.now()+15000;while(!test()){if(performance.now()>end)throw Error('Loading timed out / '+get('hall').value+' / '+get('compare-type').value+' / '+get('benchmark-value').textContent+' / '+get('comparison').textContent);await new Promise(resolve=>setTimeout(resolve,20));}}
   await wait(()=>window.DNScannerComparison && window.DNStoredArtifacts && get('names').children.length);
   // This fixture exercises strategy colours independently of rare-card targets.
-  for(const preset of DNCraftingPurposes.rareDefinitions)DNCraftingPurposes.setRareCard(preset.id,0);
+  for(const family of ['attacking','defensive','economy'])DNCraftingPurposes.disableRareFamily(family);
   document.getElementById('header-main').click();
   const core=DNScannerComparisonCore,store=DNStoredArtifacts;
   const rows=(value,name='Heavy Tank Damage')=>Array.from({length:5},(_,i)=>({name,value,known:true,hasPercent:true,level:1,levelSource:'crafting',base:value,max:value+9,unlocked:i<2,rerollEligible:false,rerollSource:'manual'}));

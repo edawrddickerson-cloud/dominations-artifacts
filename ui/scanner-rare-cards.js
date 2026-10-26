@@ -25,7 +25,7 @@
       const result=odds.get(oddsKey);
       if(result.status!=='ready' || !result.oneIn)return;
       node.textContent='Estimated rarity: 1 in '+Number(result.oneIn.toPrecision(3)).toLocaleString()+' crafts · Personal · '+data.artifacts.toLocaleString()+' artifacts'+(result.lowSample?' · Low sample':'');
-      node.title='Independent perk-roll model; at least '+match.lines+' '+(match.mode==='damage'?'damage':match.mode==='hp'?'hitpoint':'HP/damage')+' lines for '+preset.label+' in '+hall+' '+category+'.';
+      node.title='Independent perk-roll model; at least '+match.lines+' '+(match.mode==='stat'?'matching':match.mode==='damage'?'damage':match.mode==='hp'?'hitpoint':'HP/damage')+' lines for '+preset.label+' in '+hall+' '+category+'.';
     }catch{/* An unavailable estimate must never affect Keep/Discard. */}
   }};
 })();

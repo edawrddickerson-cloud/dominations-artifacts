@@ -64,7 +64,10 @@
 .purpose-saved-table th { position:static; color:var(--muted); background:transparent; font-size:.8rem; font-weight:600; white-space:normal; overflow-wrap:anywhere; text-transform:none; letter-spacing:normal; line-height:1.4; vertical-align:middle; }
 .purpose-saved-table th:last-child, .purpose-saved-table td:last-child { width:30%; max-width:12rem; text-align:center; }
 .purpose-rare-list { display:grid; gap:.5rem; }
+.purpose-rare-family { margin-bottom:1.5rem; }
+.purpose-rare-family-heading { display:flex; align-items:center; justify-content:space-between; gap:.5rem; }
 .purpose-rare-row { display:grid; grid-template-columns:minmax(12rem,1fr) auto auto; align-items:center; gap:1rem; padding:.75rem 0; border-bottom:1px solid var(--line); }
+.purpose-rare-stat { grid-template-columns:minmax(12rem,1fr) auto; }
 .purpose-rare-name { margin:0; font-size:1rem; overflow-wrap:anywhere; }
 @media(max-width:900px) { .purpose-rare-row { grid-template-columns:1fr; gap:.5rem; } }
 .purpose-saved-choice button { max-width:100%; text-align:left; white-space:normal; overflow-wrap:anywhere; }

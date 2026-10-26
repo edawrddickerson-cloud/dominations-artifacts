@@ -354,7 +354,7 @@
     const bestRare=[...rareResults].sort((a,b)=>Number(b.hit)-Number(a.hit)||
       Number(b.lines>=b.requiredLines)-Number(a.lines>=a.requiredLines)||(b.score||0)-(a.score||0)||b.lines-a.lines)[0];
     const results=allResults.filter(item=>!item.rare);
-    if(bestRare)results.push({...bestRare,label:'Single Unit Rare Card'});
+    if(bestRare)results.push({...bestRare,label:'Rare Card'});
     if(focusProfile!==DN.activeProfileId())manualTarget=null;
     focusProfile=DN.activeProfileId();
     // Retained readings remain inspectable while capture is paused. Their

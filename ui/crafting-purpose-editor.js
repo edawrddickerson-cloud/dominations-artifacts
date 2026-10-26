@@ -4,7 +4,7 @@
   const root=document.querySelector('[data-crafting-purposes]'),service=window.DNCraftingPurposes,DN=window.DN;
   if(!root||!service)return;
   const categories=[['attacking','Attacking'],['defensive','Defensive'],['economy','Economy']];
-  const tabs=[...categories,['rare','Single Unit Rare Cards'],['ratings','Rating Defaults']];
+  const tabs=[...categories,['rare','Rare Cards'],['ratings','Rating Defaults']];
   let rareView=location.hash==='#rare';
   let ratingsView=location.hash==='#ratings';
   const drafts=new Map();
@@ -106,10 +106,10 @@
   }
   function renderRareCards(state) {
     const segments=(preset,kind,label,options,current)=>'<fieldset class="seg-field"><legend>'+label+'</legend><div class="seg seg-equal" role="group" aria-label="'+DN.esc(preset.label+' '+label)+'">'+options.map(([value,text])=>'<button type="button" class="seg-btn" data-rare-'+kind+'="'+preset.id+'" data-value="'+value+'" aria-pressed="'+(value===current)+'">'+text+'</button>').join('')+'</div></fieldset>';
-    return '<div class="purpose-rare-list">'+service.rareDefinitions.map(preset=>
-      '<section class="purpose-rare-row" aria-label="'+DN.esc(preset.label)+'"><h3 class="purpose-rare-name">'+DN.esc(preset.label)+'</h3>'+
+    return categories.map(([category,label])=>'<section class="purpose-rare-family" data-rare-family="'+category+'" aria-labelledby="rare-family-'+category+'"><div class="purpose-rare-family-heading"><h3 id="rare-family-'+category+'">'+label+'</h3><button type="button" class="btn btn-small" data-rare-family-off="'+category+'" aria-label="Turn off all '+label+' rare card presets">Off all</button></div><div class="purpose-rare-list">'+service.rareDefinitions.filter(preset=>preset.category===category).sort((a,b)=>a.label.localeCompare(b.label)).map(preset=>
+      '<section class="purpose-rare-row'+(preset.kind==='stat'?' purpose-rare-stat':'')+'" aria-label="'+DN.esc(preset.label)+'"><h4 class="purpose-rare-name">'+DN.esc(preset.label)+'</h4>'+
       segments(preset,'count','Matching lines',[[3,'3× and 4×'],[4,'4× only'],[0,'Off']],state.rareCards[preset.id]||0)+
-      segments(preset,'mode','Stats',[['all','Damage &amp; HP'],['damage','Damage'],['hp','Hitpoints']],state.rareModes[preset.id]||'all')+'</section>').join('')+'</div>';
+      (preset.kind==='unit'?segments(preset,'mode','Stats',[['all','Damage &amp; HP'],['damage','Damage'],['hp','Hitpoints']],state.rareModes[preset.id]||'all'):'')+'</section>').join('')+'</div></section>').join('');
   }
   function renderConfiguration(sortNow=false) {
     const container=root.querySelector('[data-purpose-config-list]');if(!container)return;
@@ -262,6 +262,10 @@
   });
   root.addEventListener('click',async event=>{
     const target=event.target.closest('button');if(!target)return;
+    if(target.matches('[data-rare-family-off]')){
+      const category=target.dataset.rareFamilyOff;service.disableRareFamily(category);
+      root.querySelector('[data-rare-family-off="'+category+'"]').focus({preventScroll:true});return;
+    }
     if(target.matches('[data-rare-count],[data-rare-mode]')){
       const kind=target.hasAttribute('data-rare-count')?'count':'mode',id=target.getAttribute('data-rare-'+kind),value=target.dataset.value;
       if(kind==='count')service.setRareCard(id,Number(value));else service.setRareMode(id,value);

@@ -65,8 +65,7 @@
   ];
   const retiredById = new Map(retiredDefaults.map(purpose=>[purpose.id,purpose]));
   const categories = ['attacking','defensive','economy'];
-  // Rare cards intentionally include only the named unit's HP/damage lines.
-  // Broader troop buffs, linked units and building debuffs are normal targets.
+  // Keep combined unit presets and offer every canonical stat independently.
   const rareDefinitions = DN.ARMY_UNIT_FAMILIES.flatMap(unit => [false,true].map(invading => {
     const stats = new Set(names.filter(name => {
       const scope = DN.perkArmyScope(name.replace(/^Invading /, ''));
@@ -74,12 +73,15 @@
         ['damage','hp','combined'].includes(metadata[name].kind) && scope?.kind === 'unit' && scope.unit === unit;
     }));
     return {id:'rare-'+(invading?'invading-':'')+slug(unit),label:(invading?'Invading ':'')+unit,
-      stats,rare:true,addOns:{}};
+      stats,rare:true,kind:'unit',category:invading?'defensive':'attacking',addOns:{}};
   })).filter(entry => entry.stats.size);
+  rareDefinitions.push(...names.map(name=>({id:'rare-stat-'+slug(name),label:name,stats:new Set([name]),
+    rare:true,kind:'stat',category:categoryFor(name),addOns:{}})));
   const rareById = new Map(rareDefinitions.map(entry => [entry.id,entry]));
   const definitionFor = (id,state) => {
     if(byId.has(id))return byId.get(id);
     const preset=rareById.get(id);if(!preset)return null;
+    if(preset.kind==='stat')return {...preset,mode:'stat'};
     const mode=(state || settings()).rareModes[id] || 'all';
     return {...preset,mode,stats:new Set([...preset.stats].filter(name=>mode==='all' || metadata[name].kind===mode || metadata[name].kind==='combined'))};
   };
@@ -215,9 +217,13 @@
     selected.push(...importedArmies);
     const activeId=seen.has(raw?.activeId)?raw.activeId:selected[0]||entries[0]?.id||null;
     const rareDefaults=Object.fromEntries(rareDefinitions.map(preset=>[preset.id,3]));
-    const rareCards=Object.fromEntries(Object.entries(raw?.rareCards ?? rareDefaults).filter(([id,count])=>rareById.has(id) && [3,4].includes(count)));
-    const rareModes=Object.fromEntries(Object.entries(raw?.rareModes || {}).filter(([id,mode])=>rareById.has(id) && ['all','damage','hp'].includes(mode)));
-    const state={version:6,selected,activeId,customPurposes:entries,rareCards,rareModes};
+    // Add new stat presets to existing enabled setups, preserving prior unit
+    // choices and explicitly empty (all-off) configurations.
+    const addedDefaults=raw?.rareCards && Object.keys(raw.rareCards).length && (raw.rarePresetVersion||1)<2?
+      Object.fromEntries(rareDefinitions.filter(preset=>preset.kind==='stat').map(preset=>[preset.id,3])):{};
+    const rareCards=Object.fromEntries(Object.entries(raw?.rareCards?{...addedDefaults,...raw.rareCards}:rareDefaults).filter(([id,count])=>rareById.has(id) && [3,4].includes(count)));
+    const rareModes=Object.fromEntries(Object.entries(raw?.rareModes || {}).filter(([id,mode])=>rareById.get(id)?.kind==='unit' && ['all','damage','hp'].includes(mode)));
+    const state={version:6,selected,activeId,customPurposes:entries,rareCards,rareModes,rarePresetVersion:2};
     if(raw?.legacyPurposeRatings)state.legacyPurposeRatings=raw.legacyPurposeRatings;
     if(raw?.legacySelections)state.legacySelections=raw.legacySelections;
     if(raw?.legacyTargets)state.legacyTargets=raw.legacyTargets;
@@ -290,8 +296,14 @@
     save(state);
   }
   function setRareMode(id,mode) {
-    if(!rareById.has(id) || !['all','damage','hp'].includes(mode))throw Error('Choose Damage & HP, Damage or Hitpoints.');
+    if(rareById.get(id)?.kind!=='unit' || !['all','damage','hp'].includes(mode))throw Error('Choose Damage & HP, Damage or Hitpoints.');
     const state=settings();state.rareModes[id]=mode;save(state);
+  }
+  function disableRareFamily(category) {
+    if(!categories.includes(category))throw Error('Choose Attacking, Defensive or Economy.');
+    const state=settings();
+    for(const preset of rareDefinitions)if(preset.category===category)delete state.rareCards[preset.id];
+    save(state);
   }
   function setActive(id) {
     const state=settings();if(id!==null&&!byId.has(id))return;
@@ -402,7 +414,7 @@
   }
 
   window.DNCraftingPurposes={get definitions(){settings();return definitions;},get choices(){return choices;},settings,saveCustom,saveCustoms,removeCustom,configure,setRating,selectPurpose,setActive,candidatePerks,includedPerks,baseCandidatePerks,baseIncludedPerks,primaryCategory,sourceIssues,axisFor,categoryFor,ratingRows,evaluate,renderGrouped,
-    ratingOf:sharedRating,scoringOptions,rareDefinitions,setRareCard,setRareMode,
+    ratingOf:sharedRating,scoringOptions,rareDefinitions,setRareCard,setRareMode,disableRareFamily,
     editCustom:id=>window.DNCraftingPurposeEditor?.edit(id),
     setDefaults(defaults,canonPerk=name=>name){factoryDefaults=Object.fromEntries(Object.entries(defaults).map(([name,entry])=>[canonPerk(name),entry]));benchmarks.clear();window.dispatchEvent(new CustomEvent('dn-crafting-purposes-changed'));}
   };

@@ -2,6 +2,12 @@
 
 25 October 2026. Shared foundations and primitives are applied to all styled first-party routes. This record covers the migration and its review artifacts; it does not claim full accessibility conformance.
 
+## Rare-card families — 26 October 2026
+
+Rare Cards now includes an individual preset for every canonical stat alongside the combined unit HP/damage presets, grouped into Attacking, Defensive and Economy. Each family's Off all action is an atomic profile settings update that preserves other families, unit modes, normal collection targets and focus. The scanner aggregates overlapping matches into one Rare Card row; individual stats use the same weighted top-two and probability model. Existing unit choices migrate without resetting opt-outs; explicitly all-off setups remain off.
+
+Passed: complete stat coverage and unique preset IDs; three/four-line thresholds, owned ties, family isolation and migration tests; desktop/390px target browser fixtures including an economy stat's live match and rarity; scanner recognition/comparison/strategy/reading, glance and provisional-colour checks; inline shared ratings, pinned target focus, probability engine and design ownership. The focused targets/scanner visual run passed 117 checks with 30 screenshots at all five widths and 200% text size. Desktop and phone family layouts were visually reviewed. The broader 517-check run passed the rare-card checks but had ten unrelated navigation assertions on crafting-stats/config, reflecting separately changed page links. Those unrelated workspace changes are outside this feature.
+
 ## Single Unit Rare Cards — 26 October 2026
 
 Rating Defaults follow-up: moved the former Advanced ratings disclosure into a fifth Collection Targets tab named Rating Defaults. The shared five-tab variant wraps at intermediate widths and stacks at 320px. The existing ratings DOM remains mounted across view changes; filters, shared rating edits and category drafts keep their established lifecycle. Behaviour checks cover panel visibility, search identity/value retention, Home/End navigation, unsaved drafts, actual rating edits and profile/group inheritance.

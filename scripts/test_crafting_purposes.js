@@ -270,6 +270,42 @@ DN.setActiveProfile(rareProfile);assert.equal(service.settings().rareCards[rareI
 assert.throws(()=>service.setRareCard(rareId,2));
 service.setRareCard(rareId,0);assert.ok(!rareEval(4).hit);
 assert.ok(!Object.hasOwn(service.settings().rareCards,rareId),'an explicitly disabled preset stays off after reload');
-for(const preset of service.rareDefinitions)service.setRareCard(preset.id,0);
+const statPresets=service.rareDefinitions.filter(preset=>preset.kind==='stat');
+assert.equal(new Set(service.rareDefinitions.map(preset=>preset.id)).size,service.rareDefinitions.length,'preset IDs are unique across unit and stat patterns');
+assert.equal(statPresets.length,Object.keys(metadata).length,'every canonical stat has exactly one individual preset');
+assert.equal(new Set(statPresets.flatMap(preset=>[...preset.stats])).size,Object.keys(metadata).length);
+for(const preset of statPresets){assert.equal(preset.stats.size,1);assert.equal(preset.category,service.categoryFor(preset.label));}
+const statCraft=(name,count=3)=>craft(Array.from({length:5},(_,i)=>i<count?row(name,[11,6,1,11][i]):filler()));
+for(const [name,type] of [['Barracks Troop Damage','Weapon'],['Tower Damage','Armor'],['All Resources Looted','Jewelry']]) {
+  const preset=statPresets.find(p=>p.label===name);service.setRareCard(preset.id,3);
+  const value=statCraft(name),options={type,hall:'main',owned:[],selected:[preset.id]};
+  const hit=service.evaluate(value,options)[0];
+  assert.ok(hit.hit,name+' qualifies three repeated lines');assert.equal(hit.mode,'stat');assert.equal(hit.perks.join(','),name);
+  assert.ok(!service.evaluate(statCraft(name,2),options)[0].hit,'two lines do not qualify');
+  options.owned=[owned('stat-first',value.rows,type),owned('stat-second',value.rows,type)];
+  assert.equal(service.evaluate(value,options)[0].status,'owned','stat presets also reject owned ties');
+  assert.ok(service.evaluate(statCraft(name,4),options)[0].hit,'a fourth matching line improves the top two');
+  service.setRareCard(preset.id,4);assert.ok(!service.evaluate(value,options)[0].hit,'4× only applies to individual stats');
+  assert.throws(()=>service.setRareMode(preset.id,'damage'),'individual stats cannot acquire an unrelated unit mode');
+}
+const beforeFamily=service.settings();
+let familyNotifications=0;context.window.addEventListener('dn-crafting-purposes-changed',()=>familyNotifications++);
+service.disableRareFamily('defensive');
+const afterFamily=service.settings();
+assert.equal(familyNotifications,1,'family Off all is one atomic settings update');
+for(const preset of service.rareDefinitions)assert.equal(afterFamily.rareCards[preset.id],preset.category==='defensive'?undefined:beforeFamily.rareCards[preset.id]);
+assert.equal(JSON.stringify(afterFamily.rareModes),JSON.stringify(beforeFamily.rareModes),'family actions preserve stat modes');
+assert.equal(JSON.stringify(afterFamily.customPurposes),JSON.stringify(beforeFamily.customPurposes));
+assert.throws(()=>service.disableRareFamily('invalid'));
+for(const family of ['attacking','defensive','economy'])service.disableRareFamily(family);
 assert.equal(Object.keys(service.settings().rareCards).length,0,'an explicitly empty selection never restores defaults');
+const allOff=service.settings();delete allOff.rarePresetVersion;DN.lsSet('dn-crafting-purposes',JSON.stringify(allOff));
+assert.equal(Object.keys(service.settings().rareCards).length,0,'all-off legacy setups remain all off');
+DN.lsSet('dn-crafting-purposes',JSON.stringify({...allOff,rareCards:{[rareId]:4},rareModes:{[rareId]:'hp'}}));
+const expanded=service.settings();
+assert.equal(expanded.rareCards[rareId],4);assert.equal(expanded.rareModes[rareId],'hp');
+assert.ok(statPresets.every(preset=>expanded.rareCards[preset.id]===3),'new stat presets inherit the 3× default in enabled legacy setups');
+assert.ok(!expanded.rareCards['rare-heavy-infantry'],'legacy unit opt-outs remain off');
+service.setRareCard(statPresets[0].id,0);
+assert.ok(!service.settings().rareCards[statPresets[0].id],'individual stat opt-outs survive migration/save/reload');
 console.log('Collection targets, shared ratings, migration, draft saves and optional rare-card patterns passed.');
