@@ -3,7 +3,7 @@
   const checks={},get=id=>document.getElementById('storage-'+id),store=window.DNStoredArtifacts;
   const check=(name,value)=>{checks[name]=!!value;if(!value)throw new Error(name);};
   const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
-  async function wait(fn){const until=performance.now()+12000;while(!await fn()){if(performance.now()>until)throw new Error('Catalog ownership timeout: '+get('ownership-title').textContent);await pause(25);}}
+  async function wait(fn){const until=performance.now()+12000;while(!await fn()){if(performance.now()>until)throw new Error('Catalog ownership timeout: '+get('ownership-title').textContent+' '+fn.toString());await pause(25);}}
   await wait(()=>window.DNStorageScanner && !get('saved').textContent.startsWith('Loading'));
   const DN=window.DN,profile=DN.addProfile('Catalog ownership test');DN.setActiveProfile(profile);
   DN.lsSet('dn-artifact-hall-filter','Main');
@@ -63,5 +63,39 @@
   read('British Kettle Drum',6,{hall:'war',type:'War Legendary'});
   await wait(()=>DN.loadCollected().has('british-kettle-drum-mythical'));
   check('War Mythical edition is marked by name and six attributes',!DN.loadCollected().has('british-kettle-drum-legendary'));
+  const canvas=document.createElement('canvas');canvas.width=canvas.height=12;canvas.getContext('2d').fillRect(0,0,12,12);const image=canvas.toDataURL('image/png');
+  const arm='arm-reliquary-of-charlemagne-mythical',statsBefore=JSON.stringify(await store.read(store.collectionKey()));
+  const scan={valid:false,warnings:[],rows:Array.from({length:6},()=>({name:'',value:null,known:false,hasPercent:false})),artifact:{name:'Arm Reliquary of Charlemagne',type:'War Mythical',hall:'war',image}};
+  window.DNStorageScanner.update(scan,false,{reviewable:true,pending:false,expectedRows:6,profileKey:store.collectionKey(),encounterId:++encounter});
+  await wait(async()=>(await store.readCatalogArtwork())[arm]===image);
+  check('incomplete named Mythical scan saves its captured image',DN.loadCollected().has(arm) && (await store.readCatalogArtwork())[arm]===image);
+  check('image-only capture never creates or replaces scanned stats',JSON.stringify(await store.read(store.collectionKey()))===statsBefore);
+  DN.saveCollectionUi({hall:'War',viewMode:'list'});
+  const collection=document.createElement('iframe');collection.srcdoc=(await(await fetch('collection.html')).text()).replace(/<!-- Cloudflare Web Analytics -->.*<!-- End Cloudflare Web Analytics -->/g,'');document.body.append(collection);
+  const armImage=()=>collection.contentDocument?.querySelector('[data-artifact-id="'+arm+'"] img');
+  await wait(()=>collection.contentDocument?.getElementById('hall-war') && collection.contentWindow.DNStoredArtifacts);
+  collection.contentDocument.getElementById('hall-war').click();collection.contentDocument.getElementById('view-list').click();
+  await wait(()=>armImage()?.getAttribute('src')===image);
+  await armImage().decode();
+  check('Collection uses the personal crop with no catalog image or saved stats',armImage().naturalWidth===12);
+  collection.srcdoc=(await(await fetch('collection.html')).text()).replace(/<!-- Cloudflare Web Analytics -->.*<!-- End Cloudflare Web Analytics -->/g,'');
+  await wait(()=>armImage()?.getAttribute('src')===image);
+  check('image-only capture survives a Collection reload',armImage().getAttribute('src')===image);
+  const records=await store.readBackupRecords(),backup={kind:'dominations-planner-backup',version:1,settings:window.DNLocalBackupCore.settingsSnapshot(localStorage),records};
+  window.DNLocalBackupCore.validate(backup);
+  check('local backup includes and validates image-only captures',records.some(record=>record.id==='catalog-artwork:'+DN.activeProfileId() && record.images[arm]===image));
+  const planner=await store.readPlannerRecords([DN.activeProfileId()]);
+  check('image-only records never enter cloud planner transport',!planner.some(record=>record.id.startsWith('catalog-artwork:')));
+  const priorKey=store.collectionKey();DN.setActiveProfile(DN.addProfile('Artwork isolation'));
+  check('personal images stay within their profile',!Object.keys(await store.readCatalogArtwork()).length);
+  const late=await store.saveCatalogArtwork({name:scan.artifact.name,hall:'war',rows:scan.rows,image},await store.loadCatalog(),{profileKey:priorKey});
+  check('late old-profile image saves are rejected',late===false && !Object.keys(await store.readCatalogArtwork()).length);
+  DN.setActiveProfile(priorKey.slice(11));
+  await store.remove(arm);
+  check('deleting an artifact also deletes its personal image',!(await store.readCatalogArtwork())[arm]);
+  window.DNStorageScanner.update(scan,false,{reviewable:true,pending:false,expectedRows:6,profileKey:store.collectionKey(),encounterId:++encounter});
+  await wait(async()=>(await store.readCatalogArtwork())[arm]===image);
+  check('deleting then rescanning restores the personal image without full stats',(await store.readCatalogArtwork())[arm]===image);
+  collection.remove();
   frame.remove();return {passed:true,ui:checks};
 })();

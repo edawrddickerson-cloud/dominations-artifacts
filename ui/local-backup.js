@@ -21,6 +21,10 @@
     for(const [key,value] of Object.entries(data.settings))if(!isSettingKey(key) || typeof value!=='string')fail();
     const ids=new Set();
     for(const record of data.records) {
+      if(/^catalog-artwork:[^:]+$/.test(record?.id || '')) {
+        if(ids.has(record.id) || !record.images || typeof record.images!=='object' || Array.isArray(record.images) || Object.entries(record.images).some(([id,image])=>!/^[a-z0-9-]+$/.test(id) || typeof image!=='string' || image.length>=1000000 || !/^data:image\/(?:jpeg|png|webp);base64,[a-z\d+/=]+$/i.test(image)))fail();
+        ids.add(record.id);continue;
+      }
       if(record?.id==='crafting-log') {
         if(ids.has(record.id) || typeof record.value!=='string')fail();
         ids.add(record.id);continue;

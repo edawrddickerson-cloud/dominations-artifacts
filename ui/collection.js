@@ -42,7 +42,7 @@
 
   /** @type {object[]} */
   let rows = [];
-  let catalogRows=[],catalogImages={};
+  let catalogRows=[],catalogImages={},personalImages={};
   /** @type {Record<string, object>} */
   let byId = {};
   /** @type {Set<string>} */
@@ -123,18 +123,18 @@
   }
   const crafted=row=>row && !['Legendary','Mythical'].includes(DN.text(row.grade));
   function artworkThumb(id,name,size) {
-    const row=byId[id],item=row?.scanned;
+    const row=byId[id],item=personalImages[id]?{...row?.scanned,image:personalImages[id]}:row?.scanned;
     if(!window.DNArtwork)return DN.thumbHtml(artifactImages[id] || '',name,size);
     const image=window.DNArtwork.html(item,'entity-thumb',name,catalogImages[id] || '');
     return '<span class="entity-thumb-frame '+DN.esc(size)+'">'+image+'</span>';
   }
   function applyScans(scans) {
     rows=window.DNStoredArtifacts.catalogRows(catalogRows,scans,{includeOrdinary:true});
-    byId={};collected=DN.loadCollected();artifactImages={...catalogImages};
+    byId={};collected=DN.loadCollected();artifactImages={...catalogImages,...personalImages};
     for(const row of rows) {
       const id=DN.artifactKey(row);byId[id]=row;
       if(row.scanned && !row.scanned.catalogId)collected.add(id);
-      if(row.scanned?.image)artifactImages[id]=row.scanned.image;
+      if(row.scanned?.image && !personalImages[id])artifactImages[id]=row.scanned.image;
     }
   }
 
@@ -1162,9 +1162,9 @@
     const refresh=async()=>{
       const sequence=++refreshSequence;
       try {
-        const key=window.DNStoredArtifacts.collectionKey(),scans=await window.DNStoredArtifacts.read(key);
+        const key=window.DNStoredArtifacts.collectionKey(),[scans,artwork]=await Promise.all([window.DNStoredArtifacts.read(key),window.DNStoredArtifacts.readCatalogArtwork(key)]);
         if(sequence!==refreshSequence || key!==window.DNStoredArtifacts.collectionKey())return;
-        applyScans(scans);
+        personalImages=artwork;applyScans(scans);
         loadout=DN.loadLoadout();levels=DN.loadLevels();
         render();
       } catch {showError('Could not refresh your shared inventory. Reload to try again.');}
@@ -1415,6 +1415,7 @@
       collected = DN.loadCollected();
       try {
         const linked=await window.DNStoredArtifacts.reconcileCatalog(catalogRows);
+        personalImages=await window.DNStoredArtifacts.readCatalogArtwork(linked.profileKey);
         applyScans(linked.collection);
       } catch {showError('Could not load scanned artifacts from browser storage. Reload to try again.');}
       loadout = DN.loadLoadout();

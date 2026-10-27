@@ -46,6 +46,8 @@
     const art=new Map();
     if(preserveArtwork)for(const record of previous.records)for(const item of record.items || [])if(item.image)art.set(record.id+':'+item.id,item.image);
     let records=workspace.records.map(record=>({id:record.id,items:record.items.map(item=>({...C.sanitizeItem(item),...(art.has(record.id+':'+item.id)?{image:art.get(record.id+':'+item.id)}:{})}))}));
+    // Image-only catalog captures stay local to the same account and profile.
+    if(preserveArtwork){const profiles=new Set(workspace.records.filter(record=>record.id.startsWith('collection:')).map(record=>'catalog-artwork:'+record.id.slice(11)));records.push(...previous.records.filter(record=>profiles.has(record.id)));}
     if(preserveArtwork&&window.DNLocalArtworkRecovery){
       const sources=[{owner,local:previous},...await window.DNServiceStore.get('cloud-recovery') || []];
       records=window.DNLocalArtworkRecovery.recover(records,sources,{owner}).records;

@@ -28,6 +28,9 @@ function workspace(value=6) {
   assert.equal(item.image,undefined);assert.equal(item.rows[0].raw,undefined);assert.equal(item.rows[0].rerollEvidence.image,undefined);
   assert.equal(item.rows[0].rerollEligible,true);assert.equal(item.rows.length,2,'ordered duplicate perks are preserved');assert.equal(item.rows[1].value,-3);
   assert.equal(workspace().records.length,2,'scanner history is not uploaded');
+  const pictureOnly=C.createWorkspace(settings,[{id:'items',items:[]},{id:'collection:main',items:[]},{id:'catalog-artwork:main',images:{'arm-reliquary-of-charlemagne-mythical':'data:image/png;base64,YQ=='}}]);
+  assert.equal(pictureOnly.records.length,2,'image-only catalog captures are excluded from cloud serialization');
+  assert.equal(JSON.stringify(pictureOnly).includes('data:image'),false);
   assert.throws(()=>C.validate({...workspace(),version:2}));
   assert.throws(()=>C.validate({...workspace(),settings:{...settings,'sb-auth-token':'private'}}));
   assert.throws(()=>C.validate({...workspace(),records:[{id:'items',items:[]}]}));

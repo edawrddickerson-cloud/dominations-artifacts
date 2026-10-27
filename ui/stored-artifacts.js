@@ -140,6 +140,36 @@
       transaction.onabort=transaction.onerror=()=>reject(transaction.error);
     });
   }
+  const catalogArtworkKey=profileKey=>'catalog-artwork:'+profileKey.replace(/^collection:/,'');
+  const localArtwork=image=>typeof image==='string' && image.length<1000000 && /^data:image\/(?:jpeg|png|webp);base64,[a-z\d+/=]+$/i.test(image);
+  async function readCatalogArtwork(profileKey=collectionKey()) {
+    const db=await open();
+    return new Promise((resolve,reject)=>{
+      const request=db.transaction('inventory','readonly').objectStore('inventory').get(catalogArtworkKey(profileKey));
+      request.onsuccess=()=>resolve(request.result?.images || {});request.onerror=()=>reject(request.error);
+    });
+  }
+  // Name/edition ownership and the artwork crop are independent of stat OCR.
+  // Keep image-only records local; never manufacture a scanned stat snapshot.
+  async function saveCatalogArtwork(item,catalog,{profileKey=collectionKey(),isCurrent=()=>true}={}) {
+    const match=matchCatalog(item,catalog),owner=window.DNCloud?.user()?.id;
+    if(!match || !localArtwork(item.image))return false;
+    const current=()=>profileKey===collectionKey() && owner===window.DNCloud?.user()?.id && isCurrent() && window.DN.loadCollected().has(match.artifact_id);
+    if(!current())return false;
+    const db=await open();let changed=false;
+    return new Promise((resolve,reject)=>{
+      const tx=db.transaction('inventory','readwrite'),store=tx.objectStore('inventory'),request=store.get(catalogArtworkKey(profileKey));
+      request.onsuccess=()=>{
+        if(!current())return;
+        const record=request.result || {id:catalogArtworkKey(profileKey),images:{}};
+        if(record.images[match.artifact_id]===item.image)return;
+        record.images[match.artifact_id]=item.image;
+        const write=store.put(record);changed=true;write.onsuccess=()=>{if(!current())tx.abort();};
+      };
+      tx.oncomplete=()=>{if(changed)announce(profileKey);resolve(changed);};
+      tx.onabort=tx.onerror=()=>reject(tx.error || new Error('The image changed before it could be saved.'));
+    });
+  }
   async function recoverArtwork(patches,isCurrent=()=>true){
     const grouped=new Map();
     for(const patch of patches || []){
@@ -191,6 +221,7 @@
     return new Promise((resolve,reject)=>{
       const transaction=db.transaction('inventory','readwrite'),store=transaction.objectStore('inventory'),request=store.get(key);let removed;
       request.onsuccess=()=>{removed=request.result?.items?.find(item=>item.id===id);store.put({id:key,items:(request.result?.items || []).filter(item=>item.id!==id)});};
+      if(!inventory){const artwork=store.get(catalogArtworkKey(key));artwork.onsuccess=()=>{const record=artwork.result;if(record?.images?.[id]){delete record.images[id];store.put(record);}};}
       transaction.oncomplete=()=>{
         if(!inventory && removed?.catalogId && key===collectionKey()) {
           const owned=window.DN.loadCollected();owned.delete(removed.catalogId);
@@ -662,6 +693,6 @@
     });
     return row;
   }
-  window.DNStoredArtifacts = {read, write, readBackupRecords, readPlannerRecords, restoreBackupRecords, recoverArtwork, accept, saveScan, keepCraft, passivePlan, passiveMerge, remove, update, identify, toRow, matchCatalog, markCatalogOwned, linkCatalogItem, catalogRows, reconcileCatalog, loadCatalog, useCatalog, collectionKey, impliedRange, tierBases, tierMetadata, craftingTier, inferStorageRow, backfillItem, merge,backfillArtwork,
+  window.DNStoredArtifacts = {read, write, readBackupRecords, readPlannerRecords, restoreBackupRecords, readCatalogArtwork, saveCatalogArtwork, recoverArtwork, accept, saveScan, keepCraft, passivePlan, passiveMerge, remove, update, identify, toRow, matchCatalog, markCatalogOwned, linkCatalogItem, catalogRows, reconcileCatalog, loadCatalog, useCatalog, collectionKey, impliedRange, tierBases, tierMetadata, craftingTier, inferStorageRow, backfillItem, merge,backfillArtwork,
     newId:() => 'scan-' + crypto.randomUUID()};
 })();

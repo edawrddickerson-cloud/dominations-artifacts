@@ -15,6 +15,19 @@
   const store=window.DNStoredArtifacts;
   const esc=window.DN.esc;
   let catalog=[],catalogMatch=null,ownershipTimer=null,ownershipKey='',markedOwnershipKey='';
+  let artworkSavingKey='',savedArtworkKey='';
+  function saveMatchedArtwork() {
+    const image=current?.artifact?.image,profileKey=observationProfile,scanEncounter=encounter,match=catalogMatch;
+    if(!match || !image || !reviewable || pending || current.metadataConflict || profileKey!==store.collectionKey())return;
+    const key=JSON.stringify([profileKey,scanEncounter,match.artifact_id]);
+    if(key===artworkSavingKey || key===savedArtworkKey)return;
+    artworkSavingKey=key;
+    const item={name:match.name,hall:match.hall.toLowerCase(),rows:current.rows,image};
+    const isCurrent=()=>observationProfile===profileKey && encounter===scanEncounter && reviewable && !pending && !current?.metadataConflict && catalogMatch?.artifact_id===match.artifact_id;
+    store.saveCatalogArtwork(item,catalog,{profileKey,isCurrent}).then(()=>{if(isCurrent())savedArtworkKey=key;})
+      .catch(()=>{savedStatus('Could not save the artifact image. Read the artifact again.',true);})
+      .finally(()=>{if(artworkSavingKey===key)artworkSavingKey='';});
+  }
   function syncCatalogOwnership({commit=false}={}) {
     catalogMatch=null;
     const item=current && {name:get('name').value.trim(),hall:document.getElementById('scanner-hall').value,rows:current.rows};
@@ -115,6 +128,7 @@
   }
   function render() {
     syncCatalogOwnership();
+    saveMatchedArtwork();
     const special=!!reviewable && !!current && !!store.matchCatalog({name:get('name').value,hall:document.getElementById('scanner-hall').value,rows:current.rows},catalog) || /legendary|mythical/i.test(get('type').value);
     for(const select of document.querySelectorAll('#scanner-correct .scanner-perk-tier')) {
       select.disabled=special;

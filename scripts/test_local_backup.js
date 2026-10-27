@@ -27,6 +27,10 @@ const data={kind:'dominations-planner-backup',version:1,settings:{'dn_perk_group
   for(const bad of [{}, {...data,version:2},{...data,settings:{unrelated:'x'}},{...data,records:[data.records[0],data.records[0]]},
     {...data,records:[{id:'items',items:[{...data.records[0].items[0],image:'https://example.com/image.png'}]}]}])assert.throws(()=>validate(bad));
   const storage=new Storage([['unrelated','keep'],['sb-auth-token','private'],['dn_cloud_runtime','private'],['dn_perk_group_defaults_v1','old-groups'],['dn-old','old']]);
+  const artwork={id:'catalog-artwork:p',images:{'arm-reliquary-of-charlemagne-mythical':'data:image/png;base64,YQ=='}};
+  assert.doesNotThrow(()=>validate({...data,records:[...data.records,artwork]}));
+  assert.throws(()=>validate({...data,records:[{...artwork,images:{arm:'https://invalid.example/image.jpg'}}]}));
+  assert.throws(()=>validate({...data,records:[artwork,artwork]}));
   assert.equal(settingsSnapshot(storage).dn_perk_group_defaults_v1,'old-groups','group defaults are included despite their historical underscore prefix');
   assert.equal(settingsSnapshot(storage)['sb-auth-token'],undefined,'authentication is never exported');
   assert.equal(settingsSnapshot(storage).dn_cloud_runtime,undefined,'integration state is never exported');
@@ -38,6 +42,8 @@ const data={kind:'dominations-planner-backup',version:1,settings:{'dn_perk_group
   assert.equal(storage.getItem('sb-auth-token'),'private');
   assert.equal(storage.getItem('dn_cloud_runtime'),'private');
   assert.deepEqual(store.records,[...data.records,{id:'crafting-log',value:data.settings['dn-crafting-scanner-log-v2']}],'artwork, stats and legacy logs survive a JSON round trip');
+  await restore(JSON.parse(JSON.stringify({...data,records:[...data.records,artwork]})),storage,store);
+  assert.deepEqual(store.records.find(record=>record.id===artwork.id),artwork,'image-only catalog crops survive a full backup round trip');
   assert.equal(storage.getItem('dn-crafting-scanner-log-v2'),null,'legacy logs no longer consume settings quota');
   validate({...data,settings:{},records:store.records});
   assert.throws(()=>validate({...data,records:[{id:'crafting-log',value:42}]}));

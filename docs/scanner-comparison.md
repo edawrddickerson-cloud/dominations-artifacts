@@ -1,5 +1,13 @@
 # Craft comparison
 
+## Named artifact artwork, October 27, 2026
+
+Storage Scanner saves a current Legendary/Mythical artwork crop as soon as its title, hall and five/six-row edition identify a unique collected catalog item. Stat OCR completeness is independent: an incomplete read must not create a scanned stat snapshot or replace catalog/saved stats. Crops live in profile-scoped `catalog-artwork:<profileId>` IndexedDB records, are included in full local backups, and are excluded from cloud planner records. Same-account cloud reconciliation preserves these records only for profiles present in the incoming workspace; switching accounts never carries them across.
+
+Collection prefers the most recently saved personal catalog crop, then the saved scan's image/shared artwork reference, then the stored catalog image. Removing a collection artifact removes its personal crop; rescanning can save it again without waiting for complete stats. Stale profile/encounter results, conflicting metadata, unknown titles and pending corrections cannot save a crop. No image is uploaded or automatically added to the public artwork catalog.
+
+Validation: `node scripts/run_scanner_ocr_fixture.js --storage-catalog --summary` covers Arm Reliquary's incomplete scan, unchanged stats, image rendering/reload, backup inclusion, profile isolation, deletion and rescan. Also run linked-artifact, local-backup and backend-core checks for persistence changes.
+
 ## Whole-number OCR percentages, October 27, 2026
 
 Artifact stat percentages are signed whole numbers. Shared OCR parsing repairs one dot or comma between two digits when joining the original digits yields a value within -40% to +40%: `+1.3%` and `+1,3%` become `+13%`. The original OCR text is retained and the row records `percentageCorrected`. This rule never rounds, truncates, supplies a missing sign or percent symbol, or changes a stat's polarity. Leading-zero repairs, repeated punctuation and out-of-range joins stay unreadable and follow the existing retry/review path.
