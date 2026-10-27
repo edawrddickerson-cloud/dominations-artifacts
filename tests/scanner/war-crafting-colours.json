@@ -1,0 +1,16 @@
+[
+  {"fixture":"war-pistol","source":"Screenshot 2026-10-27 233330.png","artifactName":"Georg Luger's Pistol","hall":"war","category":"Weapon","panel":{"x":298,"y":174,"width":632,"height":330},"categoryBox":{"x":230,"y":91,"width":320,"height":43},"rows":[
+    {"name":"Invading Supply Vehicle Hitpoints","value":-1,"colour":"neutral"},
+    {"name":"Heavy Tank Damage","value":1,"colour":"neutral"},
+    {"name":"Assault Vehicle Damage","value":3,"colour":"green"},
+    {"name":"Invading MRL Hitpoints","value":-6,"colour":"blue"},
+    {"name":"Invading Bomber Hitpoints","value":-1,"colour":"neutral"}
+  ]},
+  {"fixture":"war-body-shield","source":"Screenshot 2026-10-27 233241.png","artifactName":"Casimir Zeglen's Brewster Body Shield","hall":"war","category":"Armor","panel":{"x":315,"y":185,"width":632,"height":332},"categoryBox":{"x":170,"y":129,"width":300,"height":44},"rows":[
+    {"name":"Heavy Cavalry Hitpoints","value":1,"colour":"neutral"},
+    {"name":"Invading Attack Helicopter Damage","value":-1,"colour":"neutral"},
+    {"name":"Ranged Infantry Hitpoints","value":6,"colour":"blue"},
+    {"name":"Supply Vehicle Hitpoints","value":1,"colour":"neutral"},
+    {"name":"Invading Armored Car Damage","value":-1,"colour":"neutral"}
+  ]}
+]

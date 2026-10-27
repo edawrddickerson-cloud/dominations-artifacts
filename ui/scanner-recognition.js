@@ -179,6 +179,10 @@
     const light=coloured?Math.max(g,b)*2:.299*r+.587*g+.114*b;
     return 255-Math.max(0,Math.min(255,(light-35)*2.1));
   }
+  function neutralTextContrast(r,g,b) {
+    const max=Math.max(r,g,b),min=Math.min(r,g,b);
+    return max-min<Math.max(25,max*.18)?255-Math.max(0,Math.min(255,(r-35)*2.1)):255;
+  }
   function parseText(text, names, canonPerk, expectedRows = 5) {
     expectedRows=Number.isInteger(Number(expectedRows)) && Number(expectedRows)>=1 && Number(expectedRows)<=6?Number(expectedRows):5;
     const catalogue = new Map(names.map(name => [normalized(name), name]));
@@ -264,18 +268,24 @@
   }
   function rowColours(pixels,width,height) {
     const radius=Math.max(2,Math.round(height/5*.08));
-    const lightAt=(x,y)=>{const p=(Math.max(0,Math.min(height-1,y))*width+Math.max(0,Math.min(width-1,x)))*4;return Math.max(pixels[p],pixels[p+1],pixels[p+2]);};
+    const at=(x,y)=>(Math.max(0,Math.min(height-1,y))*width+Math.max(0,Math.min(width-1,x)))*4;
+    const light=p=>Math.max(pixels[p],pixels[p+1],pixels[p+2]);
     return Array.from({length:5},(_,row)=>{
       const counts={neutral:0,green:0,blue:0};
       for(let y=Math.ceil((row+.15)*height/5);y<Math.floor((row+.85)*height/5);y++)for(let x=0;x<width*.8;x++) {
         const p=(y*width+x)*4,r=pixels[p],g=pixels[p+1],b=pixels[p+2],max=Math.max(r,g,b),min=Math.min(r,g,b);
-        const neighbours=[lightAt(x-radius,y),lightAt(x+radius,y),lightAt(x,y-radius),lightAt(x,y+radius)].sort((a,b)=>a-b);
-        if(max<=(neighbours[1]+neighbours[2])/2+12)continue;
-        if(Math.max(g,b)>r*1.8 && Math.max(g,b)>25)counts[b>=g*.85?'blue':'green']++;
-        else if(max-min<25 && max>55)counts.neutral++;
+        const neighbours=[at(x-radius,y),at(x+radius,y),at(x,y-radius),at(x,y+radius)].sort((a,b)=>light(a)-light(b));
+        if(max<=(light(neighbours[1])+light(neighbours[2]))/2+12)continue;
+        const background=channel=>(pixels[neighbours[1]+channel]+pixels[neighbours[2]+channel])/2;
+        // Blue War-map texture has saturated edges too. A glyph must add
+        // chroma relative to its neighbours, rather than merely be blue.
+        const addedChroma=Math.max(g-background(1),b-background(2))-(r-background(0));
+        if(Math.max(g,b)>r*1.8 && Math.max(g,b)>25 && addedChroma>20)counts[b>=g*.85?'blue':'green']++;
+        else if(max-min<Math.max(25,max*.18) && max>55)counts.neutral++;
       }
       const coloured=counts.green>counts.blue?'green':'blue',other=coloured==='green'?'blue':'green';
-      return counts[coloured]>30 && counts[coloured]>counts[other]*2.5?coloured:counts.green+counts.blue<30 && counts.neutral>40?'neutral':null;
+      return counts[coloured]>30 && counts[coloured]>counts[other]*2.5 && counts[coloured]>counts.neutral*1.25?coloured:
+        counts.neutral>40 && counts.neutral>Math.max(counts.green,counts.blue)*1.25?'neutral':null;
     });
   }
   function inferColourValues(parsed,colours,hall='main') {
@@ -749,8 +759,10 @@
         const conflicts=rows.flatMap((row,index)=>row.tierConflict?['Row '+(index+1)+': colour and starting percentage conflict. Verify the tier.']:[]);
         return {...annotated,valid:annotated.valid && !conflicts.length,warnings:[...new Set([...annotated.warnings,...conflicts])],...(artifact?{artifact}:{}),hall,hallSource:classification.source,inferColours,colours,unlocked,ocrCalls,recognitionPath:'standard',...(fieldViews?.reason?{calibrationReason:fieldViews.reason}:{}),rows};
       };
+      const rowBytes=pixels.data.length/5;
       for(let i=0;i<pixels.data.length;i+=4) {
-        const value=textContrast(pixels.data[i],pixels.data[i+1],pixels.data[i+2]);
+        const neutral=hall==='war' && colours[Math.min(4,Math.floor(i/rowBytes))]==='neutral';
+        const value=(neutral?neutralTextContrast:textContrast)(pixels.data[i],pixels.data[i+1],pixels.data[i+2]);
         pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=value;
       }
       context.putImageData(pixels,0,0);
@@ -799,7 +811,7 @@
                 const p=(y*canvas.width+x)*4, r=originalPixels[p],g=originalPixels[p+1],b=originalPixels[p+2];
                 const colour=colours[index];
                 const saturated=Math.max(g,b)>r*1.8 && Math.max(g,b)>25;
-                if(saturated && (colour==='green'?g>b*1.2:colour==='blue'?b>=g*.85:true)) {
+                if(colour!=='neutral' && saturated && (colour==='green'?g>b*1.2:colour==='blue'?b>=g*.85:true)) {
                   const target=((y-start+12)*rowCanvas.width+x+16)*4;
                   mask.data[target]=mask.data[target+1]=mask.data[target+2]=0;ink++;
                 }
@@ -862,7 +874,8 @@
                   rowContext.fillStyle='#fff';rowContext.fillRect(0,0,rowCanvas.width,rowCanvas.height);
                   rowContext.drawImage(source,rect.x,rect.y,rect.width,rect.height,16,12,rect.width*2,rect.height*2);
                   const pixels=rowContext.getImageData(0,0,rowCanvas.width,rowCanvas.height);
-                  for(let p=0;p<pixels.data.length;p+=4){const value=textContrast(pixels.data[p],pixels.data[p+1],pixels.data[p+2]);pixels.data[p]=pixels.data[p+1]=pixels.data[p+2]=value;}
+                  const contrast=hall==='war' && colours[index]==='neutral'?neutralTextContrast:textContrast;
+                  for(let p=0;p<pixels.data.length;p+=4){const value=contrast(pixels.data[p],pixels.data[p+1],pixels.data[p+2]);pixels.data[p]=pixels.data[p+1]=pixels.data[p+2]=value;}
                   rowContext.putImageData(pixels,0,0);
                   await activeWorker.setParameters({tessedit_pageseg_mode:'7',tessedit_char_whitelist:''});
                   const output=await readView(rowCanvas,{}, {text:true,blocks:true});
@@ -896,5 +909,5 @@
       isWarm:({fast=false}={})=>!closed && warmed.has(fast?'fast':'standard')};
   }
   function cleanArtifactName(value) {return String(value || '').replace(/\s+/g,' ').trim().replace(/^[^\p{L}\p{N}]+/u,'');}
-  window.DNScannerRecognition={autoFitField,autoFitBounds,cleanArtifactName,matchName,NAME_MATCH_THRESHOLD,parsePercentage,parseText,parseFieldRow,positionRows,signIssues,reconcileReads,combineReads,retainCraftRead,classifyBrightness,classifyStars,rowColours,inferColourValues,usefulRow,coverage,textContrast,detectPanel,parseCraftCategory,craftCategoryEvidence,classifyHallColour,hallColour,craftHall,categoryRect,categoryLine,create};
+  window.DNScannerRecognition={autoFitField,autoFitBounds,cleanArtifactName,matchName,NAME_MATCH_THRESHOLD,parsePercentage,parseText,parseFieldRow,positionRows,signIssues,reconcileReads,combineReads,retainCraftRead,classifyBrightness,classifyStars,rowColours,inferColourValues,usefulRow,coverage,textContrast,neutralTextContrast,detectPanel,parseCraftCategory,craftCategoryEvidence,classifyHallColour,hallColour,craftHall,categoryRect,categoryLine,create};
 })();

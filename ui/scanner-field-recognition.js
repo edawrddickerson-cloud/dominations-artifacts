@@ -96,8 +96,8 @@
     for(let i=0;i<pixels.data.length;i+=4) {
       const r=pixels.data[i],g=pixels.data[i+1],b=pixels.data[i+2];
       const saturated=mode==='category'?g>60 && g>r*1.25 && g>b*1.05:Math.max(g,b)>r*1.8 && Math.max(g,b)>25;
-      const value=mode==='chroma' || mode==='colour' && !compact?255-Math.min(255,Math.max(0,(numeric?Math.max(g,b):g)-r-background)*(numeric?6:mode==='chroma'?8:12)):mode==='colour' || mode==='category'?saturated?0:255:R().textContrast(r,g,b);
-      if(saturated)ink++;
+      const value=mode==='neutral'?R().neutralTextContrast(r,g,b):mode==='chroma' || mode==='colour' && !compact?255-Math.min(255,Math.max(0,(numeric?Math.max(g,b):g)-r-background)*(numeric?6:mode==='chroma'?8:12)):mode==='colour' || mode==='category'?saturated?0:255:R().textContrast(r,g,b);
+      if(mode==='neutral'?value<200:saturated)ink++;
       pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=value;pixels.data[i+3]=255;
     }
     rawCtx.putImageData(pixels,0,0);ctx.drawImage(raw,16,12);raw.width=raw.height=0;
@@ -129,6 +129,9 @@
     });
   }
   async function recognize(snapshot,{worker,readView,names,canonPerk,hall='main',inferColours=false,categorySource,isClosed,ocrCalls,reuse=null,autoFit=true,fitBudget={remaining:24}}) {
+    const colours=coloursOf(Array.from({length:5},(_,i)=>snapshot.crops[i+'-name']));
+    const war=R().hallColour(snapshot.crops.hall || snapshot.crops['hall-banner'])==='war';
+    const neutralSources=new Set(war?colours.flatMap((colour,i)=>colour==='neutral'?[snapshot.crops[i+'-name'],snapshot.crops[i+'-percentage']]:[]):[]);
     const rerolls=Array.from({length:5},(_,i)=>{
       if(!snapshot.diceRequested?.[i] && !snapshot.crops[i+'-dice'])return null;
       return snapshot.crops[i+'-dice']?window.DNScannerRerollRecognition?.classifyCanvas(snapshot.crops[i+'-dice']) ||
@@ -153,7 +156,8 @@
     };
     async function read(source,kind,mode='contrast',segmentation='7',shared=false) {
       check();let focused=null;
-      if((kind==='percentage' || kind==='name' && shared) && source.width/source.height>5) {
+      if(neutralSources.has(source) && ['contrast','colour'].includes(mode))mode='neutral';
+      if(mode!=='neutral' && (kind==='percentage' || kind==='name' && shared) && source.width/source.height>5) {
         const pixels=source.getContext('2d',{willReadFrequently:true}).getImageData(0,0,source.width,source.height).data;
         const rect=percentageRect(pixels,source.width,source.height);
         if(rect){const area=kind==='percentage'?rect:{x:0,y:rect.y,width:rect.x,height:rect.height};if(area.width>2){focused=document.createElement('canvas');focused.width=area.width;focused.height=area.height;focused.getContext('2d').drawImage(source,area.x,area.y,area.width,area.height,0,0,area.width,area.height);}}
@@ -221,7 +225,7 @@
         missing.push(i);
       }
       if(!missing.length)return results;
-      const prepared=missing.map(i=>view(snapshot.crops[i+'-'+kind],mode,true,2,compactHeight));
+      const prepared=missing.map(i=>view(snapshot.crops[i+'-'+kind],neutralSources.has(snapshot.crops[i+'-'+kind]) && ['contrast','colour'].includes(mode)?'neutral':mode,true,2,compactHeight));
       if(mode==='colour' && prepared.every(item=>item.ink<30)){for(const item of prepared)item.canvas.width=item.canvas.height=0;return null;}
       const canvas=document.createElement('canvas'),cells=[];
       canvas.width=Math.max(...prepared.map(item=>item.canvas.width));
@@ -308,7 +312,6 @@
       if(parsed.row.confidence<80)parsed.warnings.push('Row '+(i+1)+': OCR field evidence is weak. Verify the name and percentage.');
       firstRows.push({...parsed.row,...(rerolls[i] || {})});firstWarnings.push(...parsed.warnings);fields.push({name,percentage,conflict:!!fieldConflict});
     }
-    const colours=coloursOf(Array.from({length:5},(_,i)=>snapshot.crops[i+'-name']));
     const fills=Array.from({length:5},(_,i)=>starFill(snapshot.crops[i+'-star']));
     const unlocked={...R().classifyStars(fills),fills};
     let artifact=null;

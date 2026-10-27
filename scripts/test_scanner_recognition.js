@@ -293,6 +293,22 @@ const colourPixels=new Uint8ClampedArray(100*100*4);
 const palette=[[100,100,100],[15,75,15],[15,60,65],[100,100,100],[15,75,15]];
 for(let row=0;row<5;row++)for(let y=row*20+4;y<row*20+13;y++)for(let x=10;x<60;x+=4){const p=(y*100+x)*4;colourPixels.set([...palette[row],255],p);}
 assert.equal(JSON.stringify(recognition.rowColours(colourPixels,100,100)),JSON.stringify(colours));
+const warTexture=new Uint8ClampedArray(100*100*4);
+for(let y=0;y<100;y++)for(let x=0;x<100;x++) {
+  const noise=((x*7+y*13)%17)*2;
+  warTexture.set([10+Math.floor(noise*.3),20+Math.floor(noise*.4),45+Math.floor(noise*.65),255],(y*100+x)*4);
+}
+assert.equal(JSON.stringify(recognition.rowColours(warTexture,100,100)),JSON.stringify(Array(5).fill(null)),'blue texture without text cannot establish blue tiers');
+const warInk=new Uint8ClampedArray(warTexture),warPalette=[[150,150,150],[110,110,110],[15,105,25],[15,70,85],[150,150,150]];
+for(let row=0;row<5;row++)for(let y=row*20+4;y<row*20+13;y++)for(let x=10;x<60;x+=4)warInk.set([...warPalette[row],255],(y*100+x)*4);
+assert.equal(JSON.stringify(recognition.rowColours(warInk,100,100)),JSON.stringify(['neutral','neutral','green','blue','neutral']),'War texture cannot outweigh white/grey glyphs or erase genuine coloured text');
+const noInk=recognition.inferColourValues(inferredInput,recognition.rowColours(warTexture,100,100),'war');
+assert(noInk.rows.every(row=>row.value===null),'background-only evidence must leave percentages unknown');
+const directWhite=recognition.inferColourValues({...inferredInput,rows:inferredInput.rows.map(row=>({...row,value:-1}))},Array(5).fill('blue'),'war');
+assert(directWhite.rows.every(row=>row.value===-1),'a signed one-percent OCR read cannot be replaced by colour inference');
+assert.equal(recognition.neutralTextContrast(28,70,120),255,'neutral War OCR excludes blue backing');
+assert.equal(recognition.neutralTextContrast(205,205,205),0,'neutral War OCR retains white glyphs');
+assert(recognition.neutralTextContrast(110,110,110)<128,'neutral War OCR retains dim grey glyphs');
 for(const [raw,name] of [['Irwading Bomiber Dannage «6%','Invading Bomber Damage'],['Vauk Capacity +6%','Vault Capacity'],['Invading Fughier Dantage 6%','Invading Fighter Damage'],['Invading Ranged Siege Hipomnis 6%','Invading Ranged Siege Hitpoints'],['Farest Expan san Cost Refund +11%,','Forest Expansion Cost Refund']]) {
   const row=parse(raw,[name],value=>value).rows[0];assert.equal(row.name,name);assert.equal(row.nameCorrected,true);
 }
