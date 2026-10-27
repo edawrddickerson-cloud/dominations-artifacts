@@ -1,0 +1,114 @@
+{
+  "version": 1,
+  "source": "User-provided game scans",
+  "images": {
+    "10th-mountain-division-war-kit-mythical": {
+      "url": "assets/artifact-scans/10th-mountain-division-war-kit-mythical-181ad53c2ce11181.jpg",
+      "source_title": "User-scanned War Mythical artwork",
+      "name": "10th Mountain Division War Kit",
+      "sha256": "181ad53c2ce1118104e7efbf04e4448fbc972ea313cc3c9644505b45d1a28fad"
+    },
+    "british-kettle-drum-mythical": {
+      "url": "assets/artifact-scans/british-kettle-drum-mythical-2b0d5ab8c6aff67d.jpg",
+      "source_title": "User-scanned War Mythical artwork",
+      "name": "British Kettle Drum",
+      "sha256": "2b0d5ab8c6aff67d8b5b7683d6d6f90f1c1b81278e715868b7d8cfaf880ee60e"
+    },
+    "asdic-type-113x-mythical": {
+      "url": "assets/artifact-scans/asdic-type-113x-mythical-5ff3a8cd165a38a4.jpg",
+      "source_title": "User-scanned War Mythical artwork",
+      "name": "ASDIC Type 113X",
+      "sha256": "5ff3a8cd165a38a4820e7f6402dcfdbd1672ece8cf594b5c1709391101eb8aa2"
+    },
+    "caligula-s-ring-mythical": {
+      "url": "assets/artifact-scans/caligula-s-ring-mythical-915b3fa6819ad4be.jpg",
+      "source_title": "User-scanned War Mythical artwork",
+      "name": "Caligula's Ring",
+      "sha256": "915b3fa6819ad4be1664c33963ef6148e90ec237308049d59dc2396b400fae28"
+    },
+    "gemini-8-gloves-mythical": {
+      "url": "assets/artifact-scans/gemini-8-gloves-mythical-bfceeaf1938b01a9.jpg",
+      "source_title": "User-scanned War Mythical artwork",
+      "name": "Gemini 8 Gloves",
+      "sha256": "bfceeaf1938b01a98640fc21f85c9df7603cd80727b9cb85006cf3136d1e2a61"
+    },
+    "general-pershing-s-bas-relief-mythical": {
+      "url": "assets/artifact-scans/general-pershing-s-bas-relief-mythical-ebcdc74f96cece89.jpg",
+      "source_title": "User-scanned War Mythical artwork",
+      "name": "General Pershing's Bas-Relief",
+      "sha256": "ebcdc74f96cece89a3b2c09c178272ab7f238e5215227ab40fc4a0c1b33a5d28"
+    },
+    "demarcation-stone-mythical": {
+      "url": "assets/artifact-scans/demarcation-stone-mythical-2c182c6b431e5ef3.jpg",
+      "source_title": "User-scanned War Mythical artwork",
+      "name": "Demarcation Stone",
+      "sha256": "2c182c6b431e5ef39b779c839222246321fc6112c4caca596dd2ac8135e049d5"
+    },
+    "huey-armament-system-mythical": {
+      "url": "assets/artifact-scans/huey-armament-system-mythical-87908ddda3581fee.jpg",
+      "source_title": "User-scanned War Mythical artwork",
+      "name": "Huey Armament System",
+      "sha256": "87908ddda3581fee8f39ecf10cb3d88adf24752bb84eb81fec227126ee7ee99d"
+    },
+    "joyeuse-sword-mythical": {
+      "url": "assets/artifact-scans/joyeuse-sword-mythical-6d648007e658b26a.jpg",
+      "source_title": "User-scanned War Mythical artwork",
+      "name": "Joyeuse Sword",
+      "sha256": "6d648007e658b26a5ee6fd28c3a7d1480645beb6aaed4d7bd0ade28a9c9247c2"
+    },
+    "leonidas-bust-mythical": {
+      "url": "assets/artifact-scans/leonidas-bust-mythical-c96e22f6863ab8a9.jpg",
+      "source_title": "User-scanned War Mythical artwork",
+      "name": "Leonidas Bust",
+      "sha256": "c96e22f6863ab8a9e4d39a6583f234f23e7cfd82777f0bfd94d9d30f7396bebe"
+    },
+    "maori-war-club-mythical": {
+      "url": "assets/artifact-scans/maori-war-club-mythical-f7911de3ef9c66bb.jpg",
+      "source_title": "User-scanned War Mythical artwork",
+      "name": "Maori War Club",
+      "sha256": "f7911de3ef9c66bb8a5791977b608780a7c009d4c6fec06d51a08523b8955762"
+    },
+    "norden-bombsight-mythical": {
+      "url": "assets/artifact-scans/norden-bombsight-mythical-b7f9708d27f95cf6.jpg",
+      "source_title": "User-scanned War Mythical artwork",
+      "name": "Norden Bombsight",
+      "sha256": "b7f9708d27f95cf6ebd5f639a92cec66e72b7bb103babb3668df05ef2feca8a3"
+    },
+    "red-baron-s-engine-mythical": {
+      "url": "assets/artifact-scans/red-baron-s-engine-mythical-0f786f628c45322e.jpg",
+      "source_title": "User-scanned War Mythical artwork",
+      "name": "Red Baron’s Engine",
+      "sha256": "0f786f628c45322eb1f92af0e439c0d05ee2bef22f38d5ec737e3e91cb329c87"
+    },
+    "the-art-of-war-mythical": {
+      "url": "assets/artifact-scans/the-art-of-war-mythical-d88b86144955a8aa.jpg",
+      "source_title": "User-scanned War Mythical artwork",
+      "name": "The Art of War",
+      "sha256": "d88b86144955a8aaab309279d931d852e39a19ea9abc6ef0b3360fb94d82566b"
+    },
+    "the-white-death-s-war-kit-mythical": {
+      "url": "assets/artifact-scans/the-white-death-s-war-kit-mythical-24c9d91c095a7153.jpg",
+      "source_title": "User-scanned War Mythical artwork",
+      "name": "The White Death's War Kit",
+      "sha256": "24c9d91c095a71531bc11b0325c17950a3a92a75df0f7f7a5b943267151edc59"
+    },
+    "tizona-sword-mythical": {
+      "url": "assets/artifact-scans/tizona-sword-mythical-2e4638ea1587b8be.jpg",
+      "source_title": "User-scanned War Mythical artwork",
+      "name": "Tizona Sword",
+      "sha256": "2e4638ea1587b8be766bc875794917b237fed37471be616f16162299da718da8"
+    },
+    "vz-9-avrocar-mythical": {
+      "url": "assets/artifact-scans/vz-9-avrocar-mythical-29c5194c871d6f12.jpg",
+      "source_title": "User-scanned War Mythical artwork",
+      "name": "Vz-9 Avrocar",
+      "sha256": "29c5194c871d6f12d6179b72baea73dd4b86a1290ee7ab3fb978da4b5592bc18"
+    },
+    "ramesses-s-abu-simbel-mythical": {
+      "url": "assets/artifact-scans/ramesses-s-abu-simbel-mythical-6be4c92935a39d61.jpg",
+      "source_title": "User-scanned War Mythical artwork",
+      "name": "Ramesses Ⅱ's Abu Simbel",
+      "sha256": "6be4c92935a39d614b4fde6498f4f8336d303beaf44a7fa067aae08fde800376"
+    }
+  }
+}

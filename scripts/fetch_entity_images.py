@@ -18,6 +18,8 @@ import urllib.parse
 import urllib.request
 from pathlib import Path
 
+from artifact_scan_images import apply_scan_images
+
 ROOT = Path(r"c:\Projects\Dominations Artifacts")
 DATA = ROOT / "data"
 RAW = DATA / "raw"
@@ -234,10 +236,14 @@ def fetch_councilor_images(
 
 
 def write_image_doc(path: Path, images: dict) -> None:
+    if path.name == 'artifact_images.json':
+        images = apply_scan_images(images, ROOT)
     payload_meta = {
         "source": "https://dominations.fandom.com/api.php",
         "thumb_size": THUMB_SIZE,
     }
+    if path.name == 'artifact_images.json':
+        payload_meta = {'source': 'User-provided game scans', 'policy': 'verified-scans-only'}
     doc = {"meta": payload_meta, "images": images}
     path.write_text(
         json.dumps(doc, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
@@ -248,35 +254,9 @@ def write_image_doc(path: Path, images: dict) -> None:
 
 
 def fetch_artifacts() -> None:
-    arts = json.loads(ARTIFACTS_PATH.read_text(encoding="utf-8"))
-    if not isinstance(arts, list):
-        raise SystemExit("artifacts.json is not an array")
-
-    unique_names = sorted({(a.get("name") or "").strip() for a in arts if a.get("name")})
-    print(f"Artifacts: resolving images for {len(unique_names)} unique names…")
-    by_name, art_misses = fetch_for_names(unique_names, artifact_candidates)
-
-    artifact_images: dict[str, dict] = {}
-    for row in arts:
-        aid = (row.get("artifact_id") or "").strip()
-        name = (row.get("name") or "").strip()
-        if not aid or not name:
-            continue
-        info = by_name.get(name)
-        if info:
-            artifact_images[aid] = {
-                "url": info["url"],
-                "source_title": info["source_title"],
-                "name": name,
-            }
-
-    print(
-        f"Artifacts: {len(by_name)}/{len(unique_names)} names, "
-        f"{len(artifact_images)}/{len(arts)} rows with images"
-    )
-    if art_misses:
-        print("  missing names:", ", ".join(art_misses))
-    write_image_doc(RAW / "artifact_images.json", artifact_images)
+    # Named artifact artwork comes only from the approved game-scan manifest.
+    # Do not query Fandom or restore removed Legendary/Mythical images.
+    write_image_doc(RAW / "artifact_images.json", {})
 
 
 def fetch_army() -> None:
