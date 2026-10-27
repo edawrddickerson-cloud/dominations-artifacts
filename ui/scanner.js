@@ -22,7 +22,7 @@
   let generation = 0, timer = null, selecting = false, pending = false, locatePending = false;
   let dimensions = "", lastSample = 0, lastProgress = 0, lastMediaTime = -1;
   const supported = window.isSecureContext && !!navigator.mediaDevices?.getDisplayMedia;
-  const detectCraftPanel=source=>window.DNScannerPanel?window.DNScannerPanel.detect(source):window.DNScannerRecognition?.detectPanel(source);
+  const detectCraftPanel=(source,anchor=null)=>window.DNScannerPanel?window.DNScannerPanel.detect(source,{anchor}):window.DNScannerRecognition?.detectPanel(source);
 
   function status(title, message) {
     if(el.status.classList?.contains?.('scanner-connection-label')) {
@@ -110,11 +110,11 @@
       if(nativeFrame.width!==size.width || nativeFrame.height!==size.height){nativeFrame.width=size.width;nativeFrame.height=size.height;}
       nativeFrame.getContext('2d').drawImage(source,0,0,size.width,size.height);
       const layout=document.getElementById('scanner-layout')?.value || 'panel';
-      if(!storage)focusPanel=detectCraftPanel(nativeFrame);
+      if(!storage)focusPanel=detectCraftPanel(nativeFrame,manualRegion?null:region);
       const candidate=storage && layout==='storage'?region:layout==='panel'?(storage?window.DNScannerRecognition?.detectPanel(nativeFrame):manualRegion && !selecting?region:focusPanel):null;
-      if(calibration.hasTemplate && candidate && !manualRegion && !selecting && !calibration.editing) {
+      if((calibration.hasTemplate || !storage) && candidate && !manualRegion && !selecting && !calibration.editing) {
         const moved=!region || ['x','y','width','height'].some(key=>Math.abs(region[key]-candidate[key])>.002);
-        if(moved){region=candidate;window.DNScannerReading?.invalidate('Panel moved or resized. Checking its saved field boxes.',{preserveDisplay:true});}
+        if(moved){region=candidate;window.DNScannerReading?.invalidate('Panel moved or resized. Checking the current artifact.',{preserveDisplay:true});}
       }
       fieldState=calibration.update(nativeFrame,calibration.hasTemplate && candidate && region && !selecting?region:candidate,{layout});
     }
@@ -130,7 +130,7 @@
       cropContext.drawImage(source, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
       el.freshness.textContent = image ? "Local screenshot crop; not a live capture." : "Preview sampled at " + new Date().toLocaleTimeString() + ". Source freshness is not independently verified.";
       el.meta.textContent = "Source " + nextDimensions + " · crop " + crop.width + "×" + crop.height + " pixels";
-      if(!storage && !calibration)focusPanel=detectCraftPanel(el.frame);
+      if(!storage && !calibration)focusPanel=detectCraftPanel(el.frame,manualRegion?null:region);
       const focusObserved=!storage && !selecting && !calibration?.editing && !document.hidden && (image || !track?.muted && el.video.currentTime!==lastMediaTime);
       window.DNScannerReading?.update(el.crop, {session:generation,live:!!stream,current:!selecting && !fieldState?.paused && !document.hidden && (image || !track?.muted),itemPresent:focusObserved && focusPanel!==undefined && !manualRegion?!!focusPanel:undefined,categorySource:el.frame,panelRegion:region,fields:fieldState?.fields || null});
     } else el.meta.textContent = "Source " + nextDimensions + " pixels · select the complete artifact panel";
@@ -226,7 +226,10 @@
     if(!window.DNScannerRecognition || !(image || stream))return false;
     const size=sourceSize();if(!size.width || !size.height || track?.muted)return false;
     const source=document.createElement("canvas");
-    const scale=Math.min(1,1280/size.width);source.width=Math.round(size.width*scale);source.height=Math.round(size.height*scale);
+    // The locator owns its downsampling. Use the same native pixels here and
+    // during live validation so a thin frame cannot disappear on a second resize.
+    const scale=window.DNStorageRecognition?Math.min(1,1280/size.width):1;
+    source.width=Math.round(size.width*scale);source.height=Math.round(size.height*scale);
     source.getContext("2d").drawImage(image || el.video,0,0,source.width,source.height);
     const storage=!!window.DNStorageRecognition;
     const candidate=storage?window.DNStorageRecognition.detectPanel(source):detectCraftPanel(source);
