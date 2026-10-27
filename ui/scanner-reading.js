@@ -540,24 +540,27 @@
     let artwork=speculative?null:captureArtwork(metadataPanel);
     if(storage && el.layout.value==='storage') {
       const info=window.DNStorageRecognition.inspect(snapshot);
-      if(latestFields?.template?.kind==='storage')info.expectedRows=latestFields.template.rows.length;
-      if(rowCount()!==info.expectedRows){el.rows.value=String(info.expectedRows);best=null;result=null;confirmed=false;}
       if(info.hall){el.hall.value=info.hall;window.DNPrimaryFilters?.setHall(info.hall);}
     }
     if(storage && window.DNScannerRerollRecognition) {
-      const detect=canvas=>{
+      const detect=(canvas,expectedRows)=>{
         const pixels=canvas.getContext('2d',{willReadFrequently:true}).getImageData(0,0,canvas.width,canvas.height).data;
-        if(latestFields?.template?.kind==='storage' && window.DNStorageRegions) {
+        if(latestFields?.template?.kind==='storage' && latestFields.template.rows.length===expectedRows && window.DNStorageRegions) {
           const resolved=window.DNStorageRegions.resolve(latestFields.template,{x:0,y:0,width:1,height:1},canvas);
           return latestFields.template.rows.map((_,i)=>resolved.valid && resolved.boxes[i+'-dice']?window.DNScannerRerollRecognition.classify(pixels,canvas.width,canvas.height,resolved.boxes[i+'-dice']):window.DNScannerRerollRecognition.unknown('uncalibrated-dice'));
         }
-        return window.DNScannerRerollRecognition.detectStorage(pixels,canvas.width,canvas.height,{expectedRows:rowCount(),layout:el.layout.value});
+        return window.DNScannerRerollRecognition.detectStorage(pixels,canvas.width,canvas.height,{expectedRows,layout:el.layout.value});
       };
-      const currentDice=detect(source),medianDice=detect(snapshot);
-      rerollObservations=currentDice.map((row,i)=>row.rerollEligible===medianDice[i]?.rerollEligible?row:
-        {...row,rerollEligible:null,rerollConfidence:'unknown',rerollConflict:true,rerollEvidence:{reason:'transition'}});
+      // Freeze both possible layouts before awaiting category OCR. Only the
+      // category-selected count may supply dice evidence to the resulting rows.
+      rerollObservations={};
+      for(const count of el.layout.value==='storage'?[5,6]:[rowCount()]) {
+        const currentDice=detect(source,count),medianDice=detect(snapshot,count);
+        rerollObservations[count]=currentDice.map((row,i)=>row.rerollEligible===medianDice[i]?.rerollEligible?row:
+          {...row,rerollEligible:null,rerollConfidence:'unknown',rerollConflict:true,rerollEvidence:{reason:'transition'}});
+      }
     }
-    const previous=resultCurrent?result:best;
+    let previous=resultCurrent?result:best;
     const knownTiers=(previous?.rows || []).map(row=>({...row,hall:previous?.artifact?.hall || previous?.hall || el.hall.value}));
     const job={snapshot,categorySource,speculative,witness,context,sampleRevision,timing};
     if(speculative)job.validation=new Promise(resolve=>{job.resolveValidation=resolve;});
@@ -579,7 +582,11 @@
         temporal=job.approvedTemporal;artwork=job.artwork;
       }
       if(request!==token || owner!==engine || storage && readingProfile!==window.DNStoredArtifacts?.collectionKey()){if(storage && latestCanvas && !editing)say(readingProfile!==window.DNStoredArtifacts?.collectionKey()?'Profile changed while reading. Read the current artifact again.':'Read cancelled because the watched fields changed. Check Field calibration and try Read Artifact again.');return;}
-      if(rerollObservations)parsed.rows=parsed.rows.map((row,i)=>({...row,...rerollObservations[i]}));
+      if(storage && el.layout.value==='storage' && [5,6].includes(parsed.expectedRows)) {
+        if(rowCount()!==parsed.expectedRows){el.rows.value=String(parsed.expectedRows);best=null;result=null;confirmed=false;}
+        if(previous?.rows?.length!==parsed.expectedRows)previous=null;
+      }
+      if(rerollObservations)parsed.rows=parsed.rows.map((row,i)=>({...row,...rerollObservations[rowCount()]?.[i]}));
       parsed.rows=parsed.rows.map((row,i)=>{
         const prior=previous?.rows[i];
         return prior?.rerollSource==='manual' && prior.name===row.name && prior.value===row.value?{

@@ -241,6 +241,18 @@ async function main(){
   assert.match(moving.e.result.innerHTML,/Off <strong>/,'moving local overlays do not cancel in-flight crafting OCR');
   moving.e.read.fire('click');moving.jobs[1].resolve(parsed());await flush();
   assert.doesNotMatch(moving.e.result.innerHTML,/3-frame noise filtering|count toward rating/,'crafting results omit capture implementation details');
+  const categoryRows=await harness({storage:true});categoryRows.e.layout.value='storage';categoryRows.e.rows.value='6';
+  categoryRows.window.DNScannerRerollRecognition={detectStorage:(pixels,width,height,{expectedRows})=>Array.from({length:expectedRows},()=>({rerollEligible:expectedRows===6,rerollSource:'dice-background',rerollConfidence:'high'}))};
+  categoryRows.reader.update(categoryRows.canvas(),{session:1,current:true});categoryRows.e.read.fire('click');
+  const mythical={...parsed(),expectedRows:6,artifact:{type:'Mythical'},rows:[...parsed().rows,{...parsed().rows[0]}].map(row=>({...row,unlocked:true}))};
+  categoryRows.jobs.at(-1).resolve(mythical);await flush();
+  assert.equal(categoryRows.e.rows.value,'6');assert.equal(categoryRows.keepStates.at(-1).expectedRows,6);
+  assert(categoryRows.keepStates.at(-1).result.rows.every(row=>row.rerollEligible===false && row.rerollSource==='artifact-type'),'Mythical row detection preserves the named-artifact reroll rule');
+  categoryRows.e.read.fire('click');categoryRows.jobs.at(-1).resolve({...parsed(),expectedRows:5,artifact:{type:'Weapon'}});await flush();
+  assert.equal(categoryRows.e.rows.value,'5','a five-row category clears the previous Mythical count');
+  assert.equal(categoryRows.keepStates.at(-1).expectedRows,5);
+  assert.equal(categoryRows.keepStates.at(-1).result.rows.length,5,'old six-row results cannot win the best-read merge');
+  assert(categoryRows.keepStates.at(-1).result.rows.every(row=>row.rerollEligible===false),'ordinary items use five-row dice geometry');
   const six=await harness();six.e.rows.value='6';six.e.rows.fire('change');
   six.reader.update(six.canvas(),{session:1,current:true});six.e.read.fire('click');
   assert.equal(six.jobs[0].options.expectedRows,6);

@@ -33,7 +33,7 @@
       const result=await engine.recognize(crop,{layout:'storage',expectedRows:info.expectedRows});
       const expected=label.rows.map(r=>({...r,name:canonPerk(r.name)}));
       const exact=result.rows.length===expected.length&&result.rows.every((r,i)=>r.name===expected[i].name&&r.value===expected[i].value);
-      const hallCorrect=info.hall===label.hall&&result.hall===label.hall,rowCountCorrect=info.expectedRows===label.rows.length,category=result.artifact.type===label.type,title=normalize(result.artifact.name)===normalize(label.name),stars=result.unlocked.count===label.unlocked;
+      const hallCorrect=info.hall===label.hall&&result.hall===label.hall,rowCountCorrect=result.expectedRows===label.rows.length && info.expectedRows===5,category=result.artifact.type===label.type,title=normalize(result.artifact.name)===normalize(label.name),stars=result.unlocked.count===label.unlocked;
       const picture=await createImageBitmap(await(await fetch(result.artifact.image)).blob()),artwork=picture.width===192&&picture.height>100;picture.close();
       const review=result.valid||result.warnings.every(w=>{
         if(w.includes('OCR evidence is weak') || w.includes('Assumed OCR spelling'))return true;

@@ -13,28 +13,19 @@
   const recognition=window.DNScannerRecognition;
   const types=['Weapon','Armor','Jewelry','Pottery','Legendary','Mythical','War Weapon','War Armor','War Equipment','War Legendary','War Mythical'];
   function detectPanel(source) { return recognition.detectPanel(source,{storage:true}); }
-  function inspect(source) {
+  const rowsForType=type=>/^(?:War )?Mythical$/i.test(String(type || '').trim())?6:5;
+  function inspect(source,{type=null}={}) {
     const c=document.createElement('canvas');c.width=source.width;c.height=source.height;
     const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(source,0,0);
     const {data}=ctx.getImageData(0,0,c.width,c.height);
-    let red=0,blue=0,longest=0,run=0;
+    let red=0,blue=0;
     for(let y=Math.round(c.height*.42);y<c.height*.52;y+=2)for(let x=Math.round(c.width*.015);x<c.width*.28;x+=2) {
       const p=(y*c.width+x)*4,r=data[p],g=data[p+1],b=data[p+2];
       if(r>60 && r>g*1.3 && r>b*1.3)red++;
       if(b>60 && b>r*1.25 && b>g*1.1)blue++;
     }
-    // A sixth row has a tall star at the bottom left. Five-row footer borders
-    // produce only short horizontal runs in this narrow column.
-    for(let y=Math.round(c.height*.825);y<c.height*.94;y++) {
-      let gold=0;
-      for(let x=Math.round(c.width*.327);x<c.width*.367;x++) {
-        const p=(y*c.width+x)*4,r=data[p],g=data[p+1],b=data[p+2];
-        if(r>190 && g>140 && r>g*1.05 && b<g*.65)gold++;
-      }
-      run=gold>1?run+1:0;longest=Math.max(longest,run);
-    }
     const hall=blue>100 && blue>red*2?'war':red>100 && red>blue*2?'main':null;
-    c.width=c.height=0;return {hall,expectedRows:longest>source.height*.025?6:5};
+    c.width=c.height=0;return {hall,expectedRows:rowsForType(type)};
   }
   function levelOf(text) {
     const match=/^\s*(10|[1-9])\s*\/\s*10\s*$/.exec(text);
@@ -56,9 +47,9 @@
     const canvases=[];
     const make=()=>{const c=document.createElement('canvas');canvases.push(c);return c;};
     const full=layout==='storage';
-    const calibrated=full && fields?.template?.kind==='storage';
-    if(calibrated && (!window.DNStorageRegions?.resolve(fields.template,{x:0,y:0,width:1,height:1},source).valid || fields.template.rows.length!==expectedRows))throw new Error('Saved storage field boxes do not fit this dialog. Recalibrate fields.');
-    const boxes=calibrated?Object.fromEntries(window.DNStorageRegions.fields(fields.template).map(field=>[field.id,field.box])):null;
+    let calibrated=full && fields?.template?.kind==='storage';
+    if(calibrated && !window.DNStorageRegions?.resolve(fields.template,{x:0,y:0,width:1,height:1},source).valid)throw new Error('Saved storage field boxes do not fit this dialog. Recalibrate fields.');
+    let boxes=calibrated?Object.fromEntries(window.DNStorageRegions.fields(fields.template).map(field=>[field.id,field.box])):null;
     const box=(id,fallback)=>calibrated?boxes[id]:fallback;
     // Full dialog includes the left type banner, title, all row stars and footer.
     // Legacy rows-only crops end at percentages. Dice-inclusive crops extend
@@ -69,7 +60,7 @@
     const sourcePixels=originalContext.getImageData(0,0,source.width,source.height).data;
     source=original;
     // Fixed before the first async worker call; never borrow a previous item.
-    const rerolls=(calibrated?fields.template.rows.map((row,i)=>{
+    const readRerolls=()=>(calibrated?fields.template.rows.map((row,i)=>{
       const rect=row.dice && window.DNScannerCore.cropPixels(row.dice,source.width,source.height);
       return rect?window.DNScannerRerollRecognition?.classify(sourcePixels,source.width,source.height,rect):window.DNScannerRerollRecognition?.unknown('uncalibrated-dice');
     }):window.DNScannerRerollRecognition?.detectStorage(sourcePixels,source.width,source.height,{expectedRows,layout})) ||
@@ -127,10 +118,11 @@
         return {text:output.data.text.trim(),confidence:lines.length?Math.min(...lines.map(l=>l.confidence)):0};
       } finally {c.width=c.height=0;}
     }
-    const rowHeight=area.height/expectedRows;
+    let rowHeight=area.height/expectedRows;
     const rect=(index,x,width,y,height)=>({x:area.x+x*area.width,width:width*area.width,y:area.y+(index+y)*rowHeight,height:height*rowHeight});
     const rows=[],warnings=[],evidence=[];
     let artifact={name:'',type:'',source:'storage',metadataWarnings:[]};
+    let calibrationReason=null;
     try {
       if(full) {
         const titleRect=box('title',{x:.31,y:.018,width:.553,height:.110});
@@ -154,7 +146,17 @@
         if(artwork){picture.height=Math.max(1,Math.round(192*(source.height*artwork.height)/(source.width*artwork.width)));picture.getContext('2d').drawImage(source,source.width*artwork.x,source.height*artwork.y,source.width*artwork.width,source.height*artwork.height,0,0,picture.width,picture.height);artifact.image=picture.toDataURL('image/jpeg',.88);}
         if(!artifact.name || title.confidence<80)artifact.metadataWarnings.push('Check the artifact name.');
         if(!matched)artifact.metadataWarnings.push('Choose the artifact category.');
+        // All ordinary and Legendary artifacts have five rows. Gold footer
+        // decorations and a previous item's template cannot establish six.
+        const detectedRows=rowsForType(type.confidence>=80?matched:null);
+        if(expectedRows!==detectedRows)knownTiers=[];
+        expectedRows=detectedRows;area.height=expectedRows===6?.785:.659;rowHeight=area.height/expectedRows;
+        if(calibrated && fields.template.rows.length!==expectedRows) {
+          calibrated=false;boxes=null;knownTiers=[];
+          calibrationReason='Saved boxes use a different row count. Using the category layout.';
+        }
       } else artifact.metadataWarnings.push('Enter the artifact name and category for this rows-only crop.');
+      const rerolls=readRerolls();
       for(let i=0;i<expectedRows;i++) {
         const labelRect=box(i+'-name',expectedRows===5?rect(i,.15,.665,.12,.31):fitInk(rect(i,.15,.665,.06,.54)));
         const amountRect=box(i+'-percentage',fitInk(rect(i,.85,.15,.20,.60),true));
@@ -240,12 +242,12 @@
       warnings.push(...recognition.signIssues(tiered));
       if(tiered.some(r=>!r.known || !recognition.usefulRow(r)))warnings.push('Each visible row needs a known perk and signed percentage.');
       for(const [index,row] of tiered.entries())if(row.inferredFields?.length)warnings.push('Row '+(index+1)+': '+row.inferredFields.join(' and ')+' inferred from tier evidence. Verify before keeping.');
-      return {rows:tiered,warnings:[...new Set(warnings)],valid:warnings.length===0,artifact,expectedRows,hall:artifact.hall,recognitionPath:calibrated?'storage-calibrated-fields':'storage-fields',
+      return {rows:tiered,warnings:[...new Set(warnings)],valid:warnings.length===0,artifact,expectedRows,hall:artifact.hall,recognitionPath:calibrated?'storage-calibrated-fields':'storage-fields',...(calibrationReason?{calibrationReason}:{}),
         unlocked:{count,states,method:'storage-row-stars'},reroll:window.DNScannerRerollRecognition?.summarize(tiered),observations:[{pass:'storage-fields',rows:tiered,warnings}],evidence};
     } finally {
       for(const c of canvases)c.width=c.height=0;
       if(!isClosed())await worker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});
     }
   }
-  window.DNStorageRecognition={detectPanel,inspect,recognize,levelOf,starState,types};
+  window.DNStorageRecognition={detectPanel,inspect,recognize,levelOf,starState,types,rowsForType};
 })();

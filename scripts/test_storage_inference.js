@@ -52,12 +52,15 @@ function canvas() {
 }
 context.document={createElement:canvas};
 vm.runInContext(fs.readFileSync('ui/scanner-core.js','utf8'),context);
+vm.runInContext(fs.readFileSync('ui/scanner-regions.js','utf8'),context);
+vm.runInContext(fs.readFileSync('ui/storage-field-regions.js','utf8'),context);
 vm.runInContext(fs.readFileSync('ui/scanner-name-catalog.js','utf8'),context);
 vm.runInContext(fs.readFileSync('ui/scanner-recognition.js','utf8'),context);
 vm.runInContext(fs.readFileSync('ui/storage-recognition.js','utf8'),context);
-async function scan(missing,{known=true,priorName='Positive',priorHall='war',percentage=null,retryPercentage=null,levelText=null,autoFit=false,fitPercentage=null}={}) {
-  const queue=['Example','War Weapon'];
-  for(let i=0;i<5;i++) {
+async function scan(missing,{known=true,priorName='Positive',priorHall='war',percentage=null,retryPercentage=null,levelText=null,autoFit=false,fitPercentage=null,type='War Weapon',expectedRows=5,calibrationRows=null}={}) {
+  const queue=['Example',type];
+  const count=/^(War )?Mythical$/.test(type)?6:5;
+  for(let i=0;i<count;i++) {
     queue.push('Positive',percentage ?? (missing==='value'?'':missing==='level'?'+7%':'+12%'));
     if(retryPercentage!==null)queue.push(retryPercentage);
     if(missing==='value')queue.push(''); // Numeric retry before inference.
@@ -72,13 +75,34 @@ async function scan(missing,{known=true,priorName='Positive',priorHall='war',per
   }};
   const knownTiers=known?Array.from({length:5},()=>({name:priorName,hall:priorHall,
     tier:missing==='level'?'green':'blue',tierSource:'percentage-level'})):[];
+  const fields=calibrationRows?{template:context.window.DNStorageRegions.defaults(1,calibrationRows)}:null;
   const result=await context.window.DNStorageRecognition.recognize(canvas(),{
-    autoFit,worker,names:['Positive'],canonPerk:value=>value,expectedRows:5,layout:'storage',hall:'war',knownTiers,
+    autoFit,worker,names:['Positive'],canonPerk:value=>value,expectedRows,layout:'storage',hall:'war',knownTiers,fields,
   });
   assert.equal(queue.length,0);
   return result;
 }
 async function testOCRFallback() {
+  for(const type of ['Weapon','War Weapon','Legendary','War Legendary','???','Mythical','War Mythical']) {
+    const expected=/^(War )?Mythical$/.test(type)?6:5;
+    for(const requested of [5,6]) {
+      const result=await scan('tier',{type,expectedRows:requested,known:false});
+      assert.equal(result.expectedRows,expected,type+' determines the row count before stat OCR');
+      assert.equal(result.rows.length,expected,'a stale row selector cannot change '+type+' geometry');
+    }
+  }
+  for(const [type,calibrationRows,expected] of [['War Weapon',6,5],['War Legendary',6,5],['War Mythical',5,6]]) {
+    const result=await scan('tier',{type,expectedRows:calibrationRows,calibrationRows,known:false});
+    assert.equal(result.rows.length,expected,'wrong-count saved boxes cannot override '+type);
+    assert.equal(result.recognitionPath,'storage-fields');assert(result.calibrationReason);
+  }
+  const originalFactory=context.document.createElement;
+  context.document.createElement=()=>({width:0,height:0,getContext(){return {drawImage(){},getImageData(x,y,w,h){const data=new Uint8ClampedArray(w*h*4);for(let i=0;i<data.length;i+=4)data.set([255,190,0,255],i);return {data};}};}});
+  const detector=context.window.DNStorageRecognition;
+  assert.equal(detector.inspect({width:200,height:200}).expectedRows,5,'gold decorations cannot invent a sixth row');
+  assert.equal(detector.inspect({width:200,height:200},{type:'War Legendary'}).expectedRows,5);
+  assert.equal(detector.inspect({width:200,height:200},{type:'War Mythical'}).expectedRows,6);
+  context.document.createElement=originalFactory;
   const fitted=await scan('value',{autoFit:true,fitPercentage:'+8%'});
   assert(fitted.rows.every(row=>row.value===8 && !row.inferred),'direct expanded OCR is accepted before tier inference');
   assert(fitted.evidence.every(row=>row.amount.evidenceSource==='expanded-field' && row.amount.autoFit.steps===2),'storage records bounded automatic-fit provenance');
