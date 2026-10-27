@@ -10,7 +10,6 @@
   let rows = [], canonPerk = DN.polishPerk, hall = DN.loadCollectionUi().hall;
   let totals = [], refreshId = 0;
   let showSources = true;
-  const percent = value => (value > 0 ? '+' : '') + value + '%';
 
   function computeTotals(scans) {
     const byId = new Map(rows.map(row => [DN.artifactKey(row), row]));
@@ -75,8 +74,8 @@
     el.sub.textContent = `${DN.activeStrategy().name} · ${totals.length} active stats · ${hall} hall`;
     el.list.innerHTML = shown.length ? shown.map(total => {
       const tone = total.value > 0 ? 'pref-pos' : total.value < 0 ? 'pref-neg' : '';
-      const sourceRow = source => `<li><span>${DN.esc(source.name)}<small>${DN.esc(source.role)}</small></span><b>${percent(source.value)}</b></li>`;
-      return `<article class="active-total"><header><h3>${DN.esc(total.name)}</h3><strong class="${tone}">${percent(total.value)}</strong></header>` +
+      const sourceRow = source => `<li><span>${DN.esc(source.name)}<small>${DN.esc(source.role)}</small></span><b>${DN.formatPerkValue(total.name,source.value)}</b></li>`;
+      return `<article class="active-total"><header><h3>${DN.esc(total.name)}</h3><strong class="${tone}">${DN.formatPerkValue(total.name,total.value)}</strong></header>` +
         '<div class="active-total-sources"><ul aria-label="Contributing artifacts">' + total.sources.map(sourceRow).join('') + '</ul></div></article>';
     }).join('') : `<p class="totals-empty">${query ? 'No stats match your search.' : 'No active bonuses in this hall.'}</p>`;
   }

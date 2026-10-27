@@ -1,5 +1,13 @@
 # Discrepancies
 
+## Limited-time Mythical confirmations — October 27, 2026
+
+[Elephant Archer Quiver, Fengguan Phoenix Crown and Admiral Yi’s Helmet](limited-time-mythicals-2026-10-27.md): existing entries marked as user-confirmed limited-time releases. All 18 stat rows match after the user's clarification that Fengguan's All Defensive Towers Damage is +11%. No sign questions remain.
+
+## Profile 3 review — October 27, 2026
+
+[Original item-by-item review of all 22 War Mythicals](profile3-war-mythical-review-2026-10-27.md), with [pre-correction evidence and flags](profile3-war-mythical-review-2026-10-27.json). **All requested stat confirmations resolved:** six Mythicals added at 1,000 tokens each; Maori War Club corrected; Arm Reliquary cooldown and Gemini 8 Helmet/T-34 perk orders corrected; percentage maxima and +1 Spartan/Marine count effects confirmed. See [resolution and validation](profile3-war-mythical-resolution-2026-10-27.md). Original review files preserve the historical pre-correction state; missing artwork evidence remains documented separately.
+
 **Generated:** 2026-09-05
 
 ## Draft vs wiki perk conflicts

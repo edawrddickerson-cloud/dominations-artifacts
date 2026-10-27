@@ -573,7 +573,7 @@
       const locked=perk && row.scanned && row.scanned.rows[perk.index-1]?.unlocked!==true;
       const star=perk?perkStar(DN.artifactKey(row),perk):'';
       const name='<td class="comparison-stat '+side+'">'+(line?'<span class="comparison-stat-content">'+(side==='left'?diceIcon(row,perk)+star:'')+'<span class="comparison-stat-name'+(locked?' is-locked':'')+'">'+DN.esc(line.name)+'</span>'+(side==='right'?star+diceIcon(row,perk):'')+'</span>':DN.BLANK)+'</td>';
-      const stat='<td class="comparison-perk-stat">'+(Number.isFinite(value)?signed(value)+'%':DN.BLANK)+'</td>';
+      const stat='<td class="comparison-perk-stat">'+DN.formatPerkValue(perk?.name,value)+'</td>';
       const weighted='<td class="comparison-line-score"><b>'+(Number.isFinite(value)?formatNum(points):DN.BLANK)+'</b></td>';
       return side==='left'?name+stat+weighted:weighted+stat+name;
     };
@@ -674,7 +674,7 @@
       const tierOptions='<option value="">Choose tier</option>'+(crafted(row)?tiers.map((base,index)=>'<option value="'+base+'"'+(tier===String(base)?' selected':'')+'>'+['White','Green','Blue'][index]+'</option>').join(''):'')+(recorded?'<option value="recorded" selected>'+ (crafted(row)?'Recorded':'Fixed')+'</option>':'');
       const state=scanned?.unlocked===true?'true':scanned?.unlocked===false?'false':'';
       return '<fieldset class="artifact-perk-edit-row" data-index="'+index+'"><legend>Perk '+index+'</legend><label class="artifact-perk-edit-name">Name<input type="text" name="name" list="collection-perk-names" value="'+DN.esc(perk?.name || scanned?.name || '')+'" aria-label="Name for perk '+index+'"></label>'+
-        number('value','Current %',value,index)+number('level','Level',level,index,1,10)+'<label>Tier<select name="tier" aria-label="Tier for perk '+index+'">'+tierOptions+'</select></label>'+
+        number('value',DN.isCountPerk(perk?.name || scanned?.name)?'Current count':'Current %',value,index)+number('level','Level',level,index,1,10)+'<label>Tier<select name="tier" aria-label="Tier for perk '+index+'">'+tierOptions+'</select></label>'+
         (row.scanned?'<label>State<select name="unlocked" aria-label="State for perk '+index+'"><option value=""'+(state===''?' selected':'')+'>Unknown</option><option value="true"'+(state==='true'?' selected':'')+'>Unlocked</option><option value="false"'+(state==='false'?' selected':'')+'>Locked</option></select></label>':'')+(row.scanned?'<label>Reroll<select name="reroll" aria-label="Reroll availability for perk '+index+'"'+(!crafted(row)?' disabled':'')+'><option value=""'+(scanned?.rerollEligible==null && crafted(row)?' selected':'')+'>Unknown</option><option value="true"'+(scanned?.rerollEligible===true?' selected':'')+'>Available</option><option value="false"'+(scanned?.rerollEligible===false || !crafted(row)?' selected':'')+'>Unavailable</option></select></label>':'')+'</fieldset>';
     }).join('')+'<div class="artifact-perk-edit-actions"><button type="submit" class="btn btn-accent">Save</button><button type="button" class="btn" data-action="edit-cancel">Cancel</button><span class="artifact-perk-edit-status" role="status"></span></div></form>';
   }
@@ -705,6 +705,9 @@
         else{base=sign*magnitude;max=sign*(magnitude+9);}
       }
       const name=canonPerk(input('name').value.trim());
+      if(DN.isCountPerk(name)) {
+        base=value ?? previousBase;max=base;level=1;
+      }
       if(Number.isInteger(level) && Number.isFinite(value) && base===null)base=Math.sign(value)*(Math.abs(value)-level+1);
       if(Number.isFinite(base) && max===null && Number.isInteger(level))max=Math.sign(base)*(Math.abs(base)+9);
       if(value===null && Number.isFinite(base) && Number.isInteger(level))value=Math.sign(base)*(Math.abs(base)+level-1);
@@ -843,7 +846,7 @@
         const value=actualPerkValue(id,perk),line=full.lines[index];
         const points=line?line.preference:null;
         const locked=row.scanned && row.scanned.rows[perk.index-1]?.unlocked!==true;
-        return '<div class="collection-table-stat"><div class="collection-table-stat-title">'+diceIcon(row,perk)+perkStar(id,perk)+'<span class="comparison-stat-name'+(locked?' is-locked':'')+'">'+DN.esc(perk.name)+'</span></div><div class="collection-table-stat-values"><span>'+(Number.isFinite(value)?(value>=0?'+':'')+formatNum(value)+'%':DN.BLANK)+'</span><span title="Score at maximum upgrade">'+(Number.isFinite(comparisonMaxValue(row,perk))?formatNum(points):DN.BLANK)+'</span></div></div>';
+        return '<div class="collection-table-stat"><div class="collection-table-stat-title">'+diceIcon(row,perk)+perkStar(id,perk)+'<span class="comparison-stat-name'+(locked?' is-locked':'')+'">'+DN.esc(perk.name)+'</span></div><div class="collection-table-stat-values"><span>'+DN.formatPerkValue(perk.name,value)+'</span><span title="Score at maximum upgrade">'+(Number.isFinite(comparisonMaxValue(row,perk))?formatNum(points):DN.BLANK)+'</span></div></div>';
       }).join('');
       const usage=usedStrategies(id);
       const identity='<div class="collection-table-identity"><div class="collection-table-thumb">'+artworkThumb(id,DN.show(row.name),'entity-thumb--collection')+'</div><div><button type="button" class="card-name collection-table-name" data-action="inspect" data-id="'+DN.esc(id)+'">'+DN.esc(DN.show(row.name))+'</button><small title="'+DN.esc(usage.map(strategy=>strategy.name).join(', '))+'">Used by '+usage.length+' strategies</small></div></div>';
@@ -999,7 +1002,7 @@
         const valLabel =
           v == null || !Number.isFinite(v)
             ? ""
-            : ` (${v > 0 ? "+" : ""}${v}%)`;
+            : ` (${DN.formatPerkValue(p.name,v)})`;
         const name = p.name || "Perk " + p.index;
         return `<option value="${p.index}"${selected}>${DN.esc(name + valLabel)}</option>`;
       })

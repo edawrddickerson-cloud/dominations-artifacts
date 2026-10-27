@@ -1082,10 +1082,17 @@
    * (e.g. special ±1 non-% perks).
    * @returns {{ base: number | null, max: number | null }}
    */
+  function isCountPerk(name) {
+    return ['Mercenary Camp Deploys Spartans when Destroyed', 'APC Deploys Marines On Death'].includes(name);
+  }
+  function formatPerkValue(name, value) {
+    return Number.isFinite(value) ? (value > 0 ? '+' : '') + value + (isCountPerk(name) ? '' : '%') : BLANK;
+  }
   function effectivePerkRange(perk) {
     if (!perk || perk.base == null || !Number.isFinite(perk.base)) {
       return { base: null, max: null };
     }
+    if (isCountPerk(perk.name)) return {base: perk.base, max: perk.base};
     if (perk.max != null && Number.isFinite(perk.max)) {
       return { base: perk.base, max: perk.max };
     }
@@ -1944,6 +1951,8 @@
     perksOf,
     saveArtifactPerkEdits,
     effectivePerkRange,
+    isCountPerk,
+    formatPerkValue,
     clampPerkLevel,
     stepPerkLevel,
     emptyHallLoadout,

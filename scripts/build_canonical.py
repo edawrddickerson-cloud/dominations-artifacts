@@ -7,6 +7,7 @@ import json
 import re
 import shutil
 import subprocess
+from artifact_verified_overrides import apply_verified_overrides
 from collections import defaultdict
 from datetime import date
 from pathlib import Path
@@ -1100,6 +1101,9 @@ def build() -> None:
         if bhg not in sec:
             out["source_secondary"] = (sec + "; " if sec else "") + bhg
         break
+
+    # User-confirmed profile evidence supersedes historical draft/wiki values.
+    apply_verified_overrides(rows, CANONICAL_FIELDS, ROOT)
 
     # Sort: hall Main then War; grade Legendary then Mythical; name
     hall_ord = {"Main": 0, "War": 1}

@@ -314,6 +314,9 @@
   const matchingIdentity=(other,item)=>(other.catalogId && item.catalogId?other.catalogId===item.catalogId:identity(other)===identity(item)) &&
     !(other.keptFromCraft && item.keptFromCraft && other.id!==item.id);
   function impliedRange(row) {
+    if (['Mercenary Camp Deploys Spartans when Destroyed','APC Deploys Marines On Death'].includes(row.name)) {
+      return Number.isFinite(row.value)?{base:row.value,max:row.value}:null;
+    }
     if(!Number.isFinite(row.value) || !Number.isInteger(row.level) || row.level<1 || row.level>10)return null;
     const magnitude=Math.abs(row.value)-(row.level-1), sign=Math.sign(row.value);
     if(!sign || magnitude<=0)return null;
@@ -400,6 +403,10 @@
     if(!Array.isArray(item?.rows))return item;
     const bases=tierBases(item),tiered=!!bases;
     const resolveRow=row=>{
+      if (['Mercenary Camp Deploys Spartans when Destroyed','APC Deploys Marines On Death'].includes(row.name)) {
+        const range=impliedRange(row);
+        return range?{...row,...range,rangeSource:'fixed-count',rangeReview:null}:row;
+      }
       if(row.rangeSource==='manual' && Number.isFinite(row.base) && Number.isFinite(row.max))return row;
       if(tiered && Number.isFinite(row.value)) {
         const sign=Math.sign(row.value),magnitude=Math.abs(row.value);

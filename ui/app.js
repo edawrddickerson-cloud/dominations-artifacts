@@ -650,7 +650,7 @@
     if (!lines.length) return blankSpan("no perks");
     const parts = lines.map((line, i) => {
       const vals = line.base
-        ? `<span class="perk-val-main">${esc(line.base)}</span>` +
+        ? `<span class="perk-val-main">${esc(window.DN.isCountPerk(line.name) ? window.DN.formatPerkValue(line.name,Number(line.base)) : line.base)}</span>` +
           (line.max ? `<span class="perk-val-max"> → ${esc(line.max)}</span>` : "")
         : line.max
           ? `<span class="perk-val-main">${esc(line.max)}</span>`
