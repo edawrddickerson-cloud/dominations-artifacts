@@ -14,6 +14,7 @@
   const el=Object.fromEntries(ids.map(id=>[id,get(id)]));
   let template=storage?G.load(rowCount()):G.load(),draft=null,frozen=null,frozenPanel=null,source=null,panel=null,drag=null,active=null,lastPath=null,lastReason=null,currentLayout=storage?'storage':'panel',templateRows=rowCount();
   let fitting=null;
+  let currentAutomatic=false;
   function cancelFit(){if(fitting){fitting.cancelled=true;void fitting.engine.close().catch(()=>{});fitting=null;refreshInputs();}}
   const notify=()=>{lastPath=lastReason=null;window.DNScannerReading?.invalidate('Field calibration changed. Reading the current panel again.');window.dispatchEvent(new Event('dn-scanner-fields-change'));};
   function discard() {
@@ -22,8 +23,9 @@
     frozen=null;frozenPanel=null;draft=null;drag=null;el.editor.hidden=true;
     el.canvas.width=640;el.canvas.height=360;el.preview.width=320;el.preview.height=64;
   }
-  function update(nextSource,nextPanel,{layout=currentLayout}={}) {
+  function update(nextSource,nextPanel,{layout=currentLayout,automatic=currentAutomatic}={}) {
     currentLayout=layout;
+    currentAutomatic=automatic;
     if(storage && templateRows!==rowCount() && !draft){templateRows=rowCount();template=G.load(templateRows);lastPath=lastReason=null;}
     source=nextSource;panel=nextPanel;active=null;
     el.edit.disabled=!source || !panel || !supported(layout) || !!draft;
@@ -37,6 +39,10 @@
       else text='Standard recognition · '+resolved.reason;
       if(!panel && source && supported(layout))text=storage?'Select the full stored-item dialog to calibrate fields.':'Panel anchor missing · reading paused. Find Panel or recalibrate.';
     }else if(localStorageValue())text='Standard recognition · saved boxes are invalid. Reset or recalibrate.';
+    else if(!storage && currentAutomatic && supported(layout) && source && panel) {
+      active=window.DNScannerPanel?.automaticFields(source,panel) || null;
+      if(active)text='Automatic fields';
+    }
     if(el.status.textContent!==text)el.status.textContent=text;
     return {fields:active,paused:!!draft || !!(template && el.enabled.checked && supported(layout) && source && !panel)};
   }
@@ -151,7 +157,7 @@
   function begin() {
     if(!source || !panel || draft)return;
     frozen=document.createElement('canvas');frozen.width=source.width;frozen.height=source.height;frozen.getContext('2d').drawImage(source,0,0);
-    frozenPanel={...panel};draft=template?G.copy(template):G.defaults(panel.width*source.width/(panel.height*source.height),storage?rowCount():false);
+    frozenPanel={...panel};draft=template?G.copy(template):active?G.copy(active.template):G.defaults(panel.width*source.width/(panel.height*source.height),storage?rowCount():false);
     draft.aspect=panel.width*source.width/(panel.height*source.height);
     el.field.replaceChildren(...G.fields(draft).map(field=>{const option=document.createElement('option');option.value=field.id;option.textContent=field.label;return option;}));
     el.field.value='0-name';el.editor.hidden=false;el.edit.disabled=true;

@@ -3,10 +3,12 @@
  * A panel candidate never confirms a name, stat, category or hall. */
 (() => {
   'use strict';
+  let silverFrame=null;
   function detect(source,{anchor=null}={}) {
     if(!source?.width || !source?.height)return null;
-    const gold=window.DNScannerRecognition?.detectPanel(source);
-    if(gold)return gold;
+    const anchorKey=window.DNScannerCore.validRegion(anchor)?JSON.stringify([source.width,source.height,anchor.x,anchor.y,anchor.width,anchor.height]):null;
+    const trackedSilver=anchorKey!==null && anchorKey===silverFrame;
+    if(!trackedSilver){const gold=window.DNScannerRecognition?.detectPanel(source);if(gold){silverFrame=null;return gold;}}
     const canvas=document.createElement('canvas'),scale=Math.min(1,960/source.width);
     canvas.width=Math.round(source.width*scale);canvas.height=Math.round(source.height*scale);
     try {
@@ -50,8 +52,11 @@
         const x=Math.round(anchor.x*w),y=Math.round(anchor.y*h),width=Math.round(anchor.width*w),height=Math.round(anchor.height*h);
         const inset=Math.max(2,Math.round(width*.015));
         if(x+width<=w && y+height<=h && height>=width*.3 && height<=width*.8 && ribbon(x,y,width,height) &&
-          edge(x,y,width,inset) && edge(x,y+height-1,width,inset) && side(x,y,height,inset) && side(x+width-1,y,height,inset))return {...anchor};
+          edge(x,y,width,inset) && edge(x,y+height-1,width,inset) && side(x,y,height,inset) && side(x+width-1,y,height,inset)){
+          silverFrame=anchorKey;return {...anchor};
+        }
       }
+      if(trackedSilver){const gold=window.DNScannerRecognition?.detectPanel(source);if(gold){silverFrame=null;return gold;}}
       const spans=[];
       const maxGap=Math.max(3,Math.round(w*.03));
       // Separate exposure bands retain thin bevels without merging a dim edge
@@ -78,8 +83,16 @@
         const region={x:x/w,y:top.y/h,width:width/w,height:height/h};
         if(window.DNScannerCore.validRegion(region)){best=region;bestScore=score;}
       }
+      silverFrame=best?JSON.stringify([source.width,source.height,best.x,best.y,best.width,best.height]):null;
       return best;
     } finally {canvas.width=canvas.height=0;}
   }
-  window.DNScannerPanel={detect};
+  function automaticFields(source,panel) {
+    const G=window.DNScannerRegions;
+    if(!G || !source || !window.DNScannerCore.validRegion(panel) || silverFrame!==JSON.stringify([source.width,source.height,panel.x,panel.y,panel.width,panel.height]))return null;
+    const template=G.defaults(panel.width*source.width/(panel.height*source.height));
+    template.rows.forEach(row=>{row.name.y+=row.name.height*.20;row.name.height*=.60;row.name.width=.60;row.percentage={...row.name};});
+    return G.resolve(template,panel,source).valid?{template,source,panel}:null;
+  }
+  window.DNScannerPanel={detect,automaticFields};
 })();

@@ -1,0 +1,135 @@
+{
+  "date": "2026-10-28",
+  "method": "Six warm real-OCR reads (two original War screenshots, three repetitions) through the production Connect/capture/controller/target renderer with a 10Hz local canvas stream at 1718x1390 and 100 synthetic owned items. Both OCR models warmed before timing. Separate held-frame benchmark uses 30 samples.",
+  "before": {
+    "runs": [
+      {
+        "fixture": "war-pistol",
+        "repeat": 0,
+        "statsMs": 1203.8999999985099,
+        "targetMs": 1203.8999999985099,
+        "valid": false,
+        "inferred": 1,
+        "automatic": false
+      },
+      {
+        "fixture": "war-body-shield",
+        "repeat": 0,
+        "statsMs": 1758.2999999970198,
+        "targetMs": 1758.3999999985099,
+        "valid": false,
+        "inferred": 1,
+        "automatic": false
+      },
+      {
+        "fixture": "war-pistol",
+        "repeat": 1,
+        "statsMs": 1961.5,
+        "targetMs": 1961.5,
+        "valid": false,
+        "inferred": 1,
+        "automatic": false
+      },
+      {
+        "fixture": "war-body-shield",
+        "repeat": 1,
+        "statsMs": 1711.1000000014901,
+        "targetMs": 1711.1000000014901,
+        "valid": false,
+        "inferred": 1,
+        "automatic": false
+      },
+      {
+        "fixture": "war-pistol",
+        "repeat": 2,
+        "statsMs": 1736.3999999985099,
+        "targetMs": 1736.3999999985099,
+        "valid": false,
+        "inferred": 1,
+        "automatic": false
+      },
+      {
+        "fixture": "war-body-shield",
+        "repeat": 2,
+        "statsMs": 1883.3000000044703,
+        "targetMs": 1883.3000000044703,
+        "valid": false,
+        "inferred": 1,
+        "automatic": false
+      }
+    ],
+    "medianStatsMs": 1747.3499999977648,
+    "verified": 0,
+    "detector": {
+      "samples": 30,
+      "ms": 648.3999999985099,
+      "goldScans": 30
+    }
+  },
+  "after": {
+    "runs": [
+      {
+        "fixture": "war-pistol",
+        "repeat": 0,
+        "statsMs": 664.8999999985099,
+        "targetMs": 664.8999999985099,
+        "valid": true,
+        "inferred": 0,
+        "automatic": true
+      },
+      {
+        "fixture": "war-body-shield",
+        "repeat": 0,
+        "statsMs": 472.3999999985099,
+        "targetMs": 472.3999999985099,
+        "valid": true,
+        "inferred": 0,
+        "automatic": true
+      },
+      {
+        "fixture": "war-pistol",
+        "repeat": 1,
+        "statsMs": 840.7999999970198,
+        "targetMs": 840.7999999970198,
+        "valid": true,
+        "inferred": 0,
+        "automatic": true
+      },
+      {
+        "fixture": "war-body-shield",
+        "repeat": 1,
+        "statsMs": 645.5,
+        "targetMs": 645.5,
+        "valid": true,
+        "inferred": 0,
+        "automatic": true
+      },
+      {
+        "fixture": "war-pistol",
+        "repeat": 2,
+        "statsMs": 939.6999999955297,
+        "targetMs": 939.6999999955297,
+        "valid": true,
+        "inferred": 0,
+        "automatic": true
+      },
+      {
+        "fixture": "war-body-shield",
+        "repeat": 2,
+        "statsMs": 803,
+        "targetMs": 803,
+        "valid": true,
+        "inferred": 0,
+        "automatic": true
+      }
+    ],
+    "medianStatsMs": 733.9499999992549,
+    "verified": 6,
+    "detector": {
+      "samples": 30,
+      "ms": 123.69999999552965,
+      "goldScans": 0
+    }
+  },
+  "limitations": "Local static-fixture capture, not live game animation or a general accuracy dataset. Target calculation and read scheduling are tested separately with 500 synthetic owned items. Timings vary; no universal 0.5-second guarantee. Automatic row fields retain existing conflict, fit and standard-fallback rules; saved templates remain authoritative."
+}

@@ -116,7 +116,7 @@
         const moved=!region || ['x','y','width','height'].some(key=>Math.abs(region[key]-candidate[key])>.002);
         if(moved){region=candidate;window.DNScannerReading?.invalidate('Panel moved or resized. Checking the current artifact.',{preserveDisplay:true});}
       }
-      fieldState=calibration.update(nativeFrame,calibration.hasTemplate && candidate && region && !selecting?region:candidate,{layout});
+      fieldState=calibration.update(nativeFrame,calibration.hasTemplate && candidate && region && !selecting?region:candidate,{layout,automatic:!storage && !manualRegion && !selecting});
     }
     const activeRegion = drag ? core.regionBetween(drag.start, drag.end) : region;
     if (activeRegion) {

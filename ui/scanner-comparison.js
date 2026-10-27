@@ -376,7 +376,7 @@
       const content='<strong>'+DN.esc(name)+'</strong><span class="scanner-focus-target">'+DN.esc(target)+'</span><b class="scanner-focus-score">'+DN.esc(score)+'</b>';
       return '<li '+attribute+' class="'+(hit?'purpose-hit':'purpose-miss')+'">'+(attribute.startsWith('data-purpose-result=')?'<button type="button" class="scanner-target-rating-open" aria-pressed="false">'+content+'</button>':content)+'</li>';
     };
-    let lines=results.map(item=>row(item.label,item.threshold!==null?'> '+item.threshold:item.score!==null?'Open slot':'—',item.score===null?'—':(item.uncertain?'~':'')+item.score,item.hit,'data-purpose-result="'+DN.esc(item.id)+'"')).join('');
+    let lines=results.map(item=>row(item.label,item.benchmarkAvailable?(item.threshold!==null?'> '+item.threshold:item.incomplete?'—':'Open slot'):'—',item.score===null?'—':(item.uncertain?'~':'')+item.score,item.hit,'data-purpose-result="'+DN.esc(item.id)+'"')).join('');
     if(!selected.length){
       const strategies=[...(options?.strategyOptions || [])];
       if(options && !strategies.some(strategy=>strategy.id===options.strategyId))strategies.unshift({id:options.strategyId,name:options.strategyName || 'Active strategy',options});

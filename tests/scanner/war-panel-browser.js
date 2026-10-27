@@ -58,10 +58,11 @@
   b.fillStyle='#126b9b';b.fillRect(278,202,130,24);b.fillStyle='#111';b.fillRect(260,225,16,120);b.fillRect(561,225,16,120);
   check('paired bars and a blue ribbon require vertical frame sides',DNScannerPanel.detect(blank)===null);
   blank.width=blank.height=0;
-  let reads=0;
+  let reads=0,automaticReads=0;
   DNScannerCollection.isEnabled=()=>false;
-  DNScannerRecognition.create=()=>({warm:async()=>{},isWarm:()=>false,close:async()=>{},recognize:async()=>{
+  DNScannerRecognition.create=()=>({warm:async()=>{},isWarm:()=>false,close:async()=>{},recognize:async(source,options)=>{
     reads++;
+    if(options.fields && !DNScannerRegions.load())automaticReads++;
     return {valid:false,rows:[],artifact:{type:''},hall:'war',hallSource:'hall-colour',unlocked:{count:null,states:[]},warnings:[]};
   }});
   // Hold automatic locating so the button must create the first crop.
@@ -94,6 +95,7 @@
   check('preview contains game pixels',crop.some((value,index)=>index%4!==3 && value>120));
   await wait(()=>reads>0);
   check('the detected War panel starts automatic reading',reads>0);
+  check('detected War panels use temporary fields without a saved template',automaticReads>0 && DNScannerRegions.load()===null);
   async function nextItems(label) {
     for(const item of [captureItems[1],captureItems[2],captureItems[0]]) {
       const before=reads;captureImage=item.image;

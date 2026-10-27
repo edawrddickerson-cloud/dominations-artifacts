@@ -412,6 +412,7 @@
       });
       return {id, label: purpose.label, rare:!!purpose.rare, mode:purpose.mode, perks:purpose.rare?[...purpose.stats]:undefined, requiredLines, score, contributions, lines, threshold, best: benchmark.candidates[0]?.score ?? null,
         count: benchmark.candidates.length, incomplete: benchmark.incomplete, uncertain, status, missingSources,
+        benchmarkAvailable:validCategory && available && !missingSources.length,
         hit: status === 'vacancy' || status === 'better'};
     });
   }

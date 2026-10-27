@@ -523,7 +523,7 @@
         const context=titleSource.getContext('2d',{willReadFrequently:true});
         context.drawImage(source,left,top,right-left,bottom-top,0,0,titleSource.width,titleSource.height);
         const pixels=context.getImageData(0,0,titleSource.width,titleSource.height);
-        for(let i=0;i<pixels.data.length;i+=4){const [r,g,b]=pixels.data.subarray(i,i+3);const value=Math.min(r,g,b)>145 || g>90 && g>r*1.25 && g>b*1.05?0:255;pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=value;pixels.data[i+3]=255;}
+        for(let i=0;i<pixels.data.length;i+=4){const r=pixels.data[i],g=pixels.data[i+1],b=pixels.data[i+2];const value=Math.min(r,g,b)>145 || g>90 && g>r*1.25 && g>b*1.05?0:255;pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=value;pixels.data[i+3]=255;}
         context.putImageData(pixels,0,0);
       }
     }
