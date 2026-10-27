@@ -132,6 +132,7 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
         <div id="scanner-fields-editor" hidden>
           <p>Scanning pauses while you edit this frozen frame. Choose a field, then drag a box around it. Drag inside the selected box to move it, or drag a corner to resize it. The percentage box must include its sign and %. Allow room for longer names and values on other artifacts. Name and percentage boxes may overlap.</p>
           <label>Field <select id="scanner-fields-field"></select></label>
+          <button type="button" class="btn" id="scanner-fields-fit">Auto Fit</button>
           <canvas id="scanner-fields-canvas" class="scanner-preview" width="640" height="360" tabindex="0" aria-label="Field boxes on a frozen source. Choose a field then drag to draw, move or resize its box. Use the numeric fields for precise keyboard editing."></canvas>
           <div class="scanner-region-fields">
             <label>Left % of panel<input id="scanner-fields-x" type="number" step="0.1" /></label>
@@ -221,15 +222,15 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
   <script src="vendor/tesseract/tesseract.min.js"></script>
   <script src="scanner-reroll-recognition.js?v=1"></script>
   <script src="scanner-name-catalog.js?v=1"></script>
-  <script src="scanner-recognition.js?v=20261023-title-cleanup"></script>
-  <script src="scanner-field-recognition.js?v=20261021-title-witness"></script>
-  <script src="scanner-calibration.js?v=4"></script>
+  <script src="scanner-recognition.js?v=20261027-auto-fit"></script>
+  <script src="scanner-field-recognition.js?v=20261027-auto-fit"></script>
+  <script src="scanner-calibration.js?v=5"></script>
   <script src="crafting-history.js?v=20261024-artwork"></script>
   <script src="crafted-log-stats.js?v=20261026-rare-cards"></script>
   <script src="crafting-community.js?v=20261026-rare-cards"></script>
   <script src="crafting-probability.js?v=20261026-rare-cards"></script>
   <script src="scanner-collection.js?v=20261025-eligibility"></script>
-  <script src="scanner-reading.js?v=20261024-artwork"></script>
+  <script src="scanner-reading.js?v=20261027-auto-fit"></script>
   <script src="scanner-profile.js?v=1"></script>
   <script src="scanner.js?v=20261022-image-refresh"></script>
   <script src="services.js?v=20261025-slate"></script>

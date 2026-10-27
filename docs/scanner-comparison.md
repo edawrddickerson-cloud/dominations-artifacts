@@ -1,5 +1,11 @@
 # Craft comparison
 
+## Whole-number OCR percentages, October 27, 2026
+
+Artifact stat percentages are signed whole numbers. Shared OCR parsing repairs one dot or comma between two digits when joining the original digits yields a value within -40% to +40%: `+1.3%` and `+1,3%` become `+13%`. The original OCR text is retained and the row records `percentageCorrected`. This rule never rounds, truncates, supplies a missing sign or percent symbol, or changes a stat's polarity. Leading-zero repairs, repeated punctuation and out-of-range joins stay unreadable and follow the existing retry/review path.
+
+Independent name/percentage crops compare the normalized whole value, so `+13%` and `+1.3%` agree while `+14%` and `+1.3%` remain a conflict. Storage OCR retries invalid numeric tokens using its existing alternate glyph view. Fractional values cannot count toward capture coverage or pass storage auto-save validation. Upgrade-level, tier, confidence and conflict checks remain authoritative.
+
 ## Rare Cards, October 26, 2026
 
 All presets default to 3× and 4× for profiles without saved rare-card settings. Adding individual-stat presets preserves existing unit choices/modes and defaults the new stats to 3× in previously enabled setups. Explicitly empty all-off setups remain off. The `rarePresetVersion: 2` marker preserves subsequent individual-stat opt-outs.
@@ -153,6 +159,24 @@ The initial 24-frame recording screen, before the final parse memo, retains exac
 These are static original recording frames, not a new continuous replay or a universal speedup claim. The October 16 recording is no longer at its previous local path. Game animation, screen-share setup and IndexedDB completion are outside timing. Retained local snapshots and source hashes make the controlled comparison reviewable without publishing pixels.
 
 Evidence: [summary and limitations](../reports/scanner-ocr-pass-summary-2026-10-18.json), [72 paired samples](../reports/scanner-ocr-pass-paired.json), [wide baseline](../reports/scanner-ocr-wide-baseline.json), [wide candidate](../reports/scanner-ocr-wide-candidate.json), [baseline accuracy](../reports/scanner-ocr-pass-audit-before.json) and [final accuracy](../reports/scanner-ocr-pass-audit-final.json). Reproduce the paired run with `node scripts/run_crafting_speed.js --snapshot=data/temp/crafting-ocr-pass-baseline-2026-10-17 --compare-snapshot=data/temp/crafting-ocr-pass-candidate-memo-2026-10-17 --label=baseline --fixtures=pic1,video161,video174,video200,video253,video255 --logs=10 --temperatures=warm,cold --repeat=3 --trace-ocr --report=reports/scanner-ocr-pass-paired.json`. Run `node scripts/test_scanner_field_retry.js`, `node scripts/test_scanner_regions.js` and `node scripts/test_scanner_field_reuse.js` for focused evidence/provenance regressions, alongside the crafting display checks above.
+
+## Automatic scan fitting, October 27, 2026
+
+Crafting and Storage Scanner automatically try larger crops for unclear stat names and signed percentages after their normal OCR retries. Clear fields and conflicting rows retain their existing path. Crafting supports both saved field boxes and standard panel scanning; Storage supports five/six-row full dialogs and existing row layouts. The worker and frozen scan input are reused. Live crafting disables these extra retries during speculative OCR; an ordinary settled retry enables them after the existing 220 ms gate.
+
+Each unresolved field gets at most eight centred 10% expansion steps, with a shared limit of 24 candidate crops per recognition job, including crafting's standard fallback. Crops stay within the source and physical row boundaries. Crafting excludes stars and the gold frame; storage name growth stays in the text band, above upgrade bars and before the numeric field. Unchanged pixel crops and oversized crops stop or skip work. A fit needs two distinct high-confidence crops (80 or higher) agreeing on an exact catalogue name or an explicit signed percentage. Weak intermediate views cannot erase stronger evidence; conflicting strong candidates reject the fit. Existing names and signed values cannot be silently replaced by incompatible fit evidence.
+
+Successful fits affect only this scan. Failed searches preserve earlier evidence and uncertainty. Saved calibration is never changed, no new worker is started, expanded evidence never enters the original-crop reuse cache, and stale/cancelled work cannot publish. Attempted and accepted crop readings remain in the recognition observations/evidence. OCR agreement is not independent proof of correctness, and unreadable pixels can still require manual correction.
+
+Focused validation: `node scripts/test_scanner_auto_fit.js`, `node scripts/test_storage_inference.js`, `node scripts/test_scanner_speculation.js`, `node scripts/run_scanner_ocr_fixture.js --field-fit --summary` and `node scripts/run_scanner_ocr_fixture.js --auto-fit-storage --summary`. Real screenshot checks cover clipped crafting names/percentages, a shifted-text standard panel without saved boxes, and clipped storage names/percentages. These fixtures do not establish general live-capture accuracy or latency.
+
+## Field calibration Auto Fit, October 27, 2026
+
+Both calibration editors offer Auto Fit for the selected stat name or signed percentage. It tests the frozen frame at the original size and up to eight centred 10% expansions. Growth stays inside the source/panel and is bounded vertically by neighbouring row centres (without shrinking the starting box). Every candidate must pass the existing template geometry checks. Two successive distinct crops must produce the same reading at OCR confidence 80 or higher: an exact catalogue name or one explicit signed percentage in the supported range. This is a calibration suggestion, not independent proof that OCR is correct.
+
+Only a successful fit changes the draft. Failure retains the original coordinates. Saving remains explicit; no recognition result, score, log record or image is published by calibration. Field changes, manual edits, Cancel, Reset and capture cleanup cancel pending fits and discard stale results. Star, dice, Hall, category and storage metadata boxes retain manual calibration. The temporary local OCR worker is released after fitting.
+
+Run `node scripts/run_scanner_ocr_fixture.js --field-fit --summary` for real screenshot recovery of undersized name/percentage crops, bounded failure, cancellation and explicit-save checks. The screenshot establishes these cases only; it is not a general capture-accuracy audit. The action uses the existing shared `.btn` control without a new visual variant.
 
 ## OCR during settling, October 18, 2026
 

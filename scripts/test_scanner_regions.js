@@ -79,7 +79,7 @@ async function run(percentages) {
   assert.equal(snapshot.crops['0-name'].pixel,42,'all field pixels freeze before async recognition');
   const calls=[],settings=[];
   const nameTexts=percentages.map((_,i)=>i===1?'Invading MRL Damage':'Catapult Damage');
-  const result=await F.recognize(snapshot,{names,canonPerk:v=>v,hall:'main',inferColours:false,isClosed:()=>false,ocrCalls:()=>calls.length,
+  const result=await F.recognize(snapshot,{autoFit:false,names,canonPerk:v=>v,hall:'main',inferColours:false,isClosed:()=>false,ocrCalls:()=>calls.length,
     worker:{async setParameters(value){settings.push(value);}},readView:async input=>{calls.push(input);return calls.length<=2?atlasOutput(input,calls.length===1?nameTexts:percentages):output([{text:percentages[0],confidence:95}]);}});
   assert.equal(calls.length,percentages[0]==='1%'?3:2,'two batched fields, with only the missing signed percentage retried');
   assert.equal(settings.filter(s=>s.tessedit_char_whitelist==='+-0123456789.,%').length,percentages[0]==='1%'?2:1);

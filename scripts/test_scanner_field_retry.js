@@ -13,7 +13,7 @@ vm.createContext(context);
 for(const file of ['scanner-recognition.js','scanner-field-recognition.js'])vm.runInContext(fs.readFileSync('ui/'+file,'utf8'),context);
 const F=context.window.DNScannerFieldRecognition;
 function output(lines){return {data:{text:lines.map(line=>line.text).join('\n'),blocks:[{paragraphs:[{lines}]}]}};}
-async function run({weak=false,contradiction=false,valueConflict=false,missingSign=false,missingLine=false,automaticCategory=false,sourceReadable=true}={}){
+async function run({weak=false,contradiction=false,valueConflict=false,missingSign=false,missingLine=false,automaticCategory=false,sourceReadable=true,percentage='+1%',guidePercentage=percentage}={}){
   const crops={};for(let i=0;i<5;i++){crops[i+'-name']=canvas(i+1);crops[i+'-percentage']=crops[i+'-name'];crops[i+'-star']=canvas();}
   crops.category=canvas(30);crops['hall-banner']=canvas();
   const categorySource=canvas(40),snapshot={crops,sharedPercentages:Array(5).fill(true),automaticCategory},settings={};
@@ -27,10 +27,10 @@ async function run({weak=false,contradiction=false,valueConflict=false,missingSi
       return output(input.draws.flatMap(({source,args})=>{
         if(!initial && missingLine)return [];
         const name=!initial && contradiction?'Catapult Hitpoints':'Catapult Damage';
-        return [{text:name+' '+(missingSign?'1%':!initial && valueConflict?'+6%':'+1%'),confidence:initial && weak && source.pixel===1?50:95,bbox:{y0:args[1]+12,y1:args[1]+source.height-12}}];
+        return [{text:name+' '+(missingSign?'1%':!initial && valueConflict?'+6%':percentage),confidence:initial && weak && source.pixel===1?50:95,bbox:{y0:args[1]+12,y1:args[1]+source.height-12}}];
       }));
     }
-    return output([{text:settings.tessedit_char_whitelist==='+-0123456789.,%'?(missingSign?'1%':'+1%'):'Catapult Damage +1%',confidence:95}]);
+    return output([{text:settings.tessedit_char_whitelist==='+-0123456789.,%'?(missingSign?'1%':percentage):'Catapult Damage '+guidePercentage,confidence:95}]);
   };
   const result=await F.recognize(snapshot,{worker,readView,names:['Catapult Damage','Catapult Hitpoints'],canonPerk:value=>value,hall:'main',isClosed:()=>false,ocrCalls:()=>calls.length,reuse,categorySource});
   return {result,calls,reuse};
@@ -38,6 +38,9 @@ async function run({weak=false,contradiction=false,valueConflict=false,missingSi
 async function main(){
   let read=await run();
   assert.equal(read.result.valid,true);assert.equal(read.calls.filter(call=>call.atlas).length,1,'clear rows need no extra OCR batch');
+  read=await run({weak:true,percentage:'+1.1%',guidePercentage:'+11%'});
+  assert.equal(read.result.valid,true,'decimal punctuation does not create a false independent-crop conflict');
+  assert(read.result.rows.every(row=>row.value===11 && !row.conflict),'field reads use the same whole-number normalization');
   read=await run({weak:true});
   assert.equal(read.result.valid,true);assert.equal(read.result.rows[0].confidence,95);
   assert.deepEqual(read.calls.filter(call=>call.atlas).map(call=>call.atlas),[[1,2,3,4,5],[1]],'only the unclear physical row is enlarged');

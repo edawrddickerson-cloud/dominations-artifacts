@@ -51,16 +51,19 @@ function canvas() {
   })};
 }
 context.document={createElement:canvas};
+vm.runInContext(fs.readFileSync('ui/scanner-core.js','utf8'),context);
 vm.runInContext(fs.readFileSync('ui/scanner-name-catalog.js','utf8'),context);
 vm.runInContext(fs.readFileSync('ui/scanner-recognition.js','utf8'),context);
 vm.runInContext(fs.readFileSync('ui/storage-recognition.js','utf8'),context);
-async function scan(missing,{known=true,priorName='Positive',priorHall='war'}={}) {
+async function scan(missing,{known=true,priorName='Positive',priorHall='war',percentage=null,retryPercentage=null,levelText=null,autoFit=false,fitPercentage=null}={}) {
   const queue=['Example','War Weapon'];
   for(let i=0;i<5;i++) {
-    queue.push('Positive',missing==='value'?'':missing==='level'?'+7%':'+12%');
+    queue.push('Positive',percentage ?? (missing==='value'?'':missing==='level'?'+7%':'+12%'));
+    if(retryPercentage!==null)queue.push(retryPercentage);
     if(missing==='value')queue.push(''); // Numeric retry before inference.
-    queue.push(missing==='level'?'':missing==='value'?'3/10':'7/10');
+    queue.push(levelText ?? (missing==='level'?'':missing==='value'?'3/10':'7/10'));
     if(missing==='level')for(let attempt=0;attempt<5;attempt++)queue.push('');
+    if(fitPercentage!==null)queue.push(fitPercentage,fitPercentage);
   }
   const worker={setParameters:async()=>{},recognize:async()=>{
     assert(queue.length,'unexpected OCR call');
@@ -70,12 +73,24 @@ async function scan(missing,{known=true,priorName='Positive',priorHall='war'}={}
   const knownTiers=known?Array.from({length:5},()=>({name:priorName,hall:priorHall,
     tier:missing==='level'?'green':'blue',tierSource:'percentage-level'})):[];
   const result=await context.window.DNStorageRecognition.recognize(canvas(),{
-    worker,names:['Positive'],canonPerk:value=>value,expectedRows:5,layout:'storage',hall:'war',knownTiers,
+    autoFit,worker,names:['Positive'],canonPerk:value=>value,expectedRows:5,layout:'storage',hall:'war',knownTiers,
   });
   assert.equal(queue.length,0);
   return result;
 }
 async function testOCRFallback() {
+  const fitted=await scan('value',{autoFit:true,fitPercentage:'+8%'});
+  assert(fitted.rows.every(row=>row.value===8 && !row.inferred),'direct expanded OCR is accepted before tier inference');
+  assert(fitted.evidence.every(row=>row.amount.evidenceSource==='expanded-field' && row.amount.autoFit.steps===2),'storage records bounded automatic-fit provenance');
+  for(const percentage of ['+1.3%','+1,3%','+ 1 . 3 %']) {
+    const corrected=await scan('tier',{known:false,percentage,levelText:'8/10'});
+    assert(corrected.rows.every(row=>row.value===13 && row.level===8 && row.tier==='blue'),'storage reads whole 13 percent from stray decimal punctuation');
+    assert(corrected.rows.every(row=>row.percentageCorrected && row.raw.includes(percentage)),'storage retains the original corrected OCR evidence');
+    assert(corrected.evidence.every(entry=>entry.amount.text===percentage),'raw amount crop is preserved');
+  }
+  const retried=await scan('tier',{known:false,percentage:'+12.5%',retryPercentage:'+13%',levelText:'8/10'});
+  assert(retried.rows.every(row=>row.value===13),'invalid digit joins trigger an independent glyph retry instead of keeping a decimal');
+  assert(retried.evidence.every(entry=>entry.amount.alternative.text==='+12.5%'),'retry retains the rejected numeric evidence');
   const value=await scan('value');
   for(const row of value.rows) {
     assert.equal(row.value,8);assert.equal(row.level,3);assert.equal(row.tier,'blue');

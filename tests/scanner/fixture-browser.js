@@ -103,7 +103,7 @@
         const options={canonPerk,ratingOf:(name,axis)=>defaults[name]?.[axis]||0,scoreMode,prefSortAxes};
         parity &&= JSON.stringify(window.DNArtifactScoring.score(toArtifact(result.rows),options))===JSON.stringify(window.DNArtifactScoring.score(toArtifact(labels.rows),options));
       }
-      const injection=forced?{description:'Synthetic robustness test: real first-pass output replaced with blank text/no line evidence; bounded row, colour and percentage retries use real OCR pixels.',actualWorkerCalls,fallbackExecuted:actualWorkerCalls>=6&&actualWorkerCalls<=21}:undefined;
+      const injection=forced?{description:'Synthetic robustness test: real first-pass output replaced with blank text/no line evidence; bounded row, colour, percentage and automatic crop retries use real OCR pixels.',actualWorkerCalls,fallbackExecuted:actualWorkerCalls>=6&&actualWorkerCalls<=45}:undefined;
       const expectedKnown=labels.rows.every(row=>names.includes(row.name));
       const complete=window.DNScannerRecognition.coverage(result.rows).light==='green';
       const appropriateValidation=labels.reviewPair?complete && (!result.valid || expectedKnown):kind==='forced-sign-failure'?!result.valid && complete && result.rows.some(row=>row.inferred):expectedKnown?result.valid:!result.valid && complete && result.warnings.every(warning=>warning.startsWith('Unknown or ambiguous perk:'));

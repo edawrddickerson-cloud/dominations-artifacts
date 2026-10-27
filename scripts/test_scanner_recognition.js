@@ -138,8 +138,26 @@ assert.equal(parse(text.split('\n').slice(0,4).join('\n'),names,canon,5).valid,f
 assert.equal(parse('',names,canon,5).valid,false,'no artifact visible');
 assert.equal(parse(text+'\nUnknown +4%',names,canon,5).valid,false,'extra rows are not silently dropped');
 assert.equal(parse('Artifact Benefits\n'+text,names,canon,5).valid,true);
-assert.equal(parse(text.replace('+1%','-1.5%'),names,canon,5).rows[0].value,-1.5);
-assert.equal(parse(text.replace('+1%','+1,5%'),names,canon,5).rows[0].value,1.5);
+assert.equal(parse(text.replace('+1%','-1.5%'),names,canon,5).rows[0].value,-15);
+assert.equal(parse(text.replace('+1%','+1,5%'),names,canon,5).rows[0].value,15);
+const parsePercentage=categoryRecognition.parsePercentage;
+for(const [raw,value] of [['+1.3%',13],['-1.3%',-13],['+1,3%',13],['+ 1 . 3 %',13],['+1.0%',10],['+4,0%',40],['+13%',13],['-40%',-40]]) {
+  assert.equal(parsePercentage(raw).value,value,raw+' keeps its sign and original digits');
+  const field=categoryRecognition.parseFieldRow('Catapult Damage',raw,names,canon);
+  assert.equal(field.row.value,value);assert.equal(field.row.rawPercentage,raw.trim(),'original numeric evidence stays intact');
+}
+for(const raw of ['+12.5%','+4.1%','+1.30%','+0.5%','+1.2.3%','+.13%','+13.%','1.3%','+1.3','+1.3% junk','++1.3%']) {
+  assert.equal(parsePercentage(raw).value,null,raw+' cannot become a guessed, rounded or truncated integer');
+  assert.equal(categoryRecognition.parseFieldRow('Catapult Damage',raw,names,canon).row.value,null);
+}
+const decimal=parse('Catapult Damage +1.3%',names,canon,1);
+assert.equal(decimal.valid,true);assert.equal(decimal.rows[0].value,13);assert.equal(decimal.rows[0].percentageCorrected,true);
+assert.equal(decimal.rows[0].raw,'Catapult Damage +1.3%');assert.equal(decimal.rows[0].rawPercentage,'+1.3%');
+assert.equal(parse('Catapult Damage +12.5%',names,canon,1).valid,false,'invalid decimal cannot count as a completed read');
+assert.equal(parse('Catapult Damage -1.3%',names,canon,1).valid,false,'digit repair cannot reverse an invalid stat sign');
+assert.equal(categoryRecognition.parseFieldRow('Catapult Damage +13%','+1.3%',names,canon).valid,true,'independent crops agree after punctuation repair');
+assert.equal(categoryRecognition.parseFieldRow('Catapult Damage +14%','+1.3%',names,canon).row.conflict,true,'different integer readings remain a conflict');
+assert.equal(categoryRecognition.usefulRow({known:true,name:'Catapult Damage',value:1.3,hasPercent:true}),false,'fractional rows never count toward capture coverage');
 const reconcile=context.window.DNScannerRecognition.reconcileReads;
 const good=parse(text,names,canon,5);
 assert.equal(reconcile(parse(text.replace('Catapult Hitpoints','Er tpoints'),names,canon,5),good).valid,true,'clearer exact reread may recover clipped text');

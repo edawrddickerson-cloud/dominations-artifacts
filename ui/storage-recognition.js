@@ -46,12 +46,12 @@
     const fill=yellow/(pixels.length/4);
     return fill>=.3?true:fill<=.1?false:null;
   }
-  const signedPercent=text=>/^[+-]\s*\d+(?:[.,]\d+)?\s*%$/.test(text.trim());
+  const signedPercent=text=>window.DNScannerRecognition.parsePercentage(text).value!==null;
   function colouredInk(r,g,b,soft=false) {
     const strongest=Math.max(g,b);
     return strongest>25 && (soft?strongest-r>8 && strongest>r*1.15:strongest>r*1.6);
   }
-  async function recognize(source,{worker,names,canonPerk,expectedRows=5,layout='storage',hall='main',knownTiers=[],fields=null,isClosed=()=>false}) {
+  async function recognize(source,{worker,names,canonPerk,expectedRows=5,layout='storage',hall='main',knownTiers=[],fields=null,isClosed=()=>false,autoFit=true,fitBudget={remaining:24}}) {
     expectedRows=Number(expectedRows)===6?6:5;
     const canvases=[];
     const make=()=>{const c=document.createElement('canvas');canvases.push(c);return c;};
@@ -67,6 +67,7 @@
     const original=make();original.width=source.width;original.height=source.height;
     const originalContext=original.getContext('2d',{willReadFrequently:true});originalContext.drawImage(source,0,0);
     const sourcePixels=originalContext.getImageData(0,0,source.width,source.height).data;
+    source=original;
     // Fixed before the first async worker call; never borrow a previous item.
     const rerolls=(calibrated?fields.template.rows.map((row,i)=>{
       const rect=row.dice && window.DNScannerCore.cropPixels(row.dice,source.width,source.height);
@@ -119,10 +120,12 @@
       if(isClosed())throw new Error('Recognition stopped');
       await worker.setParameters({tessedit_pageseg_mode:mode,tessedit_char_whitelist:whitelist});
       const c=field(rect,ink);
-      const output=await worker.recognize(c,{}, {text:true,blocks:true});
-      if(isClosed())throw new Error('Recognition stopped');
-      const lines=(output.data.blocks || []).flatMap(b=>(b.paragraphs || []).flatMap(p=>p.lines || []));
-      return {text:output.data.text.trim(),confidence:lines.length?Math.min(...lines.map(l=>l.confidence)):0};
+      try {
+        const output=await worker.recognize(c,{}, {text:true,blocks:true});
+        if(isClosed())throw new Error('Recognition stopped');
+        const lines=(output.data.blocks || []).flatMap(b=>(b.paragraphs || []).flatMap(p=>p.lines || []));
+        return {text:output.data.text.trim(),confidence:lines.length?Math.min(...lines.map(l=>l.confidence)):0};
+      } finally {c.width=c.height=0;}
     }
     const rowHeight=area.height/expectedRows;
     const rect=(index,x,width,y,height)=>({x:area.x+x*area.width,width:width*area.width,y:area.y+(index+y)*rowHeight,height:height*rowHeight});
@@ -183,6 +186,36 @@
           const alternative=await read(crop,'0123456789/',ink,mode);
           if(levelOf(alternative.text)!==null && alternative.confidence>=60)level={...alternative,alternative:level};
         }
+        const autoFitAttempts=[];
+        if(autoFit)for(const kind of ['name','percentage']) {
+          const existing=kind==='name'?label:amount;
+          const current=recognition.parseFieldRow(label.text,amount.text,names,canonPerk).row;
+          if(current.conflict || (kind==='name'?current.known && !current.assumed && (label.confidence>=80 || label.corroborated):current.value!==null && amount.confidence>=80))continue;
+          const region=kind==='name'?labelRect:amountRect;
+          const boxes=Array.from({length:expectedRows},(_,j)=>box(j+'-'+kind,kind==='name'?rect(j,.15,.665,.12,.31):rect(j,.85,.15,.20,.60)));
+          const bounds=recognition.autoFitBounds(region,i,boxes);
+          const star=box(i+'-star',rect(i,.043,.048,.40,.30));bounds.x=Math.min(region.x,star.x+star.width+3/source.width);bounds.width=1-bounds.x;
+          // Name growth stops before the upgrade fraction on the next line.
+          if(kind==='name') {
+            const labelArea=rect(i,.15,.665,.12,.31);
+            bounds.y=Math.max(bounds.y,Math.min(region.y,labelArea.y));
+            bounds.height=Math.max(region.y+region.height,labelArea.y+labelArea.height)-bounds.y;
+            bounds.width=Math.min(1,Math.max(region.x+region.width,amountRect.x))-bounds.x;
+          }
+          const fitted=await recognition.autoFitField({box:region,bounds,budget:fitBudget,isClosed,dimensions:source,
+            read:async region=>{
+              const evidence=await read(region,kind==='percentage'?'+-0123456789.,%':'',kind==='name'?'grey':'colour-soft');
+              autoFitAttempts.push({kind,box:region,...evidence});
+              return kind==='name'?{...evidence,rawText:evidence.text,text:evidence.text.replace(/\s+[+-]\s*(?:\d+\s*)?$/,'')}:evidence;
+            },
+            accept:evidence=>{
+              const candidate=recognition.parseFieldRow(kind==='name'?evidence.text:label.text,kind==='percentage'?evidence.text:amount.text,names,canonPerk).row;
+              if(candidate.conflict || current.known && candidate.known && candidate.name!==current.name || current.value!==null && candidate.value!==null && candidate.value!==current.value)return false;
+              return kind==='name'?candidate.known && candidate.nameMatch?.method==='exact'?candidate.name:null:
+                candidate.value!==null && !recognition.signIssues([candidate]).length?candidate.value:null;
+            }});
+          if(fitted){if(kind==='name')label={...fitted,alternative:existing};else amount={...fitted,alternative:existing};}
+        }
         const parsed=recognition.parseText(label.text.replace(/[’‘]/g,"'")+' '+amount.text,names,canonPerk,1);
         const canonical=canonPerk(label.text);
         const row=parsed.rows.length===1?parsed.rows[0]:{name:canonical,raw:label.text+' '+amount.text,value:null,known:names.includes(canonical),hasPercent:false};
@@ -200,7 +233,7 @@
         if(value===null)artifact.metadataWarnings.push('Row '+(i+1)+': upgrade level unclear; enter it in Correct Recognition if needed.');
         warnings.push(...parsed.warnings.filter(w=>!w.startsWith('Expected ')).map(w=>'Row '+(i+1)+': '+w));
         if((label.confidence<80 && !label.corroborated) || amount.confidence<80)warnings.push('Row '+(i+1)+': OCR evidence is weak. Verify the name and percentage.');
-        evidence.push({index:i,label,amount,level,reroll:rerolls[i]});
+        evidence.push({index:i,label,amount,level,reroll:rerolls[i],...(autoFitAttempts.length?{autoFitAttempts}:{})});
       }
       const states=rows.map(r=>r.unlocked),count=states.every(s=>s!==null)?states.filter(Boolean).length:null;
       const tiered=window.DNStoredArtifacts?.backfillItem({hall:artifact.hall || hall,type:artifact.type,rows}).rows || rows;

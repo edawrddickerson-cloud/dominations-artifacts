@@ -14,6 +14,7 @@ async function main(){
   let h=await setup();h.feed();
   assert.equal(h.jobs.length,1,'live OCR starts before the settling delay');
   assert.equal(h.jobs[0].options.fieldReuse,null,'unvalidated work cannot populate verified encounter evidence');
+  assert.equal(h.jobs[0].options.autoFit,false,'early OCR cannot run automatic crop fitting before settling');
   h.advance(100);h.feed();h.jobs[0].resolve(parsed());await flush();
   assert.equal(h.collector.summary().itemCount,0,'fast OCR is not logged before settling');
   assert.equal(h.comparisons.some(x=>x.confirmed),false,'fast OCR cannot publish an early score');
@@ -41,6 +42,7 @@ async function main(){
   assert.doesNotMatch(h.e.result.innerHTML,/Bomber Damage/);
   h.advance(0);assert.equal(h.jobs.length,2,'changed exact input uses an ordinary settled read');
   assert.ok(h.jobs[1].options.fieldReuse,'ordinary retry restores normal evidence caching');
+  assert.equal(h.jobs[1].options.autoFit,true,'ordinary settled retry enables automatic crop fitting');
   h.jobs[1].resolve(parsed());await flush();assert.equal(h.collector.summary().itemCount,1);
   assert.match(h.e.result.innerHTML,/Heavy Tank Damage/);
 

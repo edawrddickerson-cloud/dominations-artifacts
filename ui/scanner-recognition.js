@@ -147,10 +147,20 @@
     const candidate=candidates.find(item=>item.name===suggestion);
     return suggestion?{name:suggestion,confidence:candidate?.confidence ?? 0,rawSimilarity:rawSimilarity(suggestion),corrections:corrected.corrections,margin:Number.isFinite(margin)?margin:null,automatic:false,method:'suggestion'}:null;
   }
+  function parsePercentage(text) {
+    const match=/^([+-])\s*(\d+)(?:\s*([.,])\s*(\d+))?\s*%$/.exec(String(text || '').trim());
+    if(!match)return {value:null,corrected:false,outOfRange:false};
+    // Artifact percentages are whole numbers. OCR may insert punctuation
+    // between the original digits; join those digits, never round a fraction.
+    const corrected=!!match[3],digits=match[2]+(match[4] || '');
+    const amount=Number(match[1]+digits),outOfRange=!Number.isSafeInteger(amount) || Math.abs(amount)>40;
+    const ambiguous=corrected && (digits.length!==2 || digits[0]==='0');
+    return {value:outOfRange || ambiguous?null:amount,corrected:corrected && !outOfRange && !ambiguous,outOfRange};
+  }
   function usefulRow(row) {
-    if(!row || !Number.isFinite(row.value) || Math.abs(row.value)>40 || row.value===null)return false;
+    if(!row || !Number.isInteger(row.value) || Math.abs(row.value)>40)return false;
     if(signIssues([row]).length)return false;
-    if(row.hasPercent===false || (!row.inferred && row.raw && !/^.+?\s*[+-]\s*\d+(?:[.,]\d+)?\s*%\s*$/.test(row.raw) && !(row.known && row.trailingNoise)))return false;
+    if(row.hasPercent===false || (!row.inferred && row.raw && !/^.+?\s*[+-]\s*\d+(?:\s*[.,]\s*\d+)?\s*%\s*$/.test(row.raw) && !(row.known && row.trailingNoise)))return false;
     if(row.known)return true;
     const name=String(row.name || '').trim(), words=name.split(/\s+/);
     return /^[a-z][a-z'’ -]*$/i.test(name) && words.filter(word=>word.length>=3).length>=2 && !/^(er|el|ene)\b/i.test(name);
@@ -175,24 +185,25 @@
     const rows = [], warnings = [];
     for (const raw of String(text || "").split(/\r?\n/).map(line => line.trim()).filter(Boolean)) {
       if (/^artifact benefits[:\s]*$/i.test(raw)) continue;
-      let match = /^(.+?)\s*([+-]\s*\d+(?:[.,]\d+)?)\s*%\s*$/.exec(raw);
+      let match = /^(.+?)\s*([+-]\s*\d+(?:\s*[.,]\s*\d+)?)\s*%\s*$/.exec(raw);
       // Background texture often becomes tiny words after a complete percentage.
       // Accept only bounded noise after a known name; retain the original evidence.
-      const noisy = !match && /^(.+?)\s*([+-]\s*\d+(?:[.,]\d+)?)\s*%\s+((?:[a-z]{1,2}|[»©|])(?:\s+(?:[a-z]{1,2}|[»©|])){0,2})\s*$/i.exec(raw);
+      const noisy = !match && /^(.+?)\s*([+-]\s*\d+(?:\s*[.,]\s*\d+)?)\s*%\s+((?:[a-z]{1,2}|[»©|])(?:\s+(?:[a-z]{1,2}|[»©|])){0,2})\s*$/i.exec(raw);
       const trailingNoise=!!noisy && catalogue.has(normalized(canonPerk(noisy[1].trim())));
       if(trailingNoise)match=noisy;
       // Name extraction is independent of percentage validation. A bad sign
       // must not turn a known perk into a new catalogue label.
-      const tail=/^(.*?)\s*[+«»–—-]?\s*\d+(?:[.,]\d+)?\s*%/.exec(raw);
+      const tail=/^(.*?)\s*[+«»–—-]?\s*\d+(?:\s*[.,]\s*\d+)?\s*%/.exec(raw);
       const damagedTail=/^(.*?)\s+[+«»–—=\-]\s*[^%]*%/.exec(raw);
       const label = match ? match[1].trim() : (tail?tail[1]:damagedTail?damagedTail[1]:raw.replace(/\s+[+-].*$/, "")).trim();
       const exact = catalogue.get(normalized(canonPerk(label))) || catalogue.get(normalized(label));
-      const value = match ? Number(match[2].replace(/\s/g, "").replace(",", ".")) : null;
+      const percentage=parsePercentage(match?match[2]+'%':'');
+      const value=percentage.value;
       const matched=exact?{name:exact,confidence:1,automatic:true,method:'exact'}:matchName(label,names,value);
       const canonical = matched?.name;
       if(!canonical && !raw.includes('%'))continue;
-      const outOfRange=Number.isFinite(value) && Math.abs(value)>40;
-      rows.push({raw, rawName:label, name: canonical || label, value: Number.isFinite(value) && !outOfRange ? value : null, known: !!canonical, assumed:!!canonical && !matched.automatic, nameCorrected:!!canonical && !exact, nameMatch:matched, hasPercent:raw.includes('%'),...(outOfRange?{outOfRange:true}:{}),...(trailingNoise?{trailingNoise:true}:{})});
+      const outOfRange=percentage.outOfRange;
+      rows.push({raw, rawName:label, name: canonical || label, value, known: !!canonical, assumed:!!canonical && !matched.automatic, nameCorrected:!!canonical && !exact, nameMatch:matched, hasPercent:raw.includes('%'),...(percentage.corrected?{percentageCorrected:true,rawPercentage:match[2]+'%'}:{}),...(outOfRange?{outOfRange:true}:{}),...(trailingNoise?{trailingNoise:true}:{})});
       if(outOfRange)warnings.push('Percentage outside -40% to +40%: '+raw+'. Retry or correct this row.');
       if(trailingNoise)warnings.push('Ignored background text after the percentage for '+canonical+'. Verify this row.');
       if(canonical && !matched.automatic)warnings.push('Assumed OCR spelling: '+label+' → '+canonical+'. Verify this row.');
@@ -219,23 +230,21 @@
   function parseFieldRow(nameText,percentageText,names,canonPerk) {
     // Names may include the adjacent percentage in an intentionally wide box.
     // Read the value solely from its own crop and retain both original texts.
-    const label=String(nameText || '').trim().replace(/\s*[+\-\u2212]\s*\d+(?:[.,]\d+)?\s*%.*$/,'').trim();
+    const label=String(nameText || '').trim().replace(/\s*[+\-\u2212]\s*\d+(?:\s*[.,]\s*\d+)?\s*%.*$/,'').trim();
     const percentage=String(percentageText || '').trim();
-    const signed=/^[+-]\s*\d+(?:[.,]\d+)?\s*%$/.test(percentage);
-    const amount=signed?Number(percentage.replace(/[\s%]/g,'').replace(',','.')):null;
-    const value=Number.isFinite(amount) && Math.abs(amount)<=40?amount:null;
+    const amount=parsePercentage(percentage),value=amount.value;
     const exact=names.find(name=>normalized(name)===normalized(canonPerk(label)) || normalized(name)===normalized(label));
     const matched=exact?{name:exact,confidence:1,automatic:true,method:'exact'}:matchName(label,names,value);
     const name=matched?.name;
-    const row={raw:label+' '+percentage,rawName:String(nameText || ''),rawPercentage:percentage,name:name || label,value,known:!!name,assumed:!!name && !matched.automatic,nameCorrected:!!name && !exact,nameMatch:matched,hasPercent:percentage.includes('%')};
+    const row={raw:label+' '+percentage,rawName:String(nameText || ''),rawPercentage:percentage,name:name || label,value,known:!!name,assumed:!!name && !matched.automatic,nameCorrected:!!name && !exact,nameMatch:matched,hasPercent:percentage.includes('%'),...(amount.corrected?{percentageCorrected:true}:{}),...(amount.outOfRange?{outOfRange:true}:{})};
     const warnings=[];
     if(!name)warnings.push('Unknown or ambiguous perk: '+label);
     else if(!matched.automatic)warnings.push('Assumed OCR spelling: '+label+' → '+name+'. Verify this row.');
     if(value===null)warnings.push('Unreadable signed percentage: '+percentage);
     warnings.push(...signIssues([row]));
     // Overlapping crops provide an independent contradiction check.
-    const adjacent=/([+-]\s*\d+(?:[.,]\d+)?)\s*%\s*$/.exec(String(nameText || ''));
-    if(adjacent && value!==null && Number(adjacent[1].replace(/\s/g,'').replace(',','.'))!==value){row.conflict=true;warnings.push('Name and percentage crops disagree. Verify this row.');}
+    const adjacent=/([+-]\s*\d+(?:\s*[.,]\s*\d+)?)\s*%\s*$/.exec(String(nameText || ''));
+    if(adjacent && value!==null && parsePercentage(adjacent[1]+'%').value!==value){row.conflict=true;warnings.push('Name and percentage crops disagree. Verify this row.');}
     return {row,warnings,valid:!warnings.length};
   }
   function classifyBrightness(strengths) {
@@ -542,6 +551,39 @@
     if(tiers.size===1)return {hall:[...tiers][0],source:'percentage-tier'};
     return {hall:selected==='war'?'war':'main',source:'selected-hall'};
   }
+  // One frozen read owns the budget and worker. Geometry proposals never save
+  // calibration or establish evidence for a different encounter/crop.
+  async function autoFitField({box,bounds={x:0,y:0,width:1,height:1},read,accept,isClosed=()=>false,budget,dimensions=null}) {
+    let previous=null,lastRect=box,lastPixels=null;
+    for(let step=1;step<=8 && budget.remaining>0;step++) {
+      if(isClosed())throw new Error('Recognition stopped');
+      const factor=1.1**step,cx=box.x+box.width/2,cy=box.y+box.height/2;
+      const x=Math.max(bounds.x,cx-box.width*factor/2),y=Math.max(bounds.y,cy-box.height*factor/2);
+      const rect={x,y,width:Math.min(bounds.x+bounds.width,cx+box.width*factor/2)-x,height:Math.min(bounds.y+bounds.height,cy+box.height*factor/2)-y};
+      if(rect.width<=0 || rect.height<=0 || lastRect && ['x','y','width','height'].every(key=>Math.abs(rect[key]-lastRect[key])<1e-9))break;
+      lastRect=rect;
+      if(dimensions) {
+        const pixels=window.DNScannerCore.cropPixels(rect,dimensions.width,dimensions.height);
+        if(!pixels || pixels.width*pixels.height>4000000)break;
+        const key=JSON.stringify(pixels);if(key===lastPixels)continue;lastPixels=key;
+      }
+      budget.remaining--;
+      const evidence=await read(rect);
+      if(isClosed())throw new Error('Recognition stopped');
+      const key=evidence?.confidence>=80?accept(evidence):null;
+      if(key===false)return null;
+      if(key!==null && key!==undefined && previous && previous.key!==key)return null;
+      if(key!==null && key!==undefined && previous?.key===key)return {...evidence,autoFit:{box:rect,steps:step},evidenceSource:'expanded-field'};
+      if(key!==null && key!==undefined)previous={key};
+    }
+    return null;
+  }
+  function autoFitBounds(box,index,boxes) {
+    const center=item=>item.y+item.height/2,cy=center(box);
+    const top=index?Math.max(0,Math.min(box.y,(center(boxes[index-1])+cy)/2)):0;
+    const bottom=index<boxes.length-1?Math.min(1,Math.max(box.y+box.height,(center(boxes[index+1])+cy)/2)):1;
+    return {x:0,y:top,width:1,height:bottom-top};
+  }
   function create({names, canonPerk}) {
     const workers=new Map(),initializing=new Map(),warmed=new Set();let closed=false,fieldEvidence=null;
     async function getWorker(kind='standard') {
@@ -560,7 +602,7 @@
       })());
       return initializing.get(kind);
     }
-    async function recognize(source, {expectedRows=5, layout="panel",hall='main',inferColours=false,categorySource=null,titleSource=null,fields=null,colourHall=null,knownTiers=[],isCurrent=()=>true,fieldReuse=null}={},fallbackEncounter=null) {
+    async function recognize(source, {expectedRows=5, layout="panel",hall='main',inferColours=false,categorySource=null,titleSource=null,fields=null,colourHall=null,knownTiers=[],isCurrent=()=>true,fieldReuse=null,autoFit=true,fitBudget={remaining:24}}={},fallbackEncounter=null) {
       const stopped=()=>closed || !isCurrent();
       const check=()=>{if(stopped())throw new Error('Recognition superseded or stopped');};
       if(stopped())fieldEvidence=null;
@@ -568,7 +610,7 @@
       expectedRows=Number(expectedRows)===6?6:5;
       // Freeze small field crops synchronously, before worker initialization yields.
       let fieldViews;
-      try{fieldViews=layout==='panel' && fields?window.DNScannerFieldRecognition?.snapshot(fields):null;}
+      try{fieldViews=layout==='panel' && fields?window.DNScannerFieldRecognition?.snapshot(fields,{autoFit}):null;}
       catch(error){fieldEvidence=null;throw error;}
       const scoped=value=>typeof value==='string' || typeof value==='number' && Number.isFinite(value);
       const reuseKey=fieldViews?.valid && fieldViews.reuseGeometry && scoped(fieldReuse?.epoch) && scoped(fieldReuse?.profile)?
@@ -588,7 +630,7 @@
       try {activeWorker=await getWorker(fieldViews?.valid?'fast':'standard');check();}catch(error){if(fieldEvidence===encounter)fieldEvidence=null;fieldViews?.release?.();throw error;}
       let ocrCalls=0;
       const readView=async(...args)=>{check();ocrCalls++;const output=await activeWorker.recognize(...args);check();return output;};
-      if(layout==='storage' || layout==='storage-rows' || layout==='storage-rows-dice')return window.DNStorageRecognition.recognize(source,{worker:activeWorker,names,canonPerk,expectedRows,layout,hall,knownTiers,fields,isClosed:stopped});
+      if(layout==='storage' || layout==='storage-rows' || layout==='storage-rows-dice')return window.DNStorageRecognition.recognize(source,{worker:activeWorker,names,canonPerk,expectedRows,layout,hall,knownTiers,fields,isClosed:stopped,autoFit,fitBudget});
       let artifactName=null,nameEvidence=null;
       if(titleSource?.width && titleSource?.height) {
         try {
@@ -601,7 +643,7 @@
       }
       if(fieldViews?.valid) {
         try {
-          let calibrated=await window.DNScannerFieldRecognition.recognize(fieldViews,{worker:activeWorker,readView,names,canonPerk,hall,inferColours,categorySource,isClosed:stopped,ocrCalls:()=>ocrCalls,reuse});
+          let calibrated=await window.DNScannerFieldRecognition.recognize(fieldViews,{worker:activeWorker,readView,names,canonPerk,hall,inferColours,categorySource,isClosed:stopped,ocrCalls:()=>ocrCalls,reuse,autoFit,fitBudget});
           if(artifactName || nameEvidence)calibrated={...calibrated,artifact:{...calibrated.artifact,...(artifactName?{name:artifactName}:{}),...(nameEvidence?{nameEvidence}:{})}};
           // Metadata uses its own pixels. Repeating every text row cannot repair
           // an unread category or star, and used to multiply complete read time.
@@ -616,7 +658,7 @@
           // Contradictory field evidence still goes through the conflict rules.
           await activeWorker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});
           const fallback=await recognize(source,{expectedRows,layout,hall:calibrated.hall || hall,inferColours,categorySource,
-            colourHall:calibrated.hallSource==='hall-colour'?calibrated.hall:null,isCurrent},encounter);
+            colourHall:calibrated.hallSource==='hall-colour'?calibrated.hall:null,isCurrent,autoFit,fitBudget},encounter);
           let selected=combineReads(calibrated,fallback,expectedRows);
           // Standard crafting supplies the fresh-craft rule, not independent
           // dice pixels. Explicit calibrated controls, including unreadable ones,
@@ -728,7 +770,7 @@
         const rowCanvas=document.createElement('canvas');
         const rowContext=rowCanvas.getContext('2d',{willReadFrequently:true});
         const rowHeight=canvas.height/expectedRows;
-        const rowTexts=[], confidences=[], colourReads=[], percentageReads=[];
+        const rowTexts=[], confidences=[], colourReads=[], percentageReads=[],autoFitReads=[],autoFitAttempts=[];
         await activeWorker.setParameters({tessedit_pageseg_mode:'7'});
         try {
           for(let index=0;index<expectedRows;index++) {
@@ -799,7 +841,8 @@
                   }
                 } finally {if(!closed)await activeWorker.setParameters({tessedit_char_whitelist:''});}
                 percentageReads.push({index,reads:focused});
-                if(focused.every(read=>read.confidence>=80 && /^[+-]\s*\d+(?:[.,]\d+)?\s*%$/.test(read.text)) && focused[0].text.replace(/\s/g,'')===focused[1].text.replace(/\s/g,'')) {
+                const focusedValues=focused.map(read=>parsePercentage(read.text).value);
+                if(focused.length===2 && focused.every(read=>read.confidence>=80) && focusedValues.every(value=>value!==null && value===focusedValues[0])) {
                   const candidate=parseText(initial.name+' '+focused[0].text,names,canonPerk).rows[0];
                   if(usefulRow(candidate) && (initial.value===null || initial.value===candidate.value)) {
                     text=initial.name+' '+focused[0].text;confidence=Math.min(...focused.map(read=>read.confidence));
@@ -807,13 +850,41 @@
                 }
               }
             }
+            const current=parseText(text,names,canonPerk,1).rows[0];
+            if(autoFit && (!current?.known || current.assumed || !usefulRow(current) || confidence<80) && !current?.conflict) {
+              const boxes=Array.from({length:expectedRows},(_,i)=>({x:roi.x/source.width,y:(roi.y+i*roi.height/expectedRows)/source.height,width:roi.width/source.width,height:roi.height/expectedRows/source.height}));
+              const bounds=autoFitBounds(boxes[index],index,boxes);
+              if(layout==='panel'){bounds.x=.084;bounds.width=.975-bounds.x;}
+              const fitted=await autoFitField({box:boxes[index],bounds,budget:fitBudget,isClosed:stopped,dimensions:source,
+                read:async region=>{
+                  check();const rect=window.DNScannerCore.cropPixels(region,source.width,source.height);
+                  rowCanvas.width=rect.width*2+32;rowCanvas.height=rect.height*2+24;
+                  rowContext.fillStyle='#fff';rowContext.fillRect(0,0,rowCanvas.width,rowCanvas.height);
+                  rowContext.drawImage(source,rect.x,rect.y,rect.width,rect.height,16,12,rect.width*2,rect.height*2);
+                  const pixels=rowContext.getImageData(0,0,rowCanvas.width,rowCanvas.height);
+                  for(let p=0;p<pixels.data.length;p+=4){const value=textContrast(pixels.data[p],pixels.data[p+1],pixels.data[p+2]);pixels.data[p]=pixels.data[p+1]=pixels.data[p+2]=value;}
+                  rowContext.putImageData(pixels,0,0);
+                  await activeWorker.setParameters({tessedit_pageseg_mode:'7',tessedit_char_whitelist:''});
+                  const output=await readView(rowCanvas,{}, {text:true,blocks:true});
+                  const lines=(output.data.blocks || []).flatMap(b=>(b.paragraphs || []).flatMap(p=>p.lines || []));
+                  const evidence={text:output.data.text.trim(),confidence:lines.length===1?lines[0].confidence:0};
+                  autoFitAttempts.push({index,box:region,...evidence});return evidence;
+                },accept:evidence=>{
+                  const candidate=parseText(evidence.text,names,canonPerk,1);
+                  const row=candidate.rows[0];
+                  if(!candidate.valid || row?.nameMatch?.method!=='exact')return null;
+                  if(current?.known && current.name!==row.name || current?.value!=null && current.value!==row.value)return false;
+                  return JSON.stringify([row.name,row.value]);
+                }});
+              if(fitted){text=fitted.text;confidence=fitted.confidence;autoFitReads.push({index,...fitted});}
+            }
             rowTexts.push(text);confidences.push(confidence);
           }
           const retry=parseText(rowTexts.join('\n'),names,canonPerk,expectedRows);
           retry.rows=rowTexts.map(text=>parseText(text,names,canonPerk).rows[0] || {raw:text,name:'',value:null,known:false,hasPercent:false});
           if(confidences.some(value=>value<80)){retry.valid=false;retry.warnings.push('Some individual rows are still unclear. Verify their names and percentages.');}
           const selected=combineReads(annotate(parsed),annotate(retry),expectedRows);
-          return annotate({...selected,colourReads,percentageReads,observations:[firstObservation,{pass:'individual-rows',rows:retry.rows,warnings:[...retry.warnings]}]});
+          return annotate({...selected,colourReads,percentageReads,autoFitReads,observations:[firstObservation,{pass:'individual-rows',rows:retry.rows,warnings:[...retry.warnings],autoFitReads,autoFitAttempts}]});
         } finally {
           rowCanvas.width=rowCanvas.height=0;
           if(!closed)await activeWorker.setParameters({tessedit_pageseg_mode:'6'});
@@ -825,5 +896,5 @@
       isWarm:({fast=false}={})=>!closed && warmed.has(fast?'fast':'standard')};
   }
   function cleanArtifactName(value) {return String(value || '').replace(/\s+/g,' ').trim().replace(/^[^\p{L}\p{N}]+/u,'');}
-  window.DNScannerRecognition={cleanArtifactName,matchName,NAME_MATCH_THRESHOLD,parseText,parseFieldRow,positionRows,signIssues,reconcileReads,combineReads,retainCraftRead,classifyBrightness,classifyStars,rowColours,inferColourValues,usefulRow,coverage,textContrast,detectPanel,parseCraftCategory,craftCategoryEvidence,classifyHallColour,hallColour,craftHall,categoryRect,categoryLine,create};
+  window.DNScannerRecognition={autoFitField,autoFitBounds,cleanArtifactName,matchName,NAME_MATCH_THRESHOLD,parsePercentage,parseText,parseFieldRow,positionRows,signIssues,reconcileReads,combineReads,retainCraftRead,classifyBrightness,classifyStars,rowColours,inferColourValues,usefulRow,coverage,textContrast,detectPanel,parseCraftCategory,craftCategoryEvidence,classifyHallColour,hallColour,craftHall,categoryRect,categoryLine,create};
 })();

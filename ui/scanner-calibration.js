@@ -10,11 +10,14 @@
   const supported=layout=>layout===(storage?'storage':'panel');
   const get=id=>document.getElementById('scanner-fields-'+id);
   if(!get('editor'))return;
-  const ids=['enabled','edit','reset','status','editor','field','canvas','x','y','width','height','optional-label','optional','preview','preview-label','feedback','save','cancel'];
+  const ids=['enabled','edit','reset','status','editor','field','canvas','x','y','width','height','optional-label','optional','preview','preview-label','feedback','save','cancel','fit'];
   const el=Object.fromEntries(ids.map(id=>[id,get(id)]));
   let template=storage?G.load(rowCount()):G.load(),draft=null,frozen=null,frozenPanel=null,source=null,panel=null,drag=null,active=null,lastPath=null,lastReason=null,currentLayout=storage?'storage':'panel',templateRows=rowCount();
+  let fitting=null;
+  function cancelFit(){if(fitting){fitting.cancelled=true;void fitting.engine.close().catch(()=>{});fitting=null;refreshInputs();}}
   const notify=()=>{lastPath=lastReason=null;window.DNScannerReading?.invalidate('Field calibration changed. Reading the current panel again.');window.dispatchEvent(new Event('dn-scanner-fields-change'));};
   function discard() {
+    cancelFit();
     if(frozen)frozen.width=frozen.height=0;
     frozen=null;frozenPanel=null;draft=null;drag=null;el.editor.hidden=true;
     el.canvas.width=640;el.canvas.height=360;el.preview.width=320;el.preview.height=64;
@@ -43,9 +46,82 @@
   function selected(){return draft && G.fields(draft).find(field=>field.id===el.field.value);}
   function refreshInputs() {
     const field=selected();if(!field)return;
+    if(el.fit)el.fit.disabled=!!fitting || !field.box || !['name','percentage'].includes(field.kind);
     for(const key of ['x','y','width','height']){el[key].value=field.box?String(Math.round(field.box[key]*100000)/1000):'';el[key].disabled=!field.box;}
     el['optional-label'].hidden=!['category','hall','dice'].includes(field.kind);el.optional.checked=!!field.box;
     draw();
+  }
+  async function autoFit() {
+    const field=selected(),R=window.DNScannerRecognition;
+    if(fitting || !field?.box || !['name','percentage'].includes(field.kind))return;
+    const names=Array.from(document.getElementById('scanner-names')?.children || [],option=>option.value);
+    if(!names.length){el.feedback.textContent='Perk names unavailable. Try again after loading.';return;}
+    const job={engine:R.create({names,canonPerk:value=>value}),cancelled:false};fitting=job;
+    const original={...field.box},owner=draft;
+    const current=()=>fitting===job && !job.cancelled && draft===owner;
+    refreshInputs();el.save.disabled=true;
+    el.feedback.textContent='Fitting '+field.label+'…';
+    let previous=null,previousRect=null;
+    try {
+      const worker=await job.engine.warm();
+      if(!current())return;
+      await worker.setParameters({tessedit_pageseg_mode:'7',tessedit_char_whitelist:''});
+      for(let step=0;step<=8 && current();step++) {
+        const box=fitBox(original,field,owner,frozenPanel,step);
+        const candidate=G.copy(owner);G.assign(candidate,field.id,box);
+        if(!G.resolve(candidate,frozenPanel,frozen).valid)break;
+        const rect=C.cropPixels(G.toSource(box,frozenPanel),frozen.width,frozen.height);
+        if(rect.width*rect.height>4000000)break;
+        if(previousRect && ['x','y','width','height'].every(key=>rect[key]===previousRect[key]))break;
+        previousRect=rect;
+        const crop=document.createElement('canvas'),view=document.createElement('canvas');
+        let output;
+        try {
+          crop.width=rect.width;crop.height=rect.height;
+          const ctx=crop.getContext('2d',{willReadFrequently:true});
+          ctx.drawImage(frozen,rect.x,rect.y,rect.width,rect.height,0,0,rect.width,rect.height);
+          const pixels=ctx.getImageData(0,0,crop.width,crop.height);
+          for(let i=0;i<pixels.data.length;i+=4){const value=R.textContrast(pixels.data[i],pixels.data[i+1],pixels.data[i+2]);pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=value;pixels.data[i+3]=255;}
+          ctx.putImageData(pixels,0,0);
+          const scale=Math.min(4,Math.max(2,64/crop.height));
+          view.width=Math.ceil(crop.width*scale)+32;view.height=Math.ceil(crop.height*scale)+24;
+          const v=view.getContext('2d');v.fillStyle='#fff';v.fillRect(0,0,view.width,view.height);v.drawImage(crop,16,12,view.width-32,view.height-24);
+          output=await worker.recognize(view);
+        } finally {crop.width=crop.height=view.width=view.height=0;}
+        if(!current())return;
+        const text=String(output.data.text || '').trim();
+        const parsed=R.parseFieldRow(text,'',names,value=>value).row;
+        const amounts=text.match(/[+-]\s*\d+(?:[.,]\d+)?\s*%/g) || [];
+        const amount=amounts.length===1?R.parsePercentage(amounts[0]).value:null;
+        const reading=output.data.confidence>=80?(field.kind==='name'?
+          parsed.known && parsed.nameMatch?.method==='exact'?parsed.name:null:
+          amount!==null && !/[\d%+\-]/.test(text.replace(amounts[0],''))?amounts[0].replace(/\s/g,''):null):null;
+        // Require agreement after another 10% expansion: a plausible clipped
+        // number or partial catalogue name must not stop at its first reading.
+        if(reading!==null && previous?.reading===reading){
+          G.assign(owner,field.id,box);refreshInputs();
+          el.feedback.textContent='Fit found · '+reading+'. Review before saving.';return;
+        }
+        previous=reading===null?null:{reading};
+        el.feedback.textContent='Fitting '+field.label+' · '+(step+1)+'/9';
+      }
+      if(current())el.feedback.textContent='No reliable fit. Original box retained.';
+    } catch {if(current())el.feedback.textContent='Auto fit failed. Original box retained.';}
+    finally {
+      await job.engine.close().catch(()=>{});
+      if(current()){
+        const feedback=el.feedback.textContent;fitting=null;refreshInputs();el.feedback.textContent=feedback;
+      }
+    }
+  }
+  function fitBox(box,field,template,panel,step) {
+    const factor=1.1**step,cx=box.x+box.width/2,cy=box.y+box.height/2;
+    const centers=template.rows.map(row=>row[field.kind].y+row[field.kind].height/2);
+    const top=Math.max(0,-panel.y/panel.height,field.index?Math.min(box.y,(centers[field.index-1]+cy)/2):0);
+    const bottom=Math.min(1,(1-panel.y)/panel.height,field.index<centers.length-1?Math.max(box.y+box.height,(centers[field.index+1]+cy)/2):1);
+    const left=Math.max(0,-panel.x/panel.width),right=Math.min(1,(1-panel.x)/panel.width);
+    const x=Math.max(left,cx-box.width*factor/2),y=Math.max(top,cy-box.height*factor/2);
+    return {x,y,width:Math.min(right,cx+box.width*factor/2)-x,height:Math.min(bottom,cy+box.height*factor/2)-y};
   }
   function draw() {
     if(!draft || !frozen)return;
@@ -69,7 +145,7 @@
     if(rect){el.preview.width=rect.width;el.preview.height=rect.height;preview.drawImage(frozen,rect.x,rect.y,rect.width,rect.height,0,0,rect.width,rect.height);}
     else {el.preview.width=320;el.preview.height=64;preview.clearRect(0,0,320,64);}
     const resolved=G.resolve(draft,frozenPanel,frozen);
-    el.save.disabled=!resolved.valid;
+    el.save.disabled=!!fitting || !resolved.valid;
     el.feedback.textContent=resolved.valid?(Object.keys(resolved.unavailable || {}).length?'An optional dice box is outside this frame; its eligibility will stay unknown.':'Boxes fit this frame. Check the crop previews, then save.'):resolved.reason;
   }
   function begin() {
@@ -83,6 +159,7 @@
   }
   function point(event){const rect=el.canvas.getBoundingClientRect();return {x:Math.max(0,Math.min(1,(event.clientX-rect.left)/rect.width)),y:Math.max(0,Math.min(1,(event.clientY-rect.top)/rect.height))};}
   el.canvas.addEventListener('pointerdown',event=>{
+    cancelFit();
     const field=selected();if(event.button!==0 || !field)return;
     const start=point(event),box=field.box && G.toSource(field.box,frozenPanel),rect=el.canvas.getBoundingClientRect();
     let corner=null;
@@ -102,19 +179,22 @@
   el.canvas.addEventListener('pointerup',finish);el.canvas.addEventListener('pointercancel',finish);
   el.canvas.addEventListener('keydown',event=>{if(event.key==='Escape'){discard();notify();update(source,panel);}});
   for(const key of ['x','y','width','height'])el[key].addEventListener('input',()=>{
+    cancelFit();
     const field=selected();if(!field)return;
     G.assign(draft,field.id,Object.fromEntries(['x','y','width','height'].map(k=>[k,el[k].value.trim()===''?NaN:Number(el[k].value)/100])));draw();
   });
   el.optional.addEventListener('change',()=>{
+    cancelFit();
     const field=selected();if(!field || !['category','hall','dice'].includes(field.kind))return;
     const seed=storage?G.fields(G.defaults(draft.aspect,draft.rows.length)).find(item=>item.id===field.id)?.box:field.kind==='category'?{x:-.3,y:-.31,width:.5,height:.2}:field.kind==='hall'?{x:.03,y:.04,width:.55,height:.2}:
       {x:.88,y:draft.rows[field.index].name.y,width:.10,height:draft.rows[field.index].name.height};
     G.assign(draft,field.id,el.optional.checked?seed:null);refreshInputs();
   });
-  el.field.addEventListener('change',refreshInputs);el.edit.addEventListener('click',begin);
+  el.field.addEventListener('change',()=>{cancelFit();refreshInputs();});el.edit.addEventListener('click',begin);
+  el.fit?.addEventListener('click',autoFit);
   el.cancel.addEventListener('click',()=>{discard();notify();update(source,panel);});
   el.save.addEventListener('click',()=>{
-    if(!draft || !G.resolve(draft,frozenPanel,frozen).valid)return;
+    if(fitting || !draft || !G.resolve(draft,frozenPanel,frozen).valid)return;
     if(!G.save(draft)){el.feedback.textContent='Could not save boxes in this browser. Allow local storage and try again.';return;}
     template=G.copy(draft);discard();notify();update(source,panel);
   });

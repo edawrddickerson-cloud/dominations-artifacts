@@ -75,10 +75,10 @@ async function main() {
     const storagePassive=process.argv.includes('--storage-passive');
     const glance=process.argv.includes('--glance');
     const viewport=process.argv.find(arg=>arg.startsWith('--viewport='))?.slice(11) || '1440x900';
-    if(glance || process.argv.includes('--identification') || process.argv.includes('--crafting-keep') || process.argv.includes('--regions-ui') || process.argv.includes('--crafting-stats')){if(!/^\d{3,4}x\d{3,4}$/.test(viewport))throw new Error('Invalid viewport');const [width,height]=viewport.split('x').map(Number);await client.send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:false});}
+    if(glance || process.argv.includes('--identification') || process.argv.includes('--crafting-keep') || process.argv.includes('--regions-ui') || process.argv.includes('--field-fit') || process.argv.includes('--crafting-stats')){if(!/^\d{3,4}x\d{3,4}$/.test(viewport))throw new Error('Invalid viewport');const [width,height]=viewport.split('x').map(Number);await client.send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:false});}
     if(inventory)await client.send('Emulation.setDeviceMetricsOverride',{width:1800,height:1100,deviceScaleFactor:1,mobile:false});
     if(storageLayout)await client.send('Emulation.setDeviceMetricsOverride',{width:1440,height:900,deviceScaleFactor:1,mobile:false});
-    const storage=process.argv.includes('--storage') || inventory || storageLayout || storagePassive || process.argv.includes('--storage-fields') || process.argv.includes('--storage-catalog') || process.argv.includes('--linked-artifacts');
+    const storage=process.argv.includes('--storage') || inventory || storageLayout || storagePassive || process.argv.includes('--storage-fields') || process.argv.includes('--auto-fit-storage') || process.argv.includes('--storage-catalog') || process.argv.includes('--linked-artifacts');
     await client.send('Page.navigate',{url:origin+'/ui/'+(storage?'storage-scanner.html':'scanner.html')});
     await delay(500);
     // The scanner document lives inside its capture host. Await its scripts,
@@ -102,6 +102,8 @@ async function main() {
       expression='window.DNRegionsFixtures='+JSON.stringify(fixtures)+';window.DNRegionsScales=[1,.75,1.5];\n'+fs.readFileSync(path.join(root,'tests/scanner/regions-benchmark-browser.js'),'utf8');
     }
     if(process.argv.includes('--regions-ui'))expression=fs.readFileSync(path.join(root,'tests/scanner/regions-ui-browser.js'),'utf8');
+    if(process.argv.includes('--field-fit'))expression=fs.readFileSync(path.join(root,'tests/scanner/field-fit-browser.js'),'utf8');
+    if(process.argv.includes('--auto-fit-storage'))expression=fs.readFileSync(path.join(root,'tests/scanner/auto-fit-storage-browser.js'),'utf8');
     if(process.argv.includes('--storage-fields'))expression=fs.readFileSync(path.join(root,'tests/scanner/storage-fields-browser.js'),'utf8');
     if(process.argv.includes('--crafting-metadata'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-metadata-browser.js'),'utf8');
     if(process.argv.includes('--crafting-edits'))expression=fs.readFileSync(path.join(root,'tests/scanner/crafting-edits-browser.js'),'utf8');
@@ -147,6 +149,17 @@ async function main() {
     const result=await evaluation;
     if(result.exceptionDetails) throw new Error(JSON.stringify(result.exceptionDetails));
     const value=result.result.value;
+    if(process.argv.includes('--field-fit')) {
+      await client.send('Runtime.evaluate',{expression:'(document.getElementById("scanner-view")?.contentWindow || window).document.getElementById("scanner-fields-field").focus()'});
+      await client.send('Input.dispatchKeyEvent',{type:'keyDown',key:'Tab',windowsVirtualKeyCode:9});
+      await client.send('Input.dispatchKeyEvent',{type:'keyUp',key:'Tab',windowsVirtualKeyCode:9});
+      const focus=await client.send('Runtime.evaluate',{expression:'(document.getElementById("scanner-view")?.contentWindow || window).eval(\'document.activeElement.id==="scanner-fields-fit" && getComputedStyle(document.activeElement).outlineStyle==="solid"\')',returnByValue:true});
+      value.checks['Auto Fit keyboard focus is visible']=focus.result.value===true;value.passed &&= focus.result.value===true;
+      const out=path.join(root,'data/temp/design-review');fs.mkdirSync(out,{recursive:true});
+      const screenshot=await client.send('Page.captureScreenshot',{format:'png'});
+      const filename='scanner-field-fit-'+viewport+'.png';fs.writeFileSync(path.join(out,filename),Buffer.from(screenshot.data,'base64'));
+      const index=path.join(out,'index.html');if(fs.existsSync(index))fs.appendFileSync(index,'<figure><figcaption>Scanner Auto Fit '+viewport+'</figcaption><a href="'+filename+'"><img style="max-width:100%" src="'+filename+'" alt="Scanner calibration Auto Fit"></a></figure>');
+    }
     if(process.argv.includes('--crafting-stats') && process.argv.includes('--report')){fs.mkdirSync(path.join(root,'data/temp/crafted-log-stats-previews'),{recursive:true});const screenshot=await client.send('Page.captureScreenshot',{format:'png'});fs.writeFileSync(path.join(root,'data/temp/crafted-log-stats-previews/'+viewport+'.png'),Buffer.from(screenshot.data,'base64'));}
     if(process.argv.includes('--regions-ui') && process.argv.includes('--report')){const screenshot=await client.send('Page.captureScreenshot',{format:'png'});fs.writeFileSync(path.join(root,'tests/scanner/regions-ui-'+viewport+'.png'),Buffer.from(screenshot.data,'base64'));}
     if(glance && process.argv.includes('--report')){const screenshot=await client.send('Page.captureScreenshot',{format:'png'});fs.writeFileSync(path.join(root,'tests/scanner/glance-'+viewport+'.png'),Buffer.from(screenshot.data,'base64'));}

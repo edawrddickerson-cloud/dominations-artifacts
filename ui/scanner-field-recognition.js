@@ -9,7 +9,7 @@
 (() => {
   'use strict';
   const R=()=>window.DNScannerRecognition;
-  function snapshot(fields) {
+  function snapshot(fields,{autoFit=true}={}) {
     const resolved=window.DNScannerRegions.resolve(fields.template,fields.panel,fields.source);
     if(!resolved.valid)return resolved;
     const crops={};
@@ -43,7 +43,14 @@
         source:[fields.source.width,fields.source.height],panelSource:fields.panelSource?[fields.panelSource.width,fields.panelSource.height]:null});
       const seedCategory={x:-.3,y:-.31,width:.5,height:.2};
       const automaticCategory=fields.template.category && Object.keys(seedCategory).every(key=>fields.template.category[key]===seedCategory[key]);
-      return {valid:true,crops,release,sharedPercentages,reuseGeometry,automaticCategory,diceRequested:fields.template.rows.map(row=>!!row.dice),unavailable:resolved.unavailable || {}};
+      const input=fields.panelSource || fields.source,rect=fields.panelSource?{x:0,y:0,width:input.width,height:input.height}:window.DNScannerCore.cropPixels(fields.panel,input.width,input.height);
+      // Freeze neighbouring pixels before any worker await. Never expand into
+      // a newer live frame or store an expanded crop in the verified cache.
+      if(autoFit && rect.width*rect.height<=4000000) {
+        const frame=document.createElement('canvas');frame.width=rect.width;frame.height=rect.height;
+        frame.getContext('2d').drawImage(input,rect.x,rect.y,rect.width,rect.height,0,0,rect.width,rect.height);crops['fit-panel']=frame;
+      }
+      return {valid:true,crops,template:window.DNScannerRegions.copy(fields.template),release,sharedPercentages,reuseGeometry,automaticCategory,diceRequested:fields.template.rows.map(row=>!!row.dice),unavailable:resolved.unavailable || {}};
     }catch(error){release();throw error;}
   }
   function percentageRect(data,width,height) {
@@ -121,7 +128,7 @@
       return {text:String(line.text || '').trim(),confidence:line.confidence || 0,words:line.words || []};
     });
   }
-  async function recognize(snapshot,{worker,readView,names,canonPerk,hall='main',inferColours=false,categorySource,isClosed,ocrCalls,reuse=null}) {
+  async function recognize(snapshot,{worker,readView,names,canonPerk,hall='main',inferColours=false,categorySource,isClosed,ocrCalls,reuse=null,autoFit=true,fitBudget={remaining:24}}) {
     const rerolls=Array.from({length:5},(_,i)=>{
       if(!snapshot.diceRequested?.[i] && !snapshot.crops[i+'-dice'])return null;
       return snapshot.crops[i+'-dice']?window.DNScannerRerollRecognition?.classifyCanvas(snapshot.crops[i+'-dice']) ||
@@ -178,9 +185,10 @@
         const result=evidence(output);
         if(guide) {
           result.guideText=guide.text;
-          const suffix=/([+-]\s*\d+(?:[.,]\d+)?)\s*%\s*$/.exec(guide.text),value=/^([+-]\s*\d+(?:[.,]\d+)?)\s*%$/.exec(result.text);
-          if(suffix && value) {
-            if(Number(suffix[1].replace(/\s/g,'').replace(',','.'))!==Number(value[1].replace(/\s/g,'').replace(',','.')))result.conflict=true;
+          const suffix=/([+-]\s*\d+(?:\s*[.,]\s*\d+)?)\s*%\s*$/.exec(guide.text);
+          const guideValue=R().parsePercentage(suffix?suffix[1]+'%':'').value,value=R().parsePercentage(result.text).value;
+          if(guideValue!==null && value!==null) {
+            if(guideValue!==value)result.conflict=true;
             else {result.corroborated=true;result.focusedConfidence=result.confidence;result.guideConfidence=guideConfidence;result.confidence=Math.max(result.confidence,guideConfidence);}
           }
         }
@@ -231,7 +239,8 @@
     }
     const fields=[],firstRows=[],firstWarnings=[],fieldReads=Array.from({length:5},()=>[]);
     const recordFields=(i,pass,name,percentage)=>{
-      const raw=value=>value?{text:value.text,confidence:value.confidence,...(value.guideText?{guideText:value.guideText}: {}),
+      const raw=value=>value?{text:value.text,confidence:value.confidence,...(value.rawText?{rawText:value.rawText}:{}),...(value.guideText?{guideText:value.guideText}: {}),
+        ...(value.autoFit?{autoFit:value.autoFit,evidenceSource:'expanded-field'}:{}),
         ...(value.reused?{reused:true,evidenceSource:'same-encounter-identical-pixels'}:{})}:null;
       fieldReads[i].push({pass,name:raw(name),percentage:raw(percentage)});
     };
@@ -239,7 +248,7 @@
     // Identical calibrated boxes contain the same evidence. Read their signed
     // suffix once instead of repeating identical pixels through a guide pass.
     const batchPercentages=snapshot.sharedPercentages?.every(Boolean)?null:await batch('percentage');
-    const suffixOf=name=>({text:/([+-]\s*\d+(?:[.,]\d+)?)\s*%\s*$/.exec(name.text)?.[0]?.trim() || '',confidence:name.confidence,words:[],source:'shared-crop',...(name.reused?{reused:true}:{})});
+    const suffixOf=name=>({text:/([+-]\s*\d+(?:\s*[.,]\s*\d+)?)\s*%\s*$/.exec(name.text)?.[0]?.trim() || '',confidence:name.confidence,words:[],source:'shared-crop',...(name.reused?{reused:true}:{})});
     const batchRows=batchNames.map((name,i)=>{
       const percentage=batchPercentages?.[i] || suffixOf(name);
       return {...parseField(name.text,percentage.text).row,confidence:Math.min(name.confidence,percentage.confidence)};
@@ -334,7 +343,7 @@
     for(let i=0;i<5;i++) {
       const first=parseField(fields[i].name.text,fields[i].percentage.text);
       if(fields[i].conflict){first.row.conflict=true;first.warnings.push('Independent field views disagree. Verify this row.');first.valid=false;}
-      let selected=first;
+      let selected=first,chosenName=fields[i].name,chosenPercentage=fields[i].percentage;
       if(!first.valid || rows[i].confidence<80) {
         const alternativeName=await read(snapshot.crops[i+'-name'],'name','colour','7',snapshot.sharedPercentages?.[i]);
         const alternativePercentage=await read(snapshot.crops[i+'-percentage'],'percentage','colour');
@@ -346,8 +355,40 @@
           const conflict=percentage.conflict || first.row.conflict || candidate.row.conflict || first.row.known && candidate.row.known && first.row.name!==candidate.row.name ||
             first.row.value!==null && candidate.row.value!==null && first.row.value!==candidate.row.value;
           if(conflict){selected=first;selected.row.conflict=true;selected.warnings.push('Row '+(i+1)+': independent field reads disagree. Verify it.');}
-          else if(candidate.valid && name.confidence>=80 && percentage.confidence>=80){selected=candidate;rows[i].confidence=Math.min(name.confidence,percentage.confidence);}
+          else if(candidate.valid && name.confidence>=80 && percentage.confidence>=80){selected=candidate;chosenName=name;chosenPercentage=percentage;rows[i].confidence=Math.min(name.confidence,percentage.confidence);}
         }
+      }
+      if(autoFit && snapshot.template && snapshot.crops['fit-panel'] && !selected.row.conflict && (!selected.valid || rows[i].confidence<80)) {
+        for(const kind of ['name','percentage']) {
+          const existing=kind==='name'?chosenName:chosenPercentage;
+          if(kind==='name'?selected.row.known && !selected.row.assumed && existing.confidence>=80:selected.row.value!==null && existing.confidence>=80)continue;
+          const box=snapshot.template.rows[i][kind],frame=snapshot.crops['fit-panel'];
+          const bounds=R().autoFitBounds(box,i,snapshot.template.rows.map(row=>row[kind]));
+          const star=snapshot.template.rows[i].star;
+          bounds.x=Math.min(box.x,star.x+star.width);bounds.width=1-bounds.x;
+          const fitted=await R().autoFitField({box,bounds,budget:fitBudget,isClosed,dimensions:frame,
+            read:async region=>{
+              const rect=window.DNScannerCore.cropPixels(region,frame.width,frame.height),crop=document.createElement('canvas');
+              crop.width=rect.width;crop.height=rect.height;
+              try {
+                crop.getContext('2d').drawImage(frame,rect.x,rect.y,rect.width,rect.height,0,0,rect.width,rect.height);
+                const evidence=await read(crop,kind,'contrast','7',snapshot.sharedPercentages?.[i]);
+                recordFields(i,'auto-fit-attempt-'+kind,kind==='name'?evidence:null,kind==='percentage'?evidence:null);
+                // A growing name crop can include the beginning of its adjacent
+                // numeric field. Keep the raw glyphs; never use them as a value.
+                return kind==='name'?{...evidence,rawText:evidence.text,text:evidence.text.replace(/\s+[+-]\s*(?:\d+\s*)?$/,'')}:evidence;
+              }
+              finally {crop.width=crop.height=0;}
+            },accept:evidence=>{
+              if(evidence.conflict)return null;
+              const candidate=parseField(kind==='name'?evidence.text:chosenName.text,kind==='percentage'?evidence.text:chosenPercentage.text).row;
+              if(candidate.conflict || selected.row.known && candidate.known && candidate.name!==selected.row.name || selected.row.value!==null && candidate.value!==null && candidate.value!==selected.row.value)return false;
+              return kind==='name'?candidate.known && candidate.nameMatch?.method==='exact'?candidate.name:null:
+                candidate.value!==null && !R().signIssues([candidate]).length?candidate.value:null;
+            }});
+          if(fitted){if(kind==='name')chosenName=fitted;else chosenPercentage=fitted;selected=parseField(chosenName.text,chosenPercentage.text);retried=true;recordFields(i,'auto-fit-'+kind,chosenName,chosenPercentage);}
+        }
+        rows[i].confidence=Math.min(chosenName.confidence,chosenPercentage.confidence);
       }
       rows[i]={...selected.row,...(rerolls[i] || {}),confidence:rows[i].confidence};warnings.push(...selected.warnings);
       if(rows[i].confidence<80)warnings.push('Row '+(i+1)+': OCR field evidence is weak. Verify the name and percentage.');
@@ -399,7 +440,7 @@
     if(!fields || !source?.width || source.width*source.height*4>byteLimit)return null;
     let frozen;
     try {
-      frozen=snapshot({...fields,panelSource:source});
+      frozen=snapshot({...fields,panelSource:source},{autoFit:false});
       if(!frozen.valid)return null;
       let bytes=0;const images=[];
       const add=(id,canvas)=>{

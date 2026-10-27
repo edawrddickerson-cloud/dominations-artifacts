@@ -568,7 +568,7 @@
     let serviceOutcome='cancelled',serviceCalls=0,serviceInferences=0;
     try {
       timing('ocr-start');
-      const parsed=await owner.recognize(snapshot,{expectedRows:Number(el.rows.value),layout:el.layout.value,hall:el.hall.value,inferColours:el.infer.checked,categorySource,titleSource,fields:latestFields?{...latestFields,panelSource:snapshot}:null,knownTiers,
+      const parsed=await owner.recognize(snapshot,{expectedRows:Number(el.rows.value),layout:el.layout.value,hall:el.hall.value,inferColours:el.infer.checked,categorySource,titleSource,fields:latestFields?{...latestFields,panelSource:snapshot}:null,knownTiers,autoFit:!speculative,
         fieldReuse:!storage && !speculative?{epoch:JSON.stringify([session,itemId,fieldGeometry,request]),profile:readingProfile || DN.activeProfileId()}:null,
         isCurrent:()=>request===token && owner===engine && !!latestCanvas && !job.discarded && (!speculative || context===readContext())});
       timing('ocr-end');
