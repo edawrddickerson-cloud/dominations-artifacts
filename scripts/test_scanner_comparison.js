@@ -37,7 +37,7 @@ for(const type of ['Armor','Pottery']) {
   assert.equal(result.threshold,190,type+' benchmark uses the same defensive ratings');
 }
 assert.equal(core.compare(craft(11),{type:'Jewelry',hall:'main',owned:[],options:{...options,prefSortAxes:{offensive:false,defensive:true}}}).score,100,'Jewelry uses offensive ratings on a defensive base');
-assert.equal(core.compare(craft(11),{type:'Armor',hall:'war',owned:[],options:{...options,prefSortAxes:{offensive:false,defensive:true}}}).score,100,'War categories use offensive ratings even on a defensive base');
+assert.equal(core.compare(craft(11),{type:'Armor',hall:'war',owned:[],options:{...options,prefSortAxes:{offensive:false,defensive:true}}}).score,200,'mixed War categories respect the selected defensive axis');
 assert.equal(compare(-11,items).score,100,'negative percentage magnitudes match the existing scorer');
 assert.equal(compare(11,[owned('locked',20,{unlocked:false}),owned('unused',10)]).status,'better','all visible stats count even if locked');
 const partialOwned=owned('partial',10);partialOwned.scanned.rows[2].max=null;partialOwned.scanned.rows[2].level=null;

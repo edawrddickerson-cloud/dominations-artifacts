@@ -183,5 +183,15 @@
     return withRerollPotential({...base,axes:options.prefSortAxes,
       lines:base.lines.map(line=>({...line,preference:lineActiveScore(line,options.prefSortAxes)}))},{grade,eligible,...rerollPotential({hall,grade},options)});
   }
-  window.DNArtifactScoring = { score, perkLines, lineActiveScore, withRerollPotential, comparisonScore, rerollPotential };
+  function craftingAxes(selected,{hall,type}={}) {
+    const axes={offensive:selected?.offensive!==false,defensive:selected?.defensive!==false};
+    if(!axes.offensive && !axes.defensive)return axes;
+    const category=String(type || '').trim().replace(/^war[ -]/i,'').toLowerCase();
+    if(String(hall).toLowerCase()==='main') {
+      if(['armor','pottery'].includes(category))return {offensive:false,defensive:true};
+      if(['jewelry','jewellery'].includes(category))return {offensive:true,defensive:false};
+    }
+    return axes;
+  }
+  window.DNArtifactScoring = { score, perkLines, lineActiveScore, withRerollPotential, comparisonScore, rerollPotential, craftingAxes };
 })();

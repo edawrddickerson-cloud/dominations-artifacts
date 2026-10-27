@@ -100,6 +100,7 @@
   }
   function invalidate(message="Previous result is no longer current.",{preserveDisplay=false}={}) {
     discardSpeculation('invalidated');
+    const retained=!storage && preserveDisplay && resultProfile===window.DNStoredArtifacts?.collectionKey()?(best || result):null;
     itemArtwork=null;
     if(!preserveDisplay || storage){displayedScore=null;displayedKeeper=null;displayedCapture=null;}
     frames.clear();signatures=[];hash=null;readHash=null;
@@ -108,7 +109,7 @@
     el.correct.textContent="";
     say(message); if(el.accept)el.accept.disabled=true;
     window.DNStorageScanner?.update(null,false);
-    attempts=0;settled=false;best=null;anchor=null;progress('idle','Waiting for an artifact');
+    attempts=0;settled=false;best=retained;if(!retained)anchor=null;progress('idle','Waiting for an artifact');
   }
   function reset() {
     storageTypeOverride=null;
@@ -278,6 +279,9 @@
         options:{...base,ratingOf:strategy.context.ratingOf,strategyId:strategy.id,revision}}))};
   }
   function score() {
+    if(!storage && resultProfile && resultProfile!==window.DNStoredArtifacts?.collectionKey()){
+      resultProfile=null;invalidate('Profile changed. Read the current artifact again.');return;
+    }
     const hallStatus=get('hall-label');
     if(!storage && hallStatus)hallStatus.textContent=(result?.hall || el.hall.value)==='war'?'War item':'Main (Multiplayer) item';
     if(!storage && hallStatus)hallStatus.textContent+=' · '+({
@@ -361,9 +365,9 @@
           previewScore=window.DNScannerComparisonCore?.previewRowScore(perk,previewOpts) ?? null;
         }
         const contribution=targetContext?.contributions?.[index];
-        const excluded=!!targetContext && contribution?.included===false && !!perk?.known;
+        const excluded=!!targetContext && (contribution?.included===false || contribution?.active===false) && !!perk?.known;
         const multiplier=excluded?0:targetContext?contribution?.weight:acceptedScore!=null && maxMagnitude?acceptedScore/maxMagnitude:null;
-        const multiplierMarkup=editingRatings && contribution?.included?'<input type="number" class="scanner-rating-input" min="0" max="10" step="1" data-target-rating-row="'+index+'" data-target-id="'+DN.esc(targetContext.id)+'" data-perk="'+DN.esc(contribution.name)+'" value="'+multiplier+'" aria-label="'+DN.esc(contribution.name+': shared rating multiplier')+'" />':multiplier!=null?String(multiplier):'&mdash;';
+        const multiplierMarkup=editingRatings && contribution?.included && contribution?.active!==false?'<input type="number" class="scanner-rating-input" min="0" max="10" step="1" data-target-rating-row="'+index+'" data-target-id="'+DN.esc(targetContext.id)+'" data-perk="'+DN.esc(contribution.name)+'" value="'+multiplier+'" aria-label="'+DN.esc(contribution.name+': shared rating multiplier')+'" />':multiplier!=null?String(multiplier):'&mdash;';
         const provisional=!excluded && (targetContext?!!contribution?.uncertain:previewScore!==null);
         const rowScore=excluded?0:targetContext?contribution?.score ?? null:acceptedScore ?? previewScore;
         const scoreTitle=targetContext?(contribution?.included?targetContext.label+(rowScore!==null?' · Max '+(Math.abs(perk.value)+9)+'% × '+multiplier+' = '+rowScore:''): 'Not included in '+targetContext.label):provisional?'Provisional score for the best current reading; excluded from the item subtotal. '+window.DNScannerComparisonCore.scoreExclusion(perk):rowScore===null?(window.DNScannerComparisonCore?.scoreExclusion(perk) || (!opts?'Perk ratings are still loading':editing?'Apply the corrected values to score this row':'Waiting for a scoring result matching this row')):perk?.inferred?'Score uses the displayed percentage, inferred from text colour':scored?.estimated?'Estimated maximum percentage times perk rating':'';
@@ -547,6 +551,9 @@
   }
   async function read({speculative=false}={}) {
     if(!ready || busy || !latestCanvas || inlineEditing)return;
+    if(!storage && resultProfile && resultProfile!==window.DNStoredArtifacts?.collectionKey()){
+      resultProfile=null;invalidate('Profile changed. Reading the current artifact again.');
+    }
     const request=token,source=latestCanvas,readingProfile=window.DNStoredArtifacts?.collectionKey(),readingSession=session,readingItemId=itemId;
     const timing=stage=>{
       const point={stage,time:performance.now(),session:readingSession,itemId:readingItemId,request,source:serviceSource};
@@ -582,7 +589,7 @@
           {...row,rerollEligible:null,rerollConfidence:'unknown',rerollConflict:true,rerollEvidence:{reason:'transition'}});
       }
     }
-    let previous=resultCurrent?result:best;
+    let previous=!storage && resultProfile!==readingProfile?null:resultCurrent?result:best;
     const knownTiers=(previous?.rows || []).map(row=>({...row,hall:previous?.artifact?.hall || previous?.hall || el.hall.value}));
     const job={snapshot,categorySource,speculative,witness,context,sampleRevision,timing};
     if(speculative)job.validation=new Promise(resolve=>{job.resolveValidation=resolve;});
@@ -595,7 +602,7 @@
       timing('ocr-start');
       const parsed=await owner.recognize(snapshot,{expectedRows:Number(el.rows.value),layout:el.layout.value,hall:el.hall.value,manualType:storage?manualStorageType():null,inferColours:el.infer.checked,categorySource,titleSource,fields:latestFields?{...latestFields,panelSource:snapshot}:null,knownTiers,autoFit:!speculative,
         fieldReuse:!storage && !speculative?{epoch:JSON.stringify([session,itemId,fieldGeometry,request]),profile:readingProfile || DN.activeProfileId()}:null,
-        isCurrent:()=>request===token && owner===engine && !!latestCanvas && !job.discarded && (!speculative || context===readContext())});
+        isCurrent:()=>request===token && owner===engine && readingProfile===window.DNStoredArtifacts?.collectionKey() && !!latestCanvas && !job.discarded && (!speculative || context===readContext())});
       timing('ocr-end');
       serviceCalls=parsed.ocrCalls || 0;serviceInferences=(parsed.rows || []).filter(row=>row.inferred || row.assumed).length;
       if(speculative){
@@ -603,7 +610,7 @@
         if(context!==readContext() || !liveCapture || document.hidden || editing || !(el.auto.checked || window.DNScannerCollection?.isEnabled()))return;
         temporal=job.approvedTemporal;artwork=job.artwork;
       }
-      if(request!==token || owner!==engine || storage && readingProfile!==window.DNStoredArtifacts?.collectionKey()){if(storage && latestCanvas && !editing)say(readingProfile!==window.DNStoredArtifacts?.collectionKey()?'Profile changed while reading. Read the current artifact again.':'Read cancelled because the watched fields changed. Check Field calibration and try Read Artifact again.');return;}
+      if(request!==token || owner!==engine || readingProfile!==window.DNStoredArtifacts?.collectionKey()){if(storage && latestCanvas && !editing)say(readingProfile!==window.DNStoredArtifacts?.collectionKey()?'Profile changed while reading. Read the current artifact again.':'Read cancelled because the watched fields changed. Check Field calibration and try Read Artifact again.');return;}
       if(storage && el.layout.value==='storage' && ![5,6].includes(parsed.expectedRows) && parsed.artifact?.type)parsed.expectedRows=window.DNStorageRecognition.rowsForType(parsed.artifact.type);
       if(storage && el.layout.value==='storage' && [5,6].includes(parsed.expectedRows)) {
         if(rowCount()!==parsed.expectedRows){el.rows.value=String(parsed.expectedRows);best=null;result=null;confirmed=false;}
@@ -618,10 +625,9 @@
       if(window.DNStoredArtifacts)parsed.rows=window.DNStoredArtifacts.backfillItem({hall:parsed.hall || el.hall.value,type:parsed.artifact?.type,freshCraft:!storage,rows:parsed.rows}).rows;
       if(window.DNArtifactStatContext)parsed.rows=window.DNArtifactStatContext.annotate(parsed,{freshCraft:!storage}).rows;
       window.DNScannerCalibration?.report(parsed.recognitionPath,parsed.calibrationReason);
-      if(!storage && parsed.hall && parsed.hall!==el.hall.value){el.hall.value=parsed.hall;window.DNPrimaryFilters?.setHall(parsed.hall);}
       parsed.temporal=temporal;
       const useful=recognition.coverage(parsed.rows,rowCount()).total;
-      if(!storage)best=recognition.retainCraftRead(previous,parsed,rowCount());
+      if(!storage)best=recognition.retainCraftRead(previous,parsed,rowCount(),{sameEncounter:true});
       else if(!best)best=parsed;
       else if(best.hall && parsed.hall && best.hall!==parsed.hall)best=parsed;
       else if(!best.valid)best=recognition.combineReads(best,parsed,rowCount());
@@ -632,6 +638,7 @@
       if(useful===0 && !parsed.rows.some(row=>row.known) && !best?.rows.some(row=>row.known))best=null;
       if(parsed.unlocked?.count===3)best={...(best || parsed),unlocked:parsed.unlocked};
       result=best;resultProfile=readingProfile;confirmed=!!result?.valid;resultCurrent=true;editing=false;
+      if(!storage && result?.hall && result.hall!==el.hall.value){el.hall.value=result.hall;window.DNPrimaryFilters?.setHall(result.hall);}
       if(storage && result){result=applyStorageName(result);best=result;}
       if(!storage && result){
         itemArtwork=artwork;
@@ -719,7 +726,7 @@
       window.DNStorageScanner?.update(null,false);
     });
   }
-  el.read.addEventListener("click",()=>{if(inlineEditing)return;editing=false;attempts=0;settled=false;best=null;return startRead();});
+  el.read.addEventListener("click",()=>{if(inlineEditing)return;editing=false;attempts=0;settled=false;if(storage)best=null;return startRead();});
   function autofillCraftingRow(target) {
     if(storage)return;
     const field=target?.closest?.('.scanner-edit-row');

@@ -276,6 +276,15 @@ assert.equal(reconcile(missingFifth,physicalRows).rows.length,5,'keep physical r
 for(let count=1;count<=3;count++)assert.equal(recognition.classifyStars(Array.from({length:5},(_,i)=>i<count?.8:.01)).count,count);
 for(const fills of [[0,0,0,0,0],[.8,.8,.8,.8,0],[.8,0,.8,0,0],[.2,0,0,0,0]])assert.equal(recognition.classifyStars(fills).count,null);
 const inferredInput={valid:false,warnings:['Unreadable signed percentage'],rows:Array.from({length:5},()=>({name:'Invading APC Hitpoints',known:true,value:null,raw:'Invading APC Hitpoints «6%',hasPercent:true}))};
+const completeCandidate={valid:false,warnings:[],hall:'main',hallSource:'hall-colour',artifact:{type:'Weapon'},rows:Array.from({length:5},()=>({name:'Heavy Tank Damage',value:11,known:true,hasPercent:true,confidence:90}))};
+const retainedNameOnly={...completeCandidate,rows:completeCandidate.rows.map(row=>({...row,name:'Bomber Damage',value:null,confidence:99}))};
+assert.equal(categoryRecognition.retainCraftRead(completeCandidate,retainedNameOnly).rows[0].value,11,'a more confident name-only retry cannot erase an accepted percentage');
+const typed={...completeCandidate,rows:completeCandidate.rows.map(row=>({...row,nameSource:'manual',inferred:true,confidence:50}))};
+const strongerOther={...completeCandidate,rows:completeCandidate.rows.map(row=>({...row,name:'Bomber Damage',confidence:99}))};
+assert.equal(categoryRecognition.retainCraftRead(typed,strongerOther).rows[0].name,'Heavy Tank Damage','OCR cannot overwrite an explicitly corrected name');
+const strongerValue={...completeCandidate,rows:completeCandidate.rows.map(row=>({...row,value:6,confidence:99}))};
+assert.equal(categoryRecognition.retainCraftRead(typed,strongerValue).rows[0].value,6,'a stronger percentage can improve the same manually named stat');
+assert.equal(categoryRecognition.retainCraftRead(typed,strongerValue).rows[0].nameSource,'manual','manual-name provenance survives stronger numeric evidence');
 const colours=['neutral','green','blue','neutral','green'];
 const mainInferred=recognition.inferColourValues(inferredInput,colours,'main');
 assert.equal(JSON.stringify(mainInferred.rows.map(row=>row.value)),JSON.stringify([-1,-6,-11,-1,-6]));

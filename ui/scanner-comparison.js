@@ -20,20 +20,8 @@
     if(row.scoreExcluded)reasons.push('Row was excluded from scoring');
     return reasons.join('; ');
   }
-  function craftOptions(options,{hall,type,rows}={}) {
-    if(options?.targetScoring)return options;
-    if(!options || !options.prefSortAxes.offensive && !options.prefSortAxes.defensive)return options;
-    const category=typeName(type);
-    if(hallName(hall)==='Main' && category==='weapon')return options;
-    let axis=hallName(hall)==='War'?'offensive':['armor','pottery'].includes(category)?'defensive':['jewelry','jewellery'].includes(category)?'offensive':null;
-    // An unread Main category could belong to either role. Show the stronger
-    // complete total, while each category's actual comparison uses its own role.
-    if(!axis && rows?.length && rows.every(row=>row.name && Number.isFinite(row.value))) {
-      const roles=[null,'offensive','defensive'];
-      const totals=roles.map(role=>scoreCraftRows(rows,role?{...options,prefSortAxes:{offensive:role==='offensive',defensive:role==='defensive'}}:options,hall,type).potentialPreference);
-      axis=roles[totals.indexOf(Math.max(...totals))];
-    }
-    return axis?{...options,prefSortAxes:{offensive:axis==='offensive',defensive:axis==='defensive'}}:options;
+  function craftOptions(options,{hall,type}={}) {
+    return options?{...options,prefSortAxes:window.DNArtifactScoring.craftingAxes(options.prefSortAxes,{hall,type})}:options;
   }
   function scoreCraftRows(rows,options,hall,type) {
     return window.DNArtifactScoring.comparisonScore(statRow(rows.map(perk=>scoreable(perk)?{...perk,value:Math.sign(perk.value)*(Math.abs(perk.value)+9)}:{name:'',value:0})),options,
@@ -348,7 +336,7 @@
     const result=confirmed && latest?{...latest,rows:captureResult?.rows || latest.rows}:null;
     const available=!error && loadedProfile===DN.activeProfileId() && (!loading || loadedProfile===DN.activeProfileId());
     const rareIds=Object.keys(state.rareCards || {}),selected=[...state.selected,...rareIds];
-    const evaluate=(value,ready=available)=>service && selected.length?service.evaluate(value,{...state,selected,type:type.value,hall:hall.value,owned,canonPerk:options?.canonPerk,available:!!value && ready}):[];
+    const evaluate=(value,ready=available)=>service && selected.length?service.evaluate(value,{...state,selected,type:type.value,hall:hall.value,owned,canonPerk:options?.canonPerk,prefSortAxes:options?.prefSortAxes,available:!!value && ready}):[];
     const allResults=evaluate(result);
     const rareResults=allResults.filter(item=>item.rare);
     const bestRare=[...rareResults].sort((a,b)=>Number(b.hit)-Number(a.hit)||
@@ -372,11 +360,12 @@
     let focusHit=hits.length>0;
     const benchmark=document.getElementById('scanner-benchmark');
     const keeper=isUnlockedKeeper(keeperResult),count=keeperResult?.unlocked?.count;
-    const row=(name,target,score,hit,attribute='')=>{
-      const content='<strong>'+DN.esc(name)+'</strong><span class="scanner-focus-target">'+DN.esc(target)+'</span><b class="scanner-focus-score">'+DN.esc(score)+'</b>';
+    const row=(name,target,score,hit,attribute='',second=null)=>{
+      const evidence=second?' title="'+DN.esc('Second owned: '+second.name+' · '+second.score)+'"':'';
+      const content='<strong>'+DN.esc(name)+'</strong><span class="scanner-focus-target"'+evidence+'>'+DN.esc(target)+'</span><b class="scanner-focus-score">'+DN.esc(score)+'</b>';
       return '<li '+attribute+' class="'+(hit?'purpose-hit':'purpose-miss')+'">'+(attribute.startsWith('data-purpose-result=')?'<button type="button" class="scanner-target-rating-open" aria-pressed="false">'+content+'</button>':content)+'</li>';
     };
-    let lines=results.map(item=>row(item.label,item.benchmarkAvailable?(item.threshold!==null?'> '+item.threshold:item.incomplete?'—':'Open slot'):'—',item.score===null?'—':(item.uncertain?'~':'')+item.score,item.hit,'data-purpose-result="'+DN.esc(item.id)+'"')).join('');
+    let lines=results.map(item=>row(item.label,item.benchmarkAvailable?(item.threshold!==null?'> '+item.threshold:item.incomplete?'—':'Open slot'):'—',item.score===null?'—':(item.uncertain?'~':'')+item.score,item.hit,'data-purpose-result="'+DN.esc(item.id)+'"',item.second)).join('');
     if(!selected.length){
       const strategies=[...(options?.strategyOptions || [])];
       if(options && !strategies.some(strategy=>strategy.id===options.strategyId))strategies.unshift({id:options.strategyId,name:options.strategyName || 'Active strategy',options});

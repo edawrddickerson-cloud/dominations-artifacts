@@ -92,6 +92,8 @@ async function main() {
     let expression = fs.readFileSync(path.join(root,collectionComparison?'tests/scanner/collection-comparison-browser.js':process.argv.includes('--primary-filters')?'tests/scanner/filters-browser.js':glance?'tests/scanner/glance-browser.js':storageLayout?'tests/scanner/storage-layout-browser.js':process.argv.includes('--navigation')?'tests/scanner/navigation-browser.js':inventory?'tests/scanner/inventory-browser.js':coverage?'tests/scanner/storage-coverage-browser.js':storage?'tests/scanner/storage-browser.js':uiSmoke?'tests/scanner/ui-browser.js':'tests/scanner/fixture-browser.js'),'utf8');
     if(process.argv.includes('--headers'))expression=fs.readFileSync(path.join(root,'tests/scanner/headers-browser.js'),'utf8');
     if(process.argv.includes('--war-colours'))expression=fs.readFileSync(path.join(root,'tests/scanner/war-colours-browser.js'),'utf8');
+    if(process.argv.includes('--scoring-axes'))expression=fs.readFileSync(path.join(root,'tests/scanner/scoring-axes-browser.js'),'utf8');
+    if(process.argv.includes('--retention'))expression=fs.readFileSync(path.join(root,'tests/scanner/retention-browser.js'),'utf8');
     if(process.argv.includes('--profile-delete'))expression=fs.readFileSync(path.join(root,'tests/scanner/profile-delete-browser.js'),'utf8');
     if(process.argv.includes('--inventory-tiers'))expression='window.DNInventoryTierOnly=true;\n'+expression;
     if(storagePassive)expression=fs.readFileSync(path.join(root,'tests/scanner/storage-passive-browser.js'),'utf8');

@@ -382,8 +382,8 @@
     if(!changed && !conflicts)return first;
     return {...retry,rows,valid:false,warnings:[...new Set([...first.warnings,...retry.warnings]),conflicts?'OCR reads disagree about perk names or values. Verify the conflicting rows.':'Combined the clearest compatible rows from separate reads. Verify these rows.']};
   }
-  function retainCraftRead(first,retry,expectedRows=5) {
-    if(!first || first.hall && retry.hall && first.hall!==retry.hall || first.artifact?.type && retry.artifact?.type && first.artifact.type!==retry.artifact.type)return retry;
+  function retainCraftRead(first,retry,expectedRows=5,{sameEncounter=false}={}) {
+    if(!first || !sameEncounter && (first.hall && retry.hall && first.hall!==retry.hall || first.artifact?.type && retry.artifact?.type && first.artifact.type!==retry.artifact.type))return retry;
     const usable=row=>row?.known && row.name && Number.isFinite(row.value) && row.hasPercent!==false && !row.conflict && !row.tierConflict && !row.outOfRange && !row.scoreExcluded && !row.estimated;
     // A suggested or disputed reading still supplies a display candidate. Its
     // uncertainty stays attached; weaker retries must not erase it or flicker
@@ -401,8 +401,9 @@
     const rows=Array.from({length:expectedRows},(_,index)=>{
       const prior=first.rows[index],next=retry.rows[index];
       if(!displayable(prior))return next || prior || {name:'',value:null,known:false,hasPercent:false};
-      const lostPercentage=next?.name===prior.name && Number.isFinite(prior.value) && !Number.isFinite(next?.value);
-      if(displayable(next) && !lostPercentage && (!usable(prior) || usable(next)) && stronger(next,prior))return next;
+      const lostPercentage=Number.isFinite(prior.value) && prior.hasPercent!==false && (!Number.isFinite(next?.value) || next?.hasPercent===false);
+      const manualName=prior.nameSource==='manual';
+      if(displayable(next) && !lostPercentage && (!manualName || next.name===prior.name) && (!usable(prior) || usable(next)) && stronger(next,prior))return manualName?{...next,nameSource:'manual'}:next;
       if(!usable(next) || next.name!==prior.name || next.value!==prior.value)retained=true;
       return prior;
     });

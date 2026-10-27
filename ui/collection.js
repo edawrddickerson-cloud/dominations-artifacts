@@ -510,10 +510,7 @@
     const scored={};
     comparisonPerks(row,mode).forEach(perk=>{scored['perk_'+perk.index+'_name']=perk.name;scored['perk_'+perk.index+'_base']=String(comparisonValue(row,perk,mode) ?? '');});
     let axes={offensive:document.getElementById('header-off').getAttribute('aria-pressed')==='true',defensive:document.getElementById('header-def').getAttribute('aria-pressed')==='true'};
-    if(crafted(row)) {
-      if(row.hall==='War' || row.grade==='Jewelry')axes={offensive:true,defensive:false};
-      else if(['Armor','Pottery'].includes(row.grade))axes={offensive:false,defensive:true};
-    }
+    if(crafted(row))axes=window.DNArtifactScoring.craftingAxes(axes,{hall:row.hall,type:row.grade});
     const result=window.DNArtifactScoring.comparisonScore(scored,{canonPerk,scoreMode:'combined',
       prefSortAxes:axes,ratingOf:ratingContext(strategyId).ratingOf},
       {hall:row.hall,grade:row.grade,eligible:comparisonPerks(row,mode).map(perk=>mode==='all'?(row.scanned?.rows[perk.index-1]?.rerollEligible ?? (crafted(row)?null:false)):false)});
