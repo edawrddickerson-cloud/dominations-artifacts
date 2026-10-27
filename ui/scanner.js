@@ -17,7 +17,7 @@
   const calibration=window.DNScannerCalibration;
   const captureSession=window.parent && window.parent!==window?window.parent.DNScannerSession:null;
   const nativeFrame=calibration?document.createElement('canvas'):null;
-  let stream = null, track = null, image = null, region = null, drag = null;
+  let stream = null, track = null, image = null, region = null, drag = null, manualRegion = false;
   let trackListeners = [];
   let generation = 0, timer = null, selecting = false, pending = false, locatePending = false;
   let dimensions = "", lastSample = 0, lastProgress = 0, lastMediaTime = -1;
@@ -52,7 +52,7 @@
     context.clearRect(0, 0, canvas.width, canvas.height);
   }
   function clearRegion() {
-    region = null; drag = null;
+    region = null; drag = null; manualRegion = false;
     blank(el.crop, cropContext);
     el.freshness.textContent = "No calibrated region.";
     window.DNScannerReading?.update(el.crop,{session:generation,current:false});
@@ -100,7 +100,9 @@
     const width = Math.round(size.width * scale), height = Math.round(size.height * scale);
     if (el.frame.width !== width || el.frame.height !== height) { el.frame.width = width; el.frame.height = height; }
     frameContext.drawImage(source, 0, 0, width, height);
-    if(locatePending){locatePending=false;if(findPanel())return true;}
+    // A connection can start between crafts. Keep looking until a panel appears,
+    // without replacing a selection while the user is drawing it.
+    if(locatePending || (!region && !drag && !window.DNStorageRecognition)){locatePending=false;if(findPanel())return true;}
     let fieldState=null,focusPanel;
     const storage=!!window.DNStorageRecognition;
     if(calibration) {
@@ -108,8 +110,8 @@
       nativeFrame.getContext('2d').drawImage(source,0,0,size.width,size.height);
       const layout=document.getElementById('scanner-layout')?.value || 'panel';
       if(!storage)focusPanel=window.DNScannerRecognition?.detectPanel(nativeFrame);
-      const candidate=storage && layout==='storage'?region:layout==='panel'?(storage?window.DNScannerRecognition?.detectPanel(nativeFrame):focusPanel):null;
-      if(calibration.hasTemplate && candidate && !selecting && !calibration.editing) {
+      const candidate=storage && layout==='storage'?region:layout==='panel'?(storage?window.DNScannerRecognition?.detectPanel(nativeFrame):manualRegion && !selecting?region:focusPanel):null;
+      if(calibration.hasTemplate && candidate && !manualRegion && !selecting && !calibration.editing) {
         const moved=!region || ['x','y','width','height'].some(key=>Math.abs(region[key]-candidate[key])>.002);
         if(moved){region=candidate;window.DNScannerReading?.invalidate('Panel moved or resized. Checking its saved field boxes.',{preserveDisplay:true});}
       }
@@ -129,7 +131,7 @@
       el.meta.textContent = "Source " + nextDimensions + " · crop " + crop.width + "×" + crop.height + " pixels";
       if(!storage && !calibration)focusPanel=window.DNScannerRecognition?.detectPanel(el.frame);
       const focusObserved=!storage && !selecting && !calibration?.editing && !document.hidden && (image || !track?.muted && el.video.currentTime!==lastMediaTime);
-      window.DNScannerReading?.update(el.crop, {session:generation,live:!!stream,current:!selecting && !fieldState?.paused && !document.hidden && (image || !track?.muted),itemPresent:focusObserved && focusPanel!==undefined?!!focusPanel:undefined,categorySource:el.frame,panelRegion:region,fields:fieldState?.fields || null});
+      window.DNScannerReading?.update(el.crop, {session:generation,live:!!stream,current:!selecting && !fieldState?.paused && !document.hidden && (image || !track?.muted),itemPresent:focusObserved && focusPanel!==undefined && !manualRegion?!!focusPanel:undefined,categorySource:el.frame,panelRegion:region,fields:fieldState?.fields || null});
     } else el.meta.textContent = "Source " + nextDimensions + " pixels · select the complete artifact panel";
     return true;
   }
@@ -209,12 +211,12 @@
       endCapture("Not connected", message);
     }
   }
-  function setRegion(next) {
+  function setRegion(next,{manual=true}={}) {
     if (!core.validRegion(next)) { status("Invalid region", "Enter percentages within the source; width and height must be positive and fit inside it."); return; }
     const size = sourceSize(), crop = core.cropPixels(next, size.width, size.height);
     if (!crop || crop.width < 32 || crop.height < 32) { status("Region too small", "Select a larger panel region. Readable game text is required for later recognition."); return; }
     window.DNScannerReading?.invalidate('Panel selection changed. Checking the selected artifact.');
-    region = next; selecting = false; drag = null;
+    region = next; manualRegion = manual; selecting = false; drag = null;
     for (const key of ["x", "y", "width", "height"]) el[key].value = String(Math.round(region[key] * 10000) / 100);
     controls(); renderFrame();
     status(image ? "Local screenshot preview" : "Region preview active", "Check the panel crop. All visible perk rows count, including locked and duplicate rows.");
@@ -238,7 +240,7 @@
     if(!candidate)return false;
     const layout=document.getElementById("scanner-layout");if(layout)layout.value=storage?"storage":"panel";
     window.DNScannerReading?.invalidate("Panel selection changed. Reading the new region.");
-    setRegion(candidate);return true;
+    setRegion(candidate,{manual:false});return true;
   }
   const find=document.getElementById("scanner-find");
   find?.addEventListener("click",()=>{if(!findPanel())status("Panel not found","Select the full panel manually, or choose Text rows only and select the perk text without headings or stars.");});

@@ -13,16 +13,20 @@ const deferred = () => { let resolve, reject; const promise = new Promise((a, b)
 function target() {
   return { listeners: {}, addEventListener(name, fn) { this.listeners[name] = fn; }, fire(name, event = {}) { return this.listeners[name]?.(event); } };
 }
-function harness() {
-  const elements = {}, timers = new Map(), captureRequests = [], bitmapRequests = [];
+function harness({calibrated=false}={}) {
+  const elements = {}, timers = new Map(), captureRequests = [], bitmapRequests = [], readings=[];
+  const detection={panel:null},store=new Map();
   let timerId = 0;
-  for (const id of ['connect', 'stop', 'source', 'select', 'retry', 'status', 'message', 'freshness', 'meta', 'frame', 'crop', 'video', 'file', 'apply', 'x', 'y', 'width', 'height','image-refresh']) {
+  const ids=['connect', 'stop', 'source', 'select', 'retry', 'status', 'message', 'freshness', 'meta', 'frame', 'crop', 'video', 'file', 'apply', 'x', 'y', 'width', 'height','image-refresh'];
+  if(calibrated)ids.push('layout','rows',...['enabled','edit','reset','status','editor','field','canvas','x','y','width','height','optional-label','optional','preview','preview-label','feedback','save','cancel','fit'].map(id=>'fields-'+id));
+  for (const id of ids) {
     const draws = [];
     elements[id] = Object.assign(target(), {
       value: '', files: [], textContent: '', disabled: false, width: 640, height: 360,
       attributes: {}, classList: { toggle() {} }, draws,
       setAttribute(k, v) { this.attributes[k] = v; },
-      getContext() { return { clearRect() {}, drawImage(...args) { draws.push(args); }, strokeRect() {} }; },
+      getContext() { return { clearRect() {}, drawImage(...args) { draws.push(args); }, strokeRect() {},fillRect(){},fillText(){},measureText(){return {width:50};} }; },
+      replaceChildren(...children){this.children=children;},
       getBoundingClientRect() { return { left: 0, top: 0, width: 640, height: 360 }; },
       focus() {}, setPointerCapture() {}, hasPointerCapture() { return false; }, releasePointerCapture() {},
     });
@@ -31,16 +35,25 @@ function harness() {
   Object.assign(elements.video, { videoWidth: 1920, videoHeight: 1080, readyState: 2, currentTime: 1, srcObject: null, pauses: 0,
     pause() { this.pauses++; }, async play() {} });
   const window = Object.assign(target(), { isSecureContext: true });
-  const document = Object.assign(target(), { hidden: false, getElementById: id => elements[id.replace('scanner-', '')] });
+  const document = Object.assign(target(), { hidden: false, getElementById: id => elements[id.replace('scanner-', '')],createElement:()=>({...elements.frame}) });
+  window.dispatchEvent=event=>window.fire(event.type);
   const context = { window, document, navigator: { mediaDevices: { getDisplayMedia(options) { const request = deferred(); captureRequests.push({ ...request, options }); return request.promise; } } },
-    performance: { now: () => 1000 }, Date,
+    performance: { now: () => 1000 }, Date,Event:class {constructor(type){this.type=type;}},
+    localStorage:{getItem:key=>store.get(key) || null,setItem:(key,value)=>store.set(key,value),removeItem:key=>store.delete(key)},
     setTimeout(fn) { const id = ++timerId; timers.set(id, fn); return id; }, clearTimeout(id) { timers.delete(id); },
     createImageBitmap(file) { const request = deferred(); bitmapRequests.push({ ...request, file }); return request.promise; },
   };
   vm.createContext(context);
   vm.runInContext(read('scanner-core.js'), context);
+  if(calibrated){
+    elements.layout.value='panel';elements.rows.value='5';elements['fields-enabled'].checked=true;
+    vm.runInContext(read('scanner-regions.js'),context);
+    window.DNScannerRecognition={detectPanel:()=>detection.panel};
+    window.DNScannerReading={update:(canvas,state)=>readings.push(state),reset(){},invalidate(){}};
+    vm.runInContext(read('scanner-calibration.js'),context);
+  }
   vm.runInContext(read('scanner.js'), context);
-  return { elements, timers, captureRequests, bitmapRequests, window, document, core: window.DNScannerCore };
+  return { elements, timers, captureRequests, bitmapRequests, window, document, core: window.DNScannerCore,detection,readings };
 }
 function capture() {
   function track(kind) { return Object.assign(target(), { kind, readyState: 'live', muted: false, stops: 0, stop() { this.stops++; this.readyState = 'ended'; } }); }
@@ -111,6 +124,42 @@ async function main() {
   assert.equal(stopped.closed, 1); assert.equal(e.status.textContent, 'Disconnected');
   const closing = await start(h); h.window.fire('pagehide');
   assert.equal(closing.video.stops, 1); assert.equal(h.timers.size, 0);
+
+  const recovery=harness({calibrated:true}),r=recovery.elements;
+  await start(recovery);
+  assert.equal(r['fields-edit'].disabled,true,'no calibration without a panel');
+  recovery.detection.panel={x:.2,y:.2,width:.5,height:.4};
+  r.video.currentTime++;
+  [...recovery.timers.values()].at(-1)();
+  assert.equal(r.select.attributes['aria-pressed'],'false','a panel appearing after connection is selected automatically');
+  assert.equal(r['fields-edit'].disabled,false,'late automatic detection enables calibration');
+  assert.equal(recovery.readings.at(-1).current,true);
+  assert.equal(recovery.readings.at(-1).itemPresent,true);
+  r['fields-edit'].fire('click');r['fields-save'].fire('click');
+  assert.equal(recovery.window.DNScannerCalibration.hasTemplate,true);
+  recovery.detection.panel=null;r.retry.fire('click');
+  assert.equal(recovery.readings.at(-1).current,false,'automatic anchor loss still pauses saved-field reads');
+  assert.equal(r['fields-edit'].disabled,true);
+  r.select.fire('click');
+  r.frame.fire('pointerdown',{button:0,clientX:128,clientY:72,pointerId:1});
+  r.frame.fire('pointerup',{clientX:448,clientY:216,pointerId:1});
+  assert.equal(r['fields-edit'].disabled,false,'manual drawing enables calibration when detection misses');
+  assert.equal(recovery.readings.at(-1).current,true,'manual drawing resumes reads with saved fields');
+  assert.ok(recovery.readings.at(-1).fields,'saved fields resolve against the manual anchor');
+  assert.equal(recovery.readings.at(-1).itemPresent,undefined,'a missed automatic border cannot veto an explicit selection');
+  recovery.detection.panel={x:.1,y:.1,width:.6,height:.5};r.retry.fire('click');
+  assert.equal(recovery.readings.at(-1).fields.panel.x,.2,'automatic detection cannot replace an explicit calibration anchor');
+  recovery.detection.panel=null;
+  r['fields-edit'].fire('click');
+  assert.equal(r['fields-editor'].hidden,false,'manual anchor opens the real field editor');
+  assert.equal(recovery.readings.at(-1).current,false,'field editing still pauses reads');
+  r['fields-cancel'].fire('click');
+  assert.equal(recovery.readings.at(-1).current,true,'cancel resumes the manually anchored read');
+  r.video.videoWidth=1280;r.video.videoHeight=720;r.retry.fire('click');
+  assert.equal(r['fields-edit'].disabled,true,'dimension changes discard the manual anchor');
+  r.stop.fire('click');await start(recovery);
+  assert.equal(r['fields-edit'].disabled,true,'manual anchor cannot leak into another capture');
+  r.stop.fire('click');
   console.log('Scanner geometry, permission, capture cleanup, calibration, and local decode races passed.');
 }
 main().catch(error => { console.error(error); process.exitCode = 1; });

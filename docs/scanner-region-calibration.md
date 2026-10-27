@@ -8,6 +8,8 @@ Invariants: Pixels stay local and temporary. Only one coordinate template persis
 
 Open **Crafting Scanner → Scanner setup**, connect the game or load a local screenshot, then select **Calibrate Fields** after the gold panel is found. The editor pauses reading on a frozen frame.
 
+The crafting scanner keeps looking when sharing starts before an artifact panel appears. If detection misses the border, **Select Region** or **Apply Region** supplies an explicit panel anchor for reading and field calibration. Select the complete benefits panel. This manual anchor stays fixed until another selection, **Refresh Image Detection**, a source-size change or capture cleanup; it does not follow panel movement automatically. An automatic border miss cannot veto the explicit selection. Saved boxes still undergo the same shape and source-boundary checks.
+
 Choose each row's name, signed percentage and star, plus optional Category and Hall colour fields. Draw a box, drag its interior to move it, or drag a corner to resize it. Numeric inputs provide precise keyboard editing. Every selected field has a crop preview. Include the full sign and percent character; leave room for tall letters, long names and multi-digit percentages. Category/Hall coordinates can extend outside the panel. For Hall colour, sample a plain part of the Artifact Benefits ribbon: **red = Main, blue = War**. Existing saved coordinates remain usable. With no Hall box, the scanner samples the ribbon inside the anchored panel. An unclear or mixed colour retains the manually selected Hall.
 
 **Save Field Boxes** stores one template in this browser. **Cancel** keeps the previous saved template. **Reset Saved Boxes** removes it. **Use saved field boxes** switches between calibrated and standard recognition. Screenshots are never persisted by calibration.
@@ -73,6 +75,7 @@ Node 22+, local Chrome and the existing vendored OCR assets are required. Set `C
 ```powershell
 node scripts/test_scanner_regions.js
 node scripts/test_scanner_capture.js
+node scripts/test_scanner_capture_ui.cjs --summary
 node scripts/test_scanner_recognition.js
 node scripts/test_scanner_reading.js
 node scripts/test_scanner_frames.js
