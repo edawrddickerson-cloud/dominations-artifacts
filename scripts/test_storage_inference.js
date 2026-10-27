@@ -59,7 +59,7 @@ vm.runInContext(fs.readFileSync('ui/scanner-recognition.js','utf8'),context);
 vm.runInContext(fs.readFileSync('ui/storage-recognition.js','utf8'),context);
 async function scan(missing,{known=true,priorName='Positive',priorHall='war',percentage=null,retryPercentage=null,levelText=null,autoFit=false,fitPercentage=null,type='War Weapon',expectedRows=5,calibrationRows=null,manualType=null,categoryConfidence=95,categoryRetries=[]}={}) {
   const category=context.window.DNStorageRecognition.categoryType,retries=[];
-  if(!manualType && !category(type))for(let i=0;i<3;i++) {
+  if(!manualType && !category(type))for(let i=0;i<4;i++) {
     const retry=categoryRetries[i] || {text:'',confidence:95};retries.push(retry);
     if(category(retry.text) && retry.confidence>=60)break;
   }
@@ -109,7 +109,7 @@ async function testOCRFallback() {
     assert.equal(result.artifact.categoryEvidence.length,categoryRetries.length+1);
   }
   const unread=await scan('tier',{type:'???',known:false});
-  assert.equal(unread.artifact.categoryEvidence.length,4,'an unread category uses at most three retries');
+  assert.equal(unread.artifact.categoryEvidence.length,5,'an unread category uses at most four retries including adaptive gold');
   assert.equal(unread.artifact.categoryUnclear,true);
   for(const type of ['War Mythical','  War\n Mythical  ','Mythical']) {
     const result=await scan('tier',{type,categoryConfidence:60,known:false});

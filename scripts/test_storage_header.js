@@ -1,0 +1,46 @@
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm');
+const {harness,parsed,flush}=require('./test_scanner_reading.js');
+const context={window:{DNScannerRecognition:{}}};vm.createContext(context);
+vm.runInContext(fs.readFileSync('ui/storage-recognition.js','utf8'),context);
+const {titleDecision,categoryType}=context.window.DNStorageRecognition;
+const read=(text,confidence=95,x=.31,complete=true,pixelKey=null)=>({text,confidence,box:{x,y:.018,width:.55,height:.11},complete,pixelKey});
+const options={recovering:true};
+let decision=titleDecision([read('Kettle Drum',99,.46,false),read('British Kettle Drum',88),read('British Kettle Drum',85,.302)],options);
+assert.equal(decision.title.text,'British Kettle Drum');assert.equal(decision.verified,true,'complete corroborated crops beat a confident clipped fragment');
+assert.equal(titleDecision([read('Same title'),read('Same title',96)],options).verified,false,'reprocessing identical crop geometry does not corroborate it');
+assert.equal(titleDecision([read('Same title',95,.31,true,'1,2,3,4'),read('Same title',95,.302,true,'1,2,3,4')],options).verified,false,'subpixel box changes cannot count the same pixels twice');
+decision=titleDecision([read('Title A'),read('Title A',96,.302),read('Title B',90,.30)],options);
+assert.equal(decision.verified,false);assert.equal(decision.conflict,true,'contradictory strong full-header reads need review');
+assert.equal(titleDecision([read('Weak',79),read('Weak',79,.302)],options).verified,false,'weak consensus cannot verify a name');
+assert.equal(titleDecision([read('Ordinary uncataloged title'),read('Ordinary uncataloged title',90,.302)],options).verified,true,'catalog coverage is optional for ordinary names');
+const catalog=[{artifact_id:'drum-legendary',name:'British Kettle Drum',grade:'Legendary',hall:'War'},
+  {artifact_id:'drum-mythical',name:'British Kettle Drum',grade:'Mythical',hall:'War'}];
+decision=titleDecision([read('British Kettle Drum')],{...options,catalog,type:'War Legendary',hall:'war'});
+assert.equal(decision.catalogId,'drum-legendary');assert.equal(decision.verified,false,'a catalog match cannot verify one recovered crop');
+assert.equal(titleDecision([read('Kettle Drum'),read('Kettle Drum',90,.302)],{...options,catalog,type:'War Legendary',hall:'war'}).catalogId,null,'catalog never supplies missing title words');
+assert.equal(titleDecision([read('British Kettle Drum')],{recovering:false}).verified,true,'unchanged clear full-header reads retain the fast path');
+for(const label of ['War Mythi cal','W a r Mythi cal','WarMythical'])assert.equal(categoryType(label,'war'),'War Mythical');
+for(const label of ['Mydhical','War Legend','Mythical Legendary','Mythical II'])assert.equal(categoryType(label),null,'only whitespace can be repaired in complete category labels');
+async function lifecycle(){
+  const h=await harness({storage:true}),{reader,e,jobs,keepStates}=h;
+  Object.assign(h.window.DNStorageRecognition,{types:['Legendary','Mythical'],rowsForType:type=>type==='Mythical'?6:5});e.layout.value='storage';
+  const frame=h.canvas();reader.update(frame,{session:1,current:true});e.read.fire('click');
+  const scan={...parsed(),expectedRows:5,artifact:{name:'Kettle Drum',type:'Legendary',titleUnclear:true,titleConflict:true}};
+  jobs.at(-1).resolve(scan);await flush();
+  reader.setStorageName('British ');assert.equal(keepStates.at(-1).result.artifact.name,'British ','typing must preserve trailing spaces');
+  e.read.fire('click');reader.setStorageName('British Kettle Drum');jobs.at(-1).resolve(scan);await flush();
+  let artifact=keepStates.at(-1).result.artifact;
+  assert.equal(artifact.name,'British Kettle Drum');assert.equal(artifact.nameSource,'manual');assert.equal(artifact.titleUnclear,false);assert.equal(artifact.titleConflict,false);
+  assert.equal(keepStates.at(-1).manualCorrection,true);
+  reader.setStorageType('Mythical');jobs.at(-1).resolve({...scan,expectedRows:6,rows:[...scan.rows,scan.rows[0]],artifact:{...scan.artifact,type:'Mythical'}});await flush();
+  assert.equal(keepStates.at(-1).result.artifact.name,'British Kettle Drum','category rereads preserve manual title corrections');
+  reader.setStorageName('');assert.equal(keepStates.at(-1).result.artifact.titleUnclear,true,'clearing a name cannot mark it verified');
+  reader.setStorageName('Manual current item');frame.pixel=240;reader.update(frame,{session:1,current:true});e.read.fire('click');jobs.at(-1).resolve(scan);await flush();
+  assert.equal(keepStates.at(-1).result.artifact.name,'Kettle Drum','manual names never leak into a new artifact');
+  reader.setStorageName('Old profile name');h.DN.setActiveProfile(h.DN.addProfile('Header profile test'));
+  e.read.fire('click');jobs.at(-1).resolve(scan);await flush();
+  assert.equal(keepStates.at(-1).result.artifact.name,'Kettle Drum','manual names never cross profile boundaries');
+  reader.reset();
+  console.log('Storage headers: crop agreement, conflicts, exact catalog support, whitespace-only category repair and manual name lifecycle passed.');
+}
+lifecycle().catch(error=>{console.error(error);process.exitCode=1;});

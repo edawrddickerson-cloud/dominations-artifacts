@@ -31,7 +31,7 @@
   function syncCatalogOwnership({commit=false}={}) {
     catalogMatch=null;
     const item=current && {name:get('name').value.trim(),hall:document.getElementById('scanner-hall').value,rows:current.rows};
-    const match=item && reviewable && !pending && !current.metadataConflict && !current.artifact?.categoryUnclear && observationProfile===store.collectionKey() &&
+    const match=item && reviewable && !pending && !current.metadataConflict && !current.artifact?.categoryUnclear && !current.artifact?.titleUnclear && observationProfile===store.collectionKey() &&
       item.rows?.length===expectedRows && store.matchCatalog(item,catalog);
     const key=match?JSON.stringify([observationProfile,encounter,item.name,match.artifact_id]):'';
     if(key!==ownershipKey){clearTimeout(ownershipTimer);ownershipTimer=null;ownershipKey=key;}
@@ -74,6 +74,7 @@
     if(observationProfile!==store.collectionKey()){show('uncertain','Profile changed','Read the current artifact again before saving it to this profile.');return null;}
     if(!reviewable || pending) {show('uncertain','Ownership check pending',pending?'Complete the remaining fields. Valid edits apply automatically.':'Waiting for a current artifact read; the displayed stats may be from the last scan.');return null;}
     if(current.artifact?.categoryUnclear){show('uncertain','Category needed','Choose the artifact category.');return null;}
+    if(current.artifact?.titleUnclear){show('uncertain','Name needs review','Check the artifact name.');return null;}
     if(catalogMatch) {
       show('collection','Collected · '+catalogMatch.grade,catalogMatch.name+' is marked Collected on Artifact rankings.');
       return matches();
@@ -107,6 +108,7 @@
     if(!reviewable)return 'Waiting for a current artifact read.';
     if(current.metadataConflict)return 'Verify the conflicting artifact name, category or Hall.';
     if(current.artifact?.categoryUnclear)return 'Choose the artifact category.';
+    if(current.artifact?.titleUnclear)return 'Check the artifact name.';
     const linked=store.matchCatalog({name:get('name').value,hall:document.getElementById('scanner-hall').value,rows:current.rows},catalog);
     if(linked && !window.DN.loadCollected().has(linked.artifact_id))return 'Not collected. Tick Collected on Priority or scan the artifact again.';
     if(current.rows?.length!==expectedRows)return 'Read all '+expectedRows+' stats.';
@@ -137,7 +139,7 @@
       select.options[0].textContent=special?'Not applicable':'Unknown';
       select.classList.toggle('is-unknown',false);
     }
-    for(const id of ['name','type'])get(id).classList?.toggle('is-unknown',!get(id).value.trim());
+    for(const id of ['name','type'])get(id).classList?.toggle('is-unknown',!get(id).value.trim() || id==='name' && !!current?.artifact?.titleUnclear);
     const checked=renderOwnership(),reason=keepReason();canKeep=!reason;
     const plan=checked && (checked[1].action==='added'?checked[0]:checked[1]);
     const nextKey=canKeep?JSON.stringify([observationProfile,encounter,reviewedItem()]):'';
@@ -192,7 +194,10 @@
   }};
   for(const id of ['name','type'])get(id).addEventListener('input',()=>{
     edited=true;manualCorrection=true;
-    if(id==='name' && current){const logged=window.DNScannerCollection?.itemForEncounter?.(encounter,observationProfile);if(logged)window.DNScannerCollection.setName(logged.id,get('name').value);}
+    if(id==='name' && current){
+      const logged=window.DNScannerCollection?.itemForEncounter?.(encounter,observationProfile);if(logged)window.DNScannerCollection.setName(logged.id,get('name').value);
+      window.DNScannerReading?.setStorageName(get('name').value);
+    }
     if(id==='type' && get('type').value) {
       const hall=/^War /i.test(get('type').value)?'war':'main';
       document.getElementById('scanner-hall').value=hall;window.DNPrimaryFilters?.setHall(hall);

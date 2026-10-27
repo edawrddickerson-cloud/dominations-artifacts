@@ -14,9 +14,30 @@
   const types=['Weapon','Armor','Jewelry','Pottery','Legendary','Mythical','War Weapon','War Armor','War Equipment','War Legendary','War Mythical'];
   function detectPanel(source) { return recognition.detectPanel(source,{storage:true}); }
   const rowsForType=type=>/^(?:War )?Mythical$/i.test(String(type || '').trim())?6:5;
+  const titleKey=text=>String(text || '').normalize('NFKD').toLowerCase().replace(/\p{M}/gu,'').replace(/[^\p{L}\p{N}]/gu,'');
+  const cropKey=box=>JSON.stringify([box.x,box.y,box.width,box.height]);
+  function titleDecision(reads,{recovering=false,catalog=[],type='',hall=null}={}) {
+    const groups=new Map();
+    for(const read of reads)if(read.complete && read.confidence>=80 && titleKey(read.text)) {
+      const key=titleKey(read.text),group=groups.get(key) || [];group.push(read);groups.set(key,group);
+    }
+    const catalogMatch=text=>{
+      if(!/^(?:War )?(?:Legendary|Mythical)$/.test(type))return null;
+      const matches=catalog.filter(row=>row.grade===(rowsForType(type)===6?'Mythical':'Legendary') &&
+        (!hall || row.hall?.toLowerCase()===hall) && [row.name,row.alternate_name].some(name=>name && titleKey(name)===titleKey(text)));
+      return matches.length===1?matches[0].artifact_id:null;
+    };
+    const agreed=[...groups.values()].filter(group=>new Set(group.map(read=>read.pixelKey || cropKey(read.box))).size>=2);
+    const conflict=groups.size>1;
+    const candidates=reads.filter(read=>read.complete && titleKey(read.text)).sort((a,b)=>
+      Number(!!catalogMatch(b.text))-Number(!!catalogMatch(a.text)) || b.confidence-a.confidence);
+    const title=(agreed.length===1?agreed[0].slice().sort((a,b)=>b.confidence-a.confidence)[0]:candidates[0]) || reads[0];
+    const verified=!!title?.text && !conflict && (recovering?agreed.length===1:!!title?.complete && title.confidence>=80);
+    return {title,verified,conflict,catalogId:title?catalogMatch(title.text):null};
+  }
   function categoryType(text,hall=null) {
-    const normalized=String(text || '').replace(/\s+/g,' ').trim().toLowerCase().replace(/^war(?=weapon|armor|equipment|legendary|mythical)/,'war ');
-    let matched=types.find(type=>type.toLowerCase()===normalized);
+    const normalized=String(text || '').replace(/\s+/g,'').toLowerCase();
+    let matched=types.find(type=>type.replace(/\s+/g,'').toLowerCase()===normalized);
     if(!matched || hall==='main' && /^War /.test(matched))return null;
     // The current blue ribbon can supply a clipped War prefix. A remembered
     // Hall selection cannot establish it, and missing grade text stays unknown.
@@ -99,10 +120,19 @@
       const ctx=c.getContext('2d',{willReadFrequently:true});ctx.fillStyle='#fff';ctx.fillRect(0,0,c.width,c.height);
       ctx.drawImage(source,sx,sy,sw,sh,12,12,w,h);
       const pixels=ctx.getImageData(12,12,w,h);
+      let goldThreshold=0;
+      const gold=(r,g,b)=>r>25 && g>20 && g>=r*.60 && b<g*.82 && r>b*1.25;
+      if(ink==='gold' || ink==='gold-title') {
+        const counts=new Uint32Array(256);let total=0;
+        for(let i=0;i<pixels.data.length;i+=4)if(gold(pixels.data[i],pixels.data[i+1],pixels.data[i+2])){counts[pixels.data[i+1]]++;total++;}
+        let sum=0,peak=0;for(;peak<255 && sum<total*.98;peak++)sum+=counts[peak];
+        goldThreshold=Math.max(20,peak*(ink==='gold'?.60:.78));
+      }
       for(let i=0;i<pixels.data.length;i+=4) {
         const r=pixels.data[i],g=pixels.data[i+1],b=pixels.data[i+2];
         if(ink==='raw')continue;
         const v=ink==='title'?(r>205 && g>160?0:255):
+          ink==='gold' || ink==='gold-title'?(gold(r,g,b) && g>=goldThreshold?0:255):
           ink==='title-soft'?(r>190 && g>145?0:255):
           ink==='banner' || ink==='banner-soft'?(.299*r+.587*g+.114*b>(ink==='banner-soft'?115:145)?0:255):
           ink==='grey'?(.299*r+.587*g+.114*b>65?0:255):
@@ -124,7 +154,8 @@
         const output=await worker.recognize(c,{}, {text:true,blocks:true});
         if(isClosed())throw new Error('Recognition stopped');
         const lines=(output.data.blocks || []).flatMap(b=>(b.paragraphs || []).flatMap(p=>p.lines || []));
-        return {text:output.data.text.trim(),confidence:lines.length?Math.min(...lines.map(l=>l.confidence)):0};
+        return {text:output.data.text.trim(),confidence:lines.length?Math.min(...lines.map(l=>l.confidence)):0,
+          pixelKey:[Math.round(rect.x*source.width),Math.round(rect.y*source.height),Math.ceil(rect.width*source.width),Math.ceil(rect.height*source.height)].join(',')};
       } finally {c.width=c.height=0;}
     }
     let rowHeight=area.height/expectedRows;
@@ -135,11 +166,17 @@
     let calibrationReason=null;
     try {
       if(full) {
-        const titleRect=box('title',{x:.31,y:.018,width:.553,height:.110});
+        const titleBand={x:.31,y:.018,width:.553,height:.110},titleRect=box('title',titleBand);
+        const complete=region=>region.x>=.302 && region.y>=.016 && region.x+region.width<=.872 && region.y+region.height<=.14 &&
+          region.x<=titleBand.x+1/source.width && region.y<=titleBand.y+1/source.height &&
+          region.x+region.width>=titleBand.x+titleBand.width-1/source.width && region.y+region.height>=titleBand.y+titleBand.height-1/source.height;
         let title=await read(titleRect,'','title','6');
+        const titleEvidence=[{...title,box:titleRect,ink:'title',complete:complete(titleRect)}];
+        const recoverTitle=!complete(titleRect) || title.confidence<80;
         if(title.confidence<80) {
           for(const ink of ['title-soft','raw']) {
             const alternative=await read(titleRect,'',ink,'6');
+            titleEvidence.push({...alternative,box:titleRect,ink,complete:complete(titleRect)});
             if(alternative.confidence>title.confidence)title=alternative;
           }
         }
@@ -157,21 +194,36 @@
           // Retry the complete ribbon's text band, independently of clipped
           // saved boxes. These temporary views never change calibration.
           const wide={x:.065,y:.430,width:.19,height:.072};
-          for(const [ink,mode] of [['banner','7'],['raw','7'],['banner-soft','6']]) {
-            const alternative=await read(wide,'',ink,mode);
-            categoryEvidence.push({...alternative,box:wide,ink});
+          for(const [ink,mode,region] of [['banner','7',wide],['gold','7',{x:.068,y:.439,width:.185,height:.056}],['raw','7',wide],['banner-soft','6',wide]]) {
+            const alternative=await read(region,'',ink,mode);
+            categoryEvidence.push({...alternative,box:region,ink});
             const candidate=categoryType(alternative.text,detectedHall);
             if(candidate && alternative.confidence>=60){type=alternative;matched=candidate;break;}
           }
         }
         const selected=checkedType || matched;
+        const currentHall=checkedType?(/^War /i.test(checkedType)?'war':'main'):/^War /.test(selected || '')?'war':detectedHall;
+        let catalog=[];
+        if(recoverTitle) {
+          try{catalog=await window.DNStoredArtifacts?.loadCatalog?.() || [];}catch{}
+          if(isClosed())throw new Error('Recognition stopped');
+          const expanded={x:.307,y:.018,width:.558,height:.110};
+          for(const [region,ink] of [[titleBand,'title'],[expanded,'title-soft'],[titleBand,'gold-title'],[expanded,'gold-title'],[expanded,'raw']]) {
+            if(titleEvidence.some(evidence=>cropKey(evidence.box)===cropKey(region) && evidence.ink===ink))continue;
+            const alternative=await read(region,'',ink,'6');
+            titleEvidence.push({...alternative,box:region,ink,complete:true});
+            if(titleDecision(titleEvidence,{recovering:true,catalog,type:selected,hall:currentHall}).verified)break;
+          }
+        }
+        const decision=titleDecision(titleEvidence,{recovering:recoverTitle,catalog,type:selected,hall:currentHall});
+        title=decision.title;
         artifact={...artifact,name:title.text.replace(/\s+/g,' '),type:selected || '',rawType:categoryEvidence[0].text,typeConfidence:type.confidence,categoryEvidence,...(checkedType?{typeSource:'manual'}:{}),titleConfidence:title.confidence,
-          hall:checkedType?(/^War /i.test(checkedType)?'war':'main'):/^War /.test(selected || '')?'war':detectedHall};
+          hall:currentHall,rawTitle:titleEvidence[0].text,titleEvidence,titleUnclear:!decision.verified,titleConflict:decision.conflict,...(decision.catalogId?{titleCatalogMatch:decision.catalogId}:{})};
         artifact.categoryUnclear=!selected;
         const picture=make();picture.width=192;picture.height=Math.round(192*(source.height*.295)/(source.width*.226));
         const artwork=box('artwork',{x:.037,y:.067,width:.226,height:.295});
         if(artwork){picture.height=Math.max(1,Math.round(192*(source.height*artwork.height)/(source.width*artwork.width)));picture.getContext('2d').drawImage(source,source.width*artwork.x,source.height*artwork.y,source.width*artwork.width,source.height*artwork.height,0,0,picture.width,picture.height);artifact.image=picture.toDataURL('image/jpeg',.88);}
-        if(!artifact.name || title.confidence<80)artifact.metadataWarnings.push('Check the artifact name.');
+        if(artifact.titleUnclear)artifact.metadataWarnings.push('Check the artifact name.');
         if(!selected)artifact.metadataWarnings.push('Choose the artifact category.');
         else if(!types.includes(manualType) && type.confidence<80)artifact.metadataWarnings.push('Check the artifact category.');
         // All ordinary and Legendary artifacts have five rows. Gold footer
@@ -277,5 +329,5 @@
       if(!isClosed())await worker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});
     }
   }
-  window.DNStorageRecognition={detectPanel,inspect,recognize,levelOf,starState,types,rowsForType,categoryType};
+  window.DNStorageRecognition={detectPanel,inspect,recognize,levelOf,starState,types,rowsForType,categoryType,titleDecision};
 })();

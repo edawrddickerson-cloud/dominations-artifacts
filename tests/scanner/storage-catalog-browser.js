@@ -57,6 +57,8 @@
   check('abandoned title corrections cannot mark an intermediate name',!DN.loadCollected().has('rosetta-stone-legendary'));
   get('name').value='Rosetta Stone';get('name').dispatchEvent(new Event('input',{bubbles:true}));
   await wait(()=>DN.loadCollected().has('rosetta-stone-legendary'));
+  // Ownership reaches the embedded rankings document asynchronously.
+  await wait(()=>checkbox('rosetta-stone-legendary')?.checked);
   check('a finished title correction marks its Priority checkbox',checkbox('rosetta-stone-legendary').checked);
   frame.srcdoc=source;await wait(()=>checkbox('enigma-machine-mythical')?.checked);
   check('Priority checkboxes stay checked after reload',checkbox('enigma-machine-legendary').checked && checkbox('enigma-machine-mythical').checked);

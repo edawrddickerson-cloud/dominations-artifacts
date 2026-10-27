@@ -35,6 +35,7 @@
   let liveCapture=false,sampleRevision=0,speculatedToken=null;
   const storageEdits=new Map();
   let storageTypeOverride=null;
+  let storageNameOverride=null;
   let storageTypeReread=false;
   const preview=document.createElement("canvas");
   preview.width=256;preview.height=128;
@@ -49,6 +50,13 @@
   }
   const rowCount=()=>Number(el.rows.value)===6?6:5;
   const manualStorageType=()=>storageTypeOverride?.session===session && storageTypeOverride.itemId===itemId && storageTypeOverride.profileKey===window.DNStoredArtifacts?.collectionKey()?storageTypeOverride.type:null;
+  const manualStorageName=()=>storageNameOverride?.session===session && storageNameOverride.itemId===itemId && storageNameOverride.profileKey===window.DNStoredArtifacts?.collectionKey()?storageNameOverride.name:null;
+  function applyStorageName(value) {
+    const name=manualStorageName();
+    if(!value || name===null)return value;
+    return {...value,artifact:{...value.artifact,name,nameSource:'manual',titleUnclear:!name.trim(),titleConflict:false,titleCatalogMatch:null,
+      metadataWarnings:(value.artifact?.metadataWarnings || []).filter(warning=>warning!=='Check the artifact name.')}};
+  }
   function say(text){el["result-status"].textContent=text;}
   function progress(next,text){phase=next;el.progress.className='scanner-progress is-'+next;el.progress.textContent=storage?next==='finished'?/failed/i.test(text)?'Finished · read failed':'Finished':({reading:'Reading…',waiting:'Waiting…',paused:'Paused',idle:'Waiting for an artifact'}[next] || text):text;}
   const settleDelay=storage?700:220;
@@ -104,6 +112,7 @@
   }
   function reset() {
     storageTypeOverride=null;
+    storageNameOverride=null;
     storageTypeReread=false;
     inlineEditing=false;deferredFrame=null;window.DNScannerTargetRatings?.stopEditing?.();
     liveCapture=false;sampleRevision=0;speculatedToken=null;
@@ -167,12 +176,14 @@
   function update(canvas, state) {
     if(!storage && inlineEditing){deferredFrame={canvas,state:{...state}};return;}
     if(session!==state.session){reset();session=state.session;}
-    let correctedGeometryType=null;
+    let correctedGeometryType=null,correctedGeometryName=null;
     if(Object.prototype.hasOwnProperty.call(state,'live'))liveCapture=state.live===true;
     if(Object.prototype.hasOwnProperty.call(state,'fields')) {
       const next=state.fields || null,key=next?JSON.stringify([next.template,next.panel]):null;
       if(storage && key!==fieldGeometry && next?.template?.kind==='storage' && latestFields?.template?.kind==='storage' &&
-        next.template.rows.length!==latestFields.template.rows.length && next.template.rows.length===rowCount())correctedGeometryType=manualStorageType();
+        next.template.rows.length!==latestFields.template.rows.length && next.template.rows.length===rowCount()){
+        correctedGeometryType=manualStorageType();correctedGeometryName=manualStorageName();
+      }
       if(key!==fieldGeometry){invalidate('Field regions changed. Checking the current artifact.',{preserveDisplay:true});hash=null;readHash=null;latestCanvas=null;}
       latestFields=next;fieldGeometry=key;
     }
@@ -231,6 +242,7 @@
       if(changed(itemAnchor,next,.08))itemBoundary=true;
       itemId++;itemAnchor=next;
       if(correctedGeometryType)storageTypeOverride={...storageTypeOverride,itemId};
+      if(correctedGeometryName!==null)storageNameOverride={...storageNameOverride,itemId};
     }
     // Cancel on changes in the filtered fields below. A noisy individual
     // frame must not repeatedly supersede storage OCR or its ownership check.
@@ -317,7 +329,7 @@
     if(correctionStatus)correctionStatus.textContent=correctionError || (editing && !confirmed?(storage?'Complete the remaining fields; valid edits apply automatically.':'Changes are valid. Use Corrected Values, then Keep Artifact.'):'');
     const unknownEditable=storage && [...el.correct.querySelectorAll('input,select,.scanner-perk-unlocked,.scanner-perk-reroll')].some(input=>!input.disabled && !input.classList?.contains('scanner-perk-tier') &&
       (String(input.value ?? '').trim()==='' || input.classList.contains('is-unknown') || input.validity?.valid===false));
-    window.DNStorageScanner?.update(result,confirmed && !!latestCanvas,{reviewable:resultCurrent && !!latestCanvas && (!editing || confirmed),pending:editing && !confirmed,correctionError,expectedRows:rowCount(),unknownEditable,profileKey:resultProfile,encounterId:JSON.stringify([session,itemId]),manualCorrection:!!manualStorageType() || editing && confirmed});
+    window.DNStorageScanner?.update(result,confirmed && !!latestCanvas,{reviewable:resultCurrent && !!latestCanvas && (!editing || confirmed),pending:editing && !confirmed,correctionError,expectedRows:rowCount(),unknownEditable,profileKey:resultProfile,encounterId:JSON.stringify([session,itemId]),manualCorrection:manualStorageName()!==null || !!manualStorageType() || editing && confirmed});
     let previewOpts;
     const rowStatus=get('row-status');
     if(rowStatus)rowStatus.textContent=progress.total+'/'+rowCount()+' stats captured';
@@ -620,6 +632,7 @@
       if(useful===0 && !parsed.rows.some(row=>row.known) && !best?.rows.some(row=>row.known))best=null;
       if(parsed.unlocked?.count===3)best={...(best || parsed),unlocked:parsed.unlocked};
       result=best;resultProfile=readingProfile;confirmed=!!result?.valid;resultCurrent=true;editing=false;
+      if(storage && result){result=applyStorageName(result);best=result;}
       if(!storage && result){
         itemArtwork=artwork;
         const incoming=parsed.artifact?.nameEvidence,held=result.artifact?.nameEvidence;
@@ -973,6 +986,11 @@
     if(correctedFields)try{window.DNTelemetry?.event('scanner_fields_corrected',{source:serviceSource,count:correctedFields},true);}catch{}
   }
   el.accept?.addEventListener("click",()=>applyCorrections());
+  function setStorageName(name) {
+    if(!storage || !result || !latestCanvas || resultProfile!==window.DNStoredArtifacts?.collectionKey())return false;
+    storageNameOverride={name:String(name ?? ''),session,itemId,profileKey:resultProfile};
+    result=applyStorageName(result);if(best)best=applyStorageName(best);score();return true;
+  }
   function setStorageType(type) {
     if(!storage || !window.DNStorageRecognition.types.includes(type))return false;
     storageTypeOverride={type,session,itemId,profileKey:window.DNStoredArtifacts?.collectionKey()};
@@ -1015,7 +1033,7 @@
   for(const event of ['focus','storage','dn-strategies-changed'])window.addEventListener(event,()=>{ratingContext=null;if(ready)score();});
   window.addEventListener('dn-scanner-target-focus-changed',()=>{if(ready)score();});
   window.addEventListener('dn-scanner-target-edit-changed',()=>{if(ready)score();});
-  window.DNScannerReading={update,reset,invalidate,setInlineEditing,setStorageType};
+  window.DNScannerReading={update,reset,invalidate,setInlineEditing,setStorageType,setStorageName};
   score();
   (async()=>{
     try {
