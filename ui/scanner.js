@@ -22,6 +22,7 @@
   let generation = 0, timer = null, selecting = false, pending = false, locatePending = false;
   let dimensions = "", lastSample = 0, lastProgress = 0, lastMediaTime = -1;
   const supported = window.isSecureContext && !!navigator.mediaDevices?.getDisplayMedia;
+  const detectCraftPanel=source=>window.DNScannerPanel?window.DNScannerPanel.detect(source):window.DNScannerRecognition?.detectPanel(source);
 
   function status(title, message) {
     if(el.status.classList?.contains?.('scanner-connection-label')) {
@@ -109,7 +110,7 @@
       if(nativeFrame.width!==size.width || nativeFrame.height!==size.height){nativeFrame.width=size.width;nativeFrame.height=size.height;}
       nativeFrame.getContext('2d').drawImage(source,0,0,size.width,size.height);
       const layout=document.getElementById('scanner-layout')?.value || 'panel';
-      if(!storage)focusPanel=window.DNScannerRecognition?.detectPanel(nativeFrame);
+      if(!storage)focusPanel=detectCraftPanel(nativeFrame);
       const candidate=storage && layout==='storage'?region:layout==='panel'?(storage?window.DNScannerRecognition?.detectPanel(nativeFrame):manualRegion && !selecting?region:focusPanel):null;
       if(calibration.hasTemplate && candidate && !manualRegion && !selecting && !calibration.editing) {
         const moved=!region || ['x','y','width','height'].some(key=>Math.abs(region[key]-candidate[key])>.002);
@@ -129,7 +130,7 @@
       cropContext.drawImage(source, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
       el.freshness.textContent = image ? "Local screenshot crop; not a live capture." : "Preview sampled at " + new Date().toLocaleTimeString() + ". Source freshness is not independently verified.";
       el.meta.textContent = "Source " + nextDimensions + " · crop " + crop.width + "×" + crop.height + " pixels";
-      if(!storage && !calibration)focusPanel=window.DNScannerRecognition?.detectPanel(el.frame);
+      if(!storage && !calibration)focusPanel=detectCraftPanel(el.frame);
       const focusObserved=!storage && !selecting && !calibration?.editing && !document.hidden && (image || !track?.muted && el.video.currentTime!==lastMediaTime);
       window.DNScannerReading?.update(el.crop, {session:generation,live:!!stream,current:!selecting && !fieldState?.paused && !document.hidden && (image || !track?.muted),itemPresent:focusObserved && focusPanel!==undefined && !manualRegion?!!focusPanel:undefined,categorySource:el.frame,panelRegion:region,fields:fieldState?.fields || null});
     } else el.meta.textContent = "Source " + nextDimensions + " pixels · select the complete artifact panel";
@@ -228,7 +229,7 @@
     const scale=Math.min(1,1280/size.width);source.width=Math.round(size.width*scale);source.height=Math.round(size.height*scale);
     source.getContext("2d").drawImage(image || el.video,0,0,source.width,source.height);
     const storage=!!window.DNStorageRecognition;
-    const candidate=storage?window.DNStorageRecognition.detectPanel(source):window.DNScannerRecognition.detectPanel(source);
+    const candidate=storage?window.DNStorageRecognition.detectPanel(source):detectCraftPanel(source);
     if(storage && candidate) {
       const rect=core.cropPixels(candidate,source.width,source.height),panel=document.createElement('canvas');
       panel.width=rect.width;panel.height=rect.height;panel.getContext('2d').drawImage(source,rect.x,rect.y,rect.width,rect.height,0,0,rect.width,rect.height);

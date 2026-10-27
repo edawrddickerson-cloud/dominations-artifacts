@@ -2,7 +2,7 @@
  * Ownership: Crafting setup UI and one localStorage template, never game control.
  * Invariants: Editor freezes in-memory pixels and pauses reads; saves coordinates
  * only; failures remain visible; capture/session cleanup releases the frozen frame.
- * Constraints: Supported gold-panel anchor required; calibration is browser-local. */
+ * Constraints: Supported benefits-panel anchor required; calibration is browser-local. */
 (() => {
   'use strict';
   const storage=!!window.DNStorageRegions,G=storage?window.DNStorageRegions:window.DNScannerRegions,C=window.DNScannerCore;
@@ -32,7 +32,7 @@
     if(draft)text='Calibration paused · editing a frozen frame.';
     else if(!el.enabled.checked)text='Standard recognition · saved field boxes switched off.';
     else if(template) {
-      const resolved=supported(layout)?G.resolve(template,panel,source):{valid:false,reason:storage?'Choose Full stored-item dialog to use saved boxes.':'Choose Gold-framed panel to use saved boxes.'};
+      const resolved=supported(layout)?G.resolve(template,panel,source):{valid:false,reason:storage?'Choose Full stored-item dialog to use saved boxes.':'Choose Artifact Benefits panel to use saved boxes.'};
       if(resolved.valid){active={template:G.copy(template),source,panel};text=lastReason?'Standard recognition · '+lastReason:lastPath==='calibrated-fields+standard-fallback'?'Calibrated fields · standard fallback used for unclear fields.':'Calibrated fields · saved boxes follow the detected panel.';}
       else text='Standard recognition · '+resolved.reason;
       if(!panel && source && supported(layout))text=storage?'Select the full stored-item dialog to calibrate fields.':'Panel anchor missing · reading paused. Find Panel or recalibrate.';

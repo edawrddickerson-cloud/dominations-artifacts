@@ -6,7 +6,7 @@ Invariants: Pixels stay local and temporary. Only one coordinate template persis
 
 ## Use the feature
 
-Open **Crafting Scanner → Scanner setup**, connect the game or load a local screenshot, then select **Calibrate Fields** after the gold panel is found. The editor pauses reading on a frozen frame.
+Open **Crafting Scanner → Scanner setup**, connect the game or load a local screenshot, then select **Calibrate Fields** after the benefits panel is found. The editor pauses reading on a frozen frame.
 
 The crafting scanner keeps looking when sharing starts before an artifact panel appears. If detection misses the border, **Select Region** or **Apply Region** supplies an explicit panel anchor for reading and field calibration. Select the complete benefits panel. This manual anchor stays fixed until another selection, **Refresh Image Detection**, a source-size change or capture cleanup; it does not follow panel movement automatically. An automatic border miss cannot veto the explicit selection. Saved boxes still undergo the same shape and source-boundary checks.
 
@@ -14,11 +14,17 @@ Choose each row's name, signed percentage and star, plus optional Category and H
 
 **Save Field Boxes** stores one template in this browser. **Cancel** keeps the previous saved template. **Reset Saved Boxes** removes it. **Use saved field boxes** switches between calibrated and standard recognition. Screenshots are never persisted by calibration.
 
-Boxes are relative to the detected panel and follow supported translation and uniform resizing. A panel aspect change greater than 8%, an invalid box, or an out-of-source crop requests recalibration and uses standard recognition. A missing panel anchor pauses reads. This is gold-panel tracking, not recognition of arbitrary game layouts.
+Boxes are relative to the detected panel and follow supported translation and uniform resizing. A panel aspect change greater than 8%, an invalid box, or an out-of-source crop requests recalibration and uses standard recognition. A missing panel anchor pauses reads. Supported panel anchors include the original gold frame and silver War frame; arbitrary game layouts remain unsupported.
 
 Names and percentages are read independently and associated by row index; duplicates and locked rows remain separate. Wide percentage crops first locate their numeric suffix within that same crop, then use a character-restricted OCR pass. Narrow crops go directly to percentage OCR. Stars use yellow-pixel analysis. The existing name catalogue, polarity rules, hall classification and scorer remain authoritative. Weak fields get a bounded colour retry and, when needed, a standard recognition fallback. Contradictory field, hall or star evidence cannot become confirmed merely because the fallback succeeds. Stat crops retain the existing three-frame median filtering, and label changes participate in frame-change detection.
 
 ## What the measurements establish
+
+### Silver War frames, 27 October 2026
+
+The supplied `Screenshot 2026-10-27 232708.png` shows a silver-grey frame around the Trench Knife benefits panel inside a shared game browser window. The existing gold-only detector returns no candidate for those pixels. `ui/scanner-panel.js` keeps the existing gold result unchanged and adds a capture-only fallback requiring paired neutral borders, both vertical sides and a blue benefits ribbon. It supplies the same anchor to the preview, field calibration and current-panel observation. Panel geometry does not confirm OCR metadata or stats; the OCR modules and Storage Scanner detector remain unchanged.
+
+`tests/scanner/crafting-war-silver.png` extracts only the displayed Shared source preview from that screenshot, at 824×667. It is a scaled preview of the original 1718×1390 capture, not an independent original capture. `node scripts/test_scanner_capture_ui.cjs --war-panel --summary` reproduces the old detector miss and exercises the real Connect/Refresh Image Detection controls, preview pixels, calibration and automatic read scheduling. Derived 1718×1390, 1236×1001 and 618×500 size probes check geometry; blank frames, neutral rectangles without a ribbon and bars without vertical sides are rejected. OCR responses are simulated in this test, so it establishes the capture-to-read path rather than original-resolution War text accuracy.
 
 ### Category and hall correction, 14 October 2026
 
@@ -76,6 +82,7 @@ Node 22+, local Chrome and the existing vendored OCR assets are required. Set `C
 node scripts/test_scanner_regions.js
 node scripts/test_scanner_capture.js
 node scripts/test_scanner_capture_ui.cjs --summary
+node scripts/test_scanner_capture_ui.cjs --war-panel --summary
 node scripts/test_scanner_recognition.js
 node scripts/test_scanner_reading.js
 node scripts/test_scanner_frames.js
