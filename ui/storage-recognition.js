@@ -14,6 +14,15 @@
   const types=['Weapon','Armor','Jewelry','Pottery','Legendary','Mythical','War Weapon','War Armor','War Equipment','War Legendary','War Mythical'];
   function detectPanel(source) { return recognition.detectPanel(source,{storage:true}); }
   const rowsForType=type=>/^(?:War )?Mythical$/i.test(String(type || '').trim())?6:5;
+  function categoryType(text,hall=null) {
+    const normalized=String(text || '').replace(/\s+/g,' ').trim().toLowerCase().replace(/^war(?=weapon|armor|equipment|legendary|mythical)/,'war ');
+    let matched=types.find(type=>type.toLowerCase()===normalized);
+    if(!matched || hall==='main' && /^War /.test(matched))return null;
+    // The current blue ribbon can supply a clipped War prefix. A remembered
+    // Hall selection cannot establish it, and missing grade text stays unknown.
+    if(hall==='war' && !/^War /.test(matched))matched=types.find(type=>type==='War '+matched);
+    return matched || null;
+  }
   function inspect(source,{type=null}={}) {
     const c=document.createElement('canvas');c.width=source.width;c.height=source.height;
     const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(source,0,0);
@@ -95,7 +104,7 @@
         if(ink==='raw')continue;
         const v=ink==='title'?(r>205 && g>160?0:255):
           ink==='title-soft'?(r>190 && g>145?0:255):
-          ink==='banner'?(.299*r+.587*g+.114*b>145?0:255):
+          ink==='banner' || ink==='banner-soft'?(.299*r+.587*g+.114*b>(ink==='banner-soft'?115:145)?0:255):
           ink==='grey'?(.299*r+.587*g+.114*b>65?0:255):
           ink==='colour' || ink==='colour-soft'?(colouredInk(r,g,b,ink==='colour-soft')?0:255):
           // Fractions are pale grey over a green/black progress bar. Using
@@ -134,16 +143,31 @@
             if(alternative.confidence>title.confidence)title=alternative;
           }
         }
-        const type=await read(box('category',{x:.072,y:.439,width:.2,height:.058}),'','banner');
-        const normalizedType=type.text.replace(/\s+/g,' ').trim().toLowerCase();
-        const matched=types.find(t=>t.toLowerCase()===normalizedType),selected=types.includes(manualType)?manualType:matched;
-        artifact={...artifact,name:title.text.replace(/\s+/g,' '),type:selected || '',rawType:type.text,typeConfidence:type.confidence,...(checkedType?{typeSource:'manual'}:{}),titleConfidence:title.confidence,hall:checkedType?(/^War /i.test(checkedType)?'war':'main'):inspect(source).hall};
-        artifact.categoryUnclear=!selected;
+        let detectedHall=inspect(source).hall;
         if(calibrated && boxes.hall && !checkedType) {
           const rect=window.DNScannerCore.cropPixels(boxes.hall,source.width,source.height);
           const pixels=originalContext.getImageData(rect.x,rect.y,rect.width,rect.height).data;
-          artifact.hall=recognition.classifyHallColour(pixels) || hall;
+          detectedHall=recognition.classifyHallColour(pixels) || detectedHall;
         }
+        const categoryRect=box('category',{x:.072,y:.439,width:.2,height:.058});
+        let type=await read(categoryRect,'','banner');
+        const categoryEvidence=[{...type,box:categoryRect,ink:'banner'}];
+        let matched=categoryType(type.text,detectedHall);
+        if(!checkedType && !matched) {
+          // Retry the complete ribbon's text band, independently of clipped
+          // saved boxes. These temporary views never change calibration.
+          const wide={x:.065,y:.430,width:.19,height:.072};
+          for(const [ink,mode] of [['banner','7'],['raw','7'],['banner-soft','6']]) {
+            const alternative=await read(wide,'',ink,mode);
+            categoryEvidence.push({...alternative,box:wide,ink});
+            const candidate=categoryType(alternative.text,detectedHall);
+            if(candidate && alternative.confidence>=60){type=alternative;matched=candidate;break;}
+          }
+        }
+        const selected=checkedType || matched;
+        artifact={...artifact,name:title.text.replace(/\s+/g,' '),type:selected || '',rawType:categoryEvidence[0].text,typeConfidence:type.confidence,categoryEvidence,...(checkedType?{typeSource:'manual'}:{}),titleConfidence:title.confidence,
+          hall:checkedType?(/^War /i.test(checkedType)?'war':'main'):/^War /.test(selected || '')?'war':detectedHall};
+        artifact.categoryUnclear=!selected;
         const picture=make();picture.width=192;picture.height=Math.round(192*(source.height*.295)/(source.width*.226));
         const artwork=box('artwork',{x:.037,y:.067,width:.226,height:.295});
         if(artwork){picture.height=Math.max(1,Math.round(192*(source.height*artwork.height)/(source.width*artwork.width)));picture.getContext('2d').drawImage(source,source.width*artwork.x,source.height*artwork.y,source.width*artwork.width,source.height*artwork.height,0,0,picture.width,picture.height);artifact.image=picture.toDataURL('image/jpeg',.88);}
@@ -253,5 +277,5 @@
       if(!isClosed())await worker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});
     }
   }
-  window.DNStorageRecognition={detectPanel,inspect,recognize,levelOf,starState,types,rowsForType};
+  window.DNStorageRecognition={detectPanel,inspect,recognize,levelOf,starState,types,rowsForType,categoryType};
 })();

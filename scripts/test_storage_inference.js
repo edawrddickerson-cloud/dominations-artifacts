@@ -57,9 +57,15 @@ vm.runInContext(fs.readFileSync('ui/storage-field-regions.js','utf8'),context);
 vm.runInContext(fs.readFileSync('ui/scanner-name-catalog.js','utf8'),context);
 vm.runInContext(fs.readFileSync('ui/scanner-recognition.js','utf8'),context);
 vm.runInContext(fs.readFileSync('ui/storage-recognition.js','utf8'),context);
-async function scan(missing,{known=true,priorName='Positive',priorHall='war',percentage=null,retryPercentage=null,levelText=null,autoFit=false,fitPercentage=null,type='War Weapon',expectedRows=5,calibrationRows=null,manualType=null,categoryConfidence=95}={}) {
-  const queue=['Example',type];
-  const count=/^(War )?Mythical$/.test(manualType || type.replace(/\s+/g,' ').trim())?6:5;
+async function scan(missing,{known=true,priorName='Positive',priorHall='war',percentage=null,retryPercentage=null,levelText=null,autoFit=false,fitPercentage=null,type='War Weapon',expectedRows=5,calibrationRows=null,manualType=null,categoryConfidence=95,categoryRetries=[]}={}) {
+  const category=context.window.DNStorageRecognition.categoryType,retries=[];
+  if(!manualType && !category(type))for(let i=0;i<3;i++) {
+    const retry=categoryRetries[i] || {text:'',confidence:95};retries.push(retry);
+    if(category(retry.text) && retry.confidence>=60)break;
+  }
+  const queue=['Example',type,...retries];
+  const selected=manualType || category(type) || retries.find(retry=>category(retry.text) && retry.confidence>=60)?.text || '';
+  const count=/^(War )?Mythical$/.test(selected.replace(/\s+/g,' ').trim())?6:5;
   for(let i=0;i<count;i++) {
     queue.push('Positive',percentage ?? (missing==='value'?'':missing==='level'?'+7%':'+12%'));
     if(retryPercentage!==null)queue.push(retryPercentage);
@@ -71,8 +77,8 @@ async function scan(missing,{known=true,priorName='Positive',priorHall='war',per
   let calls=0;
   const worker={setParameters:async()=>{},recognize:async()=>{
     assert(queue.length,'unexpected OCR call');
-    const text=queue.shift();
-    const confidence=calls++===1?categoryConfidence:95;
+    const evidence=queue.shift(),text=typeof evidence==='string'?evidence:evidence.text;
+    const confidence=calls++===1?categoryConfidence:typeof evidence==='object'?evidence.confidence:95;
     return {data:{text,blocks:[{paragraphs:[{lines:[{confidence}]}]}]}};
   }};
   const knownTiers=known?Array.from({length:5},()=>({name:priorName,hall:priorHall,
@@ -85,6 +91,26 @@ async function scan(missing,{known=true,priorName='Positive',priorHall='war',per
   return result;
 }
 async function testOCRFallback() {
+  const category=context.window.DNStorageRecognition.categoryType;
+  assert.equal(category('Legendary','war'),'War Legendary','current blue ribbon supplies a clipped War prefix');
+  assert.equal(category('Legendary'),'Legendary','without pixel evidence the selected Hall cannot supply War');
+  assert.equal(category('WarLegendary','war'),'War Legendary','joined exact words retain their category');
+  for(const text of ['War Legend','Legendry','War','Legendary Mythical','War Legendary bonus'])assert.equal(category(text,'war'),null,'incomplete or extra category words cannot be guessed');
+  assert.equal(category('War Legendary','main'),null,'contradictory current Hall pixels do not identify a category');
+  for(const [type,categoryRetries,expected] of [
+    ['egend:',[{text:'War Legendary',confidence:85}],'War Legendary'],
+    ['', [{text:'War',confidence:95},{text:'War Mythical',confidence:91}],'War Mythical'],
+    ['', [{text:'War Legendary',confidence:20},{text:'War Legendary',confidence:65}],'War Legendary'],
+  ]) {
+    const result=await scan('tier',{type,categoryRetries,known:false});
+    assert.equal(result.artifact.type,expected,'bounded independent banner views recover exact categories');
+    assert.equal(result.rows.length,/Mythical$/.test(expected)?6:5);
+    assert.equal(result.artifact.rawType,type,'original clipped OCR text remains available');
+    assert.equal(result.artifact.categoryEvidence.length,categoryRetries.length+1);
+  }
+  const unread=await scan('tier',{type:'???',known:false});
+  assert.equal(unread.artifact.categoryEvidence.length,4,'an unread category uses at most three retries');
+  assert.equal(unread.artifact.categoryUnclear,true);
   for(const type of ['War Mythical','  War\n Mythical  ','Mythical']) {
     const result=await scan('tier',{type,categoryConfidence:60,known:false});
     assert.equal(result.rows.length,6,'an explicit Mythical banner cannot silently become five-row Legendary when confidence is low');
