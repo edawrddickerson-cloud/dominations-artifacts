@@ -13,13 +13,16 @@
   const checkbox=id=>frame.contentDocument?.querySelector('.collected-input[data-artifact-id="'+id+'"]');
   await wait(()=>checkbox('enigma-machine-legendary'));
   let encounter=0;
-  function read(name,count=5,{type='Legendary',hall='main',reviewable=true,profileKey=store.collectionKey(),pending=false,metadataConflict=false}={}) {
+  function read(name,count=5,{type='Legendary',hall='main',reviewable=true,profileKey=store.collectionKey(),pending=false,metadataConflict=false,categoryUnclear=false}={}) {
     // Unknown percentages and levels must block stat saving, not name ownership.
     const rows=Array.from({length:count},()=>({name:'',value:null,known:false,hasPercent:false}));
-    window.DNStorageScanner.update({valid:false,metadataConflict,warnings:[],rows,artifact:{name,type,hall}},false,
+    window.DNStorageScanner.update({valid:false,metadataConflict,warnings:[],rows,artifact:{name,type,hall,categoryUnclear}},false,
       {reviewable,pending,expectedRows:count,profileKey,encounterId:++encounter});
   }
   check('both editions begin uncollected',!checkbox('enigma-machine-legendary').checked && !checkbox('enigma-machine-mythical').checked);
+  read('Enigma Machine',5,{type:'',categoryUnclear:true});await pause(750);
+  check('an unread banner cannot mark a default five-row Legendary edition',!checkbox('enigma-machine-legendary').checked && !checkbox('enigma-machine-mythical').checked && get('ownership-title').textContent==='Category needed');
+  check('an unread banner blocks saving until category correction',get('type').value==='' && get('keep-status').textContent==='Choose the artifact category.' && (await store.read('items')).length===0);
   read('  ENIGMA   MACHINE ',5,{type:''});
   await wait(()=>checkbox('enigma-machine-legendary').checked);
   check('five attributes check Legendary on the already open Priority page',checkbox('enigma-machine-legendary').checked && !checkbox('enigma-machine-mythical').checked);

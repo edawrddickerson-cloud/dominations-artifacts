@@ -31,7 +31,7 @@
   function syncCatalogOwnership({commit=false}={}) {
     catalogMatch=null;
     const item=current && {name:get('name').value.trim(),hall:document.getElementById('scanner-hall').value,rows:current.rows};
-    const match=item && reviewable && !pending && !current.metadataConflict && observationProfile===store.collectionKey() &&
+    const match=item && reviewable && !pending && !current.metadataConflict && !current.artifact?.categoryUnclear && observationProfile===store.collectionKey() &&
       item.rows?.length===expectedRows && store.matchCatalog(item,catalog);
     const key=match?JSON.stringify([observationProfile,encounter,item.name,match.artifact_id]):'';
     if(key!==ownershipKey){clearTimeout(ownershipTimer);ownershipTimer=null;ownershipKey=key;}
@@ -73,6 +73,7 @@
     if(!loaded || collectionProfile!==store.collectionKey()) {show('unknown','Checking saved artifacts…','Waiting for your active profile\'s collection and scanned inventory.');return null;}
     if(observationProfile!==store.collectionKey()){show('uncertain','Profile changed','Read the current artifact again before saving it to this profile.');return null;}
     if(!reviewable || pending) {show('uncertain','Ownership check pending',pending?'Complete the remaining fields. Valid edits apply automatically.':'Waiting for a current artifact read; the displayed stats may be from the last scan.');return null;}
+    if(current.artifact?.categoryUnclear){show('uncertain','Category needed','Choose the artifact category.');return null;}
     if(catalogMatch) {
       show('collection','Collected · '+catalogMatch.grade,catalogMatch.name+' is marked Collected on Artifact rankings.');
       return matches();
@@ -105,6 +106,7 @@
     if(pending)return correctionError || 'Complete the remaining fields. Edits apply automatically.';
     if(!reviewable)return 'Waiting for a current artifact read.';
     if(current.metadataConflict)return 'Verify the conflicting artifact name, category or Hall.';
+    if(current.artifact?.categoryUnclear)return 'Choose the artifact category.';
     const linked=store.matchCatalog({name:get('name').value,hall:document.getElementById('scanner-hall').value,rows:current.rows},catalog);
     if(linked && !window.DN.loadCollected().has(linked.artifact_id))return 'Not collected. Tick Collected on Priority or scan the artifact again.';
     if(current.rows?.length!==expectedRows)return 'Read all '+expectedRows+' stats.';
@@ -174,8 +176,8 @@
       const detectedHall=/^War /i.test(get('type').value)?'war':result?.artifact?.hall;
       if(detectedHall){document.getElementById('scanner-hall').value=detectedHall;window.DNPrimaryFilters?.setHall(detectedHall);}
       const hall=document.getElementById('scanner-hall').value;
-      if(!get('type').value){const saved=window.DN.loadScannerArtifactType(hall);get('type').value=[...get('type').options].find(option=>option.value.replace(/^War /,'').toLowerCase()===saved)?.value || '';}
-      window.DN.saveScannerArtifactType(get('type').value,hall);
+      if(!get('type').value && !result?.artifact?.categoryUnclear){const saved=window.DN.loadScannerArtifactType(hall);get('type').value=[...get('type').options].find(option=>option.value.replace(/^War /,'').toLowerCase()===saved)?.value || '';}
+      if(!result?.artifact?.categoryUnclear)window.DN.saveScannerArtifactType(get('type').value,hall);
     }
     artifact=result?.artifact;
     get('picture').hidden=!artifact?.image;
@@ -195,6 +197,7 @@
       const hall=/^War /i.test(get('type').value)?'war':'main';
       document.getElementById('scanner-hall').value=hall;window.DNPrimaryFilters?.setHall(hall);
       window.DN.saveScannerArtifactType(get('type').value,hall);
+      window.DNScannerReading?.setStorageType(get('type').value);
     }
     get('metadata').textContent='Using your checked name and category.';render();
   });

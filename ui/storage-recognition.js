@@ -42,7 +42,7 @@
     const strongest=Math.max(g,b);
     return strongest>25 && (soft?strongest-r>8 && strongest>r*1.15:strongest>r*1.6);
   }
-  async function recognize(source,{worker,names,canonPerk,expectedRows=5,layout='storage',hall='main',knownTiers=[],fields=null,isClosed=()=>false,autoFit=true,fitBudget={remaining:24}}) {
+  async function recognize(source,{worker,names,canonPerk,expectedRows=5,layout='storage',hall='main',manualType=null,knownTiers=[],fields=null,isClosed=()=>false,autoFit=true,fitBudget={remaining:24}}) {
     expectedRows=Number(expectedRows)===6?6:5;
     const canvases=[];
     const make=()=>{const c=document.createElement('canvas');canvases.push(c);return c;};
@@ -121,7 +121,8 @@
     let rowHeight=area.height/expectedRows;
     const rect=(index,x,width,y,height)=>({x:area.x+x*area.width,width:width*area.width,y:area.y+(index+y)*rowHeight,height:height*rowHeight});
     const rows=[],warnings=[],evidence=[];
-    let artifact={name:'',type:'',source:'storage',metadataWarnings:[]};
+    const checkedType=types.includes(manualType)?manualType:null;
+    let artifact={name:'',type:checkedType || '',...(checkedType?{typeSource:'manual',hall:/^War /i.test(checkedType)?'war':'main'}:{}),source:'storage',metadataWarnings:[]};
     let calibrationReason=null;
     try {
       if(full) {
@@ -134,9 +135,11 @@
           }
         }
         const type=await read(box('category',{x:.072,y:.439,width:.2,height:.058}),'','banner');
-        const matched=types.find(t=>t.toLowerCase()===type.text.toLowerCase());
-        artifact={...artifact,name:title.text.replace(/\s+/g,' '),type:matched || '',rawType:type.text,titleConfidence:title.confidence,hall:inspect(source).hall};
-        if(calibrated && boxes.hall) {
+        const normalizedType=type.text.replace(/\s+/g,' ').trim().toLowerCase();
+        const matched=types.find(t=>t.toLowerCase()===normalizedType),selected=types.includes(manualType)?manualType:matched;
+        artifact={...artifact,name:title.text.replace(/\s+/g,' '),type:selected || '',rawType:type.text,typeConfidence:type.confidence,...(checkedType?{typeSource:'manual'}:{}),titleConfidence:title.confidence,hall:checkedType?(/^War /i.test(checkedType)?'war':'main'):inspect(source).hall};
+        artifact.categoryUnclear=!selected;
+        if(calibrated && boxes.hall && !checkedType) {
           const rect=window.DNScannerCore.cropPixels(boxes.hall,source.width,source.height);
           const pixels=originalContext.getImageData(rect.x,rect.y,rect.width,rect.height).data;
           artifact.hall=recognition.classifyHallColour(pixels) || hall;
@@ -145,10 +148,11 @@
         const artwork=box('artwork',{x:.037,y:.067,width:.226,height:.295});
         if(artwork){picture.height=Math.max(1,Math.round(192*(source.height*artwork.height)/(source.width*artwork.width)));picture.getContext('2d').drawImage(source,source.width*artwork.x,source.height*artwork.y,source.width*artwork.width,source.height*artwork.height,0,0,picture.width,picture.height);artifact.image=picture.toDataURL('image/jpeg',.88);}
         if(!artifact.name || title.confidence<80)artifact.metadataWarnings.push('Check the artifact name.');
-        if(!matched)artifact.metadataWarnings.push('Choose the artifact category.');
+        if(!selected)artifact.metadataWarnings.push('Choose the artifact category.');
+        else if(!types.includes(manualType) && type.confidence<80)artifact.metadataWarnings.push('Check the artifact category.');
         // All ordinary and Legendary artifacts have five rows. Gold footer
         // decorations and a previous item's template cannot establish six.
-        const detectedRows=rowsForType(type.confidence>=80?matched:null);
+        const detectedRows=rowsForType(selected);
         if(expectedRows!==detectedRows)knownTiers=[];
         expectedRows=detectedRows;area.height=expectedRows===6?.785:.659;rowHeight=area.height/expectedRows;
         if(calibrated && fields.template.rows.length!==expectedRows) {

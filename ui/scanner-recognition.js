@@ -602,7 +602,7 @@
       })());
       return initializing.get(kind);
     }
-    async function recognize(source, {expectedRows=5, layout="panel",hall='main',inferColours=false,categorySource=null,titleSource=null,fields=null,colourHall=null,knownTiers=[],isCurrent=()=>true,fieldReuse=null,autoFit=true,fitBudget={remaining:24}}={},fallbackEncounter=null) {
+    async function recognize(source, {expectedRows=5, layout="panel",hall='main',manualType=null,inferColours=false,categorySource=null,titleSource=null,fields=null,colourHall=null,knownTiers=[],isCurrent=()=>true,fieldReuse=null,autoFit=true,fitBudget={remaining:24}}={},fallbackEncounter=null) {
       const stopped=()=>closed || !isCurrent();
       const check=()=>{if(stopped())throw new Error('Recognition superseded or stopped');};
       if(stopped())fieldEvidence=null;
@@ -630,7 +630,7 @@
       try {activeWorker=await getWorker(fieldViews?.valid?'fast':'standard');check();}catch(error){if(fieldEvidence===encounter)fieldEvidence=null;fieldViews?.release?.();throw error;}
       let ocrCalls=0;
       const readView=async(...args)=>{check();ocrCalls++;const output=await activeWorker.recognize(...args);check();return output;};
-      if(layout==='storage' || layout==='storage-rows' || layout==='storage-rows-dice')return window.DNStorageRecognition.recognize(source,{worker:activeWorker,names,canonPerk,expectedRows,layout,hall,knownTiers,fields,isClosed:stopped,autoFit,fitBudget});
+      if(layout==='storage' || layout==='storage-rows' || layout==='storage-rows-dice')return window.DNStorageRecognition.recognize(source,{worker:activeWorker,names,canonPerk,expectedRows,layout,hall,manualType,knownTiers,fields,isClosed:stopped,autoFit,fitBudget});
       let artifactName=null,nameEvidence=null;
       if(titleSource?.width && titleSource?.height) {
         try {

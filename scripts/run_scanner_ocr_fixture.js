@@ -78,7 +78,7 @@ async function main() {
     if(glance || process.argv.includes('--identification') || process.argv.includes('--crafting-keep') || process.argv.includes('--regions-ui') || process.argv.includes('--field-fit') || process.argv.includes('--crafting-stats')){if(!/^\d{3,4}x\d{3,4}$/.test(viewport))throw new Error('Invalid viewport');const [width,height]=viewport.split('x').map(Number);await client.send('Emulation.setDeviceMetricsOverride',{width,height,deviceScaleFactor:1,mobile:false});}
     if(inventory)await client.send('Emulation.setDeviceMetricsOverride',{width:1800,height:1100,deviceScaleFactor:1,mobile:false});
     if(storageLayout)await client.send('Emulation.setDeviceMetricsOverride',{width:1440,height:900,deviceScaleFactor:1,mobile:false});
-    const storage=process.argv.includes('--storage') || inventory || storageLayout || storagePassive || process.argv.includes('--storage-fields') || process.argv.includes('--auto-fit-storage') || process.argv.includes('--storage-catalog') || process.argv.includes('--linked-artifacts');
+    const storage=process.argv.includes('--storage') || inventory || storageLayout || storagePassive || process.argv.includes('--storage-fields') || process.argv.includes('--auto-fit-storage') || process.argv.includes('--storage-catalog') || process.argv.includes('--linked-artifacts') || process.argv.includes('--storage-category');
     await client.send('Page.navigate',{url:origin+'/ui/'+(storage?'storage-scanner.html':'scanner.html')});
     await delay(500);
     // The scanner document lives inside its capture host. Await its scripts,
@@ -94,6 +94,7 @@ async function main() {
     if(process.argv.includes('--profile-delete'))expression=fs.readFileSync(path.join(root,'tests/scanner/profile-delete-browser.js'),'utf8');
     if(process.argv.includes('--inventory-tiers'))expression='window.DNInventoryTierOnly=true;\n'+expression;
     if(storagePassive)expression=fs.readFileSync(path.join(root,'tests/scanner/storage-passive-browser.js'),'utf8');
+    if(process.argv.includes('--storage-category'))expression=fs.readFileSync(path.join(root,process.argv.includes('--real-category')?'tests/scanner/storage-category-real-browser.js':'tests/scanner/storage-category-browser.js'),'utf8');
     if(process.argv.includes('--storage-catalog'))expression=fs.readFileSync(path.join(root,'tests/scanner/storage-catalog-browser.js'),'utf8');
     if(process.argv.includes('--linked-artifacts'))expression=fs.readFileSync(path.join(root,'tests/scanner/linked-artifacts-browser.js'),'utf8');
     if(process.argv.includes('--regions-benchmark'))expression='window.DNRegionsBaseline='+process.argv.includes('--baseline')+'; window.DNRegionsTight='+process.argv.includes('--regions-tight')+';\n'+fs.readFileSync(path.join(root,'tests/scanner/regions-benchmark-browser.js'),'utf8');

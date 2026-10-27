@@ -57,9 +57,9 @@ vm.runInContext(fs.readFileSync('ui/storage-field-regions.js','utf8'),context);
 vm.runInContext(fs.readFileSync('ui/scanner-name-catalog.js','utf8'),context);
 vm.runInContext(fs.readFileSync('ui/scanner-recognition.js','utf8'),context);
 vm.runInContext(fs.readFileSync('ui/storage-recognition.js','utf8'),context);
-async function scan(missing,{known=true,priorName='Positive',priorHall='war',percentage=null,retryPercentage=null,levelText=null,autoFit=false,fitPercentage=null,type='War Weapon',expectedRows=5,calibrationRows=null}={}) {
+async function scan(missing,{known=true,priorName='Positive',priorHall='war',percentage=null,retryPercentage=null,levelText=null,autoFit=false,fitPercentage=null,type='War Weapon',expectedRows=5,calibrationRows=null,manualType=null,categoryConfidence=95}={}) {
   const queue=['Example',type];
-  const count=/^(War )?Mythical$/.test(type)?6:5;
+  const count=/^(War )?Mythical$/.test(manualType || type.replace(/\s+/g,' ').trim())?6:5;
   for(let i=0;i<count;i++) {
     queue.push('Positive',percentage ?? (missing==='value'?'':missing==='level'?'+7%':'+12%'));
     if(retryPercentage!==null)queue.push(retryPercentage);
@@ -68,27 +68,41 @@ async function scan(missing,{known=true,priorName='Positive',priorHall='war',per
     if(missing==='level')for(let attempt=0;attempt<5;attempt++)queue.push('');
     if(fitPercentage!==null)queue.push(fitPercentage,fitPercentage);
   }
+  let calls=0;
   const worker={setParameters:async()=>{},recognize:async()=>{
     assert(queue.length,'unexpected OCR call');
     const text=queue.shift();
-    return {data:{text,blocks:[{paragraphs:[{lines:[{confidence:95}]}]}]}};
+    const confidence=calls++===1?categoryConfidence:95;
+    return {data:{text,blocks:[{paragraphs:[{lines:[{confidence}]}]}]}};
   }};
   const knownTiers=known?Array.from({length:5},()=>({name:priorName,hall:priorHall,
     tier:missing==='level'?'green':'blue',tierSource:'percentage-level'})):[];
   const fields=calibrationRows?{template:context.window.DNStorageRegions.defaults(1,calibrationRows)}:null;
   const result=await context.window.DNStorageRecognition.recognize(canvas(),{
-    autoFit,worker,names:['Positive'],canonPerk:value=>value,expectedRows,layout:'storage',hall:'war',knownTiers,fields,
+    autoFit,worker,names:['Positive'],canonPerk:value=>value,expectedRows,layout:'storage',hall:'war',knownTiers,fields,manualType,
   });
   assert.equal(queue.length,0);
   return result;
 }
 async function testOCRFallback() {
+  for(const type of ['War Mythical','  War\n Mythical  ','Mythical']) {
+    const result=await scan('tier',{type,categoryConfidence:60,known:false});
+    assert.equal(result.rows.length,6,'an explicit Mythical banner cannot silently become five-row Legendary when confidence is low');
+    assert.equal(result.artifact.type,type.replace(/\s+/g,' ').trim());
+    assert(result.artifact.metadataWarnings.includes('Check the artifact category.'));
+  }
+  for(const [type,manualType,expected] of [['War Legendary','War Mythical',6],['War Mythical','War Legendary',5]]) {
+    const result=await scan('tier',{type,manualType,known:false});
+    assert.equal(result.rows.length,expected,'manual category controls OCR geometry instead of the conflicting banner');
+    assert.equal(result.artifact.type,manualType);assert.equal(result.artifact.typeSource,'manual');
+  }
   for(const type of ['Weapon','War Weapon','Legendary','War Legendary','???','Mythical','War Mythical']) {
     const expected=/^(War )?Mythical$/.test(type)?6:5;
     for(const requested of [5,6]) {
       const result=await scan('tier',{type,expectedRows:requested,known:false});
       assert.equal(result.expectedRows,expected,type+' determines the row count before stat OCR');
       assert.equal(result.rows.length,expected,'a stale row selector cannot change '+type+' geometry');
+      assert.equal(result.artifact.categoryUnclear,type==='???','an unread category cannot establish a Legendary edition from default geometry');
     }
   }
   for(const [type,calibrationRows,expected] of [['War Weapon',6,5],['War Legendary',6,5],['War Mythical',5,6]]) {
