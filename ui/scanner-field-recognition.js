@@ -39,7 +39,8 @@
         const a=resolved.boxes[i+'-name'],b=resolved.boxes[i+'-percentage'];
         return ['x','y','width','height'].every(key=>a[key]===b[key]);
       });
-      const reuseGeometry=JSON.stringify({boxes:resolved.boxes,template:fields.template,
+      const foregroundRows=fields.foregroundRows===true;
+      const reuseGeometry=JSON.stringify({boxes:resolved.boxes,template:fields.template,foregroundRows,
         source:[fields.source.width,fields.source.height],panelSource:fields.panelSource?[fields.panelSource.width,fields.panelSource.height]:null});
       const seedCategory={x:-.3,y:-.31,width:.5,height:.2};
       const automaticCategory=fields.template.category && Object.keys(seedCategory).every(key=>fields.template.category[key]===seedCategory[key]);
@@ -50,7 +51,7 @@
         const frame=document.createElement('canvas');frame.width=rect.width;frame.height=rect.height;
         frame.getContext('2d').drawImage(input,rect.x,rect.y,rect.width,rect.height,0,0,rect.width,rect.height);crops['fit-panel']=frame;
       }
-      return {valid:true,crops,template:window.DNScannerRegions.copy(fields.template),release,sharedPercentages,reuseGeometry,automaticCategory,diceRequested:fields.template.rows.map(row=>!!row.dice),unavailable:resolved.unavailable || {}};
+      return {valid:true,crops,template:window.DNScannerRegions.copy(fields.template),release,sharedPercentages,reuseGeometry,foregroundRows,automaticCategory,diceRequested:fields.template.rows.map(row=>!!row.dice),unavailable:resolved.unavailable || {}};
     }catch(error){release();throw error;}
   }
   function percentageRect(data,width,height) {
@@ -89,14 +90,15 @@
     const rawCtx=raw.getContext('2d',{willReadFrequently:true});rawCtx.drawImage(source,0,0,raw.width,raw.height);
     const pixels=rawCtx.getImageData(0,0,raw.width,raw.height);let ink=0,background=0;
     const numeric=minimumScale>2;
+    const foreground=mode==='green'||mode==='blue';
     if(mode==='chroma' && numeric){
       const histogram=new Uint32Array(256);for(let i=0;i<pixels.data.length;i+=4)histogram[Math.max(0,Math.max(pixels.data[i+1],pixels.data[i+2])-pixels.data[i])]++;
       let total=0;for(let value=0;value<256;value++){total+=histogram[value];if(total>=pixels.data.length/8){background=value;break;}}
     }
     for(let i=0;i<pixels.data.length;i+=4) {
       const r=pixels.data[i],g=pixels.data[i+1],b=pixels.data[i+2];
-      const saturated=mode==='category'?g>60 && g>r*1.25 && g>b*1.05:Math.max(g,b)>r*1.8 && Math.max(g,b)>25;
-      const value=mode==='neutral'?R().neutralTextContrast(r,g,b):mode==='chroma' || mode==='colour' && !compact?255-Math.min(255,Math.max(0,(numeric?Math.max(g,b):g)-r-background)*(numeric?6:mode==='chroma'?8:12)):mode==='colour' || mode==='category'?saturated?0:255:R().textContrast(r,g,b);
+      const saturated=mode==='green'?g>60 && g>r*1.8 && g>b*1.2:mode==='blue'?Math.min(g,b)>r*1.8 && Math.min(g,b)-r>25 && Math.max(g,b)>35:mode==='category'?g>60 && g>r*1.25 && g>b*1.05:Math.max(g,b)>r*1.8 && Math.max(g,b)>25;
+      const value=foreground?saturated?0:255:mode==='neutral'?R().neutralTextContrast(r,g,b):mode==='chroma' || mode==='colour' && !compact?255-Math.min(255,Math.max(0,(numeric?Math.max(g,b):g)-r-background)*(numeric?6:mode==='chroma'?8:12)):mode==='colour' || mode==='category'?saturated?0:255:R().textContrast(r,g,b);
       if(mode==='neutral'?value<200:saturated)ink++;
       pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=value;pixels.data[i+3]=255;
     }
@@ -206,11 +208,13 @@
     const batchEvidence=new Map();let evidenceBytes=0,reusedFields=0;
     const samePixels=(first,second)=>{if(first.length!==second.length)return false;for(let i=0;i<first.length;i++)if(first[i]!==second[i])return false;return true;};
     const copyEvidence=value=>({...value,words:(value.words || []).map(word=>({...word,...(word.bbox?{bbox:{...word.bbox}}:{})}))});
+    const batchProfile=(kind,index,mode)=>neutralSources.has(snapshot.crops[index+'-'+kind]) && ['contrast','colour'].includes(mode)?'neutral':snapshot.foregroundRows && war && mode==='contrast' && ['green','blue'].includes(colours[index])?colours[index]:mode;
+    const batchKey=(kind,index,mode)=>kind+':'+mode+':'+index+':'+batchProfile(kind,index,mode);
     async function batch(kind,mode='contrast',indices=[0,1,2,3,4],compactHeight=48) {
       check();
       const results=Array(5),missing=[];
       for(const i of indices) {
-        const source=snapshot.crops[i+'-'+kind],key=kind+':'+mode+':'+i;
+        const source=snapshot.crops[i+'-'+kind],key=batchKey(kind,i,mode);
         // This operation has a fixed compact view, PSM 6 and kind-specific
         // whitelist. Other views/parameters cannot consume these entries.
         if(reuse && mode==='contrast' && compactHeight===48 && evidenceBytes+source.width*source.height*4<=reuse.byteLimit) {
@@ -225,7 +229,12 @@
         missing.push(i);
       }
       if(!missing.length)return results;
-      const prepared=missing.map(i=>view(snapshot.crops[i+'-'+kind],neutralSources.has(snapshot.crops[i+'-'+kind]) && ['contrast','colour'].includes(mode)?'neutral':mode,true,2,compactHeight));
+      const prepared=missing.map(i=>{
+        const source=snapshot.crops[i+'-'+kind];
+        // Automatic War rows can isolate their known foreground ink before
+        // the first atlas; unclear/conflicting evidence keeps ordinary retries.
+        return view(source,batchProfile(kind,i,mode),true,2,compactHeight);
+      });
       if(mode==='colour' && prepared.every(item=>item.ink<30)){for(const item of prepared)item.canvas.width=item.canvas.height=0;return null;}
       const canvas=document.createElement('canvas'),cells=[];
       canvas.width=Math.max(...prepared.map(item=>item.canvas.width));
@@ -426,7 +435,7 @@
           !row.known || row.assumed || row.inferred || row.conflict || row.tierConflict || row.confidence<80 ||
           row.name!==initial.row.name || row.value!==initial.row.value)continue;
         for(const [kind,evidence] of [['name',name],['percentage',percentage]]) {
-          const key=kind+':contrast:'+i,candidate=batchEvidence.get(key);
+          const key=batchKey(kind,i,'contrast'),candidate=batchEvidence.get(key);
           if(candidate)verified.set(key,{...candidate,index:i,name:row.name,value:row.value,evidence:copyEvidence(evidence)});
         }
       }

@@ -17,7 +17,7 @@ const context={URL,Uint8ClampedArray,window:{},document:{baseURI:'http://localho
 vm.createContext(context);
 for(const file of ['scanner-core.js','scanner-recognition.js','scanner-field-recognition.js'])vm.runInContext(fs.readFileSync('ui/'+file,'utf8'),context);
 const R=context.window.DNScannerRecognition,F=context.window.DNScannerFieldRecognition;
-let frames=0,released=0,geometry='geometry-a',namePixel=10,percentagePixel=20,variation=0,partial=false,current=true;
+let frames=0,released=0,geometry='geometry-a',namePixel=10,percentagePixel=20,variation=0,partial=false,current=true,hallPixel=0,foregroundRows=false;
 F.snapshot=()=>{
   frames++;const crops={};
   for(let i=0;i<5;i++) {
@@ -25,8 +25,8 @@ F.snapshot=()=>{
     crops[i+'-percentage']=canvas(partial && i===4?99:i===2?percentagePixel:20);
     crops[i+'-star']=canvas();
   }
-  crops.category=canvas([40,210,50],120,30);crops['hall-banner']=canvas();
-  return {valid:true,crops,reuseGeometry:geometry,sharedPercentages:Array(5).fill(false),release(){released++;for(const crop of Object.values(crops))crop.width=crop.height=0;}};
+  crops.category=canvas([40,210,50],120,30);crops['hall-banner']=canvas(hallPixel);
+  return {valid:true,crops,reuseGeometry:geometry,foregroundRows,sharedPercentages:Array(5).fill(false),release(){released++;for(const crop of Object.values(crops))crop.width=crop.height=0;}};
 };
 let calls=0,settings={},gate=null,failNext=false,standardCalls=0,categoryCalls=0,lastAtlasSizes=[],standardConflict=false,weakFirstBatch=false;
 const worker={async setParameters(value){Object.assign(settings,value);},async terminate(){},async recognize(input){
@@ -52,6 +52,21 @@ async function main(){
   result=await read();assert.equal(result.delta,1);assert.equal(result.reusedFields,10);assert.equal(categoryCalls,2,'category evidence is always fresh');
   assert.equal(result.observations[0].reusedFields,10,'observations identify replayed evidence');
   assert.equal(result.observations.at(-1).fieldReads[0][0].name.evidenceSource,'same-encounter-identical-pixels');
+  // The uniform fake canvas cannot model glyph edges. Supply neutral row
+  // classification while exercising the real Hall-dependent view selection.
+  const rowColours=R.rowColours;R.rowColours=()=>Array(5).fill('neutral');
+  try{
+    hallPixel=[20,70,160];result=await read();
+    assert.equal(result.reusedFields,0,'changed Hall preprocessing cannot reuse identical glyph pixels through another view');
+    hallPixel=0;result=await read();assert.equal(result.reusedFields,0,'restoring the original view also requires its own verified evidence');
+    result=await read();assert.equal(result.reusedFields,10);
+    hallPixel=[20,70,160];foregroundRows=true;R.rowColours=()=>Array(5).fill('green');
+    result=await read();assert.equal(result.reusedFields,0);
+    result=await read();assert.equal(result.reusedFields,10);
+    R.rowColours=()=>Array(5).fill('blue');result=await read();
+    assert.equal(result.reusedFields,0,'changing the selected foreground view cannot reuse identical original pixels');
+  }finally{R.rowColours=rowColours;hallPixel=0;foregroundRows=false;}
+  await read();
   namePixel=11;lastAtlasSizes=[];result=await read();
   assert.equal(result.rows[2].name,'Catapult Hitpoints');assert.equal(result.reusedFields,9);assert.equal(result.delta,2);
   assert.deepEqual(lastAtlasSizes,[1],'only the changed physical name cell enters the atlas');

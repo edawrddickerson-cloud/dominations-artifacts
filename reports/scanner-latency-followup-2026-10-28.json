@@ -1,0 +1,363 @@
+{
+  "date": "2026-10-28",
+  "baselineCommit": "46d58d59278f9b57bc11aab45983d9215cf43fad",
+  "metric": "Source change to paint of exact labelled stats, Hall/category, all five star states, 100% field coverage (17/17), punctuation-normalized title and Collection Target; tied owned comparisons must Discard.",
+  "conditions": {
+    "fixtures": [
+      "war-pistol",
+      "war-body-shield"
+    ],
+    "repetitionsEach": 3,
+    "sourcePixels": [
+      1718,
+      1390
+    ],
+    "streamHz": 10,
+    "ownedItems": 100,
+    "ocr": "real local Tesseract, warm workers",
+    "settlingGateMs": 220
+  },
+  "measurements": {
+    "before": {
+      "passed": true,
+      "medianMs": 626.8,
+      "rangeMs": [
+        492.2,
+        777.9
+      ],
+      "runs": [
+        {
+          "fixture": "war-pistol",
+          "repeat": 0,
+          "statsMs": 710.6000000089407,
+          "targetMs": 710.6000000089407,
+          "completeMs": 710.6000000089407,
+          "valid": true,
+          "inferred": 0,
+          "automatic": true,
+          "name": "Georg Luger’s Pistol",
+          "fields": 100,
+          "decisionCorrect": true
+        },
+        {
+          "fixture": "war-body-shield",
+          "repeat": 0,
+          "statsMs": 492.20000000298023,
+          "targetMs": 492.20000000298023,
+          "completeMs": 492.20000000298023,
+          "valid": true,
+          "inferred": 0,
+          "automatic": true,
+          "name": "Casimir Zeglen’s Brewster - Body Shield ;",
+          "fields": 100,
+          "decisionCorrect": true
+        },
+        {
+          "fixture": "war-pistol",
+          "repeat": 1,
+          "statsMs": 777.8999999910593,
+          "targetMs": 777.8999999910593,
+          "completeMs": 777.8999999910593,
+          "valid": true,
+          "inferred": 0,
+          "automatic": true,
+          "name": "Georg Luger’s Pistol",
+          "fields": 100,
+          "decisionCorrect": true
+        },
+        {
+          "fixture": "war-body-shield",
+          "repeat": 1,
+          "statsMs": 534.2999999970198,
+          "targetMs": 534.2999999970198,
+          "completeMs": 534.2999999970198,
+          "valid": true,
+          "inferred": 0,
+          "automatic": true,
+          "name": "Casimir Zeglen’s Brewster - Body Shield ;",
+          "fields": 100,
+          "decisionCorrect": true
+        },
+        {
+          "fixture": "war-pistol",
+          "repeat": 2,
+          "statsMs": 618.6999999880791,
+          "targetMs": 618.6999999880791,
+          "completeMs": 618.6999999880791,
+          "valid": true,
+          "inferred": 0,
+          "automatic": true,
+          "name": "Georg Luger’s Pistol",
+          "fields": 100,
+          "decisionCorrect": true
+        },
+        {
+          "fixture": "war-body-shield",
+          "repeat": 2,
+          "statsMs": 635,
+          "targetMs": 635,
+          "completeMs": 635,
+          "valid": true,
+          "inferred": 0,
+          "automatic": true,
+          "name": "Casimir Zeglen’s Brewster - Body Shield ;",
+          "fields": 100,
+          "decisionCorrect": true
+        }
+      ],
+      "ocrCallsPerRead": [
+        6.0,
+        4.0
+      ]
+    },
+    "after": {
+      "passed": true,
+      "medianMs": 480.9,
+      "rangeMs": [
+        418.1,
+        520.4
+      ],
+      "runs": [
+        {
+          "fixture": "war-pistol",
+          "repeat": 0,
+          "statsMs": 481.3999999910593,
+          "targetMs": 481.3999999910593,
+          "completeMs": 481.3999999910593,
+          "valid": true,
+          "inferred": 0,
+          "automatic": true,
+          "name": "Georg Luger’s Pistol",
+          "fields": 100,
+          "decisionCorrect": true
+        },
+        {
+          "fixture": "war-body-shield",
+          "repeat": 0,
+          "statsMs": 511.20000000298023,
+          "targetMs": 511.20000000298023,
+          "completeMs": 511.20000000298023,
+          "valid": true,
+          "inferred": 0,
+          "automatic": true,
+          "name": "Casimir Zeglen’s Brewster - Body Shield ;",
+          "fields": 100,
+          "decisionCorrect": true
+        },
+        {
+          "fixture": "war-pistol",
+          "repeat": 1,
+          "statsMs": 421.8999999910593,
+          "targetMs": 421.8999999910593,
+          "completeMs": 421.8999999910593,
+          "valid": true,
+          "inferred": 0,
+          "automatic": true,
+          "name": "Georg Luger’s Pistol",
+          "fields": 100,
+          "decisionCorrect": true
+        },
+        {
+          "fixture": "war-body-shield",
+          "repeat": 1,
+          "statsMs": 520.4000000059605,
+          "targetMs": 520.4000000059605,
+          "completeMs": 520.4000000059605,
+          "valid": true,
+          "inferred": 0,
+          "automatic": true,
+          "name": "Casimir Zeglen’s Brewster - Body Shield ;",
+          "fields": 100,
+          "decisionCorrect": true
+        },
+        {
+          "fixture": "war-pistol",
+          "repeat": 2,
+          "statsMs": 418.1000000089407,
+          "targetMs": 418.1000000089407,
+          "completeMs": 418.1000000089407,
+          "valid": true,
+          "inferred": 0,
+          "automatic": true,
+          "name": "Georg Luger’s Pistol",
+          "fields": 100,
+          "decisionCorrect": true
+        },
+        {
+          "fixture": "war-body-shield",
+          "repeat": 2,
+          "statsMs": 480.5,
+          "targetMs": 480.5,
+          "completeMs": 480.5,
+          "valid": true,
+          "inferred": 0,
+          "automatic": true,
+          "name": "Casimir Zeglen’s Brewster - Body Shield ;",
+          "fields": 100,
+          "decisionCorrect": true
+        }
+      ],
+      "ocrCallsPerRead": [
+        3.0,
+        3.0
+      ]
+    },
+    "finalSourceConfirmation": {
+      "passed": true,
+      "medianMs": 512.4,
+      "rangeMs": [
+        381.6,
+        588.3
+      ],
+      "runs": [
+        {
+          "fixture": "war-pistol",
+          "repeat": 0,
+          "statsMs": 532.5,
+          "targetMs": 532.5,
+          "completeMs": 532.5,
+          "valid": true,
+          "inferred": 0,
+          "automatic": true,
+          "name": "Georg Luger’s Pistol",
+          "fields": 100,
+          "decisionCorrect": true
+        },
+        {
+          "fixture": "war-body-shield",
+          "repeat": 0,
+          "statsMs": 540.4000000059605,
+          "targetMs": 540.4000000059605,
+          "completeMs": 540.4000000059605,
+          "valid": true,
+          "inferred": 0,
+          "automatic": true,
+          "name": "Casimir Zeglen’s Brewster - Body Shield ;",
+          "fields": 100,
+          "decisionCorrect": true
+        },
+        {
+          "fixture": "war-pistol",
+          "repeat": 1,
+          "statsMs": 381.6000000089407,
+          "targetMs": 381.6000000089407,
+          "completeMs": 381.6000000089407,
+          "valid": true,
+          "inferred": 0,
+          "automatic": true,
+          "name": "Georg Luger’s Pistol",
+          "fields": 100,
+          "decisionCorrect": true
+        },
+        {
+          "fixture": "war-body-shield",
+          "repeat": 1,
+          "statsMs": 588.3000000119209,
+          "targetMs": 588.3000000119209,
+          "completeMs": 588.3000000119209,
+          "valid": true,
+          "inferred": 0,
+          "automatic": true,
+          "name": "Casimir Zeglen’s Brewster - Body Shield ;",
+          "fields": 100,
+          "decisionCorrect": true
+        },
+        {
+          "fixture": "war-pistol",
+          "repeat": 2,
+          "statsMs": 492.09999999403954,
+          "targetMs": 492.09999999403954,
+          "completeMs": 492.20000000298023,
+          "valid": true,
+          "inferred": 0,
+          "automatic": true,
+          "name": "Georg Luger’s Pistol",
+          "fields": 100,
+          "decisionCorrect": true
+        },
+        {
+          "fixture": "war-body-shield",
+          "repeat": 2,
+          "statsMs": 482.80000001192093,
+          "targetMs": 482.80000001192093,
+          "completeMs": 482.80000001192093,
+          "valid": true,
+          "inferred": 0,
+          "automatic": true,
+          "name": "Casimir Zeglen’s Brewster - Body Shield ;",
+          "fields": 100,
+          "decisionCorrect": true
+        }
+      ],
+      "ocrCallsPerRead": [
+        3.0,
+        3.0
+      ]
+    }
+  },
+  "scaledAccuracy": [
+    {
+      "fixture": "war-pistol",
+      "scale": 0.75,
+      "exact": true,
+      "valid": true,
+      "calls": 6
+    },
+    {
+      "fixture": "war-pistol",
+      "scale": 1,
+      "exact": true,
+      "valid": true,
+      "calls": 6
+    },
+    {
+      "fixture": "war-pistol",
+      "scale": 1.5,
+      "exact": true,
+      "valid": true,
+      "calls": 2
+    },
+    {
+      "fixture": "war-body-shield",
+      "scale": 0.75,
+      "exact": true,
+      "valid": false,
+      "calls": 12
+    },
+    {
+      "fixture": "war-body-shield",
+      "scale": 1,
+      "exact": true,
+      "valid": true,
+      "calls": 2
+    },
+    {
+      "fixture": "war-body-shield",
+      "scale": 1.5,
+      "exact": true,
+      "valid": true,
+      "calls": 2
+    }
+  ],
+  "checks": [
+    "scanner regions and frozen input",
+    "scanner field evidence reuse including effective preprocessing changes",
+    "scanner reading and in-flight profile invalidation",
+    "scanner speculation and worker readiness",
+    "scanner capture",
+    "scanner recognition/comparison/strategy",
+    "crafting purposes and inline editing",
+    "War panel UI and navigation session",
+    "glance and provisional colours",
+    "narrow real OCR calibration",
+    "design ownership guard",
+    "site build"
+  ],
+  "limitations": [
+    "Two original War screenshots, three warm reads each; small sample is not a population estimate.",
+    "No live game motion, screen-sharing permission or cold model load.",
+    "After primary timing precedes cache-key hardening; final-source confirmation includes that hardening and ran alongside other checks.",
+    "Artifact title comparison normalizes punctuation; exact title punctuation is not established.",
+    "No confidence threshold, conflict rule or 220 ms settling reduction; 0.2 seconds is not established."
+  ]
+}

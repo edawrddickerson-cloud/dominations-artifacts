@@ -432,6 +432,10 @@ async function main(){
   calibrated.reader.update(calibratedFrame,{session:1,current:true,fields:{...fields,panel:{...fields.panel,x:.2}}});
   calibrated.jobs[0].resolve(parsed());await flush();
   assert.doesNotMatch(calibrated.e.result.innerHTML,/95/,'moved calibration cancels results even if stat pixels are unchanged');
+  calibrated.e.read.fire('click');const oldProfile=calibrated.jobs.at(-1);
+  calibrated.reader.update(calibratedFrame,{session:1,current:true,fields:{...fields,panel:{...fields.panel,x:.2},foregroundRows:true}});
+  oldProfile.resolve(parsed());await flush();
+  assert.doesNotMatch(calibrated.e.result.innerHTML,/95/,'a preprocessing profile change cancels in-flight results without moving the boxes');
   calibrated.e.read.fire('click');const changed=calibrated.jobs.at(-1);
   calibrated.reader.update(calibratedFrame,{session:1,current:false,fields:null});changed.resolve(parsed());await flush();
   assert.doesNotMatch(calibrated.e.result.innerHTML,/95/,'lost panel anchor cancels field reads');

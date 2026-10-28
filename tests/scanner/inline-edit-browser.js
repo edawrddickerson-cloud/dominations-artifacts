@@ -3,7 +3,7 @@
   const get=id=>document.getElementById('scanner-'+id),checks={};
   const check=(name,value)=>{checks[name]=!!value;if(!value)throw Error(name);};
   const wait=async fn=>{for(let i=0;i<500;i++){if(fn())return;await new Promise(r=>setTimeout(r,20));}throw Error('Inline edit timed out');};
-  await wait(()=>get('names').children.length && window.DNScannerTargetRatings);
+  await wait(()=>get('names').children.length && window.DNScannerTargetRatings && window.DNScannerCollection);
   get('auto').checked=false;document.getElementById('header-main').click();
   const tank='Heavy Tank Damage',fighter='Fighter Damage';
   const target=DNCraftingPurposes.saveCustom({label:'Air and tanks',category:'attacking',perks:[tank,fighter]});DNCraftingPurposes.configure(target,{weights:{[tank]:2,[fighter]:3}});

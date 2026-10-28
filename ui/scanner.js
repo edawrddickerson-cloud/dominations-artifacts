@@ -87,6 +87,7 @@
   }
   function renderFrame() {
     const source = image || el.video;
+    const storage=!!window.DNStorageRecognition;
     const size = sourceSize();
     if (!size.width || !size.height || (!image && (el.video.readyState < 2 || track?.muted))) return false;
     const nextDimensions = size.width + "x" + size.height;
@@ -99,16 +100,24 @@
     dimensions = nextDimensions;
     const scale = Math.min(1, 1280 / size.width);
     const width = Math.round(size.width * scale), height = Math.round(size.height * scale);
+    // Freeze a crafting frame once. Preview metadata, field crops and stat
+    // pixels must not come from different video frames during a transition.
+    if(calibration && !storage){
+      if(nativeFrame.width!==size.width || nativeFrame.height!==size.height){nativeFrame.width=size.width;nativeFrame.height=size.height;}
+      nativeFrame.getContext('2d').drawImage(source,0,0,size.width,size.height);
+    }
+    const currentSource=calibration && !storage?nativeFrame:source;
     if (el.frame.width !== width || el.frame.height !== height) { el.frame.width = width; el.frame.height = height; }
-    frameContext.drawImage(source, 0, 0, width, height);
+    frameContext.drawImage(currentSource, 0, 0, width, height);
     // A connection can start between crafts. Keep looking until a panel appears,
     // without replacing a selection while the user is drawing it.
     if(locatePending || (!region && !drag && !window.DNStorageRecognition)){locatePending=false;if(findPanel())return true;}
     let fieldState=null,focusPanel;
-    const storage=!!window.DNStorageRecognition;
     if(calibration) {
-      if(nativeFrame.width!==size.width || nativeFrame.height!==size.height){nativeFrame.width=size.width;nativeFrame.height=size.height;}
-      nativeFrame.getContext('2d').drawImage(source,0,0,size.width,size.height);
+      if(storage){
+        if(nativeFrame.width!==size.width || nativeFrame.height!==size.height){nativeFrame.width=size.width;nativeFrame.height=size.height;}
+        nativeFrame.getContext('2d').drawImage(source,0,0,size.width,size.height);
+      }
       const layout=document.getElementById('scanner-layout')?.value || 'panel';
       if(!storage)focusPanel=detectCraftPanel(nativeFrame,manualRegion?null:region);
       const candidate=storage && layout==='storage'?region:layout==='panel'?(storage?window.DNScannerRecognition?.detectPanel(nativeFrame):manualRegion && !selecting?region:focusPanel):null;
@@ -127,7 +136,7 @@
     if (crop) {
       // Keep the crop at native resolution. The display is scaled by CSS only.
       if (el.crop.width !== crop.width || el.crop.height !== crop.height) { el.crop.width = crop.width; el.crop.height = crop.height; }
-      cropContext.drawImage(source, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
+      cropContext.drawImage(currentSource, crop.x, crop.y, crop.width, crop.height, 0, 0, crop.width, crop.height);
       el.freshness.textContent = image ? "Local screenshot crop; not a live capture." : "Preview sampled at " + new Date().toLocaleTimeString() + ". Source freshness is not independently verified.";
       el.meta.textContent = "Source " + nextDimensions + " · crop " + crop.width + "×" + crop.height + " pixels";
       if(!storage && !calibration)focusPanel=detectCraftPanel(el.frame,manualRegion?null:region);

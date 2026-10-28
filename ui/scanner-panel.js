@@ -92,7 +92,7 @@
     if(!G || !source || !window.DNScannerCore.validRegion(panel) || silverFrame!==JSON.stringify([source.width,source.height,panel.x,panel.y,panel.width,panel.height]))return null;
     const template=G.defaults(panel.width*source.width/(panel.height*source.height));
     template.rows.forEach(row=>{row.name.y+=row.name.height*.20;row.name.height*=.60;row.name.width=.60;row.percentage={...row.name};});
-    return G.resolve(template,panel,source).valid?{template,source,panel}:null;
+    return G.resolve(template,panel,source).valid?{template,source,panel,foregroundRows:true}:null;
   }
   window.DNScannerPanel={detect,automaticFields};
 })();

@@ -1,5 +1,13 @@
 # Craft comparison
 
+## Complete War capture latency follow-up, October 28, 2026
+
+Crafting preview, field crops and stat pixels now use one frozen native frame. This prevents video advancing between those reads and needlessly rejecting otherwise usable speculative work. Automatic War fields isolate classified green/blue foreground text in the initial row atlas, avoiding redundant enlargement and colour retries on the labelled fixtures. Unclassified rows, saved/manual fields and other layouts retain their existing preprocessing. Confidence, signed-value checks, conflicts, retries and the full 220 ms settling gate are unchanged. Effective preprocessing participates in encounter-cache keys and field-profile changes invalidate in-flight work.
+
+Six matched warm reads of two original War screenshots measured complete capture at median 627 ms before and 481 ms after (after range 418–520 ms). This includes exact labelled stats, Hall/category, five star states, 17/17 field coverage, the title with punctuation normalized, and a painted Collection Target. All six reads on each side were verified without inferred values and produced the correct tied Discard decision against identical owned items. The final-source confirmation, run alongside other checks, measured median 512 ms (382–588 ms); all six remained complete and correct. Each final read used three OCR calls. The six automatic-field probes at 0.75, 1 and 1.5 scale were exact and verified, retaining fallback where needed.
+
+These local 10 Hz canvas-stream tests exclude actual game motion and screen-sharing permission. They establish neither universal latency nor a 0.2-second result; the unchanged settling gate alone is 220 ms. See [timings, accuracy and limits](../reports/scanner-latency-followup-2026-10-28.json). Run `node scripts/test_scanner_latency.cjs --live --trace-ocr --summary` to include per-call OCR timings in the complete-capture benchmark.
+
 ## War read latency and Collection Target availability, October 28, 2026
 
 Validated silver War panels use temporary row fields when no saved calibration exists and Use field boxes is enabled. These fields select the existing fast OCR path and its bounded fit/conflict/standard fallback; they do not persist a template or change confidence rules. Saved boxes take precedence, manual/text layouts retain their existing paths, and Main gold panels are unchanged. Calibrate Fields starts from the active temporary geometry and still requires an explicit save. Settling and speculative input validation retain the full 220 ms gate and exact frozen-pixel checks.

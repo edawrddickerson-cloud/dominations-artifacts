@@ -180,7 +180,7 @@
     let correctedGeometryType=null,correctedGeometryName=null;
     if(Object.prototype.hasOwnProperty.call(state,'live'))liveCapture=state.live===true;
     if(Object.prototype.hasOwnProperty.call(state,'fields')) {
-      const next=state.fields || null,key=next?JSON.stringify([next.template,next.panel]):null;
+      const next=state.fields || null,key=next?JSON.stringify([next.template,next.panel,!!next.foregroundRows]):null;
       if(storage && key!==fieldGeometry && next?.template?.kind==='storage' && latestFields?.template?.kind==='storage' &&
         next.template.rows.length!==latestFields.template.rows.length && next.template.rows.length===rowCount()){
         correctedGeometryType=manualStorageType();correctedGeometryName=manualStorageName();

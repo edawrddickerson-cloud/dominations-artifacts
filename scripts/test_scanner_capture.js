@@ -137,6 +137,8 @@ async function main() {
   assert.equal(recovery.readings.at(-1).itemPresent,true);
   r['fields-edit'].fire('click');r['fields-save'].fire('click');
   assert.equal(recovery.window.DNScannerCalibration.hasTemplate,true);
+  assert.equal(r.crop.draws.at(-1)[0],recovery.readings.at(-1).fields.source,'stat crop and calibrated metadata use the same frozen source');
+  assert.notEqual(r.crop.draws.at(-1)[0],r.video,'a live video frame cannot change between crafting crop operations');
   recovery.detection.panel=null;r.retry.fire('click');
   assert.equal(recovery.readings.at(-1).current,false,'automatic anchor loss still pauses saved-field reads');
   assert.equal(r['fields-edit'].disabled,true);
