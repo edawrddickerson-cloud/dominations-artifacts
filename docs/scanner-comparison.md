@@ -1,5 +1,15 @@
 # Craft comparison
 
+## Explicit collection saves and stable names, October 28, 2026
+
+The scanner ends with a compact Last 3 crafted items list, newest first by original capture time, scoped to the active profile. The native disclosure reveals the five stats; its shared Add to Collection button uses the canonical log record and physical-item ID. Retries and corrections update the same row without changing craft order or replacing its action node. Reopening retains the recent list and Added state. The full history remains in Crafting Stats.
+
+Both current and logged actions accept five complete stat rows, identified Hall/category and the correct profile. Star/dice uncertainty or selected Hall provenance alone cannot block an explicit save; unknown fields and inferred-value provenance remain intact. Incomplete/conflicting stats and profile mismatch still block it. While a new live read runs, Add uses the displayed snapshot and its original encounter, never the new acquisition. Paused capture still disables the main action; recent records remain available. Failed saves show a visible error and remain retryable.
+
+Once a row has a known name, subsequent raw text, suggested names and automatic glyph/catalogue fuzzy matches cannot replace it even if their confidence is higher or the old percentage is disputed. Stronger exact known evidence and manual correction remain available; a new artifact/profile/capture context resets identity. Fresh row colour can infer a missing percentage using the retained canonical name and sign after fields are combined: War white/green/blue is 1/3/6, Main is 1/6/11. Inference stays opt-in and unverified, retains raw observations, skips conflicts, and does not overwrite a finite contradictory OCR number.
+
+Run `node scripts/test_crafting_scanner_contract.cjs` for every scanner change. It checks production ownership/persistence/benchmark behaviour with deterministic OCR at 1440, 390 and 320px, plus recognition, retention, inference, profile/encounter isolation, display colours, the unchanged 220 ms speculative lifecycle, and real War screenshot OCR at three scales. Screenshots are linked from `data/temp/design-review/index.html`. Static screenshot tests cannot establish live-game accuracy. See the [regression review](scanner-regression-review-2026-10-28.md) for reproduced causes, history and coverage gaps.
+
 ## Complete War capture latency follow-up, October 28, 2026
 
 Crafting preview, field crops and stat pixels now use one frozen native frame. This prevents video advancing between those reads and needlessly rejecting otherwise usable speculative work. Automatic War fields isolate classified green/blue foreground text in the initial row atlas, avoiding redundant enlargement and colour retries on the labelled fixtures. Unclassified rows, saved/manual fields and other layouts retain their existing preprocessing. Confidence, signed-value checks, conflicts, retries and the full 220 ms settling gate are unchanged. Effective preprocessing participates in encounter-cache keys and field-profile changes invalidate in-flight work.

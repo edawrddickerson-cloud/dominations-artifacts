@@ -52,6 +52,19 @@ const nameOnly=craftRetry({value:null,inferred:false,confidence:80});
 assert.equal(categoryRecognition.retainCraftRead(nameOnly,craftRetry({name:'',known:false,value:null})).rows[2].name,'Ranged Infantry Hitpoints','missing OCR cannot erase a name whose percentage is still unknown');
 assert.equal(categoryRecognition.retainCraftRead({...nameOnly,rows:nameOnly.rows.map(row=>({...row,outOfRange:true}))},craftRetry({name:'',known:false,value:null})).rows[2].name,'Ranged Infantry Hitpoints','an invalid percentage does not erase its readable stat name');
 assert.equal(categoryRecognition.retainCraftRead(retainedCraft,craftRetry({value:null,inferred:false,confidence:99})).rows[2].value,11,'losing the percentage cannot erase the held value');
+// Identity confidence is separate from percentage quality. Previously clearing
+// an unrelated percentage conflict let fuzzy/raw names win the row comparison.
+const exactWithNumericConflict=craftRetry({value:null,inferred:false,conflict:true,confidence:60,nameMatch:{method:'exact',automatic:true,confidence:1}});
+for(const method of ['suggestion','ocr-glyphs','ocr-catalogue']) {
+  const fuzzyReplacement=craftRetry({name:'Bomber Hitpoints',value:6,inferred:false,confidence:99,
+    assumed:method==='suggestion',nameMatch:{method,automatic:method!=='suggestion',confidence:.99}});
+  const held=categoryRecognition.retainCraftRead(exactWithNumericConflict,fuzzyReplacement);
+  assert.equal(held.rows[2].name,'Ranged Infantry Hitpoints',method+' cannot replace a known name, even while its percentage needs review');
+  assert.equal(held.rows[2].nameMatch.method,'exact','the original exact-name evidence stays attached');
+  assert.equal(held.valid,false,'holding an exact name cannot confirm missing/conflicting numeric evidence');
+}
+const rawReplacement=craftRetry({name:'RzngeH lnf9try hpzz',known:false,value:6,inferred:false,confidence:100});
+assert.equal(categoryRecognition.retainCraftRead(exactWithNumericConflict,rawReplacement).rows[2].name,'Ranged Infantry Hitpoints','raw OCR cannot displace a canonical stat');
 for(const [text,type] of [['Weapon','Weapon'],['War Armor','Armor'],['Armour','Armor'],['Jewellery','Jewelry'],['Pottery','Pottery'],['War Equipment','Equipment']])assert.equal(categoryRecognition.parseCraftCategory(text),type);
 assert.equal(categoryRecognition.parseCraftCategory('Pottery',41),'Pottery','exact ornate-font label can be accepted at moderate confidence');
 assert.equal(categoryRecognition.parseCraftCategory('Pottery',20),null,'very weak labels require manual fallback');
@@ -289,6 +302,12 @@ const colours=['neutral','green','blue','neutral','green'];
 const mainInferred=recognition.inferColourValues(inferredInput,colours,'main');
 assert.equal(JSON.stringify(mainInferred.rows.map(row=>row.value)),JSON.stringify([-1,-6,-11,-1,-6]));
 assert.equal(JSON.stringify(recognition.inferColourValues(inferredInput,colours,'war').rows.map(row=>row.value)),JSON.stringify([-1,-3,-6,-1,-3]));
+const missingWarValues=recognition.inferColourValues({...inferredInput,rows:inferredInput.rows.map(row=>({...row,name:'Catapult Damage',value:undefined}))},colours,'war');
+assert.equal(JSON.stringify(missingWarValues.rows.map(row=>row.value)),JSON.stringify([1,3,6,1,3]),'missing numeric fields use the War tiers and positive canonical sign');
+for(const flag of ['conflict','tierConflict']){
+  const disputed=recognition.inferColourValues({...inferredInput,rows:inferredInput.rows.map(row=>({...row,[flag]:true}))},Array(5).fill('blue'),'war');
+  assert(disputed.rows.every(row=>row.value===null),'colour cannot resolve existing '+flag+' evidence');
+}
 assert.equal(mainInferred.valid,false,'inferred percentages require user review');
 assert.equal(mainInferred.rows[0].raw,inferredInput.rows[0].raw,'inference preserves original OCR');
 assert.equal(recognition.coverage(mainInferred.rows).light,'green','inferred values can complete capture without confirming rating');

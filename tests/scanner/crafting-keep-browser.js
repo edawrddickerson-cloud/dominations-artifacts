@@ -5,10 +5,13 @@
   const check=(name,value)=>{checks[name]=!!value;if(!value)throw Error(name);};
   const pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
   async function wait(test){const end=performance.now()+15000;while(!await test()){if(performance.now()>end)throw Error('Keep test timed out: '+get('keep').title+' / '+get('keep').title);await pause(20);}}
-  await wait(()=>get('names').children.length && window.DNScannerKeep);
+  await wait(()=>get('names').children.length && window.DNScannerKeep && window.DNScannerCollection);
+  for(const id of ['keep-status','recent-items','recent-crafts','recent-empty'])check('current scanner exposes '+id,!!get(id));
   window.DNConsent?.set({});
   check('Keep starts disabled',get('keep').disabled);
   get('auto').checked=false;window.DNScannerCollection.isEnabled=()=>false;document.getElementById('header-main').click();
+  for(const id of DNCraftingPurposes.settings().selected)DNCraftingPurposes.selectPurpose(id,false);
+  for(const category of ['attacking','defensive','economy'])DNCraftingPurposes.disableRareFamily(category);
   if(!get('off').checked)document.getElementById('header-off').click();
   if(get('def').checked)document.getElementById('header-def').click();
   DN.saveGlobalPerkRatings({'Heavy Tank Damage':{offensive:2,defensive:2},'Fighter Damage':{offensive:5,defensive:5}});
@@ -24,10 +27,11 @@
   DNScannerRecognition.create=()=>({recognize:async()=>structuredClone(response),close:async()=>{}});
   const canvas=document.createElement('canvas');canvas.width=640;canvas.height=320;
   const source=document.createElement('canvas');source.width=1000;source.height=600;source.getContext('2d').fillRect(0,0,1000,600);
-  async function read(value,partial=false,extra={}){
+  async function read(value,partial=false,extra={},whileReading){
     response={...complete(value),...extra};if(partial){response.valid=false;response.rows=response.rows.slice(0,4);}
     pixel=(pixel+40)%240;const ctx=canvas.getContext('2d');ctx.fillStyle='rgb('+pixel+','+pixel+','+pixel+')';ctx.fillRect(0,0,640,320);
     DNScannerReading.update(canvas,{session:1,current:true,categorySource:source,panelRegion:{x:.4,y:.2,width:.55,height:.5}});get('read').click();
+    whileReading?.();
     await wait(()=>!get('read').disabled);
   }
   await read(11);
@@ -68,6 +72,7 @@
   window.dispatchEvent(new Event('focus'));await pause(100);
   check('imported crafts retain the improved benchmark',cutoff()==='200');
   const other=DN.addProfile('Keep isolation');DN.setActiveProfile(other);window.dispatchEvent(new Event('focus'));
+  for(const category of ['attacking','defensive','economy'])DNCraftingPurposes.disableRareFamily(category);
   get('compare-type').value='weapon';get('compare-type').dispatchEvent(new Event('change',{bubbles:true}));
   await wait(()=>target()==='Open slot');
   check('kept crafts do not leak into a different profile',get('keep').disabled);
@@ -75,6 +80,7 @@
   await read(6);
   const realKeep=store.keepCraft;store.keepCraft=async()=>{throw Error('Simulated write failure');};
   get('keep').click();await wait(()=>get('keep').title.includes('Simulated'));
+  check('failed Add shows a visible error',get('keep-status').textContent.includes('Simulated') && !get('keep-status').hidden);
   check('failed Keep remains retryable',!get('keep').disabled && get('keep').textContent==='Add to Collection');store.keepCraft=realKeep;
   get('keep').click();await wait(()=>get('keep').textContent==='Added');
   check('retry stores the craft once',(await keptItems()).length===4);
@@ -82,13 +88,18 @@
   const outcomes=await Promise.all([store.keepCraft(concurrent),store.keepCraft(concurrent)]);
   check('atomic Keep prevents concurrent duplicate writes',outcomes.filter(outcome=>outcome.action==='added').length===1 && outcomes.filter(outcome=>outcome.action==='duplicate').length===1);
   check('profile mismatch cancels persistence',(await store.keepCraft({...concurrent,id:'wrong-profile'},{profileKey:'collection:wrong'})).action==='cancelled');
-  const priorConfirm=window.confirm;window.confirm=()=>true;get('collection-clear').click();window.confirm=priorConfirm;
-  const logData=async()=>JSON.parse(await DN.scannerLog.read());
-  const logButton=id=>[...get('item-log').querySelectorAll('[data-keep-log]')].find(button=>button.dataset.keepLog===id);
+  await read(1,false,{hallSource:'selected-hall',unlocked:{count:null,states:[null,null,null,null,null]},
+    rows:rows(1).map(row=>({...row,unlocked:null,rerollEligible:null,rerollCaptureExpected:true,rerollSource:'dice-background',rerollConfidence:'unknown'}))});
+  check('optional stars and dice do not block adding complete stats',!get('keep').disabled && DNScannerComparison.identification().missing.length>0);
+  get('keep').click();await wait(()=>get('keep').textContent==='Added');
+  const optional=(await keptItems()).at(-1);
+  check('explicit Add preserves unknown stars and dice',optional.rows.every(row=>row.unlocked==null && row.rerollEligible==null));
+  const logData=async()=>{await DNScannerCollection.flush();return JSON.parse(await DN.scannerLog.read());};
+  const logButton=id=>[...get('recent-items').querySelectorAll('[data-keep-log]')].find(button=>button.dataset.keepLog===id);
   const beforeLogged=(await keptItems()).length;
   await read(1);const missed=(await logData()).items.at(-1);
   await read(6);const final=(await logData()).items.at(-1);
-  const setLogName=(id,name)=>{const input=[...get('item-log').querySelectorAll('[data-log-name]')].find(input=>input.dataset.logName===id);input.value=name;input.dispatchEvent(new Event('input',{bubbles:true}));};
+  const setLogName=(id,name)=>DNScannerCollection.setName(id,name);
   setLogName(final.id,'Named craft <Weapon>');await DNScannerCollection.flush();
   check('each completed physical craft is logged separately',missed.id!==final.id && missed.rows.length===5 && final.rows.length===5 && missed.profileKey===profileKey);
   response=complete(6);response.valid=false;response.warnings=['Other OCR evidence needs review'];response.rows[2]={...response.rows[2],value:11,confidence:97};
@@ -96,34 +107,33 @@
   const finalSnapshot=(await logData()).items.find(item=>item.id===final.id);
   check('manually entered log name survives OCR retries',finalSnapshot.name==='Named craft <Weapon>' && finalSnapshot.nameSource==='manual');
   check('log follows the last stronger held stats rather than an older validated read',finalSnapshot.rows[2].value===11 && logButton(final.id) && !logButton(final.id).disabled);
-  document.querySelector('details[aria-label="Crafted item log"]').open=true;
   store.keepCraft=async()=>{throw Error('Log Keep write failure');};
-  logButton(missed.id).click();await wait(()=>get('item-log').textContent.includes('Log Keep write failure'));
+  logButton(missed.id).click();await wait(()=>get('recent-items').textContent.includes('Log Keep write failure'));
   check('failed log Keep is retryable',!logButton(missed.id).disabled);store.keepCraft=realKeep;
   logButton(missed.id).click();logButton(missed.id).click();
-  await wait(()=>logButton(missed.id).textContent==='Kept');
+  await wait(()=>logButton(missed.id).textContent==='Added');
   let loggedInventory=await keptItems();
   check('forgotten earlier craft can be kept after moving on',loggedInventory.length===beforeLogged+1 && loggedInventory.find(item=>item.id===missed.keepId)?.rows[0].value===1);
-  logButton(final.id).click();await wait(()=>logButton(final.id).textContent==='Kept');
+  logButton(final.id).click();await wait(()=>logButton(final.id).textContent==='Added');
   loggedInventory=await keptItems();
   check('log Keep retains the recognized name and artwork',loggedInventory.find(item=>item.id===missed.keepId)?.name==='Test crafted weapon' && loggedInventory.find(item=>item.id===missed.keepId)?.image?.startsWith('data:image/jpeg'));
   check('Keep from log saves the final held snapshot',loggedInventory.find(item=>item.id===final.keepId)?.rows[2].value===11 && loggedInventory.length===beforeLogged+2);
   check('Keep from log retains the manually entered item name',loggedInventory.find(item=>item.id===final.keepId)?.name==='Named craft <Weapon>');
   check('keeping the current logged craft updates the current Keep button',get('keep').textContent==='Added' && get('keep').disabled);
   await read(11);const shared=(await logData()).items.at(-1);setLogName(shared.id,'Main Keep name');get('keep').click();
-  await wait(()=>get('keep').textContent==='Added' && logButton(shared.id).textContent==='Kept');
+  await wait(()=>get('keep').textContent==='Added' && logButton(shared.id).textContent==='Added');
   logButton(shared.id).click();
   check('current and logged Keep share one physical item ID',(await keptItems()).filter(item=>item.id===shared.keepId).length===1);
   check('main Keep retains the name entered in the crafting log',(await keptItems()).find(item=>item.id===shared.keepId)?.name==='Main Keep name');
-  const logReopened=document.createElement('iframe');logReopened.hidden=true;logReopened.src='scanner.html?keep-reopen=log';document.body.append(logReopened);
-  await wait(()=>logReopened.contentWindow?.DNScannerCollection);
+  const logReopened=document.createElement('iframe');logReopened.hidden=true;logReopened.src='crafting-stats.html?keep-reopen=log';document.body.append(logReopened);
+  await wait(()=>logReopened.contentWindow?.DNScannerCollection && logReopened.contentDocument?.querySelector('[data-keep-log]'));
   check('logged stats and Kept status survive reopening',[...logReopened.contentDocument.querySelectorAll('[data-keep-log]')].some(button=>button.dataset.keepLog===missed.id && button.disabled && button.textContent==='Kept'));
   check('entered item names survive reopening the crafting log',[...logReopened.contentDocument.querySelectorAll('[data-log-name]')].some(input=>input.dataset.logName===final.id && input.value==='Named craft <Weapon>'));
   logReopened.remove();
   await read(11,false,{valid:false,rows:rows(11).map((row,i)=>i===2?{...row,inferred:true,colour:'blue'}:row)});
   const inferredLog=(await logData()).items.at(-1);
   check('complete held inferred stats can be kept from the log',!logButton(inferredLog.id).disabled);
-  logButton(inferredLog.id).click();await wait(()=>logButton(inferredLog.id).textContent==='Kept');
+  logButton(inferredLog.id).click();await wait(()=>logButton(inferredLog.id).textContent==='Added');
   check('explicit log Keep preserves the inferred stat and its provenance',(await keptItems()).find(item=>item.id===inferredLog.keepId)?.rows[2].inferred===true);
   await read(6,false,{valid:false,rows:rows(6).map((row,i)=>i===2?{...row,inferred:true,colour:'green'}:row)});
   check('main Keep accepts the same complete held read as the log',!get('keep').disabled);
@@ -133,11 +143,40 @@
   await wait(()=>collection.contentDocument?.querySelector('[data-artifact-id="'+missed.keepId+'"]'));
   check('kept log craft appears in the Collection page',true);collection.remove();
   await read(6,false,{artifact:{type:''}});
-  const untyped=(await logData()).items.at(-1),category=[...get('item-log').querySelectorAll('[data-log-type]')].find(select=>select.dataset.logType===untyped.id);
+  const untyped=(await logData()).items.at(-1),category=[...get('recent-items').querySelectorAll('[data-log-type]')].find(select=>select.dataset.logType===untyped.id);
   check('log Keep requires identifying a missing category',logButton(untyped.id).disabled && !!category);
   category.value='weapon';category.dispatchEvent(new Event('change',{bubbles:true}));
   check('missing category can be supplied on an older logged craft',!logButton(untyped.id).disabled);
-  logButton(untyped.id).click();await wait(()=>logButton(untyped.id).textContent==='Kept');
+  logButton(untyped.id).click();await wait(()=>logButton(untyped.id).textContent==='Added');
+  await read(1);const held=(await logData()).items.at(-1);
+  await read(6,false,{},()=>{
+    check('displayed craft can still be added while the next read runs',!get('keep').disabled);
+    get('keep').click();
+  });
+  await wait(async()=>(await keptItems()).some(item=>item.id===held.keepId));
+  const next=(await logData()).items.at(-1);
+  check('Add during a new read saves the displayed encounter only',held.id!==next.id && !(await keptItems()).some(item=>item.id===next.keepId));
+  const latest=(await logData()).items.slice(-3).reverse();
+  check('only the newest three crafts are listed newest first',JSON.stringify([...get('recent-items').children].map(node=>node.dataset.recentItem))===JSON.stringify(latest.map(item=>item.id)));
+  check('recent list is at the bottom of the scanner',get('recent-crafts').compareDocumentPosition(get('result')) & Node.DOCUMENT_POSITION_PRECEDING);
+  check('recent stats are compact disclosures',get('recent-items').querySelectorAll('details:not([open])').length===3);
+  const stableButton=logButton(latest[0].id);stableButton.focus();
+  setLogName(latest[0].id,'Latest crafted weapon with a longer recognised name');
+  check('refresh preserves the Add button and keyboard focus',logButton(latest[0].id)===stableButton && document.activeElement===stableButton);
+  const recentReopened=document.createElement('iframe');recentReopened.hidden=true;recentReopened.src='scanner.html?keep-reopen=recent';document.body.append(recentReopened);
+  await wait(()=>recentReopened.contentWindow?.DNScannerCollection && recentReopened.contentDocument?.querySelectorAll('[data-recent-item]').length===3);
+  check('recent ordering and Added state survive reopening',JSON.stringify([...recentReopened.contentDocument.querySelectorAll('[data-recent-item]')].map(node=>node.dataset.recentItem))===JSON.stringify(latest.map(item=>item.id)) && [...recentReopened.contentDocument.querySelectorAll('[data-keep-log]')].find(button=>button.dataset.keepLog===held.id)?.textContent==='Added');
+  recentReopened.remove();
+  const alt=DN.addProfile('Recent isolation');DN.setActiveProfile(alt);window.dispatchEvent(new Event('focus'));
+  check('recent crafts are isolated by profile',get('recent-items').children.length===0 && !get('recent-empty').hidden);
+  DN.setActiveProfile(profile);window.dispatchEvent(new Event('focus'));
+  check('returning to a profile restores its recent crafts',get('recent-items').children.length===3);
+  const recentBounds=get('recent-items').getBoundingClientRect();
+  check('recent rows and complete action labels fit their panel',[...get('recent-items').children].every(node=>{
+    const box=node.getBoundingClientRect(),button=node.querySelector('button'),buttonBox=button.getBoundingClientRect(),range=document.createRange();range.selectNodeContents(button);const text=range.getBoundingClientRect();
+    return box.height<=(innerWidth<=480?125:80) && node.scrollWidth<=node.clientWidth && buttonBox.left>=recentBounds.left && buttonBox.right<=recentBounds.right+1 && text.left>=buttonBox.left && text.right<=buttonBox.right;
+  }));
   check('no horizontal overflow',document.documentElement.scrollWidth<=innerWidth);
+  get('recent-crafts').scrollIntoView({block:'end'});
   return {passed:Object.values(checks).every(Boolean),ui:checks};
 })()

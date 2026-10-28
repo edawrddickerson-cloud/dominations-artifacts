@@ -131,7 +131,7 @@ The commands below were identified in the repository; run only the relevant set 
 | Artifact target rankings | `node scripts/test_artifact_ranking_targets_ui.js` |
 | Collection comparisons | `node scripts/test_strategy_collection_ui.js` and relevant collection/scanner fixtures |
 | Statistics and probability | `node scripts/test_crafting_probability_ui.cjs` and existing statistics checks for the affected module |
-| Scanner reading/comparison/styles | Required recognition, comparison, strategy, reading, glance and provisional-colour commands in `ui/AGENTS.md` |
+| Scanner recognition, reading, ownership or styles | `node scripts/test_crafting_scanner_contract.cjs` (current routes, exact-name/colour inference, collection recovery, desktop/phone UI, display and live lifecycle checks); additional affected OCR fixture matrices |
 | Live settling lifecycle | Additional speculation and worker-readiness commands in `ui/AGENTS.md` |
 | Shared control visual change | `node scripts/check_design_system.cjs`; `node scripts/test_design_ui.cjs` (`--full` for the complete matrix), plus rendered inspection |
 

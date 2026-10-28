@@ -155,6 +155,13 @@ async function main() {
     const result=await evaluation;
     if(result.exceptionDetails) throw new Error(JSON.stringify(result.exceptionDetails));
     const value=result.result.value;
+    if(process.argv.includes('--crafting-keep') && process.argv.includes('--recent-report')){
+      const out=path.join(root,'data/temp/design-review');fs.mkdirSync(out,{recursive:true});
+      const screenshot=await client.send('Page.captureScreenshot',{format:'png'}),filename='scanner-recent-'+viewport+'.png';
+      fs.writeFileSync(path.join(out,filename),Buffer.from(screenshot.data,'base64'));
+      const index=path.join(out,'index.html');if(!fs.existsSync(index))fs.writeFileSync(index,'<!doctype html><meta charset="utf-8"><title>Design review</title>');
+      fs.appendFileSync(index,'<figure><figcaption>Crafting scanner recent items '+viewport+'</figcaption><a href="'+filename+'"><img style="max-width:100%" src="'+filename+'" alt="Last three crafted items"></a></figure>');
+    }
     if(process.argv.includes('--field-fit')) {
       await client.send('Runtime.evaluate',{expression:'(document.getElementById("scanner-view")?.contentWindow || window).document.getElementById("scanner-fields-field").focus()'});
       await client.send('Input.dispatchKeyEvent',{type:'keyDown',key:'Tab',windowsVirtualKeyCode:9});

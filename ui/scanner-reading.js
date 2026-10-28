@@ -312,7 +312,9 @@
     const draft=!storage && editing && !confirmed && resultCurrent?corrections(true):null;
     const captureResult=draft?{...visibleResult,rows:draft.rows,unlocked:{states:draft.rows.map(row=>row.unlocked)}}:visibleResult;
     window.DNScannerComparison?.update(scoreResult || result,(current && !!candidate) || retainDecision,baseOpts,{keeperResult,categoryResult:starCurrent?result:null,captureResult,captureRetained:captureHolding,encounterId:JSON.stringify([session,itemId])});
-    window.DNScannerKeep?.update(result,{current,confirmed,profileKey:resultProfile,encounterId:JSON.stringify([session,itemId])});
+    const keepHolding=!storage && captureHolding && !editing && !!latestCanvas && ['waiting','reading'].includes(phase);
+    window.DNScannerKeep?.update(keepHolding?displayedCapture:result,{current:current || keepHolding,confirmed,retained:keepHolding,
+      profileKey:resultProfile,encounterId:JSON.stringify([session,keepHolding?displayedItemId:itemId])});
     const rerollType=get('compare-type')?.value || scoreResult?.artifact?.type;
     const targetContext=!storage?window.DNScannerComparison?.scoringContext?.():null;
     const editingRatings=!storage && !!window.DNScannerTargetRatings?.isEditing();
@@ -631,6 +633,13 @@
       else if(!best)best=parsed;
       else if(best.hall && parsed.hall && best.hall!==parsed.hall)best=parsed;
       else if(!best.valid)best=recognition.combineReads(best,parsed,rowCount());
+      // A later colour observation may arrive with an unreadable name. Apply
+      // inference to the held exact name as well as this retry's OCR names.
+      if(!storage && el.infer.checked && best?.rows.some(row=>row.known && !row.assumed && !row.conflict && !row.tierConflict && !Number.isFinite(row.value))){
+        best=recognition.inferColourValues(best,best.colours || [],best.hall || el.hall.value);
+        if(window.DNStoredArtifacts)best={...best,rows:window.DNStoredArtifacts.backfillItem({hall:best.hall,type:best.artifact?.type,freshCraft:true,rows:best.rows}).rows};
+        if(window.DNArtifactStatContext)best={...best,rows:window.DNArtifactStatContext.annotate(best,{freshCraft:true}).rows};
+      }
       if(best!==parsed)best={...best,rows:best.rows.map((row,i)=>row.name===parsed.rows[i]?.name?{
         ...row,rerollEligible:parsed.rows[i].rerollEligible,rerollSource:parsed.rows[i].rerollSource,
         rerollConfidence:parsed.rows[i].rerollConfidence,rerollEvidence:parsed.rows[i].rerollEvidence,

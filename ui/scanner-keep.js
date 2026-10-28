@@ -8,6 +8,7 @@
   let result=null,state={},saving=false,failure='',failureKey='';
   const key=()=>state.profileKey+':'+state.encounterId;
   const currentLog=()=>window.DNScannerCollection?.itemForEncounter(state.encounterId,state.profileKey);
+  const currentType=()=>state.retained?result?.artifact?.type || currentLog()?.type || '':get('compare-type')?.value || '';
   function loggedReason(item){
     if(!window.DNScannerCollectionCore?.isComplete(item))return 'All five stats must be complete before keeping this craft.';
     if(!['main','war'].includes(item.hall))return 'The artifact hall needs to be identified.';
@@ -38,12 +39,7 @@
   }
   function reason(){
     if(!state.current)return 'Read the current craft before keeping it.';
-    if(!window.DNScannerCollectionCore?.isComplete(result))return 'Confirm all five stats before keeping this craft.';
-    if(state.profileKey!==store.collectionKey())return 'Read this craft again for the current profile.';
-    if(!get('compare-type').value)return 'Choose the artifact category before keeping.';
-    const identification=window.DNScannerComparison?.identification();
-    if(identification?.missing.length)return 'Manual entry required: '+identification.missing.join(', ')+'.';
-    return '';
+    return loggedReason({...result,type:currentType(),profileKey:state.profileKey});
   }
   function render(){
     if(!button)return;
@@ -52,6 +48,8 @@
     button.textContent=busy?'Saving…':kept?'Added':'Add to Collection';
     button.disabled=busy || kept || !!blocked;
     button.title=(failureKey===key()?failure:'') || (kept?'Added to Collection':blocked || 'Add to Collection');
+    const status=get('keep-status');
+    if(status){status.textContent=failureKey===key()?failure:'';status.hidden=!status.textContent;}
   }
   window.DNScannerKeep={loggedReason,keepLogged,update(next,nextState){result=next;state=nextState;render();}};
   button?.addEventListener('click',async()=>{
@@ -59,7 +57,7 @@
     const encounter=key(),profileKey=state.profileKey,profileId=DN.activeProfileId();
     const logged=currentLog();
     if(!ids.has(encounter))ids.set(encounter,logged?.keepId || store.newId());
-    const type=get('compare-type').value.replace(/^./,letter=>letter.toUpperCase());
+    const type=currentType().replace(/^./,letter=>letter.toUpperCase());
     const item=store.backfillItem({id:ids.get(encounter),name:(logged?.nameSource==='manual'?logged.name:result.artifact?.name || logged?.name) || 'Crafted '+type,
       hall:result.hall || get('hall').value,hallSource:result.hallSource,unlocked:structuredClone(result.unlocked),type,reviewed:true,freshCraft:true,keptFromCraft:true,profileId,
       capturedAt:new Date().toISOString(),image:result.artifact?.image || null,...(result.artifact?.artworkId?{artworkId:result.artifact.artworkId}:{}),rows:structuredClone(result.rows)});

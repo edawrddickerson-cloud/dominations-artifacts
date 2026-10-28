@@ -189,6 +189,40 @@ async function main(){
   assert.equal(stableResult.rows[2].name,'Bomber Damage','more confident evidence updates the completed stat');
   assert.equal(stableResult.hallSource,'hall-colour');
   assert.equal(stableResult.unlocked.states.length,5);
+  // A name and its colour need not arrive in the same OCR attempt. Inference
+  // must combine fresh tier evidence with the held canonical identity.
+  const warHeld=await harness(),warFrame=warHeld.canvas();
+  const warNameOnly={...parsed('Heavy Tank Damage',1),valid:false,warnings:['Unreadable percentage'],hall:'war',hallSource:'hall-colour',artifact:{type:'Weapon'},
+    colours:['neutral','neutral',null,'neutral','neutral']};
+  warNameOnly.rows=warNameOnly.rows.map((row,i)=>({...row,hasPercent:true,level:1,levelSource:'crafting',confidence:90,
+    nameMatch:{method:'exact',automatic:true,confidence:1},...(i===2?{name:'Invading APC Hitpoints',value:null,hasPercent:false}:{})}));
+  const warGarbage={...warNameOnly,colours:['neutral','neutral','blue','neutral','neutral'],rows:warNameOnly.rows.map((row,i)=>i===2?
+    {...row,name:'lrv3d1ng hpzz',known:false,nameMatch:null,confidence:99}:row)};
+  const readWar=async(value)=>{warHeld.e.read.fire('click');warHeld.jobs.at(-1).resolve(value);await flush();return warHeld.comparisons.at(-1).state.captureResult;};
+  warHeld.reader.update(warFrame,{session:1,current:true});
+  let warResult=await readWar(warNameOnly);assert.equal(warResult.rows[2].value,null);
+  warResult=await readWar(warGarbage);
+  assert.equal(warResult.rows[2].name,'Invading APC Hitpoints','garbled retry text never displaces the held canonical name');
+  assert.equal(warResult.rows[2].value,-6,'fresh blue War evidence supplies signed 6% for the previously identified name');
+  assert.equal(warResult.rows[2].inferred,true);assert.equal(warResult.valid,false,'inference never confirms OCR');
+  assert.equal(warHeld.collector.summary().itemCount,1,'improved inference updates the same physical craft');
+  const warDirect={...warNameOnly,valid:true,warnings:[],colours:warGarbage.colours,
+    rows:warNameOnly.rows.map((row,i)=>i===2?{...row,value:-6,hasPercent:true,confidence:97}:row)};
+  warResult=await readWar(warDirect);
+  assert.equal(warResult.rows[2].value,-6);assert.equal(warResult.rows[2].inferred,undefined,'exact signed OCR replaces the inferred percentage');
+  warHeld.e.infer.checked=false;warFrame.pixel=255;warHeld.reader.update(warFrame,{session:1,current:true});
+  warResult=await readWar(warNameOnly);warResult=await readWar(warGarbage);
+  assert.equal(warResult.rows[2].value,null,'disabled colour inference leaves missing values unknown');
+  assert.equal(warHeld.collector.summary().itemCount,2,'a new physical artifact starts another record');
+  warHeld.e.infer.checked=true;warFrame.pixel=0;warHeld.reader.update(warFrame,{session:1,current:true});
+  warResult=await readWar(warGarbage);
+  assert.equal(warResult.rows[2].name,'lrv3d1ng hpzz','a new artifact cannot inherit the preceding item\'s name');
+  assert.equal(warResult.rows[2].value,null,'blue text without a known current-item name cannot invent a signed percentage');
+  await readWar(warNameOnly);
+  warHeld.DN.setActiveProfile(warHeld.DN.addProfile('War inference isolation'));
+  warResult=await readWar(warGarbage);
+  assert.equal(warResult.rows[2].name,'lrv3d1ng hpzz','changing profile clears the held canonical identity');
+  assert.equal(warResult.rows[2].value,null,'another profile cannot supply the stat name needed for colour inference');
   const live=await harness(),frame=live.canvas();live.e.auto.checked=true;
   const inferredHeld=await harness(),inferredFrame=inferredHeld.canvas();inferredHeld.e.auto.checked=true;
   inferredHeld.reader.update(inferredFrame,{session:1,current:true});inferredHeld.advance(220);

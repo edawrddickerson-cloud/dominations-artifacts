@@ -159,6 +159,11 @@
       const item=items.get(encounters.get(encounterKey(sessionId+':'+encounterId,profileKey)));
       return item?clone(item):null;
     }
+    function recentItems(profileKey) {
+      return clone([...items.values()].reverse()
+        .filter(item=>item.profileKey===profileKey && item.scannerSource!=='storage' && (item.expectedRows || 5)===5)
+        .sort((a,b)=>(Date.parse(b.firstSeen) || 0)-(Date.parse(a.firstSeen) || 0)).slice(0,3));
+    }
     function updateItem(id,changes) {
       const item=items.get(id);if(!item)return false;
       const next=clone({...item,...changes,id});
@@ -266,7 +271,7 @@
         rows:item.rows.map(row=>({name:row.name,raw:row.raw,rawName:row.rawName,known:row.known,assumed:row.assumed,nameSource:row.nameSource,
           nameMatch:row.nameMatch?{name:row.nameMatch.name,method:row.nameMatch.method,confidence:row.nameMatch.confidence,automatic:row.nameMatch.automatic}:null}))}));
     }
-    return {record,recordItem,itemForEncounter,updateItem,historyItems,ocrFeedbackItems,nameReviews,sessionId,reconcileHistory,weekly,exportData:options=>clone(snapshot(options)),
+    return {record,recordItem,itemForEncounter,recentItems,updateItem,historyItems,ocrFeedbackItems,nameReviews,sessionId,reconcileHistory,weekly,exportData:options=>clone(snapshot(options)),
       // Persistence owns this immutable string. Avoid cloning the entire log
       // before serializing it; exports and public summaries remain isolated.
       serialize:()=>JSON.stringify(snapshot({includeImages:true})),takeChanges,getItem:id=>items.has(id)?clone(items.get(id)):null,
@@ -285,6 +290,7 @@
   }
   const collector=createCollector({initialData}), count=document.getElementById('scanner-collection-count'), list=document.getElementById('scanner-collected-labels');
   const keeping=new Set(),keepMessages=new Map(),itemNodes=new Map(),itemNumbers=new Map(),itemNameKeys=new Map(),nameGroups=new Map();
+  const recentNodes=new Map();
   let persistence=Promise.resolve(),storageRevision=0;
   function downloadJSON(data,prefix) {
     const url=URL.createObjectURL(new Blob([JSON.stringify(data,null,2)+'\n'],{type:'application/json'}));
@@ -351,9 +357,54 @@
     const input=node.querySelector('[data-log-name]');if(input && !input.disabled)input.focus();else node.querySelector('summary')?.focus();
   });
   let labelCount=0,unknownCount=0;
+  function renderRecent() {
+    const list=document.getElementById('scanner-recent-items');if(!list)return;
+    const items=collector.recentItems(window.DNStoredArtifacts?.collectionKey()),ids=new Set(items.map(item=>item.id));
+    const empty=document.getElementById('scanner-recent-empty');if(empty)empty.hidden=!!items.length;
+    for(const [id,node] of recentNodes)if(!ids.has(id)){node.remove();recentNodes.delete(id);}
+    for(const [index,item] of items.entries()) {
+      let node=recentNodes.get(item.id);
+      if(!node){
+        node=document.createElement('li');node.dataset.recentItem=item.id;
+        const details=document.createElement('details'),summary=document.createElement('summary'),name=document.createElement('strong'),meta=document.createElement('span');
+        name.className='scanner-recent-name';meta.className='scanner-recent-meta';summary.append(name,meta);
+        const stats=document.createElement('ol');stats.className='scanner-recent-stats';
+        details.append(summary,stats);
+        const button=document.createElement('button');button.type='button';button.className='btn btn-small';button.dataset.keepLog=item.id;
+        const status=document.createElement('p');status.className='scanner-recent-status';status.setAttribute('role','status');
+        node.append(details,button,status);recentNodes.set(item.id,node);
+      }
+      // Keep the action and disclosure nodes stable through asynchronous OCR.
+      // A refresh between pointer-down and click must not discard that click.
+      node.querySelector('.scanner-recent-name').textContent=item.name || 'Unnamed artifact';
+      const date=new Date(item.firstSeen),time=Number.isFinite(date.getTime())?date.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}):'';
+      node.querySelector('.scanner-recent-meta').textContent=[item.hall==='war'?'War':item.hall==='main'?'Main':'Unknown hall',item.type || 'Unknown category',time].filter(Boolean).join(' · ');
+      const stats=node.querySelector('.scanner-recent-stats');stats.textContent='';
+      for(let i=0;i<(item.expectedRows || 5);i++){
+        const row=item.rows[i],li=document.createElement('li');
+        li.textContent=(row?.name || 'Unread stat')+' '+(Number.isFinite(row?.value)?(row.value>=0?'+':'')+row.value+'%':'?%')+(row?.inferred?' (inferred)':'');stats.append(li);
+      }
+      let category=node.querySelector('[data-log-type]');
+      if(!item.type && !category){
+        const label=document.createElement('label');label.textContent='Category ';
+        category=document.createElement('select');category.className='ui-compact';category.dataset.logType=item.id;
+        category.add(new Option('Choose category',''));
+        for(const exhibit of window.DN?.ARTIFACT_TYPE_EXHIBITS[item.hall==='war'?'War':'Main'] || [])category.add(new Option(exhibit.label.replace(/ Exhibit$/,''),exhibit.key.replace(/^war-/,'')));
+        label.append(category);node.querySelector('details').append(label);
+      }else if(item.type && category)category.parentElement.remove();
+      const busy=keeping.has(item.id),reason=window.DNScannerKeep?.loggedReason(item) || '';
+      const button=node.querySelector('[data-keep-log]');button.textContent=busy?'Saving…':item.keptId?'Added':'Add to Collection';
+      button.disabled=busy || !!item.keptId || !!reason || !window.DNScannerKeep;
+      button.title=item.keptId?'Added to Collection':reason || 'Add to Collection';
+      button.setAttribute('aria-label',button.textContent+': '+(item.name || 'Unnamed artifact'));
+      const status=node.querySelector('.scanner-recent-status');status.textContent=keepMessages.get(item.id) || (!item.keptId?reason:'');status.hidden=!status.textContent;
+      if(list.children[index]!==node)list.insertBefore(node,list.children[index] || null);
+    }
+  }
   function render({all=false,itemId=null}={}) {
     renderStorage();
     const data=collector.takeChanges({all});
+    renderRecent();
     const statistics=document.getElementById('scanner-lifetime-stats');
     if(statistics)for(const field of statistics.querySelectorAll('[data-crafted-stat]'))field.textContent=(field.dataset.craftedStat==='sinceLastKept'?data.sinceLastKept:field.dataset.craftedStat==='weekly'?collector.weekly():data.lifetime[field.dataset.craftedStat]).toLocaleString();
     const hallLabel=hall=>hall==='war'?'War':hall==='main'?'Main (Multiplayer)':'Hall unclear';
@@ -430,7 +481,7 @@
     }
   }
   if(window.DNArtwork)setTimeout(()=>backfillArtwork().catch(()=>{}),0);
-  document.getElementById('scanner-item-log')?.addEventListener('click',async event=>{
+  async function keepFromLog(event){
     const button=event.target.closest('[data-keep-log]');if(!button || button.disabled)return;
     const id=button.dataset.keepLog,item=collector.getItem(id);
     if(!item || keeping.has(id))return;
@@ -438,17 +489,19 @@
     try{await window.DNScannerKeep.keepLogged(item);}
     catch(error){keepMessages.set(id,error.message || 'Could not keep this craft. Try again.');}
     finally{keeping.delete(id);render({itemId:id});}
-  });
+  }
+  for(const id of ['scanner-item-log','scanner-recent-items'])document.getElementById(id)?.addEventListener('click',keepFromLog);
   document.getElementById('scanner-item-log')?.addEventListener('input',event=>{
     const id=event.target.dataset.logName,item=id && collector.getItem(id);
     if(!item || item.keptId || keeping.has(id))return;
     // Save without replacing the focused field or the Keep button being clicked.
     if(collector.updateItem(id,{name:event.target.value.trim() || null,nameSource:'manual'})){persist();renderNameReviews(collector.nameReviews());}
   });
-  document.getElementById('scanner-item-log')?.addEventListener('change',event=>{
+  function changeCategory(event){
     const id=event.target.dataset.logType;if(!id || !event.target.value)return;
     afterChange(collector.updateItem(id,{type:event.target.value.replace(/^./,letter=>letter.toUpperCase())}));
-  });
+  }
+  for(const id of ['scanner-item-log','scanner-recent-items'])document.getElementById(id)?.addEventListener('change',changeCategory);
   document.getElementById('scanner-item-log')?.addEventListener('focusout',event=>{
     // A name field losing focus to Keep must not replace the button before its click.
     if(event.target.dataset.logName && !event.relatedTarget?.closest('[data-keep-log]'))render();

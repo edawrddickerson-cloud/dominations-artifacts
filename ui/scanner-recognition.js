@@ -294,9 +294,9 @@
     const amounts={neutral:bases[0],green:bases[1],blue:bases[2]};
     const warnings=[...parsed.warnings];
     const rows=parsed.rows.map((row,index)=>{
-      const amount=amounts[colours[index]],sign=row.known && !row.assumed?expectedSign(row.name):null;
+      const amount=amounts[colours[index]],sign=row.known && !row.assumed && !row.conflict && !row.tierConflict?expectedSign(row.name):null;
       if(!amount || sign===null)return {...row,colour:colours[index]};
-      if(row.value!==null) {
+      if(Number.isFinite(row.value)) {
         if(Math.abs(row.value)!==amount)warnings.push('Colour and OCR disagree on row '+(index+1)+'. Check the artifact type and original percentage.');
         return {...row,colour:colours[index]};
       }
@@ -389,6 +389,8 @@
     // uncertainty stays attached; weaker retries must not erase it or flicker
     // between names while the scorer waits for reliable evidence.
     const displayable=row=>row?.known && row.name && !row.scoreExcluded && !row.estimated;
+    const knownName=row=>row?.known && !row.assumed;
+    const exactName=row=>knownName(row) && (row.nameSource==='manual' || !row.nameMatch || row.nameMatch.method==='exact');
     const strength=row=>[
       row.conflict || row.tierConflict || row.outOfRange?0:1,
       row.valueSource==='manual' || row.tierSource==='manual'?3:row.assumed?0:row.inferred || Number.isFinite(row.confidence) && row.confidence<80?1:2,
@@ -401,6 +403,9 @@
     const rows=Array.from({length:expectedRows},(_,index)=>{
       const prior=first.rows[index],next=retry.rows[index];
       if(!displayable(prior))return next || prior || {name:'',value:null,known:false,hasPercent:false};
+      // Identity is independent of numeric/conflict confidence. A clear known
+      // name must never become a suggested fuzzy match or raw OCR gibberish.
+      if(knownName(prior) && !exactName(next)){retained=true;return prior;}
       const lostPercentage=Number.isFinite(prior.value) && prior.hasPercent!==false && (!Number.isFinite(next?.value) || next?.hasPercent===false);
       const manualName=prior.nameSource==='manual';
       if(displayable(next) && !lostPercentage && (!manualName || next.name===prior.name) && (!usable(prior) || usable(next)) && stronger(next,prior))return manualName?{...next,nameSource:'manual'}:next;

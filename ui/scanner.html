@@ -13,7 +13,7 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Artifacts - Crafting Scanner</title>
   <link rel="stylesheet" href="styles.css?v=20261025-slate" />
-  <link rel="stylesheet" href="scanner.css?v=20261025-slate" />
+  <link rel="stylesheet" href="scanner.css?v=20261028-craft-recovery" />
   <link rel="stylesheet" href="crafting-purposes.css?v=20261027-rare-columns" />
   <script src="design-ui.js?v=20261025-slate" defer></script>
 </head>
@@ -168,6 +168,7 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
         <section id="scanner-benchmark" class="scanner-summary-card scanner-benchmark" aria-label="Crafting focus areas and keep indicator">
         <div class="scanner-keep">
           <button type="button" id="scanner-keep" class="btn" disabled>Add to Collection</button>
+          <p id="scanner-keep-status" role="status" hidden></p>
         </div>
           <div class="scanner-focus-areas">
             <div id="scanner-purpose-results" class="scanner-purpose-results" role="status"></div>
@@ -197,6 +198,11 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
         <button type="button" class="btn" id="scanner-accept" disabled>Use Corrected Values</button>
       </div>
     </section>
+    <section id="scanner-recent-crafts" class="scanner-reading scanner-panel" aria-labelledby="scanner-recent-heading">
+      <h2 id="scanner-recent-heading">Last 3 crafted items</h2>
+      <ol id="scanner-recent-items" class="scanner-recent-items"></ol>
+      <p id="scanner-recent-empty">No crafted items</p>
+    </section>
     <video id="scanner-video" class="scanner-video" muted playsinline aria-hidden="true"></video>
   </div>
   <script src="scanner-core.js?v=1"></script>
@@ -218,11 +224,11 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
   <script src="scanner-comparison.js?v=20261028-scoring-retention"></script>
   <script src="scanner-target-ratings.js?v=20261023-no-auto"></script>
   <script src="scanner-layout.js?v=20261023-aligned-image-heading"></script>
-  <script src="scanner-keep.js?v=20261025-stats-page"></script>
+  <script src="scanner-keep.js?v=20261028-craft-recovery"></script>
   <script src="vendor/tesseract/tesseract.min.js"></script>
   <script src="scanner-reroll-recognition.js?v=1"></script>
   <script src="scanner-name-catalog.js?v=1"></script>
-  <script src="scanner-recognition.js?v=20261028-scoring-retention"></script>
+  <script src="scanner-recognition.js?v=20261028-craft-recovery"></script>
   <script src="scanner-panel.js?v=20261028-war-foreground"></script>
   <script src="scanner-field-recognition.js?v=20261028-war-foreground"></script>
   <script src="scanner-calibration.js?v=20261028-fast-war"></script>
@@ -230,8 +236,8 @@ History: One English five-row gold-frame screenshot verifies the initial layout.
   <script src="crafted-log-stats.js?v=20261026-rare-cards"></script>
   <script src="crafting-community.js?v=20261026-rare-cards"></script>
   <script src="crafting-probability.js?v=20261026-rare-cards"></script>
-  <script src="scanner-collection.js?v=20261025-eligibility"></script>
-  <script src="scanner-reading.js?v=20261028-war-foreground"></script>
+  <script src="scanner-collection.js?v=20261028-craft-recovery"></script>
+  <script src="scanner-reading.js?v=20261028-craft-recovery"></script>
   <script src="scanner-profile.js?v=1"></script>
   <script src="scanner.js?v=20261028-war-foreground"></script>
   <script src="services.js?v=20261025-slate"></script>

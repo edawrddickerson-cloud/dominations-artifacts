@@ -349,6 +349,17 @@
 #scanner-keeper-reason { font-size:1.2rem; font-weight:900; line-height:1.35; }
 .scanner-log-name { display:flex;flex-wrap:wrap;align-items:center;gap:.5rem;margin:.35rem 0;color:var(--muted); }
 .scanner-log-name input { width:18rem; max-width:100%; min-width:0; }
+#scanner-recent-heading { font-size:var(--type-section); margin:0 0 .5rem; }
+.scanner-recent-items { list-style:none; padding:0; margin:0; }
+.scanner-recent-items > li { display:grid; grid-template-columns:minmax(0,1fr) auto; align-items:start; gap:.25rem .75rem; padding:.5rem 0; border-bottom:1px solid var(--line); }
+.scanner-recent-items > li:last-child { border-bottom:0; }
+.scanner-recent-items details { min-width:0; }
+.scanner-recent-items summary { overflow-wrap:anywhere; }
+.scanner-recent-meta { display:block; margin-left:1rem; color:var(--muted); font-size:.75rem; }
+.scanner-recent-stats { margin:.5rem 0; padding-left:1.25rem; font-size:.8125rem; }
+.scanner-recent-status { grid-column:1/-1; margin:0; font-size:.75rem; color:var(--muted); }
+#scanner-keep-status { margin:.25rem 0 0; font-size:.75rem; }
+@media(max-width:480px) { .scanner-recent-items > li { grid-template-columns:minmax(0,1fr); } .scanner-recent-items > li > .btn { justify-self:end; } }
 .scanner-log-name input:focus-visible { outline:2px solid var(--accent);outline-offset:2px; }
 .scanner-benchmark.is-provisional { border-style:dashed; }
 .scanner-benchmark #scanner-comparison { font-weight:700; }

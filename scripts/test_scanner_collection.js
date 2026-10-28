@@ -94,6 +94,26 @@ assert.equal(steady.summary().itemCount,2,'separate identical completed crafts g
 assert.notEqual(steady.summary().items[0].keepId,steady.summary().items[1].keepId);
 const restoredSteady=context.window.DNScannerCollectionCore.createCollector({initialData:steady.exportData()});
 assert.equal(restoredSteady.summary().items[0].keptId,keepId,'kept status survives restoring the log');
+const recent=context.window.DNScannerCollectionCore.createCollector();
+for(let i=1;i<=4;i++){
+  recent.recordItem(stable,i,{profileKey:'collection:a',newEncounter:true,scannerSource:'crafting'});
+  const item=recent.summary().items.at(-1);recent.updateItem(item.id,{firstSeen:'2026-10-28T12:00:0'+i+'Z'});
+}
+let lastThree=recent.recentItems('collection:a');
+assert.deepEqual(Array.from(lastThree,item=>item.firstSeen),['2026-10-28T12:00:04Z','2026-10-28T12:00:03Z','2026-10-28T12:00:02Z']);
+const older=recent.summary().items[0];recent.updateItem(older.id,{name:'Later correction'});
+assert.equal(recent.recentItems('collection:a')[0].id,lastThree[0].id,'retrying an old craft does not change craft order');
+recent.recordItem(stable,5,{profileKey:'collection:b',newEncounter:true});
+assert.equal(recent.recentItems('collection:b').length,1,'recent items are scoped to the active collection');
+assert.equal(recent.recentItems('collection:a').length,3);
+recent.recordItem(stable,6,{profileKey:'collection:a',newEncounter:true,scannerSource:'storage'});
+assert.equal(recent.recentItems('collection:a')[0].id,lastThree[0].id,'storage observations cannot displace crafted items');
+recent.recordItem(stable,7,{newEncounter:true});
+assert.equal(recent.recentItems('collection:a')[0].id,lastThree[0].id,'unassigned legacy items cannot be attributed to every profile');
+lastThree[0].rows[0].name='External edit';
+assert.equal(recent.recentItems('collection:a')[0].rows[0].name,stable.rows[0].name,'recent projections cannot mutate saved evidence');
+const recentReopened=context.window.DNScannerCollectionCore.createCollector({initialData:recent.exportData()});
+assert.equal(recentReopened.recentItems('collection:a')[0].id,lastThree[0].id,'recent order survives reopening');
 
 // October 16 export, item 49: a later -5% read displaced an earlier -6%
 // despite its Main green tier conflict. Keep the better read and both raw passes.

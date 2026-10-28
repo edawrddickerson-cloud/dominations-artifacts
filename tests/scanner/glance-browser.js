@@ -112,7 +112,7 @@
   check('weaker disputed name keeps the best current stat and score',get('result').querySelectorAll('.scanner-stat-title')[2].textContent.includes('Ranged Infantry Hitpoints') && get('result').querySelectorAll('.scanner-stat-score')[2].textContent==='~20');
   const suggestedName=JSON.parse(JSON.stringify(rangedConflict));suggestedName.rows[2]={...suggestedName.rows[2],name:'Bomber Hitpoints',raw:'Bomber Hitpoints +6%',value:6,colour:'green',conflict:false,assumed:true,confidence:95};
   await retrySameItem(suggestedName);
-  check('stronger suggested name replaces the held stat without claiming confirmation',get('result').querySelectorAll('.scanner-stat-title')[2].textContent.includes('Bomber Hitpoints') && get('result').querySelectorAll('.scanner-stat-score')[2].textContent.startsWith('~') && get('keep').disabled);
+  check('higher confidence fuzzy suggestion cannot replace a known stat even with disputed numeric evidence',get('result').querySelectorAll('.scanner-stat-title')[2].textContent.includes('Ranged Infantry Hitpoints') && get('result').querySelectorAll('.scanner-stat-score')[2].textContent==='~20' && get('keep').disabled);
   const rangedInferred=JSON.parse(JSON.stringify(ranged));rangedInferred.rows[2].inferred=true;rangedInferred.rows[2].colour='blue';
   await read(rangedInferred);
   check('displayed inferred eleven percent is scored at rating one',get('result').querySelectorAll('.scanner-stat-value')[2].textContent==='+11%' && get('result').querySelectorAll('.scanner-stat-score')[2].textContent==='20' && get('item-total').textContent==='~180');
