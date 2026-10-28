@@ -13,6 +13,9 @@ const checks=[
   ['run_scanner_ocr_fixture.js','--glance','--viewport=1440x900','--summary'],
   ['run_scanner_ocr_fixture.js','--provisional-colours','--summary'],
   ['test_scanner_latency.cjs','--real-ocr','--summary'],
+  ['test_scanner_regions.js'],['test_scanner_field_retry.js'],
+  ['test_scanner_war_calibration.cjs','--full','--summary'],
+  ['test_scanner_war_calibration.cjs','--live','--summary'],
 ];
 for(const [file,...args] of checks){
   console.log('Checking '+file+(args.length?' '+args.join(' '):''));

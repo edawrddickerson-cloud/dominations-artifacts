@@ -1,0 +1,191 @@
+{
+  "date": "2026-10-29",
+  "sourceHashes": {
+    "before": "c0bbda787f516119548468d182e073446645ce78342a58f90869cc2b979e4ca4",
+    "after": "604dd1e51cab3a31bb80fb843cb67328816ea7ec0ce2810ef4443b0f33e2bdce"
+  },
+  "method": "Two independently labelled original War screenshots at three sizes and three exposures, using automatic, broad saved, tight saved and separate name/percentage fields. Direct signed OCR, confidence >=80, metadata and unchanged templates required. Warm local OCR. Runtime timings are omitted because concurrent work affects them.",
+  "before": {
+    "cases": 72,
+    "exactSignedSets": 70,
+    "confirmed": 41,
+    "ocrCalls": 1211,
+    "byMode": {
+      "automatic": {
+        "cases": 18,
+        "confirmed": 16
+      },
+      "saved-broad": {
+        "cases": 18,
+        "confirmed": 8
+      },
+      "saved-tight": {
+        "cases": 18,
+        "confirmed": 16
+      },
+      "saved-separate": {
+        "cases": 18,
+        "confirmed": 1
+      }
+    }
+  },
+  "after": {
+    "cases": 72,
+    "exactSignedSets": 72,
+    "confirmed": 72,
+    "ocrCalls": 372,
+    "byMode": {
+      "automatic": {
+        "cases": 18,
+        "confirmed": 18
+      },
+      "saved-broad": {
+        "cases": 18,
+        "confirmed": 18
+      },
+      "saved-tight": {
+        "cases": 18,
+        "confirmed": 18
+      },
+      "saved-separate": {
+        "cases": 18,
+        "confirmed": 18
+      }
+    }
+  },
+  "controlledCapture": {
+    "passed": true,
+    "cases": 6,
+    "runs": [
+      {
+        "fixture": "war-pistol",
+        "repeat": 0,
+        "exposure": 1,
+        "statsMs": 978.8000000119209,
+        "targetMs": 978.8000000119209,
+        "completeMs": 978.8000000119209,
+        "valid": true,
+        "inferred": 0,
+        "automatic": false,
+        "savedBoxesUnchanged": true,
+        "path": "calibrated-fields",
+        "name": "Georg Luger’s Pistol",
+        "fields": 100,
+        "decisionCorrect": true
+      },
+      {
+        "fixture": "war-body-shield",
+        "repeat": 0,
+        "exposure": 1,
+        "statsMs": 859.5,
+        "targetMs": 859.5,
+        "completeMs": 859.5,
+        "valid": true,
+        "inferred": 0,
+        "automatic": false,
+        "savedBoxesUnchanged": true,
+        "path": "calibrated-fields",
+        "name": "Casimir Zeglen’s Brewster - Body Shield ;",
+        "fields": 100,
+        "decisionCorrect": true
+      },
+      {
+        "fixture": "war-pistol",
+        "repeat": 1,
+        "exposure": 0.9,
+        "statsMs": 744.5,
+        "targetMs": 744.5,
+        "completeMs": 744.5,
+        "valid": true,
+        "inferred": 0,
+        "automatic": false,
+        "savedBoxesUnchanged": true,
+        "path": "calibrated-fields",
+        "name": "Georg Luger’s Pistol",
+        "fields": 100,
+        "decisionCorrect": true
+      },
+      {
+        "fixture": "war-body-shield",
+        "repeat": 1,
+        "exposure": 0.9,
+        "statsMs": 809.9000000059605,
+        "targetMs": 809.9000000059605,
+        "completeMs": 809.9000000059605,
+        "valid": true,
+        "inferred": 0,
+        "automatic": false,
+        "savedBoxesUnchanged": true,
+        "path": "calibrated-fields",
+        "name": "Casimir Zeglen’s Brewster Body Shield ;",
+        "fields": 100,
+        "decisionCorrect": true
+      },
+      {
+        "fixture": "war-pistol",
+        "repeat": 2,
+        "exposure": 0.75,
+        "statsMs": 746.3000000119209,
+        "targetMs": 746.3000000119209,
+        "completeMs": 746.3000000119209,
+        "valid": true,
+        "inferred": 0,
+        "automatic": false,
+        "savedBoxesUnchanged": true,
+        "path": "calibrated-fields",
+        "name": "Georg Luger’s Pistol",
+        "fields": 100,
+        "decisionCorrect": true
+      },
+      {
+        "fixture": "war-body-shield",
+        "repeat": 2,
+        "exposure": 0.75,
+        "statsMs": 557.5,
+        "targetMs": 557.5,
+        "completeMs": 557.5,
+        "valid": true,
+        "inferred": 0,
+        "automatic": false,
+        "savedBoxesUnchanged": true,
+        "path": "calibrated-fields",
+        "name": "Casimir Zeglen’s Brewster Body Shield |",
+        "fields": 100,
+        "decisionCorrect": true
+      }
+    ],
+    "network": {
+      "external": 0,
+      "errors": []
+    },
+    "scope": "Actual production capture/controller/scoring through a 10Hz canvas stream, existing broad calibration, controlled dimming/edge particles/transient flash, 100 synthetic owned artifacts and tied Discard decisions. Actual gameplay is a separate investigation."
+  },
+  "mainAudit": {
+    "cases": 66,
+    "exactSignedSets": 66,
+    "directSignedSets": 66,
+    "confirmed": 65,
+    "confidentlyIncorrect": 0,
+    "preExistingReview": {
+      "fixture": "greenissue",
+      "scale": 0.75,
+      "reproducedWithOriginalFieldSource": true
+    }
+  },
+  "checks": {
+    "craftingContract": true,
+    "designSystem": true,
+    "fieldGeometry": true,
+    "missingSigns": true,
+    "contradictoryNumericEvidence": true,
+    "cacheProvenance": true,
+    "desktopAndPhoneOwnership": true
+  },
+  "commands": [
+    "node scripts/test_crafting_scanner_contract.cjs",
+    "node scripts/test_scanner_war_calibration.cjs --full",
+    "node scripts/test_scanner_war_calibration.cjs --live",
+    "node scripts/run_scanner_ocr_fixture.js --crafting-audit --summary"
+  ],
+  "limitations": "The transformed screenshot matrix has two independent images. The capture check uses controlled streams. Actual recorded gameplay transitions and broader stat-reading quality are being studied separately. No calibration is reset or rewritten."
+}

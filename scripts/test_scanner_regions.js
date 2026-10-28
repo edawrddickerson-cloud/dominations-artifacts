@@ -77,6 +77,15 @@ suffixPixels.fill(0);suffixInk(10,10,100,12);suffixInk(150,10,40,12);suffixInk(1
 assert.equal(F.percentageRect(suffixPixels,300,60),null,'multiple physical text lines cannot be merged into a suffix');
 suffixPixels.fill(0);suffixInk(10,20,100,18,[100,100,100]);suffixInk(150,20,40,18,[100,100,100]);
 assert.equal(F.percentageRect(suffixPixels,300,60),null,'uncoloured fields keep the existing OCR guide path');
+for(const [mode,colour] of [['neutral',[100,100,100]],['green',[10,40,12]],['blue',[8,30,34]]]){
+  suffixPixels.fill(0);suffixInk(0,0,300,60,[8,20,35]);
+  suffixInk(10,20,100,18,colour);suffixInk(155,28,9,2,colour);suffixInk(170,20,11,18,colour);suffixInk(190,20,15,18,colour);
+  const original=suffixPixels.slice(),rect=F.percentageRect(suffixPixels,300,60,mode);
+  assert(rect && rect.x>110 && rect.x<=155 && rect.x+rect.width>=205,mode+' War suffix keeps dim minus, digits and percent inside its own field');
+  assert.deepEqual(suffixPixels,original,'locating a suffix never rewrites the source pixels');
+  suffixPixels.fill(0);suffixInk(0,0,300,60,colour);
+  assert.equal(F.percentageRect(suffixPixels,300,60,mode),null,'uniform '+mode+' pixels cannot establish text geometry');
+}
 async function run(percentages) {
   const narrow=G.copy(template);narrow.rows.forEach(row=>{row.percentage.x=.78;row.percentage.width=.15;});
   const snapshot=F.snapshot({template:narrow,panel,source});assert.equal(snapshot.valid,true);

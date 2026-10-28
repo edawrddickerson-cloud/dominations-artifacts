@@ -54,10 +54,16 @@
       return {valid:true,crops,template:window.DNScannerRegions.copy(fields.template),release,sharedPercentages,reuseGeometry,foregroundRows,automaticCategory,diceRequested:fields.template.rows.map(row=>!!row.dice),unavailable:resolved.unavailable || {}};
     }catch(error){release();throw error;}
   }
-  function percentageRect(data,width,height) {
+  function foregroundInk(r,g,b,mode) {
+    return mode==='neutral'?R().neutralTextContrast(r,g,b)<200:
+      mode==='green'?g>25 && g>r*1.8 && g>b*1.2:
+      mode==='blue'?Math.min(g,b)>r*1.8 && Math.min(g,b)-r>15 && Math.max(g,b)>25:null;
+  }
+  function percentageRect(data,width,height,foreground=null) {
     // Locate the last coloured word in this physical row. This supplies only
     // geometry; the sign, digits and percent glyph still have to pass OCR.
-    const ink=(x,y)=>{const p=(y*width+x)*4,r=data[p],g=data[p+1],b=data[p+2];return data[p+3]>=128 && g>25 && (g>r*1.8 && g>b*1.2 || Math.min(g,b)>r*1.8);};
+    const ink=(x,y)=>{const p=(y*width+x)*4,r=data[p],g=data[p+1],b=data[p+2];return data[p+3]>=128 &&
+      (foreground?foregroundInk(r,g,b,foreground):g>25 && (g>r*1.8 && g>b*1.2 || Math.min(g,b)>r*1.8));};
     const bands=[];let band=null,gap=0;
     for(let y=0;y<height;y++) {
       let count=0;for(let x=0;x<width;x++)if(ink(x,y))count++;
@@ -97,7 +103,7 @@
     }
     for(let i=0;i<pixels.data.length;i+=4) {
       const r=pixels.data[i],g=pixels.data[i+1],b=pixels.data[i+2];
-      const saturated=mode==='green'?g>60 && g>r*1.8 && g>b*1.2:mode==='blue'?Math.min(g,b)>r*1.8 && Math.min(g,b)-r>25 && Math.max(g,b)>35:mode==='category'?g>60 && g>r*1.25 && g>b*1.05:Math.max(g,b)>r*1.8 && Math.max(g,b)>25;
+      const saturated=foreground?foregroundInk(r,g,b,mode):mode==='category'?g>60 && g>r*1.25 && g>b*1.05:Math.max(g,b)>r*1.8 && Math.max(g,b)>25;
       const value=foreground?saturated?0:255:mode==='neutral'?R().neutralTextContrast(r,g,b):mode==='chroma' || mode==='colour' && !compact?255-Math.min(255,Math.max(0,(numeric?Math.max(g,b):g)-r-background)*(numeric?6:mode==='chroma'?8:12)):mode==='colour' || mode==='category'?saturated?0:255:R().textContrast(r,g,b);
       if(mode==='neutral'?value<200:saturated)ink++;
       pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=value;pixels.data[i+3]=255;
@@ -133,7 +139,8 @@
   async function recognize(snapshot,{worker,readView,names,canonPerk,hall='main',inferColours=false,categorySource,isClosed,ocrCalls,reuse=null,autoFit=true,fitBudget={remaining:24}}) {
     const colours=coloursOf(Array.from({length:5},(_,i)=>snapshot.crops[i+'-name']));
     const war=R().hallColour(snapshot.crops.hall || snapshot.crops['hall-banner'])==='war';
-    const neutralSources=new Set(war?colours.flatMap((colour,i)=>colour==='neutral'?[snapshot.crops[i+'-name'],snapshot.crops[i+'-percentage']]:[]):[]);
+    const foregroundSources=new Map(war?colours.flatMap((colour,i)=>['neutral','green','blue'].includes(colour)?
+      [[snapshot.crops[i+'-name'],colour],[snapshot.crops[i+'-percentage'],colour]]:[]):[]);
     const rerolls=Array.from({length:5},(_,i)=>{
       if(!snapshot.diceRequested?.[i] && !snapshot.crops[i+'-dice'])return null;
       return snapshot.crops[i+'-dice']?window.DNScannerRerollRecognition?.classifyCanvas(snapshot.crops[i+'-dice']) ||
@@ -158,17 +165,18 @@
     };
     async function read(source,kind,mode='contrast',segmentation='7',shared=false) {
       check();let focused=null;
-      if(neutralSources.has(source) && ['contrast','colour'].includes(mode))mode='neutral';
-      if(mode!=='neutral' && (kind==='percentage' || kind==='name' && shared) && source.width/source.height>5) {
+      if(foregroundSources.has(source) && ['contrast','colour'].includes(mode))mode=foregroundSources.get(source);
+      if((kind==='percentage' || kind==='name' && shared) && source.width/source.height>5) {
         const pixels=source.getContext('2d',{willReadFrequently:true}).getImageData(0,0,source.width,source.height).data;
-        const rect=percentageRect(pixels,source.width,source.height);
+        const rect=percentageRect(pixels,source.width,source.height,foregroundSources.get(source));
         if(rect){const area=kind==='percentage'?rect:{x:0,y:rect.y,width:rect.x,height:rect.height};if(area.width>2){focused=document.createElement('canvas');focused.width=area.width;focused.height=area.height;focused.getContext('2d').drawImage(source,area.x,area.y,area.width,area.height,0,0,area.width,area.height);}}
       }
-      const prepared=view(focused || source,focused && mode==='contrast'?'chroma':mode,false,focused && kind==='percentage'?(mode==='colour'?5:4):2);
+      const minimumScale=foregroundSources.has(source) && source.height<48?4:focused && kind==='percentage'?(mode==='colour'?5:4):2;
+      const prepared=view(focused || source,focused && mode==='contrast'?'chroma':mode,false,minimumScale);
       if((mode==='colour' || mode==='category') && prepared.ink<30){prepared.canvas.width=prepared.canvas.height=0;if(focused)focused.width=focused.height=0;return null;}
       try {
         let rectangle=null,guide=null,guideConfidence=0;
-        if(kind==='percentage' && !focused && source.width/source.height>5) {
+        if((kind==='percentage' || kind==='name' && foregroundSources.has(source)) && !focused && source.width/source.height>5) {
           // Percentages follow variable-length names. For a deliberately wide
           // percentage box, locate its numeric suffix within that same crop.
           // This independent layout pass never borrows the name crop's text.
@@ -182,8 +190,22 @@
             guideConfidence=Math.min(...tail.map(word=>Number.isFinite(word.confidence)?word.confidence:0));
             const minX=Math.min(...tail.map(w=>w.bbox.x0)),maxX=Math.max(...tail.map(w=>w.bbox.x1)),
               minY=Math.min(...tail.map(w=>w.bbox.y0)),maxY=Math.max(...tail.map(w=>w.bbox.y1)),padding=(maxY-minY)*.55;
-            const left=Math.max(0,Math.floor(minX-padding)),top=Math.max(0,Math.floor(minY-padding));
-            rectangle={left,top,width:Math.min(prepared.canvas.width,Math.ceil(maxX+padding))-left,height:Math.min(prepared.canvas.height,Math.ceil(maxY+padding))-top};
+            const signed=tail.some(word=>/^[+-]/.test(word.text.trim()));
+            const prior=words[last-(tail[0]===words[last-1]?2:1)];
+            // Do not include the preceding name's final glyph in a numeric
+            // crop. Clamp only when the guide located the sign itself, so an
+            // unrecognised, separated sign keeps the ordinary full padding.
+            const nameEdge=foregroundSources.has(source) && signed && prior?.bbox?.x1<minX?Math.floor((prior.bbox.x1+minX)/2):0;
+            const left=Math.max(nameEdge,Math.max(0,Math.floor(minX-padding))),top=Math.max(0,Math.floor(minY-padding));
+            if(kind==='percentage')rectangle={left,top,width:Math.min(prepared.canvas.width,Math.ceil(maxX+padding))-left,height:Math.min(prepared.canvas.height,Math.ceil(maxY+padding))-top};
+            else if(signed &&
+              (last===words.length-1 || last===words.length-2 && /^%$/.test(words[last+1].text.trim()))) {
+              // If the percent glyph was read as a letter/digit, read the name
+              // independently to the left of the signed suffix. Only its pixel
+              // bounds are borrowed; numeric evidence still has its own read.
+              const right=Math.floor(minX-(maxY-minY)*.1);
+              if(right>16)rectangle={left:0,top:0,width:right,height:prepared.canvas.height};
+            }
           }
         }
         await worker.setParameters({tessedit_pageseg_mode:segmentation,tessedit_char_whitelist:kind==='percentage'?'+-0123456789.,%':kind==='category'?'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz ':''});
@@ -208,7 +230,7 @@
     const batchEvidence=new Map();let evidenceBytes=0,reusedFields=0;
     const samePixels=(first,second)=>{if(first.length!==second.length)return false;for(let i=0;i<first.length;i++)if(first[i]!==second[i])return false;return true;};
     const copyEvidence=value=>({...value,words:(value.words || []).map(word=>({...word,...(word.bbox?{bbox:{...word.bbox}}:{})}))});
-    const batchProfile=(kind,index,mode)=>neutralSources.has(snapshot.crops[index+'-'+kind]) && ['contrast','colour'].includes(mode)?'neutral':snapshot.foregroundRows && war && mode==='contrast' && ['green','blue'].includes(colours[index])?colours[index]:mode;
+    const batchProfile=(kind,index,mode)=>foregroundSources.has(snapshot.crops[index+'-'+kind]) && ['contrast','colour'].includes(mode)?foregroundSources.get(snapshot.crops[index+'-'+kind]):mode;
     const batchKey=(kind,index,mode)=>kind+':'+mode+':'+index+':'+batchProfile(kind,index,mode);
     async function batch(kind,mode='contrast',indices=[0,1,2,3,4],compactHeight=48) {
       check();
@@ -231,9 +253,11 @@
       if(!missing.length)return results;
       const prepared=missing.map(i=>{
         const source=snapshot.crops[i+'-'+kind];
-        // Automatic War rows can isolate their known foreground ink before
-        // the first atlas; unclear/conflicting evidence keeps ordinary retries.
-        return view(source,batchProfile(kind,i,mode),true,2,compactHeight);
+        // Saved War boxes need the same foreground isolation as automatic
+        // fields. Broad boxes keep more padding: retain glyph resolution in
+        // their first atlas without changing the original crop or coordinates.
+        const height=war && !snapshot.foregroundRows?Math.max(compactHeight,96):compactHeight;
+        return view(source,batchProfile(kind,i,mode),true,2,height);
       });
       if(mode==='colour' && prepared.every(item=>item.ink<30)){for(const item of prepared)item.canvas.width=item.canvas.height=0;return null;}
       const canvas=document.createElement('canvas'),cells=[];
@@ -282,7 +306,8 @@
       if(candidate.valid && !enlargedConflicts[i])batchNames[i]=alternative;
     }
     const needsColour=!batchPercentages && batchNames.some(name=>!parseField(name.text,suffixOf(name).text).valid || name.confidence<80);
-    const colourNames=needsColour?await batch('name','colour'):null;
+    const colourIndices=needsColour?[0,1,2,3,4].filter(i=>batchProfile('name',i,'colour')!==batchProfile('name',i,'contrast')):[];
+    const colourNames=colourIndices.length?await batch('name','colour',colourIndices):null;
     for(let i=0;i<5;i++) {
       let name=batchNames[i],percentage;
       if(batchPercentages)percentage=batchPercentages[i];

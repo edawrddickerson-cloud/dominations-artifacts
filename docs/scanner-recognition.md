@@ -7,6 +7,12 @@ History: Builds on Phase 2 calibration. One real English gold-framed panel is ve
 
 ## Crafting speed and evidence review (2026-10-16)
 
+For the 28 October saved-War-calibration fix and its real-OCR/capture checks, see
+[Saved War calibration](scanner-region-calibration.md#saved-war-calibration-28-october-2026).
+Saved and automatic War fields share foreground processing without rewriting
+calibration. Separate signed numeric evidence and confidence requirements remain
+mandatory; matching inferred values do not pass the regression matrix.
+
 Calibrated crafting now batches five physical name crops into one compact OCR image. Separate percentage boxes use a second batch; identical name/percentage boxes read their original signed suffix once. A line is assigned by its bounding box, never by its position in the OCR output. Missing, wrapped, duplicate, or cross-cell lines trigger a focused retry without shifting later stats. A second colour batch recovers difficult coloured rows before the independent field retries. Complete text no longer triggers a full panel OCR merely because a category or star is unreadable.
 
 Calibrated fields use the pinned, locally hosted Tesseract fast English model. Unclear calibrated text retains the original model for its standard fallback. Storage and text-only OCR retain their original model. Models warm while capture settles and cache under separate model/version keys. Only public model data enters that cache; image/text evidence does not. At most two workers exist per engine and both terminate on close. See `ui/vendor/tesseract/README.md` for model provenance and hashes.

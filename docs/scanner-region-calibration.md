@@ -30,6 +30,36 @@ Follow-up stability checks reproduced misses after 10% dimming of the supplied p
 
 The original game screenshots `Screenshot 2026-10-27 233330.png` and `Screenshot 2026-10-27 233241.png` are retained as `tests/scanner/war-pistol.png` and `tests/scanner/war-body-shield.png`. The War panel browser test covers all three images at three widths, 0/10/25% dimming and synthetic edge particles. It cycles repeatedly through the three artifacts before and after saving calibration, verifies automatic reads and stable crop bounds through brightness changes, then checks empty-scene rejection and returning-panel recovery. Automatic regions follow a relocated panel even without saved field boxes; explicit manual regions stay fixed. These transformations check robustness on three supplied images; they do not establish performance across all live animation or OCR text accuracy.
 
+### Saved War calibration, 28 October 2026
+
+Saved boxes retain their exact coordinates and priority. War foreground isolation
+now follows current blue-ribbon pixels for saved and automatic fields, including
+focused retries. Neutral text excludes blue backing; green/blue masks retain dim
+glyphs and signs. Broad saved rows retain their glyph resolution in the first
+atlas. A colour retry is skipped when it would repeat the same foreground view.
+Unknown colours and non-War panels retain their existing processing.
+
+The suffix locator uses the same foreground mask inside each original field.
+When an overlapping name crop mistakes the percent glyph for another character,
+a bounded OCR guide can locate the signed suffix and reread the name to its left.
+Guide text supplies geometry only: the numeric field still needs its own signed
+OCR. Missing signs, contradictory values and low confidence remain unconfirmed;
+recovered evidence cannot enter the verified first-atlas cache.
+
+`node scripts/test_scanner_war_calibration.cjs --full` checks the two original War
+screenshots at three sizes and three brightness levels with automatic, broad
+saved, tight saved and separate name/percentage boxes. Every case requires exact
+direct signed values, confidence, Hall/category/stars and unchanged coordinates.
+`--live` starts the real capture/controller/target workflow with broad boxes
+already saved in a disposable browser, then cycles the items with controlled
+dimming, edge particles and a transient flash. It checks exact direct stats,
+complete metadata, tied Discard decisions and unchanged browser calibration.
+Both commands are part of `test_crafting_scanner_contract.cjs`.
+
+These are controlled probes of two independent screenshots, not a measurement of
+general live-game accuracy. The original gameplay recording referenced by the
+older replay documentation is unavailable at its recorded path on this machine.
+
 ### Category and hall correction, 14 October 2026
 
 Category OCR isolates green lettering, accepts a clear category word even when the adjacent icon lowers overall line confidence, and retries with normal contrast or sparse text if the first pass does not identify a type. It still rejects competing category types. Crafting hall detection uses ribbon colour rather than OCR labels or percentage tiers, before applying percentage inference. Standard fallback retains the calibrated colour and a clear calibrated category.
