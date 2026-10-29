@@ -73,7 +73,7 @@
     if(category!=='attacking')return choices.map(renderChoice).join('');
     return [['barracks','Barracks Troops'],['factory','Factory Troops'],['air','Airstrip Troops']].map(([type,label])=>
       '<fieldset class="purpose-troop-group"><legend>'+label+'</legend><div class="purpose-troop-options">'+choices.filter(choice=>DN.armyUnitType(choice.label.replace(/ attack$/,''))===type).map(renderChoice).join('')+'</div></fieldset>'
-    ).join('')+'<div class="purpose-troop-options">'+choices.filter(choice=>choice.id==='attack-enemy-buildings').map(renderChoice).join('')+'</div>';
+    ).join('')+'<div class="purpose-troop-options">'+choices.filter(choice=>['attack-generals','attack-enemy-buildings'].includes(choice.id)).map(renderChoice).join('')+'</div>';
   }
   function render() {
     if(savingRating||savingTargets)return;

@@ -51,6 +51,11 @@
   }
   add('expansion', 'Expansion', 'Economy', ['Forest Expansion Cost Refund']);
 
+  add('attack-generals','Generals','Unit attack',[
+    ...DN.PERK_GROUPS.find(group=>group.id==='generals').perks.map(perk=>perk.name),
+    ...enemyBuildingDebuffs(['Generals']),...enemyDefenders,
+  ]);
+  add('counter-generals','Invading Generals','Unit counters',DN.PERK_GROUPS.find(group=>group.id==='invading-generals').perks.map(perk=>perk.name));
   add('attack-enemy-buildings','Include All Enemy Building & Defender Debuffs','Unit attack',[...enemyBuildings,...enemyDefenders]);
   const defensiveStats = new Set(DN.PERK_GROUPS.filter(group => ['buildings','all-towers','defenders'].includes(group.id)).flatMap(group => group.perks.map(perk => perk.name)));
   const economyStats = new Set(choices.filter(choice => choice.group === 'Economy').flatMap(choice => [...choice.stats]));

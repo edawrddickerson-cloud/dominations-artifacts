@@ -96,6 +96,16 @@
   check('The two sortable headers use matching typography',win().getComputedStyle(doc().querySelector('[data-purpose-sort-column="name"]')).font===win().getComputedStyle(doc().querySelector('[data-purpose-sort-column="rating"]')).font);
   check('Deduplicated target editor updates the same Off field below',doc().querySelector('[data-layer="profile"][data-key="Barracks Troop Damage"][data-axis="offensive"]').value==='4');
   save();const attackOnly=savedId('Combined collecting');
+  check('Generals choice is available alongside troop presets',!!doc().querySelector('[data-purpose-selection="attack-generals"]')&&!stat("Generals' Damage"));
+  choose('attack-generals');
+  check('Selecting Generals reveals individual shared ratings',stat("Generals' Damage").querySelector('[data-purpose-include]').checked&&service().ratingOf("Generals' Damage")===6&&!!stat("Generals' Hitpoints")&&!!stat("Generals' Movement Speed"));
+  save();edit(attackOnly);
+  check('Generals selection survives saving and reopening',doc().querySelector('[data-purpose-selection="attack-generals"]').checked&&service().definitions.find(p=>p.id===attackOnly).stats.has("Generals' Damage"));
+  const generalOptions=window.DNCraftingPurposes.scoringOptions(attackOnly,{canonPerk:name=>name,prefSortAxes:{offensive:true,defensive:false}},{hall:'war',type:'Equipment'});
+  check('Generals Damage contributes six times its upgraded percentage',generalOptions.ratingOf("Generals' Damage",'offensive')===6&&window.DNArtifactScoring.score({perk_1_name:"Generals' Damage",perk_1_max:'10'},{...generalOptions,scoreMode:'combined'}).preference===60);
+  stat("Generals' Damage").querySelector('[data-purpose-include]').click();save();edit(attackOnly);
+  check('Individual General exclusions persist while other General stats remain included',!stat("Generals' Damage").querySelector('[data-purpose-include]').checked&&stat("Generals' Hitpoints").querySelector('[data-purpose-include]').checked);
+  choose('attack-generals');save();
   check('Saving preserves an explicit default-debuff opt-out',!service().settings().customPurposes.find(p=>p.id===attackOnly).selections.includes('attack-enemy-buildings'));
   tab('defensive');
   check('The active attack-only saved target is absent from the defensive list',!doc().querySelector('[data-purpose-edit="'+attackOnly+'"]'));
@@ -104,6 +114,10 @@
   check('An empty defensive selection shows all defensive stats without attack stats',JSON.stringify(alphabetic(visibleStats()))===JSON.stringify(allTabStats('defensive'))&&!stat('Barracks Troop Damage'));
   check('General target is not a source checkbox',!doc().querySelector('[data-purpose-selection="general-defensive"]'));
   choose('counter-bomber');
+  check('Defensive targets offer Invading Generals',!!doc().querySelector('[data-purpose-selection="counter-generals"]'));
+  choose('counter-generals');
+  check('Invading Generals reveals defensive general stats',!!stat("Invading Generals' Damage")&&!!stat("Invading Generals' Hitpoints")&&!stat("Generals' Damage"));
+  choose('counter-generals');
   tab('attacking');
   check('Defensive draft selections do not alter the attacking target',doc().querySelector('[data-purpose-name]').value==='Combined collecting'&&doc().querySelectorAll('[data-purpose-selection]:checked').length===2&&!savedId('Anti bomber'));
   tab('defensive');
