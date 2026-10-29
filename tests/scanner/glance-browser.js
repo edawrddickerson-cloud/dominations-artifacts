@@ -91,10 +91,10 @@
   const tiedRerolls=complete(1);tiedRerolls.rows.forEach(row=>row.rerollEligible=true);
   await read(tiedRerolls);
   const gains=()=>Array.from(get('result').querySelectorAll('.scanner-reroll-gain')).map(node=>node.textContent.replace(/\s/g,''));
-  check('every eligible row shows its gain and all gains enter the total',JSON.stringify(gains())==='["+80","+80","+80","+80","+80"]' && get('item-total').textContent==='500');
+  check('one best eligible row adds its gain once',JSON.stringify(gains())==='["+80","","","",""]' && get('item-total').textContent==='180');
   const lowestLast=complete(11);lowestLast.rows.forEach(row=>row.rerollEligible=true);lowestLast.rows[4].value=1;
   await read(lowestLast);
-  check('different eligible contributions keep their own gains',JSON.stringify(gains())==='["+60","+60","+60","+60","+80"]' && get('item-total').textContent==='500');
+  check('other actual rows remain unchanged by the single reroll',JSON.stringify(gains())==='["","","","","+80"]' && get('item-total').textContent==='260');
   setRatings({[perk]:{offensive:2,defensive:2},'Ranged Infantry Hitpoints':{offensive:1,defensive:0}});
   window.dispatchEvent(new Event('storage'));
   if(!get('def').checked)document.getElementById('header-def').click();

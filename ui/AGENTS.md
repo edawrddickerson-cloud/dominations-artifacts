@@ -1,8 +1,8 @@
 # Crafting scanner display rules
 
 October 29: Crafting totals and same-target owned benchmarks use the sum of
-maximum-upgrade stat scores plus the sum of all confirmed eligible reroll gains,
-once per row. Show each included gain beside its stat. Unknown dice cannot add
+the actual rows' level-10 stat scores plus ONE best eligible reroll gain,
+once per card. Show that gain beside its selected row. Unknown dice cannot add
 a confirmed bonus. Rare Card evaluation always checks both scoring axes,
 independently of the header Off/Def toggles.
 

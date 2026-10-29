@@ -167,10 +167,11 @@
     // line preference assigned by the comparison adapter.
     const points=line=>Number.isFinite(line.preference)?line.preference:active(line);
     const gain=(line,i,possible=false)=>special || !rerollPoolKnown || (possible?eligible[i]===false:eligible[i]!==true)?0:Math.max(0,target-points(line));
-    const rerollGains=base.lines.map((line,i)=>gain(line,i)),possibleRerollGains=base.lines.map((line,i)=>gain(line,i,true));
-    const sum=values=>values.reduce((total,value)=>total+value,0);
-    const rerollGain=sum(rerollGains),possibleGain=sum(possibleRerollGains);
-    const index=rerollGain>0?rerollGains.indexOf(Math.max(...rerollGains)):-1;
+    const gains=base.lines.map((line,i)=>gain(line,i)),possibleGains=base.lines.map((line,i)=>gain(line,i,true));
+    // Upgrade the actual card, then replace at most one eligible row.
+    const rerollGain=Math.max(0,...gains),possibleGain=Math.max(0,...possibleGains);
+    const index=rerollGain>0?gains.indexOf(rerollGain):-1,possibleIndex=possibleGain>0?possibleGains.indexOf(possibleGain):-1;
+    const rerollGains=gains.map((value,i)=>i===index?value:0),possibleRerollGains=possibleGains.map((value,i)=>i===possibleIndex?value:0);
     return {...base,basePreference:base.preference,potentialPreference:base.preference+rerollGain,
       possiblePotentialPreference:base.preference+possibleGain,rerollGain,rerollGains,possibleRerollGains,rerollIndex:index,
       rerollTarget:target,rerollStat,rerollMagnitude,rerollPoolKnown,rerollUncertain:possibleGain>rerollGain || !special && !rerollPoolKnown && eligible.some(value=>value!==false),

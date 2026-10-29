@@ -4,7 +4,7 @@ const path=require('node:path'),{spawnSync}=require('node:child_process');
 const root=path.resolve(__dirname,'..');
 const checks=[
   ['test_scanner_recognition.js'],['test_scanner_comparison.js'],['test_strategy_scanner.js'],
-  ['test_reroll_potential.js'],['test_scanner_axes.js'],['test_crafting_purposes.js'],
+  ['test_crafting_score_contract.js'],['test_reroll_potential.js'],['test_scanner_axes.js'],['test_crafting_purposes.js'],
   ['test_scanner_reading.js'],['test_scanner_collection.js'],['test_crafting_log_statistics.js'],
   ['test_scanner_speculation.js'],['test_scanner_worker_readiness.js'],
   ['test_scanner_field_reuse.js'],['test_scanner_capture.js'],['check_design_system.cjs'],

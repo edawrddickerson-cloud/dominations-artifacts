@@ -315,9 +315,9 @@ service.configure(summedTarget,{weights:{'Heavy Infantry Damage':5}});
 const summedRows=Array.from({length:5},()=>({...row('Heavy Infantry Damage',1),rerollEligible:true}));
 const sumOptions={type:'Weapon',hall:'main',selected:[summedTarget],owned:[owned('sum-one',summedRows.map(row=>({...row,rerollEligible:false})),'Weapon'),owned('sum-two',summedRows.map(row=>({...row,rerollEligible:false})),'Weapon')]};
 const summed=service.evaluate({...craft(summedRows),artifact:{type:'Weapon'}},sumOptions)[0];
-assert.equal(summed.baseScore,250);assert.equal(summed.rerollGain,250);assert.equal(summed.score,500);assert.equal(summed.threshold,250);assert.ok(summed.hit);
-assert.equal(summed.contributions.reduce((sum,row)=>sum+(row.score||0)+row.rerollGain,0),summed.score,'displayed row scores plus all gains match the target total');
-assert.equal(service.evaluate({...craft(summedRows),artifact:{type:'Weapon'}},{...sumOptions,owned:[owned('sum-one',summedRows,'Weapon'),owned('sum-two',summedRows,'Weapon')]})[0].status,'owned','owned benchmarks add the identical summed gains and reject ties');
+assert.equal(summed.baseScore,250);assert.equal(summed.rerollGain,50);assert.equal(summed.score,300);assert.equal(summed.threshold,250);assert.ok(summed.hit);
+assert.equal(summed.contributions.reduce((sum,row)=>sum+(row.score||0)+row.rerollGain,0),summed.score,'actual upgraded rows plus one selected gain match the target total');
+assert.equal(service.evaluate({...craft(summedRows),artifact:{type:'Weapon'}},{...sumOptions,owned:[owned('sum-one',summedRows,'Weapon'),owned('sum-two',summedRows,'Weapon')]})[0].status,'owned','owned benchmarks use the identical single-reroll formula and reject ties');
 assert.ok(service.evaluate(fighterCraft,{type:'Weapon',hall:'main',owned:[],selected:[fighter.id]})[0].hit,'Fighter is a combined unit preset for evidenced damage/hitpoint stats');
 for(const prefSortAxes of [{offensive:false,defensive:true},{offensive:false,defensive:false}]){
   assert.ok(service.evaluate(fighterCraft,{type:'Weapon',hall:'main',owned:[],selected:[fighter.id],prefSortAxes})[0].hit,'offensive rare patterns ignore the page axis toggles');

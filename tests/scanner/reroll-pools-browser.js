@@ -3,7 +3,7 @@
   const checks={},get=id=>document.getElementById('scanner-'+id);
   const check=(name,value)=>{checks[name]=!!value;if(!value)throw Error(name+' / total '+get('item-total').textContent+' / category '+get('compare-type').value+' / '+get('result').textContent+' / '+get('warnings').textContent);};
   async function wait(test){const end=performance.now()+15000;while(!test()){if(performance.now()>end)throw Error('Timed out');await new Promise(resolve=>setTimeout(resolve,20));}}
-  await wait(()=>get('names').children.length);
+  await wait(()=>window.DNScannerCollection&&window.DNScannerReading&&window.DNCraftingPurposes&&get('names').children.length);
   get('auto').checked=false;window.DNScannerCollection.isEnabled=()=>false;
   for(const family of ['attacking','defensive','economy'])DNCraftingPurposes.disableRareFamily(family);
   const ratings=Object.fromEntries(Object.keys(window.DN_ARTIFACT_STAT_CONTEXT.stats).map(name=>[name,{offensive:0,defensive:0}]));
@@ -12,7 +12,7 @@
   let response,pixel=0,session=0;
   window.DNScannerRecognition.create=()=>({recognize:async()=>structuredClone(response),close:async()=>{}});
   const canvas=document.createElement('canvas');canvas.width=640;canvas.height=360;
-  const cases=[['main','Weapon','Heavy Tank Damage',1,100,500],['main','Armor','Invading Heavy Tank Damage',-1,60,300],['main','Jewelry','Oil Looted',1,40,200],['main','Pottery','Vault Interest',1,40,200],['war','Weapon','Heavy Tank Damage',1,30,150],['war','Armor','Heavy Tank Hitpoints',1,15,75],['war','Equipment',"Invading Generals' Hitpoints",-1,75,375],['main','Weapon',"Generals' Damage",1,100,500]];
+  const cases=[['main','Weapon','Heavy Tank Damage',1,100,180],['main','Armor','Invading Heavy Tank Damage',-1,60,60],['main','Jewelry','Oil Looted',1,40,40],['main','Pottery','Vault Interest',1,40,40],['war','Weapon','Heavy Tank Damage',1,30,110],['war','Armor','Heavy Tank Hitpoints',1,15,55],['war','Equipment',"Invading Generals' Hitpoints",-1,75,75],['main','Weapon',"Generals' Damage",1,100,300]];
   for(const [hall,type,name,value,ceiling,total] of cases){
     if(name==="Generals' Damage" && document.getElementById('header-def').getAttribute('aria-pressed')!=='true')document.getElementById('header-def').click();
     response={valid:true,warnings:[],hall,hallSource:'hall-colour',artifact:{type},unlocked:{count:2,states:[true,true,false,false,false]},
@@ -22,7 +22,7 @@
     const scores=[...get('result').querySelectorAll('.scanner-stat-base-score')].map(node=>Number(node.textContent));
     const gains=[...get('result').querySelectorAll('.scanner-reroll-gain')].map(node=>Number(node.textContent.replace(/\s/g,'')));
     check(hall+' '+type+' uses its legal ceiling',get('item-total').textContent===String(total));
-    check(hall+' '+type+' row gains agree with the total',scores.reduce((a,b)=>a+b,0)+gains.reduce((a,b)=>a+b,0)===total && gains.filter(value=>value>0).length===5);
+    check(hall+' '+type+' row gains agree with the total',scores.reduce((a,b)=>a+b,0)+gains.reduce((a,b)=>a+b,0)===total && gains.filter(value=>value>0).length===1);
     const best=get('result').querySelector('.is-best-reroll');
     check(hall+' '+type+' explains its replacement score',best?.querySelector('.scanner-reroll-gain')?.title.includes(ceiling+' points'));
   }

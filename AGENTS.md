@@ -1,3 +1,18 @@
+# Protected crafting score contract
+
+Before changing crafting or owned-item comparison scores, read
+`docs/artifact-rerolls.md`. Potential means the card's **actual five rows at
+level 10, plus the gain from ONE best eligible reroll at level 10**. Never
+replace all five rows hypothetically. For level-10 row scores
+`150 + 30 + 15 + 0 + 0` and a legal replacement worth `150`, potential is
+`195 + 150 = 345`, never `750`.
+
+`scripts/test_crafting_score_contract.js` locks these hand-calculated examples
+in the required scanner gate. Do not rewrite this rule or its expected examples
+to accommodate an implementation. Reconcile an ambiguous request that appears
+to change the one-reroll limit with the user before changing the contract.
+Routine fixes that restore this contract do not require confirmation.
+
 # Site-wide UI copy
 
 Keep site UI copy to names, facts, and necessary actions. Do not add explanatory blurbs, introductory prose, redundant descriptions, or implementation details. Use concise labels, values, counts, statuses, and controls. Keep errors and instructions only when needed to complete an action. Apply this rule across all pages and new or edited UI, including scanner decision boxes.
