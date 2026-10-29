@@ -185,21 +185,21 @@
         if(prefix===target)return {...output,lineConfidence:output.lineConfidence ?? output.confidence,confidence:Math.max(output.confidence,Math.min(...confidences))};}
       return output;
     };
-    async function read(source,kind,mode='contrast',segmentation='7',shared=false) {
+    async function read(source,kind,mode='contrast',segmentation='7',shared=false,originalNumeric=false) {
       check();let focused=null;
       if(mode==='soft')mode=['green','blue'].includes(foregroundSources.get(source))?foregroundSources.get(source)+'-soft':'channel';
       if(foregroundSources.has(source) && ['contrast','colour'].includes(mode))mode=foregroundSources.get(source);
-      if(!['channel','green-soft','blue-soft'].includes(mode) && (kind==='percentage' || kind==='name' && shared) && source.width/source.height>5) {
+      if(!originalNumeric && !['channel','green-soft','blue-soft'].includes(mode) && (kind==='percentage' || kind==='name' && shared) && source.width/source.height>5) {
         const pixels=source.getContext('2d',{willReadFrequently:true}).getImageData(0,0,source.width,source.height).data;
         const rect=percentageRect(pixels,source.width,source.height,foregroundSources.get(source));
         if(rect){const area=kind==='percentage'?rect:{x:0,y:rect.y,width:rect.x,height:rect.height};if(area.width>2){focused=document.createElement('canvas');focused.width=area.width;focused.height=area.height;focused.getContext('2d').drawImage(source,area.x,area.y,area.width,area.height,0,0,area.width,area.height);}}
       }
-      const minimumScale=foregroundSources.has(source) && source.height<48?4:focused && kind==='percentage'?(mode==='colour'?5:4):2;
+      const minimumScale=originalNumeric?4:foregroundSources.has(source) && source.height<48?4:focused && kind==='percentage'?(mode==='colour'?5:4):2;
       const prepared=view(focused || source,focused && mode==='contrast'?'chroma':mode,false,minimumScale);
       if((mode==='colour' || mode==='category') && prepared.ink<30){prepared.canvas.width=prepared.canvas.height=0;if(focused)focused.width=focused.height=0;return null;}
       try {
         let rectangle=null,guide=null,guideConfidence=0;
-        if((kind==='percentage' || kind==='name' && foregroundSources.has(source)) && !focused && source.width/source.height>5) {
+        if(!originalNumeric && (kind==='percentage' || kind==='name' && foregroundSources.has(source)) && !focused && source.width/source.height>5) {
           // Percentages follow variable-length names. For a deliberately wide
           // percentage box, locate its numeric suffix within that same crop.
           // This independent layout pass never borrows the name crop's text.
@@ -303,9 +303,10 @@
     }
     const fields=[],firstRows=[],firstWarnings=[],fieldReads=Array.from({length:5},()=>[]);
     const recordFields=(i,pass,name,percentage)=>{
-      const raw=value=>value?{text:value.text,confidence:value.confidence,...(value.rawText?{rawText:value.rawText}:{}),...(value.guideText?{guideText:value.guideText}: {}),
+      const raw=value=>value?{text:value.text,confidence:value.confidence,...(Number.isFinite(value.lineConfidence)?{lineConfidence:value.lineConfidence}:{}),...(Number.isFinite(value.guideConfidence)?{guideConfidence:value.guideConfidence}:{}),...(value.rawText?{rawText:value.rawText}:{}),...(value.guideText?{guideText:value.guideText}: {}),
         ...(value.autoFit?{autoFit:value.autoFit,evidenceSource:'expanded-field'}:{}),
-        ...(value.reused?{reused:true,evidenceSource:'same-encounter-identical-pixels'}:{})}:null;
+        ...(value.reused?{reused:true,evidenceSource:'same-encounter-identical-pixels'}:{}),
+        ...(value.numericRetry?{numericRetry:true,evidenceSource:'original-percentage-crop',view:value.numericRetry}: {})}:null;
       fieldReads[i].push({pass,name:raw(name),percentage:raw(percentage)});
     };
     const batchNames=await batch('name');
@@ -426,6 +427,17 @@
       const fallback=await readCategorySource();
       if(fallback.type)artifact=fallback;
     }
+    // Tier constraints only apply to fresh ordinary crafts with a detected Hall
+    // and a readable category. Storage's upgraded percentages never enter here.
+    const numericHall=colourHall;
+    const ordinaryType=artifact?.type && (numericHall==='war'?['Weapon','Armor','Equipment']:numericHall==='main'?['Weapon','Armor','Jewelry','Pottery']:[]).includes(artifact.type);
+    const startingValues=ordinaryType?window.DNStoredArtifacts?.tierBases({hall:numericHall,type:artifact.type,crafting:true}):null;
+    const percentageEvidence=i=>fieldReads[i].flatMap(field=>{
+      const amounts=[];
+      if(field.percentage){const amount=R().parsePercentage(field.percentage.text);if(amount.value!==null)amounts.push({value:amount.value,confidence:field.percentage.confidence});}
+      if(field.name){const amount=suffixOf(field.name);const parsed=R().parsePercentage(amount.text);if(parsed.value!==null)amounts.push({value:parsed.value,confidence:amount.confidence});}
+      return amounts;
+    });
     const observations=[{pass:'calibrated-fields',rows:firstRows.map(row=>({...row})),warnings:[...firstWarnings],artifact:artifact?{...artifact}:null,unlocked,...(reusedFields?{reusedFields}: {})}];
     if(batchRows.some((row,i)=>row.raw!==firstRows[i].raw || row.confidence!==firstRows[i].confidence))
       observations.unshift({pass:'calibrated-batch',rows:batchRows,warnings:[],artifact:artifact?{...artifact}:null,unlocked});
@@ -487,6 +499,41 @@
           if(fitted){if(kind==='name')chosenName=fitted;else chosenPercentage=fitted;selected=parseField(chosenName.text,chosenPercentage.text);retried=true;recordFields(i,'auto-fit-'+kind,chosenName,chosenPercentage);}
         }
         rows[i].confidence=Math.min(chosenName.confidence,chosenPercentage.confidence);
+      }
+      // Syntactically readable -32%, -34%, -35% and zero otherwise skip the
+      // missing/weak-field retries. Revisit just their original frozen number
+      // box, at most twice, after settling (speculative jobs disable autoFit).
+      // Neither a catalogue tier nor repeated OCR supplies or edits a glyph.
+      const observedNumbers=percentageEvidence(i);
+      const numericConflict=startingValues && observedNumbers.some(amount=>!startingValues.includes(Math.abs(amount.value)));
+      if(autoFit && numericConflict && selected.row.known && !selected.row.assumed && !selected.row.inferred) {
+        const alternatives=[];
+        for(const [mode,segmentation] of [['channel','13'],[war?'soft':'contrast','7']]) {
+          const amount=await read(snapshot.crops[i+'-percentage'],'percentage',mode,segmentation,false,true);
+          if(amount){amount.numericRetry=mode+':'+segmentation;recordFields(i,'tier-percentage-'+mode,null,amount);alternatives.push(amount);}
+        }
+        retried=true;
+        const direct=alternatives.map(amount=>({amount,parsed:parseField(selected.row.name,amount.text)}));
+        const strong=direct.filter(candidate=>candidate.amount.confidence>=80 && candidate.parsed.valid &&
+          startingValues.includes(Math.abs(candidate.parsed.row.value)));
+        const values=new Set(strong.map(candidate=>candidate.parsed.row.value));
+        const candidate=values.size===1 && strong.length===2?strong[0]:null;
+        const credible=percentageEvidence(i).filter(amount=>amount.confidence>=80);
+        const nameConflict=fieldReads[i].some(field=>field.name && field.name.confidence>=80 &&
+          parseField(field.name.text,'').row.known && parseField(field.name.text,'').row.name!==selected.row.name);
+        const contradiction=nameConflict || credible.some(amount=>!candidate || amount.value!==candidate.parsed.row.value);
+        if(candidate && !contradiction) {
+          // Only weak contradictory glyph reads can yield to stronger direct
+          // OCR. Retain the original name crop and every rejected raw token.
+          selected={...candidate.parsed,row:{...candidate.parsed.row,rawName:chosenName.text,numericRetry:true,
+            numericEvidenceSource:'original-percentage-crop'}};
+          chosenPercentage=candidate.amount;
+          rows[i].confidence=Math.min(chosenName.confidence,...strong.map(value=>value.amount.confidence));
+        } else if(selected.row.conflict || contradiction || values.size>1) {
+          selected.row.conflict=true;
+          selected.warnings.push('Row '+(i+1)+': signed percentage views disagree. Verify it.');
+          selected.valid=false;
+        }
       }
       rows[i]={...selected.row,...(rerolls[i] || {}),confidence:rows[i].confidence};warnings.push(...selected.warnings);
       if(rows[i].confidence<80)warnings.push('Row '+(i+1)+': OCR field evidence is weak. Verify the name and percentage.');

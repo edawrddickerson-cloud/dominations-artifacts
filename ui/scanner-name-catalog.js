@@ -52,6 +52,15 @@
     vault:['vauli'],vehicle:['veliclke','veyicle','wehicle'],
   };
   for(const [to,from] of Object.entries(exportReview))groups.push({to,from,source:'Saved scanner exports 2026-10-11 through 2026-10-14; word/context review 2026-10-15',confidence:.96});
+  // Narrow spelling review of complete stat labels in the October 29 export.
+  // Keep the badly degraded effect token scoped to its intact unit: it is not
+  // a general hitpoints rule, and does not supply an Enemy/Invading qualifier.
+  const octoberReview={
+    redoubt:['redaunt'],fighter:['fightet'],hitpoints:['htpaints'],
+    library:['libary'],vehicle:['vehicie','vetucle'],
+    'supply vehicle hitpoints':['supply vehicle hapcines'],
+  };
+  for(const [to,from] of Object.entries(octoberReview))groups.push({to,from,source:'Saved artifact-perk-observations-2026-10-29 export; complete stat spelling/context review 2026-10-29',confidence:.96});
   const rules=groups.flatMap(group=>group.from.map(from=>({from,to:group.to,confidence:group.confidence,source:group.source})))
     .sort((a,b)=>b.from.split(' ').length-a.from.split(' ').length || a.from.localeCompare(b.from));
   function correct(text,{protectedWords=new Set()}={}) {

@@ -36,7 +36,8 @@
   unknownStar.click();
   check('unknown star can be confirmed unlocked',unknownStar.value==='true' && unknownStar.classList.contains('is-unlocked') && !unknownStar.classList.contains('is-unknown'));
   check('corrected star state applies immediately',get('correct').querySelector('.scanner-perk-unlocked').value==='false');
-  const buttons=[document.getElementById('storage-add-collection'),document.querySelector('.storage-review-actions a')];
+  const buttons=Array.from(document.querySelectorAll('.storage-review-actions button:not([hidden])'));
+  check('inventory transfer is a visible review action',buttons.includes(document.getElementById('storage-add-collection')));
   const reviewContent=document.querySelector('.storage-review-content'),collapsedHeight=reviewContent.getBoundingClientRect().height;
   const ranges=Array.from(reviewContent.querySelectorAll('.storage-range-edit'));
   ranges.forEach(range=>{range.open=true;});
@@ -75,7 +76,8 @@
   const current=get('correct').querySelector('.scanner-edit-row');
   const unknownValue=current.querySelector('.scanner-perk-value'),unknownLevel=current.querySelector('.scanner-perk-level'),unknownTier=current.querySelector('.scanner-perk-tier');
   unknownLevel.value='';unknownTier.value='';edit(unknownValue,'');
-  check('unknown editable fields have amber borders',[unknownValue,unknownLevel,unknownTier,current.querySelector('.scanner-perk-base'),current.querySelector('.scanner-perk-max')].every(input=>input.classList.contains('is-unknown') && getComputedStyle(input).borderTopColor==='rgb(231, 183, 109)'));
+  check('unknown editable fields have amber borders',[unknownValue,unknownLevel,current.querySelector('.scanner-perk-base'),current.querySelector('.scanner-perk-max')].every(input=>input.classList.contains('is-unknown') && getComputedStyle(input).borderTopColor==='rgb(231, 183, 109)'));
+  check('optional storage tier is not marked as missing',!unknownTier.classList.contains('is-unknown'));
   edit(unknownLevel,'3');edit(unknownTier,'blue');
   check('autofilled fields clear unknown highlighting',unknownValue.value==='8' && !unknownValue.classList.contains('is-unknown') && !unknownLevel.classList.contains('is-unknown') && !unknownTier.classList.contains('is-unknown'));
   const artifactName=document.getElementById('storage-name');artifactName.value='';artifactName.dispatchEvent(new Event('input',{bubbles:true}));

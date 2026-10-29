@@ -598,7 +598,7 @@
           {...row,rerollEligible:null,rerollConfidence:'unknown',rerollConflict:true,rerollEvidence:{reason:'transition'}});
       }
     }
-    let previous=!storage && resultProfile!==readingProfile?null:resultCurrent?result:best;
+    let previous=resultProfile!==readingProfile?null:resultCurrent?result:best;
     const knownTiers=(previous?.rows || []).map(row=>({...row,hall:previous?.artifact?.hall || previous?.hall || el.hall.value}));
     const job={snapshot,categorySource,speculative,witness,context,sampleRevision,timing};
     if(speculative)job.validation=new Promise(resolve=>{job.resolveValidation=resolve;});
@@ -637,8 +637,11 @@
       if(window.DNArtifactStatContext)parsed.rows=window.DNArtifactStatContext.annotate(parsed,{freshCraft:!storage}).rows;
       window.DNScannerCalibration?.report(parsed.recognitionPath,parsed.calibrationReason);
       parsed.temporal=temporal;
+      // Seed local per-field provenance only after stale/speculative validation.
+      if(window.DNScannerEvidence)Object.assign(parsed,window.DNScannerEvidence.seed(parsed));
       const useful=recognition.coverage(parsed.rows,rowCount()).total;
       if(!storage)best=recognition.retainCraftRead(previous,parsed,rowCount(),{sameEncounter:true});
+      else if(window.DNScannerEvidence)best=window.DNScannerEvidence.merge(previous,parsed,{sameEncounter:true,expectedRows:rowCount(),storage:true,base:previous?recognition.combineReads(previous,parsed,rowCount()):parsed});
       else if(!best)best=parsed;
       else if(best.hall && parsed.hall && best.hall!==parsed.hall)best=parsed;
       else if(!best.valid)best=recognition.combineReads(best,parsed,rowCount());
@@ -649,20 +652,21 @@
         if(window.DNStoredArtifacts)best={...best,rows:window.DNStoredArtifacts.backfillItem({hall:best.hall,type:best.artifact?.type,freshCraft:true,rows:best.rows}).rows};
         if(window.DNArtifactStatContext)best={...best,rows:window.DNArtifactStatContext.annotate(best,{freshCraft:true}).rows};
       }
-      if(best!==parsed)best={...best,rows:best.rows.map((row,i)=>row.name===parsed.rows[i]?.name?{
+      if(best!==parsed && !window.DNScannerEvidence)best={...best,rows:best.rows.map((row,i)=>row.name===parsed.rows[i]?.name?{
         ...row,rerollEligible:parsed.rows[i].rerollEligible,rerollSource:parsed.rows[i].rerollSource,
         rerollConfidence:parsed.rows[i].rerollConfidence,rerollEvidence:parsed.rows[i].rerollEvidence,
         rerollConflict:parsed.rows[i].rerollConflict}:row)};
       if(useful===0 && !parsed.rows.some(row=>row.known) && !best?.rows.some(row=>row.known))best=null;
-      if(parsed.unlocked?.count===3)best={...(best || parsed),unlocked:parsed.unlocked};
+      if(parsed.unlocked?.count===3 && (!window.DNScannerEvidence || !previous))best={...(best || parsed),unlocked:parsed.unlocked};
       result=best;resultProfile=readingProfile;confirmed=!!result?.valid;resultCurrent=true;editing=false;
       if(!storage && result?.hall && result.hall!==el.hall.value){el.hall.value=result.hall;window.DNPrimaryFilters?.setHall(result.hall);}
       if(storage && result){result=applyStorageName(result);best=result;}
       if(!storage && result){
         itemArtwork=artwork;
         const incoming=parsed.artifact?.nameEvidence,held=result.artifact?.nameEvidence;
+        if(window.DNScannerEvidence)result.artifact=window.DNScannerEvidence.mergeArtifact(result.artifact,parsed.artifact);
         result.artifact={...result.artifact,image:artwork,...(!result.artifact?.name && parsed.artifact?.name?{name:parsed.artifact.name}:{}),
-          ...(incoming && (!held || (incoming.confidence ?? -1)>=(held.confidence ?? -1))?{nameEvidence:incoming}:{})};
+          ...(!window.DNScannerEvidence && incoming && (!held || (incoming.confidence ?? -1)>=(held.confidence ?? -1))?{nameEvidence:incoming}:{})};
         const logged=window.DNScannerCollection?.itemForEncounter?.(JSON.stringify([session,itemId]),resultProfile);
         if(logged?.nameSource==='manual')result.artifact={...result.artifact,name:logged.name,nameSource:'manual'};
         result.artifact.name=recognition.cleanArtifactName(result.artifact.name) || null;
@@ -933,7 +937,8 @@
       if(storage) {
         next.inferredFields=['value','level','tier'].filter(key=>row.querySelector('.scanner-perk-'+key)?.dataset?.autoInferred==='true');
         next.inferred=next.inferredFields.includes('value');
-        next.valueSource=next.inferred?'tier-level':null;
+        next.valueSource=next.inferred?'tier-level':storageEdits.get(rowsIndex)?.has('value') || next.value!==original?.value?'manual':original?.valueSource;
+        next.unlockedSource=storageEdits.get(rowsIndex)?.has('unlocked') || next.unlocked!==original?.unlocked?'manual':original?.unlockedSource;
       }
       if(storage)next.levelSource=next.level!=null?next.unlocked===false?'locked-star':next.inferredFields.includes('level')?'tier-percentage':'manual':null;
       if(storage) {
@@ -972,6 +977,7 @@
       }
       return next;
     });
+    if(window.DNScannerEvidence)rows=rows.map(row=>window.DNScannerEvidence.resolveManual(row,{all:!automatic}));
     const fields=[...el.correct.querySelectorAll('.scanner-edit-row')];
     if(storage && window.DNStoredArtifacts)rows=window.DNStoredArtifacts.backfillItem({hall:el.hall.value,type:document.getElementById('storage-type')?.value || result?.artifact?.type,rows}).rows;
     fields.forEach((field,index)=>field.querySelector('.scanner-perk-name')?.setAttribute?.('aria-invalid',String(!rows[index].known)));
@@ -985,6 +991,7 @@
     if(storage && rows.some(row=>row.level!=null && (!Number.isInteger(row.level) || row.level<1 || row.level>10)))return {rows,error:'Levels must be whole numbers from 1 to 10, or blank if unclear.'};
     if(storage && rows.some(row=>[row.base,row.max].some(value=>value!=null && !Number.isFinite(value)) ||
       (row.base!=null && row.max!=null && (row.value<Math.min(row.base,row.max) || row.value>Math.max(row.base,row.max)))))return {rows,error:'Base and max must be numeric, and the current value must be within their range. Leave unclear endpoints blank.'};
+    if(rows.some(row=>row.fieldEvidence?.value?.conflict))return {rows,error:'Resolve the conflicting percentage readings before saving.'};
     const signWarnings=recognition.signIssues(rows);
     if(storage && window.DNStoredArtifacts) {
       rows=window.DNStoredArtifacts.backfillItem({hall:el.hall.value,type:document.getElementById('storage-type')?.value || result?.artifact?.type,rows}).rows;
@@ -1002,7 +1009,7 @@
     }
     const warnings=automatic?(result?.warnings || []).filter(w=>{const row=/^Row (\d+):/.exec(w);return row?!storageEdits.has(Number(row[1])-1):/conflict|disagree/i.test(w) && storageEdits.size<rowCount();}):[];
     const correctedFields=rows.reduce((count,row,index)=>count+['name','value','tier','level','unlocked','rerollEligible'].filter(key=>row[key]!==result?.rows[index]?.[key]).length,0);
-    token++;result={...result,rows,warnings,valid:true,colours:result?.colours,hall:result?.hall,unlocked:result?.unlocked};confirmed=true;resultCurrent=true;editing=true;
+    token++;result={...result,fieldEvidence:{...result?.fieldEvidence,conflict:false},rows,warnings,valid:true,colours:result?.colours,hall:result?.hall,unlocked:result?.unlocked};confirmed=true;resultCurrent=true;editing=true;
     const states=rows.map(r=>r.unlocked);result.unlocked={states,count:states.every(s=>s!==null)?states.filter(Boolean).length:null,method:'verified'};if(!automatic)showCorrection();
     settled=true;progress('finished','Finished · using your verified corrections');
     window.DNScannerCollection?.recordItem({...result,hall:result.hall || el.hall.value},itemId,{corrected:true,expectedRows:rowCount(),continuous:true,steadyState:!storage,profileKey:resultProfile,encounterId:JSON.stringify([session,itemId])});

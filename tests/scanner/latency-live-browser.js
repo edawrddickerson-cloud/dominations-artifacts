@@ -2,7 +2,7 @@
 (async()=>{
   const get=id=>document.getElementById('scanner-'+id),pause=ms=>new Promise(resolve=>setTimeout(resolve,ms));
   const titleKey=value=>String(value || '').toLowerCase().replace(/[^a-z0-9]/g,'');
-  const wait=async(fn,timeout=15000)=>{const until=performance.now()+timeout;while(!fn()){if(performance.now()>until)throw Error('Live latency timed out: '+get('result-status').textContent);await pause(10);}};
+  const wait=async(fn,timeout=15000)=>{const until=performance.now()+timeout;while(!fn()){if(performance.now()>until)throw Error('Live latency timed out: '+get('result-status').textContent+' '+JSON.stringify(window.DNLatencyCompletionDebug || null));await pause(10);}};
   await wait(()=>get('names').children.length);
   const labels=await(await fetch('../tests/scanner/war-crafting-colours.json')).json();
   const savedBoxesBefore=localStorage.getItem(DNScannerRegions.KEY);
@@ -55,6 +55,7 @@
       const targetReady=node && /^>/.test(node.textContent);
       const complete=result.valid && DNScannerComparisonCore.captureCompleteness(result).percent===100 && result.hall===item.label.hall && result.artifact?.type===item.label.category &&
         result.unlocked?.states?.every((value,index)=>value===(index===0)) && result.unlocked?.states?.length===5 && titleKey(result.artifact?.name)===titleKey(item.label.artifactName);
+      window.DNLatencyCompletionDebug={fixture:item.label.fixture,exposure,valid:result.valid,fields:DNScannerComparisonCore.captureCompleteness(result),hall:result.hall,type:result.artifact?.type,title:result.artifact?.name,expectedTitle:item.label.artifactName,titleEvidence:result.artifact?.nameEvidence,stars:result.unlocked,targetReady};
       requestAnimationFrame(()=>requestAnimationFrame(()=>{
         if(pending!==item)return;
         item.statsMs ??= performance.now()-item.start;

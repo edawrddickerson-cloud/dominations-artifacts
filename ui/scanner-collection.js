@@ -7,7 +7,7 @@
  * failed reads can still reveal labels in separate diagnostic observations. */
 (async () => {
   'use strict';
-  const isComplete=item=>!!item && (item.expectedRows || 5)===5 && item.rows?.length===5 && item.rows.every(row=>row.known && row.name && !row.assumed && !row.conflict && !row.tierConflict && Number.isFinite(row.value) && row.hasPercent!==false);
+  const isComplete=item=>!!item && !item.fieldEvidence?.conflict && (item.expectedRows || 5)===5 && item.rows?.length===5 && item.rows.every(row=>!row.fieldEvidence?.value?.conflict && row.known && row.name && !row.assumed && !row.conflict && !row.tierConflict && Number.isFinite(row.value) && row.hasPercent!==false);
   function createCollector({initialData}={}) {
     const history=window.DNCraftingHistory;
     if(history)initialData=history.normalize(initialData);
@@ -99,8 +99,9 @@
         const nextSignature=signature(result);
         if([...items.values()].some(item=>item.id!==previousActive && signature(item)===nextSignature))identityEvidence='possible-revisit';
       }
-      const incomingEvidence=result.artifact?.nameEvidence;
-      const nameEvidence=incomingEvidence && (!prior?.nameEvidence || (incomingEvidence.confidence ?? -1)>=(prior.nameEvidence.confidence ?? -1))?incomingEvidence:prior?.nameEvidence || null;
+      const selectedArtifact=window.DNScannerEvidence?.mergeArtifact(prior?{name:prior.name,nameSource:prior.nameSource,nameEvidence:prior.nameEvidence,titleMatch:prior.titleMatch,type:prior.type,image:prior.image,artworkId:prior.artworkId}:{},result.artifact || {});
+      const incomingEvidence=selectedArtifact?.nameEvidence || result.artifact?.nameEvidence;
+      const nameEvidence=selectedArtifact?incomingEvidence || null:incomingEvidence && (!prior?.nameEvidence || (incomingEvidence.confidence ?? -1)>=(prior.nameEvidence.confidence ?? -1))?incomingEvidence:prior?.nameEvidence || null;
       if(!prior && items.size>=5000)return false;
       // Keep a verified or fuller read when a manual retry produces worse OCR.
       const rowQuality=row=>!row?0:(row.known?8:0)+(row.name && Number.isFinite(row.value) && !row.conflict && !row.tierConflict && !row.outOfRange?2:0)+(!row.assumed && !row.inferred?1:0);
@@ -109,12 +110,21 @@
         (!!prior.validated===!!result.valid && quality(prior.rows)>quality(result.rows)))) {
         // Dice observations can improve independently of the text read. Never
         // replace manual choices or attach them to a different encounter.
-        if(!sameArtifact(prior,result)){if(evidenceChanged)setItem(id,clone({...prior,ocrEvidence:evidence}));return evidenceChanged;}
-        const scannedName=result.artifact?.name;
+        if(!sameArtifact(prior,result)){
+          const bound=!!encounter && prior.encounterId===encounter && prior.profileKey===profileKey &&
+            prior.rows.length===result.rows.length && (!prior.hall || !result.hall || prior.hall===result.hall) &&
+            (!prior.type || !result.artifact?.type || prior.type===result.artifact.type);
+          const titleChanged=bound && selectedArtifact && (selectedArtifact.name!==prior.name || JSON.stringify(nameEvidence)!==JSON.stringify(prior.nameEvidence));
+          const disputed=bound && window.DNScannerEvidence && (result.fieldEvidence?.conflict || result.rows.some(row=>row.fieldEvidence?.value?.conflict));
+          const merged=disputed?window.DNScannerEvidence.merge({rows:prior.rows,valid:prior.validated,hall:prior.hall,artifact:{type:prior.type},fieldEvidence:prior.fieldEvidence},result,{sameEncounter:true,expectedRows,storage:scannerSource==='storage',base:result}):null;
+          if(evidenceChanged || titleChanged || disputed)setItem(id,clone({...prior,ocrEvidence:evidence,...(merged?{rows:merged.rows,fieldEvidence:merged.fieldEvidence,validated:false,unlocked:merged.unlocked}:{}),...(titleChanged?{name:selectedArtifact.name || null,nameSource:selectedArtifact.nameSource || prior.nameSource || 'scanned',nameEvidence,titleMatch:selectedArtifact.titleMatch,lastUpdated:new Date().toISOString()}:{} )}));
+          return evidenceChanged || titleChanged || !!disputed;
+        }
+        const scannedName=selectedArtifact?.name || result.artifact?.name;
         const recoveredImage=!prior.image && result.artifact?.image;
         const recoveredArtwork=result.artifact?.artworkId && result.artifact.artworkId!==prior.artworkId;
         let changed=evidenceChanged || !!recoveredImage || !!recoveredArtwork || !!scannedName && !prior.name && prior.nameSource!=='manual' || JSON.stringify(nameEvidence)!==JSON.stringify(prior.nameEvidence || null);
-        const rows=prior.rows.map((row,index)=>{
+        let rows=prior.rows.map((row,index)=>{
           const next=result.rows[index];
           if(row.rerollSource==='manual' || !next || !Object.prototype.hasOwnProperty.call(next,'rerollEligible'))return row;
           if(row.rerollEligible===next.rerollEligible && row.rerollSource===next.rerollSource)return row;
@@ -122,7 +132,14 @@
           return {...row,rerollEligible:next.rerollEligible,rerollSource:next.rerollSource,
             rerollConfidence:next.rerollConfidence,rerollEvidence:next.rerollEvidence,rerollConflict:next.rerollConflict};
         });
-        if(changed)setItem(id,clone({...prior,...(recoveredImage?{image:recoveredImage}:{}),...(recoveredArtwork?{artworkId:result.artifact.artworkId}:{}),...(scannedName && !prior.name && prior.nameSource!=='manual'?{name:scannedName,nameSource:'scanned'}:{}),nameEvidence,ocrEvidence:evidence,rows,lastUpdated:new Date().toISOString()}));
+        let fieldEvidence=prior.fieldEvidence,validated=prior.validated;
+        if(window.DNScannerEvidence && !prior.corrected){
+          const first={fieldEvidence:prior.fieldEvidence,rows:prior.rows,valid:prior.validated,hall:prior.hall,hallSource:prior.hallSource,artifact:{name:prior.name,nameSource:prior.nameSource,nameEvidence:prior.nameEvidence,titleMatch:prior.titleMatch,type:prior.type},unlocked:prior.unlocked};
+          const merged=window.DNScannerEvidence.merge(first,result,{sameEncounter:true,expectedRows,storage:scannerSource==='storage',base:first});
+          rows=merged.rows;fieldEvidence=merged.fieldEvidence;validated=merged.valid;changed ||= JSON.stringify(fieldEvidence)!==JSON.stringify(prior.fieldEvidence) || JSON.stringify(rows)!==JSON.stringify(prior.rows);
+        }
+        changed ||= !!selectedArtifact && (selectedArtifact.name!==prior.name || JSON.stringify(selectedArtifact.titleMatch)!==JSON.stringify(prior.titleMatch));
+        if(changed)setItem(id,clone({...prior,...(recoveredImage?{image:recoveredImage}:{}),...(recoveredArtwork?{artworkId:result.artifact.artworkId}:{}),...(selectedArtifact?{name:selectedArtifact.name || null,nameSource:selectedArtifact.nameSource || prior.nameSource || 'scanned',titleMatch:selectedArtifact.titleMatch}:scannedName && !prior.name && prior.nameSource!=='manual'?{name:scannedName,nameSource:'scanned'}:{}),nameEvidence,ocrEvidence:evidence,rows,fieldEvidence,validated,lastUpdated:new Date().toISOString()}));
         return changed;
       }
       const timestamp=new Date().toISOString();
@@ -138,8 +155,8 @@
         encounterId:encounter || prior?.encounterId || null,profileKey:profileKey || prior?.profileKey || null,
         keepId:prior?.keepId || 'craft-log-'+id,keptId:prior?.keptId || null,
         hallSource:result.hallSource || prior?.hallSource || null,
-        name:prior?.nameSource==='manual'?prior.name:result.artifact?.name || prior?.name || null,
-        nameSource:prior?.nameSource || (result.artifact?.name?'scanned':null),image:result.artifact?.image || prior?.image || null,
+        name:selectedArtifact?selectedArtifact.name || null:prior?.nameSource==='manual'?prior.name:result.artifact?.name || prior?.name || null,
+        nameSource:selectedArtifact?.nameSource || prior?.nameSource || (result.artifact?.name?'scanned':null),titleMatch:selectedArtifact?.titleMatch || null,fieldEvidence:result.fieldEvidence || prior?.fieldEvidence || null,image:result.artifact?.image || prior?.image || null,
         ...(result.artifact?.artworkId?{artworkId:result.artifact.artworkId}:prior?.artworkId && (!result.artifact?.image || result.artifact.image===prior.image)?{artworkId:prior.artworkId}:{}),
         type:result.artifact?.type || prior?.type || null,freshCraft:result.freshCraft ?? prior?.freshCraft ?? rows.every(row=>row.rerollSource==='fresh-craft'),rows,unlocked:result.unlocked || prior?.unlocked || null,
         revision:prior?.revision || 0,writer:prior?.writer || '',keptAt:prior?.keptAt || null,
@@ -200,14 +217,28 @@
       const reviews=[];let number=0;
       for(const item of items.values()) {
         number++;
-        if(!String(item.name || '').trim() || /^(unknown|unnamed)( artifact)?$/i.test(String(item.name).trim()))
-          reviews.push({itemId:item.id,number,hall:item.hall,type:item.type,firstSeen:item.firstSeen,evidence:item.nameEvidence?clone(item.nameEvidence):null});
+        const missing=!String(item.name || '').trim() || /^(unknown|unnamed)( artifact)?$/i.test(String(item.name).trim());
+        const assessment=item.nameSource!=='manual' && window.DNArtifactTitleRecognition?.classify?.({text:item.name || '',confidence:item.nameEvidence?.confidence ?? 0},{hall:item.hall,type:item.type});
+        const correctedTitle=assessment?.match?.automatic && window.DNArtifactTitleRecognition.key(item.name)!==window.DNArtifactTitleRecognition.key(assessment.match.name);
+        const questionable=correctedTitle || item.nameSource!=='manual' && (item.titleMatch?.automatic===false || assessment && (!assessment.plausible || assessment.match?.method==='context-mismatch') || /%|\b(?:damage|hitpoints)\b/i.test(item.name || '') || /[|_]\s*$/.test(item.name || ''));
+        if(missing || questionable)reviews.push({itemId:item.id,number,hall:item.hall,type:item.type,name:item.name || null,reason:missing?item.nameEvidence?'missing-title':'not-captured':'title-review',firstSeen:item.firstSeen,evidence:item.nameEvidence?clone(item.nameEvidence):null});
       }
       return reviews;
     }
+    function titleCandidates(){
+      const grouped=new Map();
+      for(const item of items.values())if(item.name && item.nameSource!=='manual'){
+        const text=String(item.name).trim(),key=JSON.stringify([item.hall,item.type,text]);
+        if(!grouped.has(key))grouped.set(key,{name:text,hall:item.hall,type:item.type,encounters:0,firstSeen:item.firstSeen,lastSeen:item.firstSeen,match:item.titleMatch || item.nameEvidence?.match || null,examples:[]});
+        const group=grouped.get(key);group.encounters++;
+        if(item.firstSeen<group.firstSeen)group.firstSeen=item.firstSeen;if(item.firstSeen>group.lastSeen)group.lastSeen=item.firstSeen;
+        if(item.nameEvidence?.text && group.examples.length<3 && !group.examples.includes(item.nameEvidence.text))group.examples.push(item.nameEvidence.text);
+      }
+      return [...grouped.values()].sort((a,b)=>b.encounters-a.encounters || a.name.localeCompare(b.name));
+    }
     function snapshot({includeImages=false}={}){
       const snapshots=includeImages?[...items.values()]:[...items.values()].map(({image,...text})=>text);
-      return {...(ledger?{ledger:clone(ledger)}:{}),version:2,kind:'unverified-artifact-perk-observations',exportedAt:new Date().toISOString(),notes:'Items contain the best read per detected artifact encounter; retries and corrections update that entry. Separate encounters may have identical stats. OCR observations require verification.'+(includeImages?' Artifact artwork included.':' No images included.'),lifetimeStatistics:{version:1,archived:{...archivedStats},totals:lifetimeTotals(),sinceLastKept},items:snapshots,scans,labels:[...labels.values()],nameReviews:nameReviews()};
+      return {...(ledger?{ledger:clone(ledger)}:{}),version:2,kind:'unverified-artifact-perk-observations',exportedAt:new Date().toISOString(),notes:'Items contain the best read per detected artifact encounter; retries and corrections update that entry. Separate encounters may have identical stats. OCR observations require verification.'+(includeImages?' Artifact artwork included.':' No images included.'),lifetimeStatistics:{version:1,archived:{...archivedStats},totals:lifetimeTotals(),sinceLastKept},items:snapshots,scans,labels:[...labels.values()],nameReviews:nameReviews(),titleCandidates:titleCandidates()};
     }
     function takeChanges({all=false}={}) {
       const changes={scanCount:scans.length,itemCount:items.size,reset:resetView,lifetime:lifetimeTotals(),sinceLastKept,nameReviews:all || resetView || dirtyItems.size?nameReviews():null,
@@ -271,7 +302,7 @@
         rows:item.rows.map(row=>({name:row.name,raw:row.raw,rawName:row.rawName,known:row.known,assumed:row.assumed,nameSource:row.nameSource,
           nameMatch:row.nameMatch?{name:row.nameMatch.name,method:row.nameMatch.method,confidence:row.nameMatch.confidence,automatic:row.nameMatch.automatic}:null}))}));
     }
-    return {record,recordItem,itemForEncounter,recentItems,updateItem,historyItems,ocrFeedbackItems,nameReviews,sessionId,reconcileHistory,weekly,exportData:options=>clone(snapshot(options)),
+    return {record,recordItem,itemForEncounter,recentItems,updateItem,historyItems,ocrFeedbackItems,nameReviews,titleCandidates,sessionId,reconcileHistory,weekly,exportData:options=>clone(snapshot(options)),
       // Persistence owns this immutable string. Avoid cloning the entire log
       // before serializing it; exports and public summaries remain isolated.
       serialize:()=>JSON.stringify(snapshot({includeImages:true})),takeChanges,getItem:id=>items.has(id)?clone(items.get(id)):null,
@@ -309,7 +340,7 @@
     const status=document.getElementById('scanner-stat-evidence-status');
     try {
       const evidence=await window.DNArtifactStatContext.browserEvidence({collector});
-      const report={kind:'artifact-stat-evidence',version:1,exportedAt:new Date().toISOString(),...evidence,artifactNamesNeedingReview:collector.nameReviews()};
+      const report={kind:'artifact-stat-evidence',version:1,exportedAt:new Date().toISOString(),...evidence,artifactNamesNeedingReview:collector.nameReviews(),artifactTitleCandidates:collector.titleCandidates()};
       downloadJSON(report,'artifact-stat-evidence');
       status.textContent='Stat evidence download started.'+(evidence.errors.length?' '+evidence.errors.join(' '):'');
     }catch{status.textContent='Stat evidence could not be exported. Your saved data has not been changed.';}
@@ -339,11 +370,11 @@
   function renderNameReviews(reviews) {
     const reviewList=document.getElementById('scanner-name-review'),reviewCount=document.getElementById('scanner-name-review-count');
     if(!reviewList)return;
-    if(reviewCount)reviewCount.textContent=reviews.length+' missing artifact names';
+    if(reviewCount)reviewCount.textContent=reviews.length+' artifact names to review';
     reviewList.textContent='';
     for(const review of reviews) {
       const li=document.createElement('li'),label=document.createElement('span'),button=document.createElement('button');
-      label.textContent='Artifact #'+review.number+' · '+(review.hall==='main'?'Main':review.hall==='war'?'War':'Unknown hall')+' · '+(review.type || 'Unknown category')+' ';
+      label.textContent='Artifact #'+review.number+(review.reason==='title-review'?' ? '+review.name:'')+' · '+(review.hall==='main'?'Main':review.hall==='war'?'War':'Unknown hall')+' · '+(review.type || 'Unknown category')+' ';
       button.type='button';button.className='btn';button.dataset.reviewName=review.itemId;button.textContent='Review name';li.append(label,button);
       if(review.evidence?.text){const evidence=document.createElement('p');evidence.textContent='OCR: '+review.evidence.text+(Number.isFinite(review.evidence.confidence)?' · Score '+Math.round(review.evidence.confidence):'');li.append(evidence);}
       reviewList.append(li);

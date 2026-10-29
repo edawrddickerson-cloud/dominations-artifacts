@@ -1,0 +1,80 @@
+{
+  "date": "2026-10-29",
+  "status": "implemented-locally",
+  "deployed": false,
+  "changes": [
+    "39 reviewed ordinary title identities with conservative context-aware fuzzy matching",
+    "Bounded selective title retries with complete readable-word confidence",
+    "Independent bounded row/metadata evidence; manual protection and physical-row identity",
+    "Seven reviewed stat spellings and preserved raw-glyph acceptances",
+    "Bounded original-percentage-crop retries for ordinary crafting tier conflicts",
+    "Unverified title candidates and questionable accepted titles in local diagnostics/exports"
+  ],
+  "textReplay": {
+    "uniqueNameSignPairs": 2740,
+    "originalAutomatic": 1578,
+    "finalAutomatic": 1592,
+    "gain": 14,
+    "unresolvedOrSuggested": 1148,
+    "limitation": "Historical OCR name replay, not verified live accuracy or percentage success."
+  },
+  "verification": {
+    "mandatoryScannerContract": "passed",
+    "checks": [
+      "test_scanner_evidence.cjs",
+      "test_artifact_titles.cjs",
+      "test_scanner_stat_spellings.cjs",
+      "test_scanner_numeric_retry.js",
+      "test_scanner_recognition.js",
+      "test_scanner_comparison.js",
+      "test_strategy_scanner.js",
+      "test_crafting_score_contract.js",
+      "test_reroll_potential.js",
+      "test_scanner_axes.js",
+      "test_crafting_purposes.js",
+      "test_scanner_reading.js",
+      "test_scanner_collection.js",
+      "test_crafting_log_statistics.js",
+      "test_scanner_speculation.js",
+      "test_scanner_worker_readiness.js",
+      "test_scanner_field_reuse.js",
+      "test_scanner_capture.js",
+      "check_design_system.cjs",
+      "run_scanner_ocr_fixture.js --crafting-keep --viewport=1440x900 --recent-report --summary",
+      "run_scanner_ocr_fixture.js --crafting-keep --viewport=390x844 --recent-report --summary",
+      "run_scanner_ocr_fixture.js --crafting-keep --viewport=320x800 --recent-report --summary",
+      "run_scanner_ocr_fixture.js --glance --viewport=1440x900 --summary",
+      "run_scanner_ocr_fixture.js --provisional-colours --summary",
+      "run_scanner_ocr_fixture.js --collection-comparison --summary",
+      "run_scanner_ocr_fixture.js --reroll-pools --summary",
+      "test_crafting_purposes_ui.js --summary",
+      "test_crafting_purposes_ui.js --target-focus --summary",
+      "test_scanner_latency.cjs --real-ocr --summary",
+      "test_scanner_regions.js",
+      "test_scanner_field_retry.js",
+      "test_scanner_war_calibration.cjs --full --summary",
+      "test_scanner_war_calibration.cjs --live --summary",
+      "test_scanner_war_calibration.cjs --stability --summary"
+    ],
+    "storage": [
+      "47 real title/header cases passed",
+      "desktop and 390px Storage layout passed",
+      "passive saving, catalog artwork and linked artifact browser checks passed"
+    ],
+    "persistence": [
+      "workspace privacy",
+      "v2 history/reconciliation",
+      "OCR feedback consent",
+      "local backup",
+      "stored artifacts",
+      "storage inference/header"
+    ],
+    "design": "ownership passed; desktop and 320px scanner screenshots visually reviewed",
+    "build": "290 versioned assets; reproducibility, dependency hashing and service loader passed"
+  },
+  "limits": [
+    "Catalogue coverage is partial; unknown names remain unverified candidates.",
+    "Original OCR examples are private ignored review files; no automatic catalogue learning.",
+    "Real fixture and synthetic lifecycle checks do not establish general live-game accuracy."
+  ]
+}

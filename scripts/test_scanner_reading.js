@@ -47,7 +47,7 @@ async function harness({storage=false,speculation=false,workerWarm=true}={}) {
     fetch:async url=>({ok:true,text:async()=>read('data/perk_name_mapping.csv'),json:async()=>({...JSON.parse(read('data/perk_rating_defaults.json')),
       'Heavy Tank Damage':{offensive:1,defensive:0}})})};
   vm.createContext(context);
-  for(const file of ['data/army_catalog.js','shared.js','data/artifact_stat_context.js','artifact-stat-context.js','artifact-scoring.js','stored-artifacts.js','scanner-frames.js','scanner-name-catalog.js','scanner-recognition.js'])vm.runInContext(read(file),context);
+  for(const file of ['data/army_catalog.js','shared.js','data/artifact_stat_context.js','artifact-stat-context.js','artifact-scoring.js','stored-artifacts.js','scanner-frames.js','scanner-name-catalog.js','scanner-evidence.js','scanner-recognition.js'])vm.runInContext(read(file),context);
   if(speculation){for(const file of ['scanner-core.js','scanner-regions.js','scanner-field-recognition.js'])vm.runInContext(read(file),context);elements.layout.value='panel';}
   vm.runInContext(read('scanner-collection.js'),context);
   const collector=window.DNScannerCollectionCore.createCollector(),batches=[];

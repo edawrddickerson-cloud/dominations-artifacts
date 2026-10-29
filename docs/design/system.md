@@ -159,3 +159,5 @@ Dependency direction: `ui/design-tokens.css` → `ui/components.css` → page co
 During migration, preserve existing token names as aliases where needed and load common definitions consistently in the shell and embedded documents. Extract old declarations when a consumer migrates; avoid permanently appending another override layer. Page CSS can set layout and documented variants; repeated control colours, focus, radius and typography belong to the shared component.
 
 Record exceptions with component, consumer, reason and check. Legitimate exceptions include native popup rendering, scanner compact rows and specialised rating grids. A copied page rule without a reason is drift. New component variants must update this specification, the component gallery and affected checks in the same change.
+
+Scanner diagnostics (29 October 2026): title review uses the existing native disclosure, list, text and shared `.btn` action. Missing and suspicious accepted titles share that list; the count is a concise names-to-review total. Grouped unverified title candidates and field journals belong in JSON exports, without explanatory UI copy or new visual variants.

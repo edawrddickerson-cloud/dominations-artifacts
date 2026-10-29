@@ -85,7 +85,7 @@
       return null;
     }
     const preview=reviewedItem();
-    if(!get('name').value.trim() || !get('type').value || current.metadataConflict || current.warnings?.some(w=>/OCR reads disagree|conflict/i.test(w)) ||
+    if(!get('name').value.trim() || !get('type').value || current.metadataConflict || current.fieldEvidence?.conflict || current.warnings?.some(w=>/OCR reads disagree|conflict/i.test(w)) ||
       preview.rows?.length!==expectedRows || window.DNScannerRecognition.signIssues(preview.rows).length ||
       preview.rows.some(row=>!row.known || row.assumed || !Number.isFinite(row.value) || !row.hasPercent || row.conflict || row.tierConflict)) {
       show('uncertain','More scan details needed','Read the artifact name, category and all stats before checking for a saved match.');return null;
@@ -106,6 +106,7 @@
     if(observationProfile!==store.collectionKey())return 'Profile changed. Read this artifact again for the current profile.';
     if(pending)return correctionError || 'Complete the remaining fields. Edits apply automatically.';
     if(!reviewable)return 'Waiting for a current artifact read.';
+    if(current.fieldEvidence?.conflict)return 'Resolve the conflicting readings.';
     if(current.metadataConflict)return 'Verify the conflicting artifact name, category or Hall.';
     if(current.artifact?.categoryUnclear)return 'Choose the artifact category.';
     if(current.artifact?.titleUnclear)return 'Check the artifact name.';

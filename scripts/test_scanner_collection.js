@@ -4,6 +4,7 @@
 const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),path=require('node:path');
 const context={window:{},document:{getElementById:()=>null},Date};vm.createContext(context);
 vm.runInContext(fs.readFileSync(path.join(__dirname,'../ui/crafting-history.js'),'utf8'),context);
+vm.runInContext(fs.readFileSync(path.join(__dirname,'../ui/scanner-evidence.js'),'utf8'),context);
 vm.runInContext(fs.readFileSync(path.join(__dirname,'../ui/scanner-collection.js'),'utf8'),context);
 const collector=context.window.DNScannerCollectionCore.createCollector();
 const unknown={valid:false,rows:[{raw:'Enemy Sniper Tower Hitpoints +1%',name:'Enemy Sniper Tower Hitpoints',known:false,value:1}],warnings:['Unknown label']};

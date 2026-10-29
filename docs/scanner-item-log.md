@@ -1,5 +1,7 @@
 # Crafting item log
 
+October 29: Full Item Log includes local bounded per-field evidence and grouped unverified `titleCandidates`. Stat Evidence includes `artifactTitleCandidates`. The existing Scanner diagnostics list includes missing and questionable accepted titles; `not-captured` distinguishes older entries without retained title OCR. Stronger reviewed title evidence can update a bound encounter even when its stat retry is worse. Manual titles remain protected; no historical title is changed just because a catalogue candidate exists. See [field evidence](scanner-recognition.md#independent-field-evidence-29-october-2026).
+
 The crafting title is read separately from the category and saved with the logged artifact. Compact entries show that name, the original `firstSeen` timestamp as `yyyy-mm-ddThh:mm:ss` UTC, hall/category, status and Keep. Expand an entry for its stats and optional name correction. Names and timestamps survive retries and reopening. Repeated names within the same profile, hall and category display a shared count; they do not block distinct crafts with the same name. Existing unnamed entries remain unnamed until corrected or read again in their original encounter.
 
 Verification: `node scripts/run_scanner_ocr_fixture.js --crafting-log --summary` reads the title from the real `pic1.png` screenshot through the production pipeline and checks timestamp formatting, compact entries, retry identity, repeated names, corrections and reopening. This fixture does not establish title accuracy for every artifact or layout.

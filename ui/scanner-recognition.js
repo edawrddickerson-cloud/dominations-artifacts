@@ -118,10 +118,10 @@
     const protectedWords=nameVocabulary.get(names);
     return window.DNScannerNameCatalog?.correct(text,{protectedWords}) || {text,corrections:[],confidence:1};
   }
-  function matchName(label,names,value,{threshold=NAME_MATCH_THRESHOLD}={}) {
+  function matchName(label,names,value,{threshold=NAME_MATCH_THRESHOLD,_rawGlyphs=false}={}) {
     const raw=normalized(label),exact=names.find(name=>normalized(name)===raw);
     if(exact)return {name:exact,confidence:1,automatic:true,method:'exact'};
-    const corrected=correctNameWords(raw,names),text=corrected.text,source=splitName(text,true);
+    const corrected=_rawGlyphs?{text:raw,corrections:[],confidence:1}:correctNameWords(raw,names),text=corrected.text,source=splitName(text,true);
     if(text.length<10 || source.entity.length<3)return null;
     if(!nameParts.has(names))nameParts.set(names,names.map(name=>({name,...splitName(name)})));
     const effects=new Set(nameParts.get(names).map(item=>item.effect));
@@ -140,8 +140,14 @@
     }
     candidates.sort((a,b)=>a.cost-b.cost || a.name.localeCompare(b.name));
     const best=candidates[0],margin=best?(candidates[1]?.cost ?? Infinity)-best.cost:0;
-    if(best && best.confidence>=threshold && best.cost<=4 && margin>=NAME_MATCH_MARGIN && source.prefixCost<=1) {
-      return {name:best.name,confidence:best.confidence,rawSimilarity:rawSimilarity(best.name),corrections:corrected.corrections,margin:Number.isFinite(margin)?margin:null,automatic:true,method:corrected.corrections.length?'ocr-catalogue':'ocr-glyphs'};
+    const accepted=best && best.confidence+1e-12>=threshold && best.cost<=4 && margin>=NAME_MATCH_MARGIN && source.prefixCost<=1;
+    // Reviewed corrections cannot demote independently sufficient original
+    // glyph evidence. Both paths retain identical qualifier/sign/margin gates.
+    const original=!_rawGlyphs && corrected.corrections.length?matchName(label,names,value,{threshold,_rawGlyphs:true}):null;
+    if(original?.automatic && best?.name===original.name && !accepted)return {...original,corrections:corrected.corrections};
+    if(accepted && original?.automatic && original.name!==best.name)return {name:best.name,confidence:best.confidence,automatic:false,method:'suggestion',corrections:corrected.corrections,rawSimilarity:rawSimilarity(best.name)};
+    if(accepted) {
+      return {name:best.name,confidence:Math.max(threshold,best.confidence),rawSimilarity:rawSimilarity(best.name),corrections:corrected.corrections,margin:Number.isFinite(margin)?margin:null,automatic:true,method:corrected.corrections.length?'ocr-catalogue':'ocr-glyphs'};
     }
     const suggestion=closeName(label,names,value);
     const candidate=candidates.find(item=>item.name===suggestion);
@@ -432,10 +438,11 @@
     const hallRead=identifiedHall(first) && !identifiedHall(retry)?first:retry;
     const artifact=retry.artifact?.type && !retry.metadataConflict?retry.artifact:first.artifact || retry.artifact;
     const unlocked={...retry.unlocked,states,count:states.every(state=>typeof state==='boolean')?states.filter(Boolean).length:null};
-    return {...retry,artifact,metadataConflict:artifact===first.artifact?first.metadataConflict:retry.metadataConflict,
+    const merged={...retry,artifact,metadataConflict:artifact===first.artifact?first.metadataConflict:retry.metadataConflict,
       hall:hallRead.hall || first.hall,hallSource:hallRead.hallSource,unlocked,rows,
       valid:(!!first.valid || !!retry.valid && !retained) && rows.every(row=>usable(row) && !row.assumed && !row.inferred),
       warnings:[...new Set([...(retry.warnings || []),...(retained?['Retained the stronger previous row readings.']:[])])]};
+    return window.DNScannerEvidence?.merge(first,retry,{sameEncounter:true,expectedRows,base:merged,storage:false}) || merged;
   }
   function detectPanel(source,{storage=false}={}) {
     // Gold horizontal borders produce candidates only, not artifact confirmation.
@@ -654,20 +661,64 @@
       const readView=async(...args)=>{check();ocrCalls++;const output=await activeWorker.recognize(...args);check();return output;};
       if(layout==='storage' || layout==='storage-rows' || layout==='storage-rows-dice')return window.DNStorageRecognition.recognize(source,{worker:activeWorker,names,canonPerk,expectedRows,layout,hall,manualType,knownTiers,fields,isClosed:stopped,autoFit,fitBudget});
       let artifactName=null,nameEvidence=null;
+      const titleRecognition=window.DNArtifactTitleRecognition,titleReads=[];
+      const titleArtifact=artifact=>{
+        if(artifact?.nameSource==='manual')return artifact;
+        if(titleRecognition && titleReads.length) {
+          const identifiedHall=['hall-colour','crafting-label','percentage-tier','manual'].includes(artifact?.hallSource);
+          const type=artifact?.type || '';
+          const decision=titleRecognition.decide(titleReads,{type,hall:type==='Equipment' || /^War /.test(type)?'war':identifiedHall?artifact.hall:null});
+          artifactName=decision.name;
+          nameEvidence={text:titleReads[0].rawText.slice(0,500),confidence:decision.title.confidence,accepted:decision.verified,
+            match:decision.title.match,conflict:decision.conflict,reads:decision.evidence};
+        }
+        if(!artifactName && artifact?.nameSource==='ocr'){artifact={...artifact};delete artifact.name;delete artifact.nameSource;}
+        return artifactName || nameEvidence?{...artifact,...(artifactName?{name:artifactName,nameSource:'ocr'}:{}),...(nameEvidence?{nameEvidence,titleConflict:!!nameEvidence.conflict,titleUnclear:!nameEvidence.accepted}:{})}:artifact;
+      };
       if(titleSource?.width && titleSource?.height) {
         try {
           await activeWorker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});
           const read=await readView(titleSource,{}, {text:true,blocks:true});
-          const rawName=String(read.data.text || '').replace(/\s+/g,' ').trim(),name=cleanArtifactName(rawName);
-          if(read.data.confidence>=60 && /[a-z]{3}/i.test(name) && name.length<=160)artifactName=name;
-          nameEvidence={text:rawName.slice(0,500),confidence:Number.isFinite(read.data.confidence)?read.data.confidence:null,accepted:!!artifactName};
-        } finally {if(!closed)await activeWorker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});}
+          if(titleRecognition) {
+            titleReads.push(titleRecognition.fromOCR(read.data,{view:'block',pixelKey:'full'}));
+            let decision=titleRecognition.decide(titleReads);
+            // Two selective retries at most. Strong clean headers keep the
+            // original fast path. Same-pixel retries are not corroboration.
+            if(!decision.verified || decision.title.confidence<80) {
+              await activeWorker.setParameters({tessedit_pageseg_mode:'7',tessedit_char_whitelist:''});
+              const alternative=await readView(titleSource,{}, {text:true,blocks:true});
+              titleReads.push(titleRecognition.fromOCR(alternative.data,{view:'line',pixelKey:'full'}));
+              decision=titleRecognition.decide(titleReads);
+              if(!decision.verified) {
+                const lines=titleReads[0].lines.filter(line=>line.bbox && /[\p{L}\p{N}]/u.test(String(line.text || '')));
+                const boxes=lines.map(line=>line.bbox);
+                if(boxes.length) {
+                  const left=Math.max(0,Math.floor(Math.min(...boxes.map(box=>box.x0))-8));
+                  const top=Math.max(0,Math.floor(Math.min(...boxes.map(box=>box.y0))-8));
+                  const right=Math.min(titleSource.width,Math.ceil(Math.max(...boxes.map(box=>box.x1))+8));
+                  const bottom=Math.min(titleSource.height,Math.ceil(Math.max(...boxes.map(box=>box.y1))+8));
+                  if(right>left && bottom>top) {
+                    await activeWorker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});
+                    const focused=await readView(titleSource,{rectangle:{left,top,width:right-left,height:bottom-top}}, {text:true,blocks:true});
+                    titleReads.push(titleRecognition.fromOCR(focused.data,{view:'text-lines',pixelKey:[left,top,right,bottom].join(',')}));
+                  }
+                }
+              }
+            }
+            titleArtifact(null);
+          } else {
+            const rawName=String(read.data.text || '').replace(/\s+/g,' ').trim(),name=cleanArtifactName(rawName);
+            if(read.data.confidence>=60 && /[a-z]{3}/i.test(name) && name.length<=160)artifactName=name;
+            nameEvidence={text:rawName.slice(0,500),confidence:Number.isFinite(read.data.confidence)?read.data.confidence:null,accepted:!!artifactName};
+          }
+        } catch(error) {if(fieldEvidence===encounter)fieldEvidence=null;fieldViews?.release?.();throw error;}
+        finally {if(!closed)await activeWorker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});}
       }
       if(fieldViews?.valid) {
         try {
           const quickPreview=preview && inferColours && hallColour(fieldViews.crops.hall || fieldViews.crops['hall-banner'])==='war';
           let calibrated=await window.DNScannerFieldRecognition.recognize(fieldViews,{worker:activeWorker,readView,names,canonPerk,hall,inferColours,categorySource,isClosed:stopped,ocrCalls:()=>ocrCalls,reuse,autoFit:autoFit && !quickPreview,fitBudget});
-          if(artifactName || nameEvidence)calibrated={...calibrated,artifact:{...calibrated.artifact,...(artifactName?{name:artifactName}:{}),...(nameEvidence?{nameEvidence}:{})}};
+          if(artifactName || nameEvidence)calibrated={...calibrated,artifact:titleArtifact({...calibrated.artifact,hallSource:calibrated.hallSource})};
           // Metadata uses its own pixels. Repeating every text row cannot repair
           // an unread category or star, and used to multiply complete read time.
           if(calibrated.valid) {
@@ -740,7 +791,7 @@
         } catch(error) {if(closed)throw error;}
         finally {if(!closed)await activeWorker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});}
       }
-      if(artifactName || nameEvidence)artifact={...artifact,...(artifactName?{name:artifactName}:{}),...(nameEvidence?{nameEvidence}:{})};
+      if(artifactName || nameEvidence)artifact=titleArtifact(artifact);
       let calibrated=null;
       if(layout==='panel') {
         const candidate=detectPanel(source);
@@ -769,7 +820,7 @@
       const annotate=parsed=>{
         const classification=craftHall({colourHall,colourOnly:true,selected:selectedHall});
         hall=classification.hall;
-        if(artifact)artifact={...artifact,hall};
+        if(artifact)artifact=titleArtifact({...artifact,hall,hallSource:classification.source});
         const annotated=inferColours?inferColourValues(parsed,colours,hall):parsed;
         const rows=annotated.rows.map((row,index)=>{
           const next={...row,colour:annotated.rows.length===5?colours[index]:null,unlocked:annotated.rows.length===5?unlocked.states[index]:null,level:1,levelSource:'crafting',rerollEligible:true,rerollSource:'fresh-craft',rerollConfidence:'high'};
@@ -927,6 +978,6 @@
     return {recognize,close,warm:({fast=false}={})=>getWorker(fast?'fast':'standard'),
       isWarm:({fast=false}={})=>!closed && warmed.has(fast?'fast':'standard')};
   }
-  function cleanArtifactName(value) {return String(value || '').replace(/\s+/g,' ').trim().replace(/^[^\p{L}\p{N}]+/u,'');}
+  function cleanArtifactName(value) {if(window.DNArtifactTitleRecognition)return window.DNArtifactTitleRecognition.clean(value);return String(value || '').replace(/\s+/g,' ').trim().replace(/^[^\p{L}\p{N}]+/u,'');}
   window.DNScannerRecognition={autoFitField,autoFitBounds,cleanArtifactName,matchName,NAME_MATCH_THRESHOLD,parsePercentage,parseText,parseFieldRow,positionRows,signIssues,reconcileReads,combineReads,retainCraftRead,classifyBrightness,classifyStars,rowColours,inferColourValues,usefulRow,coverage,textContrast,neutralTextContrast,detectPanel,parseCraftCategory,craftCategoryEvidence,classifyHallColour,hallColour,craftHall,categoryRect,categoryLine,create};
 })();

@@ -10,7 +10,7 @@ const root=path.resolve(__dirname,'..');
 const read=file=>fs.readFileSync(path.join(root,file),'utf8');
 const context={window:{},localStorage:{getItem:()=>null,setItem(){},removeItem(){}}};
 vm.createContext(context);
-for(const file of ['ui/data/army_catalog.js','ui/shared.js','ui/scanner-name-catalog.js','ui/scanner-recognition.js'])vm.runInContext(read(file),context);
+for(const file of ['ui/data/army_catalog.js','ui/shared.js','ui/scanner-name-catalog.js','ui/scanner-evidence.js','ui/scanner-recognition.js'])vm.runInContext(read(file),context);
 const DN=context.window.DN, parse=context.window.DNScannerRecognition.parseText;
 const categoryRecognition=context.window.DNScannerRecognition;
 assert.equal(categoryRecognition.cleanArtifactName(' " ★ Medal'), 'Medal');

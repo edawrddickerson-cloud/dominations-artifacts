@@ -97,6 +97,7 @@
     return counts;
   }
   const rowKeys=['name','known','value','hasPercent','level','levelSource','tier','tierSource','colour','base','max','rangeSource','assumed','inferred','conflict','tierConflict','outOfRange','nameSource','valueSource','unlocked','rerollEligible','rerollSource'];
+  const projectRow=row=>({...Object.fromEntries(rowKeys.filter(k=>row[k]!==undefined).map(k=>[k,row[k]])),...(row.fieldEvidence?.value?.conflict?{conflict:true}:{})});
   function project(log) {
     const value=normalize(log);
     const baseline=value.ledger.baseline;
@@ -109,7 +110,7 @@
       startingContextSource:i.startingContextSource || 'unknown',
       craftingEventId:i.craftingEventId || null,craftingEventSource:i.craftingEventSource || 'unknown',gameVersion:i.gameVersion || null,gameVersionSource:i.gameVersionSource || 'unknown',
       unlocked:i.unlocked?{count:i.unlocked.count}:null,keepId:i.keepId || 'craft-log-'+i.id,
-      rows:i.rows.map(row=>Object.fromEntries(rowKeys.filter(k=>row[k]!==undefined).map(k=>[k,row[k]])))}))};
+      rows:i.rows.map(projectRow)}))};
   }
   function preserveLocalDetails(log,local) {
     const previous=new Map((local?.items || []).map(item=>[item.id,item]));
@@ -121,9 +122,10 @@
       if(prior.name===item.name && prior.nameEvidence)item.nameEvidence=copy(prior.nameEvidence);
       item.rows=item.rows.map((row,index)=>{
         const old=prior.rows[index];
-        const projected=old && Object.fromEntries(rowKeys.filter(k=>old[k]!==undefined).map(k=>[k,old[k]]));
+        const projected=old && projectRow(old);
         return canonical(projected)===canonical(row)?copy(old):row;
       });
+      if(item.rows.some(row=>row.fieldEvidence?.value?.conflict))item.fieldEvidence={version:1,conflict:true};
     }
     return log;
   }

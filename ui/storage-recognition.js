@@ -17,16 +17,20 @@
   const titleKey=text=>String(text || '').normalize('NFKD').toLowerCase().replace(/\p{M}/gu,'').replace(/[^\p{L}\p{N}]/gu,'');
   const cropKey=box=>JSON.stringify([box.x,box.y,box.width,box.height]);
   function titleDecision(reads,{recovering=false,catalog=[],type='',hall=null}={}) {
-    const groups=new Map();
-    for(const read of reads)if(read.complete && read.confidence>=80 && titleKey(read.text)) {
-      const key=titleKey(read.text),group=groups.get(key) || [];group.push(read);groups.set(key,group);
-    }
     const catalogMatch=text=>{
       if(!/^(?:War )?(?:Legendary|Mythical)$/.test(type))return null;
       const matches=catalog.filter(row=>row.grade===(rowsForType(type)===6?'Mythical':'Legendary') &&
         (!hall || row.hall?.toLowerCase()===hall) && [row.name,row.alternate_name].some(name=>name && titleKey(name)===titleKey(text)));
       return matches.length===1?matches[0].artifact_id:null;
     };
+    if(window.DNArtifactTitleRecognition) {
+      const decision=window.DNArtifactTitleRecognition.decide(reads,{threshold:80,recovering,requireAgreement:true,type,hall});
+      return {...decision,catalogId:catalogMatch(decision.title.text)};
+    }
+    const groups=new Map();
+    for(const read of reads)if(read.complete && read.confidence>=80 && titleKey(read.text)) {
+      const key=titleKey(read.text),group=groups.get(key) || [];group.push(read);groups.set(key,group);
+    }
     const agreed=[...groups.values()].filter(group=>new Set(group.map(read=>read.pixelKey || cropKey(read.box))).size>=2);
     const conflict=groups.size>1;
     const candidates=reads.filter(read=>read.complete && titleKey(read.text)).sort((a,b)=>
@@ -172,8 +176,9 @@
           region.x+region.width>=titleBand.x+titleBand.width-1/source.width && region.y+region.height>=titleBand.y+titleBand.height-1/source.height;
         let title=await read(titleRect,'','title','6');
         const titleEvidence=[{...title,box:titleRect,ink:'title',complete:complete(titleRect)}];
-        const recoverTitle=!complete(titleRect) || title.confidence<80;
-        if(title.confidence<80) {
+        const titleQuality=window.DNArtifactTitleRecognition?.classify(title);
+        const recoverTitle=!complete(titleRect) || title.confidence<80 || titleQuality && !titleQuality.plausible;
+        if(title.confidence<80 || titleQuality && !titleQuality.plausible) {
           for(const ink of ['title-soft','raw']) {
             const alternative=await read(titleRect,'',ink,'6');
             titleEvidence.push({...alternative,box:titleRect,ink,complete:complete(titleRect)});
@@ -217,7 +222,7 @@
         }
         const decision=titleDecision(titleEvidence,{recovering:recoverTitle,catalog,type:selected,hall:currentHall});
         title=decision.title;
-        artifact={...artifact,name:title.text.replace(/\s+/g,' '),type:selected || '',rawType:categoryEvidence[0].text,typeConfidence:type.confidence,categoryEvidence,...(checkedType?{typeSource:'manual'}:{}),titleConfidence:title.confidence,
+        artifact={...artifact,name:title.text.replace(/\s+/g,' '),type:selected || '',rawType:categoryEvidence[0].text,typeConfidence:type.confidence,categoryEvidence,...(checkedType?{typeSource:'manual'}:{}),titleConfidence:title.confidence,nameSource:'ocr',...(title.match?{titleMatch:title.match}:{}),
           hall:currentHall,rawTitle:titleEvidence[0].text,titleEvidence,titleUnclear:!decision.verified,titleConflict:decision.conflict,...(decision.catalogId?{titleCatalogMatch:decision.catalogId}:{})};
         artifact.categoryUnclear=!selected;
         const picture=make();picture.width=192;picture.height=Math.round(192*(source.height*.295)/(source.width*.226));
