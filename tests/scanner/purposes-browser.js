@@ -167,7 +167,7 @@
   check('Focus rows contain only name, target and score in one full-row button',result(combined).querySelector('button').children.length===3&&!get('purpose-results').textContent.includes('Review read')&&!get('purpose-results').textContent.includes('weighted points'));
   check('Focus scores use readable text',parseFloat(getComputedStyle(result(combined)).fontSize)>=16&&parseFloat(getComputedStyle(result(combined).querySelector('.scanner-focus-score')).fontSize)>=20);
   check('Indicator has only one word',get('benchmark').querySelector('.scanner-item-score').innerText.trim()==='Keep');
-  check('Keep has no flashing status line',!get('keep-status'));
+  check('Keep has no flashing status line',!get('keep-status') || get('keep-status').hidden && !get('keep-status').textContent);
   const indicator=get('benchmark').querySelector('.scanner-item-score');
   const verdict=box(get('decision-state')),indicatorBox=box(indicator),actionBox=box(get('keep').parentElement);
   check('Keep text is centred horizontally and vertically in the coloured panel',Math.abs((verdict.left+verdict.right)-(indicatorBox.left+indicatorBox.right))<3&&Math.abs((verdict.top+verdict.bottom)-(indicatorBox.top+indicatorBox.bottom))<2&&Math.abs(indicatorBox.top-actionBox.bottom)<2);
@@ -339,10 +339,18 @@
   await publish(rareCraft(4));
   await wait(()=>rareRow()?.classList.contains('purpose-hit'));
   check('Four-line rare match turns the single row and decision green',get('decision-state').textContent==='Keep'&&get('purpose-results').querySelector('[data-rare-card-detail]').textContent.includes('Invading Bomber · 4×'));
+  const setAxes=(off,def)=>{for(const [id,active] of [['header-off',off],['header-def',def]])if((document.getElementById(id).getAttribute('aria-pressed')==='true')!==active)document.getElementById(id).click();};
+  for(const [off,def] of [[true,false],[false,true],[true,true],[false,false]]){
+    setAxes(off,def);await wait(()=>rareRow()?.classList.contains('purpose-hit'));
+    check('Defensive Rare Card stays green with axes '+off+'/'+def,get('decision-state').textContent==='Keep');
+  }
+  setAxes(true,true);
   const rareBenchmarks=[1,2].map(index=>({id:'rare-browser-'+index,name:'Rare benchmark '+index,hall:'main',type:'Armor',rows:rareCraft(4).rows}));
   await store.write(store.collectionKey(),rareBenchmarks);window.dispatchEvent(new Event('dn-artifacts-changed'));
   await wait(()=>rareRow()?.classList.contains('purpose-miss'));
   check('Rare cards still reject ties in the owned top two',get('decision-state').textContent==='Discard'&&get('purpose-results').querySelector('[data-rare-card-detail]').textContent.includes('No improvement'));
+  setAxes(true,false);check('Rare owned ties stay red with the defensive header axis off',rareRow().classList.contains('purpose-miss'));
+  setAxes(true,true);
   DNCraftingPurposes.setRareCard('rare-invading-bomber',3);
   const history=DNScannerCollection.historyItems;
   DNScannerCollection.historyItems=()=>Array.from({length:30},(_,i)=>({id:'rarity-sample-'+i,hall:'main',type:'Armor',rows:rareCraft(3).rows,firstSeen:'2026-10-22T12:00:00Z'}));
@@ -369,6 +377,11 @@
   window.dispatchEvent(new Event('dn-crafting-log-changed'));await publish(economyCraft);
   check('Three economy stat lines qualify through the same single scanner row',rareRow().classList.contains('purpose-hit')&&rareRow().textContent.includes('Rare Card')&&get('purpose-results').querySelector('[data-rare-card-detail]').textContent.includes('All Resources Looted · 3×'));
   check('Individual stat rarity uses only its named stat',get('purpose-results').querySelector('[data-rare-card-rarity]').textContent.includes('Estimated rarity: 1 in')&&get('purpose-results').querySelector('[data-rare-card-rarity]').title.includes('matching lines for All Resources Looted'));
+  setAxes(false,true);await wait(()=>rareRow()?.classList.contains('purpose-hit'));
+  check('Offensive Rare Card stays green with Off disabled',get('decision-state').textContent==='Keep');
+  setAxes(false,false);await wait(()=>rareRow()?.classList.contains('purpose-hit'));
+  check('Offensive Rare Card stays green with both header axes disabled',get('decision-state').textContent==='Keep');
+  setAxes(true,true);
   DNCraftingPurposes.disableRareFamily('economy');
   check('Disabling the matching family removes its scanner row',!rareRow()&&Object.keys(DNCraftingPurposes.settings().rareCards).length===0);
   DNScannerCollection.historyItems=history;

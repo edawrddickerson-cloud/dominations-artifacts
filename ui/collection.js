@@ -524,7 +524,7 @@
   }
   function compareByScore(a,b) {return compareByStrategyScore(a,b);}
   function comparisonCandidates(selected) {
-    return selected?ownedForHall().filter(row=>row.grade===selected.grade && DN.artifactKey(row)!==highlightedId).sort(compareByScore):[];
+    return selected?pickerCandidates('hall',selected.grade).filter(row=>DN.artifactKey(row)!==highlightedId):[];
   }
   function syncInspector() {
     const visible=!!(byId[highlightedId] || pickerTarget);

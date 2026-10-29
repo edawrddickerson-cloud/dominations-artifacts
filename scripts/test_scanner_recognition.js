@@ -311,6 +311,12 @@ assert.equal(JSON.stringify(mainInferred.rows.map(row=>row.value)),JSON.stringif
 assert.equal(JSON.stringify(recognition.inferColourValues(inferredInput,colours,'war').rows.map(row=>row.value)),JSON.stringify([-1,-3,-6,-1,-3]));
 const missingWarValues=recognition.inferColourValues({...inferredInput,rows:inferredInput.rows.map(row=>({...row,name:'Catapult Damage',value:undefined}))},colours,'war');
 assert.equal(JSON.stringify(missingWarValues.rows.map(row=>row.value)),JSON.stringify([1,3,6,1,3]),'missing numeric fields use the War tiers and positive canonical sign');
+for(const [hall,expected] of [['war',6],['main',11]])for(const [name,sign] of [['Catapult Damage',1],['Invading APC Hitpoints',-1]]){
+  const zeroInput={...inferredInput,valid:true,rows:inferredInput.rows.map(row=>({...row,name,value:0,rawPercentage:'+0%'}))};
+  const recovered=recognition.inferColourValues(zeroInput,Array(5).fill('blue'),hall);
+  assert(recovered.rows.every(row=>row.value===sign*expected && row.inferred),'impossible zero starting percentages use the blue tier and canonical sign');
+  assert.equal(recovered.valid,false,'zero recovery is provisional');assert.equal(recovered.rows[0].rawPercentage,'+0%');
+}
 for(const flag of ['conflict','tierConflict']){
   const disputed=recognition.inferColourValues({...inferredInput,rows:inferredInput.rows.map(row=>({...row,[flag]:true}))},Array(5).fill('blue'),'war');
   assert(disputed.rows.every(row=>row.value===null),'colour cannot resolve existing '+flag+' evidence');

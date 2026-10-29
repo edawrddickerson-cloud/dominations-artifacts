@@ -21,7 +21,7 @@
     return reasons.join('; ');
   }
   function craftOptions(options,{hall,type}={}) {
-    return options?{...options,prefSortAxes:window.DNArtifactScoring.craftingAxes(options.prefSortAxes,{hall,type})}:options;
+    return options && !options.targetScoring?{...options,prefSortAxes:window.DNArtifactScoring.craftingAxes(options.prefSortAxes,{hall,type})}:options;
   }
   function scoreCraftRows(rows,options,hall,type) {
     return window.DNArtifactScoring.comparisonScore(statRow(rows.map(perk=>scoreable(perk)?{...perk,value:Math.sign(perk.value)*(Math.abs(perk.value)+9)}:{name:'',value:0})),options,
@@ -323,7 +323,7 @@
     flag.textContent=(latest.provisional || comparison.provisional?'Estimated · ':'')+(qualifies?'Makes top 2':comparison.status==='tie'?'Ties benchmark':'Below top 2');
     detail.textContent=comparison.threshold===null?comparison.count+' / 2 owned':
       (comparison.score-comparison.threshold>0?'+':'')+(comparison.score-comparison.threshold)+' points · Rank '+comparison.rank;
-    detail.textContent+=' · Upgraded '+comparison.baseScore+' → Potential '+comparison.score+(comparison.rerollGain>0?' (+ '+comparison.rerollGain+' from stat '+(comparison.rerollIndex+1)+')':'')+(comparison.provisional?' · Reroll availability needs review':'');
+    detail.textContent+=' · Upgraded '+comparison.baseScore+' → Potential '+comparison.score+(comparison.rerollGain>0?' (+ '+comparison.rerollGain+' reroll)':'')+(comparison.provisional?' · Reroll availability needs review':'');
     if(keeper)detail.textContent+=' · 3 open stats · Keep for review';
     } finally {renderStrategyResults();renderPurposeResults();}
   }

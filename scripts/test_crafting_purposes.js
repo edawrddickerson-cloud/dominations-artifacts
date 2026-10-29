@@ -242,6 +242,15 @@ assert.ok(!rareEval(2).hit);
 const rareOwned=[owned('rare-one',rareRows(3)),owned('rare-two',rareRows(3))];
 assert.equal(rareEval(3,rareOwned).status,'owned','ties never replace');
 assert.ok(rareEval(4,rareOwned).hit);
+for(const prefSortAxes of [{offensive:true,defensive:false},{offensive:false,defensive:true},{offensive:true,defensive:true},{offensive:false,defensive:false}]){
+  const value=rareEval(4,rareOwned,{prefSortAxes});
+  assert.ok(value.hit,'defensive rare patterns ignore the page axis toggles');
+  assert.equal(value.score,rareEval(4,rareOwned).score);assert.equal(value.threshold,rareEval(4,rareOwned).threshold,'rare benchmarks use the same axes as the candidate');
+  assert.equal(rareEval(3,rareOwned,{prefSortAxes}).status,'owned','toggling axes cannot make an owned tie qualify');
+  const options=service.scoringOptions(rareId,{prefSortAxes},{hall:'main',type:'Armor'});
+  assert.equal(options.prefSortAxes.offensive,true);assert.equal(options.prefSortAxes.defensive,true,'focused rare scoring uses both axes');
+  assert.equal(context.window.DNScannerComparisonCore.craftOptions(options,{hall:'main',type:'Armor'}).prefSortAxes.offensive,true,'inline rare scoring retains its resolved axes');
+}
 service.setRareMode(rareId,'damage');
 assert.equal(rareEval(4).lines,2,'damage mode excludes HP lines');
 assert.ok(!rareEval(4).hit,'mixed lines cannot satisfy damage-only requirements');
@@ -301,7 +310,18 @@ for(const [name,type] of [['Heavy Infantry Damage','Weapon'],['Tower Damage','Po
 const fighter=service.rareDefinitions.find(preset=>preset.id==='rare-fighter');
 service.setRareCard(fighter.id,3);
 const fighterCraft=statCraft('Fighter Damage');
+const summedTarget=service.saveCustom({label:'Summed reroll target',category:'attacking',perks:['Heavy Infantry Damage']});
+service.configure(summedTarget,{weights:{'Heavy Infantry Damage':5}});
+const summedRows=Array.from({length:5},()=>({...row('Heavy Infantry Damage',1),rerollEligible:true}));
+const sumOptions={type:'Weapon',hall:'main',selected:[summedTarget],owned:[owned('sum-one',summedRows.map(row=>({...row,rerollEligible:false})),'Weapon'),owned('sum-two',summedRows.map(row=>({...row,rerollEligible:false})),'Weapon')]};
+const summed=service.evaluate({...craft(summedRows),artifact:{type:'Weapon'}},sumOptions)[0];
+assert.equal(summed.baseScore,250);assert.equal(summed.rerollGain,250);assert.equal(summed.score,500);assert.equal(summed.threshold,250);assert.ok(summed.hit);
+assert.equal(summed.contributions.reduce((sum,row)=>sum+(row.score||0)+row.rerollGain,0),summed.score,'displayed row scores plus all gains match the target total');
+assert.equal(service.evaluate({...craft(summedRows),artifact:{type:'Weapon'}},{...sumOptions,owned:[owned('sum-one',summedRows,'Weapon'),owned('sum-two',summedRows,'Weapon')]})[0].status,'owned','owned benchmarks add the identical summed gains and reject ties');
 assert.ok(service.evaluate(fighterCraft,{type:'Weapon',hall:'main',owned:[],selected:[fighter.id]})[0].hit,'Fighter is a combined unit preset for evidenced damage/hitpoint stats');
+for(const prefSortAxes of [{offensive:false,defensive:true},{offensive:false,defensive:false}]){
+  assert.ok(service.evaluate(fighterCraft,{type:'Weapon',hall:'main',owned:[],selected:[fighter.id],prefSortAxes})[0].hit,'offensive rare patterns ignore the page axis toggles');
+}
 assert.ok(!service.evaluate({...fighterCraft,hall:'war'},{type:'Weapon',hall:'war',owned:[],selected:[fighter.id]})[0].hit,'Main evidence cannot invent War availability');
 const beforeFamily=service.settings();
 let familyNotifications=0;context.window.addEventListener('dn-crafting-purposes-changed',()=>familyNotifications++);

@@ -11,7 +11,7 @@
   for(const label of labels)fixtures.push({...label,image:await createImageBitmap(await(await fetch('../tests/scanner/'+label.fixture+'.png')).blob())});
   const api=DNCraftingPurposes;
   const target=api.saveCustom({label:'Latency collection target',category:'defensive',selections:['general-defensive'],addOns:{attacking:{source:'profile'}}});
-  const owned=Array.from({length:100},(_,i)=>{const label=fixtures[i%2];return {id:'live-owned-'+i,name:'Owned '+i,hall:'war',type:label.category,reviewed:true,rows:label.rows.map(row=>({...row,name:canonPerk(row.name),known:true,hasPercent:true,level:1,unlocked:false,rerollEligible:false,rerollSource:'manual'}))};});
+  const owned=Array.from({length:100},(_,i)=>{const label=fixtures[i%2];return {id:'live-owned-'+i,name:'Owned '+i,hall:'war',type:label.category,reviewed:true,rows:label.rows.map(row=>({...row,name:canonPerk(row.name),known:true,hasPercent:true,level:1,unlocked:false,rerollEligible:true,rerollSource:'manual'}))};});
   await DNStoredArtifacts.write(DNStoredArtifacts.collectionKey(),owned);
   window.dispatchEvent(new Event('focus'));await pause(150);
   const stages=[],jobs=[],factory=window.Tesseract.createWorker,performanceHook=window.DNScannerPerformance;

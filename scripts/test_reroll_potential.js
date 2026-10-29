@@ -7,7 +7,13 @@ const row=values=>Object.fromEntries(values.flatMap((value,i)=>[['perk_'+(i+1)+'
 const potential=(values,eligible,extra={})=>scoring.comparisonScore(row(values),options,{hall:'main',grade:'Weapon',eligible,...extra});
 let result=potential([10,20,30,40,50],[true,true,true,true,true]);
 assert.equal(result.basePreference,150);assert.equal(result.potentialPreference,160);assert.equal(result.rerollIndex,0);
-assert.equal(result.potentialPreference-result.basePreference,10,'five dice allow only one replacement at the legal rating-one ceiling');
+assert.equal(result.potentialPreference-result.basePreference,10,'only rows below the legal ceiling contribute a gain');
+result=potential([1,2,3],[true,true,true]);
+assert.equal(result.basePreference,6);assert.equal(result.rerollGain,54);assert.equal(result.potentialPreference,60,'total adds every eligible row gain');
+assert.equal(JSON.stringify(result.rerollGains),'[19,18,17]');
+result=potential([1,2,3],[true,null,false]);
+assert.equal(result.potentialPreference,25);assert.equal(result.possiblePotentialPreference,43,'unknown dice stay outside the confirmed gain sum');
+assert.equal(result.rerollUncertain,true);
 result=potential([10,20,30,40,50],[false,false,true,false,false]);
 assert.equal(result.potentialPreference,150);assert.equal(result.rerollIndex,-1,'an eligible row stronger than the category ceiling needs no reroll');
 result=potential([1,20,3,40,50],[false,false,true,false,false]);
@@ -73,4 +79,4 @@ const saved=collector.exportData().items[0];assert.equal(saved.validated,true);a
 const observed={...logged,rows:logged.rows.map(row=>({...row,rerollSource:'dice-background'}))};const collector2=logs.createCollector();collector2.recordItem(observed,1);
 collector2.recordItem({...observed,valid:false,rows:observed.rows.map((row,i)=>({...row,known:false,inferred:true,rerollEligible:i===2}))},1);
 assert.equal(collector2.exportData().items[0].rows[2].rerollEligible,true,'weaker text retry still updates current dice observation');
-console.log('Legal category pools, factory/strategy/army ceilings, eligibility, one-row gains, uncertainty, axes, migration, mask identity, and independent log enrichment passed.');
+console.log('Legal category pools, factory/strategy/army ceilings, summed eligible gains, uncertainty, axes, migration, mask identity, and independent log enrichment passed.');

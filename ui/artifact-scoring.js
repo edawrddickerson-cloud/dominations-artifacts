@@ -166,15 +166,13 @@
     // Callers provide their selected axes; older score objects can use an explicit
     // line preference assigned by the comparison adapter.
     const points=line=>Number.isFinite(line.preference)?line.preference:active(line);
-    let index=-1,possibleIndex=-1;
-    if(!special)for(let i=0;i<base.lines.length;i++) {
-      if(eligible[i]===true && (index<0 || points(base.lines[i])<points(base.lines[index])))index=i;
-      if(eligible[i]!==false && (possibleIndex<0 || points(base.lines[i])<points(base.lines[possibleIndex])))possibleIndex=i;
-    }
-    const gain=i=>!rerollPoolKnown || i<0?0:Math.max(0,target-points(base.lines[i]));
-    const rerollGain=gain(index),possibleGain=gain(possibleIndex);
+    const gain=(line,i,possible=false)=>special || !rerollPoolKnown || (possible?eligible[i]===false:eligible[i]!==true)?0:Math.max(0,target-points(line));
+    const rerollGains=base.lines.map((line,i)=>gain(line,i)),possibleRerollGains=base.lines.map((line,i)=>gain(line,i,true));
+    const sum=values=>values.reduce((total,value)=>total+value,0);
+    const rerollGain=sum(rerollGains),possibleGain=sum(possibleRerollGains);
+    const index=rerollGain>0?rerollGains.indexOf(Math.max(...rerollGains)):-1;
     return {...base,basePreference:base.preference,potentialPreference:base.preference+rerollGain,
-      possiblePotentialPreference:base.preference+possibleGain,rerollGain,rerollIndex:rerollGain>0?index:-1,
+      possiblePotentialPreference:base.preference+possibleGain,rerollGain,rerollGains,possibleRerollGains,rerollIndex:index,
       rerollTarget:target,rerollStat,rerollMagnitude,rerollPoolKnown,rerollUncertain:possibleGain>rerollGain || !special && !rerollPoolKnown && eligible.some(value=>value!==false),
       rerollUnknown:special?0:base.lines.filter((_,i)=>eligible[i]!==true && eligible[i]!==false).length};
   }

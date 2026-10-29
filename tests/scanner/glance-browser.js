@@ -91,10 +91,10 @@
   const tiedRerolls=complete(1);tiedRerolls.rows.forEach(row=>row.rerollEligible=true);
   await read(tiedRerolls);
   const gains=()=>Array.from(get('result').querySelectorAll('.scanner-reroll-gain')).map(node=>node.textContent.replace(/\s/g,''));
-  check('tied lowest rows show a gain only on the first row',JSON.stringify(gains())==='["+80","","","",""]' && get('item-total').textContent==='180');
+  check('every eligible row shows its gain and all gains enter the total',JSON.stringify(gains())==='["+80","+80","+80","+80","+80"]' && get('item-total').textContent==='500');
   const lowestLast=complete(11);lowestLast.rows.forEach(row=>row.rerollEligible=true);lowestLast.rows[4].value=1;
   await read(lowestLast);
-  check('only the lowest-scoring rerollable row shows its gain',JSON.stringify(gains())==='["","","","","+80"]');
+  check('different eligible contributions keep their own gains',JSON.stringify(gains())==='["+60","+60","+60","+60","+80"]' && get('item-total').textContent==='500');
   setRatings({[perk]:{offensive:2,defensive:2},'Ranged Infantry Hitpoints':{offensive:1,defensive:0}});
   window.dispatchEvent(new Event('storage'));
   if(!get('def').checked)document.getElementById('header-def').click();
@@ -151,6 +151,7 @@
   await read(unknownName);check('unrecognised name loses only its own field credit',get('capture-percent').textContent==='16/17 identified');
   check('one missing field remains amber and blocks Keep',getComputedStyle(get('glance-board')).color==='rgb(255, 228, 173)' && get('keep').disabled);
   get('corrections').open=true;
+  await wait(()=>get('correct').querySelectorAll('.scanner-perk-name').length===5);
   const missingName=get('correct').querySelectorAll('.scanner-perk-name')[4];missingName.value=perk;missingName.dispatchEvent(new Event('input',{bubbles:true}));
   check('typed field updates the identified total immediately',get('capture-percent').textContent==='17/17 identified' && get('capture-detail').textContent==='16 read · 0 inferred · 1 typed' && get('capture-review').hidden);
   get('accept').click();

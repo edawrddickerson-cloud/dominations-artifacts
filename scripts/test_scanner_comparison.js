@@ -244,10 +244,10 @@ async function browserChecks() {
     {name:'Medium',value:11,known:true,rerollEligible:true},
     ...Array.from({length:3},()=>({name:'Weak',value:6,known:true,rerollEligible:true}))]};
   browser.window.DNScannerComparison.update(screenshotResult,true,screenshotOptions);
-  assert.equal(elements['scanner-item-total'].textContent,'~195','screenshot total includes 100 points of reroll potential');
+  assert.equal(elements['scanner-item-total'].textContent,'~500','screenshot total sums all five eligible reroll gains');
   assert.equal(elements['scanner-benchmark-value'].textContent,'160');
   assert.match(elements['scanner-benchmark'].className,/is-top-two/);
-  assert.doesNotMatch(elements['scanner-benchmark'].className,/is-unknown/,'estimated 195 beats 160 and gets the green state');
+  assert.doesNotMatch(elements['scanner-benchmark'].className,/is-unknown/,'estimated 500 beats 160 and gets the green state');
   assert.match(elements['scanner-benchmark'].className,/is-provisional/,'estimated read still keeps its review styling');
   console.log('Capture completeness, top-two scores/cutoffs, ties, pending reads, profile reloads, and failed storage passed.');
 }

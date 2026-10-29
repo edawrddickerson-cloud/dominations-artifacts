@@ -208,6 +208,10 @@ async function main(){
   assert.equal(warResult.rows[2].value,-6,'fresh blue War evidence supplies signed 6% for the previously identified name');
   assert.equal(warResult.rows[2].inferred,true);assert.equal(warResult.valid,false,'inference never confirms OCR');
   assert.equal(warHeld.collector.summary().itemCount,1,'improved inference updates the same physical craft');
+  const warZero={...warNameOnly,colours:warGarbage.colours,rows:warNameOnly.rows.map((row,i)=>i===2?{...row,value:0,hasPercent:true,rawPercentage:'+0%'}:row)};
+  warResult=await readWar(warZero);
+  assert.equal(warResult.rows[2].value,-6,'a zero OCR percentage cannot suppress blue War inference');
+  assert.equal(warResult.rows[2].inferred,true);assert.equal(warResult.valid,false);
   const warDirect={...warNameOnly,valid:true,warnings:[],colours:warGarbage.colours,
     rows:warNameOnly.rows.map((row,i)=>i===2?{...row,value:-6,hasPercent:true,confidence:97}:row)};
   warResult=await readWar(warDirect);

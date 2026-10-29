@@ -1,5 +1,12 @@
 # Local artifact recognition prototype
 
+October 29 zero recovery: a zero starting percentage cannot block crafting
+colour inference. With inference enabled, a known unambiguous stat uses its
+canonical sign and current text tier: blue War is ±6%, blue Main is ±11%.
+Recovery happens before tier annotation and stays inferred/unconfirmed, with
+raw OCR preserved. Nonzero direct reads, existing conflicts and unknown names
+retain their evidence rules; Storage retains its level-aware inference.
+
 Authority: `Untitled-1.md`, supplied `pic1.png`, and the user's decision to score all visible perks.
 Ownership: Scanner recognition/correction and a minimal extraction of the existing artifact scorer.
 Invariants: Include locked rows and duplicates; use current visible percentages; preserve existing Hall/Showcase scoring and rating inheritance. Pixels remain browser-local. No production deployment.

@@ -1,5 +1,11 @@
 # Crafting scanner display rules
 
+October 29: Crafting totals and same-target owned benchmarks use the sum of
+maximum-upgrade stat scores plus the sum of all confirmed eligible reroll gains,
+once per row. Show each included gain beside its stat. Unknown dice cannot add
+a confirmed bonus. Rare Card evaluation always checks both scoring axes,
+independently of the header Off/Def toggles.
+
 For every crafting scanner recognition, reading, ownership or UI change, run
 `node scripts/test_crafting_scanner_contract.cjs` before committing. It exercises
 the current scanner and Crafting Stats pages, exact-name retention, War inference,

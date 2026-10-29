@@ -302,7 +302,7 @@
     const rows=parsed.rows.map((row,index)=>{
       const amount=amounts[colours[index]],sign=row.known && !row.assumed && !row.conflict && !row.tierConflict?expectedSign(row.name):null;
       if(!amount || sign===null)return {...row,colour:colours[index]};
-      if(Number.isFinite(row.value)) {
+      if(Number.isFinite(row.value) && row.value!==0) {
         if(Math.abs(row.value)!==amount)warnings.push('Colour and OCR disagree on row '+(index+1)+'. Check the artifact type and original percentage.');
         return {...row,colour:colours[index]};
       }

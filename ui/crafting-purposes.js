@@ -345,11 +345,11 @@
     const pools=craftedPools[hallName(hall)] || {},category=Object.keys(pools).find(value=>typeName(value)===typeName(type)),pool=pools[category] || {};
     return {...purpose,stats:new Set([...purpose.stats].filter(name=>Object.hasOwn(pool,name)))};
   }
-  function scoreRows(rows, purpose, axes) {
-    return rows.reduce((sum, row) => {
-      const weight = sharedRating(row.name);
-      return sum + (purpose.stats.has(row.name) && axes[axisFor(row.name)] && weight > 0 && Number.isFinite(row.value) ? Math.abs(row.value) * weight : 0);
-    }, 0);
+  function scoreRows(rows, purpose, axes, hall, type) {
+    return window.DNArtifactScoring.comparisonScore(window.DNScannerComparisonCore.statRow(rows),{
+      canonPerk:name=>name,scoreMode:'combined',prefSortAxes:axes,
+      ratingOf:(name,axis)=>purpose.stats.has(name) && axisFor(name)===axis?Math.max(0,sharedRating(name)):0,
+    },{hall,grade:type,eligible:rows.map(row=>row.name?row.rerollEligible:false)});
   }
   let cachedOwned, cachedCanon;
   const benchmarks = new Map();
@@ -357,7 +357,7 @@
     const state=settings();
     const core = window.DNScannerComparisonCore;
     const normalizedType = typeName(type), normalizedHall = hallName(hall);
-    const axes=prefSortAxes?window.DNArtifactScoring.craftingAxes(prefSortAxes,{hall:normalizedHall,type:normalizedType}):{offensive:true,defensive:true};
+    const selectedAxes=prefSortAxes?window.DNArtifactScoring.craftingAxes(prefSortAxes,{hall:normalizedHall,type:normalizedType}):{offensive:true,defensive:true};
     if (cachedOwned !== owned || cachedCanon !== canonPerk) { benchmarks.clear(); cachedOwned = owned; cachedCanon = canonPerk; }
     const validCategory = !!normalizedType && (!result?.hall || hallName(result.hall) === normalizedHall) &&
       DN.artifactSlotCapacity(normalizedType, normalizedHall === 'war' ? 'War' : 'Main') > 0;
@@ -372,12 +372,15 @@
       if (!usable) { uncertain = true; return {name: '', value: 0}; }
       readable++;
       uncertain ||= !!row.assumed || !!row.inferred || !!row.inferredFields?.length;
-      return {name, value: Math.abs(row.value) + 9};
+      return {name, value: Math.abs(row.value) + 9,rerollEligible:row.rerollEligible};
     });
     uncertain ||= rows.length !== 5 || !!result?.partial || !!result?.provisional;
     return selected.filter(id => definitionFor(id,state)).map(id => {
       const purpose = craftingPurpose(definitionFor(id,state),normalizedHall,normalizedType);
-      const score = readable ? scoreRows(potentialRows, purpose, axes) : null;
+      const axes=purpose.rare?{offensive:true,defensive:true}:selectedAxes;
+      const potential=readable?scoreRows(potentialRows,purpose,axes,normalizedHall,normalizedType):null;
+      const score=potential?.potentialPreference ?? null;
+      const purposeUncertain=uncertain || !!potential?.rerollUncertain;
       const lines = potentialRows.filter(row => purpose.stats.has(row.name) && (purpose.rare || sharedRating(row.name) > 0)).length;
       const effectiveWeights = [...purpose.stats].sort().map(name => [name, sharedRating(name)]);
       const cacheKey = JSON.stringify([id, normalizedHall, normalizedType, effectiveWeights,axes.offensive,axes.defensive]);
@@ -393,7 +396,9 @@
           const unknown = maxRows.length !== 5 || maxRows.some(row => !metadata[row.name] || !Number.isFinite(row.value)) ||
             item.scanned?.rows.some(row => row.assumed || row.conflict || row.tierConflict || row.estimated);
           if (unknown) { incomplete++; continue; }
-          candidates.push({id: identity, name: item.name, score: scoreRows(maxRows, purpose, axes)});
+          const potential=scoreRows(maxRows,purpose,axes,normalizedHall,normalizedType);
+          if(potential.rerollUncertain){incomplete++;continue;}
+          candidates.push({id: identity, name: item.name, score: potential.potentialPreference});
         }
         candidates.sort((a, b) => b.score - a.score);
         benchmarks.set(cacheKey, {candidates, incomplete});
@@ -403,17 +408,19 @@
       const missingSources=sourceIssues(purpose);
       const requiredLines=purpose.rare ? state.rareCards[id] : null;
       let status = !result || score === null ? 'waiting' : !validCategory ? 'category' : !available || missingSources.length ? 'unavailable' :
-        purpose.rare && (!requiredLines || lines < requiredLines || uncertain) ? 'pattern' :
+        purpose.rare && (!requiredLines || lines < requiredLines || purposeUncertain) ? 'pattern' :
+        potential?.rerollUncertain ? 'review' :
         score <= 0 ? 'irrelevant' : threshold !== null && score <= threshold ? 'owned' :
         benchmark.incomplete ? 'review' : threshold === null ? 'vacancy' : 'better';
       const contributions=rows.slice(0,5).map((row,index)=>{
         const name=canonPerk(row.name),included=purpose.stats.has(name),active=included && axes[axisFor(name)],usable=!!potentialRows[index]?.name;
         const weight=included?(active?sharedRating(name):0):null;
-        return {name,included,active,axis:axisFor(name),weight,score:included && usable?potentialRows[index].value*weight:null,
+        return {name,included,active,axis:axisFor(name),weight,score:included && usable?potentialRows[index].value*weight:null,rerollGain:potential?.rerollGains[index] ?? 0,
           uncertain:!!row.assumed || !!row.inferred || !!row.inferredFields?.length};
       });
       return {id, label: purpose.label, rare:!!purpose.rare, mode:purpose.mode, perks:purpose.rare?[...purpose.stats]:undefined, requiredLines, score, contributions, lines, threshold, best: benchmark.candidates[0]?.score ?? null,
-        count: benchmark.candidates.length, second:benchmark.candidates[1] || null,incomplete: benchmark.incomplete, uncertain, status, missingSources,
+        baseScore:potential?.basePreference ?? null,rerollGain:potential?.rerollGain ?? 0,
+        count: benchmark.candidates.length, second:benchmark.candidates[1] || null,incomplete: benchmark.incomplete, uncertain:purposeUncertain, status, missingSources,
         benchmarkAvailable:validCategory && available && !missingSources.length,
         hit: status === 'vacancy' || status === 'better'};
     });
@@ -422,7 +429,7 @@
   function scoringOptions(id,base,context) {
     settings();let purpose=definitionFor(id);if(!purpose || !base)return null;
     if(context)purpose=craftingPurpose(purpose,context.hall,context.type);
-    return {...base,targetScoring:true,prefSortAxes:base.prefSortAxes?window.DNArtifactScoring.craftingAxes(base.prefSortAxes,context):{offensive:true,defensive:true},
+    return {...base,targetScoring:true,prefSortAxes:purpose.rare || !base.prefSortAxes?{offensive:true,defensive:true}:window.DNArtifactScoring.craftingAxes(base.prefSortAxes,context),
       ratingOf:(name,axis)=>purpose.stats.has(name) && axisFor(name)===axis?sharedRating(name):0};
   }
 

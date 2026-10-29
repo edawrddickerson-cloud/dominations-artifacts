@@ -4,6 +4,7 @@ const path=require('node:path'),{spawnSync}=require('node:child_process');
 const root=path.resolve(__dirname,'..');
 const checks=[
   ['test_scanner_recognition.js'],['test_scanner_comparison.js'],['test_strategy_scanner.js'],
+  ['test_reroll_potential.js'],['test_scanner_axes.js'],['test_crafting_purposes.js'],
   ['test_scanner_reading.js'],['test_scanner_collection.js'],['test_crafting_log_statistics.js'],
   ['test_scanner_speculation.js'],['test_scanner_worker_readiness.js'],
   ['test_scanner_field_reuse.js'],['test_scanner_capture.js'],['check_design_system.cjs'],
@@ -12,6 +13,10 @@ const checks=[
   ['run_scanner_ocr_fixture.js','--crafting-keep','--viewport=320x800','--recent-report','--summary'],
   ['run_scanner_ocr_fixture.js','--glance','--viewport=1440x900','--summary'],
   ['run_scanner_ocr_fixture.js','--provisional-colours','--summary'],
+  ['run_scanner_ocr_fixture.js','--collection-comparison','--summary'],
+  ['run_scanner_ocr_fixture.js','--reroll-pools','--summary'],
+  ['test_crafting_purposes_ui.js','--summary'],
+  ['test_crafting_purposes_ui.js','--target-focus','--summary'],
   ['test_scanner_latency.cjs','--real-ocr','--summary'],
   ['test_scanner_regions.js'],['test_scanner_field_retry.js'],
   ['test_scanner_war_calibration.cjs','--full','--summary'],

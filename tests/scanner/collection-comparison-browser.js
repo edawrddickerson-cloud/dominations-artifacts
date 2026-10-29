@@ -4,7 +4,7 @@
   const check = (name, result) => { checks[name] = !!result; if (!result) throw new Error(name); };
   async function wait(fn) {
     const deadline = performance.now() + 15000;
-    while (!fn()) { if (performance.now() > deadline) throw new Error('Timed out loading collection'); await new Promise(resolve => setTimeout(resolve, 25)); }
+    while (!await fn()) { if (performance.now() > deadline) throw new Error('Timed out loading collection: '+fn); await new Promise(resolve => setTimeout(resolve, 25)); }
   }
   await wait(() => window.DNStoredArtifacts && window.DN);
   const DN = window.DN, store = window.DNStoredArtifacts;
@@ -21,8 +21,10 @@
   initialLayout.Main.mains=['Best now','Other exhibit'];
   initialLayout.Main.scannedPlaced=['Best now','Other exhibit','Best unlocked','Alternative'];
   DN.saveLoadout(initialLayout,initialStrategy);
+  // Keep the reroll score fixtures independent of changing factory ratings.
+  const fixtureRatings={"Generals' Hitpoints":{offensive:5,defensive:0},'Heavy Tank Damage':{offensive:2,defensive:0}};
   const source = (await (await fetch('collection.html')).text()).replace(/<!-- Cloudflare Web Analytics -->.*<!-- End Cloudflare Web Analytics -->/g,'')
-    .replace('<head>','<head><script>const originalFetch=window.fetch.bind(window);window.fetch=(url,options)=>String(url).includes("artifact_images.json")?Promise.resolve(new Response("{}")):originalFetch(url,options);</script>');
+    .replace('<head>','<head><script>const fixtureRatings='+JSON.stringify(fixtureRatings)+';const originalFetch=window.fetch.bind(window);window.fetch=(url,options)=>String(url).includes("artifact_images.json")?Promise.resolve(new Response("{}")):String(url).includes("perk_rating_defaults.json")?Promise.resolve(new Response(JSON.stringify(fixtureRatings))):originalFetch(url,options);</script>');
   const frame = document.createElement('iframe'); frame.width = '1400'; frame.height = '900'; frame.style.flex='none'; frame.srcdoc = source; document.body.append(frame);
   await wait(() => frame.contentDocument?.querySelectorAll('#collection-list .artifact-card').length === 4);
   const doc = frame.contentDocument, win = frame.contentWindow;
@@ -37,6 +39,8 @@
   const select = doc.getElementById('collection-compare-item');
   check('restores remembered unlocked rows', doc.getElementById('compare-unlocked').getAttribute('aria-pressed') === 'true');
   check('selection does not start a comparison', select.value === '' && doc.querySelectorAll('.comparison-portrait').length === 1 && doc.querySelectorAll('.collection-stat-comparison th').length === 3);
+  const candidateIds=()=>Array.from(select.options).map(option=>option.value).filter(Boolean);
+  check('crafted comparison offers only unused same-type items',JSON.stringify(candidateIds().slice().sort())===JSON.stringify(['Alternative','Best unlocked']));
   check('current candidate order uses unlocked stats', select.options[1].value === 'Alternative');
   select.value = 'Best unlocked'; select.dispatchEvent(new win.Event('change'));
   const scores = () => [...Array.from(doc.querySelectorAll(doc.getElementById('compare-unlocked').getAttribute('aria-pressed')==='true'?'.comparison-unlocked-score':'.comparison-total')).map(node => Number(node.textContent)),Number(doc.querySelector('.comparison-change strong').textContent)];
@@ -74,6 +78,7 @@
   doc.getElementById('view-structured').click();
   doc.querySelector('#museum-board [data-id="Best now"][data-action="tile-inspect"]').click();
   check('occupied slot selection keeps extra picker hidden', doc.getElementById('slot-picker').hidden);
+  check('occupied crafted slot excludes the other occupied exhibit',!candidateIds().includes('Other exhibit') && candidateIds().includes('Best unlocked'));
   check('slot picker is outside the comparison', !doc.querySelector('.collection-comparison #slot-picker'));
   doc.getElementById('view-list').click();
   check('comparison choices preserve the active loadout', JSON.stringify(win.DN.loadLoadout()) === activeLoadout);
@@ -94,6 +99,7 @@
   check('old artifact returns to unused', !afterSwap.includes('Best now') && !Object.hasOwn(win.DN.loadLoadout().Main.singles,'Best now'));
   check('replacement is selected for comparison', doc.querySelector('.comparison-item h3').textContent === 'Best unlocked');
   check('old artifact can be compared again', Array.from(select.options).some(option=>option.value==='Best now'));
+  check('swap refreshes unused choices without exposing occupied slots',JSON.stringify(candidateIds().slice().sort())===JSON.stringify(['Alternative','Best now']));
   check('swap leaves only the new selected artifact visible', select.value === '' && doc.querySelectorAll('.comparison-portrait').length === 1);
   select.value='Best now'; select.dispatchEvent(new win.Event('change'));
   doc.getElementById('header-def').click();
@@ -114,14 +120,15 @@
   editDoc.querySelector('#collection-list [data-artifact-id="Best unlocked"] .card-name').click();
   editDoc.querySelector('.comparison-edit').open=true;
   const form=editDoc.querySelector('.artifact-perk-editor');
-  check('editor includes all five rows, including missing perks',form.querySelectorAll('.artifact-perk-edit-row').length===5);
+  check('editor includes all five rows, including missing perks',form.querySelectorAll('.artifact-perk-edit-row[data-index]').length===5);
   check('tier replaces base and max inputs',form.querySelector('[name="tier"]') && !form.querySelector('[name="base"], [name="max"]'));
   const set=(index,name,value)=>{form.querySelector('[data-index="'+index+'"] [name="'+name+'"]').value=String(value);};
-  set(1,'level',6);
+  set(1,'level',6);set(1,'tier','6');
   set(2,'name','Catapult Damage');set(2,'value',-8);set(2,'level',3);set(2,'tier','6');set(2,'unlocked','true');
   set(3,'name','Catapult Hitpoints');set(3,'tier','11');set(3,'level',1);set(3,'unlocked','false');
   form.requestSubmit();
-  await wait(()=>editDoc.querySelector('.artifact-perk-edit-status')?.textContent==='Saved');
+  check('edited perk inputs satisfy current validation: '+JSON.stringify(Array.from(form.querySelectorAll(':invalid')).map(input=>({name:input.name,value:input.value,error:input.validationMessage}))),form.checkValidity());
+  await wait(async()=>(await store.read(store.collectionKey())).find(item=>item.id==='Best unlocked')?.rows[1]?.value===-8);
   const saved=(await store.read(store.collectionKey())).find(item=>item.id==='Best unlocked');
   check('level resolves missing maximum percentage',saved.rows[0].base===6 && saved.rows[0].max===15);
   check('tier supplies the negative base and max presets',saved.rows[1].name==='Catapult Damage' && saved.rows[1].value===-8 && saved.rows[1].base===-6 && saved.rows[1].max===-15);
@@ -182,14 +189,14 @@
   rerollDoc.querySelector('[data-artifact-id="Main blue dice"] .card-name').click();
   const rerollSelect=rerollDoc.getElementById('collection-compare-item');rerollSelect.value='Main grey dice';rerollSelect.dispatchEvent(new rerollWin.Event('change'));
   const headerScores=()=>Array.from(rerollDoc.querySelectorAll('.comparison-header-scores')).map(node=>node.textContent);
-  check('headers show current unlocked score and full potential',JSON.stringify(headerScores())==='["Unlocked Score:6/Full Potential:145","Unlocked Score:6/Full Potential:55"]' && !rerollDoc.querySelector('.comparison-base-score,.comparison-possible-score'));
+  check('headers show current unlocked score and summed full potential',JSON.stringify(headerScores())==='["Unlocked Score:6/Full Potential:500","Unlocked Score:6/Full Potential:55"]' && !rerollDoc.querySelector('.comparison-base-score,.comparison-possible-score'));
   check('both header numbers are large and bold',Array.from(rerollDoc.querySelectorAll('.comparison-header-metric strong')).every(node=>parseFloat(rerollWin.getComputedStyle(node).fontSize)>=32 && Number(rerollWin.getComputedStyle(node).fontWeight)>=850));
   check('dice bonus never replaces a per-stat score',Array.from(rerollDoc.querySelectorAll('.collection-stat-comparison tbody tr')).reduce((sum,row)=>sum+Number(row.querySelector('.comparison-line-score b').textContent),0)===55 && !rerollDoc.querySelector('.collection-stat-comparison').textContent.includes('→'));
-  check('comparison difference uses potential totals',rerollDoc.querySelector('.comparison-change strong').textContent==='-90');
+  check('comparison difference uses summed potential totals',rerollDoc.querySelector('.comparison-change strong').textContent==='-445');
   check('comparison shows active and faded dice for both items',rerollDoc.querySelectorAll('.collection-stat-comparison .comparison-dice.is-rerollable').length===5 && rerollDoc.querySelectorAll('.collection-stat-comparison .comparison-dice[aria-label="Reroll unavailable"]').length===5 && Number(rerollWin.getComputedStyle(rerollDoc.querySelector('.collection-stat-comparison .comparison-dice[aria-label="Reroll unavailable"]')).opacity)<1);
   check('dice occupy the outside edges of both stat columns',Array.from(rerollDoc.querySelectorAll('.comparison-stat.left .comparison-stat-content')).every(node=>node.firstElementChild.classList.contains('comparison-dice')) && Array.from(rerollDoc.querySelectorAll('.comparison-stat.right .comparison-stat-content')).every(node=>node.lastElementChild.classList.contains('comparison-dice')));
   rerollDoc.getElementById('compare-unlocked').click();
-  check('both header scores stay visible in unlocked view',JSON.stringify(headerScores())==='["Unlocked Score:6/Full Potential:145","Unlocked Score:6/Full Potential:55"]');
+  check('both header scores stay visible in unlocked view',JSON.stringify(headerScores())==='["Unlocked Score:6/Full Potential:500","Unlocked Score:6/Full Potential:55"]');
   check('all dice and locked rows remain visible in unlocked view',rerollDoc.querySelectorAll('.collection-stat-comparison .comparison-dice').length===10 && rerollDoc.querySelectorAll('.collection-stat-comparison .comparison-dice.is-rerollable').length===5 && rerollDoc.querySelectorAll('.collection-stat-comparison .comparison-stat-name.is-locked').length===8);
   check('unlocked central difference excludes reroll potential',rerollDoc.querySelector('.comparison-change strong').textContent==='0');
   rerollDoc.getElementById('compare-all').click();
@@ -208,9 +215,10 @@
   if(warDoc.getElementById('header-off').getAttribute('aria-pressed')!=='true')warDoc.getElementById('header-off').click();
   if(warDoc.getElementById('header-def').getAttribute('aria-pressed')==='true')warDoc.getElementById('header-def').click();
   warDoc.querySelector('[data-artifact-id="War blue dice"] .card-name').click();
-  check('War Weapon reroll uses its highest category rating of 2 at 15 percent',warDoc.querySelector('.comparison-unlocked-score').textContent==='6' && warDoc.querySelector('.comparison-potential-total').textContent==='75');
+  check('War Weapon sums each eligible gain at its category ceiling of 30',warDoc.querySelector('.comparison-unlocked-score').textContent==='6' && warDoc.querySelector('.comparison-potential-total').textContent==='150');
   warFrame.remove();
   DN.setActiveProfile(DN.addProfile('Sortable artifact table'));
+  DN.updateStrategy(DN.activeStrategyId(),{name:'Collection comparison'});
   DN.saveCollectionUi({hall:'Main',viewMode:'list',valueMode:'actual',compareRows:'all'});DN.lsSet('dn-artifact-hall-filter','Main');
   const tableItems=[item('A Weapon',[6,1,1,1,1]),item('B Weapon',[11,1,1,1,1]),{...item('C Armor',[1,1,1,1,1]),type:'Armor'},{...item('D Mythical',[1,1,1,1,1,1]),type:'Mythical'},item('E Unused Weapon',[1,1,1,1,1]),{...item('F Showcase Legendary',[1,1,1,1,1]),type:'Legendary'},{...item('G Legendary',[1,1,1,1,1]),type:'Legendary'},{...item('H Showcase Mythical',[1,1,1,1,1,1]),type:'Mythical'},{...item('I Unused Legendary',[1,1,1,1,1]),type:'Legendary'}];
   tableItems[1].rows.forEach(row=>row.rerollEligible=true);
@@ -229,12 +237,13 @@
   const longName=tableDoc.querySelector('.collection-table-name');longName.textContent='A very long artifact title that needs several lines without overlapping its neighbouring stats';
   check('long titles wrap inside their own column',longName.getBoundingClientRect().right<=longName.closest('th').getBoundingClientRect().right && longName.scrollWidth<=longName.clientWidth && tableWin.getComputedStyle(longName).whiteSpace==='normal');
   check('image and bold name lead each artifact row',listRows().every(row=>row.querySelector('.collection-table-thumb img') && row.querySelector('.collection-table-thumb').getBoundingClientRect().right<=row.querySelector('.card-name').getBoundingClientRect().left && Number(tableWin.getComputedStyle(row.querySelector('.card-name')).fontWeight)>=700));
-  check('list includes per-stat scores and both artifact totals',listRows().every(row=>row.querySelector('.collection-table-stat-values [title="Score at maximum upgrade"]') && row.querySelector('.collection-table-unlocked') && row.querySelector('.collection-table-potential')));
+  check('list includes per-stat scores and strategy totals',listRows().every(row=>row.querySelector('.collection-table-stat-values [title="Score at maximum upgrade"]') && row.querySelector('.collection-strategy-score')));
   const sort=key=>tableDoc.querySelector('[data-sort="'+key+'"]').click();
   sort('name');check('artifact names sort descending inside each type',listIds()[0]==='E Unused Weapon' && sectionOrder()==='Weapon,Armor,Legendary,Mythical');
   sort('name');check('artifact name sorts ascending',listIds()[0]==='A Weapon');
-  for(const [key,selector] of [['unlocked','.collection-table-unlocked'],['potential','.collection-table-potential']]) {
-    const sortedWithinSections=ascending=>Array.from(tableDoc.querySelectorAll('.collection-type-section')).every(section=>{const values=Array.from(section.querySelectorAll('.collection-table-row')).map(row=>Number(row.querySelector(selector).textContent));return values.every((value,i)=>!i || (ascending?values[i-1]<=value:values[i-1]>=value));});
+  const strategySortKey='strategy-score:'+tableWin.DN.activeStrategyId();
+  for(const [key,selector] of [[strategySortKey,'.collection-strategy-score']]) {
+    const sortedWithinSections=ascending=>Array.from(tableDoc.querySelectorAll('.collection-type-section')).every(section=>{const values=Array.from(section.querySelectorAll('.collection-table-row')).map(row=>parseFloat(row.querySelector(selector).textContent));return values.every((value,i)=>!i || (ascending?values[i-1]<=value:values[i-1]>=value));});
     sort(key);check(key+' sorts descending within fixed sections',sortedWithinSections(false) && sectionOrder()==='Weapon,Armor,Legendary,Mythical');
     sort(key);check(key+' sorts ascending within fixed sections',sortedWithinSections(true) && sectionOrder()==='Weapon,Armor,Legendary,Mythical');
   }
@@ -250,7 +259,7 @@
   choose('Armor');check('slot dropdown allows multiple types',listRows().length===4 && filter.querySelectorAll('input:checked').length===2 && filter.open);
   choose('Weapon');choose('Mythical');check('Mythical filter includes Showcase copies',listRows().length===3 && listIds().includes('C Armor') && listIds().includes('D Mythical') && listIds().includes('H Showcase Mythical'));
   choose('Legendary');check('Legendary filter includes assigned unused and Showcase copies',['F Showcase Legendary','G Legendary','I Unused Legendary'].every(id=>listIds().includes(id)));
-  sort('unlocked');check('sorting preserves selected filters',listRows().length===6 && filter.querySelectorAll('input:checked').length===3);
+  sort(strategySortKey);check('sorting preserves selected filters',listRows().length===6 && filter.querySelectorAll('input:checked').length===3);
   filter.querySelector('[data-filter-action="all"]').click();check('select all restores every artifact',listRows().length===9);
   tableDoc.querySelector('[data-artifact-id="B Weapon"] .card-name').click();
   check('table name opens comparison and editor',tableDoc.querySelector('.comparison-item h3').textContent==='B Weapon' && tableDoc.querySelector('.artifact-perk-editor'));
