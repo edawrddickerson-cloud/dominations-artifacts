@@ -2,11 +2,12 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('nod
 const context={window:{},Date,crypto:require('node:crypto')};vm.createContext(context);
 vm.runInContext(fs.readFileSync('ui/stored-artifacts.js','utf8'),context);
 const {merge,impliedRange}=context.window.DNStoredArtifacts;
-for(const name of ['Mercenary Camp Deploys Spartans when Destroyed','APC Deploys Marines On Death']) {
+for(const name of ['Mercenary Camp Deploys Spartans when Destroyed','APC Deploys Marines On Death','Castle spawns Sword Saints when Destroyed']) {
   assert.equal(impliedRange({name,value:1,level:10}).max,1,'Deployment counts never gain nine units from upgrade inference');
   const fixed=context.window.DNStoredArtifacts.backfillItem({hall:'war',type:'War Mythical',rows:[{name,value:1,level:1,base:1,max:10,rangeSource:'inferred-level'}]}).rows[0];
   assert.equal(fixed.max,1,'Legacy inferred count maxima are corrected in memory');
 }
+assert.equal(impliedRange({name:'Castle spawns Sword Saints when Destroyed',value:2,level:1}).max,2,'Profile 4 Sword Saints are a count, not an eleven-unit upgraded effect');
 const item=(id='a')=>({id,name:'Example',hall:'main',type:'Weapon',reviewed:true,rows:[
   {name:'Damage',value:13,level:3,unlocked:true},{name:'Invading Damage',value:-8,level:3,unlocked:true},
   {name:'Hitpoints',value:1,level:1,unlocked:false},{name:'Hitpoints',value:6,level:1,unlocked:true}].map(row=>({...row,levelSource:'ocr'}))});

@@ -7,7 +7,7 @@ async function checkOrigin(origin,environment,accounts){
   const storage={get length(){return values.size;},key:index=>[...values.keys()][index],getItem:key=>values.get(key)??null,setItem:(key,value)=>values.set(key,value),removeItem:key=>values.delete(key)};
   const context={window:{addEventListener(){}},location:new URL('/config.html',origin),localStorage:storage,document:{hidden:false,addEventListener(){}},navigator:{onLine:true,userAgent:'Chrome/123'},innerWidth:1440,crypto,URL,AbortController,TextEncoder,Date,setTimeout,clearTimeout,setInterval:()=>0,fetch:async(_url,options)=>{sent.push(JSON.parse(options.body));return {};}};
   vm.createContext(context);
-  for(const name of ['service-config','integration-core','telemetry'])vm.runInContext(fs.readFileSync('ui/'+name+'.js','utf8'),context);
+  for(const name of ['service-config','integration-core','consent','telemetry'])vm.runInContext(fs.readFileSync('ui/'+name+'.js','utf8'),context);
   const {DNServiceConfig:config,DNIntegrationCore:core,DNConsent:consent,DNTelemetry:telemetry}=context.window;
   assert.equal(config.environment,environment);
   assert.equal(core.cloudReady(config,origin),accounts);

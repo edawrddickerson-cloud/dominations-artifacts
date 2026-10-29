@@ -7,7 +7,7 @@
   // Capture the serving style before shell history adopts a content-page URL.
   // Static HTML previews keep .html; Workers' clean URLs stay extensionless.
   const cleanURLs = /^https?:$/.test(location.protocol) && !location.pathname.endsWith('.html');
-  const pages = new Set(['ratings.html','artifacts.html','collection.html','totals.html','scanner.html','crafting-stats.html','storage-scanner.html','council.html','council-collection.html','council-ratings.html','config.html','privacy.html','crafting-statistics.html']);
+  const pages = new Set(['ratings.html','artifacts.html','collection.html','totals.html','scanner.html','crafting-stats.html','storage-scanner.html','council.html','council-collection.html','council-ratings.html','config.html','privacy.html','crafting-statistics.html','research-planner.html']);
   let stream = null, nav = null, checking = false, restoring = null;
   let currentURL, currentIndex = 0;
   let header = null, headerObserver = null;

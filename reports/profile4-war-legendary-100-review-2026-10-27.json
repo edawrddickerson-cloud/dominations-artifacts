@@ -1,0 +1,1031 @@
+{
+  "version": 1,
+  "profile": "Profile 4",
+  "workspaceRevision": 338,
+  "sourceSha256": "017208b391eed269282fbd628fa64d1907cbddf524c441b908945a7d52c67f68",
+  "canonicalBeforeSha256": "ff6d75715f89c752dd8e844fed389cb34586ebb54d8fdf75926b5670a527c1dc",
+  "status": "base-conflicts-resolved-maximum-unverified",
+  "cost": "100",
+  "evidence": "User-collected, reviewed saved scans; all 35 rows record level 1. Original stat-panel pixels and raw OCR are not retained here. No field-by-field independent pixel verification is claimed. Percentage maxima are derived by the existing Legendary +9 rule. Count-effect maxima remain unknown.",
+  "summary": {
+    "scannedItems": 7,
+    "scannedRows": 35,
+    "itemsWithDifferences": 3,
+    "differentRows": 5,
+    "newCanonicalEntries": 0,
+    "missingFromCollection": [
+      {
+        "artifact_id": "great-imperial-crown-legendary",
+        "name": "Great Imperial Crown"
+      },
+      {
+        "artifact_id": "the-white-death-s-war-kit-legendary",
+        "name": "The White Death's War Kit"
+      }
+    ],
+    "imagesInSource": 0,
+    "otherCostScansExcluded": 39
+  },
+  "items": [
+    {
+      "artifact_id": "10th-mountain-division-war-kit-legendary",
+      "name": "10th Mountain Division War Kit",
+      "scannedName": "10th Mountain Division War Kit",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "APC Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "APC Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "APC Damage",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "APC Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "APC Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "APC Hitpoints",
+            "value": 1,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 10
+          },
+          "different": true,
+          "scanCandidate": {
+            "name": "APC Hitpoints",
+            "base": "1",
+            "max": "10"
+          },
+          "resolution": "user-confirmed-ocr-error-database-retained"
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Machine Gun Infantry Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Machine Gun Infantry Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Machine Gun Infantry Damage",
+            "value": 5,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 14
+          },
+          "different": true,
+          "scanCandidate": {
+            "name": "Machine Gun Infantry Damage",
+            "base": "5",
+            "max": "14"
+          },
+          "resolution": "user-confirmed-ocr-error-database-retained"
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "6",
+            "max": "15"
+          },
+          "accepted": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "6",
+            "max": "15"
+          },
+          "observed": {
+            "name": "Enemy Defender Spawn Time",
+            "value": 6,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 15
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Enemy Redoubt Damage",
+            "base": "-6",
+            "max": "-15"
+          },
+          "accepted": {
+            "name": "Enemy Redoubt Damage",
+            "base": "-6",
+            "max": "-15"
+          },
+          "observed": {
+            "name": "Enemy Redoubt Damage",
+            "value": -6,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -15
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "demarcation-stone-legendary",
+      "name": "Demarcation Stone",
+      "scannedName": "Demarcation Stone",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Heavy Infantry Damage",
+            "base": "3",
+            "max": "12"
+          },
+          "accepted": {
+            "name": "Heavy Infantry Damage",
+            "base": "3",
+            "max": "12"
+          },
+          "observed": {
+            "name": "Heavy Infantry Damage",
+            "value": 3,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 12
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Ranged Infantry Damage",
+            "base": "3",
+            "max": "12"
+          },
+          "accepted": {
+            "name": "Ranged Infantry Damage",
+            "base": "3",
+            "max": "12"
+          },
+          "observed": {
+            "name": "Ranged Infantry Damage",
+            "value": 3,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 12
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Supply Vehicle Healing",
+            "base": "3",
+            "max": "12"
+          },
+          "accepted": {
+            "name": "Supply Vehicle Healing",
+            "base": "3",
+            "max": "12"
+          },
+          "observed": {
+            "name": "Supply Vehicle Healing",
+            "value": 3,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 12
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Invading Machine Gun Infantry Damage",
+            "base": "-3",
+            "max": "-12"
+          },
+          "accepted": {
+            "name": "Invading Machine Gun Infantry Damage",
+            "base": "-3",
+            "max": "-12"
+          },
+          "observed": {
+            "name": "Invading Machine Gun Infantry Damage",
+            "value": -3,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -12
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "All Enemy Defensive Towers Damage",
+            "base": "-3",
+            "max": "-12"
+          },
+          "accepted": {
+            "name": "All Enemy Defensive Towers Damage",
+            "base": "-3",
+            "max": "-12"
+          },
+          "observed": {
+            "name": "All Enemy Defensive Towers Damage",
+            "value": -3,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -12
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "gemini-8-helmet-legendary",
+      "name": "Gemini 8 Helmet",
+      "scannedName": "Gemini 8 Helmet",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Attack Helicopter Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Attack Helicopter Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Attack Helicopter Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Armored Car Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Armored Car Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Armored Car Damage",
+            "value": 1,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 10
+          },
+          "different": true,
+          "scanCandidate": {
+            "name": "Armored Car Damage",
+            "base": "1",
+            "max": "10"
+          },
+          "resolution": "user-confirmed-ocr-error-database-retained"
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Bazooka Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Bazooka Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Bazooka Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Heavy Tank Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Heavy Tank Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Heavy Tank Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Barracks Troop Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Barracks Troop Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Barracks Troop Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "general-pershing-s-bas-relief-legendary",
+      "name": "General Pershing's Bas-Relief",
+      "scannedName": "General Pershing's Bas-Relief",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Heavy Infantry Hitpoints",
+            "base": "3",
+            "max": "12"
+          },
+          "accepted": {
+            "name": "Heavy Infantry Hitpoints",
+            "base": "3",
+            "max": "12"
+          },
+          "observed": {
+            "name": "Heavy Infantry Hitpoints",
+            "value": 3,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 12
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Ranged Infantry Hitpoints",
+            "base": "3",
+            "max": "12"
+          },
+          "accepted": {
+            "name": "Ranged Infantry Hitpoints",
+            "base": "3",
+            "max": "12"
+          },
+          "observed": {
+            "name": "Ranged Infantry Hitpoints",
+            "value": 3,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 12
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Heavy Cavalry Hitpoints",
+            "base": "3",
+            "max": "12"
+          },
+          "accepted": {
+            "name": "Heavy Cavalry Hitpoints",
+            "base": "3",
+            "max": "12"
+          },
+          "observed": {
+            "name": "Heavy Cavalry Hitpoints",
+            "value": 3,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 12
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Ranged Siege Damage",
+            "base": "3",
+            "max": "12"
+          },
+          "accepted": {
+            "name": "Ranged Siege Damage",
+            "base": "3",
+            "max": "12"
+          },
+          "observed": {
+            "name": "Ranged Siege Damage",
+            "value": 3,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 12
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Raider Damage",
+            "base": "3",
+            "max": "12"
+          },
+          "accepted": {
+            "name": "Raider Damage",
+            "base": "3",
+            "max": "12"
+          },
+          "observed": {
+            "name": "Raider Damage",
+            "value": 3,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 12
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "normandy-scr-536-walkie-talkie-legendary",
+      "name": "Normandy SCR-536 \"Walkie-Talkie\"",
+      "scannedName": "Normandy SCR-536",
+      "identityAlias": true,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Bazooka Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Bazooka Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Bazooka Damage",
+            "value": 9,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Bomber Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Bomber Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Bomber Damage",
+            "value": 9,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Armored Car Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Armored Car Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Armored Car Damage",
+            "value": 9,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "MRL Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "MRL Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "MRL Damage",
+            "value": 9,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Rally Cooldown",
+            "base": "-11",
+            "max": "-20"
+          },
+          "accepted": {
+            "name": "Rally Cooldown",
+            "base": "-11",
+            "max": "-20"
+          },
+          "observed": {
+            "name": "Rally Cooldown",
+            "value": -11,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -20
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "tizona-sword-legendary",
+      "name": "Tizona Sword",
+      "scannedName": "Tizona Sword",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "6",
+            "max": "15"
+          },
+          "accepted": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "6",
+            "max": "15"
+          },
+          "observed": {
+            "name": "Enemy Defender Spawn Time",
+            "value": 6,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 15
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Heavy Cavalry Damage",
+            "base": "6",
+            "max": "15"
+          },
+          "accepted": {
+            "name": "Heavy Cavalry Damage",
+            "base": "6",
+            "max": "15"
+          },
+          "observed": {
+            "name": "Heavy Cavalry Damage",
+            "value": 6,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 15
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Heavy Cavalry Hitpoints",
+            "base": "3",
+            "max": "12"
+          },
+          "accepted": {
+            "name": "Heavy Cavalry Hitpoints",
+            "base": "3",
+            "max": "12"
+          },
+          "observed": {
+            "name": "Heavy Cavalry Hitpoints",
+            "value": 3,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 12
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Ranged Siege Damage",
+            "base": "6",
+            "max": "15"
+          },
+          "accepted": {
+            "name": "Ranged Siege Damage",
+            "base": "6",
+            "max": "15"
+          },
+          "observed": {
+            "name": "Ranged Siege Damage",
+            "value": 6,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 15
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Ranged Siege Hitpoints",
+            "base": "3",
+            "max": "12"
+          },
+          "accepted": {
+            "name": "Ranged Siege Hitpoints",
+            "base": "3",
+            "max": "12"
+          },
+          "observed": {
+            "name": "Ranged Siege Hitpoints",
+            "value": 3,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 12
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "vespa-150-tap-legendary",
+      "name": "Vespa 150 TAP",
+      "scannedName": "Vespa 150 TAP",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Machine Gun Infantry Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Machine Gun Infantry Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Machine Gun Infantry Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Machine Gun Infantry Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Machine Gun Infantry Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Machine Gun Infantry Hitpoints",
+            "value": 1,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 10
+          },
+          "different": true,
+          "scanCandidate": {
+            "name": "Machine Gun Infantry Hitpoints",
+            "base": "1",
+            "max": "10"
+          },
+          "resolution": "user-confirmed-ocr-error-database-retained"
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Ranged Siege Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Ranged Siege Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Ranged Siege Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Ranged Siege Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Ranged Siege Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Ranged Siege Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Factory Troop Damage",
+            "base": "1",
+            "max": ""
+          },
+          "accepted": {
+            "name": "Factory Troop Damage",
+            "base": "1",
+            "max": "10"
+          },
+          "observed": {
+            "name": "Factory Troop Damage",
+            "value": 1,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 10
+          },
+          "different": true
+        }
+      ]
+    }
+  ],
+  "reviewFlags": [
+    {
+      "artifact_id": "10th-mountain-division-war-kit-legendary",
+      "name": "10th Mountain Division War Kit",
+      "slot": 2,
+      "perk": "APC Hitpoints",
+      "databaseBase": "7",
+      "scannedBase": "1",
+      "kind": "base-value-needs-game-confirmation",
+      "resolution": "user-confirmed-ocr-error-database-retained",
+      "confirmedBase": "7"
+    },
+    {
+      "artifact_id": "10th-mountain-division-war-kit-legendary",
+      "name": "10th Mountain Division War Kit",
+      "slot": 3,
+      "perk": "Machine Gun Infantry Damage",
+      "databaseBase": "8",
+      "scannedBase": "5",
+      "kind": "base-value-needs-game-confirmation",
+      "resolution": "user-confirmed-ocr-error-database-retained",
+      "confirmedBase": "8"
+    },
+    {
+      "artifact_id": "gemini-8-helmet-legendary",
+      "name": "Gemini 8 Helmet",
+      "slot": 2,
+      "perk": "Armored Car Damage",
+      "databaseBase": "7",
+      "scannedBase": "1",
+      "kind": "base-value-needs-game-confirmation",
+      "resolution": "user-confirmed-ocr-error-database-retained",
+      "confirmedBase": "7"
+    },
+    {
+      "artifact_id": "vespa-150-tap-legendary",
+      "name": "Vespa 150 TAP",
+      "slot": 2,
+      "perk": "Machine Gun Infantry Hitpoints",
+      "databaseBase": "7",
+      "scannedBase": "1",
+      "kind": "base-value-needs-game-confirmation",
+      "resolution": "user-confirmed-ocr-error-database-retained",
+      "confirmedBase": "7"
+    },
+    {
+      "artifact_id": "vespa-150-tap-legendary",
+      "name": "Vespa 150 TAP",
+      "slot": 5,
+      "perk": "Factory Troop Damage",
+      "databaseBase": "1",
+      "scannedBase": "1",
+      "kind": "derived-maximum-only"
+    }
+  ],
+  "interpretation": "User explicitly confirmed all four base-value conflicts are OCR errors and the existing database values are correct. Original scan observations and comparison flags are retained; accepted values use the unchanged database. Vespa Factory Troop Damage maximum remains a separate unverified inference (+10% from the scanner, blank in the database).",
+  "cachedEvidence": [
+    {
+      "path": "data/raw/wiki_pages/10th_Mountain_Division_War_Kit.txt",
+      "sha256": "eec1f1c2fec106f47c7901fac141eb863cb5cee0a40f1320794e65c57fc651e8"
+    },
+    {
+      "path": "data/raw/wiki_pages/Gemini_8_Helmet.txt",
+      "sha256": "9432583021b7e8f930930ab486ccff970548d80cac3d7784cd27af780225aa27"
+    },
+    {
+      "path": "data/raw/wiki_pages/Vespa_150_TAP.txt",
+      "sha256": "7b36f5bec8cc3ff03063544efac4fe449c094426ce1ce0161733ab1d7ecce68e"
+    }
+  ],
+  "resolution": {
+    "authority": "Explicit user confirmation: all four are OCR errors; the database values are correct.",
+    "confirmedOCRErrors": [
+      {
+        "artifact_id": "10th-mountain-division-war-kit-legendary",
+        "slot": 2,
+        "perk": "APC Hitpoints",
+        "incorrectScannedBase": "1",
+        "confirmedBase": "7"
+      },
+      {
+        "artifact_id": "10th-mountain-division-war-kit-legendary",
+        "slot": 3,
+        "perk": "Machine Gun Infantry Damage",
+        "incorrectScannedBase": "5",
+        "confirmedBase": "8"
+      },
+      {
+        "artifact_id": "gemini-8-helmet-legendary",
+        "slot": 2,
+        "perk": "Armored Car Damage",
+        "incorrectScannedBase": "1",
+        "confirmedBase": "7"
+      },
+      {
+        "artifact_id": "vespa-150-tap-legendary",
+        "slot": 2,
+        "perk": "Machine Gun Infantry Hitpoints",
+        "incorrectScannedBase": "1",
+        "confirmedBase": "7"
+      }
+    ],
+    "unresolvedBaseConflicts": 0,
+    "all35BaseValuesResolved": true,
+    "canonicalStatValuesChanged": false,
+    "cloudRecordsChanged": false,
+    "unresolvedMaximum": "Vespa 150 TAP row 5 Factory Troop Damage: inferred +10% was not independently confirmed."
+  }
+}

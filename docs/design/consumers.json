@@ -14,9 +14,14 @@
     "config.html": "settings",
     "privacy.html": "document",
     "crafting-statistics.html": "document",
+    "research-planner.html": "browse",
     "index.html": "entry",
     "army.html": "redirect"
   },
+  "contentLinkExceptions": [
+    {"selector":"[data-privacy-details] a[data-privacy-link]","page":"privacy.html","hash":"","reason":"Legal policy access from the account privacy disclosure; Privacy has no side-menu entry."},
+    {"selector":"#crafting-community a[data-community-signin]","page":"config.html","hash":"#account-privacy","reason":"Required sign-in action for optional community sharing; not a duplicate browse shortcut."}
+  ],
   "owners": {
     "tokens": "ui/design-tokens.css",
     "fields-buttons-segments-rating-inputs-tables-dialogs-pickers": "ui/components.css",
@@ -53,6 +58,7 @@
     }
   ],
   "domainVariants": {
+    "research-planner.css": "Browse composition with shared native controls, completion editors and locally scrolling table. No base control overrides. scripts/test_research_planner_ui.cjs checks full labels at 200% text scaling and persistent input focus.",
     "crafting-purposes.css": "Rare Cards groups evidenced ordinary-crafted unit/stat presets by target category with shared Off all actions. Rows keep dedicated name, Matching lines and Stats columns; absent stat modes leave an empty third cell. Groups stack below 901px without truncation. scripts/test_design_ui.cjs checks column alignment and text bounds through 320px; test_crafting_purposes_ui.js checks craftable-only membership, bulk scope and focus.",
     "crafted-log-stats.css": "Personal Stats, Community Stats and Probability Calculator use the shared Collection Targets tab family; responsive calculator input/result columns and aligned requirement fields use shared controls.",
     "scanner.css": "Five-stat/image grid, semantic stat/dice colours, compact live editing; at narrow widths a 7rem minimum name column with local keyboard-scrollable overflow. Compact last-three craft rows use native disclosures and shared btn-small actions; test_crafting_scanner_contract.cjs covers recovery, focus and desktop/phone geometry.",

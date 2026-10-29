@@ -23,6 +23,9 @@
   }
   const edit=(input,value)=>{input.value=String(value);input.dispatchEvent(new Event('input',{bubbles:true}));};
   const field=(index,key)=>scanner('correct').querySelectorAll('.scanner-edit-row')[index].querySelector('.scanner-perk-'+key);
+  await read('Rejected fractional percentage',rows.map((row,i)=>i===0?{...row,value:1.3}:row));
+  await pause(750);
+  check('fractional OCR values cannot auto-save even when adapter claims validity',(await store.read('items')).length===0);
   await read('Tierless range fixture',rows.map((row,i)=>i===0?{...row,value:10,level:3}:row));
   await wait(async()=>(await store.read('items')).some(item=>item.name==='Tierless range fixture'));
   const tierless=(await store.read('items')).find(item=>item.name==='Tierless range fixture');

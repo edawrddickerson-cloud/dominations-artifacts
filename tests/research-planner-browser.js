@@ -1,0 +1,47 @@
+(async()=>{
+  const checks=[],check=(name,passed,details)=>checks.push({name,passed:!!passed,...(details?{details}:{})});
+  const wait=async fn=>{for(let n=0;n<200;n++){if(fn())return;await new Promise(r=>setTimeout(r,25));}throw Error('Research readiness timeout');};
+  await wait(()=>window.DNResearchPlanner);
+  const api=window.DNResearchPlanner,$=id=>document.getElementById(id),set=(id,value)=>{const e=$(id);e.value=value;e.dispatchEvent(new Event(e.type==='search'?'input':'change',{bubbles:true}));};
+  check('Initial progress is unknown and no research qualifies',api.getState().age===null&&!api.results().some(r=>r.status==='Ready'));
+  check('APC is the initial focus',$('research-focus').value==='APC');
+  set('research-age','11');set('research-university','6');set('research-library','11');
+  check('Age and building choices persist',api.getState().age===11&&api.getState().buildings.University===6);
+  check('Drone research is hidden at Atomic Age',!api.results().some(r=>r.entry.line==='Nikola Tesla'));
+  set('research-search','APC Hitpoints');
+  const sally=api.data.entries.find(e=>e.name==='APC Hitpoints'&&e.line==='Sally Ride');
+  const input=$(`completed-${sally.id}`);input.focus();input.value='0';input.dispatchEvent(new Event('change',{bubbles:true}));
+  check('Progress edit retains input identity and focus',$(input.id)===input&&document.activeElement===input);
+  check('Zero completion differs from unknown',api.getState().levels[sally.id]===0&&api.results().find(r=>r.entry.id===sally.id).status==='Prerequisites needed');
+  const row=input.closest('tr');row.querySelector('details').open=true;row.querySelector('[data-prerequisite]').click();
+  const dependency=sally.stages[0].requires[0].any[0],field=document.querySelector(`[data-progress="${dependency.id}"]`);
+  check('Prerequisite opens with its own completion editor',!!field&&!$('research-return').hidden);
+  field.value=String(dependency.level);field.dispatchEvent(new Event('change',{bubbles:true}));
+  $('research-return').click();
+  check('Back action hides after returning',getComputedStyle($('research-return')).display==='none');
+  check('Completed prerequisite makes Sally research ready',api.results().find(r=>r.entry.id===sally.id).status==='Ready');
+  const current=$(`completed-${sally.id}`);current.value='11';current.dispatchEvent(new Event('change',{bubbles:true}));
+  check('Invalid completion is rejected',current.getAttribute('aria-invalid')==='true'&&api.getState().levels[sally.id]===0);
+  current.value='0';current.dispatchEvent(new Event('change',{bubbles:true}));
+  set('research-search','');set('research-focus','all');
+  check('Disputed entries are excluded by default',!api.results().some(r=>r.entry.age_status==='conflicting_sources'));
+  $('research-disputed').click();
+  check('Disputed entries stay non-ready',api.results().filter(r=>r.entry.age_status==='conflicting_sources').every(r=>r.status!=='Ready'));
+  set('research-focus','APC');set('research-search','APC');
+  const scope=`dn-p:${DN.activeProfileId()}:dn-research-planner`;
+  check('Completion persists under current profile',JSON.parse(localStorage.getItem(scope)).levels[sally.id]===0);
+  const next=DN.addProfile('Research fixture');DN.setActiveProfile(next);
+  check('Other profile has no research progress',!localStorage.getItem(`dn-p:${next}:dn-research-planner`));
+  DN.setActiveProfile('main');
+  const fits=()=>document.documentElement.scrollWidth<=innerWidth+1&&[...document.querySelectorAll('.research-filters select')].every(select=>{
+    const canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');ctx.font=getComputedStyle(select).font;
+    return Math.max(...[...select.options].map(o=>ctx.measureText(o.textContent).width))+parseFloat(getComputedStyle(select).paddingLeft)+parseFloat(getComputedStyle(select).paddingRight)+2<=select.clientWidth+2;
+  });
+  check('Full select labels and local table overflow',fits());
+  document.documentElement.style.fontSize='200%';await new Promise(r=>requestAnimationFrame(r));
+  check('Full select labels at 200% text size',fits(),[...document.querySelectorAll('.research-filters select')].map(select=>{const ctx=document.createElement('canvas').getContext('2d');ctx.font=getComputedStyle(select).font;return {id:select.id,width:select.clientWidth,longest:Math.max(...[...select.options].map(o=>ctx.measureText(o.textContent).width)),padding:getComputedStyle(select).padding};}));
+  document.documentElement.style.fontSize='';
+  document.querySelector('.research-table').scrollLeft=0;window.scrollTo(0,0);
+  check('One main landmark',document.querySelectorAll('main').length===1);
+  return {passed:checks.every(c=>c.passed),ui:{checks},runs:[]};
+})()

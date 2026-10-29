@@ -94,6 +94,18 @@
           "examples": [
             "10th-mountain-division-war-kit-legendary"
           ]
+        },
+        "war:mythical": {
+          "count": 1,
+          "bases": [
+            13
+          ],
+          "maxima": [
+            22
+          ],
+          "examples": [
+            "10th-mountain-division-war-kit-mythical"
+          ]
         }
       }
     },
@@ -176,11 +188,21 @@
         "war:legendary": {
           "count": 1,
           "bases": [
-            1
+            2
           ],
           "maxima": [],
           "examples": [
             "norden-bombsight-legendary"
+          ]
+        },
+        "war:mythical": {
+          "count": 1,
+          "bases": [
+            1
+          ],
+          "maxima": [],
+          "examples": [
+            "norden-bombsight-mythical"
           ]
         }
       }
@@ -255,6 +277,18 @@
             "11th-anniversary-cake-legendary",
             "alfred-jewel-legendary"
           ]
+        },
+        "war:mythical": {
+          "count": 1,
+          "bases": [
+            12
+          ],
+          "maxima": [
+            21
+          ],
+          "examples": [
+            "10th-mountain-division-war-kit-mythical"
+          ]
         }
       }
     },
@@ -279,10 +313,10 @@
         "war:legendary": {
           "count": 1,
           "bases": [
-            6
+            7
           ],
           "maxima": [
-            15
+            16
           ],
           "examples": [
             "elephant-archer-quiver-legendary"
@@ -387,11 +421,11 @@
         "war:legendary": {
           "count": 2,
           "bases": [
-            6,
+            7,
             8
           ],
           "maxima": [
-            15,
+            16,
             17
           ],
           "examples": [
@@ -449,11 +483,11 @@
         "war:legendary": {
           "count": 2,
           "bases": [
-            3,
+            4,
             6
           ],
           "maxima": [
-            12,
+            13,
             15
           ],
           "examples": [
@@ -525,11 +559,11 @@
           "count": 2,
           "bases": [
             7,
-            9
+            10
           ],
           "maxima": [
             16,
-            18
+            19
           ],
           "examples": [
             "capt-mcconnell-s-hero-ensemble-legendary",
@@ -604,14 +638,14 @@
           "bases": [
             3,
             6,
-            7,
-            9
+            8,
+            10
           ],
           "maxima": [
             12,
             15,
-            16,
-            18
+            17,
+            19
           ],
           "examples": [
             "gemini-8-gloves-legendary",
@@ -680,13 +714,13 @@
             3,
             7,
             8,
-            9
+            10
           ],
           "maxima": [
             12,
             16,
             17,
-            18
+            19
           ],
           "examples": [
             "analytical-engine-legendary",
@@ -755,10 +789,12 @@
         "war:legendary": {
           "count": 2,
           "bases": [
-            3
+            3,
+            4
           ],
           "maxima": [
-            12
+            12,
+            13
           ],
           "examples": [
             "maori-war-club-legendary",
@@ -837,15 +873,13 @@
         "war:legendary": {
           "count": 4,
           "bases": [
-            -11,
+            -12,
             -7,
-            -6,
             -3
           ],
           "maxima": [
-            -20,
+            -21,
             -16,
-            -15,
             -12
           ],
           "examples": [
@@ -855,14 +889,17 @@
           ]
         },
         "war:mythical": {
-          "count": 1,
+          "count": 2,
           "bases": [
-            -11
+            -11,
+            -9
           ],
           "maxima": [
-            -20
+            -20,
+            -18
           ],
           "examples": [
+            "demarcation-stone-mythical",
             "huey-armament-system-mythical"
           ]
         }
@@ -1288,11 +1325,11 @@
           "count": 4,
           "bases": [
             7,
-            9
+            10
           ],
           "maxima": [
             16,
-            18
+            19
           ],
           "examples": [
             "6th-anniversary-six-shooter-legendary",
@@ -1356,10 +1393,10 @@
         "war:legendary": {
           "count": 1,
           "bases": [
-            9
+            10
           ],
           "maxima": [
-            18
+            19
           ],
           "examples": [
             "huey-armament-system-legendary"
@@ -1428,11 +1465,13 @@
           "count": 3,
           "bases": [
             7,
-            8
+            8,
+            9
           ],
           "maxima": [
             16,
-            17
+            17,
+            18
           ],
           "examples": [
             "british-kettle-drum-legendary",
@@ -1510,11 +1549,11 @@
         "war:legendary": {
           "count": 2,
           "bases": [
-            6,
+            7,
             8
           ],
           "maxima": [
-            15,
+            16,
             17
           ],
           "examples": [
@@ -1589,10 +1628,10 @@
         "war:legendary": {
           "count": 1,
           "bases": [
-            3
+            4
           ],
           "maxima": [
-            12
+            13
           ],
           "examples": [
             "plane-gyro-gunsight-legendary"
@@ -1668,16 +1707,14 @@
         "war:legendary": {
           "count": 8,
           "bases": [
-            6,
             7,
-            8,
-            9
+            9,
+            10
           ],
           "maxima": [
-            15,
             16,
-            17,
-            18
+            18,
+            19
           ],
           "examples": [
             "6th-anniversary-six-shooter-legendary",
@@ -1732,10 +1769,10 @@
         "war:legendary": {
           "count": 2,
           "bases": [
-            6
+            7
           ],
           "maxima": [
-            15
+            16
           ],
           "examples": [
             "leonidas-bust-legendary",
@@ -1805,16 +1842,14 @@
         "war:legendary": {
           "count": 7,
           "bases": [
-            6,
             7,
-            8,
-            9
+            9,
+            10
           ],
           "maxima": [
-            15,
             16,
-            17,
-            18
+            18,
+            19
           ],
           "examples": [
             "battersea-shield-legendary",
@@ -1823,7 +1858,7 @@
           ]
         },
         "war:mythical": {
-          "count": 2,
+          "count": 3,
           "bases": [
             11,
             14
@@ -1834,6 +1869,7 @@
           ],
           "examples": [
             "joyeuse-sword-mythical",
+            "red-baron-s-engine-mythical",
             "supermarine-spitfire-engine-mythical"
           ]
         }
@@ -1877,18 +1913,16 @@
         "war:legendary": {
           "count": 7,
           "bases": [
-            3,
-            6,
+            4,
             7,
-            8,
-            9
+            9,
+            10
           ],
           "maxima": [
-            12,
-            15,
+            13,
             16,
-            17,
-            18
+            18,
+            19
           ],
           "examples": [
             "6th-anniversary-six-shooter-legendary",
@@ -1931,7 +1965,7 @@
         "war:legendary": {
           "count": 1,
           "bases": [
-            1
+            2
           ],
           "maxima": [],
           "examples": [
@@ -2067,13 +2101,25 @@
         "war:legendary": {
           "count": 1,
           "bases": [
-            8
+            9
           ],
           "maxima": [
-            17
+            18
           ],
           "examples": [
             "norden-bombsight-legendary"
+          ]
+        },
+        "war:mythical": {
+          "count": 1,
+          "bases": [
+            13
+          ],
+          "maxima": [
+            22
+          ],
+          "examples": [
+            "norden-bombsight-mythical"
           ]
         }
       }
@@ -2095,20 +2141,7 @@
           "source": null
         }
       },
-      "named_evidence": {
-        "war:legendary": {
-          "count": 1,
-          "bases": [
-            6
-          ],
-          "maxima": [
-            15
-          ],
-          "examples": [
-            "sophilos-dinos-legendary"
-          ]
-        }
-      }
+      "named_evidence": {}
     },
     "Commando Hitpoints": {
       "expected_sign": 1,
@@ -2127,20 +2160,7 @@
           "source": null
         }
       },
-      "named_evidence": {
-        "war:legendary": {
-          "count": 1,
-          "bases": [
-            8
-          ],
-          "maxima": [
-            17
-          ],
-          "examples": [
-            "sophilos-dinos-legendary"
-          ]
-        }
-      }
+      "named_evidence": {}
     },
     "Decoy Tactic Hitpoints": {
       "expected_sign": 1,
@@ -2177,11 +2197,11 @@
         "war:legendary": {
           "count": 2,
           "bases": [
-            6,
+            7,
             8
           ],
           "maxima": [
-            15,
+            16,
             17
           ],
           "examples": [
@@ -2242,11 +2262,11 @@
         "war:legendary": {
           "count": 2,
           "bases": [
-            6,
+            7,
             8
           ],
           "maxima": [
-            15,
+            16,
             17
           ],
           "examples": [
@@ -2327,11 +2347,13 @@
           "count": 5,
           "bases": [
             6,
-            7
+            7,
+            8
           ],
           "maxima": [
             15,
-            16
+            16,
+            17
           ],
           "examples": [
             "analytical-engine-legendary",
@@ -2389,10 +2411,10 @@
         "war:legendary": {
           "count": 1,
           "bases": [
-            3
+            4
           ],
           "maxima": [
-            12
+            13
           ],
           "examples": [
             "maori-war-club-legendary"
@@ -2475,14 +2497,12 @@
           "bases": [
             -10,
             -9,
-            -8,
-            -6
+            -7
           ],
           "maxima": [
             -19,
             -18,
-            -17,
-            -15
+            -16
           ],
           "examples": [
             "asdic-type-113x-legendary",
@@ -2491,16 +2511,21 @@
           ]
         },
         "war:mythical": {
-          "count": 2,
+          "count": 4,
           "bases": [
+            -14,
+            -13,
             -11
           ],
           "maxima": [
+            -23,
+            -22,
             -20
           ],
           "examples": [
+            "asdic-type-113x-mythical",
             "maori-war-club-mythical",
-            "ramesses-s-abu-simbel-mythical"
+            "norden-bombsight-mythical"
           ]
         }
       }
@@ -2538,6 +2563,18 @@
           ],
           "examples": [
             "liberty-bell-legendary"
+          ]
+        },
+        "war:mythical": {
+          "count": 1,
+          "bases": [
+            -11
+          ],
+          "maxima": [
+            -20
+          ],
+          "examples": [
+            "red-baron-s-engine-mythical"
           ]
         }
       }
@@ -2736,11 +2773,11 @@
         "war:legendary": {
           "count": 2,
           "bases": [
-            -8,
+            -9,
             -6
           ],
           "maxima": [
-            -17,
+            -18,
             -15
           ],
           "examples": [
@@ -2858,14 +2895,14 @@
         "war:legendary": {
           "count": 14,
           "bases": [
-            3,
+            4,
             6,
             7,
             8,
             10
           ],
           "maxima": [
-            12,
+            13,
             15,
             16,
             17,
@@ -2878,7 +2915,7 @@
           ]
         },
         "war:mythical": {
-          "count": 3,
+          "count": 5,
           "bases": [
             11,
             12
@@ -2888,9 +2925,9 @@
             21
           ],
           "examples": [
+            "10th-mountain-division-war-kit-mythical",
             "british-kettle-drum-mythical",
-            "gemini-8-gloves-mythical",
-            "the-white-death-s-war-kit-mythical"
+            "gemini-8-gloves-mythical"
           ]
         }
       }
@@ -2930,11 +2967,11 @@
         "war:legendary": {
           "count": 2,
           "bases": [
-            -7,
+            -8,
             -6
           ],
           "maxima": [
-            -16,
+            -17,
             -15
           ],
           "examples": [
@@ -2996,20 +3033,7 @@
           "source": null
         }
       },
-      "named_evidence": {
-        "war:mythical": {
-          "count": 1,
-          "bases": [
-            -12
-          ],
-          "maxima": [
-            -21
-          ],
-          "examples": [
-            "maori-war-club-mythical"
-          ]
-        }
-      }
+      "named_evidence": {}
     },
     "Enemy Redoubt Damage": {
       "expected_sign": -1,
@@ -3032,14 +3056,28 @@
         "war:legendary": {
           "count": 2,
           "bases": [
+            -7,
             -6
           ],
           "maxima": [
+            -16,
             -15
           ],
           "examples": [
             "10th-mountain-division-war-kit-legendary",
             "raven-rattle-legendary"
+          ]
+        },
+        "war:mythical": {
+          "count": 1,
+          "bases": [
+            -11
+          ],
+          "maxima": [
+            -20
+          ],
+          "examples": [
+            "10th-mountain-division-war-kit-mythical"
           ]
         }
       }
@@ -3208,13 +3246,11 @@
           "count": 3,
           "bases": [
             -9,
-            -7,
-            -6
+            -7
           ],
           "maxima": [
             -18,
-            -16,
-            -15
+            -16
           ],
           "examples": [
             "desert-storm-psn-8-manpack-legendary",
@@ -3312,11 +3348,11 @@
           "count": 3,
           "bases": [
             1,
-            6,
+            7,
             9
           ],
           "maxima": [
-            15,
+            16,
             18
           ],
           "examples": [
@@ -3477,14 +3513,16 @@
             6,
             7,
             8,
-            9
+            9,
+            10
           ],
           "maxima": [
             13,
             15,
             16,
             17,
-            18
+            18,
+            19
           ],
           "examples": [
             "arm-reliquary-of-charlemagne-legendary",
@@ -3493,7 +3531,7 @@
           ]
         },
         "war:mythical": {
-          "count": 3,
+          "count": 4,
           "bases": [
             11,
             14
@@ -3505,7 +3543,7 @@
           "examples": [
             "arm-reliquary-of-charlemagne-mythical",
             "da-vinci-s-flying-machine-mythical",
-            "supermarine-spitfire-engine-mythical"
+            "red-baron-s-engine-mythical"
           ]
         }
       }
@@ -3537,12 +3575,12 @@
         "war:legendary": {
           "count": 4,
           "bases": [
-            6,
-            7
+            7,
+            8
           ],
           "maxima": [
-            15,
-            16
+            16,
+            17
           ],
           "examples": [
             "da-vinci-s-flying-machine-legendary",
@@ -3875,11 +3913,11 @@
         "war:legendary": {
           "count": 2,
           "bases": [
-            3,
+            4,
             6
           ],
           "maxima": [
-            12,
+            13,
             15
           ],
           "examples": [
@@ -3961,13 +3999,15 @@
             4,
             6,
             7,
-            9
+            8,
+            10
           ],
           "maxima": [
             13,
             15,
             16,
-            18
+            17,
+            19
           ],
           "examples": [
             "arm-reliquary-of-charlemagne-legendary",
@@ -4107,14 +4147,14 @@
         "war:legendary": {
           "count": 3,
           "bases": [
-            6,
             7,
-            9
+            8,
+            10
           ],
           "maxima": [
-            15,
             16,
-            18
+            17,
+            19
           ],
           "examples": [
             "capt-mcconnell-s-hero-ensemble-legendary",
@@ -4356,17 +4396,19 @@
           ]
         },
         "war:legendary": {
-          "count": 3,
+          "count": 4,
           "bases": [
-            6
+            6,
+            7
           ],
           "maxima": [
-            15
+            15,
+            16
           ],
           "examples": [
             "caligula-s-ring-legendary",
             "flamma-s-helmet-legendary",
-            "welrod-mkii-legendary"
+            "sophilos-dinos-legendary"
           ]
         },
         "war:mythical": {
@@ -4416,16 +4458,16 @@
           ]
         },
         "war:legendary": {
-          "count": 4,
+          "count": 5,
           "bases": [
             6,
             7,
-            8
+            9
           ],
           "maxima": [
             15,
             16,
-            17
+            18
           ],
           "examples": [
             "creighton-abrams-tank-commander-kit-legendary",
@@ -4534,10 +4576,12 @@
         "war:legendary": {
           "count": 3,
           "bases": [
-            6
+            6,
+            7
           ],
           "maxima": [
-            15
+            15,
+            16
           ],
           "examples": [
             "elephant-archer-quiver-legendary",
@@ -4545,7 +4589,7 @@
           ]
         },
         "war:mythical": {
-          "count": 2,
+          "count": 3,
           "bases": [
             11
           ],
@@ -4553,7 +4597,8 @@
             20
           ],
           "examples": [
-            "elephant-archer-quiver-mythical"
+            "elephant-archer-quiver-mythical",
+            "tizona-sword-mythical"
           ]
         }
       }
@@ -4610,11 +4655,11 @@
           "count": 3,
           "bases": [
             3,
-            9
+            10
           ],
           "maxima": [
             12,
-            18
+            19
           ],
           "examples": [
             "general-pershing-s-bas-relief-legendary",
@@ -4623,15 +4668,18 @@
           ]
         },
         "war:mythical": {
-          "count": 1,
+          "count": 2,
           "bases": [
+            6,
             9
           ],
           "maxima": [
+            15,
             18
           ],
           "examples": [
-            "general-pershing-s-bas-relief-mythical"
+            "general-pershing-s-bas-relief-mythical",
+            "tizona-sword-mythical"
           ]
         }
       }
@@ -4751,6 +4799,18 @@
           "examples": [
             "alfred-jewel-legendary",
             "demarcation-stone-legendary"
+          ]
+        },
+        "war:mythical": {
+          "count": 1,
+          "bases": [
+            9
+          ],
+          "maxima": [
+            18
+          ],
+          "examples": [
+            "demarcation-stone-mythical"
           ]
         }
       }
@@ -4938,15 +4998,13 @@
           "count": 10,
           "bases": [
             4,
-            6,
             7,
-            9
+            10
           ],
           "maxima": [
             13,
-            15,
             16,
-            18
+            19
           ],
           "examples": [
             "creighton-abrams-tank-commander-kit-legendary",
@@ -4955,7 +5013,7 @@
           ]
         },
         "war:mythical": {
-          "count": 7,
+          "count": 8,
           "bases": [
             11,
             14
@@ -5025,14 +5083,12 @@
         "war:legendary": {
           "count": 4,
           "bases": [
-            6,
             7,
-            9
+            10
           ],
           "maxima": [
-            15,
             16,
-            18
+            19
           ],
           "examples": [
             "da-vinci-s-flying-machine-legendary",
@@ -5079,12 +5135,12 @@
         "war:legendary": {
           "count": 3,
           "bases": [
-            6,
+            7,
             9,
             11
           ],
           "maxima": [
-            15,
+            16,
             18,
             20
           ],
@@ -5155,12 +5211,12 @@
         "war:legendary": {
           "count": 2,
           "bases": [
-            -9,
-            -6
+            -10,
+            -7
           ],
           "maxima": [
-            -18,
-            -15
+            -19,
+            -16
           ],
           "examples": [
             "asdic-type-113x-legendary",
@@ -5168,14 +5224,17 @@
           ]
         },
         "war:mythical": {
-          "count": 1,
+          "count": 2,
           "bases": [
+            -14,
             -11
           ],
           "maxima": [
+            -23,
             -20
           ],
           "examples": [
+            "asdic-type-113x-mythical",
             "elephant-archer-quiver-mythical"
           ]
         }
@@ -5389,10 +5448,10 @@
         "war:legendary": {
           "count": 2,
           "bases": [
-            -9
+            -10
           ],
           "maxima": [
-            -18
+            -19
           ],
           "examples": [
             "asdic-type-113x-legendary",
@@ -5400,14 +5459,17 @@
           ]
         },
         "war:mythical": {
-          "count": 1,
+          "count": 2,
           "bases": [
+            -14,
             -11
           ],
           "maxima": [
+            -23,
             -20
           ],
           "examples": [
+            "asdic-type-113x-mythical",
             "t-34-tank-engine-mythical"
           ]
         }
@@ -5484,9 +5546,11 @@
         "war:legendary": {
           "count": 2,
           "bases": [
+            -8,
             -7
           ],
           "maxima": [
+            -17,
             -16
           ],
           "examples": [
@@ -5563,11 +5627,13 @@
           "count": 6,
           "bases": [
             -11,
+            -9,
             -8,
             -6
           ],
           "maxima": [
             -20,
+            -18,
             -17,
             -15
           ],
@@ -5634,10 +5700,12 @@
         "war:legendary": {
           "count": 4,
           "bases": [
+            -9,
             -7,
             -6
           ],
           "maxima": [
+            -18,
             -16,
             -15
           ],
@@ -5682,14 +5750,14 @@
         "war:legendary": {
           "count": 5,
           "bases": [
+            -10,
             -9,
-            -8,
             -4,
             -3
           ],
           "maxima": [
+            -19,
             -18,
-            -17,
             -13,
             -12
           ],
@@ -5697,6 +5765,18 @@
             "asdic-type-113x-legendary",
             "crocodile-mask-legendary",
             "da-vinci-s-machine-gun-legendary"
+          ]
+        },
+        "war:mythical": {
+          "count": 1,
+          "bases": [
+            -14
+          ],
+          "maxima": [
+            -23
+          ],
+          "examples": [
+            "asdic-type-113x-mythical"
           ]
         }
       }
@@ -5722,11 +5802,11 @@
         "war:legendary": {
           "count": 2,
           "bases": [
-            -6,
+            -7,
             -4
           ],
           "maxima": [
-            -15,
+            -16,
             -13
           ],
           "examples": [
@@ -5772,30 +5852,35 @@
           ]
         },
         "war:legendary": {
-          "count": 4,
+          "count": 3,
           "bases": [
-            -8,
+            -9,
+            -7,
             -6
           ],
           "maxima": [
-            -17,
+            -18,
+            -16,
             -15
           ],
           "examples": [
             "narmer-palette-legendary",
             "norden-bombsight-legendary",
-            "red-baron-s-engine-legendary"
+            "vz-9-avrocar-legendary"
           ]
         },
         "war:mythical": {
-          "count": 1,
+          "count": 3,
           "bases": [
-            -14
+            -14,
+            -13
           ],
           "maxima": [
-            -23
+            -23,
+            -22
           ],
           "examples": [
+            "norden-bombsight-mythical",
             "vz-9-avrocar-mythical"
           ]
         }
@@ -5822,26 +5907,32 @@
       },
       "named_evidence": {
         "war:legendary": {
-          "count": 1,
+          "count": 2,
           "bases": [
+            -7,
             -6
           ],
           "maxima": [
+            -16,
             -15
           ],
           "examples": [
+            "red-baron-s-engine-legendary",
             "vz-9-avrocar-legendary"
           ]
         },
         "war:mythical": {
-          "count": 1,
+          "count": 2,
           "bases": [
-            -14
+            -14,
+            -11
           ],
           "maxima": [
-            -23
+            -23,
+            -20
           ],
           "examples": [
+            "red-baron-s-engine-mythical",
             "vz-9-avrocar-mythical"
           ]
         }
@@ -5941,12 +6032,12 @@
         "war:legendary": {
           "count": 2,
           "bases": [
-            -9,
-            -8
+            -10,
+            -9
           ],
           "maxima": [
-            -18,
-            -17
+            -19,
+            -18
           ],
           "examples": [
             "julius-caesar-statue-legendary",
@@ -6016,11 +6107,13 @@
         "war:legendary": {
           "count": 4,
           "bases": [
+            -10,
             -9,
             -8,
             -4
           ],
           "maxima": [
+            -19,
             -18,
             -17,
             -13
@@ -6032,7 +6125,7 @@
           ]
         },
         "war:mythical": {
-          "count": 1,
+          "count": 2,
           "bases": [
             -14
           ],
@@ -6040,6 +6133,7 @@
             -23
           ],
           "examples": [
+            "asdic-type-113x-mythical",
             "the-art-of-war-mythical"
           ]
         }
@@ -6086,10 +6180,10 @@
         "war:legendary": {
           "count": 1,
           "bases": [
-            -9
+            -10
           ],
           "maxima": [
-            -18
+            -19
           ],
           "examples": [
             "ramesses-s-abu-simbel-legendary"
@@ -6273,13 +6367,11 @@
           "count": 3,
           "bases": [
             -8,
-            -7,
-            -6
+            -7
           ],
           "maxima": [
             -17,
-            -16,
-            -15
+            -16
           ],
           "examples": [
             "arm-reliquary-of-charlemagne-legendary",
@@ -6426,6 +6518,18 @@
           "examples": [
             "demarcation-stone-legendary"
           ]
+        },
+        "war:mythical": {
+          "count": 1,
+          "bases": [
+            -9
+          ],
+          "maxima": [
+            -18
+          ],
+          "examples": [
+            "demarcation-stone-mythical"
+          ]
         }
       }
     },
@@ -6532,10 +6636,10 @@
         "war:legendary": {
           "count": 1,
           "bases": [
-            -9
+            -10
           ],
           "maxima": [
-            -18
+            -19
           ],
           "examples": [
             "6th-anniversary-six-shooter-legendary"
@@ -6703,16 +6807,28 @@
         "war:legendary": {
           "count": 2,
           "bases": [
-            -8,
-            -7
+            -9,
+            -8
           ],
           "maxima": [
-            -17,
-            -16
+            -18,
+            -17
           ],
           "examples": [
             "battersea-shield-legendary",
             "maori-war-club-legendary"
+          ]
+        },
+        "war:mythical": {
+          "count": 1,
+          "bases": [
+            -10
+          ],
+          "maxima": [
+            -19
+          ],
+          "examples": [
+            "maori-war-club-mythical"
           ]
         }
       }
@@ -7224,18 +7340,36 @@
             6,
             7,
             8,
-            9
+            9,
+            10
           ],
           "maxima": [
             15,
             16,
             17,
-            18
+            18,
+            19
           ],
           "examples": [
             "10th-mountain-division-war-kit-legendary",
             "11th-anniversary-cake-legendary",
             "cryolophosaurus-skull-legendary"
+          ]
+        },
+        "war:mythical": {
+          "count": 3,
+          "bases": [
+            11,
+            13
+          ],
+          "maxima": [
+            20,
+            22
+          ],
+          "examples": [
+            "10th-mountain-division-war-kit-mythical",
+            "norden-bombsight-mythical",
+            "red-baron-s-engine-mythical"
           ]
         }
       }
@@ -7261,10 +7395,12 @@
         "war:legendary": {
           "count": 2,
           "bases": [
-            7
+            7,
+            8
           ],
           "maxima": [
-            16
+            16,
+            17
           ],
           "examples": [
             "da-vinci-s-machine-gun-legendary",
@@ -7294,7 +7430,7 @@
         "war:legendary": {
           "count": 1,
           "bases": [
-            1
+            2
           ],
           "maxima": [],
           "examples": [
@@ -7358,17 +7494,31 @@
         "war:legendary": {
           "count": 4,
           "bases": [
-            7,
-            9
+            8,
+            9,
+            10
           ],
           "maxima": [
-            16,
-            18
+            17,
+            18,
+            19
           ],
           "examples": [
             "asdic-type-113x-legendary",
             "asm-135-anti-satellite-missile-legendary",
             "nine-men-s-morris-legendary"
+          ]
+        },
+        "war:mythical": {
+          "count": 1,
+          "bases": [
+            14
+          ],
+          "maxima": [
+            23
+          ],
+          "examples": [
+            "asdic-type-113x-mythical"
           ]
         }
       }
@@ -7418,15 +7568,27 @@
         "war:legendary": {
           "count": 3,
           "bases": [
-            7
+            8
           ],
           "maxima": [
-            16
+            17
           ],
           "examples": [
             "asm-135-anti-satellite-missile-legendary",
             "battersea-shield-legendary",
             "flamma-s-helmet-legendary"
+          ]
+        },
+        "war:mythical": {
+          "count": 1,
+          "bases": [
+            11
+          ],
+          "maxima": [
+            20
+          ],
+          "examples": [
+            "demarcation-stone-mythical"
           ]
         }
       }
@@ -7719,10 +7881,10 @@
         "war:legendary": {
           "count": 1,
           "bases": [
-            8
+            9
           ],
           "maxima": [
-            17
+            18
           ],
           "examples": [
             "capt-mcconnell-s-hero-ensemble-legendary"
@@ -7763,13 +7925,11 @@
         "war:legendary": {
           "count": 3,
           "bases": [
-            6,
-            8,
+            7,
             9
           ],
           "maxima": [
-            15,
-            17,
+            16,
             18
           ],
           "examples": [
@@ -7833,13 +7993,13 @@
         "war:legendary": {
           "count": 3,
           "bases": [
-            6,
             7,
+            8,
             9
           ],
           "maxima": [
-            15,
             16,
+            17,
             18
           ],
           "examples": [
@@ -7915,14 +8075,14 @@
           "count": 5,
           "bases": [
             3,
-            6,
-            9,
+            7,
+            10,
             11
           ],
           "maxima": [
             12,
-            15,
-            18,
+            16,
+            19,
             20
           ],
           "examples": [
@@ -8189,6 +8349,18 @@
             "demarcation-stone-legendary",
             "liberty-bell-legendary"
           ]
+        },
+        "war:mythical": {
+          "count": 1,
+          "bases": [
+            9
+          ],
+          "maxima": [
+            18
+          ],
+          "examples": [
+            "demarcation-stone-mythical"
+          ]
         }
       }
     },
@@ -8281,15 +8453,17 @@
           "count": 6,
           "bases": [
             3,
+            4,
             6,
             7,
-            8
+            9
           ],
           "maxima": [
             12,
+            13,
             15,
             16,
-            17
+            18
           ],
           "examples": [
             "british-kettle-drum-legendary",
@@ -8298,21 +8472,23 @@
           ]
         },
         "war:mythical": {
-          "count": 4,
+          "count": 7,
           "bases": [
             9,
             11,
+            13,
             14
           ],
           "maxima": [
             18,
             20,
+            22,
             23
           ],
           "examples": [
+            "10th-mountain-division-war-kit-mythical",
             "british-kettle-drum-mythical",
-            "caligula-s-ring-mythical",
-            "general-pershing-s-bas-relief-mythical"
+            "caligula-s-ring-mythical"
           ]
         }
       }
@@ -8357,6 +8533,18 @@
             "tizona-sword-legendary",
             "vespa-150-tap-legendary"
           ]
+        },
+        "war:mythical": {
+          "count": 1,
+          "bases": [
+            6
+          ],
+          "maxima": [
+            15
+          ],
+          "examples": [
+            "tizona-sword-mythical"
+          ]
         }
       }
     },
@@ -8377,20 +8565,7 @@
           "source": null
         }
       },
-      "named_evidence": {
-        "war:legendary": {
-          "count": 1,
-          "bases": [
-            3
-          ],
-          "maxima": [
-            12
-          ],
-          "examples": [
-            "plane-gyro-gunsight-legendary"
-          ]
-        }
-      }
+      "named_evidence": {}
     },
     "Recon Scan Duration": {
       "expected_sign": 1,
@@ -8420,6 +8595,18 @@
           ],
           "examples": [
             "minoan-bull-leaper-legendary"
+          ]
+        },
+        "war:legendary": {
+          "count": 1,
+          "bases": [
+            4
+          ],
+          "maxima": [
+            13
+          ],
+          "examples": [
+            "plane-gyro-gunsight-legendary"
           ]
         }
       }
@@ -8646,18 +8833,30 @@
           "count": 3,
           "bases": [
             3,
-            9,
+            10,
             11
           ],
           "maxima": [
             12,
-            18,
+            19,
             20
           ],
           "examples": [
             "demarcation-stone-legendary",
             "koh-i-noor-diamond-legendary",
             "napoleon-s-boxlock-pistol-legendary"
+          ]
+        },
+        "war:mythical": {
+          "count": 1,
+          "bases": [
+            9
+          ],
+          "maxima": [
+            18
+          ],
+          "examples": [
+            "demarcation-stone-mythical"
           ]
         }
       }
@@ -8918,10 +9117,10 @@
         "war:mythical": {
           "count": 1,
           "bases": [
-            -12
+            -11
           ],
           "maxima": [
-            -21
+            -20
           ],
           "examples": [
             "arm-reliquary-of-charlemagne-mythical"
@@ -9141,20 +9340,7 @@
           "source": null
         }
       },
-      "named_evidence": {
-        "war:legendary": {
-          "count": 1,
-          "bases": [
-            9
-          ],
-          "maxima": [
-            18
-          ],
-          "examples": [
-            "sophilos-dinos-legendary"
-          ]
-        }
-      }
+      "named_evidence": {}
     },
     "Wall Miner Hitpoints": {
       "expected_sign": null,
@@ -9197,18 +9383,21 @@
       },
       "named_evidence": {
         "war:legendary": {
-          "count": 2,
+          "count": 3,
           "bases": [
-            6,
+            7,
+            10,
             11
           ],
           "maxima": [
-            15,
+            16,
+            19,
             20
           ],
           "examples": [
             "caligula-s-ring-legendary",
-            "mahiole-legendary"
+            "mahiole-legendary",
+            "sophilos-dinos-legendary"
           ]
         },
         "war:mythical": {

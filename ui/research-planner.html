@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<script src="navigation.js?v=20261026-research"></script><title>Research Planner</title>
+<link rel="stylesheet" href="styles.css?v=20261025-slate"><link rel="stylesheet" href="research-planner.css?v=1">
+<script src="design-ui.js?v=20261025-slate" defer></script></head>
+<body class="page-research-planner"><nav class="site-nav" aria-label="Pages">
+<div class="site-nav-section"><h2 class="site-nav-label">Artifacts</h2><a href="artifacts.html">Artifact Rankings</a><a href="collection.html">Crafted Collection</a><a href="totals.html">Active Totals</a><a href="scanner.html?v=2">Crafting Scanner</a><a href="crafting-stats.html">Crafting Stats</a><a href="storage-scanner.html?v=2">Storage Scanner</a></div>
+<div class="site-nav-section"><h2 class="site-nav-label">Council</h2><a href="council.html">Council Rankings</a><a href="council-collection.html">Collection</a></div>
+<div class="site-nav-section"><h2 class="site-nav-label">Settings</h2><a href="config.html">Profiles</a><a href="ratings.html">Collection Targets</a></div></nav>
+<div class="app-main"><header class="top app-header"><div class="top-inner"><h1>DomiNations Artifacts</h1></div><div class="header-controls" aria-label="Profile"><div id="header-profile" class="header-profile"></div></div></header>
+<main class="research-planner" id="research-planner"><h1>Research Planner</h1>
+<div class="research-filters" aria-label="Research filters">
+<label class="filter-control"><span class="ui-field-label">Focus</span><select id="research-focus"><option value="APC">APC</option></select></label>
+<label class="filter-control"><span class="ui-field-label">Age</span><select id="research-age"><option value="">Choose age</option></select></label>
+<label class="filter-control"><span class="ui-field-label">University level</span><select id="research-university"><option value="">Unknown</option></select></label>
+<label class="filter-control"><span class="ui-field-label">Library level</span><select id="research-library"><option value="">Unknown</option></select></label>
+<label class="filter-control"><span class="ui-field-label">Building</span><select id="research-building"><option value="">Both</option><option>University</option><option>Library</option></select></label>
+<label class="filter-control"><span class="ui-field-label">Benefit</span><select id="research-relation"><option value="">All benefits</option></select></label>
+<label class="filter-control"><span class="ui-field-label">Status</span><select id="research-status"><option value="">All statuses</option><option>Ready</option><option>Progress needed</option><option>Prerequisites needed</option><option>Building level needed</option><option>Building upgrade needed</option><option>Check building level</option><option>Check conditions</option><option>Later age</option><option>Age disputed</option><option>Complete</option></select></label>
+<label class="filter-control"><span class="ui-field-label">Search</span><input id="research-search" type="search" autocomplete="off"></label>
+</div>
+<div class="research-options"><label><input id="research-future" type="checkbox"> Later ages</label><label><input id="research-finished" type="checkbox"> Completed</label><label><input id="research-disputed" type="checkbox"> Disputed ages</label><button id="research-export" type="button" class="btn btn-small">Export progress</button></div>
+<div class="research-counts"><span id="research-count" role="status">Loading research…</span><span id="research-save" role="status">Local progress</span></div>
+<p id="research-error" role="alert" hidden></p>
+<div class="table-wrap research-table" tabindex="0" role="region" aria-label="Research results"><table>
+<thead><tr><th scope="col">Research</th><th scope="col">Benefit</th><th scope="col">From age</th><th scope="col">Status</th><th scope="col">Completed level</th></tr></thead>
+<tbody id="research-rows"></tbody></table></div>
+<div class="research-footer"><span id="research-reference">Reference data</span><span>9 disputed age requirements</span></div>
+</main></div>
+<script src="data/army_catalog.js?v=8"></script><script src="shared.js?v=20261026-research"></script><script src="profiles-ui.js?v=20261026-research"></script>
+<script src="research-planner-core.js?v=1"></script><script src="research-planner-ui.js?v=1"></script>
+</body></html>

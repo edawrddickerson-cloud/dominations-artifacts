@@ -1,5 +1,15 @@
 # Discrepancies
 
+## Profile 4: 100-token War Legendaries — October 27, 2026
+
+[Seven-item review](profile4-war-legendary-100-review-2026-10-27.md), with [35-row evidence](profile4-war-legendary-100-review-2026-10-27.json): two cataloged items remain unscanned (Great Imperial Crown and The White Death's War Kit). **All four base conflicts resolved:** the user confirmed the 7-to-1 and 8-to-5 readings across 10th Mountain Division War Kit, Gemini 8 Helmet and Vespa 150 TAP are OCR errors and the database values are correct. All 35 base values are resolved; original scan evidence is preserved and canonical values are unchanged. Vespa's +1% Factory Troop Damage still has an unverified derived +10% maximum in the scan, versus a blank canonical maximum. Normandy's shortened title resolves to its existing Legendary entry. Images remain deferred.
+
+## Profile 4 review — October 27, 2026
+
+**300-token coverage complete:** after the five additional captures, the [39-item recheck](profile4-war-legendary-completion-2026-10-27.md) and [195-row evidence](profile4-war-legendary-completion-2026-10-27.json) show zero differences against the reconciled catalog and no missing cataloged items. All 25 newly captured rows match; no further canonical changes were needed. Image import remains deferred until the user's later browser backup export.
+
+[300-token War Legendary reconciliation](profile4-war-legendary-review-2026-10-27.md), with [all 170 before/after stat comparisons](profile4-war-legendary-review-2026-10-27.json): 34 existing artifacts, 29 changed five-perk sets, no new editions. Reviewed level-1 scan text supersedes older values through the override manifest; percentage maxima use the existing +9 rule, while three +2 spawn effects retain unknown maxima. Five cataloged 300-token items are absent from Profile 4: Desert Storm PSN-8 Manpack, DomiNations Game Box, Liberty Bell, Olmec Colossal Heads and Welrod MkII. The user deferred artwork import until exporting a local backup after additional scans; cloud records omit images.
+
 ## Limited-time Mythical confirmations — October 27, 2026
 
 [Elephant Archer Quiver, Fengguan Phoenix Crown and Admiral Yi’s Helmet](limited-time-mythicals-2026-10-27.md): existing entries marked as user-confirmed limited-time releases. All 18 stat rows match after the user's clarification that Fengguan's All Defensive Towers Damage is +11%. No sign questions remain.

@@ -61,6 +61,42 @@ class ScanImagesTest(unittest.TestCase):
                 import_images(source, 'Profile 3', root)
             self.assertFalse((root / 'ui').exists())
 
+    def test_legendary_import_retains_verified_mythical_and_resolves_reviewed_title(self):
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            for directory in ('data/raw', 'ui/data', 'ui/assets/artifact-scans'):
+                (root / directory).mkdir(parents=True)
+            artifact_id = 'bust-of-ramesses-ii-legendary'
+            canonical = [{'artifact_id': artifact_id, 'name': 'Bust of Ramesses II', 'hall': 'War', 'grade': 'Legendary'}]
+            (root / 'data/artifacts.json').write_text(json.dumps(canonical))
+            old = b'\xff\xd8\xffexisting-mythical'
+            import hashlib
+            old_entry = {'url': 'assets/artifact-scans/previous-mythical.jpg', 'sha256': hashlib.sha256(old).hexdigest(), 'source_title': 'User-scanned War Mythical artwork', 'name': 'Previous'}
+            (root / 'ui' / old_entry['url']).write_bytes(old)
+            (root / 'data/raw/user_verified_artifact_images.json').write_text(json.dumps({'version': 1, 'images': {'previous-mythical': old_entry}}))
+            (root / 'data/raw/artifact_images.json').write_text(json.dumps({'images': {}}))
+            capture = b'\xff\xd8\xfflegendary-original-pixels'
+            item = {'id': 'scan-unlinked', 'name': 'Bust of Ramesses 11', 'hall': 'war', 'type': 'War Legendary', 'image': 'data:image/jpeg;base64,' + base64.b64encode(capture).decode()}
+            backup = {'kind': 'dominations-planner-backup', 'version': 1, 'settings': {'dn-profiles': json.dumps({'profiles': [{'id': 'p4', 'name': 'Profile 4'}, {'id': 'p3', 'name': 'Profile 3'}]})}, 'records': [
+                {'id': 'collection:p3', 'items': [{**item, 'image': 'invalid-other-profile'}]},
+                {'id': 'collection:p4', 'items': [item, {**item, 'type': 'War Mythical', 'image': 'invalid-other-edition'}]}]}
+            source = root / 'backup.json'
+            source.write_text(json.dumps(backup))
+            result = import_images(source, 'Profile 4', root, grade='Legendary')
+            self.assertEqual(set(result), {artifact_id})
+            self.assertEqual((root / 'ui' / result[artifact_id][0]['url']).read_bytes(), capture)
+            images = json.loads((root / 'data/raw/artifact_images.json').read_text())['images']
+            self.assertEqual(set(images), {'previous-mythical', artifact_id})
+            self.assertEqual((root / 'ui' / old_entry['url']).read_bytes(), old)
+            before = (root / 'data/raw/artifact_images.json').read_bytes()
+            import_images(source, 'Profile 4', root, grade='Legendary')
+            self.assertEqual(before, (root / 'data/raw/artifact_images.json').read_bytes())
+            backup['records'][1]['items'].append(item)
+            source.write_text(json.dumps(backup))
+            with self.assertRaisesRegex(ValueError, 'Multiple captures'):
+                import_images(source, 'Profile 4', root, grade='Legendary')
+            self.assertEqual(before, (root / 'data/raw/artifact_images.json').read_bytes())
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -68,6 +68,33 @@ The expanded picker checks also found and fixed a real probability interaction d
 
 ## Pre-existing failure and manual limits
 
+### Research Planner — 26 October 2026
+
+Added a browse route in the persistent Settings menu using shared Slate fields,
+buttons, native disclosures and tables. The existing compact native select
+variant now has dense insets in the shared owner; normal selects are unchanged.
+The gallery includes the planner's longest unit/age/status labels. Research
+composition retains local table overflow. Blank progress remains unknown and
+edits preserve the active numeric input. State is local to each profile/device.
+
+`node scripts/test_research_planner.cjs` passed APC/infantry matching, exclusion
+of defender and Airstrip-capacity false positives, age and actual-building gates,
+OR prerequisites, intervening chapters, completion and disputed-age checks.
+`node scripts/test_research_planner_ui.cjs --summary` passed at 1440, 1024, 768,
+390 and 320px, including full select labels at 200% text size. The narrow cases
+were rerun after reducing filter composition padding and shortening status labels.
+`node scripts/test_navigation_ui.js --summary` passed, including the new route.
+`node scripts/check_design_system.cjs` passed for 17 routes.
+`node scripts/test_design_ui.cjs --full` passed 512 checks with 90 screenshots,
+zero browser errors, and external requests blocked. Desktop and phone planner
+screenshots and the shared compact field gallery were visually inspected. A
+subsequent planner-only check caught and fixed the hidden Back button's display;
+desktop/phone interaction screenshots were rerun with a visibility assertion.
+
+Research values remain client/wiki references. Nine disputed topics are excluded
+from automatic availability. Native option popups, actual browser zoom and
+screen-reader behavior were not manually certified.
+
 Side-menu navigation follow-up: removed first-party page links and navigation buttons from page content, including collection/statistics/scanner shortcuts, linked council stat names, empty states and sharing notices. Privacy and Statistics Methods are reachable from Settings in the persistent side menu. Existing URL deep links, exports, external references and contacts remain supported. The ownership check, navigation, council ratings, collection comparison, statistics and sharing checks passed. The desktop/phone design run passed 186 checks and generated 30 screenshots with no browser errors; representative collection, statistics and privacy screenshots were visually reviewed. Navigation fixtures now use the side menu instead of the removed council stat link.
 
 Crafting Stats layout follow-up: Personal Stats, Community Stats and Probability Calculator now have separate views, using Collection Targets' framed tabs moved into the shared component owner. Community opens by default. The calculator has an independent Personal/Community data-source select and retains inputs across switches. `node scripts/check_design_system.cjs`, `node scripts/test_crafting_probability_ui.cjs` and `node scripts/test_crafting_stats_page.cjs` passed, including 30 statistics behavior checks and keyboard tab navigation. The calculator fixture checks dropdown text fit and Max-tier alignment at 1440, 1024, 768, 390 and 320px. `node scripts/test_design_ui.cjs --full` passed 397 checks with 75 screenshots; a 320px follow-up passed 81 checks. `node scripts/test_crafting_purposes_ui.js --summary` passed with zero external requests and browser errors. At 320px tabs and calculator requirement fields stack to retain full text. Desktop and narrow screenshots were visually reviewed. Remote services were blocked; live community data was not validated.
@@ -83,3 +110,20 @@ The existing diagnostics disclosure/list/shared buttons now include questionable
 The full `node scripts/test_crafting_scanner_contract.cjs` passed on the final source, including new evidence/title/spelling/numeric-retry suites, unchanged scoring examples and benchmark checks, desktop/390/320px ownership/recovery, glance/provisional colours, speculation/readiness and real War OCR/calibration/live/stability checks. Storage real title/header coverage passed 47 cases; desktop/390px layout, passive saving, catalogue artwork and linked-item browser checks passed. Backup, stored artifacts, inference, history/reconciliation, workspace privacy, feedback consent, site-build dependency hashing and service-loader checks passed. Browser fixtures used disposable local data and reported no external traffic or browser errors.
 
 Desktop and 320px scanner screenshots were visually reviewed in `data/temp/design-review/index.html`. Storage layout fixture maintenance replaces its removed navigation-link assertion with the current visible inventory-transfer button, and checks the existing optional-tier behavior separately from required unknown-field warnings. No product layout or protected crafting expectation was changed to satisfy a fixture. Summary: `reports/scanner-evidence-2026-10-29.json`; private logs remain under ignored `data/temp/ocr-review-2026-10-29/`. Catalogue coverage and live-game accuracy remain limited by independent captures; no deployment occurred.
+
+## Combined release validation - 30 October 2026
+
+The required crafting-scanner contract passed, including the protected 345/375
+examples and real War OCR/calibration/stability checks. Research-planner core
+and browser checks, stored-artifact/verified-data checks and the Python image
+import tests passed. The full design matrix passed 522 checks over five widths,
+with 90 screenshots; research at 320px, Collection at 390px and Profiles at
+1440px were visually reviewed. Shared Slate controls and local table overflow
+remain intact. This is not a manual screen-reader or full zoom conformance claim.
+
+The navigation guard now recognizes only the exact existing Privacy disclosure
+and community Sign in destinations recorded in `consumers.json`; unrelated
+content page links still fail. The gallery includes both actions. This reconciles
+the guard with the already documented Privacy placement, rather than accepting
+unexplained visual drift. The release-config fixture now loads the existing
+consent owner before telemetry, matching the real startup dependency.

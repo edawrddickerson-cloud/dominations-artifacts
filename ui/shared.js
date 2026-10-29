@@ -88,6 +88,7 @@
     "dn-artifact-perk-levels",
     "dn-artifact-perk-edits",
     "dn-artifact-collection-ui",
+    "dn-research-planner",
     "dn-army-presets",
     STRATEGIES_KEY,
     STRATEGY_MIGRATION_BACKUP_KEY,
@@ -1083,7 +1084,7 @@
    * @returns {{ base: number | null, max: number | null }}
    */
   function isCountPerk(name) {
-    return ['Mercenary Camp Deploys Spartans when Destroyed', 'APC Deploys Marines On Death'].includes(name);
+    return ['Mercenary Camp Deploys Spartans when Destroyed', 'APC Deploys Marines On Death', 'Castle spawns Sword Saints when Destroyed'].includes(name);
   }
   function formatPerkValue(name, value) {
     return Number.isFinite(value) ? (value > 0 ? '+' : '') + value + (isCountPerk(name) ? '' : '%') : BLANK;

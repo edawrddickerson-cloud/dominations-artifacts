@@ -86,7 +86,44 @@ inferred. Costs and times exclude account discounts and temporary events.
 Stable IDs distinguish repeated skill names; grid positions distinguish repeated
 branches within a leader. `source_target_links` are the supplement's partial
 effect links, not a complete or reviewed unit grouping. The requested grouping
-by APC and other goals is a separate next step.
+by APC and other goals is generated separately in `grouped.json`.
+
+## Focus planner
+
+`ui/research-planner.html` is registered in the persistent Settings menu.
+Choose a unit or goal, age and actual University/Library levels. Completion
+inputs record the number of completed levels/chapters per skill/book. Blank
+means unknown; entering zero explicitly records no completed levels.
+
+Direct bonuses, linked spawned-unit bonuses, general bonuses, upgrades and
+research support retain their separate match reason. APC expands Heavy Infantry
+through the established army catalogue. Defender bonuses do not become attacking
+infantry bonuses; Airstrip capacity does not become APC troop capacity. Library
+books show the next matching chapter and retain intervening chapter requirements.
+Conditional munitions, wonder and World War bonuses remain conditional. Unknown
+progress, unmet prerequisites, insufficient buildings, later ages, and disputed
+gates never qualify as Ready. A completed prerequisite is trusted as recorded;
+the planner does not mark its ancestors complete automatically.
+
+Progress is local to the selected profile and device under
+`dn-p:<profile>:dn-research-planner`. It is registered with profile deletion.
+Export progress downloads a JSON copy. This change adds no cloud synchronization.
+
+Mappings are explicit effect-text rules in `scripts/build_research_planner.py`,
+with canonical unit names and linked-unit relationships from `army_catalog.json`.
+They are planning classifications, not new claims about stacking or the scope of
+an undocumented game modifier. Unmatched effects stay available under All research.
+Conditional research needs the conditions in its effect/source checked in game.
+
+```powershell
+python scripts/build_research_planner.py
+node scripts/test_research_planner.cjs
+node scripts/test_research_planner_ui.cjs --summary
+```
+
+The builder writes `data/research/grouped.json`, the generated browser copy
+`ui/data/research_planner.json`, and `reports/research_grouping.md`. Run it after
+refreshing the base catalogue. It validates all prerequisite IDs and levels.
 
 ## Rebuild
 

@@ -62,7 +62,34 @@ At 200% text scaling, keep controls and actions usable without clipped text. At 
 
 Every content document has one `main` landmark (native or equivalent role), a meaningful title and labelled sections; the persistent shell owns navigation and its skip-to-content action. Keep heading levels meaningful within each document. Keyboard users can reach and operate every control, see focus without it being hidden by sticky regions, dismiss pickers with Escape, and return from dialogs to their invoker. Disabled/invalid/loading/unknown/selected states must remain distinguishable beyond colour alone. Manual screen-reader, browser-native select popup and full zoom checks remain required for a conformance claim.
 
+General page navigation stays in the side menu. Two existing action-specific
+content links remain: Privacy inside Data & privacy details, and Sign in beside
+community-sharing consent. The consumer registry limits each exception to its
+exact selector, destination and fragment. These are legal/account actions and
+do not authorize unrelated content shortcuts.
+
 ## Component contracts
+
+### Research Planner
+
+`research-planner.html` uses the browse recipe: labelled native filters, result
+count, shared table primitives and local horizontal table scrolling. Its page
+stylesheet owns composition only. Focus, age, actual building levels, benefit
+and status filters use full labels at every supported width and 200% text size.
+Completion inputs save per profile on this device; blank is unknown, zero is
+explicitly uncompleted. Immediate progress edits retain input identity/focus.
+Prerequisite buttons open the selected research within the same page and retain
+the original filters for Back to results. Conditional and disputed research
+cannot qualify as Ready. The persistent side menu owns the route.
+
+Native `select.ui-compact` uses the shared dense type and quarter-rem inset with
+a one-rem arrow gutter. Research filters use this existing compact field variant
+to preserve full option names on narrow screens at 200% text size. Normal selects
+retain their normal insets. The gallery includes both field densities.
+
+Validate with `node scripts/test_research_planner.cjs` and
+`node scripts/test_research_planner_ui.cjs --summary`; the latter accepts
+`--viewport=320x800` and `--screenshot`. The page is in the design viewport matrix.
 
 ### Full control labels — required
 

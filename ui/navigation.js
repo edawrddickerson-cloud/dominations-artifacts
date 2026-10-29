@@ -21,6 +21,7 @@
     "config.html",
     "privacy.html",
     "crafting-statistics.html",
+    "research-planner.html",
   ]);
   const file = location.pathname.split("/").pop() || "";
   // Follow the serving document's URL style. Local directory/file previews

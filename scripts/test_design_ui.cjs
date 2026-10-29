@@ -3,8 +3,9 @@ const fs = require('node:fs'), path = require('node:path'), os = require('node:o
 const {spawn} = require('node:child_process');
 const root = path.resolve(__dirname, '..');
 const out = path.join(root, 'data/temp/design-review');
-const routes = ['artifacts','collection','ratings','totals','scanner','storage-scanner','crafting-stats','council','council-collection','council-ratings','config','privacy','crafting-statistics'];
-const theme=JSON.parse(fs.readFileSync(path.join(root,'docs/design/consumers.json'),'utf8')).theme;
+const routes = ['artifacts','collection','ratings','totals','scanner','storage-scanner','crafting-stats','council','council-collection','council-ratings','config','privacy','crafting-statistics','research-planner'];
+const consumers=JSON.parse(fs.readFileSync(path.join(root,'docs/design/consumers.json'),'utf8'));
+const theme=consumers.theme;
 const viewport = process.argv.find(arg=>arg.startsWith('--viewport='))?.slice(11);
 if(viewport&&!/^\d{3,4}x\d{3,4}$/.test(viewport))throw Error('Invalid viewport');
 const sizes = viewport ? [viewport.split('x').map(Number)] : process.argv.includes('--full') ? [[1440,900],[1024,768],[768,1024],[390,844],[320,800]] : [[1440,900],[390,844]];
@@ -52,7 +53,8 @@ async function main(){
         await delay(250);
         const result=await evaluate(`(()=>{const d=${embedded?"document.getElementById('scanner-view').contentDocument":"document"},w=d.defaultView;const visible=e=>e.getClientRects().length&&w.getComputedStyle(e).visibility!=='hidden';const fields=[...d.querySelectorAll('select,input[type="search"],input[type="text"]')].filter(visible);return {main:d.querySelectorAll('main,[role="main"]').length,overflow:d.documentElement.scrollWidth>w.innerWidth+1,shellOverflow:document.documentElement.scrollWidth>innerWidth+1,fields:fields.map(e=>({id:e.id,height:e.getBoundingClientRect().height,bg:w.getComputedStyle(e).backgroundColor,radius:w.getComputedStyle(e).borderRadius,font:w.getComputedStyle(e).fontFamily})),tokens:w.getComputedStyle(d.documentElement).getPropertyValue('--control-height')};})()`);
         check(route+' '+width+' main landmark',result.main===1,result);
-        check(route+' '+width+' page navigation stays in side menu',await evaluate(`(()=>{const d=document.getElementById('scanner-view').contentDocument;return ![...d.querySelectorAll('a[href]')].some(a=>!a.closest('.site-nav')&&a.origin===location.origin&&a.pathname.endsWith('.html'));})()`));
+        const contentNavigation=await evaluate(`(()=>{const d=document.getElementById('scanner-view').contentDocument,exceptions=${JSON.stringify(consumers.contentLinkExceptions || [])};return [...d.querySelectorAll('a[href]')].filter(a=>!a.closest('.site-nav')&&a.origin===location.origin&&a.pathname.endsWith('.html')&&!exceptions.some(rule=>a.matches(rule.selector)&&a.pathname.endsWith('/'+rule.page)&&a.hash===rule.hash)).map(a=>a.getAttribute('href'));})()`);
+        check(route+' '+width+' page navigation stays in side menu',contentNavigation.length===0,contentNavigation);
         check(route+' '+width+' local overflow',!result.overflow&&!result.shellOverflow,result);
         check(route+' '+width+' shared tokens',result.tokens.trim()==='2.25rem');
         const palette=await evaluate(`(()=>{const d=${embedded?"document.getElementById('scanner-view').contentDocument":"document"},styles=d.defaultView.getComputedStyle(d.documentElement),shell=getComputedStyle(document.documentElement),names=${JSON.stringify(Object.keys(theme.tokens))};return {content:Object.fromEntries(names.map(name=>[name,styles.getPropertyValue('--'+name).trim()])),shell:Object.fromEntries(names.map(name=>[name,shell.getPropertyValue('--'+name).trim()]))};})()`);

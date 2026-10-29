@@ -1,0 +1,29 @@
+/* Research composition; fields, buttons and table primitives use shared owners. */
+.research-planner { padding:var(--space-4); min-width:0; }
+.research-planner h1 { margin:0 0 var(--space-4); font-size:var(--type-title); }
+.research-filters { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,16rem),1fr)); gap:var(--space-3); padding:var(--space-4); border:1px solid var(--line); background:var(--panel); }
+.research-filters label { display:flex; flex-direction:column; gap:var(--space-1); min-width:0; }
+.research-filters select,.research-filters input { width:100%; }
+.research-options,.research-counts,.research-footer { display:flex; flex-wrap:wrap; align-items:center; gap:var(--space-4); margin:var(--space-4) 0; }
+.research-options label { display:inline-flex; align-items:center; gap:var(--space-2); min-height:var(--control-height); }
+.research-options > [hidden] { display:none; }
+.research-counts,.research-footer { justify-content:space-between; color:var(--muted); font-size:var(--type-label); }
+.research-table { max-height:none; padding:0; }
+.research-table table { min-width:62rem; }
+.research-table td:nth-child(1) { width:27%; }
+.research-table td:nth-child(2) { width:32%; }
+.research-table td:nth-child(3) { width:13%; }
+.research-table td:nth-child(4) { width:14%; }
+.research-table td:nth-child(5) { width:14%; }
+.research-meta { color:var(--muted); font-size:var(--type-label); margin-top:var(--space-1); }
+.research-status-ready { color:var(--success); }
+.research-status-review { color:var(--warning); }
+.research-progress { display:flex; align-items:center; gap:var(--space-2); }
+.research-progress input { width:5.5rem; }
+.research-details { margin-top:var(--space-2); }
+.research-details ul { padding-left:var(--space-4); }
+.research-details li { margin-bottom:var(--space-2); }
+.research-details a { color:var(--accent); }
+.research-planner [role="alert"] { color:var(--danger); }
+@media(max-width:640px) { .research-planner { padding:var(--space-1); } .research-filters { padding:0; border:0; } }
+@media(max-width:360px) { .research-planner { padding:.125rem; } }

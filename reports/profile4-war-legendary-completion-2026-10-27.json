@@ -1,0 +1,4858 @@
+{
+  "version": 1,
+  "profile": "Profile 4",
+  "workspaceRevision": 330,
+  "sourceSha256": "6bae80578397cf029da4a7f939786f0ef49df8924d5c6f98bb739c013cc28edd",
+  "canonicalBeforeSha256": "ff6d75715f89c752dd8e844fed389cb34586ebb54d8fdf75926b5670a527c1dc",
+  "status": "review-only",
+  "cost": "300",
+  "evidence": "User-collected, reviewed saved scans; all 195 rows record level 1. Original stat-panel pixels and raw OCR are not retained here. No field-by-field independent pixel verification is claimed. Percentage maxima are derived by the existing Legendary +9 rule. Count-effect maxima remain unknown.",
+  "summary": {
+    "scannedItems": 39,
+    "scannedRows": 195,
+    "itemsWithDifferences": 0,
+    "differentRows": 0,
+    "newCanonicalEntries": 0,
+    "missingFromCollection": [],
+    "imagesInSource": 0,
+    "otherCostScansExcluded": 0
+  },
+  "items": [
+    {
+      "artifact_id": "arm-reliquary-of-charlemagne-legendary",
+      "name": "Arm Reliquary of Charlemagne",
+      "scannedName": "Arm Reliquary of Charlemagne",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Paratrooper Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Paratrooper Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Paratrooper Damage",
+            "value": 9,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Paratrooper Hitpoints",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Paratrooper Hitpoints",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Paratrooper Hitpoints",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Generals' Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Generals' Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Generals' Damage",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Fighter Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Fighter Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Fighter Damage",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Invading Heavy Tank Damage",
+            "base": "-7",
+            "max": "-16"
+          },
+          "accepted": {
+            "name": "Invading Heavy Tank Damage",
+            "base": "-7",
+            "max": "-16"
+          },
+          "observed": {
+            "name": "Invading Heavy Tank Damage",
+            "value": -7,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -16
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "asdic-type-113x-legendary",
+      "name": "ASDIC Type 113X",
+      "scannedName": "ASDIC Type 113X",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Invading Barracks Troop Damage",
+            "base": "-10",
+            "max": "-19"
+          },
+          "accepted": {
+            "name": "Invading Barracks Troop Damage",
+            "base": "-10",
+            "max": "-19"
+          },
+          "observed": {
+            "name": "Invading Barracks Troop Damage",
+            "value": -10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -19
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Invading Factory Troop Damage",
+            "base": "-10",
+            "max": "-19"
+          },
+          "accepted": {
+            "name": "Invading Factory Troop Damage",
+            "base": "-10",
+            "max": "-19"
+          },
+          "observed": {
+            "name": "Invading Factory Troop Damage",
+            "value": -10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -19
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Invading Airstrip Troop Damage",
+            "base": "-10",
+            "max": "-19"
+          },
+          "accepted": {
+            "name": "Invading Airstrip Troop Damage",
+            "base": "-10",
+            "max": "-19"
+          },
+          "observed": {
+            "name": "Invading Airstrip Troop Damage",
+            "value": -10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -19
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Defender Spawn Time",
+            "base": "-10",
+            "max": "-19"
+          },
+          "accepted": {
+            "name": "Defender Spawn Time",
+            "base": "-10",
+            "max": "-19"
+          },
+          "observed": {
+            "name": "Defender Spawn Time",
+            "value": -10,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -19
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Missile Silo Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Missile Silo Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Missile Silo Damage",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "asm-135-anti-satellite-missile-legendary",
+      "name": "ASM-135 Anti-Satellite Missile",
+      "scannedName": "ASM-135 Anti-Satellite Missile",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Missile Silo and Big Red Button Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Missile Silo and Big Red Button Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Missile Silo and Big Red Button Damage",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Missile Silo Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Missile Silo Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Missile Silo Damage",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Airstrip Troop Damage",
+            "base": "4",
+            "max": "13"
+          },
+          "accepted": {
+            "name": "Airstrip Troop Damage",
+            "base": "4",
+            "max": "13"
+          },
+          "observed": {
+            "name": "Airstrip Troop Damage",
+            "value": 4,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 13
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Air Defense Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Air Defense Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Air Defense Damage",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Defender Hitpoints",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Defender Hitpoints",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Defender Hitpoints",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "battersea-shield-legendary",
+      "name": "Battersea Shield",
+      "scannedName": "Battersea Shield",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Missile Silo and Big Red Button Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Missile Silo and Big Red Button Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Missile Silo and Big Red Button Damage",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Bomber Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Bomber Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Bomber Damage",
+            "value": 9,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Invading Recon Scan Duration",
+            "base": "-9",
+            "max": "-18"
+          },
+          "accepted": {
+            "name": "Invading Recon Scan Duration",
+            "base": "-9",
+            "max": "-18"
+          },
+          "observed": {
+            "name": "Invading Recon Scan Duration",
+            "value": -9,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -18
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Quick Victory Time",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Quick Victory Time",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Quick Victory Time",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Invading Factory Troop Hitpoints",
+            "base": "-7",
+            "max": "-16"
+          },
+          "accepted": {
+            "name": "Invading Factory Troop Hitpoints",
+            "base": "-7",
+            "max": "-16"
+          },
+          "observed": {
+            "name": "Invading Factory Troop Hitpoints",
+            "value": -7,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -16
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "bust-of-ramesses-ii-legendary",
+      "name": "Bust of Ramesses II",
+      "scannedName": "Bust of Ramesses 11",
+      "identityAlias": true,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Air Defense Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Air Defense Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Air Defense Damage",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Air Defense Hitpoints",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Air Defense Hitpoints",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Air Defense Hitpoints",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "All Defensive Towers Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "All Defensive Towers Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "All Defensive Towers Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Invading Generals' Hitpoints",
+            "base": "-8",
+            "max": "-17"
+          },
+          "accepted": {
+            "name": "Invading Generals' Hitpoints",
+            "base": "-8",
+            "max": "-17"
+          },
+          "observed": {
+            "name": "Invading Generals' Hitpoints",
+            "value": -8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -17
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Invading Bomber Damage",
+            "base": "-8",
+            "max": "-17"
+          },
+          "accepted": {
+            "name": "Invading Bomber Damage",
+            "base": "-8",
+            "max": "-17"
+          },
+          "observed": {
+            "name": "Invading Bomber Damage",
+            "value": -8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -17
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "caligula-s-ring-legendary",
+      "name": "Caligula's Ring",
+      "scannedName": "Caligula's Ring",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Paratrooper Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Paratrooper Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Paratrooper Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Paratrooper Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Paratrooper Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Paratrooper Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Guerrilla Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Guerrilla Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Guerrilla Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Ranged Siege Damage",
+            "base": "4",
+            "max": "13"
+          },
+          "accepted": {
+            "name": "Ranged Siege Damage",
+            "base": "4",
+            "max": "13"
+          },
+          "observed": {
+            "name": "Ranged Siege Damage",
+            "value": 4,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 13
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Wall Sapper Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Wall Sapper Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Wall Sapper Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "capt-mcconnell-s-hero-ensemble-legendary",
+      "name": "Capt. McConnell's Hero Ensemble",
+      "scannedName": "Capt. McConnell's Hero Ensemble",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Generals' Hitpoints & Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Generals' Hitpoints & Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Generals' Hitpoints & Damage",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Oil Looted",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Oil Looted",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Oil Looted",
+            "value": 9,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Fighter Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Fighter Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Fighter Damage",
+            "value": 9,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Fighter Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Fighter Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Fighter Damage",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Airstrip Troop Hitpoints",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Airstrip Troop Hitpoints",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Airstrip Troop Hitpoints",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "creighton-abrams-tank-commander-kit-legendary",
+      "name": "Creighton Abrams Tank Commander Kit",
+      "scannedName": "Creighton Abrams Tank Commander Kit",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "First Aid Duration",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "First Aid Duration",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "First Aid Duration",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Heavy Tank Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Heavy Tank Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Heavy Tank Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Decoy Tactic Hitpoints",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Decoy Tactic Hitpoints",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Decoy Tactic Hitpoints",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Guerrilla Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Guerrilla Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Guerrilla Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Enemy Defender Spawn Time",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "crescent-blade-legendary",
+      "name": "Crescent Blade",
+      "scannedName": "Crescent Blade",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Defender Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Defender Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Defender Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Enemy Defender Spawn Time",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Air Defense Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Air Defense Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Air Defense Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Generals' Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Generals' Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Generals' Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Heavy Tank Damage",
+            "base": "4",
+            "max": "13"
+          },
+          "accepted": {
+            "name": "Heavy Tank Damage",
+            "base": "4",
+            "max": "13"
+          },
+          "observed": {
+            "name": "Heavy Tank Damage",
+            "value": 4,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 13
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "crocodile-mask-legendary",
+      "name": "Crocodile Mask",
+      "scannedName": "Crocodile Mask",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Generals' Damage",
+            "base": "4",
+            "max": "13"
+          },
+          "accepted": {
+            "name": "Generals' Damage",
+            "base": "4",
+            "max": "13"
+          },
+          "observed": {
+            "name": "Generals' Damage",
+            "value": 4,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 13
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Defender Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Defender Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Defender Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Invading Factory Troop Damage",
+            "base": "-4",
+            "max": "-13"
+          },
+          "accepted": {
+            "name": "Invading Factory Troop Damage",
+            "base": "-4",
+            "max": "-13"
+          },
+          "observed": {
+            "name": "Invading Factory Troop Damage",
+            "value": -4,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -13
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Invading Factory Troop Hitpoints",
+            "base": "-4",
+            "max": "-13"
+          },
+          "accepted": {
+            "name": "Invading Factory Troop Hitpoints",
+            "base": "-4",
+            "max": "-13"
+          },
+          "observed": {
+            "name": "Invading Factory Troop Hitpoints",
+            "value": -4,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -13
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Invading Generals' Hitpoints",
+            "base": "-4",
+            "max": "-13"
+          },
+          "accepted": {
+            "name": "Invading Generals' Hitpoints",
+            "base": "-4",
+            "max": "-13"
+          },
+          "observed": {
+            "name": "Invading Generals' Hitpoints",
+            "value": -4,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -13
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "cryolophosaurus-skull-legendary",
+      "name": "Cryolophosaurus Skull",
+      "scannedName": "Cryolophosaurus Skull",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Fighter Damage",
+            "base": "4",
+            "max": "13"
+          },
+          "accepted": {
+            "name": "Fighter Damage",
+            "base": "4",
+            "max": "13"
+          },
+          "observed": {
+            "name": "Fighter Damage",
+            "value": 4,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 13
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Bomber Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Bomber Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Bomber Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Redoubt Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Redoubt Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Redoubt Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Bazooka Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Bazooka Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Bazooka Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Machine Gun Infantry Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Machine Gun Infantry Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Machine Gun Infantry Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "da-vinci-s-flying-machine-legendary",
+      "name": "Da Vinci's Flying Machine",
+      "scannedName": "Da Vinci's Flying Machine",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Fighter Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Fighter Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Fighter Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Fighter Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Fighter Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Fighter Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Fighter Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Fighter Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Fighter Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Heavy Tank Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Heavy Tank Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Heavy Tank Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Heavy Tank Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Heavy Tank Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Heavy Tank Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "da-vinci-s-machine-gun-legendary",
+      "name": "Da Vinci's Machine Gun",
+      "scannedName": "Da Vinci's Machine Gun",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Machine Gun Infantry Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Machine Gun Infantry Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Machine Gun Infantry Damage",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Machine Gun Infantry Hitpoints",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Machine Gun Infantry Hitpoints",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Machine Gun Infantry Hitpoints",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Invading Factory Troop Damage",
+            "base": "-9",
+            "max": "-18"
+          },
+          "accepted": {
+            "name": "Invading Factory Troop Damage",
+            "base": "-9",
+            "max": "-18"
+          },
+          "observed": {
+            "name": "Invading Factory Troop Damage",
+            "value": -9,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -18
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Ranged Siege Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Ranged Siege Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Ranged Siege Damage",
+            "value": 9,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Enemy Catapult Hitpoints",
+            "base": "-9",
+            "max": "-18"
+          },
+          "accepted": {
+            "name": "Enemy Catapult Hitpoints",
+            "base": "-9",
+            "max": "-18"
+          },
+          "observed": {
+            "name": "Enemy Catapult Hitpoints",
+            "value": -9,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -18
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "elephant-archer-quiver-legendary",
+      "name": "Elephant Archer Quiver",
+      "scannedName": "Elephant Archer Quiver",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Invading Airstrip Troop Damage",
+            "base": "-7",
+            "max": "-16"
+          },
+          "accepted": {
+            "name": "Invading Airstrip Troop Damage",
+            "base": "-7",
+            "max": "-16"
+          },
+          "observed": {
+            "name": "Invading Airstrip Troop Damage",
+            "value": -7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -16
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Invading Bomber Hitpoints",
+            "base": "-7",
+            "max": "-16"
+          },
+          "accepted": {
+            "name": "Invading Bomber Hitpoints",
+            "base": "-7",
+            "max": "-16"
+          },
+          "observed": {
+            "name": "Invading Bomber Hitpoints",
+            "value": -7,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -16
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Heavy Cavalry Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Heavy Cavalry Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Heavy Cavalry Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Heavy Cavalry Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Heavy Cavalry Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Heavy Cavalry Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Air Defense Attack Speed",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Air Defense Attack Speed",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Air Defense Attack Speed",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "flamma-s-helmet-legendary",
+      "name": "Flamma's Helmet",
+      "scannedName": "Flamma's Helmet",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Guerrilla Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Guerrilla Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Guerrilla Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Guerrilla Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Guerrilla Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Guerrilla Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "4",
+            "max": "13"
+          },
+          "accepted": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "4",
+            "max": "13"
+          },
+          "observed": {
+            "name": "Enemy Defender Spawn Time",
+            "value": 4,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 13
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Increase Rally Duration",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Increase Rally Duration",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Increase Rally Duration",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Missile Silo and Big Red Button Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Missile Silo and Big Red Button Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Missile Silo and Big Red Button Damage",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "gemini-8-gloves-legendary",
+      "name": "Gemini 8 Gloves",
+      "scannedName": "Gemini 8 Gloves",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Defender Hitpoints",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Defender Hitpoints",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Defender Hitpoints",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Enemy Defender Spawn Time",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "All Defensive Towers Hitpoints",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "All Defensive Towers Hitpoints",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "All Defensive Towers Hitpoints",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "All Defensive Towers Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "All Defensive Towers Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "All Defensive Towers Damage",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Enemy Missile Silo Damage",
+            "base": "-8",
+            "max": "-17"
+          },
+          "accepted": {
+            "name": "Enemy Missile Silo Damage",
+            "base": "-8",
+            "max": "-17"
+          },
+          "observed": {
+            "name": "Enemy Missile Silo Damage",
+            "value": -8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -17
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "huey-armament-system-legendary",
+      "name": "Huey Armament System",
+      "scannedName": "Huey Armament System",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Attack Helicopter Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Attack Helicopter Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Attack Helicopter Damage",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Attack Helicopter Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Attack Helicopter Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Attack Helicopter Damage",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Attack Helicopter Hitpoints",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Attack Helicopter Hitpoints",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Attack Helicopter Hitpoints",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Bazooka Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Bazooka Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Bazooka Damage",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "All Enemy Defensive Towers Damage",
+            "base": "-7",
+            "max": "-16"
+          },
+          "accepted": {
+            "name": "All Enemy Defensive Towers Damage",
+            "base": "-7",
+            "max": "-16"
+          },
+          "observed": {
+            "name": "All Enemy Defensive Towers Damage",
+            "value": -7,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -16
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "joyeuse-sword-legendary",
+      "name": "Joyeuse Sword",
+      "scannedName": "Joyeuse Sword",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Factory Troop Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Factory Troop Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Factory Troop Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Heavy Tank Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Heavy Tank Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Heavy Tank Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Bomber Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Bomber Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Bomber Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Generals' Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Generals' Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Generals' Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Defender Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Defender Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Defender Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "julius-caesar-statue-legendary",
+      "name": "Julius Caesar Statue",
+      "scannedName": "Julius Caesar Statue",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Invading Generals' Damage",
+            "base": "-9",
+            "max": "-18"
+          },
+          "accepted": {
+            "name": "Invading Generals' Damage",
+            "base": "-9",
+            "max": "-18"
+          },
+          "observed": {
+            "name": "Invading Generals' Damage",
+            "value": -9,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -18
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Invading Generals' Hitpoints",
+            "base": "-9",
+            "max": "-18"
+          },
+          "accepted": {
+            "name": "Invading Generals' Hitpoints",
+            "base": "-9",
+            "max": "-18"
+          },
+          "observed": {
+            "name": "Invading Generals' Hitpoints",
+            "value": -9,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -18
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Generals' Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Generals' Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Generals' Damage",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Barracks Troop Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Barracks Troop Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Barracks Troop Damage",
+            "value": 9,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Invading Barracks Troop Damage",
+            "base": "-10",
+            "max": "-19"
+          },
+          "accepted": {
+            "name": "Invading Barracks Troop Damage",
+            "base": "-10",
+            "max": "-19"
+          },
+          "observed": {
+            "name": "Invading Barracks Troop Damage",
+            "value": -10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -19
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "leonidas-bust-legendary",
+      "name": "Leonidas Bust",
+      "scannedName": "Leonidas Bust",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Mercenary Camp Deploys Spartans when Destroyed",
+            "base": "2",
+            "max": ""
+          },
+          "accepted": {
+            "name": "Mercenary Camp Deploys Spartans when Destroyed",
+            "base": "2",
+            "max": ""
+          },
+          "observed": {
+            "name": "Mercenary Camp Deploys Spartans when Destroyed",
+            "value": 2,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "fixed-count",
+            "max": 2
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Quick Victory Time",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Quick Victory Time",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Quick Victory Time",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Generals' Hitpoints & Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Generals' Hitpoints & Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Generals' Hitpoints & Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Bazooka Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Bazooka Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Bazooka Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Bazooka Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Bazooka Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Bazooka Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "maori-war-club-legendary",
+      "name": "Maori War Club",
+      "scannedName": "Maori War Club",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "All Defensive Towers Hitpoints & Damage",
+            "base": "4",
+            "max": "13"
+          },
+          "accepted": {
+            "name": "All Defensive Towers Hitpoints & Damage",
+            "base": "4",
+            "max": "13"
+          },
+          "observed": {
+            "name": "All Defensive Towers Hitpoints & Damage",
+            "value": 4,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 13
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Defender Spawn Time",
+            "base": "-7",
+            "max": "-16"
+          },
+          "accepted": {
+            "name": "Defender Spawn Time",
+            "base": "-7",
+            "max": "-16"
+          },
+          "observed": {
+            "name": "Defender Spawn Time",
+            "value": -7,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -16
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Defender Movement Speed",
+            "base": "4",
+            "max": "13"
+          },
+          "accepted": {
+            "name": "Defender Movement Speed",
+            "base": "4",
+            "max": "13"
+          },
+          "observed": {
+            "name": "Defender Movement Speed",
+            "value": 4,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 13
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Invading Recon Scan Duration",
+            "base": "-8",
+            "max": "-17"
+          },
+          "accepted": {
+            "name": "Invading Recon Scan Duration",
+            "base": "-8",
+            "max": "-17"
+          },
+          "observed": {
+            "name": "Invading Recon Scan Duration",
+            "value": -8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -17
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Generals' Attack Speed",
+            "base": "4",
+            "max": "13"
+          },
+          "accepted": {
+            "name": "Generals' Attack Speed",
+            "base": "4",
+            "max": "13"
+          },
+          "observed": {
+            "name": "Generals' Attack Speed",
+            "value": 4,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 13
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "napoleon-s-boxlock-pistol-legendary",
+      "name": "Napoleon's Boxlock Pistol",
+      "scannedName": "Napoleon's Boxlock Pistol",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Supply Vehicle Healing",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Supply Vehicle Healing",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Supply Vehicle Healing",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Generals' Hitpoints",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Generals' Hitpoints",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Generals' Hitpoints",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Heavy Cavalry Hitpoints",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Heavy Cavalry Hitpoints",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Heavy Cavalry Hitpoints",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Barracks Troop Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Barracks Troop Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Barracks Troop Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Fighter Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Fighter Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Fighter Damage",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "narmer-palette-legendary",
+      "name": "Narmer Palette",
+      "scannedName": "Narmer Palette",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Invading Fighter Damage",
+            "base": "-7",
+            "max": "-16"
+          },
+          "accepted": {
+            "name": "Invading Fighter Damage",
+            "base": "-7",
+            "max": "-16"
+          },
+          "observed": {
+            "name": "Invading Fighter Damage",
+            "value": -7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -16
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Air Defense Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Air Defense Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Air Defense Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Bomber Hitpoints",
+            "base": "4",
+            "max": "13"
+          },
+          "accepted": {
+            "name": "Bomber Hitpoints",
+            "base": "4",
+            "max": "13"
+          },
+          "observed": {
+            "name": "Bomber Hitpoints",
+            "value": 4,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 13
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Fighter Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Fighter Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Fighter Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Bazooka Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Bazooka Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Bazooka Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "norden-bombsight-legendary",
+      "name": "Norden Bombsight",
+      "scannedName": "Norden Bombsight",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "APC Deploys Marines On Death",
+            "base": "2",
+            "max": ""
+          },
+          "accepted": {
+            "name": "APC Deploys Marines On Death",
+            "base": "2",
+            "max": ""
+          },
+          "observed": {
+            "name": "APC Deploys Marines On Death",
+            "value": 2,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "fixed-count",
+            "max": 2
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Coalition Troop Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Coalition Troop Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Coalition Troop Damage",
+            "value": 9,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Defender Spawn Time",
+            "base": "-9",
+            "max": "-18"
+          },
+          "accepted": {
+            "name": "Defender Spawn Time",
+            "base": "-9",
+            "max": "-18"
+          },
+          "observed": {
+            "name": "Defender Spawn Time",
+            "value": -9,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -18
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Invading Fighter Damage",
+            "base": "-9",
+            "max": "-18"
+          },
+          "accepted": {
+            "name": "Invading Fighter Damage",
+            "base": "-9",
+            "max": "-18"
+          },
+          "observed": {
+            "name": "Invading Fighter Damage",
+            "value": -9,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -18
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Machine Gun Infantry Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Machine Gun Infantry Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Machine Gun Infantry Damage",
+            "value": 9,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "plane-gyro-gunsight-legendary",
+      "name": "Plane Gyro Gunsight",
+      "scannedName": "Plane Gyro Gunsight",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Bomber Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Bomber Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Bomber Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Bomber Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Bomber Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Bomber Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Recon Scan Duration",
+            "base": "4",
+            "max": "13"
+          },
+          "accepted": {
+            "name": "Recon Scan Duration",
+            "base": "4",
+            "max": "13"
+          },
+          "observed": {
+            "name": "Recon Scan Duration",
+            "value": 4,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 13
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Bazooka Attack Speed",
+            "base": "4",
+            "max": "13"
+          },
+          "accepted": {
+            "name": "Bazooka Attack Speed",
+            "base": "4",
+            "max": "13"
+          },
+          "observed": {
+            "name": "Bazooka Attack Speed",
+            "value": 4,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 13
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Quick Victory Time",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Quick Victory Time",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Quick Victory Time",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "ramesses-s-abu-simbel-legendary",
+      "name": "Ramesses Ⅱ's Abu Simbel",
+      "scannedName": "Ramesses Ⅱ's Abu Simbel",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "All Defensive Towers Hitpoints",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "All Defensive Towers Hitpoints",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "All Defensive Towers Hitpoints",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Defender Spawn Time",
+            "base": "-10",
+            "max": "-19"
+          },
+          "accepted": {
+            "name": "Defender Spawn Time",
+            "base": "-10",
+            "max": "-19"
+          },
+          "observed": {
+            "name": "Defender Spawn Time",
+            "value": -10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -19
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Invading Bazooka Damage",
+            "base": "-8",
+            "max": "-17"
+          },
+          "accepted": {
+            "name": "Invading Bazooka Damage",
+            "base": "-8",
+            "max": "-17"
+          },
+          "observed": {
+            "name": "Invading Bazooka Damage",
+            "value": -8,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -17
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Invading Guerrilla Damage",
+            "base": "-10",
+            "max": "-19"
+          },
+          "accepted": {
+            "name": "Invading Guerrilla Damage",
+            "base": "-10",
+            "max": "-19"
+          },
+          "observed": {
+            "name": "Invading Guerrilla Damage",
+            "value": -10,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -19
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "All Defensive Towers Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "All Defensive Towers Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "All Defensive Towers Damage",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "raven-rattle-legendary",
+      "name": "Raven Rattle",
+      "scannedName": "Raven Rattle",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Fighter Hitpoints",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Fighter Hitpoints",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Fighter Hitpoints",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Fighter Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Fighter Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Fighter Damage",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Enemy Redoubt Damage",
+            "base": "-7",
+            "max": "-16"
+          },
+          "accepted": {
+            "name": "Enemy Redoubt Damage",
+            "base": "-7",
+            "max": "-16"
+          },
+          "observed": {
+            "name": "Enemy Redoubt Damage",
+            "value": -7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -16
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Enemy Tower Damage",
+            "base": "-7",
+            "max": "-16"
+          },
+          "accepted": {
+            "name": "Enemy Tower Damage",
+            "base": "-7",
+            "max": "-16"
+          },
+          "observed": {
+            "name": "Enemy Tower Damage",
+            "value": -7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -16
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "All Enemy Defensive Towers Damage",
+            "base": "-12",
+            "max": "-21"
+          },
+          "accepted": {
+            "name": "All Enemy Defensive Towers Damage",
+            "base": "-12",
+            "max": "-21"
+          },
+          "observed": {
+            "name": "All Enemy Defensive Towers Damage",
+            "value": -12,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -21
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "red-baron-s-engine-legendary",
+      "name": "Red Baron's Engine",
+      "scannedName": "Red Baron's Engine",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Fighter Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Fighter Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Fighter Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Bomber Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Bomber Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Bomber Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Heavy Tank Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Heavy Tank Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Heavy Tank Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Machine Gun Infantry Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Machine Gun Infantry Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Machine Gun Infantry Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Invading Fighter Hitpoints",
+            "base": "-7",
+            "max": "-16"
+          },
+          "accepted": {
+            "name": "Invading Fighter Hitpoints",
+            "base": "-7",
+            "max": "-16"
+          },
+          "observed": {
+            "name": "Invading Fighter Hitpoints",
+            "value": -7,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -16
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "rq-2-pioneer-legendary",
+      "name": "RQ-2 Pioneer",
+      "scannedName": "RQ-2 Pioneer",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Invading Bomber Damage",
+            "base": "-9",
+            "max": "-18"
+          },
+          "accepted": {
+            "name": "Invading Bomber Damage",
+            "base": "-9",
+            "max": "-18"
+          },
+          "observed": {
+            "name": "Invading Bomber Damage",
+            "value": -9,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "manual",
+            "max": -18
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Invading Bomber Damage",
+            "base": "-9",
+            "max": "-18"
+          },
+          "accepted": {
+            "name": "Invading Bomber Damage",
+            "base": "-9",
+            "max": "-18"
+          },
+          "observed": {
+            "name": "Invading Bomber Damage",
+            "value": -9,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "manual",
+            "max": -18
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Invading Bomber Hitpoints",
+            "base": "-9",
+            "max": "-18"
+          },
+          "accepted": {
+            "name": "Invading Bomber Hitpoints",
+            "base": "-9",
+            "max": "-18"
+          },
+          "observed": {
+            "name": "Invading Bomber Hitpoints",
+            "value": -9,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "manual",
+            "max": -18
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Air Defense Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Air Defense Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Air Defense Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "manual",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Air Defense Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Air Defense Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Air Defense Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "manual",
+            "max": 16
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "sanada-yukimura-s-armor-legendary",
+      "name": "Sanada Yukimura's Armor",
+      "scannedName": "Sanada Yukimura's Armor",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Castle spawns Sword Saints when Destroyed",
+            "base": "2",
+            "max": ""
+          },
+          "accepted": {
+            "name": "Castle spawns Sword Saints when Destroyed",
+            "base": "2",
+            "max": ""
+          },
+          "observed": {
+            "name": "Castle spawns Sword Saints when Destroyed",
+            "value": 2,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 11
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Generals' Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Generals' Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Generals' Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Bazooka Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Bazooka Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Bazooka Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Fighter Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Fighter Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Fighter Damage",
+            "value": 9,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Guerrilla Hitpoints",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Guerrilla Hitpoints",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Guerrilla Hitpoints",
+            "value": 9,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "6th-anniversary-six-shooter-legendary",
+      "name": "6th Anniversary Six-Shooter",
+      "scannedName": "6th Anniversary Six-Shooter",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Bazooka Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Bazooka Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Bazooka Damage",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Bazooka Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Bazooka Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Bazooka Damage",
+            "value": 9,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Bomber Hitpoints",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Bomber Hitpoints",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Bomber Hitpoints",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Attack Helicopter Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Attack Helicopter Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Attack Helicopter Damage",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Invading Paratrooper Damage",
+            "base": "-10",
+            "max": "-19"
+          },
+          "accepted": {
+            "name": "Invading Paratrooper Damage",
+            "base": "-10",
+            "max": "-19"
+          },
+          "observed": {
+            "name": "Invading Paratrooper Damage",
+            "value": -10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -19
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "sophilos-dinos-legendary",
+      "name": "Sophilos Dinos",
+      "scannedName": "Sophilos Dinos",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Wall Sapper Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Wall Sapper Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Wall Sapper Damage",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Guerrilla Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Guerrilla Damage",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Guerrilla Damage",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Guerrilla Hitpoints",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Guerrilla Hitpoints",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Guerrilla Hitpoints",
+            "value": 9,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Decoy Tactic Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Decoy Tactic Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Decoy Tactic Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Enemy Defender Spawn Time",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "supermarine-spitfire-engine-legendary",
+      "name": "Supermarine Spitfire Engine",
+      "scannedName": "Supermarine Spitfire Engine",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Bomber Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Bomber Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Bomber Damage",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Bomber Hitpoints",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Bomber Hitpoints",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Bomber Hitpoints",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Bomber Hitpoints",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Bomber Hitpoints",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Bomber Hitpoints",
+            "value": 9,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Heavy Tank Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Heavy Tank Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Heavy Tank Damage",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Fighter Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Fighter Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Fighter Damage",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "the-art-of-war-legendary",
+      "name": "The Art of War",
+      "scannedName": "The Art of War",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Heavy Tank Hitpoints",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Heavy Tank Hitpoints",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Heavy Tank Hitpoints",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Heavy Tank Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Heavy Tank Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Heavy Tank Damage",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Invading Generals' Hitpoints",
+            "base": "-10",
+            "max": "-19"
+          },
+          "accepted": {
+            "name": "Invading Generals' Hitpoints",
+            "base": "-10",
+            "max": "-19"
+          },
+          "observed": {
+            "name": "Invading Generals' Hitpoints",
+            "value": -10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -19
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Invading Generals' Damage",
+            "base": "-10",
+            "max": "-19"
+          },
+          "accepted": {
+            "name": "Invading Generals' Damage",
+            "base": "-10",
+            "max": "-19"
+          },
+          "observed": {
+            "name": "Invading Generals' Damage",
+            "value": -10,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -19
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Generals' Hitpoints & Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "accepted": {
+            "name": "Generals' Hitpoints & Damage",
+            "base": "10",
+            "max": "19"
+          },
+          "observed": {
+            "name": "Generals' Hitpoints & Damage",
+            "value": 10,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 19
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "desert-storm-psn-8-manpack-legendary",
+      "name": "Desert Storm PSN-8 Manpack",
+      "scannedName": "Desert Storm PSN-8 Manpack",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Rally Cooldown",
+            "base": "-11",
+            "max": "-20"
+          },
+          "accepted": {
+            "name": "Rally Cooldown",
+            "base": "-11",
+            "max": "-20"
+          },
+          "observed": {
+            "name": "Rally Cooldown",
+            "value": -11,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -20
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Increase Rally Duration",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Increase Rally Duration",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Increase Rally Duration",
+            "value": 9,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Factory Troop Hitpoints",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Factory Troop Hitpoints",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Factory Troop Hitpoints",
+            "value": 9,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Factory Troop Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "accepted": {
+            "name": "Factory Troop Damage",
+            "base": "9",
+            "max": "18"
+          },
+          "observed": {
+            "name": "Factory Troop Damage",
+            "value": 9,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 18
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Enemy Tower Damage",
+            "base": "-9",
+            "max": "-18"
+          },
+          "accepted": {
+            "name": "Enemy Tower Damage",
+            "base": "-9",
+            "max": "-18"
+          },
+          "observed": {
+            "name": "Enemy Tower Damage",
+            "value": -9,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -18
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "dominations-game-box-legendary",
+      "name": "DomiNations Game Box",
+      "scannedName": "DomiNations Game Box",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Generals' Hitpoints",
+            "base": "6",
+            "max": "15"
+          },
+          "accepted": {
+            "name": "Generals' Hitpoints",
+            "base": "6",
+            "max": "15"
+          },
+          "observed": {
+            "name": "Generals' Hitpoints",
+            "value": 6,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 15
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Generals' Attack Speed",
+            "base": "6",
+            "max": "15"
+          },
+          "accepted": {
+            "name": "Generals' Attack Speed",
+            "base": "6",
+            "max": "15"
+          },
+          "observed": {
+            "name": "Generals' Attack Speed",
+            "value": 6,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 15
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "6",
+            "max": "15"
+          },
+          "accepted": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "6",
+            "max": "15"
+          },
+          "observed": {
+            "name": "Enemy Defender Spawn Time",
+            "value": 6,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 15
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Generals' Damage",
+            "base": "6",
+            "max": "15"
+          },
+          "accepted": {
+            "name": "Generals' Damage",
+            "base": "6",
+            "max": "15"
+          },
+          "observed": {
+            "name": "Generals' Damage",
+            "value": 6,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 15
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Generals' Movement Speed",
+            "base": "6",
+            "max": "15"
+          },
+          "accepted": {
+            "name": "Generals' Movement Speed",
+            "base": "6",
+            "max": "15"
+          },
+          "observed": {
+            "name": "Generals' Movement Speed",
+            "value": 6,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 15
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "liberty-bell-legendary",
+      "name": "Liberty Bell",
+      "scannedName": "Liberty Bell",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Ranged Infantry Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Ranged Infantry Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Ranged Infantry Damage",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Ranged Infantry Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Ranged Infantry Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Ranged Infantry Damage",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Airstrip Troop Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "accepted": {
+            "name": "Airstrip Troop Hitpoints",
+            "base": "7",
+            "max": "16"
+          },
+          "observed": {
+            "name": "Airstrip Troop Hitpoints",
+            "value": 7,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 16
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Enemy Air Defense Damage",
+            "base": "-11",
+            "max": "-20"
+          },
+          "accepted": {
+            "name": "Enemy Air Defense Damage",
+            "base": "-11",
+            "max": "-20"
+          },
+          "observed": {
+            "name": "Enemy Air Defense Damage",
+            "value": -11,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -20
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "All Enemy Defensive Towers Damage",
+            "base": "-7",
+            "max": "-16"
+          },
+          "accepted": {
+            "name": "All Enemy Defensive Towers Damage",
+            "base": "-7",
+            "max": "-16"
+          },
+          "observed": {
+            "name": "All Enemy Defensive Towers Damage",
+            "value": -7,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -16
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "olmec-colossal-heads-legendary",
+      "name": "Olmec Colossal Heads",
+      "scannedName": "Olmec Colossal Heads",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "Rally Cooldown",
+            "base": "-11",
+            "max": "-20"
+          },
+          "accepted": {
+            "name": "Rally Cooldown",
+            "base": "-11",
+            "max": "-20"
+          },
+          "observed": {
+            "name": "Rally Cooldown",
+            "value": -11,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -20
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Increase Rally Duration",
+            "base": "11",
+            "max": "20"
+          },
+          "accepted": {
+            "name": "Increase Rally Duration",
+            "base": "11",
+            "max": "20"
+          },
+          "observed": {
+            "name": "Increase Rally Duration",
+            "value": 11,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 20
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "6",
+            "max": "15"
+          },
+          "accepted": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "6",
+            "max": "15"
+          },
+          "observed": {
+            "name": "Enemy Defender Spawn Time",
+            "value": 6,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 15
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Fighter Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Fighter Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Fighter Damage",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Fighter Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Fighter Damage",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Fighter Damage",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        }
+      ]
+    },
+    {
+      "artifact_id": "welrod-mkii-legendary",
+      "name": "Welrod MkII",
+      "scannedName": "Welrod MkII",
+      "identityAlias": false,
+      "hasImageInSource": false,
+      "perks": [
+        {
+          "slot": 1,
+          "before": {
+            "name": "All Enemy Defensive Towers Hitpoints",
+            "base": "-8",
+            "max": "-17"
+          },
+          "accepted": {
+            "name": "All Enemy Defensive Towers Hitpoints",
+            "base": "-8",
+            "max": "-17"
+          },
+          "observed": {
+            "name": "All Enemy Defensive Towers Hitpoints",
+            "value": -8,
+            "level": 1,
+            "levelSource": "manual",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": -17
+          },
+          "different": false
+        },
+        {
+          "slot": 2,
+          "before": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "8",
+            "max": "17"
+          },
+          "accepted": {
+            "name": "Enemy Defender Spawn Time",
+            "base": "8",
+            "max": "17"
+          },
+          "observed": {
+            "name": "Enemy Defender Spawn Time",
+            "value": 8,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 17
+          },
+          "different": false
+        },
+        {
+          "slot": 3,
+          "before": {
+            "name": "Guerrilla Damage",
+            "base": "6",
+            "max": "15"
+          },
+          "accepted": {
+            "name": "Guerrilla Damage",
+            "base": "6",
+            "max": "15"
+          },
+          "observed": {
+            "name": "Guerrilla Damage",
+            "value": 6,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 15
+          },
+          "different": false
+        },
+        {
+          "slot": 4,
+          "before": {
+            "name": "Guerrilla Hitpoints",
+            "base": "6",
+            "max": "15"
+          },
+          "accepted": {
+            "name": "Guerrilla Hitpoints",
+            "base": "6",
+            "max": "15"
+          },
+          "observed": {
+            "name": "Guerrilla Hitpoints",
+            "value": 6,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 15
+          },
+          "different": false
+        },
+        {
+          "slot": 5,
+          "before": {
+            "name": "Airstrip Troop Damage",
+            "base": "6",
+            "max": "15"
+          },
+          "accepted": {
+            "name": "Airstrip Troop Damage",
+            "base": "6",
+            "max": "15"
+          },
+          "observed": {
+            "name": "Airstrip Troop Damage",
+            "value": 6,
+            "level": 1,
+            "levelSource": "ocr",
+            "valueSource": null,
+            "rangeSource": "inferred-level",
+            "max": 15
+          },
+          "different": false
+        }
+      ]
+    }
+  ]
+}

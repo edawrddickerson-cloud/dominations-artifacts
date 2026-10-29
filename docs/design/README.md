@@ -14,11 +14,11 @@ The ownership guard validates the registered palette, shared asset version and a
 
 See [migration verification](verification.md) for fresh results, the known pre-existing storage assertion and remaining manual checks.
 
-All 16 first-party routes are classified in `consumers.json`. All styled documents load shared tokens and primitives through `ui/styles.css`. Every active content page loads `ui/design-ui.js`, including dynamically created pickers. Entry/Army documents retain redirect behaviour. Legal and methodology pages use the shared document recipe.
+All 17 first-party routes are classified in `consumers.json`. All styled documents load shared tokens and primitives through `ui/styles.css`. Every active content page loads `ui/design-ui.js`, including dynamically created pickers. Entry/Army documents retain redirect behaviour. Legal and methodology pages use the shared document recipe.
 
 Native field appearances, buttons/segments, picker surfaces/triggers, rating inputs, basic tables and dialogs have shared owners. Migrated local field appearances were removed. Local scanner geometry, stat/reroll colours, collection artwork/layouts and rating grids retain their domain behaviour. Shared helpers never decide selection/save state. Two unknown-OCR field appearance exceptions are recorded in the registry with their checks.
 
-First-party page links live in the side menu. Content shortcuts, linked stat names and empty-state navigation have been removed; Privacy and Statistics Methods now use the persistent shell and side-menu routes. Downloads, external references, contact links and entry/legacy redirect fallbacks remain available.
+General first-party page links live in the side menu. Content shortcuts, linked stat names and empty-state navigation have been removed. Privacy remains available from Data & privacy details, and the community-sharing Sign in action links to account settings; the consumer registry records their exact selectors and destinations. Document routes use the persistent shell. Downloads, external references, contact links and entry/legacy redirect fallbacks remain available.
 
 `tests/design/gallery.html` imports production components and demonstrates fields, density, long values, invalid/disabled controls, selection pickers, inherited/override/zero ratings, numeric states, empty data and native dialogs. It stays outside deployed `ui/` assets.
 
@@ -125,6 +125,7 @@ The commands below were identified in the repository; run only the relevant set 
 | Change | Existing checks to use |
 |---|---|
 | Shell, header, profile or navigation | `node scripts/test_navigation_ui.js --summary`; `node scripts/test_navigation_auth.cjs` when auth routing changes |
+| Research grouping, availability and progress | `node scripts/test_research_planner.cjs`; `node scripts/test_research_planner_ui.cjs --summary` at 1440, 1024, 768, 390 and 320px |
 | Shared numeric controls | `node scripts/test_strategy_management_ui.js --summary` (runs `tests/number-inputs-browser.js`) |
 | Target drafts, ratings, purposes | `node scripts/test_crafting_purposes.js`; `node scripts/test_crafting_purposes_ui.js --summary` |
 | Council ratings | `node scripts/test_council_ratings_ui.js` |

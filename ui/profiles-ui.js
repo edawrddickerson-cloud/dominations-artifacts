@@ -142,6 +142,7 @@
     ensureLink("config.html", "Profiles");
     for(const link of nav.querySelectorAll('a[href]'))if(['privacy','privacy.html'].includes(fileForHref(link.getAttribute('href'))))link.remove();
     ensureLink("crafting-statistics.html", "Statistics Methods");
+    ensureLink("research-planner.html", "Research Planner");
   }
 
   function ensureCouncilNav(nav) {

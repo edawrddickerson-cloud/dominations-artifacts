@@ -27,6 +27,7 @@
     'storage-scanner.html':()=>view().DNScannerReading&&doc().querySelector('#scanner-connect'),
     'privacy.html':()=>doc().querySelector('.ui-document'),
     'crafting-statistics.html':()=>doc().querySelector('.ui-document'),
+    'research-planner.html':()=>view().DNResearchPlanner,
   };
   async function ready(page,previous) {
     await wait(()=>view().location.pathname.endsWith('/'+page)&&doc()!==previous&&doc().readyState==='complete'&&readiness[page]());
@@ -78,6 +79,7 @@
   await wait(()=>doc()!==previous&&view().location.pathname.endsWith('/privacy.html')&&doc().querySelector('.ui-document'));
   check('Privacy opens in the shell without a sidebar entry',sidebarIdentity()&&!nav.querySelector('a[href^="privacy"]')&&!doc().querySelector('.site-nav a[href^="privacy"]'));
   await open('crafting-statistics.html');check('Statistics methods opens inside the persistent shell',sidebarIdentity()&&!!doc().querySelector('.ui-document'));
+  await open('research-planner.html');check('Research planner opens inside the persistent shell',sidebarIdentity()&&!!view().DNResearchPlanner);
   await open('config.html');
   check('Shell accepts both route spellings',DNAppShell.accepts('config')&&DNAppShell.accepts('config'+'.ht'+'ml'));
   check('Shell rejects external and non-page routes',!DNAppShell.accepts('https://outside.example/config')&&!DNAppShell.accepts('../config')&&!DNAppShell.accepts('services.js')&&!DNAppShell.accepts('nested/config'));
