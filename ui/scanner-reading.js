@@ -127,7 +127,20 @@
     if(busy){busy.snapshot.width=busy.snapshot.height=0;if(busy.categorySource)busy.categorySource.width=busy.categorySource.height=0;busy=null;}
     if(engine){const previous=engine;engine=null;previous.close().catch(()=>{});}
   }
+  function fieldSignature(values) {
+    if(latestFields && window.DNScannerRegions) {
+      const resolved=window.DNScannerRegions.resolve(latestFields.template,latestFields.panel,latestFields.source);
+      for(const id of ['category','hall',...Array.from({length:5},(_,i)=>i+'-dice')])if(resolved.valid && resolved.boxes[id]) {
+        const box=resolved.boxes[id];previewContext.drawImage(latestFields.source,box.x,box.y,box.width,box.height,0,0,32,16);
+        const labelPixels=previewContext.getImageData(0,0,32,16).data;
+        for(let i=0;i<labelPixels.length;i+=4)values.push(Math.round((labelPixels[i]+labelPixels[i+1]+labelPixels[i+2])/24),Math.round((labelPixels[i+2]-Math.max(labelPixels[i],labelPixels[i+1]))/16));
+      }
+    }
+    return values;
+  }
   function signature(canvas) {
+    const foreground=!storage && el.layout.value==='panel'?window.DNScannerFieldRecognition?.warSignature?.(canvas,latestFields):null;
+    if(foreground)return fieldSignature(foreground);
     if(storage && latestFields && window.DNStorageRegions) {
       const resolved=window.DNStorageRegions.resolve(latestFields.template,latestFields.panel,latestFields.source);
       if(resolved.valid) {
@@ -158,18 +171,10 @@
       const ribbon=previewContext.getImageData(0,0,32,16).data;
       for(let i=0;i<ribbon.length;i+=4)values.push(Math.round((ribbon[i]+ribbon[i+1]+ribbon[i+2])/24),Math.round((ribbon[i+2]-Math.max(ribbon[i],ribbon[i+1]))/16));
     }
-    if(latestFields && window.DNScannerRegions) {
-      const resolved=window.DNScannerRegions.resolve(latestFields.template,latestFields.panel,latestFields.source);
-      for(const id of ['category','hall',...Array.from({length:5},(_,i)=>i+'-dice')])if(resolved.valid && resolved.boxes[id]) {
-        const box=resolved.boxes[id];previewContext.drawImage(latestFields.source,box.x,box.y,box.width,box.height,0,0,32,16);
-        const labelPixels=previewContext.getImageData(0,0,32,16).data;
-        for(let i=0;i<labelPixels.length;i+=4)values.push(Math.round((labelPixels[i]+labelPixels[i+1]+labelPixels[i+2])/24),Math.round((labelPixels[i+2]-Math.max(labelPixels[i],labelPixels[i+1]))/16));
-      }
-    }
-    return values;
+    return fieldSignature(values);
   }
   function changed(a,b,threshold=.0005) {
-    if(!a || !b) return true;
+    if(!a || !b || a.length!==b.length) return true;
     let differences=0;
     for(let i=0;i<a.length;i++) if(Math.abs(a[i]-b[i])>1) differences++;
     return differences>a.length*threshold;
@@ -236,7 +241,9 @@
     // Inferred and partial reads also contain useful held stats. Keep their
     // best rows through minor motion while retries improve the missing fields.
     const holdKnown=!storage && (best || result)?.rows?.some(row=>row.known && !row.assumed && Number.isFinite(row.value));
-    const changeThreshold=(holdConfirmed || holdKnown) ? .02 : .003;
+    // Marker 64 identifies the denser War foreground signature. Keep its first
+    // read through local motion as well as later confirmed/partial readings.
+    const changeThreshold=(next[0]===64 || holdConfirmed || holdKnown) ? .02 : .003;
     const differentArtifact=changed(anchor,next,changeThreshold);
     if(holdConfirmed && !differentArtifact)return;
     if(changed(itemAnchor,next,changeThreshold)){
@@ -602,7 +609,8 @@
     let serviceOutcome='cancelled',serviceCalls=0,serviceInferences=0;
     try {
       timing('ocr-start');
-      const parsed=await owner.recognize(snapshot,{expectedRows:Number(el.rows.value),layout:el.layout.value,hall:el.hall.value,manualType:storage?manualStorageType():null,inferColours:el.infer.checked,categorySource,titleSource,fields:latestFields?{...latestFields,panelSource:snapshot}:null,knownTiers,autoFit:!speculative,
+      const parsed=await owner.recognize(snapshot,{expectedRows:Number(el.rows.value),layout:el.layout.value,hall:el.hall.value,manualType:storage?manualStorageType():null,inferColours:el.infer.checked,preview:!storage && liveCapture && attempts===1 && el.infer.checked,categorySource,titleSource,fields:latestFields?{...latestFields,panelSource:snapshot}:null,knownTiers,autoFit:!speculative,
+        fitBudget:!storage && liveCapture && el.layout.value==='panel' && recognition.hallColour?.(snapshot,{banner:true})==='war'?{remaining:4}:undefined,
         fieldReuse:!storage && !speculative?{epoch:JSON.stringify([session,itemId,fieldGeometry,request]),profile:readingProfile || DN.activeProfileId()}:null,
         isCurrent:()=>request===token && owner===engine && readingProfile===window.DNStoredArtifacts?.collectionKey() && !!latestCanvas && !job.discarded && (!speculative || context===readContext())});
       timing('ocr-end');

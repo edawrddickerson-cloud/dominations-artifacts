@@ -1,0 +1,648 @@
+{
+  "date": "2026-10-29",
+  "source": {
+    "filename": "2026-10-28 23-21-36.mkv",
+    "sha256": "8dad2e6828b9bd79ec57cdf66064a0c1fed101820fd4bce3c9eb821f4ec7e6e0",
+    "width": 3440,
+    "height": 1440,
+    "duration": 147.8
+  },
+  "roi": {
+    "x": 1720,
+    "y": 0,
+    "width": 1720,
+    "height": 1390
+  },
+  "labels": "tests/scanner/video/war-2026-10-28.json",
+  "method": "Seven manually transcribed distinct War artifacts from one original recording. Each static read uses native game-window pixels. Each motion run plays up to six seconds inside the labelled artifact interval through production Connect/capture, temporal sampling, OCR, retention and scorer. Disposable local browser/factory profile, warm workers, no user inventory or external requests. Screenshot pixels and original recording are not published.",
+  "sourceHashes": {
+    "before": {
+      "scanner-reading.js": "2d6f2dd13feea8cd99c37ca766a0fe085461e2bd39a89e6b46948232f10d74e2",
+      "scanner-field-recognition.js": "604dd1e51cab3a31bb80fb843cb67328816ea7ec0ce2810ef4443b0f33e2bdce",
+      "scanner-recognition.js": "e5d3b2f6f88c6784b94888246c5f079437a4413d8057aac13aedf0e5d080c099"
+    },
+    "after": {
+      "scanner-reading.js": "7bba44fc98256b11e51768ab408354588792924a988ec62d0c835bdd82167ef5",
+      "scanner-field-recognition.js": "54d274b12b9706635bd1be08fb390d0d96f283c01afb544ecebb33d5c159dce6",
+      "scanner-recognition.js": "129551945a624b996d300e548ba5c5404995d197b9cea75767c2468469262226"
+    }
+  },
+  "before": {
+    "staticCases": 7,
+    "staticExact": 1,
+    "staticConfirmed": 0,
+    "motionCases": 7,
+    "motionExact": 1,
+    "motionConfirmed": 0,
+    "cancelledReads": 19
+  },
+  "after": {
+    "staticCases": 7,
+    "staticExact": 7,
+    "staticConfirmed": 2,
+    "motionCases": 7,
+    "motionExact": 7,
+    "motionConfirmed": 2,
+    "cancelledReads": 14
+  },
+  "findings": [
+    "Recorded low-saturation coloured glyphs could fail colour/contrast processing while neutral rows remained readable.",
+    "Repeated change detection and cancellation could leave the previous item displayed for an entire sampled interval.",
+    "Numeric OCR noise could turn a fully read exact name into an unknown label, or prevent stronger name-only evidence from surviving a retry.",
+    "Unsuccessful geometric expansion of an older frame could delay the next fresh read; one intermediate isolated replay missed the blue first-row name within six seconds. The final bounded-budget code passed both subsequent seven-artifact replays."
+  ],
+  "changes": [
+    "Current War text foreground supplies the watched signature; explicit metadata fields and raw-byte speculative validation remain in place.",
+    "Bounded soft-chroma/channel recovery atlases precede more expensive field expansion; successful first reads keep their established path.",
+    "Exact names and signed percentages retain independent evidence/confidence. One signed percentage may have bounded punctuation; missing signs, extra digits/values and contradictions stay unverified.",
+    "The first live War read with colour inference enabled can display five usable known rows provisionally before field expansion and standard fallback; subsequent retries retain the stronger path and verification rules.",
+    "Live War geometric expansion shares at most four proposals across field recovery and standard fallback; this returns control to fresh pixels sooner when an older snapshot stays unreadable. Other contexts keep their existing budgets."
+  ],
+  "motionRuns": [
+    {
+      "labelTime": 1,
+      "start": 0.1,
+      "budgetMs": 2800,
+      "title": "Stielhandgranate",
+      "exactDisplayed": true,
+      "fullyConfirmed": true,
+      "firstExactPaintMs": 683.5,
+      "firstConfirmedPaintMs": 683.5999999940395,
+      "ocrJobs": 1,
+      "cancellations": 0,
+      "geometryChanges": 0,
+      "rows": [
+        {
+          "name": "Invading Armored Car Hitpoints",
+          "value": -1,
+          "confidence": 95,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Invading Ranged Infantry Hitpoints",
+          "value": -1,
+          "confidence": 95,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Invading APC Hitpoints",
+          "value": -3,
+          "confidence": 91,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Heavy Cavalry Damage",
+          "value": 3,
+          "confidence": 83,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Invading Paratrooper Hitpoints",
+          "value": -6,
+          "confidence": 93,
+          "assumed": false,
+          "tierConflict": false
+        }
+      ],
+      "warnings": []
+    },
+    {
+      "labelTime": 20,
+      "start": 20,
+      "budgetMs": 2900,
+      "title": "The French Foreign Legion's Kepi",
+      "exactDisplayed": true,
+      "fullyConfirmed": false,
+      "firstExactPaintMs": 1008.2000000178814,
+      "firstConfirmedPaintMs": null,
+      "ocrJobs": 3,
+      "cancellations": 1,
+      "geometryChanges": 0,
+      "rows": [
+        {
+          "name": "Invading Heavy Tank Damage",
+          "value": -3,
+          "confidence": 75,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Armored Car Hitpoints",
+          "value": 3,
+          "confidence": 94,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "MRL Hitpoints",
+          "value": 1,
+          "confidence": 93,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Invading Ranged Infantry Damage",
+          "value": -1,
+          "confidence": 94,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Supply Vehicle Hitpoints",
+          "value": 1,
+          "confidence": 94,
+          "assumed": false,
+          "tierConflict": false
+        }
+      ],
+      "warnings": [
+        "Row 1: OCR field evidence is weak. Verify the name and percentage."
+      ]
+    },
+    {
+      "labelTime": 40,
+      "start": 40,
+      "budgetMs": 3400,
+      "title": "Princess Mary Gift Box",
+      "exactDisplayed": true,
+      "fullyConfirmed": false,
+      "firstExactPaintMs": 1018.9000000059605,
+      "firstConfirmedPaintMs": null,
+      "ocrJobs": 4,
+      "cancellations": 2,
+      "geometryChanges": 0,
+      "rows": [
+        {
+          "name": "Enemy Air Defense Damage",
+          "value": -1,
+          "confidence": 94,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Enemy Missile Silo Damage",
+          "value": -1,
+          "confidence": 94,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "All Enemy Defensive Towers Hitpoints",
+          "value": -3,
+          "confidence": 16,
+          "inferred": true,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Anti-Tank Gun Damage",
+          "value": 1,
+          "confidence": 92,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Enemy Air Defense Damage",
+          "value": -3,
+          "confidence": 92,
+          "assumed": false,
+          "tierConflict": false
+        }
+      ],
+      "warnings": [
+        "Unreadable signed percentage: 2",
+        "Row 3: OCR field evidence is weak. Verify the name and percentage.",
+        "Row 3: percentage inferred from green text and the known perk sign. Verify it."
+      ]
+    },
+    {
+      "labelTime": 60,
+      "start": 54.5,
+      "budgetMs": 6000,
+      "title": "Casimir Zeglen's Brewster Body Shield",
+      "exactDisplayed": true,
+      "fullyConfirmed": false,
+      "firstExactPaintMs": 5849.700000017881,
+      "firstConfirmedPaintMs": null,
+      "ocrJobs": 5,
+      "cancellations": 2,
+      "geometryChanges": 0,
+      "rows": [
+        {
+          "name": "Armored Car Hitpoints",
+          "value": 6,
+          "confidence": 55,
+          "inferred": true,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Invading Mortar Troop Damage",
+          "value": -1,
+          "confidence": 94,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Machine Gun Infantry Hitpoints",
+          "value": 3,
+          "confidence": 0,
+          "inferred": true,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Heavy Cavalry Hitpoints",
+          "value": 1,
+          "confidence": 93,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Invading Raider Damage",
+          "value": -3,
+          "confidence": 93,
+          "assumed": false,
+          "tierConflict": false
+        }
+      ],
+      "warnings": [
+        "Unknown or ambiguous perk: ",
+        "Row 1: OCR field evidence is weak. Verify the name and percentage.",
+        "Unreadable signed percentage: Armored Car Hitpoints +69: pies eat x",
+        "Expected 5 visible rows; read 4. Check the complete panel.",
+        "OCR evidence is weak on 7 line(s). Verify the names and percentages.",
+        "Row 1: percentage inferred from blue text and the known perk sign. Verify it.",
+        "Combined the clearest compatible rows from separate reads. Verify these rows.",
+        "Retained the stronger previous row readings."
+      ]
+    },
+    {
+      "labelTime": 74,
+      "start": 70,
+      "budgetMs": 6000,
+      "title": "Ernest Hemingway's Field Surgery Kit",
+      "exactDisplayed": true,
+      "fullyConfirmed": false,
+      "firstExactPaintMs": 2743.5999999940395,
+      "firstConfirmedPaintMs": null,
+      "ocrJobs": 8,
+      "cancellations": 6,
+      "geometryChanges": 0,
+      "rows": [
+        {
+          "name": "All Defensive Towers Hitpoints",
+          "value": 3,
+          "confidence": 32,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Defender Hitpoints",
+          "value": 3,
+          "confidence": 57,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Anti-Tank Gun Hitpoints",
+          "value": 6,
+          "confidence": 82,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Enemy Sniper Tower Hitpoints",
+          "value": -1,
+          "confidence": 94,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Invading Generals' Hitpoints",
+          "value": -3,
+          "confidence": 82,
+          "assumed": false,
+          "tierConflict": false
+        }
+      ],
+      "warnings": [
+        "Row 1: OCR field evidence is weak. Verify the name and percentage.",
+        "Row 2: OCR field evidence is weak. Verify the name and percentage."
+      ]
+    },
+    {
+      "labelTime": 90,
+      "start": 90,
+      "budgetMs": 2900,
+      "title": "Stielhandgranate",
+      "exactDisplayed": true,
+      "fullyConfirmed": false,
+      "firstExactPaintMs": 1050,
+      "firstConfirmedPaintMs": null,
+      "ocrJobs": 4,
+      "cancellations": 2,
+      "geometryChanges": 0,
+      "rows": [
+        {
+          "name": "APC Damage",
+          "value": 1,
+          "confidence": 94,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Invading Supply Vehicle Hitpoints",
+          "value": -6,
+          "confidence": 0,
+          "inferred": true,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Invading Armored Car Hitpoints",
+          "value": -1,
+          "confidence": 94,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Invading Bomber Hitpoints",
+          "value": -1,
+          "confidence": 94,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Invading Raider Hitpoints",
+          "value": -3,
+          "confidence": 85,
+          "assumed": false,
+          "tierConflict": false
+        }
+      ],
+      "warnings": [
+        "Unreadable signed percentage: 5",
+        "Row 2: OCR field evidence is weak. Verify the name and percentage.",
+        "Row 2: percentage inferred from blue text and the known perk sign. Verify it."
+      ]
+    },
+    {
+      "labelTime": 120,
+      "start": 120,
+      "budgetMs": 5400,
+      "title": "Brewster Body Shield",
+      "exactDisplayed": true,
+      "fullyConfirmed": true,
+      "firstExactPaintMs": 644.6999999880791,
+      "firstConfirmedPaintMs": 644.6999999880791,
+      "ocrJobs": 2,
+      "cancellations": 1,
+      "geometryChanges": 0,
+      "rows": [
+        {
+          "name": "Bomber Hitpoints",
+          "value": 1,
+          "confidence": 94,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Invading Bomber Damage",
+          "value": -1,
+          "confidence": 94,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Bazooka Hitpoints",
+          "value": 1,
+          "confidence": 94,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Assault Vehicle Hitpoints",
+          "value": 1,
+          "confidence": 93,
+          "assumed": false,
+          "tierConflict": false
+        },
+        {
+          "name": "Fighter Hitpoints",
+          "value": 3,
+          "confidence": 87,
+          "assumed": false,
+          "tierConflict": false
+        }
+      ],
+      "warnings": []
+    }
+  ],
+  "checks": {
+    "fullCraftingContract": true,
+    "warCalibrationCases": 72,
+    "warCalibrationDirectConfirmed": 72,
+    "publicParticleAndChangedRowCases": 4,
+    "missingSignAndValueConflictTests": true,
+    "nameConfidenceCannotPromoteNumericCache": true,
+    "mainAudit": {
+      "cases": 66,
+      "exactDirect": 66,
+      "confirmed": 65,
+      "confidentlyIncorrect": 0,
+      "preExistingReview": {
+        "fixture": "greenissue",
+        "scale": 0.75
+      }
+    },
+    "completePreviewSafeguards": true,
+    "isolatedStagedContract": true,
+    "isolatedStagedVideoReplay": true,
+    "liveWarExpansionBudget": 4
+  },
+  "limitations": [
+    "Only seven labelled artifacts from one recording; adjacent frames and transformed fixtures do not increase the independent sample count.",
+    "Correct displayed values include provisional/inferred readings. Five of seven motion samples remain unconfirmed; no claim of seven direct verified OCR reads is made.",
+    "The final isolated run displayed complete stats in about 0.6 to 5.9 seconds: six cases within 2.8 seconds, and the blue Body Shield row near six seconds. A preceding final-code replay ranged from 0.4 to 4.3 seconds. Timings vary and are warm local replays, not a cold-start guarantee or population benchmark.",
+    "The original low-confidence greenissue fixture at 0.75 scale remains a separate review case in the established Main audit."
+  ],
+  "commands": [
+    "node scripts/review_scanner_war_video.cjs '--video=C:/Users/edwar/Videos/2026-10-28 23-21-36.mkv' --evidence=release",
+    "node scripts/test_crafting_scanner_contract.cjs",
+    "node scripts/test_scanner_war_calibration.cjs --stability --summary",
+    "node scripts/run_scanner_ocr_fixture.js --crafting-audit --summary"
+  ],
+  "baselineCommit": "15034e8",
+  "validationHistory": [
+    {
+      "label": "preview",
+      "sourceHashes": {
+        "scanner-reading.js": "b33cfc11e2d6a32123c2ab44b4f5fa3d845bba7e15d2b8feae4ee764501e2df2",
+        "scanner-field-recognition.js": "54d274b12b9706635bd1be08fb390d0d96f283c01afb544ecebb33d5c159dce6",
+        "scanner-recognition.js": "129551945a624b996d300e548ba5c5404995d197b9cea75767c2468469262226"
+      },
+      "exactDisplays": 7,
+      "samples": 7,
+      "fullyConfirmed": 2,
+      "firstExactPaintMs": [
+        {
+          "time": 1,
+          "ms": 750.2000000178814
+        },
+        {
+          "time": 20,
+          "ms": 1038.5999999940395
+        },
+        {
+          "time": 40,
+          "ms": 734.3999999761581
+        },
+        {
+          "time": 60,
+          "ms": 2963.300000011921
+        },
+        {
+          "time": 74,
+          "ms": 2586.800000011921
+        },
+        {
+          "time": 90,
+          "ms": 1050.800000011921
+        },
+        {
+          "time": 120,
+          "ms": 633.1999999880791
+        }
+      ]
+    },
+    {
+      "label": "isolatedBeforeBudget",
+      "sourceHashes": {
+        "scanner-reading.js": "f6a5f426bf9aee651b11661e4edcceafca74ad14b1e558eb810ff820d9c30c8c",
+        "scanner-field-recognition.js": "54d274b12b9706635bd1be08fb390d0d96f283c01afb544ecebb33d5c159dce6",
+        "scanner-recognition.js": "129551945a624b996d300e548ba5c5404995d197b9cea75767c2468469262226"
+      },
+      "exactDisplays": 6,
+      "samples": 7,
+      "fullyConfirmed": 2,
+      "firstExactPaintMs": [
+        {
+          "time": 1,
+          "ms": 777.2999999821186
+        },
+        {
+          "time": 20,
+          "ms": 1004.7000000178814
+        },
+        {
+          "time": 40,
+          "ms": 726.5
+        },
+        {
+          "time": 60,
+          "ms": null
+        },
+        {
+          "time": 74,
+          "ms": 2700
+        },
+        {
+          "time": 90,
+          "ms": 1062.2000000178814
+        },
+        {
+          "time": 120,
+          "ms": 638.2999999821186
+        }
+      ],
+      "note": "The blue Armored Car Hitpoints name did not become readable within its six-second motion budget. The following change limits live War geometric expansion to four proposals instead of 24."
+    },
+    {
+      "label": "boundedRetry",
+      "sourceHashes": {
+        "scanner-reading.js": "e53008194e1db42c6641d6b74b39bf6927c064da6b896b00439e717fbce2257b",
+        "scanner-field-recognition.js": "54d274b12b9706635bd1be08fb390d0d96f283c01afb544ecebb33d5c159dce6",
+        "scanner-recognition.js": "129551945a624b996d300e548ba5c5404995d197b9cea75767c2468469262226"
+      },
+      "exactDisplays": 7,
+      "samples": 7,
+      "fullyConfirmed": 2,
+      "firstExactPaintMs": [
+        {
+          "time": 1,
+          "ms": 688
+        },
+        {
+          "time": 20,
+          "ms": 1045.2999999821186
+        },
+        {
+          "time": 40,
+          "ms": 991.6999999880791
+        },
+        {
+          "time": 60,
+          "ms": 4286.699999988079
+        },
+        {
+          "time": 74,
+          "ms": 2748.5999999940395
+        },
+        {
+          "time": 90,
+          "ms": 1014
+        },
+        {
+          "time": 120,
+          "ms": 375.89999997615814
+        }
+      ]
+    },
+    {
+      "label": "finalIsolatedRelease",
+      "sourceHashes": {
+        "scanner-reading.js": "7bba44fc98256b11e51768ab408354588792924a988ec62d0c835bdd82167ef5",
+        "scanner-field-recognition.js": "54d274b12b9706635bd1be08fb390d0d96f283c01afb544ecebb33d5c159dce6",
+        "scanner-recognition.js": "129551945a624b996d300e548ba5c5404995d197b9cea75767c2468469262226"
+      },
+      "exactDisplays": 7,
+      "samples": 7,
+      "fullyConfirmed": 2,
+      "firstExactPaintMs": [
+        {
+          "time": 1,
+          "ms": 683.5
+        },
+        {
+          "time": 20,
+          "ms": 1008.2000000178814
+        },
+        {
+          "time": 40,
+          "ms": 1018.9000000059605
+        },
+        {
+          "time": 60,
+          "ms": 5849.700000017881
+        },
+        {
+          "time": 74,
+          "ms": 2743.5999999940395
+        },
+        {
+          "time": 90,
+          "ms": 1050
+        },
+        {
+          "time": 120,
+          "ms": 644.6999999880791
+        }
+      ]
+    }
+  ]
+}

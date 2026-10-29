@@ -66,6 +66,8 @@ async function main(){
   let successfulScans=0;h.window.addEventListener('dn-successful-scan',()=>successfulScans++);
   const source=h.canvas();reader.update(source,{session:1,current:true});
   e.read.fire('click');assert.equal(h.jobs.length,1);assert.equal(h.jobs[0].options.expectedRows,5);
+  assert.equal(h.jobs[0].options.preview,false,'local images keep the full recognition path');
+  assert.equal(h.jobs[0].options.fitBudget,undefined,'local images retain the existing field expansion budget');
   h.jobs[0].resolve(parsed());await flush();
   assert.equal(successfulScans,1,'the first successful scan signals the prompt without loading telemetry');
   assert.equal(h.window.DNSuccessfulScan,true,'a local success bit survives until account controls mount');
@@ -223,7 +225,15 @@ async function main(){
   warResult=await readWar(warGarbage);
   assert.equal(warResult.rows[2].name,'lrv3d1ng hpzz','changing profile clears the held canonical identity');
   assert.equal(warResult.rows[2].value,null,'another profile cannot supply the stat name needed for colour inference');
+  const boundedWar=await harness({speculation:true}),warPixels=boundedWar.canvas();warPixels.rgb=[20,80,150];
+  boundedWar.reader.update(warPixels,{session:1,current:true,live:true});boundedWar.e.read.fire('click');
+  assert.equal(boundedWar.jobs[0].options.fitBudget.remaining,4,'live War expansion is bounded so a damaged older frame cannot monopolize retries');
+  boundedWar.jobs[0].resolve({...parsed('Heavy Tank Damage',1),hall:'war'});await flush();
+  warPixels.rgb=[150,30,20];boundedWar.reader.update(warPixels,{session:1,current:true});boundedWar.e.read.fire('click');
+  assert.equal(boundedWar.jobs.at(-1).options.fitBudget,undefined,'Main ribbon retains the existing field expansion budget');
+  boundedWar.jobs.at(-1).resolve(parsed());await flush();
   const live=await harness(),frame=live.canvas();live.e.auto.checked=true;
+  live.reader.update(frame,{session:1,current:true,live:true});
   const inferredHeld=await harness(),inferredFrame=inferredHeld.canvas();inferredHeld.e.auto.checked=true;
   inferredHeld.reader.update(inferredFrame,{session:1,current:true});inferredHeld.advance(220);
   const inferredRead={...parsed(),valid:false,warnings:['Percentage inferred'],hall:'main'};
@@ -247,10 +257,12 @@ async function main(){
   inferredHeld.jobs.at(-1).resolve(parsed('Bomber Damage'));await flush();
   assert.equal(inferredHeld.comparisons.at(-1).state.captureResult.rows[2].name,'Bomber Damage','a material item change replaces the inferred read');
   live.reader.update(frame,{session:1,current:true});live.e.read.fire('click');
+  assert.equal(live.jobs[0].options.preview,true,'first live capture can show a complete provisional War read promptly');
   const partial={valid:false,warnings:['partial'],hall:'main',colours:['neutral','green','blue','neutral',null],rows:parsed().rows.slice(0,4)};
   live.jobs[0].resolve(partial);await flush();assert.match(live.e['row-status'].textContent,/4\/5/);assert.match(live.e.progress.textContent,/Improving/);
   assert.match(live.e.result.innerHTML,/scanner-perk is-green/);assert.match(live.e.result.innerHTML,/scanner-perk is-blue/);assert.doesNotMatch(live.e.result.innerHTML,/scanner-colour|% tier/);
   live.runTimers();assert.equal(live.jobs.length,2);assert.match(live.e['row-status'].textContent,/4\/5/,'rows stay visible while retrying');
+  assert.equal(live.jobs[1].options.preview,false,'ordinary retry keeps the stronger expansion and standard fallback');
   live.jobs[1].resolve({...partial,rows:partial.rows.slice(0,2)});await flush();
   assert.match(live.e['row-status'].textContent,/4\/5/,'weaker retry cannot replace best read');assert.match(live.e.progress.textContent,/Improving/);
   live.advance(499);assert.equal(live.jobs.length,2,'continued retries leave a bounded pause between attempts');

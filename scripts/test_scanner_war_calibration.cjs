@@ -20,7 +20,7 @@ if(live){
   const seed='localStorage.setItem("dn-crafting-field-template-v1",'+JSON.stringify(JSON.stringify(template))+');';
   replace("await client.send('Page.navigate'",'await client.send("Page.addScriptToEvaluateOnNewDocument",{source:'+JSON.stringify(seed)+'});await client.send(\'Page.navigate\'');
 }
-const code='window.DNWarCalibrationFull='+process.argv.includes('--full')+';window.DNWarCalibrationDimming='+live+';\n'+fs.readFileSync(path.join(project,live?'tests/scanner/latency-live-browser.js':'tests/scanner/war-calibration-browser.js'),'utf8');
+const code='window.DNWarCalibrationFull='+process.argv.includes('--full')+';window.DNWarCalibrationDimming='+live+';\n'+fs.readFileSync(path.join(project,live?'tests/scanner/latency-live-browser.js':process.argv.includes('--stability')?'tests/scanner/war-stability-browser.js':'tests/scanner/war-calibration-browser.js'),'utf8');
 replace("const evaluation=client.send('Runtime.evaluate'",'expression=\'(document.getElementById("scanner-view")?.contentWindow || window).eval(\'+JSON.stringify('+JSON.stringify(code)+')+\')\';const evaluation=client.send(\'Runtime.evaluate\'');
 const evidence=process.argv.find(arg=>arg.startsWith('--evidence='))?.slice(11);
 let saveEvidence='';

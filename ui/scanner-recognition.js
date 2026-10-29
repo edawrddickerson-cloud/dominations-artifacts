@@ -234,7 +234,11 @@
   function parseFieldRow(nameText,percentageText,names,canonPerk) {
     // Names may include the adjacent percentage in an intentionally wide box.
     // Read the value solely from its own crop and retain both original texts.
-    const label=String(nameText || '').trim().replace(/\s*[+\-\u2212]\s*\d+(?:\s*[.,]\s*\d+)?\s*%.*$/,'').trim();
+    let label=String(nameText || '').trim().replace(/\s*[+\-\u2212]\s*\d+(?:\s*[.,]\s*\d+)?\s*%.*$/,'').trim();
+    // A damaged numeric suffix must not turn a complete exact stat identity
+    // into an unknown name. It supplies no numeric value or sign evidence.
+    const tail=/\s+(?=[+\-\u2212\d])[+\-\u2212\d\s%.,:;'"\u2018\u2019]*$/.exec(label);
+    if(tail){const prefix=label.slice(0,tail.index).trim();if(names.some(name=>normalized(name)===normalized(prefix) || normalized(name)===normalized(canonPerk(prefix))))label=prefix;}
     const percentage=String(percentageText || '').trim();
     const amount=parsePercentage(percentage),value=amount.value;
     const exact=names.find(name=>normalized(name)===normalized(canonPerk(label)) || normalized(name)===normalized(label));
@@ -266,7 +270,7 @@
     const states=fills.map(fill=>fill>=.3),count=states.filter(Boolean).length;
     return count>=1 && count<=3 && states.every((state,index)=>state===(index<count))?{count,states,method:'stars'}:unknown;
   }
-  function rowColours(pixels,width,height) {
+  function rowColours(pixels,width,height,{war=false}={}) {
     const radius=Math.max(2,Math.round(height/5*.08));
     const at=(x,y)=>(Math.max(0,Math.min(height-1,y))*width+Math.max(0,Math.min(width-1,x)))*4;
     const light=p=>Math.max(pixels[p],pixels[p+1],pixels[p+2]);
@@ -275,12 +279,14 @@
       for(let y=Math.ceil((row+.15)*height/5);y<Math.floor((row+.85)*height/5);y++)for(let x=0;x<width*.8;x++) {
         const p=(y*width+x)*4,r=pixels[p],g=pixels[p+1],b=pixels[p+2],max=Math.max(r,g,b),min=Math.min(r,g,b);
         const neighbours=[at(x-radius,y),at(x+radius,y),at(x,y-radius),at(x,y+radius)].sort((a,b)=>light(a)-light(b));
-        if(max<=(light(neighbours[1])+light(neighbours[2]))/2+12)continue;
         const background=channel=>(pixels[neighbours[1]+channel]+pixels[neighbours[2]+channel])/2;
+        const greenInk=war && g>15 && g>r*1.25 && g>b*1.1 && g-b>4 && g-background(1)-(r-background(0))>6;
+        if(!greenInk && max<=(light(neighbours[1])+light(neighbours[2]))/2+12)continue;
         // Blue War-map texture has saturated edges too. A glyph must add
         // chroma relative to its neighbours, rather than merely be blue.
         const addedChroma=Math.max(g-background(1),b-background(2))-(r-background(0));
-        if(Math.max(g,b)>r*1.8 && Math.max(g,b)>25 && addedChroma>20)counts[b>=g*.85?'blue':'green']++;
+        if(greenInk)counts.green++;
+        else if(Math.max(g,b)>r*1.8 && Math.max(g,b)>25 && addedChroma>20)counts[b>=g*.85?'blue':'green']++;
         else if(max-min<Math.max(25,max*.18) && max>55)counts.neutral++;
       }
       const coloured=counts.green>counts.blue?'green':'blue',other=coloured==='green'?'blue':'green';
@@ -618,7 +624,7 @@
       })());
       return initializing.get(kind);
     }
-    async function recognize(source, {expectedRows=5, layout="panel",hall='main',manualType=null,inferColours=false,categorySource=null,titleSource=null,fields=null,colourHall=null,knownTiers=[],isCurrent=()=>true,fieldReuse=null,autoFit=true,fitBudget={remaining:24}}={},fallbackEncounter=null) {
+    async function recognize(source, {expectedRows=5, layout="panel",hall='main',manualType=null,inferColours=false,categorySource=null,titleSource=null,fields=null,colourHall=null,knownTiers=[],isCurrent=()=>true,fieldReuse=null,autoFit=true,preview=false,fitBudget={remaining:24}}={},fallbackEncounter=null) {
       const stopped=()=>closed || !isCurrent();
       const check=()=>{if(stopped())throw new Error('Recognition superseded or stopped');};
       if(stopped())fieldEvidence=null;
@@ -659,7 +665,8 @@
       }
       if(fieldViews?.valid) {
         try {
-          let calibrated=await window.DNScannerFieldRecognition.recognize(fieldViews,{worker:activeWorker,readView,names,canonPerk,hall,inferColours,categorySource,isClosed:stopped,ocrCalls:()=>ocrCalls,reuse,autoFit,fitBudget});
+          const quickPreview=preview && inferColours && hallColour(fieldViews.crops.hall || fieldViews.crops['hall-banner'])==='war';
+          let calibrated=await window.DNScannerFieldRecognition.recognize(fieldViews,{worker:activeWorker,readView,names,canonPerk,hall,inferColours,categorySource,isClosed:stopped,ocrCalls:()=>ocrCalls,reuse,autoFit:autoFit && !quickPreview,fitBudget});
           if(artifactName || nameEvidence)calibrated={...calibrated,artifact:{...calibrated.artifact,...(artifactName?{name:artifactName}:{}),...(nameEvidence?{nameEvidence}:{})}};
           // Metadata uses its own pixels. Repeating every text row cannot repair
           // an unread category or star, and used to multiply complete read time.
@@ -669,6 +676,12 @@
               if(stars.count!==null)calibrated={...calibrated,unlocked:stars,rows:calibrated.rows.map((row,i)=>({...row,unlocked:stars.states[i]}))};
             }
             return commitEvidence(calibrated);
+          }
+          if(quickPreview && calibrated.hall==='war' && !calibrated.metadataConflict && calibrated.rows.length===5 &&
+            calibrated.rows.every(row=>row.known && !row.assumed && Number.isFinite(row.value) && row.hasPercent!==false && !row.conflict && !row.tierConflict && !row.outOfRange)){
+            // Show the complete provisional read first. The reading controller
+            // keeps it unconfirmed and schedules its ordinary stronger retry.
+            return commitEvidence({...calibrated,preview:true,valid:false});
           }
           // A bounded standard pass protects established successful reads.
           // Contradictory field evidence still goes through the conflict rules.

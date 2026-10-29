@@ -1,0 +1,14 @@
+{
+  "source": {"filename":"2026-10-28 23-21-36.mkv","sha256":"8dad2e6828b9bd79ec57cdf66064a0c1fed101820fd4bce3c9eb821f4ec7e6e0","width":3440,"height":1440,"duration":147.8},
+  "roi": {"x":1720,"y":0,"width":1720,"height":1390},
+  "provenance": "Seven game-only native frames manually transcribed before running OCR. Times sample seven distinct crafted artifacts; two share the Stielhandgranate title but have different rows. Start/end bounds keep each motion run within that artifact's visible interval. The ROI reproduces the shared game browser window, excluding the taskbar. This is a targeted sample from one recording, not a population accuracy estimate.",
+  "cases": [
+    {"time":1,"start":0.1,"end":3,"title":"Stielhandgranate","category":"Weapon","unlocked":2,"rows":[["Invading Armored Car Hitpoints",-1],["Invading Ranged Infantry Hitpoints",-1],["Invading APC Hitpoints",-3],["Heavy Cavalry Damage",3],["Invading Paratrooper Hitpoints",-6]]},
+    {"time":20,"end":23,"title":"The French Foreign Legion's Kepi","category":"Armor","unlocked":1,"rows":[["Invading Heavy Tank Damage",-3],["Armored Car Hitpoints",3],["MRL Hitpoints",1],["Invading Ranged Infantry Damage",-1],["Supply Vehicle Hitpoints",1]]},
+    {"time":40,"end":43.5,"title":"Princess Mary Gift Box","category":"Equipment","unlocked":1,"rows":[["Enemy Air Defense Damage",-1],["Enemy Missile Silo Damage",-1],["All Enemy Defensive Towers Hitpoints",-3],["Anti-Tank Gun Damage",1],["Enemy Air Defense Damage",-3]]},
+    {"time":60,"start":54.5,"end":61,"title":"Casimir Zeglen's Brewster Body Shield","category":"Armor","unlocked":2,"rows":[["Armored Car Hitpoints",6],["Invading Mortar Troop Damage",-1],["Machine Gun Infantry Hitpoints",3],["Heavy Cavalry Hitpoints",1],["Invading Raider Damage",-3]]},
+    {"time":74,"start":70,"end":85,"title":"Ernest Hemingway's Field Surgery Kit","category":"Equipment","unlocked":2,"rows":[["All Defensive Towers Hitpoints",3],["Defender Hitpoints",3],["Anti-Tank Gun Hitpoints",6],["Enemy Sniper Tower Hitpoints",-1],["Invading Generals' Hitpoints",-3]]},
+    {"time":90,"end":93,"title":"Stielhandgranate","category":"Weapon","unlocked":1,"rows":[["APC Damage",1],["Invading Supply Vehicle Hitpoints",-6],["Invading Armored Car Hitpoints",-1],["Invading Bomber Hitpoints",-1],["Invading Raider Hitpoints",-3]]},
+    {"time":120,"end":125.5,"title":"Brewster Body Shield","category":"Armor","unlocked":1,"rows":[["Bomber Hitpoints",1],["Invading Bomber Damage",-1],["Bazooka Hitpoints",1],["Assault Vehicle Hitpoints",1],["Fighter Hitpoints",3]]}
+  ]
+}

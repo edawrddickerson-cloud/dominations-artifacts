@@ -59,6 +59,19 @@
       mode==='green'?g>25 && g>r*1.8 && g>b*1.2:
       mode==='blue'?Math.min(g,b)>r*1.8 && Math.min(g,b)-r>15 && Math.max(g,b)>25:null;
   }
+  function foregroundMask(data,width,height,mode) {
+    const mask=new Uint8ClampedArray(width*height),histogram=new Uint32Array(256);let background=0;
+    if(mode==='blue'){
+      for(let p=0;p<data.length;p+=4)histogram[Math.max(0,Math.min(data[p+1],data[p+2])-data[p])]++;
+      let total=0;for(let value=0;value<256;value++){total+=histogram[value];if(total>=width*height/2){background=value;break;}}
+    }
+    for(let p=0;p<data.length;p+=4){
+      if(data[p+3]<128)continue;
+      const r=data[p],g=data[p+1],b=data[p+2];
+      mask[p/4]=mode==='neutral'?255-R().neutralTextContrast(r,g,b):Math.max(0,mode==='green'?g-Math.max(r,b):Math.min(g,b)-r-background)*12;
+    }
+    return mask;
+  }
   function percentageRect(data,width,height,foreground=null) {
     // Locate the last coloured word in this physical row. This supplies only
     // geometry; the sign, digits and percent glyph still have to pass OCR.
@@ -96,15 +109,16 @@
     const rawCtx=raw.getContext('2d',{willReadFrequently:true});rawCtx.drawImage(source,0,0,raw.width,raw.height);
     const pixels=rawCtx.getImageData(0,0,raw.width,raw.height);let ink=0,background=0;
     const numeric=minimumScale>2;
-    const foreground=mode==='green'||mode==='blue';
-    if(mode==='chroma' && numeric){
-      const histogram=new Uint32Array(256);for(let i=0;i<pixels.data.length;i+=4)histogram[Math.max(0,Math.max(pixels.data[i+1],pixels.data[i+2])-pixels.data[i])]++;
+    const soft=mode==='green-soft' || mode==='blue-soft',foreground=mode==='green'||mode==='blue';
+    const mask=soft?foregroundMask(pixels.data,raw.width,raw.height,mode.split('-')[0]):null;
+    if(mode==='channel' || mode==='chroma' && numeric){
+      const histogram=new Uint32Array(256);for(let i=0;i<pixels.data.length;i+=4)histogram[mode==='channel'?pixels.data[i+1]:Math.max(0,Math.max(pixels.data[i+1],pixels.data[i+2])-pixels.data[i])]++;
       let total=0;for(let value=0;value<256;value++){total+=histogram[value];if(total>=pixels.data.length/8){background=value;break;}}
     }
     for(let i=0;i<pixels.data.length;i+=4) {
       const r=pixels.data[i],g=pixels.data[i+1],b=pixels.data[i+2];
       const saturated=foreground?foregroundInk(r,g,b,mode):mode==='category'?g>60 && g>r*1.25 && g>b*1.05:Math.max(g,b)>r*1.8 && Math.max(g,b)>25;
-      const value=foreground?saturated?0:255:mode==='neutral'?R().neutralTextContrast(r,g,b):mode==='chroma' || mode==='colour' && !compact?255-Math.min(255,Math.max(0,(numeric?Math.max(g,b):g)-r-background)*(numeric?6:mode==='chroma'?8:12)):mode==='colour' || mode==='category'?saturated?0:255:R().textContrast(r,g,b);
+      const value=soft?255-mask[i/4]:mode==='channel'?255-Math.min(255,Math.max(0,g-background)*8):foreground?saturated?0:255:mode==='neutral'?R().neutralTextContrast(r,g,b):mode==='chroma' || mode==='colour' && !compact?255-Math.min(255,Math.max(0,(numeric?Math.max(g,b):g)-r-background)*(numeric?6:mode==='chroma'?8:12)):mode==='colour' || mode==='category'?saturated?0:255:R().textContrast(r,g,b);
       if(mode==='neutral'?value<200:saturated)ink++;
       pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=value;pixels.data[i+3]=255;
     }
@@ -116,13 +130,13 @@
     let yellow=0;for(let i=0;i<data.length;i+=4)if(data[i]>160 && data[i+1]>100 && data[i+2]<data[i+1]*.8)yellow++;
     return yellow/(data.length/4);
   }
-  function coloursOf(crops) {
+  function coloursOf(crops,{war=false}={}) {
     // Reuse the existing colour classifier on five equal-sized name crops.
     const canvas=document.createElement('canvas');canvas.width=Math.max(...crops.map(c=>c.width));
     const height=Math.max(...crops.map(c=>c.height));canvas.height=height*5;
     const ctx=canvas.getContext('2d',{willReadFrequently:true});
     crops.forEach((crop,i)=>ctx.drawImage(crop,0,i*height,canvas.width,height));
-    const colours=R().rowColours(ctx.getImageData(0,0,canvas.width,canvas.height).data,canvas.width,canvas.height);
+    const colours=R().rowColours(ctx.getImageData(0,0,canvas.width,canvas.height).data,canvas.width,canvas.height,{war});
     canvas.width=canvas.height=0;return colours;
   }
   // Associate OCR lines with their physical cell, never their output order.
@@ -137,8 +151,8 @@
     });
   }
   async function recognize(snapshot,{worker,readView,names,canonPerk,hall='main',inferColours=false,categorySource,isClosed,ocrCalls,reuse=null,autoFit=true,fitBudget={remaining:24}}) {
-    const colours=coloursOf(Array.from({length:5},(_,i)=>snapshot.crops[i+'-name']));
     const war=R().hallColour(snapshot.crops.hall || snapshot.crops['hall-banner'])==='war';
+    const colours=coloursOf(Array.from({length:5},(_,i)=>snapshot.crops[i+'-name']),{war});
     const foregroundSources=new Map(war?colours.flatMap((colour,i)=>['neutral','green','blue'].includes(colour)?
       [[snapshot.crops[i+'-name'],colour],[snapshot.crops[i+'-percentage'],colour]]:[]):[]);
     const rerolls=Array.from({length:5},(_,i)=>{
@@ -163,10 +177,19 @@
       const parsed=parsedFields.get(key);
       return {...parsed,row:{...parsed.row},warnings:[...parsed.warnings]};
     };
+    const exactNameWords=output=>{
+      const row=parseField(output.text,'').row,compact=value=>String(value).toLowerCase().replace(/[^a-z0-9]/g,'');
+      if(!row.known || row.nameMatch?.method!=='exact' || !output.words?.length)return output;
+      const target=compact(row.name),confidences=[];let prefix='';
+      for(const word of output.words){prefix+=compact(word.text);if(!target.startsWith(prefix))return output;confidences.push(word.confidence ?? 0);
+        if(prefix===target)return {...output,lineConfidence:output.lineConfidence ?? output.confidence,confidence:Math.max(output.confidence,Math.min(...confidences))};}
+      return output;
+    };
     async function read(source,kind,mode='contrast',segmentation='7',shared=false) {
       check();let focused=null;
+      if(mode==='soft')mode=['green','blue'].includes(foregroundSources.get(source))?foregroundSources.get(source)+'-soft':'channel';
       if(foregroundSources.has(source) && ['contrast','colour'].includes(mode))mode=foregroundSources.get(source);
-      if((kind==='percentage' || kind==='name' && shared) && source.width/source.height>5) {
+      if(!['channel','green-soft','blue-soft'].includes(mode) && (kind==='percentage' || kind==='name' && shared) && source.width/source.height>5) {
         const pixels=source.getContext('2d',{willReadFrequently:true}).getImageData(0,0,source.width,source.height).data;
         const rect=percentageRect(pixels,source.width,source.height,foregroundSources.get(source));
         if(rect){const area=kind==='percentage'?rect:{x:0,y:rect.y,width:rect.x,height:rect.height};if(area.width>2){focused=document.createElement('canvas');focused.width=area.width;focused.height=area.height;focused.getContext('2d').drawImage(source,area.x,area.y,area.width,area.height,0,0,area.width,area.height);}}
@@ -220,7 +243,7 @@
             else {result.corroborated=true;result.focusedConfidence=result.confidence;result.guideConfidence=guideConfidence;result.confidence=Math.max(result.confidence,guideConfidence);}
           }
         }
-        return result;
+        return kind==='name'?exactNameWords(result):result;
       }finally {prepared.canvas.width=prepared.canvas.height=0;if(focused)focused.width=focused.height=0;}
     }
     // Only an explicitly scoped encounter may replay directly verified OCR.
@@ -230,7 +253,11 @@
     const batchEvidence=new Map();let evidenceBytes=0,reusedFields=0;
     const samePixels=(first,second)=>{if(first.length!==second.length)return false;for(let i=0;i<first.length;i++)if(first[i]!==second[i])return false;return true;};
     const copyEvidence=value=>({...value,words:(value.words || []).map(word=>({...word,...(word.bbox?{bbox:{...word.bbox}}:{})}))});
-    const batchProfile=(kind,index,mode)=>foregroundSources.has(snapshot.crops[index+'-'+kind]) && ['contrast','colour'].includes(mode)?foregroundSources.get(snapshot.crops[index+'-'+kind]):mode;
+    const batchProfile=(kind,index,mode)=>{
+      const colour=foregroundSources.get(snapshot.crops[index+'-'+kind]);
+      if(mode==='soft')return ['green','blue'].includes(colour)?colour+'-soft':colour || 'channel';
+      return colour && ['contrast','colour'].includes(mode)?colour:mode;
+    };
     const batchKey=(kind,index,mode)=>kind+':'+mode+':'+index+':'+batchProfile(kind,index,mode);
     async function batch(kind,mode='contrast',indices=[0,1,2,3,4],compactHeight=48) {
       check();
@@ -270,7 +297,7 @@
         await worker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:kind==='percentage'?'+-0123456789.,%':''});
         const output=await readView(canvas,{}, {text:true,blocks:true});check();
         const fresh=atlasEvidence(output,cells);
-        missing.forEach((index,i)=>{results[index]=fresh[i];});
+        missing.forEach((index,i)=>{results[index]=kind==='name'?exactNameWords(fresh[i]):fresh[i];});
         return results;
       }finally {canvas.width=canvas.height=0;for(const item of prepared)item.canvas.width=item.canvas.height=0;}
     }
@@ -285,7 +312,12 @@
     // Identical calibrated boxes contain the same evidence. Read their signed
     // suffix once instead of repeating identical pixels through a guide pass.
     const batchPercentages=snapshot.sharedPercentages?.every(Boolean)?null:await batch('percentage');
-    const suffixOf=name=>({text:/([+-]\s*\d+(?:\s*[.,]\s*\d+)?)\s*%\s*$/.exec(name.text)?.[0]?.trim() || '',confidence:name.confidence,words:[],source:'shared-crop',...(name.reused?{reused:true}:{})});
+    const suffixOf=name=>{
+      const matches=[...name.text.matchAll(/([+-]\s*\d+(?:\s*[.,]\s*\d+)?)\s*%/g)];
+      const match=matches.length===1 && /^[\s.,;:'"\u2018\u2019]{0,3}$/.test(name.text.slice(matches[0].index+matches[0][0].length))?matches[0]:null;
+      const confidence=name.lineConfidence ?? name.confidence;
+      return {text:match?.[0]?.trim() || '',confidence,words:[],source:'shared-crop',...(name.reused?{reused:true}:{})};
+    };
     const batchRows=batchNames.map((name,i)=>{
       const percentage=batchPercentages?.[i] || suffixOf(name);
       return {...parseField(name.text,percentage.text).row,confidence:Math.min(name.confidence,percentage.confidence)};
@@ -295,7 +327,7 @@
     // This is new OCR of the same glyphs, with the existing confidence threshold;
     // contradictory signed values or identities remain a conflict.
     const enlargedConflicts=Array(5).fill(false),initialBatchNames=batchNames.slice();
-    const unclear=!batchPercentages?batchNames.flatMap((name,i)=>!parseField(name.text,suffixOf(name).text).valid || name.confidence<80?[i]:[]):[];
+    const unclear=!batchPercentages?batchNames.flatMap((name,i)=>!parseField(name.text,suffixOf(name).text).valid || Math.min(name.confidence,suffixOf(name).confidence)<80?[i]:[]):[];
     const enlargedNames=unclear.length?await batch('name','contrast',unclear,96):null;
     for(const i of unclear) {
       const alternative=enlargedNames[i];
@@ -305,15 +337,36 @@
         first.row.value!==null && candidate.row.value!==null && first.row.value!==candidate.row.value;
       if(candidate.valid && !enlargedConflicts[i])batchNames[i]=alternative;
     }
-    const needsColour=!batchPercentages && batchNames.some(name=>!parseField(name.text,suffixOf(name).text).valid || name.confidence<80);
+    const warBatches=[],heldBatchPercentages=Array(5);
+    if(war && !batchPercentages)for(const mode of ['soft','channel']){
+      const indices=batchNames.flatMap((name,i)=>!parseField(name.text,suffixOf(name).text).valid || Math.min(name.confidence,suffixOf(name).confidence)<80?[i]:[]);
+      if(!indices.length)break;
+      const alternatives=await batch('name',mode);warBatches.push({mode,alternatives});
+      for(const i of indices){
+        const alternative=alternatives[i];if(!alternative.text)continue;
+        const first=parseField(batchNames[i].text,suffixOf(batchNames[i]).text),candidate=parseField(alternative.text,suffixOf(alternative).text);
+        const conflict=first.row.known && candidate.row.known && first.row.name!==candidate.row.name || first.row.value!==null && candidate.row.value!==null && first.row.value!==candidate.row.value;
+        if(conflict)enlargedConflicts[i]=true;
+        else if(candidate.valid && alternative.confidence>=80 && !enlargedConflicts[i]){batchNames[i]=alternative;heldBatchPercentages[i]=null;}
+        else if(!enlargedConflicts[i] && candidate.row.known && !candidate.row.assumed &&
+          (!first.row.known || first.row.assumed)){
+          // The name can become clear before the percentage. Retain its own
+          // exact OCR evidence without inventing or upgrading a numeric value.
+          if(first.row.value!==null)heldBatchPercentages[i]=heldBatchPercentages[i] || suffixOf(batchNames[i]);
+          batchNames[i]=alternative;
+        }
+      }
+    }
+    const needsColour=!batchPercentages && batchNames.some(name=>!parseField(name.text,suffixOf(name).text).valid || Math.min(name.confidence,suffixOf(name).confidence)<80);
     const colourIndices=needsColour?[0,1,2,3,4].filter(i=>batchProfile('name',i,'colour')!==batchProfile('name',i,'contrast')):[];
     const colourNames=colourIndices.length?await batch('name','colour',colourIndices):null;
     for(let i=0;i<5;i++) {
       let name=batchNames[i],percentage;
       if(batchPercentages)percentage=batchPercentages[i];
-      else percentage=suffixOf(name);
+      else percentage=heldBatchPercentages[i] || suffixOf(name);
       recordFields(i,'batch-contrast',initialBatchNames[i],batchPercentages?.[i] || suffixOf(initialBatchNames[i]));
       if(enlargedNames?.[i])recordFields(i,'batch-enlarged',enlargedNames[i],suffixOf(enlargedNames[i]));
+      for(const {mode,alternatives} of warBatches)if(alternatives[i])recordFields(i,'batch-war-'+mode,alternatives[i],suffixOf(alternatives[i]));
       if(colourNames?.[i]?.text)recordFields(i,'batch-colour',colourNames[i],suffixOf(colourNames[i]));
       let fieldConflict=enlargedConflicts[i];
       if(colourNames?.[i]?.confidence>=80) {
@@ -382,8 +435,9 @@
       if(fields[i].conflict){first.row.conflict=true;first.warnings.push('Independent field views disagree. Verify this row.');first.valid=false;}
       let selected=first,chosenName=fields[i].name,chosenPercentage=fields[i].percentage;
       if(!first.valid || rows[i].confidence<80) {
-        const alternativeName=await read(snapshot.crops[i+'-name'],'name','colour','7',snapshot.sharedPercentages?.[i]);
-        const alternativePercentage=await read(snapshot.crops[i+'-percentage'],'percentage','colour');
+        const alternativeMode=war && foregroundSources.get(snapshot.crops[i+'-name'])!=='neutral'?'soft':'colour';
+        const alternativeName=await read(snapshot.crops[i+'-name'],'name',alternativeMode,'7',snapshot.sharedPercentages?.[i]);
+        const alternativePercentage=await read(snapshot.crops[i+'-percentage'],'percentage',alternativeMode);
         recordFields(i,'colour-fields',alternativeName,alternativePercentage);
         if(alternativeName || alternativePercentage) {
           retried=true;
@@ -392,7 +446,14 @@
           const conflict=percentage.conflict || first.row.conflict || candidate.row.conflict || first.row.known && candidate.row.known && first.row.name!==candidate.row.name ||
             first.row.value!==null && candidate.row.value!==null && first.row.value!==candidate.row.value;
           if(conflict){selected=first;selected.row.conflict=true;selected.warnings.push('Row '+(i+1)+': independent field reads disagree. Verify it.');}
-          else if(candidate.valid && name.confidence>=80 && percentage.confidence>=80){selected=candidate;chosenName=name;chosenPercentage=percentage;rows[i].confidence=Math.min(name.confidence,percentage.confidence);}
+          else {
+            if(candidate.row.known && !candidate.row.assumed && name.confidence>=80 &&
+              (!selected.row.known || selected.row.assumed || chosenName.confidence<80))chosenName=name;
+            if(candidate.row.value!==null && percentage.confidence>=80 &&
+              (selected.row.value===null || chosenPercentage.confidence<80))chosenPercentage=percentage;
+            selected=parseField(chosenName.text,chosenPercentage.text);
+            rows[i].confidence=Math.min(chosenName.confidence,chosenPercentage.confidence);
+          }
         }
       }
       if(autoFit && snapshot.template && snapshot.crops['fit-panel'] && !selected.row.conflict && (!selected.valid || rows[i].confidence<80)) {
@@ -502,5 +563,36 @@
       return true;
     });
   }
-  window.DNScannerFieldRecognition={snapshot,recognize,atlasEvidence,percentageRect,witness,sameWitness};
+  function warSignature(source,fields) {
+    // Watch the text's foreground shape rather than moving blue-map brightness.
+    // The marker is outside the ordinary 0..32 brightness signature range.
+    // This is change detection only; speculative OCR still validates raw bytes.
+    const G=window.DNScannerRegions,C=window.DNScannerCore,template=fields?.template;
+    if(!source?.width || source.width*source.height>4000000 || !G?.valid(template) ||
+      (fields?.foregroundRows!==true && R().hallColour(source,{banner:true})!=='war'))return null;
+    const values=[64],row=document.createElement('canvas'),preview=document.createElement('canvas');
+    preview.width=128;preview.height=12;
+    try {
+      const sourceContext=source.getContext('2d',{willReadFrequently:true}),previewContext=preview.getContext('2d',{willReadFrequently:true});
+      for(const field of template.rows){
+        const box=C.cropPixels(field.name,source.width,source.height);if(!box)return null;
+        const image=sourceContext.getImageData(box.x,box.y,box.width,box.height),data=image.data,red=new Uint32Array(256),blue=new Uint32Array(256);
+        for(let p=0;p<data.length;p+=4){red[data[p]]++;blue[Math.max(0,Math.min(data[p+1],data[p+2])-data[p])]++;}
+        const median=hist=>{let count=0;for(let i=0;i<256;i++){count+=hist[i];if(count>=box.width*box.height/2)return i;}return 0;};
+        const redBackground=median(red),blueBackground=median(blue);
+        for(let p=0;p<data.length;p+=4){
+          const r=data[p],g=data[p+1],b=data[p+2],max=Math.max(r,g,b),min=Math.min(r,g,b);
+          const grey=Math.max(0,r-redBackground)*8*Math.max(0,1-(max-min)/Math.max(40,max*.25));
+          const ink=Math.max(grey,Math.max(0,g-Math.max(r,b))*12,Math.max(0,Math.min(g,b)-r-blueBackground)*12);
+          const value=255-Math.min(255,ink);data[p]=data[p+1]=data[p+2]=value;data[p+3]=255;
+        }
+        row.width=box.width;row.height=box.height;row.getContext('2d').putImageData(image,0,0);
+        previewContext.drawImage(row,0,0,128,12);
+        const pixels=previewContext.getImageData(0,0,128,12).data;
+        for(let p=0;p<pixels.length;p+=4)values.push(Math.round((255-pixels[p])/32));
+      }
+      return values;
+    }finally{row.width=row.height=preview.width=preview.height=0;}
+  }
+  window.DNScannerFieldRecognition={snapshot,recognize,atlasEvidence,percentageRect,witness,sameWitness,warSignature};
 })();

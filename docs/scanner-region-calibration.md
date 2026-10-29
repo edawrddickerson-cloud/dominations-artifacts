@@ -37,7 +37,7 @@ now follows current blue-ribbon pixels for saved and automatic fields, including
 focused retries. Neutral text excludes blue backing; green/blue masks retain dim
 glyphs and signs. Broad saved rows retain their glyph resolution in the first
 atlas. A colour retry is skipped when it would repeat the same foreground view.
-Unknown colours and non-War panels retain their existing processing.
+Unknown colours remain uninferred. Main panels retain their existing processing.
 
 The suffix locator uses the same foreground mask inside each original field.
 When an overlapping name crop mistakes the percent glyph for another character,
@@ -59,6 +59,54 @@ Both commands are part of `test_crafting_scanner_contract.cjs`.
 These are controlled probes of two independent screenshots, not a measurement of
 general live-game accuracy. The original gameplay recording referenced by the
 older replay documentation is unavailable at its recorded path on this machine.
+
+### Recorded War gameplay, 29 October 2026
+
+The newer recording `2026-10-28 23-21-36.mkv` is 147.8 seconds at 3440×1440.
+Seven game-only frames were manually transcribed before OCR, with playback
+intervals kept inside the same artifact's visible lifetime. The labels and
+recording hash are in `tests/scanner/video/war-2026-10-28.json`; original video
+and extracted frames stay outside published assets.
+
+The review reproduced both weak coloured-stat recognition and reads cancelled
+before a current item could replace the retained display. War change detection
+now watches foreground stat shapes rather than animated blue-map brightness.
+It still watches explicit category/Hall/dice boxes, clears on incompatible
+signature geometry, and retains the full 220 ms settling/raw-byte speculative
+validation contract. Public-fixture checks distinguish bounded particles from
+a genuinely changed stat row; Main and saved calibration remain isolated.
+
+War recovery adds at most two compact atlas views before individual expansion:
+soft foreground contrast and a background-normalized green channel. Clear first
+reads retain their existing path. A complete exact name can survive a damaged
+numeric suffix or improve independently from an unread percentage. Name-word
+confidence never upgrades numeric confidence or recovered cache evidence.
+Bounded trailing punctuation can follow one explicit signed percentage; extra
+digits, multiple values and missing signs remain invalid. Raw strings remain
+in observations. Contradictions and inferred values remain reviewable.
+
+On the first live War attempt with colour inference enabled, five known usable
+rows can display as an unconfirmed preview before expensive expansion and
+standard fallback. The ordinary retry still runs those stronger paths. Missing
+rows, assumed names and conflicts cannot take this shortcut; confidence and
+verification rules are unchanged. Local images retain the full initial read.
+Live War geometric expansion shares a four-proposal budget across fields and
+standard fallback, so a damaged old snapshot returns control to fresh capture
+sooner. Main, Storage and local images retain their existing expansion budget.
+
+Run the optional local study with:
+
+```powershell
+node scripts/review_scanner_war_video.cjs '--video=C:/Users/edwar/Videos/2026-10-28 23-21-36.mkv' --evidence=review
+```
+
+The tool checks the recording hash, serves it read-only on loopback, and uses a
+disposable browser and factory profile. `--static` isolates frozen-frame OCR;
+`--times=60,74` selects labelled cases. Correct displayed stats and fully
+confirmed direct OCR are separate metrics. A correct inferred value is not
+reported as direct recognition. This targeted, single-recording study is not a
+population accuracy estimate or a cold-start latency guarantee. Text-only
+evidence and limitations are in `reports/scanner-war-video-2026-10-29.json`.
 
 ### Category and hall correction, 14 October 2026
 

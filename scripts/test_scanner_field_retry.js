@@ -13,7 +13,7 @@ vm.createContext(context);
 for(const file of ['scanner-recognition.js','scanner-field-recognition.js'])vm.runInContext(fs.readFileSync('ui/'+file,'utf8'),context);
 const F=context.window.DNScannerFieldRecognition;
 function output(lines){return {data:{text:lines.map(line=>line.text).join('\n'),blocks:[{paragraphs:[{lines}]}]}};}
-async function run({weak=false,contradiction=false,valueConflict=false,missingSign=false,missingLine=false,automaticCategory=false,sourceReadable=true,percentage='+1%',guidePercentage=percentage,warGuide=false,separate=false}={}){
+async function run({weak=false,weakNumber=false,contradiction=false,valueConflict=false,missingSign=false,missingLine=false,automaticCategory=false,sourceReadable=true,percentage='+1%',guidePercentage=percentage,warGuide=false,separate=false}={}){
   const crops={};for(let i=0;i<5;i++){crops[i+'-name']=canvas(i+1,warGuide?180:100);crops[i+'-percentage']=separate?canvas(i+1,180):crops[i+'-name'];crops[i+'-star']=canvas();}
   crops.category=canvas(30);crops['hall-banner']=canvas();
   const categorySource=canvas(40),snapshot={crops,sharedPercentages:Array(5).fill(!separate),automaticCategory},settings={};
@@ -28,7 +28,9 @@ async function run({weak=false,contradiction=false,valueConflict=false,missingSi
         if(!initial && missingLine)return [];
         const name=!initial && contradiction?'Catapult Hitpoints':'Catapult Damage';
         const numeric=warGuide && separate && settings.tessedit_char_whitelist==='+-0123456789.,%';
-        return [{text:numeric?percentage:name+' '+(warGuide?'+19':missingSign?'1%':!initial && valueConflict?'+6%':percentage),confidence:numeric?0:initial && weak && source.pixel===1?50:95,bbox:{y0:args[1]+12,y1:args[1]+source.height-12}}];
+        const numberWeak=initial && weakNumber && source.pixel===1;
+        return [{text:numeric?percentage:name+' '+(warGuide?'+1g':missingSign?'1%':!initial && valueConflict?'+6%':percentage),confidence:numeric?0:initial && (weak || numberWeak) && source.pixel===1?50:95,
+          ...(numberWeak?{words:[{text:'Catapult',confidence:95},{text:'Damage',confidence:95},{text:percentage,confidence:50}]}:{}),bbox:{y0:args[1]+12,y1:args[1]+source.height-12}}];
       }));
     }
     if(warGuide && settings.tessedit_char_whitelist===''){
@@ -74,6 +76,15 @@ async function main(){
   read=await run({automaticCategory:true,sourceReadable:false});
   assert.equal(read.result.artifact.type,'Weapon','unreadable automatic text falls back to the calibrated pixels');
   assert.equal(read.calls.filter(call=>call.pixels>=30).length,2,'an unsuccessful automatic crop is not read a second time');
+  read=await run({percentage:'+1%.'});
+  assert.equal(read.result.valid,true,'bounded trailing punctuation preserves an explicit signed shared-crop percentage');
+  assert(read.result.rows.every(row=>row.rawName.endsWith('+1%.') && row.value===1),'raw name evidence retains the punctuation');
+  for(const percentage of ['1%.','+1%.5','+1% +6%']){
+    read=await run({percentage});assert.equal(read.result.valid,false);assert(read.result.rows.every(row=>row.value===null),'shared-crop cleanup cannot supply a missing sign, discard extra digits or choose between values');
+  }
+  read=await run({weakNumber:true});
+  assert.equal(read.result.valid,true,'a separate later numeric observation can recover a weak numeric field');
+  assert.equal(read.reuse.verified.size,4,'confident name words cannot promote weak initial numeric evidence into the verified cache');
   read=await run({warGuide:true});
   assert.equal(read.result.valid,true,'a signed suffix misread inside a shared name field can be separated using actual guide bounds');
   assert(read.result.rows.every(row=>row.name==='Catapult Damage' && row.value===1 && !row.inferred),'both fields require their own direct OCR');

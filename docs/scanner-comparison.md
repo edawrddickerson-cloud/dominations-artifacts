@@ -242,6 +242,15 @@ Run `node scripts/run_scanner_ocr_fixture.js --field-fit --summary` for real scr
 
 ## OCR during settling, October 18, 2026
 
+October 29 War follow-up: current War panels use a normalized foreground-text
+signature for change detection, so moving map brightness does not repeatedly
+cancel a readable item. Explicit category/Hall/dice fields remain watched and
+signature-layout changes invalidate the observation. This signature never
+approves speculative work: the full 220 ms gate and raw-byte input witness below
+remain mandatory. See [recorded War gameplay](scanner-region-calibration.md#recorded-war-gameplay-29-october-2026)
+for the local recording study and the distinction between correct provisional
+display and confirmed direct OCR.
+
 Live five-row crafting captures can start one OCR job during the existing 220 ms settling window once the fast OCR worker is ready. Cold startup keeps warming the worker and uses the ordinary settled read if the worker is not ready in time. The same worker processes it; there is no additional worker or job queue. The result cannot update scores, corrections, logs or verified crop evidence before validation. At the ordinary settling point, a fresh observation must exist and every RGBA byte of the frozen panel, prepared category source and original-frame category/Hall/dice crops must match the input an ordinary settled read would consume. Profile, encounter, capture session, calibration and recognition settings must also match. Input witnesses are temporary, limited to 8 MiB each, and released after validation. Oversized or unavailable witnesses use ordinary settled OCR.
 
 Changed pixels, stale frames, hidden or paused capture, replaced artifacts and changed profiles discard early work. A settled retry waits for the existing worker to finish its current bounded OCR call; input rejection retains the warm worker. Unvalidated work cannot populate the verified encounter cache. The original sampling cadence, settling duration, confidence thresholds, conflict handling and uncertain-stat display rules remain in place. Still images and Storage Scanner keep their ordinary read path.

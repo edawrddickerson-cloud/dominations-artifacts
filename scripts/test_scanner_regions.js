@@ -169,7 +169,7 @@ async function run(percentages) {
     const stopped=R.create({names,canonPerk:v=>v});await stopped.close();
     await assert.rejects(stopped.recognize(source,{fields:{}}),/stopped/i);
     assert.equal(released,2,'already stopped recognition never allocates field snapshots');
-    let finishInitialization;
+    const createWorker=context.window.Tesseract.createWorker;let finishInitialization;
     context.window.Tesseract.createWorker=()=>new Promise(resolve=>{finishInitialization=resolve;});
     const initializing=R.create({names,canonPerk:v=>v});
     const interrupted=initializing.recognize(source,{fields:{}});
@@ -177,6 +177,36 @@ async function run(percentages) {
     finishInitialization({async terminate(){}});
     await assert.rejects(interrupted,/stopped/i);
     assert.equal(released,3,'field snapshots released when recognition stops during initialization');
+    context.window.Tesseract.createWorker=createWorker;
+    const ribbon=canvas();ribbon.width=30;ribbon.height=10;ribbon.pixel=[20,80,150];
+    F.snapshot=()=>({valid:true,crops:{hall:ribbon},release(){released++;}});
+    const previewRows=()=>Array.from({length:5},()=>({name:'Catapult Damage',value:1,known:true,hasPercent:true,confidence:65}));
+    const previewResult=()=>({rows:previewRows(),artifact:{type:'Equipment'},hall:'war',hallSource:'hall-colour',warnings:['Review low-confidence text.'],valid:false,unlocked:{count:null,states:Array(5).fill(null)},observations:[]});
+    const cases=[
+      {label:'complete provisional',preview:true},
+      {label:'ordinary retry',options:{preview:false}},
+      {label:'inference disabled',options:{inferColours:false}},
+      {label:'Main ribbon',main:true},
+      {label:'missing row',mutate:r=>r.rows.pop()},
+      {label:'unknown name',mutate:r=>r.rows[0].known=false},
+      {label:'assumed name',mutate:r=>r.rows[0].assumed=true},
+      {label:'missing value',mutate:r=>r.rows[0].value=null},
+      {label:'missing percentage',mutate:r=>r.rows[0].hasPercent=false},
+      ...['conflict','tierConflict','outOfRange'].map(key=>({label:key,mutate:r=>r.rows[0][key]=true})),
+      {label:'metadata conflict',mutate:r=>r.metadataConflict=true},
+    ];
+    for(const item of cases){
+      ribbon.pixel=item.main?[150,30,20]:[20,80,150];
+      let fieldAutoFit;const calibrated=previewResult();item.mutate?.(calibrated);
+      F.recognize=async(views,options)=>{fieldAutoFit=options.autoFit;return calibrated;};
+      const engine=R.create({names,canonPerk:v=>v}),modelsBefore=workerModels.length;
+      const result=await engine.recognize(source,{fields:{},layout:'panel',preview:true,inferColours:true,...item.options});
+      assert.equal(result.preview===true,item.preview===true,item.label+' controls provisional short circuit');
+      assert.equal(workerModels.length-modelsBefore,item.preview?1:2,item.label+' preserves standard fallback when required');
+      assert.equal(fieldAutoFit,!!(item.main || item.options?.preview===false || item.options?.inferColours===false),item.label+' defers field expansion only for the first War preview');
+      if(item.preview){assert.equal(result.valid,false);assert.equal(result.rows.length,5);assert.match(result.warnings.join(' '),/low-confidence/);}
+      await engine.close();
+    }
   }finally {F.snapshot=originalSnapshot;F.recognize=originalRecognize;}
   console.log('Scanner field geometry, persistence, independent row association, signs, conflicts, frozen crops and temporal input passed.');
 })().catch(error=>{console.error(error);process.exitCode=1;});

@@ -16,6 +16,7 @@ const checks=[
   ['test_scanner_regions.js'],['test_scanner_field_retry.js'],
   ['test_scanner_war_calibration.cjs','--full','--summary'],
   ['test_scanner_war_calibration.cjs','--live','--summary'],
+  ['test_scanner_war_calibration.cjs','--stability','--summary'],
 ];
 for(const [file,...args] of checks){
   console.log('Checking '+file+(args.length?' '+args.join(' '):''));

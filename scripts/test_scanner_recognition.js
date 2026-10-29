@@ -170,6 +170,13 @@ assert.equal(parse('Catapult Damage +12.5%',names,canon,1).valid,false,'invalid 
 assert.equal(parse('Catapult Damage -1.3%',names,canon,1).valid,false,'digit repair cannot reverse an invalid stat sign');
 assert.equal(categoryRecognition.parseFieldRow('Catapult Damage +13%','+1.3%',names,canon).valid,true,'independent crops agree after punctuation repair');
 assert.equal(categoryRecognition.parseFieldRow('Catapult Damage +14%','+1.3%',names,canon).row.conflict,true,'different integer readings remain a conflict');
+for(const suffix of ['+19','23+','-3','+6,']){
+  const field=categoryRecognition.parseFieldRow('Catapult Damage '+suffix,'',names,canon);
+  assert.equal(field.row.name,'Catapult Damage','numeric suffix noise cannot erase an exact complete name');
+  assert.equal(field.row.value,null,'name suffix fragments cannot supply numeric evidence');
+  assert.equal(field.valid,false);assert.equal(field.row.rawName,'Catapult Damage '+suffix);
+}
+assert.equal(categoryRecognition.parseFieldRow('Catapult Damage +1g','',names,canon).row.nameMatch?.method==='exact',false,'alphabetic suffix damage still requires its own name read');
 assert.equal(categoryRecognition.usefulRow({known:true,name:'Catapult Damage',value:1.3,hasPercent:true}),false,'fractional rows never count toward capture coverage');
 const reconcile=context.window.DNScannerRecognition.reconcileReads;
 const good=parse(text,names,canon,5);
@@ -327,6 +334,12 @@ for(let y=0;y<100;y++)for(let x=0;x<100;x++) {
   warTexture.set([10+Math.floor(noise*.3),20+Math.floor(noise*.4),45+Math.floor(noise*.65),255],(y*100+x)*4);
 }
 assert.equal(JSON.stringify(recognition.rowColours(warTexture,100,100)),JSON.stringify(Array(5).fill(null)),'blue texture without text cannot establish blue tiers');
+assert.equal(JSON.stringify(recognition.rowColours(warTexture,100,100,{war:true})),JSON.stringify(Array(5).fill(null)),'War recovery does not turn blue map texture into a tier');
+const faintGreen=new Uint8ClampedArray(100*100*4);
+for(let p=0;p<faintGreen.length;p+=4)faintGreen.set([12,20,34,255],p);
+for(let row=0;row<5;row++)for(let y=row*20+4;y<row*20+13;y++)for(let x=10;x<60;x+=4)faintGreen.set([24,39,27,255],(y*100+x)*4);
+assert.equal(JSON.stringify(recognition.rowColours(faintGreen,100,100,{war:true})),JSON.stringify(Array(5).fill('green')),'low-saturation War glyph edges retain their green identity');
+assert.equal(JSON.stringify(recognition.rowColours(faintGreen,100,100)),JSON.stringify(Array(5).fill(null)),'War-only colour recovery does not change Main classification');
 const warInk=new Uint8ClampedArray(warTexture),warPalette=[[150,150,150],[110,110,110],[15,105,25],[15,70,85],[150,150,150]];
 for(let row=0;row<5;row++)for(let y=row*20+4;y<row*20+13;y++)for(let x=10;x<60;x+=4)warInk.set([...warPalette[row],255],(y*100+x)*4);
 assert.equal(JSON.stringify(recognition.rowColours(warInk,100,100)),JSON.stringify(['neutral','neutral','green','blue','neutral']),'War texture cannot outweigh white/grey glyphs or erase genuine coloured text');
