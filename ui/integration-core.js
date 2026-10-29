@@ -76,6 +76,19 @@
     if(window.DNArtworkIds)value.artworkSchema=1;
     return validate(JSON.parse(JSON.stringify(value)));
   }
+  // Delta positions belong to an exact, CAS-protected remote revision. Compare
+  // complete values, never revision/writer alone: Keep and reconciliation can
+  // preserve revisions while changing other fields. No local history is pruned.
+  function workspaceSaveRequest(data,base) {
+    const full={p_data:data,p_items_delta:null},items=data.craftingLog?.items,previous=base?.craftingLog?.items;
+    if(!Array.isArray(items) || !Array.isArray(previous) || items.length>100000)return full;
+    const changes={};
+    items.forEach((item,index)=>{if(index>=previous.length || canonical(item)!==canonical(previous[index]))changes[index]=item;});
+    const {items:omitted,...log}=data.craftingLog;
+    const delta={p_data:{...data,craftingLog:log},p_items_delta:{length:items.length,changes}};
+    const encoder=new TextEncoder();
+    return encoder.encode(JSON.stringify(delta)).length<encoder.encode(JSON.stringify(full)).length?delta:full;
+  }
   function lifetimeCraftsLogged(log) {
     if(log?.ledger && window.DNCraftingHistory)return window.DNCraftingHistory.totals(log).logged;
     if(log?.version!==2 || !Array.isArray(log.items))return null;
@@ -121,5 +134,5 @@
   const ocrFeedbackReady=config=>privacyReady(config) && config.ocrFeedbackEnabled===true;
   const cloudReady=(config,origin)=>!!config?.supabaseUrl && !!config.supabasePublishableKey &&
     (config.cloudEnabled===true && privacyReady(config) || config.localCloudTesting===true && config.environment==='development' && origin==='http://127.0.0.1:8765');
-  window.DNIntegrationCore={VERSION,POLICY,MAX_BYTES,isSyncedSetting,settingsSnapshot,sanitizeItem,createWorkspace,validate,canonical,fingerprint,decision,consent,setConsent,privacyReady,researchReady,ocrFeedbackReady,cloudReady,lifetimeCraftsLogged};
+  window.DNIntegrationCore={VERSION,POLICY,MAX_BYTES,isSyncedSetting,settingsSnapshot,sanitizeItem,createWorkspace,validate,canonical,fingerprint,decision,consent,setConsent,privacyReady,researchReady,ocrFeedbackReady,cloudReady,lifetimeCraftsLogged,workspaceSaveRequest};
 })();

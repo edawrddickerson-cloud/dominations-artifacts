@@ -107,7 +107,14 @@
       await window.DN.scannerLog.write(JSON.stringify({...merged,scans:previous?.scans || [],labels:previous?.labels || []}));
     },
     async readLocalCraftsLogged(){try{return C.lifetimeCraftsLogged(JSON.parse(await window.DN.scannerLog.read() || 'null'));}catch{return null;}},
-    remote:{read:readWorkspace,readMetadata:owner=>readWorkspace(owner,{metadataOnly:true}),async write(owner,revision,operation,data){return rpc('planner_save_workspace_v2',{p_owner:owner,p_expected_revision:revision,p_operation_id:operation,p_data:data});}}});
+    remote:{read:readWorkspace,readMetadata:owner=>readWorkspace(owner,{metadataOnly:true}),async write(owner,revision,operation,data,base){
+      // Explicit rollout gate: no production migration is implied by this code.
+      // Never fall back after an ambiguous failure; keep the pending operation
+      // for the existing read/retry reconciliation path.
+      if(config.workspaceDeltaSaves===true)return rpc('planner_save_workspace_v3',{
+        p_owner:owner,p_expected_revision:revision,p_operation_id:operation,...C.workspaceSaveRequest(data,base)});
+      return rpc('planner_save_workspace_v2',{p_owner:owner,p_expected_revision:revision,p_operation_id:operation,p_data:data});
+    }}});
   function schedule(delay=2000) {
     clearTimeout(timer);if(!currentUser || !configured())return;
     timer=setTimeout(()=>{timer=null;engine.inspect().catch(()=>{});},delay);
@@ -137,7 +144,7 @@
       if(!config.supabasePublishableKey.startsWith('sb_publishable_'))throw Error('Use a browser-safe Supabase publishable key.');
       if(!window.supabase)await window.DNServiceLoader.script('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js');
       client=window.supabase.createClient(config.supabaseUrl,config.supabasePublishableKey,{auth:{persistSession:true,autoRefreshToken:true,flowType:'pkce',detectSessionInUrl:false},global:{fetch:async(url,options={})=>{
-        const requestPath=String(url?.url || url).split('?')[0],workspaceTransfer=/\/rpc\/planner_(read_workspace|save_workspace(?:_v2)?)$/.test(requestPath)||/\/planner_workspaces$/.test(requestPath);
+        const requestPath=String(url?.url || url).split('?')[0],workspaceTransfer=/\/rpc\/planner_(read_workspace|save_workspace(?:_v[23])?)$/.test(requestPath)||/\/planner_workspaces$/.test(requestPath);
         const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),workspaceTransfer?60000:15000);
         try{return await fetch(url,{...options,signal:options.signal || controller.signal,referrerPolicy:'no-referrer'});}finally{clearTimeout(timeout);}
       }}});

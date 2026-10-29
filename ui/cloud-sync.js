@@ -85,7 +85,7 @@
               const combined=C.validate(await capture()),hash=await C.fingerprint(combined),operation=crypto.randomUUID();
               if(!valid(id,generation))return state;
               saveBinding({...binding,owner:id,pending:{operation,hash}});
-              const saved=await remote.write(id,row.revision,operation,combined);
+              const saved=await remote.write(id,row.revision,operation,combined,row.data);
               if(!valid(id,generation))return state;
               saveBinding(bound(id,saved,hash));
               cached={row:{...saved,data:combined},hash};
@@ -112,7 +112,7 @@
           if(!valid(id,generation))return state;
           const operation=binding?.pending?.hash===localHash?binding.pending.operation:crypto.randomUUID();
           saveBinding({...binding,owner:id,pending:{operation,hash:localHash}});
-          const saved=await remote.write(id,row?.revision || 0,operation,local);
+          const saved=await remote.write(id,row?.revision || 0,operation,local,row?.data);
           if(!valid(id,generation))return state;
           saveBinding({...bound(id,saved,localHash),savedAt:saved.updated_at || new Date().toISOString()});
           cached={row:{...saved,data:local},hash:localHash};
@@ -152,7 +152,7 @@
           if(!valid(id,generation))return state;
           const operation=crypto.randomUUID();
           saveBinding({...readBinding(),owner:id,pending:{operation,hash}});
-          const saved=await remote.write(id,selected.row?.revision || 0,operation,data);
+          const saved=await remote.write(id,selected.row?.revision || 0,operation,data,selected.row?.data);
           if(!valid(id,generation))return state;
           if(applyHistory && data.craftingLog)await applyHistory(data.craftingLog);
           if(!valid(id,generation))return state;
@@ -171,7 +171,7 @@
           data={...data,craftingLog:window.DNCraftingHistory.project(window.DNCraftingHistory.reconcile(selected.local.craftingLog,data.craftingLog,{baselineChoice:'cloud'}))};
           hash=await C.fingerprint(data);
           if(!valid(id,generation))return state;
-          if(hash!==selected.remoteHash){const saved=await remote.write(id,revision,crypto.randomUUID(),data);row=saved;revision=saved.revision;}
+          if(hash!==selected.remoteHash){const saved=await remote.write(id,revision,crypto.randomUUID(),data,current.data);row=saved;revision=saved.revision;}
           if(!valid(id,generation))return state;
         }
         await apply(data,{preserveArtwork:!readBinding()?.owner || readBinding().owner===id,owner:id,isCurrent:()=>valid(id,generation)});

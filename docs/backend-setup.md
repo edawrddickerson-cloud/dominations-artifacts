@@ -185,3 +185,133 @@ Required live checks: import twice without duplicates; compare two users; make c
 For server-side deletion acceptance without risking a real Discord account, the operator can create an auto-confirmed, email-only disposable user named `planner-delete-test-20261022@example.com`. Save its email, password and UUID as `TEST_USER_EMAIL`, `TEST_USER_PASSWORD` and `TEST_USER_ID` in ignored `data/temp/deletion-test-credentials.txt`. `node scripts/test_live_account_deletion.cjs --check` only verifies the identity against the database. `--execute` requires that exact email/UUID, an email-only identity created within 24 hours and an empty workspace, then seeds only its own synthetic records and account-linked analytics, calls the deployed deletion function, and verifies Auth/session rejection, planner cascades, analytics-person disappearance and unchanged other accounts/workspaces. Tokens remain in memory and reports exclude credentials. The script uses a real password Auth session, so it tests deployed server deletion rather than Discord reauthentication or the browser deletion controls. Provider event erasure remains asynchronous. The completed disposable account cannot be reused; a new test requires a fresh operator-created user and UUID.
 
 For rollback, disable `cloudEnabled` and `localCloudTesting` and optional capture in `service-config.js`. Keep the additive database intact and restore application files only through the normal reviewed deployment workflow. Existing browser formats and local saves remain usable. Never drop tables as a routine frontend rollback.
+
+## Workspace delta saves
+
+The October 29 IO investigation confirmed that the crafting log, rather than
+the five planner records, dominates revision 397: 7,587,884 of 8,253,424 JSON
+bytes. Its 2,930 items contain 14,650 perk rows; the `rows` arrays account for
+5,097,351 bytes. Field-size diagnostics return names, counts and sizes only.
+The ledger is approximately 20 kB. No history fields should be discarded to
+reduce the payload.
+
+`202610300001_workspace_delta_save.sql` was authorized and installed on October
+29 UTC (October 30 Malta time), after a fresh backup passed local restoration.
+The adapter uses it only when `workspaceDeltaSaves === true`; the approved
+release enables that flag. The migration and rollback-only production rehearsal
+preserved existing account data. The ignored deployment evidence is
+`data/temp/workspace-delta-release.json`.
+
+The proposed protocol retains the complete workspace schema and existing
+read/export paths. The sync engine passes the exact inspected remote document
+to the adapter. `workspaceSaveRequest` compares complete crafting-item values
+at each array position, not just their revision or writer. It sends changed
+positions, the target array length, and all other workspace/log fields. It
+uses a complete payload for first uploads, unavailable bases, histories above
+100,000 entries, or deltas larger than a full request. Ordering, additions,
+edits, explicit removals and ledger facts are preserved without compacting data.
+
+The new RPC checks the authenticated owner and locks the workspace row before
+checking the expected revision. It reconstructs the full document, enforces
+the original 16 MiB limit and artwork validation, and stores the same complete
+three-revision/30-day history snapshots. A metadata-only acknowledgement avoids
+serializing the full log back to a browser that already has the document.
+The engine attaches its validated local document to the resulting cache.
+
+One private receipt per account stores the latest v3 operation ID and SHA-256
+request digest, including its expected revision. This rejects altered retries,
+including omitted changes that could otherwise disappear when a sparse patch
+is reapplied to the already-updated document. The receipt is updated atomically
+with the workspace, is inaccessible to browser roles, and cascades on account
+deletion. A retry also checks its committed revision so a legacy writer's UUID
+reuse cannot make an old receipt acknowledge newer data. There is no automatic fallback after errors or lost acknowledgements;
+the existing pending-operation read/reconciliation handles uncertain outcomes.
+
+This optimization reduces full-history RPC input parsing, intermediate
+materialization and response serialization. It still compares items in the
+browser and reconstructs, validates, compresses and snapshots full documents
+in PostgreSQL. It does not normalize storage, suppress every identical-data
+save, or establish the incident's complete root cause. WAL may remain similar.
+
+Validation commands (all save tests use isolated databases and synthetic data):
+
+```powershell
+node scripts/test_workspace_delta_save.cjs
+node scripts/test_workspace_delta_transport.cjs
+node scripts/test_backend_core.js
+node scripts/test_backend_database.cjs
+node scripts/test_crafting_v2_database.cjs
+node scripts/test_cloud_metadata_reads.cjs
+node scripts/test_cloud_choice_concurrency.cjs
+node scripts/benchmark_workspace_delta_local.cjs
+```
+
+The database test uses the existing PGlite installation under
+`data/temp/backend-tests`. The benchmark uses portable PostgreSQL under
+`data/temp/postgresql-tools`, creates a password-protected, loopback-only
+cluster, and stops it after the run. It compares actual PostgREST-shaped RPC
+queries at `work_mem=2184kB`, including temp blocks, WAL, execution time,
+request/acknowledgement sizes, equal document hashes and concurrent sessions.
+Its ignored report is `data/temp/workspace-delta-local-benchmark.json`.
+Native PostgreSQL here is 18.6; hosted PostgreSQL is 17.11. Local timings and
+synthetic compression ratios are not predictions of hosted performance.
+
+The final synthetic run used a 7,498,941-byte compact workspace. Three one-row
+crafting edits sent 7,499,081-byte v2 requests versus 3,102-byte v3 requests.
+Each v2 save wrote 2,135 temporary blocks (16.68 MiB); v3 wrote zero. Median
+server execution was 583.11 ms versus 442.607 ms. A settings-only save sent
+7,499,132 versus 587 bytes and took 576.458 versus 372.638 ms, again eliminating
+the measured temporary writes. Full versus metadata acknowledgements measured
+8,322,512 versus 148 bytes. WAL remained approximately 286–295 kB per crafting
+edit, consistent with retaining full stored documents and history. The synthetic
+document compressed to 132,349 bytes, substantially smaller than the live
+818,576-byte document; do not extrapolate its WAL or latency to production.
+
+For a future rollout, first obtain approval, take and verify a backup, and
+apply only the reviewed additive migration. Keep the flag off until function
+permissions, RLS, receipts, and existing read/export compatibility are verified.
+Then enable the flag for a controlled client and compare saves and host metrics
+over matching windows before broad activation. Roll back by disabling the flag
+and retaining the additive function/table. The v2 client can read and save the
+unchanged full document format; no destructive reverse migration is required.
+
+### Separate IO investigation
+
+`node scripts/diagnose_workspace_io_readonly.cjs` uses explicit read-only
+transactions with local statement/lock timeouts. It checks the project ref,
+returns no workspace values or query text, records statistics windows and
+statement fingerprints, and writes `data/temp/disk-io-followup.json`. Field
+sampling can itself spill: the October 29 23:08 UTC pass added 16,179,588 bytes
+across two temporary files; include that cost when interpreting later counters.
+
+Before that sampling, `pg_stat_database.temp_bytes` was 742,060,449 bytes, while
+recorded statement temporary writes totalled 132,612,096 bytes. Four saves
+accounted for 70,139,904 bytes; a dashboard-tagged CTE first recorded at
+22:41:46 UTC accounted for 27,967,488 bytes across three calls. Known earlier
+field-size and parsing probes account for the other recorded spills. These
+observations leave 609,448,353 bytes unattributed, not proven to be save IO.
+
+Statement statistics reset at 21:28:28 UTC, matching the observed server start;
+database `stats_reset` is null, so equal windows cannot be assumed. PostgreSQL
+can retain cumulative database statistics across clean restarts, and failed
+executions do not update `pg_stat_statements` execution counters. Those are
+possible explanations for the gap, not evidence that particular timeouts
+caused it. See the PostgreSQL 17 documentation for
+[cumulative statistics](https://www.postgresql.org/docs/17/monitoring-stats.html)
+and [statement statistics](https://www.postgresql.org/docs/17/pgstatstatements.html).
+
+The native benchmark independently verified the failed-execution mechanism:
+a synthetic JSON-parsing SELECT deliberately raised division by zero after
+materialization. Database temporary bytes rose by 8,743,598 while recorded
+statement temporary writes rose by zero. This validates a possible attribution
+gap, but does not identify the production errors or attribute the unexplained
+609 MB to any particular failing query. This experiment never ran on production.
+
+Hosted IO timings are disabled. No Supabase MCP, host-metrics or provider-error
+log tools are exposed to this session despite Cursor's separate authenticated
+connection. Consequently the reported swap/IO-wait graphs, IO-budget warning,
+and 95.6% database-error overview still need their underlying time series and
+error messages. Rollbacks are not error counts. Compare explicit incident UTC
+windows, graph denominators and reset times before attributing the whole
+incident to saves or recommending compute changes. Do not extract browser
+OAuth tokens or reset production statistics to fill this evidence gap.
