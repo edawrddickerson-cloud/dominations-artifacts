@@ -357,10 +357,11 @@
     const state=settings();
     const core = window.DNScannerComparisonCore;
     const normalizedType = typeName(type), normalizedHall = hallName(hall);
+    const capacity = DN.artifactSlotCapacity(normalizedType, normalizedHall === 'war' ? 'War' : 'Main');
     const selectedAxes=prefSortAxes?window.DNArtifactScoring.craftingAxes(prefSortAxes,{hall:normalizedHall,type:normalizedType}):{offensive:true,defensive:true};
     if (cachedOwned !== owned || cachedCanon !== canonPerk) { benchmarks.clear(); cachedOwned = owned; cachedCanon = canonPerk; }
     const validCategory = !!normalizedType && (!result?.hall || hallName(result.hall) === normalizedHall) &&
-      DN.artifactSlotCapacity(normalizedType, normalizedHall === 'war' ? 'War' : 'Main') > 0;
+      capacity > 0;
     const rows = result?.rows || [];
     let uncertain = false, readable = 0;
     const potentialRows = rows.slice(0, 5).map(row => {
@@ -404,7 +405,8 @@
         benchmarks.set(cacheKey, {candidates, incomplete});
       }
       const benchmark = benchmarks.get(cacheKey) || {candidates: [], incomplete: 0};
-      const threshold = benchmark.candidates[1]?.score ?? null;
+      const benchmarkItem = benchmark.candidates[capacity - 1] || null;
+      const threshold = benchmarkItem?.score ?? null;
       const missingSources=sourceIssues(purpose);
       const requiredLines=purpose.rare ? state.rareCards[id] : null;
       let status = !result || score === null ? 'waiting' : !validCategory ? 'category' : !available || missingSources.length ? 'unavailable' :
@@ -420,7 +422,7 @@
       });
       return {id, label: purpose.label, rare:!!purpose.rare, mode:purpose.mode, perks:purpose.rare?[...purpose.stats]:undefined, requiredLines, score, contributions, lines, threshold, best: benchmark.candidates[0]?.score ?? null,
         baseScore:potential?.basePreference ?? null,rerollGain:potential?.rerollGain ?? 0,
-        count: benchmark.candidates.length, second:benchmark.candidates[1] || null,incomplete: benchmark.incomplete, uncertain:purposeUncertain, status, missingSources,
+        capacity, count: benchmark.candidates.length, benchmarkItem,incomplete: benchmark.incomplete, uncertain:purposeUncertain, status, missingSources,
         benchmarkAvailable:validCategory && available && !missingSources.length,
         hit: status === 'vacancy' || status === 'better'};
     });

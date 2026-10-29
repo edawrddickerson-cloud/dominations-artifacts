@@ -28,7 +28,7 @@ const original=JSON.stringify([api.settings().customPurposes,rows,cards]);
 for(const [mode,expected] of [['both',380],['off',298],['def',82],['both',380],['off',298]]) {
   const result=api.evaluate(read,{hall:'war',type:'Weapon',owned:cards,selected:[target],prefSortAxes:axes[mode]})[0];
   assert.equal(result.score,expected,mode+' current craft');assert.equal(result.threshold,expected,mode+' second-owned cutoff');
-  assert.equal(result.second.id,'second');assert.equal(result.second.name,'Second crafted card');
+  assert.equal(result.benchmarkItem.id,'second');assert.equal(result.benchmarkItem.name,'Second crafted card');
   assert.equal(result.contributions.reduce((sum,row)=>sum+(row.score || 0),0),expected,'inline contributions match the target total');
   const options=api.scoringOptions(target,{canonPerk:name=>name,prefSortAxes:axes[mode],scoreMode:'combined'},{hall:'war',type:'Weapon'});
   assert.equal(core.craftPotential(read,options).potentialPreference,expected,'reroll/base scoring uses the identical axes');

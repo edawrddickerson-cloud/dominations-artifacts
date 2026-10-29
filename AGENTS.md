@@ -13,6 +13,11 @@ to accommodate an implementation. Reconcile an ambiguous request that appears
 to change the one-reroll limit with the user before changing the contract.
 Routine fixes that restore this contract do not require confirmation.
 
+Crafting benchmarks use the owned item's Hall/type slot capacity from Collection:
+War Equipment uses the fourth-best owned item; all other ordinary types use the
+second-best. Apply this to strategy, saved-target and Rare Card recommendations.
+Fewer than that many owned items means an open slot; ties do not replace items.
+
 # Site-wide UI copy
 
 Keep site UI copy to names, facts, and necessary actions. Do not add explanatory blurbs, introductory prose, redundant descriptions, or implementation details. Use concise labels, values, counts, statuses, and controls. Keep errors and instructions only when needed to complete an action. Apply this rule across all pages and new or edited UI, including scanner decision boxes.

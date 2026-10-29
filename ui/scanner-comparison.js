@@ -1,4 +1,4 @@
-/* Authority: User-requested capture percentage and top-two benchmark, October 2026.
+/* Authority: User-requested capture percentage and slot-capacity benchmark, October 2026.
  * Ownership: Crafting summary and same-type, same-hall collection comparison.
  * Invariants: Shared maximum weighted scoring; ties do not displace owned items;
  * identified fields retain read/inferred/typed provenance. Logs are not ownership. */
@@ -7,6 +7,7 @@
   const DN=window.DN;
   const hallName=value=>String(value || '').toLowerCase()==='war'?'War':'Main';
   const typeName=value=>String(value || '').trim().replace(/^war[ -]/i,'').toLowerCase();
+  const slotCapacity=(type,hall)=>DN.artifactSlotCapacity(typeName(type),hallName(hall));
   const scoreable=row=>!!row?.name && row.known!==false && Number.isFinite(row.value) && row.hasPercent!==false && !row.assumed && !row.conflict && !row.tierConflict && !row.estimated && !row.scoreExcluded;
   function scoreExclusion(row) {
     if(!row?.name)return 'Waiting for a perk name';
@@ -143,7 +144,7 @@
   // Keep confirmation/completeness separate from that visual comparison.
   function compareStrategies(result,{strategies=[],...params},comparator=compare) {
     const results=strategies.map(strategy=>({strategyId:strategy.id,name:strategy.name,favorite:strategy.favorite,
-      ...comparator(result,{...params,options:strategy.options,limit:2})}));
+      ...comparator(result,{...params,options:strategy.options})}));
     const reliable=item=>!result?.provisional && !item.provisional && !['partial','incomplete','unconfirmed','axes','type'].includes(item.status);
     const improvements=results.filter(item=>reliable(item) && item.status==='better');
     const vacancies=results.filter(item=>reliable(item) && item.status==='vacancy');
@@ -160,7 +161,7 @@
   }
   function compare(result,{type,hall,owned,options,levels={},limit=null},benchmark=ownedBenchmark) {
     options=options?{...options,scoreMode:'combined'}:options;
-    const normalized=typeName(type),grade=normalized.charAt(0).toUpperCase()+normalized.slice(1),slots=DN.artifactSlotCapacity(grade,hallName(hall));
+    const normalized=typeName(type),grade=normalized.charAt(0).toUpperCase()+normalized.slice(1),slots=slotCapacity(type,hall);
     if(!slots || ['legendary','mythical'].includes(normalized))return {status:'type'};
     const capacity=Number.isInteger(limit) && limit>0?limit:slots;
     options=craftOptions(options,{hall,type});
@@ -223,21 +224,22 @@
     if(!strategies?.length)return;
 
     const activeLabel=document.getElementById('scanner-benchmark-label');
-    if(activeLabel)activeLabel.textContent='Top 2 · '+options.strategyName;
+    const capacity=slotCapacity(type.value,hall.value) || 2;
+    if(activeLabel)activeLabel.textContent='Top '+capacity+' · '+options.strategyName;
     const available=!error && loadedProfile===DN.activeProfileId();
     const comparison=available && type.value?compareStrategies(confirmed?latest:null,
       {type:type.value,hall:hall.value,owned,strategies},compareOwned):null;
-    const summary=comparison?comparison.belowDisplayedBenchmarks?(comparison.status==='below'?'':'Estimated · ')+'Below top 2 in all '+strategies.length+' selected strategies':
-      comparison.status==='better'?'Improves top 2 for '+comparison.improvements+' of '+strategies.length+' strategies':
-      comparison.status==='vacancy'?'Open top-two slot for '+comparison.vacancies+' of '+strategies.length+' strategies':
-      comparison.meetingDisplayedBenchmarks?(comparison.status==='check'?'Estimated · ':'')+'Meets top 2 for '+comparison.meetingDisplayedBenchmarks+' of '+strategies.length+' strategies'+(comparison.status==='tie'?' · tie does not replace an owned item':''):
-      comparison.status==='below'?'Below top 2 in all '+strategies.length+' selected strategies':
-      comparison.status==='tie'?'Ties top 2 for '+comparison.ties+' strategies · no replacement':'Check strategy comparisons · incomplete or uncertain evidence':
+    const summary=comparison?comparison.belowDisplayedBenchmarks?(comparison.status==='below'?'':'Estimated · ')+'Below top '+capacity+' in all '+strategies.length+' selected strategies':
+      comparison.status==='better'?'Improves top '+capacity+' for '+comparison.improvements+' of '+strategies.length+' strategies':
+      comparison.status==='vacancy'?'Open top '+capacity+' slot for '+comparison.vacancies+' of '+strategies.length+' strategies':
+      comparison.meetingDisplayedBenchmarks?(comparison.status==='check'?'Estimated · ':'')+'Meets top '+capacity+' for '+comparison.meetingDisplayedBenchmarks+' of '+strategies.length+' strategies'+(comparison.status==='tie'?' · tie does not replace an owned item':''):
+      comparison.status==='below'?'Below top '+capacity+' in all '+strategies.length+' selected strategies':
+      comparison.status==='tie'?'Ties top '+capacity+' for '+comparison.ties+' strategies · no replacement':'Check strategy comparisons · incomplete or uncertain evidence':
       available?'Choose the artifact category to compare strategies':'Strategy benchmarks unavailable';
     const benchmark=document.getElementById('scanner-benchmark');
     // The active score and cutoff stay visible even when that strategy is not
     // selected in the comparison table. Its numeric result still sets colour.
-    const activeComparison=available && confirmed && type.value?compareOwned(latest,{type:type.value,hall:hall.value,owned,options,limit:2}):null;
+    const activeComparison=available && confirmed && type.value?compareOwned(latest,{type:type.value,hall:hall.value,owned,options}):null;
     const activeMeetsBenchmark=Number.isFinite(activeComparison?.score) && Number.isFinite(activeComparison?.threshold) && activeComparison.score>=activeComparison.threshold;
     benchmark.classList.remove('is-top-two');benchmark.classList.remove('is-below-cutoff');
     if(!comparison || !confirmed){benchmark.classList.add('is-unknown');return;}
@@ -258,8 +260,9 @@
     if(!benchmark)return;
     try {
     const get=id=>document.getElementById('scanner-'+id),capture=identification();
+    const capacity=slotCapacity(type.value,hall.value) || 2;
     const benchmarkLabel=get('benchmark-label');
-    if(benchmarkLabel)benchmarkLabel.textContent='Top 2 benchmark';
+    if(benchmarkLabel)benchmarkLabel.textContent='Top '+capacity+' benchmark';
     const board=get('glance-board');
     const artwork=get('artwork'),image=latest?.artifact?.image;
     if(artwork && window.DNArtwork)window.DNArtwork.bind(artwork,latest?.artifact);
@@ -297,20 +300,20 @@
       if(score!==null && !latest?.partial && !error && loadedProfile===DN.activeProfileId()) {
         const categories=DN.ARTIFACT_TYPE_EXHIBITS[hallName(hall.value)] || [];
         const belowAll=categories.length>0 && categories.every(ex=>{
-          const result=compareOwned(latest,{type:ex.key.replace(/^war-/,''),hall:hall.value,owned,options,limit:2});
+          const result=compareOwned(latest,{type:ex.key.replace(/^war-/,''),hall:hall.value,owned,options});
           return result.status==='below';
         });
         if(belowAll){
           benchmark.classList.remove('is-unknown');
           benchmark.classList.add('is-below-cutoff');
-          flag.textContent='Below top 2 in every category · Item type unread';
+          flag.textContent='Below every category benchmark · Item type unread';
         }
       }
       return;
     }
     if(loading && loadedProfile!==DN.activeProfileId()){flag.textContent='Loading your collection…';return;}
     if(error){flag.textContent=error;return;}
-    const comparison=compareOwned(confirmed?latest:null,{type:type.value,hall:hall.value,owned,options,limit:2});
+    const comparison=compareOwned(confirmed?latest:null,{type:type.value,hall:hall.value,owned,options});
     if(comparison.status==='incomplete'){flag.textContent='Benchmark unavailable · owned stats incomplete';return;}
     if(comparison.status==='type'){flag.textContent='Item type needs review';return;}
     get('benchmark-value').textContent=comparison.threshold===null?'Open slot':String(comparison.threshold);
@@ -320,8 +323,8 @@
     benchmark.classList.remove('is-unknown');
     benchmark.classList.add(qualifies?'is-top-two':'is-below-cutoff');
     if(provisional)benchmark.classList.add('is-provisional');
-    flag.textContent=(latest.provisional || comparison.provisional?'Estimated · ':'')+(qualifies?'Makes top 2':comparison.status==='tie'?'Ties benchmark':'Below top 2');
-    detail.textContent=comparison.threshold===null?comparison.count+' / 2 owned':
+    flag.textContent=(latest.provisional || comparison.provisional?'Estimated · ':'')+(qualifies?'Makes top '+capacity:comparison.status==='tie'?'Ties benchmark':'Below top '+capacity);
+    detail.textContent=comparison.threshold===null?comparison.count+' / '+capacity+' owned':
       (comparison.score-comparison.threshold>0?'+':'')+(comparison.score-comparison.threshold)+' points · Rank '+comparison.rank;
     detail.textContent+=' · Upgraded '+comparison.baseScore+' → Potential '+comparison.score+(comparison.rerollGain>0?' (+ '+comparison.rerollGain+' reroll)':'')+(comparison.provisional?' · Reroll availability needs review':'');
     if(keeper)detail.textContent+=' · 3 open stats · Keep for review';
@@ -331,6 +334,7 @@
     const service=window.DNCraftingPurposes,panel=document.getElementById('scanner-purpose-results');
     if(!panel)return;
     const state=service?.settings() || {selected:[]};
+    const capacity=slotCapacity(type.value,hall.value) || 2;
     panel.hidden=false;
     flag.hidden=true;
     const result=confirmed && latest?{...latest,rows:captureResult?.rows || latest.rows}:null;
@@ -360,23 +364,23 @@
     let focusHit=hits.length>0;
     const benchmark=document.getElementById('scanner-benchmark');
     const keeper=isUnlockedKeeper(keeperResult),count=keeperResult?.unlocked?.count;
-    const row=(name,target,score,hit,attribute='',second=null)=>{
-      const evidence=second?' title="'+DN.esc('Second owned: '+second.name+' · '+second.score)+'"':'';
+    const row=(name,target,score,hit,attribute='',benchmarkItem=null)=>{
+      const evidence=benchmarkItem?' title="'+DN.esc('Owned #'+capacity+': '+benchmarkItem.name+' · '+benchmarkItem.score)+'"':'';
       const content='<strong>'+DN.esc(name)+'</strong><span class="scanner-focus-target"'+evidence+'>'+DN.esc(target)+'</span><b class="scanner-focus-score">'+DN.esc(score)+'</b>';
       return '<li '+attribute+' class="'+(hit?'purpose-hit':'purpose-miss')+'">'+(attribute.startsWith('data-purpose-result=')?'<button type="button" class="scanner-target-rating-open" aria-pressed="false">'+content+'</button>':content)+'</li>';
     };
-    let lines=results.map(item=>row(item.label,item.benchmarkAvailable?(item.threshold!==null?'> '+item.threshold:item.incomplete?'—':'Open slot'):'—',item.score===null?'—':(item.uncertain?'~':'')+item.score,item.hit,'data-purpose-result="'+DN.esc(item.id)+'"',item.second)).join('');
+    let lines=results.map(item=>row(item.label,item.benchmarkAvailable?(item.threshold!==null?'> '+item.threshold:item.incomplete?'—':'Open slot'):'—',item.score===null?'—':(item.uncertain?'~':'')+item.score,item.hit,'data-purpose-result="'+DN.esc(item.id)+'"',item.benchmarkItem)).join('');
     if(!selected.length){
       const strategies=[...(options?.strategyOptions || [])];
       if(options && !strategies.some(strategy=>strategy.id===options.strategyId))strategies.unshift({id:options.strategyId,name:options.strategyName || 'Active strategy',options});
       lines=strategies.map(strategy=>{
-        const item=available && type.value?compareOwned(confirmed?latest:null,{type:type.value,hall:hall.value,owned,options:strategy.options,limit:2}):null;
+        const item=available && type.value?compareOwned(confirmed?latest:null,{type:type.value,hall:hall.value,owned,options:strategy.options}):null;
         const hit=Number.isFinite(item?.score) && (item.threshold===null || item.score>=item.threshold);
         if(hit)focusHit=true;
         return row(strategy.name,item?.threshold===null?'Open slot':Number.isFinite(item?.threshold)?'≥ '+item.threshold:'—',Number.isFinite(item?.score)?(item.provisional?'~':'')+item.score:'—',hit,'data-strategy-focus');
       }).join('');
     }
-    const rareDetail=bestRare && bestRare.lines>=bestRare.requiredLines?bestRare.label+' · '+bestRare.lines+'×'+(bestRare.mode==='damage'?' · Damage':bestRare.mode==='hp'?' · Hitpoints':'')+(bestRare.hit?' · Top two':' · '+(bestRare.status==='owned'?'No improvement':'Unverified')):'';
+    const rareDetail=bestRare && bestRare.lines>=bestRare.requiredLines?bestRare.label+' · '+bestRare.lines+'×'+(bestRare.mode==='damage'?' · Damage':bestRare.mode==='hp'?' · Hitpoints':'')+(bestRare.hit?' · Top '+capacity:' · '+(bestRare.status==='owned'?'No improvement':'Unverified')):'';
     panel.innerHTML='<div class="scanner-focus-heading" aria-hidden="true"><span>Collection Targets</span><span>Target</span><span>Score</span></div><ul>'+lines+row('3 Unlocked Rows','= 3',Number.isFinite(count)?count:'—',keeper,'data-unlocked-focus')+'</ul>'+
       (rareDetail?'<p data-rare-card-detail>'+DN.esc(rareDetail)+'</p><p data-rare-card-rarity role="status"></p>':'');
     if(rareDetail)window.DNScannerRareCards?.render(bestRare,{hall:hall.value,type:type.value});
@@ -393,13 +397,13 @@
     document.getElementById('scanner-item-type').textContent='Target matches';
     document.getElementById('scanner-item-total').textContent=String(hits.length);
     document.getElementById('scanner-benchmark-label').textContent='Owned comparison';
-    document.getElementById('scanner-benchmark-value').textContent='Top two';
+    document.getElementById('scanner-benchmark-value').textContent='Top '+capacity;
     benchmark.classList.remove('is-top-two','is-below-cutoff','is-unknown','is-provisional');
     const pending=results.some(item=>['waiting','category','unavailable','review'].includes(item.status));
     benchmark.classList.add(hits.length?'is-top-two':pending?'is-unknown':'is-below-cutoff');
     document.getElementById('scanner-decision-state').textContent=keeper || hits.length?'Keep':'Discard';
     if(hits.some(item=>item.uncertain))benchmark.classList.add('is-provisional');
-    flag.textContent=hits.length?'Useful for '+hits.map(item=>item.label).join(', '):pending?'Check target comparisons':'No selected target improves your top two';
+    flag.textContent=hits.length?'Useful for '+hits.map(item=>item.label).join(', '):pending?'Check target comparisons':'No selected target improves your top '+capacity;
   }
   async function refresh() {
     const ticket=++request,profile=DN.activeProfileId();loading=true;error='';render();

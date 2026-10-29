@@ -343,4 +343,24 @@ assert.ok(statPresets.every(preset=>expanded.rareCards[preset.id]===3),'new stat
 assert.ok(!expanded.rareCards['rare-heavy-infantry'],'legacy unit opt-outs remain off');
 service.setRareCard(statPresets[0].id,0);
 assert.ok(!service.settings().rareCards[statPresets[0].id],'individual stat opt-outs survive migration/save/reload');
-console.log('Collection targets, shared ratings, migration, draft saves and optional rare-card patterns passed.');
+const equipmentStat='Enemy Tower Hitpoints';
+const equipmentTarget=service.saveCustom({label:'Equipment capacity',category:'attacking',perks:[equipmentStat]});
+service.configure(equipmentTarget,{weights:{[equipmentStat]:1}});
+const equipmentRare=service.rareDefinitions.find(preset=>preset.kind==='stat'&&preset.label===equipmentStat);
+service.setRareCard(equipmentRare.id,3);
+const equipmentRows=values=>values.map(value=>row(equipmentStat,-value));
+const equipmentOwned=[6,3,3,1,1].map((value,index)=>owned('equipment-'+index,equipmentRows([value,value,value,value,value]),'Equipment','war'));
+for(const id of [equipmentTarget,equipmentRare.id]){
+  const input={...craft(equipmentRows([3,1,1,1,1])),hall:'war',artifact:{type:'Equipment'}};
+  const params={type:'Equipment',hall:'war',selected:[id],owned:equipmentOwned};
+  const actual=service.evaluate(input,params)[0];
+  assert.equal(actual.capacity,4);assert.equal(actual.threshold,50);assert.equal(actual.benchmarkItem.id,'equipment-3');
+  assert.equal(actual.score,52);assert.equal(actual.status,'better','custom and Rare Card targets beat the fourth item even below second place');
+  assert.equal(service.evaluate({...input,rows:equipmentRows([1,1,1,1,1])},params)[0].status,'owned','fourth-place ties do not qualify');
+  assert.equal(service.evaluate(input,{...params,owned:equipmentOwned.slice(0,3)})[0].status,'vacancy','fewer than four equipment items leave an open slot');
+  const exhibit=DN.ARTIFACT_TYPE_EXHIBITS.War.find(ex=>ex.key==='war-equipment');
+  exhibit.count=2;
+  assert.equal(service.evaluate(input,params)[0].threshold,60,'slot count changes select the new cutoff even with cached scores');
+  exhibit.count=4;
+}
+console.log('Collection targets, shared ratings, migration, draft saves, rare-card patterns and four-slot War Equipment benchmarks passed.');

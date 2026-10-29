@@ -1,5 +1,14 @@
 # Craft comparison
 
+## Slot-capacity benchmarks, October 29, 2026
+
+Every crafting recommendation uses Collection's shared Hall/type slot capacity:
+War Equipment compares against the fourth-best owned item; all other ordinary
+types compare against the second-best. Strategy, saved-target and Rare Card
+comparisons use the same rule and the same level-10 plus one-reroll formula for
+candidate and owned items. Fewer owned items leave an open slot. Ties do not
+claim replacement. Target tooltips identify the owned item at that cutoff.
+
 ## Explicit collection saves and stable names, October 28, 2026
 
 The scanner ends with a compact Last 3 crafted items list, newest first by original capture time, scoped to the active profile. The native disclosure reveals the five stats; its shared Add to Collection button uses the canonical log record and physical-item ID. Retries and corrections update the same row without changing craft order or replacing its action node. Reopening retains the recent list and Added state. The full history remains in Crafting Stats.
@@ -49,7 +58,7 @@ Independent name/percentage crops compare the normalized whole value, so `+13%` 
 October 29: Rare Card qualification, owned benchmarks and focused row scoring
 always evaluate both offensive and defensive stats, independently of the page's
 Off/Def toggles. Matching-line settings, positive shared ratings, verified
-pattern evidence and strict improvement over owned top two remain required.
+pattern evidence and strict improvement over owned top group remain required.
 
 All presets default to 3× and 4× for profiles without saved rare-card settings. Adding individual-stat presets preserves existing unit choices/modes and defaults the new stats to 3× in previously enabled setups. Explicitly empty all-off setups remain off. The `rarePresetVersion: 2` marker preserves subsequent individual-stat opt-outs.
 
@@ -61,7 +70,7 @@ The Rare Cards tab includes one independent preset for each stat with positive o
 
 Presets are grouped into Attacking, Defensive and Economy using the existing target-category mapping. Family membership does not combine different stats into a pattern. Each family's Off all action saves one atomic update, disables both unit and individual-stat presets in that family, preserves other families and unit modes, and retains button focus. Desktop rows share dedicated Matching lines and Stats columns, retaining empty Stats cells for individual-stat rows; narrow layouts stack labelled groups without clipping.
 
-Enabled presets share one scanner row, Rare Card. Any verified pattern that strictly improves its preset-specific owned top two, or fills a vacancy, turns it green. Benchmark scope is the same hall and artifact type; ties, incomplete owned evidence, unavailable collections and uncertain pattern evidence cannot qualify. Overlapping unit/stat matches count once in the visible aggregate row. This row participates in Keep/Discard, automatic score focus and shared inline ratings. Individual presets remain available internally for pinned scoring context across scans. The existing 3 Unlocked Rows override remains independent.
+Enabled presets share one scanner row, Rare Card. Any verified pattern that strictly improves its preset-specific owned top group, or fills a vacancy, turns it green. Benchmark scope is the same hall and artifact type; ties, incomplete owned evidence, unavailable collections and uncertain pattern evidence cannot qualify. Overlapping unit/stat matches count once in the visible aggregate row. This row participates in Keep/Discard, automatic score focus and shared inline ratings. Individual presets remain available internally for pinned scoring context across scans. The existing 3 Unlocked Rows override remains independent.
 
 Matched patterns show the preset name, count and comparison outcome. Estimated rarity is the probability of at least that many lines from the preset's exact stat set in five rolls, using the existing Crafting Stats model and eligible personal history for the hall/type. It does not include collection rank or a tier requirement. Estimates require at least 20 eligible artifacts and observed samples for the preset's stats; source, artifact count and low-sample status remain visible. Missing or unverified evidence shows an unavailable estimate instead. History changes invalidate cached models; rarity never changes Keep/Discard.
 
@@ -107,7 +116,7 @@ There are no automatic General targets. New profiles and empty categories show b
 
 Schema v6 stores category and explicit addOns alongside the existing ID, label, selections, perks and excludedPerks. Each enabled add-on contains either source: profile or source: target with targetId. Older mixed targets migrate into their original primary target with named category-local donor targets for the remaining selections, preserving original IDs, selected flags, exclusions and combined scoring. Donor targets are not independently enabled. legacyTargets retains prior definitions. The three retired custom-general-* saved defaults and their scanner flags are removed. Any references to an unmodified retired default become full-profile sources. Modified exclusions are preserved as category-only snapshot sources labelled Previous category selection, so existing user targets keep their scoring without recreating a General saved target. removedDefaultTargets retains the retired definitions. Pre-v4 selections and configured armies retain their earlier migration, legacySelections and legacyPurposeRatings backups. Migration is idempotent. Profile, global and strategy-specific ratings are not rewritten by the category migration.
 
-The scanner evaluates every enabled target independently using its complete primary-plus-add-on membership. Each canonical stat contributes once to that membership; repeated physical artifact lines still count separately. All useful lines use maximum upgraded magnitude, including locked lines, plus the single largest gain allowed by their confirmed reroll availability. A positive score must strictly beat the same target's second-best owned artifact of the same Hall and type, or fill an open top-two place. Owned artifacts use exactly the same combined membership and ratings. Separate category thresholds are never added together. This permits a mixed artifact to win an explicitly combined target even if it loses both specialist targets. The benchmark cache key includes effective combined membership and ratings, so source edits invalidate the relevant comparison.
+The scanner evaluates every enabled target independently using its complete primary-plus-add-on membership. Each canonical stat contributes once to that membership; repeated physical artifact lines still count separately. All useful lines use maximum upgraded magnitude, including locked lines, plus the single largest gain allowed by their confirmed reroll availability. A positive score must strictly beat the same target's owned artifact at the Hall/type slot cutoff (fourth for War Equipment, second otherwise), or fill an open place. Owned artifacts use exactly the same combined membership and ratings. Separate category thresholds are never added together. This permits a mixed artifact to win an explicitly combined target even if it loses both specialist targets. The benchmark cache key includes effective combined membership and ratings, so source edits invalidate the relevant comparison.
 
 Invading perks, defensive buildings, defensive towers, defenders and Looted Resource Refund use shared Def ratings; other perks, including economy stats, use Off. Forest Expansion Cost Refund belongs to Economy and is selectable through Expansion. Clearing a rating restores global/group/factory inheritance; zero ignores a stat. The Group by collecting-target view in Advanced ratings edits the same shared values. Damage and HP points are a selection score, not a combined combat percentage.
 
@@ -131,7 +140,7 @@ October 17 Keep action: both the main button and the item log save a complete fi
 
 The October 16 performance review caches owned category cutoffs for a stable collection and rating resolver, and memoizes active rating lookups across preview updates. A new collection snapshot or rating resolver invalidates the cutoffs; category, Hall, axes and capacity still select their appropriate benchmark. Focus/storage changes refresh profile/army/global ratings. The shared scorer and maximum/reroll rules are unchanged. A synthetic 500-item collection measured 11.10 ms per repeated comparison before caching and 0.049 ms after caching (225x), excluding OCR/capture. See `reports/scanner-comparison-performance.json`.
 
-Assumed names, inferred percentages, numeric/name disagreements and tier conflicts do not enter crafting comparison totals until verified. Partial reads show only their readable subtotal and cannot produce a completed top-two decision.
+Assumed names, inferred percentages, numeric/name disagreements and tier conflicts do not enter crafting comparison totals until verified. Partial reads show only their readable subtotal and cannot produce a completed top-group decision.
 
 The crafting scanner displays its existing Offensive and Defensive scores plus a separate comparison with the active profile's owned collection. Hall and Base Type (Off/Def) toggles at the top right of both scanner pages use the existing shared per-profile primary-filter preferences from Priority, Collection and Council. They update scanner recognition/scoring controls, restore across navigation, and resync on focus. Storage recognition updates the shared Hall when it identifies a different hall.
 

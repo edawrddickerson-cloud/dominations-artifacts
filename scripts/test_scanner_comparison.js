@@ -22,7 +22,15 @@ assert.equal(compare(1,[]).status,'vacancy');assert.equal(compare(1,[items[0]]).
 result=compare(5,[1,2,3,4,9].map((value,index)=>owned('equipment'+index,value,{hall:'war',type:'War Equipment'})),{type:'Equipment',hall:'war'});
 assert.equal(result.capacity,4);assert.equal(result.status,'better');assert.equal(result.rank,2);assert.equal(result.threshold,55);
 const twoEquipment=compare(5,[1,2,3,4,9].map((value,index)=>owned('equipment'+index,value,{hall:'war',type:'War Equipment'})),{type:'Equipment',hall:'war',limit:2});
-assert.equal(twoEquipment.capacity,2);assert.equal(twoEquipment.threshold,65,'crafting summary uses the second-best cutoff even for a four-slot type');
+assert.equal(twoEquipment.capacity,2);assert.equal(twoEquipment.threshold,65,'an explicit caller limit remains supported');
+const equipment=[1,2,3,4,9].map((value,index)=>owned('equipment'+index,value,{hall:'war',type:'War Equipment'}));
+const equipmentStrategies=value=>core.compareStrategies(craft(value),{type:'Equipment',hall:'war',owned:equipment,strategies:[{id:'equipment',name:'Equipment',options}]}).results[0];
+assert.equal(equipmentStrategies(3).capacity,4,'scanner strategy recommendations use all four War Equipment slots');
+assert.equal(equipmentStrategies(3).threshold,55,'the fourth-best owned item sets the equipment cutoff');
+assert.equal(equipmentStrategies(3).status,'better','a craft below second place can still improve fourth place');
+assert.equal(equipmentStrategies(2).status,'tie','a fourth-place tie does not displace an owned item');
+assert.equal(equipmentStrategies(1).status,'below');
+assert.equal(core.compareStrategies(craft(1),{type:'Equipment',hall:'war',owned:equipment.slice(2),strategies:[{id:'equipment',options}]}).results[0].status,'vacancy','three owned equipment items leave the fourth slot open');
 DN.ARTIFACT_TYPE_EXHIBITS.War.find(ex=>ex.key==='war-equipment').count=3;
 assert.equal(compare(5,[],{type:'Equipment',hall:'war'}).capacity,3,'comparison reads the same live slot capacity as Collection');
 DN.ARTIFACT_TYPE_EXHIBITS.War.find(ex=>ex.key==='war-equipment').count=4;
