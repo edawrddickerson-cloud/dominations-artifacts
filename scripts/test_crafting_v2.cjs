@@ -118,6 +118,48 @@ console.log('V2 migration, 363 baseline, retries, identical crafts, clearing, co
   failure=false;const restored=app.window.DNResearchCore.create(args);await restored.load();await restored.upload();assert.equal(withdrawals,1,'withdrawal retries after reconnect without requiring sharing enabled');
   owner='b';bound='b';await restored.load();await restored.upload();assert.equal(uploads,1,'a new account never inherits another receipt');
   console.log('Independent sharing, disabled rollout, durable offline opt-in/withdrawal and owner-bound consent receipts passed.');
+  // A rejected consent epoch is terminal until an explicit sharing action.
+  // Timer/log/reconnect events and reloads must not retry a revoked upload.
+  {
+    let permissionOwner='revoked-owner',permissionState={owner:permissionOwner,epoch:'revoked-epoch',pending:null,hash:null},denied=true,logReads=0;
+    const requests=[];
+    const permissionArgs={user:()=>permissionOwner,boundOwner:()=>permissionOwner,consent:()=>true,enabled:()=>true,
+      readLog:async()=>{logReads++;return fixture.exportData();},readState:async()=>copy(permissionState),writeState:async(id,value)=>{assert.equal(id,permissionOwner);permissionState=copy(value);},
+      rpc:async(name,args)=>{requests.push({name,args});if(denied)throw Object.assign(Error('Contribution consent required'),{code:'42501'});return name==='planner_set_crafting_consent'?{epoch:'reviewed-epoch'}:{};}};
+    let paused=app.window.DNResearchCore.create(permissionArgs);await paused.load();await paused.upload();
+    const rejectedRequests=requests.length,rejectedReads=logReads;
+    for(let i=0;i<5;i++)await paused.upload();
+    assert.equal(requests.length,rejectedRequests,'a permission rejection must stop timer/log retries');
+    assert.equal(logReads,rejectedReads,'paused uploads must not repeatedly project the full craft log');
+    assert.equal(paused.status().active,false,'a rejected epoch is not active sharing');
+    assert.match(paused.status().error,/paused/);
+    paused=app.window.DNResearchCore.create(permissionArgs);await paused.load();await paused.upload();
+    assert.equal(requests.length,rejectedRequests,'a reload must preserve the pause without re-enabling consent');
+    assert.match(paused.status().error,/paused/);
+    denied=false;await paused.setSharing(true);
+    assert.equal(requests[rejectedRequests].name,'planner_set_crafting_consent','explicit review obtains a new consent receipt');
+    assert(requests.length>rejectedRequests+1,'explicit review resumes contribution upload');
+    assert(requests.slice(rejectedRequests+1).every(r=>r.args.p_epoch==='reviewed-epoch'));
+    assert.equal(paused.status().active,true);assert.equal(paused.status().error,'');
+    denied=true;permissionState.hash=null;paused=app.window.DNResearchCore.create(permissionArgs);await paused.load();await paused.upload();
+    denied=false;const withdrawalStart=requests.length;await paused.clear();
+    assert.equal(requests[withdrawalStart].name,'planner_set_crafting_consent');
+    assert.equal(requests[withdrawalStart].args.p_enabled,false,'withdrawal is available while uploads are paused');
+    assert.equal(requests.length,withdrawalStart+1,'withdrawal cannot send evidence afterward');
+    await paused.upload();assert.equal(requests.length,withdrawalStart+1,'a withdrawn receipt cannot authorize a later timer upload');
+    let rejectOld;
+    permissionState={owner:permissionOwner,epoch:'old-epoch',pending:null,hash:null};
+    const concurrent=app.window.DNResearchCore.create({...permissionArgs,rpc:async(name,args)=>{
+      if(name==='planner_submit_crafting' && args.p_epoch==='old-epoch')return new Promise((resolve,reject)=>{rejectOld=reject;});
+      return name==='planner_set_crafting_consent'?{epoch:'new-epoch'}:{};
+    }});
+    await concurrent.load();const oldUpload=concurrent.upload();
+    while(!rejectOld)await new Promise(setImmediate);
+    await concurrent.setSharing(true);rejectOld(Object.assign(Error('old consent revoked'),{code:'42501'}));await oldUpload;
+    assert.equal(permissionState.requiresConsentReview,false,'a stale rejection cannot pause a newer explicit consent choice');
+    assert.equal(permissionState.pending,true);await concurrent.upload();assert.equal(concurrent.status().active,true);
+  }
+  console.log('Permission-rejected contributions pause across retries/reloads; explicit review and withdrawal remain available.');
   app.document.createElement=()=>({width:2,height:2,getContext:()=>({drawImage(){}})});
   const reads=[],updates=[];let contextOwner='a',contextEnabled=true,finish;
   const verifier=app.window.DNCraftingResultContext.create({enabled:()=>contextEnabled,owner:()=>contextOwner,update:async id=>updates.push(id),read:async()=>{reads.push(1);await new Promise(resolve=>finish=resolve);return {text:'Sell for Continue',confidence:99};}});
