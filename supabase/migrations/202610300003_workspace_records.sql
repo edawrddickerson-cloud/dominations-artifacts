@@ -347,6 +347,9 @@ begin
    exists(select 1 from public.planner_record_current c where c.owner_id=p_owner and c.kind=r->>'kind' and c.scope=r->>'scope' and c.position=(r->>'position')::integer and c.key<>r->>'key') then raise exception 'Duplicate cloud record order' using errcode='22023'; end if;
  end loop;
  perform public.planner_records_check(p_owner,h.artwork_schema,relationships);
+ -- History retention starts when a revision is superseded, matching the
+ -- legacy pre-update safety snapshot, even after a long idle period.
+ update public.planner_record_snapshots set saved_at=now() where owner_id=p_owner and revision=h.revision;
  update public.planner_record_heads set revision=h.revision+1,operation_id=p_operation_id,updated_at=now() where owner_id=p_owner;
  insert into public.planner_record_snapshots values(p_owner,h.revision+1,p_operation_id,now(),now());
  select jsonb_object_agg(batch_index::text,encode(request_hash,'hex')) into hashes from public.planner_record_batches where owner_id=p_owner and operation_id=p_operation_id;
@@ -362,7 +365,7 @@ language plpgsql stable security definer set search_path='' as $$
 declare result jsonb;
 begin
  if auth.uid() is null or auth.uid() is distinct from p_owner then raise exception 'Account changed' using errcode='42501'; end if;
- select coalesce(jsonb_agg(jsonb_build_object('game_key','dominations','revision',s.revision,'operation_id',s.operation_id,'updated_at',s.updated_at,'format',4) order by s.revision desc),'[]') into result
+ select coalesce(jsonb_agg(jsonb_build_object('game_key','dominations','revision',s.revision,'operation_id',s.operation_id,'updated_at',s.updated_at,'saved_at',s.saved_at,'format',4) order by s.revision desc),'[]') into result
  from (select s.* from public.planner_record_snapshots s join public.planner_record_heads h using(owner_id) where s.owner_id=p_owner and s.revision<h.revision and s.saved_at>=now()-interval '30 days' order by s.revision desc limit 3) s;
  return result;
 end $$;

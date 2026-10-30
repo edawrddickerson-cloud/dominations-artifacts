@@ -158,6 +158,13 @@ async function main(){
   const unversioned=uuid();await db.exec('reset role');await query('insert into auth.users values($1)',[unversioned]);await user(unversioned);
   await rpc('planner_records_activate',{p_owner:unversioned,p_expected_revision:0});const noSchema=workspace();delete noSchema.artworkSchema;await save(0,noSchema,null,unversioned);
   const artSetting=uuid();await stage(1,artSetting,[{kind:'setting',scope:'',key:'artworkId',position:0,data:approved}],0,1,unversioned);await denied(()=>commit(1,artSetting,unversioned));
+  // A current revision can be months old; its recovery window begins when
+  // the next save replaces it, rather than when it was originally created.
+  await db.exec('reset role');await query("update public.planner_record_snapshots set saved_at=now()-interval '31 days',updated_at=now()-interval '31 days' where owner_id=$1",[unversioned]);
+  await query("update public.planner_record_heads set updated_at=now()-interval '31 days' where owner_id=$1",[unversioned]);await user(unversioned);
+  const afterIdle=copy(noSchema);afterIdle.settings['dn-p:main:dn-artifact-score-mode']='"potential"';await save(1,afterIdle,noSchema,unversioned);
+  const retained=await rpc('planner_records_history',{p_owner:unversioned});assert.equal(retained.length,1);assert.equal(retained[0].revision,1);assert(Date.parse(retained[0].saved_at)>Date.parse(retained[0].updated_at),'history timestamp is the superseding save time');
+  await db.exec('reset role');await rpc('planner_prune_expired_data');await user(unversioned);assert.deepEqual((await read(unversioned,1)).data,noSchema);
   // Every new table cascades on verified account deletion, including staged data.
   await db.exec('reset role');await query('delete from auth.users where id=$1',[A]);
   for(const name of ['heads','snapshots','versions','current','operations','batches','receipts','artwork_refs','groups'])assert.equal((await query('select count(*)::int n from public.planner_record_'+name+' where owner_id=$1',[A]))[0].n,0,name+' cascades');
