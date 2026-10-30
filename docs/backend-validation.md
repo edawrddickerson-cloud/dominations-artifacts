@@ -1,8 +1,8 @@
 # Backend validation and activation status
 
-## Record synchronization candidate (30 October 2026)
+## Record synchronization release (31 October 2026)
 
-This candidate is built locally with `workspaceRecordSaves:false`. It has not been installed, activated or published to production. Existing local scanner and scoring schemas remain authoritative. Astra's architecture and implementation review is retained privately in `data/temp/astra-sync-architecture-review-20261030.txt`.
+Production rollout was authorized on 31 October (Malta). The exact reviewed migration was installed without changing account data, then the existing account was converted after a hosted rollback trial compared its complete workspace and all three retained recovery versions through the browser codec. Its revision was preserved. The compatible client passed all 310 live asset/cache checks before conversion; `workspaceRecordSaves:true` enables the new transport. Existing local scanner and scoring schemas remain authoritative. Astra's architecture and implementation review is retained privately in `data/temp/astra-sync-architecture-review-20261030.txt`; rollout and live verification reports remain in ignored `data/temp/`.
 
 The additive `202610300003_workspace_records.sql` migration stores settings, collection descriptors, inventory items, craft records, archived counter facts and envelope metadata separately. Explicit positions preserve existing array order and canonical workspace hashes. An account head retains the existing revision/operation conflict contract; unrelated accounts lock different rows. Ordinary saves validate and version changed payloads rather than reconstructing and writing the complete JSON workspace. Indexed counters and artwork references avoid rescanning old craft payloads. Structural changes still require relationship checks.
 

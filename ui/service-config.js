@@ -1,10 +1,10 @@
 /* Public integration configuration. Never put privileged keys in ui/.
  * Empty project values keep all cloud/analytics connections disabled. */
 window.DNServiceConfig=Object.freeze({
-  build:'2026-10-30-workspace-delta',
+  build:'2026-10-31-workspace-records',
   workspaceDeltaSaves:true,
-  // Enable only after the record migration, restore drill and rollout review.
-  workspaceRecordSaves:false,
+  // Reviewed record migration and account conversion are installed.
+  workspaceRecordSaves:true,
   // Local work and preview hosts stay out of production usage dashboards.
   environment:typeof location!=='undefined' && location.origin!=='https://dominations-planner.ededed84.workers.dev'?'development':'production',
   cloudEnabled:typeof location==='undefined' || location.origin==='https://dominations-planner.ededed84.workers.dev',
