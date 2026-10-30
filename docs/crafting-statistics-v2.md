@@ -24,6 +24,10 @@ For a linked account with identical planner settings/collections, history change
 
 No deployment or migration is performed by the app. With these files installed against the old backend, the new private-save RPC is absent and backups remain pending locally until the migration is applied. Local scanning, exports and saving continue.
 
+The October 30 memory migration (`202610300002_workspace_save_memory.sql`) keeps the v3 transport and complete document contract. It releases obsolete JSON copies before validation, uses direct replacement for one non-truncating craft edit or append, and checks all artwork-reference scalars in one query. Multiple edits and truncation retain aggregation. Every save still validates the entire document, preserves complete recovery snapshots, enforces the 16 MiB limit, and checks revision/operation receipts.
+
+Visible idle metadata checks run every 65 seconds. Data-change, focus, online and explicit synchronization paths retain their existing timing. This leaves time for request workers to pass PostgREST's idle checkout threshold. The affected upstream pool can retain otherwise idle workers until another request or its lifetime cleanup; hidden/closed tabs do not guarantee prompt cleanup. See [PostgREST issue 3902](https://github.com/PostgREST/postgrest/issues/3902).
+
 ## Community evidence and consent
 
 The independent research preference requires the new `2026-10-23` research consent policy. Old manual-session consent does not carry over. New explicit opt-in obtains a durable account-specific epoch and operation receipt. Uploads never re-enable consent on reconnect. Withdrawal queues while offline, removes evidence on reconnect and invalidates existing device epochs. Lost consent responses reuse the same operation ID; replaying an old enable operation after withdrawal does not re-enable sharing. A newly signed-in account never inherits another account's receipt. A revoked device must explicitly review/toggle sharing again before contributing. The `researchEnabled` flag is now true for the user-authorized opt-in real-game rollout.

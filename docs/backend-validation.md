@@ -1,5 +1,21 @@
 # Backend validation and activation status
 
+## Workspace allocation fix (30 October 2026)
+
+The real crafting/storage test reproduced memory pressure and one `57014` save timeout in artwork validation, despite zero v3 temporary-file I/O. The new migration `202610300002_workspace_save_memory.sql` reduces temporary document copies and validates reference scalars as a set. Synthetic native PostgreSQL 18.6/Windows measurements with 2,930 crafts and 176 owned artwork references sampled about 76 MiB of allocated query contexts before the change and 50 MiB afterward; one-row median backend CPU fell about 12%. These are local context/CPU measurements, not hosted RSS or a claim of a permanent leak fix.
+
+Original, JSON-path and memory-reduced validators pass the same 123 cases. Delta, ownership, privacy, artwork-catalog invalidation, history, retry and conflict contracts pass. A fresh 51-table export passed an isolated restore; the actual restored workspace then passed settings-only and sparse saves, strict retries and CAS with both candidate DDL and saves rolled back. The function-only production apply checked workspace/history metadata and function security unchanged.
+
+Reproduce the guarded release with:
+
+```powershell
+node scripts/backup_database.cjs --verify --rehearse-workspace-memory
+node scripts/deploy_workspace_memory.cjs
+node scripts/deploy_workspace_memory.cjs --apply --backup=data/temp/database-backups/VERIFIED_FOLDER
+```
+
+Applying requires the exact migration hash in the backup's successful rehearsal record. Prior function definitions are saved to ignored `data/temp/workspace-memory-rollback.sql`. The helper performs no account-data canary writes in production. Keep live scanner acceptance separate from local benchmarks; record post-release successful save timings, errors, memory and worker expiry before calling the memory issue resolved.
+
 ## Release scope and current manual checks (21 October 2026)
 
 - Engagement analytics is required for release; crafting research remains deferred and disabled.

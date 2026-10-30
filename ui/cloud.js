@@ -201,6 +201,8 @@
   window.addEventListener('focus',()=>schedule(0));
   for(const event of ['dn-artifacts-changed','dn-strategies-changed','dn-crafting-purposes-changed','storage'])window.addEventListener(event,()=>schedule());
   for(const event of ['change','click'])document.addEventListener(event,()=>schedule());
-  setInterval(()=>{if(!document.hidden)schedule(0);},30000);
+  // Leave idle request workers time to expire before their next pool checkout.
+  // Data-change and focus events continue to schedule their own sync checks.
+  setInterval(()=>{if(!document.hidden)schedule(0);},65000);
   start();
 })();

@@ -156,6 +156,30 @@ async function main() {
     if(owner)checkOwner(owner,1);
     checkOwner(crypto.randomUUID(),0);
     if(query(local,"select has_table_privilege('anon','public.planner_workspaces','select') or has_function_privilege('anon','public.planner_read_workspace()','execute')")!=='f')throw Error('Restored anonymous workspace access is not denied.');
+    if(process.argv.includes('--rehearse-workspace-memory')) {
+      if(local.PGHOST!=='127.0.0.1'||!process.argv.includes('--verify'))throw Error('Memory rehearsal requires isolated restore.');
+      const memoryFile='supabase/migrations/202610300002_workspace_save_memory.sql',memorySource=fs.readFileSync(path.join(root,memoryFile),'utf8');
+      const memorySQL=memorySource.replace(/^begin;\r?$/gm,'').replace(/^commit;\r?$/gm,'');
+      // Exercise the restored real document locally. Both the function changes
+      // and test saves roll back before verifying all source fingerprints again.
+      const canary=`do $canary$ declare w public.planner_workspaces%rowtype;p jsonb;d jsonb;expected jsonb;a jsonb;b jsonb;op uuid;begin
+        select * into w from public.planner_workspaces order by owner_id limit 1;if not found then raise exception 'No restored workspace';end if;
+        perform set_config('request.jwt.claim.sub',w.owner_id::text,true);execute 'set local role authenticated';
+        p:=w.data#-'{craftingLog,items}';d:=jsonb_build_object('length',jsonb_array_length(w.data->'craftingLog'->'items'),'changes','{}'::jsonb);op:=gen_random_uuid();
+        a:=public.planner_save_workspace_v3(w.owner_id,w.revision,op,p,d);b:=public.planner_save_workspace_v3(w.owner_id,w.revision,op,p,d);
+        if a<>b or (a->>'revision')::bigint<>w.revision+1 or a?'data' or (select data from public.planner_workspaces where owner_id=w.owner_id)<>w.data then raise exception 'Restored settings-only save/retry mismatch';end if;
+        select * into w from public.planner_workspaces where owner_id=w.owner_id;expected:=jsonb_set(w.data,'{craftingLog,items,0,writer}',to_jsonb('memory-rehearsal'::text),true);
+        p:=expected#-'{craftingLog,items}';d:=jsonb_build_object('length',jsonb_array_length(expected->'craftingLog'->'items'),'changes',jsonb_build_object('0',expected->'craftingLog'->'items'->0));op:=gen_random_uuid();
+        a:=public.planner_save_workspace_v3(w.owner_id,w.revision,op,p,d);b:=public.planner_save_workspace_v3(w.owner_id,w.revision,op,p,d);
+        if a<>b or (a->>'revision')::bigint<>w.revision+1 or (select data from public.planner_workspaces where owner_id=w.owner_id)<>expected then raise exception 'Restored sparse save/retry mismatch';end if;
+        begin perform public.planner_save_workspace_v3(w.owner_id,w.revision,gen_random_uuid(),p,d);raise exception 'Stale restored revision accepted';exception when serialization_failure then null;end;
+        begin perform public.planner_save_workspace_v3(w.owner_id,w.revision,op,p||'{"releaseProbe":true}'::jsonb,d);raise exception 'Altered restored retry accepted';exception when invalid_parameter_value then null;end;
+        execute 'reset role';end $canary$;`;
+      query(local,"begin;set local statement_timeout='30s';"+memorySQL+canary+'rollback;');
+      if(JSON.stringify(before)!==JSON.stringify(fingerprints(local,tables))||JSON.stringify(securityBefore)!==JSON.stringify(security(local)))throw Error('Memory rehearsal did not restore original data/security.');
+      manifest.workspaceMemoryRehearsal={migration:memoryFile,sha256:crypto.createHash('sha256').update(memorySource).digest('hex'),actualRestoredWorkspace:true,settingsAndSparseSave:true,strictRetryAndCAS:true,rolledBack:true};
+      console.log('Candidate memory-save migration passed actual restored-workspace saves, strict retries, CAS and complete rollback.');
+    }
     manifest.restoreVerified=true;manifest.restoredAt=new Date().toISOString();
     manifest.verification={tableChecksumsMatch:true,plannerFunctionsMatch:true,rowSecurityPoliciesMatch:true,restoredAccountIsolation:true,anonymousWorkspaceAccessDenied:true,restoredTables:tables.length};
     if(process.argv.includes('--rehearse-ocr-weekly')) {

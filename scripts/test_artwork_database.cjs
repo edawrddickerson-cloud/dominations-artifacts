@@ -12,6 +12,8 @@ async function denied(fn,code='22023'){await assert.rejects(fn,e=>e.code===code)
  await db.exec(fs.readFileSync('supabase/migrations/202610180001_planner_backend.sql','utf8'));
  await db.exec(fs.readFileSync('supabase/migrations/202610240007_shared_artwork.sql','utf8'));
  await db.exec(fs.readFileSync('supabase/migrations/202610250008_workspace_save_validation.sql','utf8'));
+  await db.exec(fs.readFileSync('supabase/migrations/202610300001_workspace_delta_save.sql','utf8'));
+  await db.exec(fs.readFileSync('supabase/migrations/202610300002_workspace_save_memory.sql','utf8'));
  await user(null,'anon');assert.equal((await db.query('select count(*)::int n from public.planner_artwork_catalog')).rows[0].n,catalog.entries.length);
  await denied(()=>save(workspace()),'42501');
  await user(A);const w=workspace();assert.equal((await save(w)).revision,1);
@@ -23,5 +25,17 @@ async function denied(fn,code='22023'){await assert.rejects(fn,e=>e.code===code)
  await denied(()=>db.query('insert into public.planner_artwork_catalog values($1)',['art-0000000000000000']),'42501');
  await user(B);assert.equal((await db.query('select count(*)::int n from public.planner_workspaces')).rows[0].n,0);
  const legacy=workspace();delete legacy.artworkSchema;delete legacy.records[0].items[0].artworkId;assert.equal((await save(legacy)).revision,1,'legacy workspaces remain supported before adopting artwork schema');
- await db.close();console.log('Approved IDs, nested pixel rejection, old-client guard, anonymous denial and owner isolation passed.');
+ // Even an unchanged reference must fail when the catalog entry is removed.
+ await user(A);const referenced=workspace(),referencedSave=await save(referenced,2);
+ const before=(await db.query('select data,revision,operation_id from public.planner_workspaces')).rows;
+ const historyBefore=(await db.query('select revision,data from public.planner_workspace_history order by revision')).rows;
+ await db.exec('reset role');await db.query('delete from public.planner_artwork_catalog where id=$1',[id]);
+ await user(A);await denied(()=>save(referenced,referencedSave.revision));
+ assert.deepEqual((await db.query('select data,revision,operation_id from public.planner_workspaces')).rows,before);
+ assert.deepEqual((await db.query('select revision,data from public.planner_workspace_history order by revision')).rows,historyBefore,'failed validation rolls back its complete history insert');
+ await db.exec('reset role');await db.query('insert into public.planner_artwork_catalog values($1)',[id]);
+ await user(A);
+ for(const value of [true,false,[],[id],{nested:id}]){const bad=workspace();bad.extra={deep:[{artworkId:value}]};await denied(()=>save(bad,referencedSave.revision));}
+ const nested=workspace();nested.extra={deep:[{artworkId:null},{artworkId:id}]};await save(nested,referencedSave.revision);
+ await db.close();console.log('Approved IDs, nullable/nested references, catalog invalidation, rejection rollback, nested pixel rejection, old-client guard, anonymous denial and owner isolation passed.');
 })().catch(async e=>{console.error(e);await db.close();process.exitCode=1;});

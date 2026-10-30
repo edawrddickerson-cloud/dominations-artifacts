@@ -23,6 +23,7 @@ async function unchanged(fn,code='22023'){const before=await row(),prior=await h
   await db.exec('begin;'+migration.replace(/^begin;\r?$/m,'').replace(/^commit;\r?$/m,'')+'rollback;');
   assert.equal((await query("select to_regclass('public.planner_workspace_save_receipts') name"))[0].name,null,'candidate DDL rolls back');
   await db.exec(migration);
+  await db.exec(fs.readFileSync('supabase/migrations/202610300002_workspace_save_memory.sql','utf8'));
   const initial=copy(workspace([item('one'),item('two'),item('three')]));
   await user(null,'anon');await denied(()=>save(0,uuid(),full(initial)),'42501');
   await user(A);await denied(()=>save(0,uuid(),full(initial),B),'42501');
@@ -53,9 +54,26 @@ async function unchanged(fn,code='22023'){const before=await row(),prior=await h
   next=copy(next);next.craftingLog.items.reverse();await update(next);
   next=copy(next);const removed=next.craftingLog.items.pop();next.craftingLog.ledger.archived.push(copy(H.facts(removed)));await update(next);
   next=copy(next);next.craftingLog.items=[];await update(next);
+  next=copy(next);next.craftingLog.items.push(copy(H.project({version:2,items:[item('empty-append')]}).items[0]));await update(next);
   next=copy(next);next.craftingLog.items=copy(initial.craftingLog.items);await update(next);
   const factsBefore=copy(next.craftingLog);next=copy(next);next.settings['dn-p:main:dn-artifact-score-mode']='"potential"';
   const settingsRequest=await update(next);assert.deepEqual(settingsRequest.p_items_delta.changes,{});assert.deepEqual((await row()).data.craftingLog,factsBefore);
+  // Larger partial edits retain all untouched records and the same save rules.
+  next=copy(next);next.craftingLog.items=copy(H.project({version:2,items:Array.from({length:20},(_,i)=>item('partial-'+i))}).items);await update(next);
+  for(const count of [8,9]){
+    next=copy(next);for(let i=0;i<count;i++)next.craftingLog.items[i].rows[0].value+=1;
+    const partial=await update(next);assert(partial.p_items_delta);assert.equal(Object.keys(partial.p_items_delta.changes).length,count);
+  }
+  // A sparse edit must revalidate artwork references in untouched records too.
+  const artworkId=JSON.parse(fs.readFileSync('ui/data/artwork_catalog.json','utf8')).entries[0].id;
+  next=copy(next);next.artworkSchema=1;next.craftingLog.items[0].artworkId=artworkId;await update(next);
+  next=copy(next);next.craftingLog.items[1].rows[0].value+=1;
+  const unrelatedEdit=copy(C.workspaceSaveRequest(next,(await row()).data));
+  assert(unrelatedEdit.p_items_delta);assert.deepEqual(Object.keys(unrelatedEdit.p_items_delta.changes),['1']);
+  await db.exec('reset role');await query('delete from public.planner_artwork_catalog where id=$1',[artworkId]);await user(A);
+  await unchanged(()=>save(revision,uuid(),unrelatedEdit));
+  await db.exec('reset role');await query('insert into public.planner_artwork_catalog values($1)',[artworkId]);await user(A);
+  await update(next);
   assert.equal((await history()).length,3,'history remains bounded to three complete snapshots');
   await db.exec('reset role');await query("update public.planner_workspace_history set saved_at=now()-interval '31 days' where owner_id=$1 and revision=(select max(revision) from public.planner_workspace_history where owner_id=$1)",[A]);await user(A);
   await update(next);assert.equal((await history()).length,2,'30-day expiry also removes a revision inside the newest-three window');
