@@ -141,7 +141,7 @@ console.log('V2 migration, 363 baseline, retries, identical crafts, clearing, co
     assert(requests.length>rejectedRequests+1,'explicit review resumes contribution upload');
     assert(requests.slice(rejectedRequests+1).every(r=>r.args.p_epoch==='reviewed-epoch'));
     assert.equal(paused.status().active,true);assert.equal(paused.status().error,'');
-    denied=true;permissionState.hash=null;paused=app.window.DNResearchCore.create(permissionArgs);await paused.load();await paused.upload();
+    denied=true;permissionState.hash=null;permissionState.acknowledged=null;paused=app.window.DNResearchCore.create(permissionArgs);await paused.load();await paused.upload();
     denied=false;const withdrawalStart=requests.length;await paused.clear();
     assert.equal(requests[withdrawalStart].name,'planner_set_crafting_consent');
     assert.equal(requests[withdrawalStart].args.p_enabled,false,'withdrawal is available while uploads are paused');

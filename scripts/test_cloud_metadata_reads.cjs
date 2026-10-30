@@ -60,6 +60,10 @@ async function adapter() {
   dirty.local=workspace(3);await dirty.sync.inspect();assert.equal(dirty.fullReads,1,'a session keeps the true remote data across local edits');assert.equal(dirty.writes,2);
 
   const craft=id=>({id,firstSeen:'2026-10-26T10:00:00Z',rows:[]});
+  const append=fixture(workspace(1,[craft('original')]));await append.bind();
+  append.local=workspace(1,[craft('original'),{...craft('appended'),firstSeen:'2026-10-26T10:01:00Z'}]);await append.sync.inspect();
+  assert.equal(append.writes,1);assert.equal(append.backups,0,'a local append does not replace local data or copy the full backup');
+  assert.deepEqual(append.row.data.craftingLog.items.map(i=>i.id),['original','appended']);
   const history=fixture(workspace(1,[craft('original')]));await history.bind();history.local=workspace(1,[craft('new')]);await history.sync.inspect();
   assert.equal(history.fullReads,1);assert.equal(history.writes,1);assert.deepEqual(history.row.data.craftingLog.items.map(i=>i.id).sort(),['new','original'],'a dirty local history cannot discard bound cloud history');
 

@@ -1,0 +1,32 @@
+'use strict';
+const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('node:vm'),crypto=require('node:crypto');
+const app={window:{},TextEncoder,crypto:crypto.webcrypto};vm.createContext(app);
+for(const name of ['crafting-history','integration-core','workspace-records'])vm.runInContext(fs.readFileSync('ui/'+name+'.js','utf8'),app);
+const C=app.window.DNIntegrationCore,H=app.window.DNCraftingHistory,R=app.window.DNWorkspaceRecords,copy=value=>JSON.parse(JSON.stringify(value));
+const craft=id=>({id,hall:'main',firstSeen:'2026-10-30T00:00:00Z',rows:[{name:'Aircraft Damage',value:11,known:true}]});
+const inventory=id=>({id,name:'Artifact',type:'Weapon',hall:'main',rows:[{name:'Aircraft Damage',value:11}]});
+const initial=copy(C.createWorkspace({'dn-profiles':JSON.stringify({activeId:'main',profiles:[{id:'main',name:'Main'}]})},
+  [{id:'collection:main',items:[inventory('same-id'),inventory('second')]},{id:'items',items:[inventory('same-id')]}],
+  H.project({version:2,items:Array.from({length:3000},(_,i)=>craft('craft-'+i))})));
+const base=copy(R.rows(initial));
+assert.deepEqual(copy(R.workspace(base)),initial,'record projection preserves exact array order and all projected values');
+assert.deepEqual(copy(R.changes(base,base)),[]);
+const next=copy(initial);next.craftingLog.items.push(copy(H.project({version:2,items:[craft('new-craft')]}).items[0]));
+const delta=copy(R.changes(R.rows(next),base));
+assert.equal(delta.length,1,'one new craft writes one row regardless of history size');assert.equal(delta[0].kind,'craft');
+assert(Buffer.byteLength(JSON.stringify(delta))<2048);
+const changed=copy(next);changed.records[0].items[0].rows[0].value=20;
+const inventoryDelta=copy(R.changes(R.rows(changed),R.rows(next)));
+assert.equal(inventoryDelta.length,1);assert.equal(inventoryDelta[0].scope,'collection:main');
+const archived=copy(changed),removed=archived.craftingLog.items.pop();archived.craftingLog.ledger.archived.push(copy(H.facts(removed)));
+const cleared=copy(R.changes(R.rows(archived),R.rows(changed)));
+assert.equal(cleared.length,2);assert(cleared.some(row=>row.kind==='craft' && row.deleted));assert(cleared.some(row=>row.kind==='archive' && !row.deleted));
+const apply=(rows,changes)=>{const map=new Map(rows.map(row=>[R.identity(row),row]));for(const row of changes)if(row.deleted)map.delete(R.identity(row));else map.set(R.identity(row),row);return [...map.values()];};
+assert.deepEqual(copy(R.workspace(apply(R.rows(changed),cleared))),archived);
+const reordered=copy(initial);reordered.records.reverse();reordered.records[1].items.reverse();reordered.craftingLog.items.reverse();
+assert.deepEqual(copy(R.workspace(R.rows(reordered))),reordered,'reordering survives reconstruction');
+assert.throws(()=>R.workspace([...base,base[0]]),/Duplicate/);
+assert.throws(()=>R.workspace(base.filter(row=>row.kind!=='collection')),/collection is missing/);
+const bad=copy(base);bad.find(row=>row.kind==='craft').data.artworkId='unknown';assert.throws(()=>R.workspace(bad),/Invalid artwork reference/);
+const without=copy(initial);delete without.craftingLog;assert.deepEqual(copy(R.workspace(R.rows(without))),without);
+console.log('Lossless 3,000-craft record projection, constant-sized sparse changes, scoped inventory, archive transitions, ordering and invalid-input rejection passed.');

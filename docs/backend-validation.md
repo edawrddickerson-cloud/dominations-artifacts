@@ -1,5 +1,41 @@
 # Backend validation and activation status
 
+## Record synchronization candidate (30 October 2026)
+
+This candidate is built locally with `workspaceRecordSaves:false`. It has not been installed, activated or published to production. Existing local scanner and scoring schemas remain authoritative. Astra's architecture and implementation review is retained privately in `data/temp/astra-sync-architecture-review-20261030.txt`.
+
+The additive `202610300003_workspace_records.sql` migration stores settings, collection descriptors, inventory items, craft records, archived counter facts and envelope metadata separately. Explicit positions preserve existing array order and canonical workspace hashes. An account head retains the existing revision/operation conflict contract; unrelated accounts lock different rows. Ordinary saves validate and version changed payloads rather than reconstructing and writing the complete JSON workspace. Indexed counters and artwork references avoid rescanning old craft payloads. Structural changes still require relationship checks.
+
+Uploads stage at most 256 changes and 512 KiB of PostgreSQL JSONB text per normal request, then publish in one atomic commit. A single oversized legacy record has a bounded compatibility exception. Server-computed batch hashes reject altered retries while staged requests are retained. Staging is expendable: expiry and bounded eviction of other unfinished operations relieve operation-count/byte pressure; clients can re-stage their immutable request, and incomplete requests cannot commit. Committed receipts and canonical data are never evicted this way. Immutable versions support pinned, keyset-paged full reads and deltas with deletion markers. The current snapshot and three prior recovery versions are retained; periodic maintenance prunes superseded versions and expired abandoned stages. A missing/pruned read baseline triggers a complete paged read, never speculative fallback to a legacy writer.
+
+Account conversion is explicit and transactional. It preserves the current workspace and retained histories, fences every legacy write path and hides stale direct table reads for the converted account. Frozen legacy source rows have a 30-day conversion rollback window; periodic maintenance removes those copies and old receipts afterward while preserving normalized current/recovery data and untouched legacy accounts. Conversion failure rolls back to the usable old protocol. Export reconstructs current and historical envelopes in the browser while retaining existing consent/research/OCR fields. Auth deletion cascades through every new table.
+
+The browser transport preserves explicit account linking, planner conflict choices, history reconciliation and local safety copies. Durable request keys include owner and operation so concurrent tabs cannot erase each other's pending requests. These requests are not atomic with canonical local mutations in the other IndexedDB database: a reload repairs the gap by recapturing canonical data and comparing the account binding. The verified remote cache is an expendable replica, not a second canonical log. Complete browser capture/hashing and some statistics scans remain transitional costs; this migration does not claim fully incremental local persistence.
+
+Community sharing separately acknowledges each projected record by owner, consent epoch, policy and rules. Only new, corrected or archived projections are submitted. Receipts commit after each successful bounded batch. Consent withdrawal, account changes and durable permission pauses prevent stale uploads from authorizing sharing. Unchanged source projections are cached, although the local source-signature scan remains proportional to history.
+
+Verification commands:
+
+```powershell
+node scripts/test_workspace_records.cjs
+node scripts/test_cloud_record_transport.cjs
+node scripts/test_workspace_records_database.cjs
+node scripts/test_record_sync_integration.cjs
+node scripts/test_research_incremental.cjs
+node scripts/test_cloud_metadata_reads.cjs
+node scripts/test_cloud_choice_concurrency.cjs
+node scripts/test_crafting_v2.cjs
+node scripts/backup_database.cjs --verify --rehearse-workspace-records
+node scripts/replay_workspace_records_restore.cjs --backup=data/temp/database-backups/VERIFIED_FOLDER
+node scripts/test_crafting_scanner_contract.cjs
+node scripts/build_site.cjs
+node scripts/test_site_build_browser.cjs --clean-urls
+```
+
+The restore rehearsal applies the candidate and converts the actual private restored workspace inside a transaction, compares the complete reconstructed before/after documents through the browser codec, checks a sparse save and strict retries, then rolls everything back and rechecks all original table/security fingerprints. Its manifest records the exact migration hash and physical normalized/retained-legacy storage. The replay helper can verify a revised migration against the same checksum-verified archive in another fresh loopback cluster, with a separate exact-hash report, without repeating the hosted data export. Row/index overhead can exceed whole-document TOAST compression: reduced save work does not establish a larger storage allowance or user capacity. The final actual-data rehearsal measured 6,578,176 bytes of normalized tables/indexes versus 3,588,096 bytes for retained legacy workspace/history tables (about 1.83 times, or 2.83 times while both copies remain). These are one local restored fixture's sizes, not hosted capacity or a sustained-bloat benchmark.
+
+Production rollout requires a fresh exact-hash restore rehearsal, reviewed storage measurements, independent code/security review and explicit approval. Install the additive SQL while record mode remains disabled, verify the published compatible client, then authorize activation. Keep compatible record-mode code available after conversion: merely disabling the flag or restoring frozen legacy rows is not a data-preserving rollback after new record saves. A full rollback requires exporting and materializing the latest normalized snapshots under a reviewed recovery procedure. Do not drop normalized tables or discard post-conversion writes. Finish real scanner acceptance and isolated concurrency measurements before promising a concurrent-user count.
+
 ## Workspace allocation fix (30 October 2026)
 
 The real crafting/storage test reproduced memory pressure and one `57014` save timeout in artwork validation, despite zero v3 temporary-file I/O. The new migration `202610300002_workspace_save_memory.sql` reduces temporary document copies and validates reference scalars as a set. Synthetic native PostgreSQL 18.6/Windows measurements with 2,930 crafts and 176 owned artwork references sampled about 76 MiB of allocated query contexts before the change and 50 MiB afterward; one-row median backend CPU fell about 12%. These are local context/CPU measurements, not hosted RSS or a claim of a permanent leak fix.

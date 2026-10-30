@@ -33,7 +33,7 @@
     for(const path of ['service-config.js?v=20261025-probability-release','integration-core.js?v=20261024-artwork',
       'service-store.js?v=2','local-artwork-recovery.js?v=20261025-image-recovery','consent.js?v=1',
       'crafting-community.js?v=20261025-inferred','crafting-result-context.js?v=1',
-      'cloud-sync.js?v=20261025-reviewed-choice','research.js?v=20261023-automatic-v2',
+      'cloud-sync.js?v=20261025-reviewed-choice','workspace-records.js?v=20261030-records','cloud-record-transport.js?v=20261030-records','research.js?v=20261023-automatic-v2',
       'cloud.js?v=20261025-save-timeout','ocr-feedback.js?v=20261024-ocr-matching','services-ui.js?v=20261025-slate'])preload(path);
     for(const [present,path] of [[window.DNArtworkIds,'data/artwork_ids.js?v=20261024-artwork'],
       [window.DNCraftingHistory,'crafting-history.js?v=20261024-artwork'],[window.DN_ARTIFACT_STAT_CONTEXT,'data/artifact_stat_context.js?v=1'],
@@ -54,6 +54,8 @@
     // Analytics has its own readiness promise and cannot hold up account UI.
     window.DNTelemetryReady=script('telemetry.js?v=20261022-ocr-feedback').catch(()=>{});
     await Promise.all([script('crafting-community.js?v=20261025-inferred'),script('crafting-result-context.js?v=1')]);
+    await script('workspace-records.js?v=20261030-records');
+    await script('cloud-record-transport.js?v=20261030-records');
     await script('research.js?v=20261023-automatic-v2');
     await script('cloud.js?v=20261025-save-timeout');
     await script('ocr-feedback.js?v=20261024-ocr-matching');

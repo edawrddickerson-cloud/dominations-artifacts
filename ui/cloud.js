@@ -70,9 +70,9 @@
     await window.DNLocalBackupCore.restore({kind:'dominations-planner-backup',version:1,settings,records},localStorage,store);
   }
   function cloudError(name,error,responseStatus){
-      if(name==='planner_read_workspace' || name.startsWith('planner_save_workspace'))try{window.DNTelemetry?.event('cloud_sync_failed',{reason:error.code==='40001'?'conflict':error.code==='42501'?'permission':'request'});}catch{}
+      if(name==='planner_read_workspace' || name.startsWith('planner_save_workspace') || name.startsWith('planner_records_'))try{window.DNTelemetry?.event('cloud_sync_failed',{reason:error.code==='40001'?'conflict':error.code==='42501'?'permission':'request'});}catch{}
       const code=/^[A-Z0-9]{2,12}$/.test(error?.code || '')?error.code:/abort|timeout/i.test(error?.name+' '+error?.message)?'TIMEOUT':responseStatus?'HTTP'+responseStatus:'NETWORK';
-      const action=name==='planner_read_workspace'?'Loading account data':name.startsWith('planner_save_workspace')?'Saving account data':'The cloud request';
+      const action=name==='planner_read_workspace' || /^planner_records_(metadata|page|history)$/.test(name)?'Loading account data':name.startsWith('planner_save_workspace') || /^planner_records_(stage|commit|activate)$/.test(name)?'Saving account data':'The cloud request';
       const message=code==='40001'?'Account data changed. Review the versions and retry.':code==='42501'?'Account permission changed. Sign in again and retry.':code==='57014'?action+' timed out on the server (57014). Retry shortly.':code==='TIMEOUT'?action+' timed out. Retry when connected.':'The cloud request could not be completed ('+code+').';
       return Object.assign(Error(message+' Your local data is unchanged.'),{code,cause:error});
   }
@@ -97,6 +97,7 @@
       return result.data;
     }catch(error){throw cloudError('planner_read_workspace',error,responseStatus);}
   }
+  const recordRemote=config.workspaceRecordSaves===true?window.DNCloudRecordTransport.create({rpc,store:window.DNServiceStore,user:()=>currentUser?.id || null,generation:()=>authGeneration}):null;
   const engine=window.DNCloudSyncCore.create({capture,readBinding:binding,saveBinding,recover,apply,notify:announce,
     async applyHistory(log){
       if(window.DNScannerCollection){await window.DNScannerCollection.reconcileHistory(log);return;}
@@ -107,7 +108,7 @@
       await window.DN.scannerLog.write(JSON.stringify({...merged,scans:previous?.scans || [],labels:previous?.labels || []}));
     },
     async readLocalCraftsLogged(){try{return C.lifetimeCraftsLogged(JSON.parse(await window.DN.scannerLog.read() || 'null'));}catch{return null;}},
-    remote:{read:readWorkspace,readMetadata:owner=>readWorkspace(owner,{metadataOnly:true}),async write(owner,revision,operation,data,base){
+    remote:recordRemote || {read:readWorkspace,readMetadata:owner=>readWorkspace(owner,{metadataOnly:true}),async write(owner,revision,operation,data,base){
       // Explicit rollout gate: no production migration is implied by this code.
       // Never fall back after an ambiguous failure; keep the pending operation
       // for the existing read/retry reconciliation path.
@@ -129,7 +130,7 @@
   function setSession(session) {
     const next=session?.user || null;
     if(currentUser?.id===next?.id)return;
-    currentUser=next;authGeneration++;clearTimeout(timer);
+    currentUser=next;authGeneration++;clearTimeout(timer);recordRemote?.clearMemory();
     engine.setOwner(next?.id);
     window.DNTelemetry?.setOwner(next?.id || null);
     if(next){consentTask=syncConsent().catch(()=>{});schedule(0);setTimeout(recoverLocalArtwork,0);}else announce({status:'signed-out'});
@@ -144,7 +145,7 @@
       if(!config.supabasePublishableKey.startsWith('sb_publishable_'))throw Error('Use a browser-safe Supabase publishable key.');
       if(!window.supabase)await window.DNServiceLoader.script('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.118.0/dist/umd/supabase.js');
       client=window.supabase.createClient(config.supabaseUrl,config.supabasePublishableKey,{auth:{persistSession:true,autoRefreshToken:true,flowType:'pkce',detectSessionInUrl:false},global:{fetch:async(url,options={})=>{
-        const requestPath=String(url?.url || url).split('?')[0],workspaceTransfer=/\/rpc\/planner_(read_workspace|save_workspace(?:_v[23])?)$/.test(requestPath)||/\/planner_workspaces$/.test(requestPath);
+        const requestPath=String(url?.url || url).split('?')[0],workspaceTransfer=/\/rpc\/planner_(read_workspace|save_workspace(?:_v[23])?|records_(?:activate|metadata|page|stage|commit|history))$/.test(requestPath)||/\/planner_workspaces$/.test(requestPath);
         const controller=new AbortController(),timeout=setTimeout(()=>controller.abort(),workspaceTransfer?60000:15000);
         try{return await fetch(url,{...options,signal:options.signal || controller.signal,referrerPolicy:'no-referrer'});}finally{clearTimeout(timeout);}
       }}});
@@ -184,7 +185,22 @@
       }
     },
     async signOut(){if(!client)return;const {error}=await client.auth.signOut({scope:'local'});if(error)throw Error('Could not sign out. Try again.');setSession(null);},
-    async exportAccount(){return {kind:'dominations-account-export',version:1,account:window.DNCloud.user(),exportedAt:new Date().toISOString(),data:await rpc('planner_export_account')};},
+    async exportAccount(){
+      const owner=currentUser?.id,generation=authGeneration,account=window.DNCloud.user(),data=await rpc('planner_export_account');
+      const current=()=>{if(currentUser?.id!==owner || authGeneration!==generation)throw Error('The signed-in account changed. Export was cancelled.');};
+      current();
+      if(data.workspace_records) {
+        if(!recordRemote)throw Error('Reload the planner before exporting this account.');
+        data.workspace=await recordRemote.readRevision(owner,data.workspace_records);current();
+        data.workspace_history=[];
+        for(const head of data.workspace_record_history || []) {
+          const row=await recordRemote.readRevision(owner,head);current();
+          data.workspace_history.push({revision:row.revision,data:row.data,saved_at:head.saved_at || head.updated_at});
+        }
+        delete data.workspace_records;delete data.workspace_record_history;
+      }
+      return {kind:'dominations-account-export',version:1,account,exportedAt:new Date().toISOString(),data};
+    },
     async recovery(){return await window.DNServiceStore.get('cloud-recovery') || [];},recoverLocalArtwork,
     async deleteResearch(){await rpc('planner_delete_research');},
     async deleteAccount(){

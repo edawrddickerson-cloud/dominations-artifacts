@@ -180,6 +180,11 @@ async function main() {
       manifest.workspaceMemoryRehearsal={migration:memoryFile,sha256:crypto.createHash('sha256').update(memorySource).digest('hex'),actualRestoredWorkspace:true,settingsAndSparseSave:true,strictRetryAndCAS:true,rolledBack:true};
       console.log('Candidate memory-save migration passed actual restored-workspace saves, strict retries, CAS and complete rollback.');
     }
+    if(process.argv.includes('--rehearse-workspace-records')) {
+      manifest.workspaceRecordsRehearsal=require('./rehearse_workspace_records.cjs').rehearse({local,query,root});
+      if(JSON.stringify(before)!==JSON.stringify(fingerprints(local,tables)) || JSON.stringify(securityBefore)!==JSON.stringify(security(local)))throw Error('Record rehearsal did not restore original data/security.');
+      console.log('Record migration passed lossless actual-workspace conversion, sparse save, strict retries and complete rollback.');
+    }
     manifest.restoreVerified=true;manifest.restoredAt=new Date().toISOString();
     manifest.verification={tableChecksumsMatch:true,plannerFunctionsMatch:true,rowSecurityPoliciesMatch:true,restoredAccountIsolation:true,anonymousWorkspaceAccessDenied:true,restoredTables:tables.length};
     if(process.argv.includes('--rehearse-ocr-weekly')) {
@@ -226,5 +231,5 @@ async function main() {
   }
   console.log('Backup folder: '+directory);
 }
-module.exports={sourceEnvironment,query,setLog:file=>{log=file;}};
+module.exports={sourceEnvironment,query,fingerprints,security,setLog:file=>{log=file;}};
 if(require.main===module)main().catch(error=>{console.error(error.message);if(directory)console.error('Local report folder: '+directory);process.exitCode=1;});

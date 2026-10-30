@@ -76,16 +76,24 @@
           const withoutHistory=value=>{const {craftingLog,...rest}=value;return C.canonical(rest);};
           if(withoutHistory(local)===withoutHistory(row.data)) {
             const merged=window.DNCraftingHistory.project(window.DNCraftingHistory.reconcile(local.craftingLog,row.data.craftingLog));
-            if(C.canonical(merged)!==C.canonical(local.craftingLog) || C.canonical(merged)!==C.canonical(row.data.craftingLog)) {
+            const mergedCanonical=C.canonical(merged),alreadyLocal=mergedCanonical===C.canonical(local.craftingLog);
+            // A purely local craft edit already contains the known remote
+            // baseline. Ordinary CAS upload needs no local replacement/backup.
+            const localOnly=alreadyLocal && remoteHash===binding.hash;
+            if(!localOnly && (!alreadyLocal || mergedCanonical!==C.canonical(row.data.craftingLog))) {
               await recover({owner:id,remote:row});
               if(!valid(id,generation))return state;
               if(await C.fingerprint(await capture())!==localHash)return publish({status:'pending'});
               await applyHistory(merged);
               if(!valid(id,generation))return state;
-              const combined=C.validate(await capture()),hash=await C.fingerprint(combined),operation=crypto.randomUUID();
+              const combined=C.validate(await capture()),hash=await C.fingerprint(combined);
               if(!valid(id,generation))return state;
-              saveBinding({...binding,owner:id,pending:{operation,hash}});
-              const saved=await remote.write(id,row.revision,operation,combined,row.data);
+              let saved=row;
+              if(hash!==remoteHash) {
+                const operation=crypto.randomUUID();
+                saveBinding({...binding,owner:id,pending:{operation,hash}});
+                saved=await remote.write(id,row.revision,operation,combined,row.data);
+              }
               if(!valid(id,generation))return state;
               saveBinding(bound(id,saved,hash));
               cached={row:{...saved,data:combined},hash};

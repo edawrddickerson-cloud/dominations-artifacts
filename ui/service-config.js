@@ -3,6 +3,8 @@
 window.DNServiceConfig=Object.freeze({
   build:'2026-10-30-workspace-delta',
   workspaceDeltaSaves:true,
+  // Enable only after the record migration, restore drill and rollout review.
+  workspaceRecordSaves:false,
   // Local work and preview hosts stay out of production usage dashboards.
   environment:typeof location!=='undefined' && location.origin!=='https://dominations-planner.ededed84.workers.dev'?'development':'production',
   cloudEnabled:typeof location==='undefined' || location.origin==='https://dominations-planner.ededed84.workers.dev',
