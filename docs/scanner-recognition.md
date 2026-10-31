@@ -1,5 +1,30 @@
 # Local artifact recognition prototype
 
+## Storage levels and abbreviated count stats, 31 October 2026
+
+Storage keeps strict `n/10` OCR and adds a red-channel retry to separate pale
+digits from green progress fill. When the number remains unreadable, a contiguous
+green fill within 2.5 percentage points of a tenth can supply the level. Empty,
+clipped, discontinuous and ambiguous bars stay unknown. Numeric OCR takes priority;
+fill evidence and `progress-bar` provenance remain in the result. This fallback
+uses full-dialog geometry with default level boxes; moved calibration boxes and
+rows-only crops do not supply bar evidence.
+
+The official `Merc Camp Deploys Spartans when Destroyed` abbreviation resolves to
+the existing canonical Mercenary Camp stat. Known count effects accept signed
+whole counts without adding a percent sign; ordinary stats still require `%`.
+Count ranges remain fixed. `Vespa 150 TAP`, already present in `data/artifacts.csv`,
+is now an exact War Legendary title identity, preserving its model digits and
+the existing Hall/category and OCR confidence gates.
+
+`tests/scanner/storage-leonidas.png` is the supplied split app/game screenshot
+from 00:33:02. The real OCR regression isolates its game dialog and checks all six
+names, values and levels at native size, 75% and 150%, plus default calibrated
+fields at 75%. These are transformations of one screenshot, not independent samples.
+Run `node scripts/run_scanner_ocr_fixture.js --storage-levels --summary`,
+`node scripts/test_storage_progress.cjs`, `node scripts/test_artifact_titles.cjs`
+and `node scripts/test_scanner_stat_spellings.cjs`.
+
 ## Independent field evidence, 29 October 2026
 
 `ui/scanner-evidence.js` selects evidence within a validated encounter/profile/capture context and physical row position. Name, signed percentage, level, star, reroll availability, tier and colour retain separate selected observations and at most two distinct alternatives each. Repeated identical OCR does not add votes or confidence. Artifact title, category, Hall, local artwork and artwork ID have a bounded metadata journal. Unmeasured artwork retries do not replace an existing crop. There is no cross-encounter or five/six-row composition.

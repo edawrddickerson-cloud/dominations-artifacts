@@ -7,6 +7,13 @@
   'use strict';
   window.DNArtifactTitleCatalog=Object.freeze([
   {
+    "id": "vespa-150-tap-legendary",
+    "name": "Vespa 150 TAP",
+    "hall": "war",
+    "type": "Legendary",
+    "source": "data/artifacts.csv; user-confirmed 2026-10-31"
+  },
+  {
     "id": "ordinary-1",
     "name": "Alexander's Sword",
     "hall": "main",

@@ -2,6 +2,10 @@ const assert=require('node:assert/strict'),fs=require('node:fs'),vm=require('nod
 const context={window:{},Date,crypto:require('node:crypto')};vm.createContext(context);
 vm.runInContext(fs.readFileSync('ui/stored-artifacts.js','utf8'),context);
 const {merge,impliedRange}=context.window.DNStoredArtifacts;
+const measured=context.window.DNStoredArtifacts.backfillItem({hall:'main',type:'Weapon',rows:[{name:'Damage',value:11,known:true,hasPercent:true,level:1,levelSource:'progress-bar',unlocked:true}]}).rows[0];
+assert.equal(measured.level,1,'measured progress preserves an unlocked level one');
+assert.equal(measured.base,11);assert.equal(measured.max,20);
+assert.equal(measured.levelSource,'progress-bar');
 for(const name of ['Mercenary Camp Deploys Spartans when Destroyed','APC Deploys Marines On Death','Castle spawns Sword Saints when Destroyed']) {
   assert.equal(impliedRange({name,value:1,level:10}).max,1,'Deployment counts never gain nine units from upgrade inference');
   const fixed=context.window.DNStoredArtifacts.backfillItem({hall:'war',type:'War Mythical',rows:[{name,value:1,level:1,base:1,max:10,rangeSource:'inferred-level'}]}).rows[0];

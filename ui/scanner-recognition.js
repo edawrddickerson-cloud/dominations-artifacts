@@ -166,6 +166,7 @@
   function usefulRow(row) {
     if(!row || !Number.isInteger(row.value) || Math.abs(row.value)>40)return false;
     if(signIssues([row]).length)return false;
+    if(row.known && row.hasCount===true && window.DN?.isCountPerk?.(row.name))return true;
     if(row.hasPercent===false || (!row.inferred && row.raw && !/^.+?\s*[+-]\s*\d+(?:\s*[.,]\s*\d+)?\s*%\s*$/.test(row.raw) && !(row.known && row.trailingNoise)))return false;
     if(row.known)return true;
     const name=String(row.name || '').trim(), words=name.split(/\s+/);
@@ -195,6 +196,11 @@
     const rows = [], warnings = [];
     for (const raw of String(text || "").split(/\r?\n/).map(line => line.trim()).filter(Boolean)) {
       if (/^artifact benefits[:\s]*$/i.test(raw)) continue;
+      const countMatch=/^(.+?)\s*([+-]\s*\d+)\s*$/.exec(raw);
+      if(countMatch) {
+        const parsed=parseFieldRow(countMatch[1],countMatch[2],names,canonPerk);
+        if(parsed.row.hasCount){rows.push({...parsed.row,raw});warnings.push(...parsed.warnings);continue;}
+      }
       let match = /^(.+?)\s*([+-]\s*\d+(?:\s*[.,]\s*\d+)?)\s*%\s*$/.exec(raw);
       // Background texture often becomes tiny words after a complete percentage.
       // Accept only bounded noise after a known name; retain the original evidence.
@@ -246,11 +252,13 @@
     const tail=/\s+(?=[+\-\u2212\d])[+\-\u2212\d\s%.,:;'"\u2018\u2019]*$/.exec(label);
     if(tail){const prefix=label.slice(0,tail.index).trim();if(names.some(name=>normalized(name)===normalized(prefix) || normalized(name)===normalized(canonPerk(prefix))))label=prefix;}
     const percentage=String(percentageText || '').trim();
-    const amount=parsePercentage(percentage),value=amount.value;
     const exact=names.find(name=>normalized(name)===normalized(canonPerk(label)) || normalized(name)===normalized(label));
+    const countName=exact || matchName(label,names,null);
+    const count=window.DN?.isCountPerk?.(exact || (countName?.automatic?countName.name:null)) && /^[+-]\s*\d+$/.test(percentage);
+    const amount=parsePercentage(percentage+(count?'%':'')),value=amount.value;
     const matched=exact?{name:exact,confidence:1,automatic:true,method:'exact'}:matchName(label,names,value);
     const name=matched?.name;
-    const row={raw:label+' '+percentage,rawName:String(nameText || ''),rawPercentage:percentage,name:name || label,value,known:!!name,assumed:!!name && !matched.automatic,nameCorrected:!!name && !exact,nameMatch:matched,hasPercent:percentage.includes('%'),...(amount.corrected?{percentageCorrected:true}:{}),...(amount.outOfRange?{outOfRange:true}:{})};
+    const row={raw:label+' '+percentage,rawName:String(nameText || ''),rawPercentage:percentage,name:name || label,value,known:!!name,assumed:!!name && !matched.automatic,nameCorrected:!!name && !exact,nameMatch:matched,hasPercent:percentage.includes('%'),...(count && value!==null?{hasCount:true}:{}),...(amount.corrected?{percentageCorrected:true}:{}),...(amount.outOfRange?{outOfRange:true}:{})};
     const warnings=[];
     if(!name)warnings.push('Unknown or ambiguous perk: '+label);
     else if(!matched.automatic)warnings.push('Assumed OCR spelling: '+label+' → '+name+'. Verify this row.');

@@ -4,6 +4,12 @@ const context={window:{},URL,document:{baseURI:'http://localhost/ui/'}};vm.creat
 for(const file of ['ui/artifact-title-catalog.js','ui/artifact-title-recognition.js','ui/scanner-recognition.js','ui/storage-recognition.js'])vm.runInContext(fs.readFileSync(file,'utf8'),context);
 const T=context.window.DNArtifactTitleRecognition,R=context.window.DNScannerRecognition,S=context.window.DNStorageRecognition;
 const war={hall:'war',type:'Armor'};
+const vespa={hall:'war',type:'War Legendary'};
+assert.equal(T.decide([{text:'Vespa 150 TAP',confidence:95}],vespa).name,'Vespa 150 TAP');
+assert.equal(S.titleDecision([{text:'Vespa 150 TAP',confidence:95,complete:true}],vespa).verified,true);
+assert.equal(T.decide([{text:'Vespa 150 TAP',confidence:95}],{hall:'main',type:'Legendary'}).verified,false);
+assert.equal(T.decide([{text:'Vespa 150 TAP',confidence:40}],vespa).verified,false);
+assert.notEqual(T.match('Vespa 160 TAP',vespa)?.name,'Vespa 150 TAP','model digits cannot be repaired');
 for(const [raw,name] of [["Casimir Zeglen’s Brewster Body Shiel |","Casimir Zeglen's Brewster Body Shield"],["Ernest Hemingway’s Field - Surgery Kit","Ernest Hemingway's Field Surgery Kit"],["Stielhandgranate","Stielhandgranate"],["Trench Knife","Trench Knife"],["Signalling Lamp","Signalling Lamp"]]){
   const matched=T.match(raw);assert.equal(matched?.name,name,raw);assert.equal(matched.automatic,true);
 }

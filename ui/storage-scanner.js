@@ -87,7 +87,7 @@
     const preview=reviewedItem();
     if(!get('name').value.trim() || !get('type').value || current.metadataConflict || current.fieldEvidence?.conflict || current.warnings?.some(w=>/OCR reads disagree|conflict/i.test(w)) ||
       preview.rows?.length!==expectedRows || window.DNScannerRecognition.signIssues(preview.rows).length ||
-      preview.rows.some(row=>!row.known || row.assumed || !Number.isInteger(row.value) || !row.hasPercent || row.conflict || row.tierConflict)) {
+      preview.rows.some(row=>!row.known || row.assumed || !Number.isInteger(row.value) || !(row.hasPercent || row.hasCount && window.DN.isCountPerk(row.name)) || row.conflict || row.tierConflict)) {
       show('uncertain','More scan details needed','Read the artifact name, category and all stats before checking for a saved match.');return null;
     }
     const checked=matches(),[inventoryMatch,collectionMatch]=checked;
@@ -115,7 +115,7 @@
     if(current.rows?.length!==expectedRows)return 'Read all '+expectedRows+' stats.';
     for(const [index,row] of reviewedItem().rows.entries()) {
       if(!row.known || row.assumed)return 'Row '+(index+1)+': perk name needed.';
-      if(!Number.isFinite(row.value) || !row.hasPercent)return 'Row '+(index+1)+': percentage needed.';
+      if(!Number.isFinite(row.value) || !(row.hasPercent || row.hasCount && window.DN.isCountPerk(row.name)))return 'Row '+(index+1)+': value needed.';
       if(!Number.isInteger(row.value))return 'Row '+(index+1)+': whole percentage needed.';
       if(row.conflict)return 'Row '+(index+1)+': conflicting readings.';
       if(row.tierConflict)return 'Row '+(index+1)+': value and level conflict.';

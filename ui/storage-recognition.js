@@ -65,6 +65,26 @@
     const match=/^\s*(10|[1-9])\s*\/\s*10\s*$/.exec(text);
     return match?Number(match[1]):null;
   }
+  // Only a contiguous green fill starting at the left edge, close to a tenth,
+  // can supply a fallback. Empty, clipped and irregular bars stay unknown.
+  function progressLevel(data,width,height,rect) {
+    const left=Math.round(rect.x*width),top=Math.round(rect.y*height),w=Math.round(rect.width*width),h=Math.round(rect.height*height);
+    if(w<50 || h<3 || left<0 || top<0 || left+w>width || top+h>height)return null;
+    const columns=[];
+    for(let x=left;x<left+w;x++) {
+      let green=0;
+      for(let y=top;y<top+h;y++) {
+        const p=(y*width+x)*4,r=data[p],g=data[p+1],b=data[p+2];
+        if(g>70 && g>r*1.6 && g>b*1.5)green++;
+      }
+      columns.push(green/h>=.4);
+    }
+    if(columns.slice(0,Math.max(3,Math.round(w*.04))).some(value=>!value))return null;
+    let end=columns.lastIndexOf(true)+1;
+    if(columns.slice(0,end).filter(value=>!value).length>w*.02)return null;
+    const fraction=end/w,level=Math.round(fraction*10);
+    return level>=1 && level<=10 && Math.abs(fraction-level/10)<=.025?{level,fraction}:null;
+  }
   function starState(pixels) {
     let yellow=0;
     for(let p=0;p<pixels.length;p+=4)if(pixels[p]>160 && pixels[p+1]>100 && pixels[p+2]<pixels[p+1]*.8)yellow++;
@@ -116,7 +136,7 @@
       return {...rect,y:y/source.height,height:(bottom-y)/source.height};
     }
     function field(rect,ink='normal') {
-      const c=make(),scale=['level','level-green'].includes(ink)?6:Math.max(2,Math.min(4,2901/source.width));
+      const c=make(),scale=ink.startsWith('level')?6:Math.max(2,Math.min(4,2901/source.width));
       const sx=Math.round(rect.x*source.width),sy=Math.round(rect.y*source.height);
       const sw=Math.ceil(rect.width*source.width),sh=Math.ceil(rect.height*source.height);
       const w=Math.max(1,Math.round(sw*scale)),h=Math.max(1,Math.round(sh*scale));
@@ -144,6 +164,7 @@
           // Fractions are pale grey over a green/black progress bar. Using
           // the green channel alone merges the glyphs with the filled bar.
           ink==='level-green'?(g>35 && g>r*1.12 && g>b*1.12?0:255):
+          ink==='level-red'?255-Math.min(255,Math.max(0,(r-35)*3)):
           ink==='level-channel'?255-Math.min(255,Math.max(0,(g-30)*4)):
           ink.startsWith('level')?(Math.max(r,g,b)-Math.min(r,g,b)<70 && .299*r+.587*g+.114*b>(ink==='level-soft'?35:75)?0:255):recognition.textContrast(r,g,b);
         pixels.data[i]=pixels.data[i+1]=pixels.data[i+2]=v;
@@ -268,7 +289,7 @@
         const levelRect=box(i+'-level',rect(i,.40,.14,.51,.32));
         let level=await read(levelRect,'0123456789/','level');
         const tightLevel=calibrated?levelRect:rect(i,.422,.085,.59,.18);
-        for(const [crop,ink,mode] of [[tightLevel,'level-green','7'],[tightLevel,'level-soft','7'],[tightLevel,'level-channel','7'],[tightLevel,'raw','7'],[levelRect,'raw','7']]) {
+        for(const [crop,ink,mode] of [[tightLevel,'level-red','7'],[tightLevel,'level-green','7'],[tightLevel,'level-soft','7'],[tightLevel,'level-channel','7'],[tightLevel,'raw','7'],[levelRect,'raw','7']]) {
           if(levelOf(level.text)!==null && level.confidence>=60)break;
           const alternative=await read(crop,'0123456789/',ink,mode);
           if(levelOf(alternative.text)!==null && alternative.confidence>=60)level={...alternative,alternative:level};
@@ -309,11 +330,18 @@
         const star=box(i+'-star',rect(i,.043,.048,.40,.30)),c=make();c.width=30;c.height=30;
         const ctx=c.getContext('2d',{willReadFrequently:true});ctx.drawImage(source,star.x*source.width,star.y*source.height,star.width*source.width,star.height*source.height,0,0,30,30);
         const unlocked=starState(ctx.getImageData(0,0,30,30).data);
-        const value=level.confidence>=60?levelOf(level.text):null;
+        const numericLevel=level.confidence>=60?levelOf(level.text):null;
+        // Default bar geometry is valid for uncalibrated/default level boxes.
+        // Moved custom fields and rows-only crops cannot establish a full bar.
+        const defaultLevel=rect(i,.40,.14,.51,.32);
+        const defaultGeometry=!calibrated || ['x','y','width','height'].every(key=>Math.abs(levelRect[key]-defaultLevel[key])*(['x','width'].includes(key)?source.width:source.height)<=1);
+        const progress=full && defaultGeometry?progressLevel(sourcePixels,source.width,source.height,rect(i,.156,.59,.56,.20)):null;
+        const value=numericLevel ?? progress?.level ?? null;
+        if(progress)level={...level,progress};
         const prior=knownTiers[i];
         const sameHall=prior?.hall===(artifact.hall || hall);
         const tierEvidence=sameHall && prior?.name===row.name && !prior.tierConflict && ['manual','percentage-level','unique-percentage'].includes(prior.tierSource)?prior.tier:null;
-        const ranged={...row,...rerolls[i],level:value,levelSource:value==null?null:'ocr',unlocked,tierEvidence,
+        const ranged={...row,...rerolls[i],level:value,levelSource:value==null?null:numericLevel!==null?'ocr':'progress-bar',unlocked,tierEvidence,
           ...(amount.confidence<60 && tierEvidence && value!==null && row.known?{observedValue:row.value,value:null,hasPercent:false}:{} )};
         const range=window.DNStoredArtifacts?.impliedRange(ranged);
         rows.push({...ranged,...(range?{...range,rangeSource:'inferred-level'}:{})});
@@ -334,5 +362,5 @@
       if(!isClosed())await worker.setParameters({tessedit_pageseg_mode:'6',tessedit_char_whitelist:''});
     }
   }
-  window.DNStorageRecognition={detectPanel,inspect,recognize,levelOf,starState,types,rowsForType,categoryType,titleDecision};
+  window.DNStorageRecognition={detectPanel,inspect,recognize,levelOf,progressLevel,starState,types,rowsForType,categoryType,titleDecision};
 })();

@@ -6,6 +6,18 @@ for(const file of ['ui/data/army_catalog.js','ui/shared.js','ui/scanner-name-cat
 const R=app.window.DNScannerRecognition,DN=app.window.DN,catalog=app.window.DNScannerNameCatalog;
 const names=Object.keys(JSON.parse(fs.readFileSync('data/perk_rating_defaults.json','utf8')));
 const canon=DN.makeCanonPerk(DN.parseMappingCsv(fs.readFileSync('data/perk_name_mapping.csv','utf8')));
+for(const raw of ['Merc Camp Deploys Spartans when Destroyed','Merc Camp Deplovs Spartans when Destroved','Mercenary Camp Deploys Spartans when Destroyed']) {
+  for(const parsed of [R.parseFieldRow(raw,'+2',names,canon),R.parseText(raw+' +2',names,canon,1)]) {
+    const row=parsed.row || parsed.rows[0];
+    assert.equal(row.name,'Mercenary Camp Deploys Spartans when Destroyed');
+    assert.equal(row.value,2);assert.equal(row.hasCount,true);assert.equal(row.hasPercent,false);
+    assert.equal(parsed.valid,true);assert.equal(R.usefulRow(row),true);assert.ok(row.raw.includes(raw));
+  }
+}
+for(const raw of ['Bazooka Damage','Unknown Camp Deploys Spartans when Destroyed']) {
+  const parsed=R.parseFieldRow(raw,'+2',names,canon);
+  assert.equal(parsed.row.value,null);assert.equal(parsed.valid,false,'count support cannot supply a missing percent');
+}
 for(const [raw,name,value] of [
   ['Redaunt Damage','Redoubt Damage',6],
   ['Enemy Redaunt Damage','Enemy Redoubt Damage',-6],

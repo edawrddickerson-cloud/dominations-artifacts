@@ -71,7 +71,7 @@ async function scan(missing,{known=true,priorName='Positive',priorHall='war',per
     if(retryPercentage!==null)queue.push(retryPercentage);
     if(missing==='value')queue.push(''); // Numeric retry before inference.
     queue.push(levelText ?? (missing==='level'?'':missing==='value'?'3/10':'7/10'));
-    if(missing==='level')for(let attempt=0;attempt<5;attempt++)queue.push('');
+    if(missing==='level')for(let attempt=0;attempt<6;attempt++)queue.push('');
     if(fitPercentage!==null)queue.push(fitPercentage,fitPercentage);
   }
   let calls=0;

@@ -445,7 +445,7 @@
           .filter(candidate=>sign && Number.isInteger(candidate.level) && candidate.level>=1 && candidate.level<=10);
         // Previous scanner versions forced unlocked rows to level 1. Without
         // independent OCR/manual evidence, that level cannot resolve a tier.
-        const trusted=!(row.unlocked===true && row.level===1 && !['ocr','manual','crafting','tier-percentage','base-tier','locked-star'].includes(row.levelSource));
+        const trusted=!(row.unlocked===true && row.level===1 && !['ocr','progress-bar','manual','crafting','tier-percentage','base-tier','locked-star'].includes(row.levelSource));
         const matched=(trusted?candidates.find(candidate=>candidate.level===row.level):null) ||
           (row.rangeSource==='manual'?candidates.find(candidate=>candidate.base===row.base):null);
         const observed=trusted && Number.isInteger(row.level) && row.level>=1 && row.level<=10;

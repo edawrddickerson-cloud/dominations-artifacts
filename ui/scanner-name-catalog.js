@@ -9,6 +9,7 @@
 })(typeof window==='object'?window:globalThis,()=>{
   'use strict';
   const groups=[
+    {to:'mercenary camp',from:['merc camp'],source:'User screenshot 2026-10-31 00:33:02: official abbreviated stat label',confidence:1},
     {to:'hitpoints',from:['bitpomis','hitporis','hithomits','htpoiris','hitpoinis','hitpomts','hitpomnts','hitpainis','hipomnis','hitpoimis','hitpairits'],source:'Earlier reviewed scanner word confusions in scanner-recognition.js',confidence:.98},
     {to:'fighter',from:['figjhites'],source:'Earlier reviewed scanner word confusions in scanner-recognition.js',confidence:.98},
     {to:'guerrilla',from:['guernlla','guernla'],source:'docs/scanner-observations-2026-10-11-batch3.md',confidence:.98},
